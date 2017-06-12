@@ -22,3 +22,9 @@ function hocwp_theme_script_loader_src_filter( $src, $handle ) {
 }
 
 add_filter( 'script_loader_src', 'hocwp_theme_script_loader_src_filter', 10, 2 );
+
+$using = apply_filters( 'hocwp_theme_using_emoji', false );
+if ( ! $using ) {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+}
