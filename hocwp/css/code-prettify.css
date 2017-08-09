@@ -1,0 +1,32 @@
+.str, .lit, .tag {
+    color: #7d2727;
+}
+
+.kwd, .dec {
+    color: #101094;
+}
+
+.com {
+    color: #858c93;
+}
+
+.typ {
+    color: #2b91af;
+}
+
+.pun, .pln {
+    color: #303336;
+}
+
+.atn {
+    color: #e64320;
+}
+
+.atv {
+    color: #0f74bd;
+}
+
+.prettyprint {
+    color: #393318;
+    display: block;
+}

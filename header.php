@@ -24,7 +24,7 @@
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'hocwp-theme' ); ?></a>
 
 	<header id="masthead" class="site-header" role="banner">
-		<?php do_action('hocwp_theme_site_header'); ?>
+		<?php do_action('hocwp_theme_module_site_header'); ?>
 	</header><!-- #masthead -->
 
 	<div id="content" class="site-content">

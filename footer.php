@@ -14,7 +14,7 @@
 	</div><!-- #content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
-		<?php do_action('hocwp_theme_site_footer'); ?>
+		<?php do_action('hocwp_theme_module_site_footer'); ?>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
 

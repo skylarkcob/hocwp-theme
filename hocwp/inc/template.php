@@ -7,20 +7,32 @@ function hocwp_theme_load_template( $_template_file, $include_once = false ) {
 	}
 }
 
-function hocwp_theme_load_custom_template( $name ) {
-	if ( false === strpos( $name, '.php' ) ) {
-		$name .= '.php';
-	}
+function hocwp_theme_load_views( $name ) {
+	$name = HOCWP_Theme::sanitize_extension( $name, 'php' );
 	if ( ! file_exists( $name ) ) {
-		$name = get_template_directory() . '/custom/' . $name;
+		$name = HOCWP_THEME_CORE_PATH . '/views/' . $name;
+	}
+	hocwp_theme_load_template( $name );
+}
+
+function hocwp_theme_load_custom_template( $name ) {
+	$name = HOCWP_Theme::sanitize_extension( $name, 'php' );
+	if ( ! file_exists( $name ) ) {
+		$name = get_template_directory() . '/custom/views/' . $name;
 	}
 	hocwp_theme_load_template( $name );
 }
 
 function hocwp_theme_load_custom_module( $name ) {
-	$module = substr( $name, 0, 6 );
-	if ( 'module' != $module ) {
-		$name = 'module-' . $name;
-	}
+	$name = HOCWP_Theme::sanitize_prefix( $name, 'module' );
 	hocwp_theme_load_custom_template( $name );
+}
+
+function hocwp_theme_load_custom_loop( $name ) {
+	$name = HOCWP_Theme::sanitize_prefix( $name, 'loop' );
+	hocwp_theme_load_custom_template( $name );
+}
+
+function hocwp_theme_load_template_none() {
+	get_template_part( 'template-parts/content', 'none' );
 }
