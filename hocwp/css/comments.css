@@ -43,10 +43,6 @@
     margin-bottom: 0;
 }
 
-.comments-area .comment-body .comment-metadata {
-    margin-top: 10px;
-}
-
 .comments-area .comment-list li .comment-author {
     color: #444;
     font-size: 17px;
@@ -58,7 +54,7 @@
 }
 
 .comments-area .comment-body .comment-metadata a {
-    color: #848d95;
+    color: #e4e6e8;
 }
 
 .comments-area .comment-body .comment-metadata a:hover {
@@ -89,4 +85,16 @@
 .comments-area .comment-body > .reply {
     margin: 10px 0;
     text-align: right;
+}
+
+.comment-respond .comment-form input {
+    display: block;
+}
+
+.comment .comment-awaiting-moderation {
+    font-size: 13px;
+    clear: both;
+    text-align: right;
+    font-style: italic;
+    color: #e4e6e8;
 }

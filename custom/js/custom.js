@@ -8,7 +8,13 @@
         }
     });
     searchField.addEventListener('focusout', function () {
-        container.className = container.className.replace(' search-opened', '');
+        var timeout = 0;
+        if (searchField.value) {
+            timeout = 500;
+        }
+        setTimeout(function () {
+            container.className = container.className.replace(' search-opened', '');
+        }, timeout);
     });
 })();
 

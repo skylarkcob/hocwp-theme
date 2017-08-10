@@ -1,5 +1,5 @@
 <?php
-define( 'HOCWP_THEME_CORE_VERSION', '6.1.1' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.1.2' );
 define( 'HOCWP_THEME_DEVELOPING', ( ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) ? true : false ) );
 define( 'HOCWP_THEME_CORE_PATH', untrailingslashit( dirname( __FILE__ ) ) );
 define( 'HOCWP_THEME_CORE_URL', untrailingslashit( get_template_directory_uri() . '/hocwp' ) );
@@ -35,6 +35,9 @@ function hocwp_theme_load() {
 	}
 	HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/functions.php' );
 	HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/hook.php' );
+	if ( is_admin() ) {
+		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/admin.php' );
+	}
 }
 
-add_action( 'init', 'hocwp_theme_load' );
+add_action( 'init', 'hocwp_theme_load', 0 );

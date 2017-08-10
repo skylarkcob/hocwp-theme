@@ -1,10 +1,6 @@
 <?php
 function hocwp_theme_load_template( $_template_file, $include_once = false ) {
-	if ( $include_once ) {
-		include_once( $_template_file );
-	} else {
-		include( $_template_file );
-	}
+	load_template( $_template_file, $include_once );
 }
 
 function hocwp_theme_load_views( $name ) {

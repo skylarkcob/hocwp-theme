@@ -22,6 +22,7 @@ function hocwp_theme_zip_folder( $source, $destination ) {
 		return false;
 	}
 	$source = str_replace( '\\', '/', realpath( $source ) );
+	global $wp_filesystem;
 	if ( is_dir( $source ) === true ) {
 		$files = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $source ), RecursiveIteratorIterator::SELF_FIRST );
 		foreach ( $files as $file ) {
@@ -33,11 +34,11 @@ function hocwp_theme_zip_folder( $source, $destination ) {
 			if ( is_dir( $file ) === true ) {
 				$zip->addEmptyDir( str_replace( $source . '/', '', $file . '/' ) );
 			} else if ( is_file( $file ) === true ) {
-				$zip->addFromString( str_replace( $source . '/', '', $file ), file_get_contents( $file ) );
+				$zip->addFromString( str_replace( $source . '/', '', $file ), $wp_filesystem->get_contents( $file ) );
 			}
 		}
 	} else if ( is_file( $source ) === true ) {
-		$zip->addFromString( basename( $source ), file_get_contents( $source ) );
+		$zip->addFromString( basename( $source ), $wp_filesystem->get_contents( $source ) );
 	}
 
 	return $zip->close();

@@ -1,3 +1,16 @@
 abbr {
     text-decoration: none;
 }
+
+span.required {
+    color: #dd4b39;
+}
+
+input:focus,
+button:focus,
+.icon:focus,
+.svg-icon:focus,
+.icon,
+.svg-icon {
+    outline: 0 none;
+}

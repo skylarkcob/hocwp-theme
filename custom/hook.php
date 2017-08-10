@@ -80,7 +80,7 @@ function hocwp_theme_custom_comments_popup_link_class_filter( $class ) {
 add_filter( 'hocwp_theme_comments_popup_link_class', 'hocwp_theme_custom_comments_popup_link_class_filter' );
 
 function hocwp_theme_custom_sidebar_widgets_filter( $sidebars_widgets ) {
-	if ( isset( $sidebars_widgets['sidebar-1'] ) ) {
+	if ( ! is_admin() && isset( $sidebars_widgets['sidebar-1'] ) ) {
 		shuffle( $sidebars_widgets['sidebar-1'] );
 	}
 
@@ -88,3 +88,29 @@ function hocwp_theme_custom_sidebar_widgets_filter( $sidebars_widgets ) {
 }
 
 add_filter( 'sidebars_widgets', 'hocwp_theme_custom_sidebar_widgets_filter' );
+
+function hocwp_theme_custom_wp_action() {
+	if ( is_search() ) {
+		if ( empty( get_search_query() ) ) {
+			wp_redirect( home_url() );
+			exit;
+		}
+	}
+}
+
+add_action( 'wp', 'hocwp_theme_custom_wp_action' );
+
+function hocwp_theme_custom_widgets_init_action() {
+	$args = array(
+		'name'          => esc_html__( 'Footer Widgets', 'hocwp-theme' ),
+		'id'            => 'footer',
+		'description'   => esc_html__( 'Add widgets here.', 'hocwp-theme' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	);
+	register_sidebar( $args );
+}
+
+add_action( 'widgets_init', 'hocwp_theme_custom_widgets_init_action', 99 );
