@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: HocWP Theme\n"
-"POT-Creation-Date: 2017-07-31 17:32+0700\n"
-"PO-Revision-Date: 2017-07-31 17:44+0700\n"
+"Project-Id-Version: hocwp-theme vi\n"
+"POT-Creation-Date: 2017-09-07 08:41+0700\n"
+"PO-Revision-Date: 2017-09-07 09:02+0700\n"
 "Last-Translator: \n"
 "Language-Team: hocwp.net@gmail.com\n"
 "Language: vi\n"
@@ -14,18 +14,523 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-KeywordsList: __;_e;translate;_n;_x;_ex; esc_attr__;_nx; "
 "esc_attr_e; esc_attr_x; esc_html__; esc_html_e;esc_html_x; _n_noop; "
-"_nx_noop; translate_nooped_plural\n"
+"_nx_noop; translate_nooped_plural;esc_html;esc_html__\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: comments.php:40
-#, php-format
-msgid "%1$s thought on &ldquo;%2$s&rdquo;"
-msgstr "%1$s bình luận cho &ldquo;%2$s&rdquo;"
+#: functions.php:47
+msgid "Primary"
+msgstr "Chính"
 
-#: hocwp/inc/template-post.php:23
+#: functions.php:93
+msgid "Sidebar"
+msgstr "Thanh bên"
+
+#: functions.php:95
+msgid "Add widgets here."
+msgstr "Thêm widget vào chỗ này."
+
+#: hocwp/admin/admin-setting-page-custom-code.php:3
+msgid "Custom Code"
+msgstr "Mã tùy chỉnh"
+
+#: hocwp/admin/admin-setting-page-custom-code.php:19
+msgid "Google Analytics"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:31
+msgid "Cascading Style Sheets"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:43
+msgid "Head Code"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:48
+msgid "Add code at the end of the <code>&lt;head&gt;</code> tag."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:56
+msgid "Body Code"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:61
+msgid "Add code before <code>&lt;/body&gt;</code> tag."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-development.php:3
+msgid "Development"
+msgstr "Phát triển"
+
+#: hocwp/admin/admin-setting-page-development.php:27
+msgid "Compress CSS and JS"
+msgstr "Nén CSS và JS"
+
+#: hocwp/admin/admin-setting-page-development.php:33
+msgid "Minify all CSS and Javascript files"
+msgstr "Nén tất cả tập tin CSS và Javascript"
+
+#: hocwp/admin/admin-setting-page-development.php:40
+msgid "Compress Theme as ZIP File"
+msgstr "Nén giao diện thành tập tin zip"
+
+#: hocwp/admin/admin-setting-page-development.php:47
+msgid "After building environment, theme will be compressed for release."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-development.php:134
+msgid "Execute"
+msgstr "Tiến hành"
+
+#: hocwp/admin/admin-setting-page-discussion.php:3
+msgid "Discussion"
+msgstr "Thảo luận"
+
+#: hocwp/admin/admin-setting-page-discussion.php:20
+msgid "Comment Notification"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:38
+#, php-format
+msgid ""
+"Notify commenters when their comment has new reply. You can use these tags "
+"in subject and message: %s"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:46
+msgid "Avatar Size"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:61
+msgid "Mail Subject"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:70
+msgid "Mail Message"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-extension.php:3
+msgid "Extension"
+msgstr "Gói mở rộng"
+
+#: hocwp/admin/admin-setting-page-extension.php:45
+msgid "Number of items per page:"
+msgstr "Số lượng đối tượng hiển thị trên mỗi trang:"
+
+#: hocwp/admin/admin-setting-page-extension.php:51
+msgid "Columns"
+msgstr "Cột"
+
+#: hocwp/admin/admin-setting-page-extension.php:78
+msgid "Filter extensions list"
+msgstr "Lọc danh sách gói mở rộng"
+
+#: hocwp/admin/admin-setting-page-extension.php:84
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: hocwp/admin/admin-setting-page-general.php:3
+msgid "General"
+msgstr "Chung"
+
+#: hocwp/admin/admin-setting-page-media.php:3
+msgid "Media"
+msgstr "Tập tin"
+
+#: hocwp/admin/admin-setting-page-permalinks.php:3
+msgid "Permalinks"
+msgstr "Đường dẫn tĩnh"
+
+#: hocwp/admin/admin-setting-page-reading.php:3
+msgid "Reading"
+msgstr "Đọc"
+
+#: hocwp/admin/admin-setting-page-writing.php:3
+msgid "Writing"
+msgstr "Viết"
+
+#: hocwp/admin/admin.php:31
+msgid "phpinfo()"
+msgstr ""
+
+#: hocwp/admin/admin.php:31
+msgid "PHP Info"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:16
+msgid "extension"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:17
+msgid "extensions"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:152
+#, php-format
+msgid "No extensions found for &#8220;%s&#8221;."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:154
+msgid "No extensions found."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:156
+msgid "You do not appear to have any extensions available at this time."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:163
+msgid "Name"
+msgstr "Tên"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:164
+msgid "Description"
+msgstr "Mô tả"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:188
+#, php-format
+msgid "All <span class=\"count\">(%s)</span>"
+msgstr "Tất cả <span class=\"screen-reader-text\">%s</span>"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:191
+#, php-format
+msgid "Active <span class=\"count\">(%s)</span>"
+msgstr "Kích hoạt <span class=\"screen-reader-text\">%s</span>"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:194
+#, php-format
+msgid "Inactive <span class=\"count\">(%s)</span>"
+msgstr "Không kích hoạt <span class=\"screen-reader-text\">%s</span>"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:213
+#: hocwp/admin/class-hocwp-extensions-list-table.php:235
+msgid "Activate"
+msgstr "Kích hoạt"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:216
+#: hocwp/admin/class-hocwp-extensions-list-table.php:233
+msgid "Deactivate"
+msgstr "Ngừng kích hoạt"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:233
+#, php-format
+msgid "Deactivate %s"
+msgstr "Nừng kích hoạt %s"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:235
+#, php-format
+msgid "Activate %s"
+msgstr "Kích hoạt %s"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:240
+#, php-format
+msgid "Select %s"
+msgstr "Lựa chọn %s"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:335
+#, php-format
+msgid "<strong>Notice:</strong> %s extension(s) activated."
+msgstr "<strong>Thông báo:</strong> %s gói mở rộng được kích hoạt."
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:338
+#, php-format
+msgid "<strong>Notice:</strong> %s extension(s) deactivated."
+msgstr "<strong>Thông báo:</strong> %s gói mở rộng ngừng kích hoạt."
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:187
+msgid "Theme Settings"
+msgstr "Cài đặt giao diện"
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:187
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:270
+msgid ""
+"<strong>Notice:</strong> All settings have been changed. In order to save "
+"them please don't forget to click the 'Save Changes' button."
+msgstr ""
+"<strong>Thông báo:</strong> Mọi thiết lập đều đã được lưu. Để có thể lưu các "
+"cài đặt, đừng quên nhấn vào nút 'Lưu thiết lập' hoặc 'Lưu thay đổi'."
+
+#: hocwp/ext/admin-setting-page-smtp.php:8
+#: hocwp/ext/admin-setting-page-smtp.php:228
+msgid "SMTP Email"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:25
+msgid "Server Configuration"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:26
+msgid "The configuration of SMTP servers."
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:39
+msgid "From Email"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:47
+msgid ""
+"You can specify the email address that emails should be sent from. If you "
+"leave this blank, the default email will be used."
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:52
+msgid "From Name"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:58
+msgid ""
+"You can specify the name that emails should be sent from. If you leave this "
+"blank, the emails will be sent from WordPress."
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:63
+msgid "Return Path"
+msgstr "Địa chỉ trả về"
+
+#: hocwp/ext/admin-setting-page-smtp.php:70
+msgid "Set the return-path to match the From Email."
+msgstr "Thiết lập địa chỉ email người nhận khớp với email người gửi."
+
+#: hocwp/ext/admin-setting-page-smtp.php:77
+msgid "SMTP Host"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:83
+msgid "smtp.example.com"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-smtp.php:90
+msgid "SMTP Port"
+msgstr "Cổng SMTP"
+
+#: hocwp/ext/admin-setting-page-smtp.php:101
+msgid "Encryption"
+msgstr "Mã hóa"
+
+#: hocwp/ext/admin-setting-page-smtp.php:109
+msgid "No encryption."
+msgstr "Không mã hóa."
+
+#: hocwp/ext/admin-setting-page-smtp.php:110
+msgid "Use SSL encryption."
+msgstr "Sử dụng mã hóa SSL."
+
+#: hocwp/ext/admin-setting-page-smtp.php:111
+msgid "Use TLS encryption."
+msgstr "Sử dụng mã hóa TLS."
+
+#: hocwp/ext/admin-setting-page-smtp.php:114
+msgid ""
+"TLS is not the same as STARTTLS. For most servers SSL is the recommended "
+"option."
+msgstr ""
+"TLS không giống với STARTTLS. Hầu hết các server đều sử dụng SSL cho thông "
+"tin cài đặt được đề nghị."
+
+#: hocwp/ext/admin-setting-page-smtp.php:120
+msgid "Username"
+msgstr "Tài khoản"
+
+#: hocwp/ext/admin-setting-page-smtp.php:131
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: hocwp/ext/admin-setting-page-smtp.php:153
+msgid "Testing And Debugging Settings"
+msgstr "Kiểm tra lỗi cài đặt"
+
+#: hocwp/ext/admin-setting-page-smtp.php:157
+msgid ""
+"You can use this section to send an email from your server using the above "
+"configured SMTP details to see if the email gets delivered."
+msgstr ""
+"Bạn có thể sử dụng chức năng này để gửi mail từ server sử dụng thông tin cấu "
+"hình SMTP để kiểm tra xem có hoạt động hay không."
+
+#: hocwp/ext/admin-setting-page-smtp.php:165
+msgid "To:"
+msgstr "Tới:"
+
+#: hocwp/ext/admin-setting-page-smtp.php:171
+msgid "Enter the recipient's email address."
+msgstr "Nhập địa chỉ email người nhận."
+
+#: hocwp/ext/admin-setting-page-smtp.php:177
+msgid "Subject:"
+msgstr "Tiêu đề:"
+
+#: hocwp/ext/admin-setting-page-smtp.php:184
+msgid "Enter a subject for your message"
+msgstr "Nhập tiêu đề cho tin nhắn của bạn"
+
+#: hocwp/ext/admin-setting-page-smtp.php:190
+msgid "Message:"
+msgstr "Nội dung:"
+
+#: hocwp/ext/admin-setting-page-smtp.php:197
+msgid "Write your email message"
+msgstr "Nhập nội dung mail của bạn"
+
+#: hocwp/ext/admin-setting-page-smtp.php:202
+msgid "Send Test"
+msgstr "Gửi thử"
+
+#: hocwp/ext/admin-setting-page-smtp.php:228
+#, php-format
+msgid "Test mail to %s"
+msgstr "Gửi mail thử tới %s"
+
+#: hocwp/ext/admin-setting-page-smtp.php:232
+msgid "Thank you for using HocWP, your SMTP mail settings work successfully."
+msgstr ""
+"Cảm ơn bạn sử dung dịch vụ của HocWP Team, thông tin cấu hình gửi mail bằng "
+"SMTP hoạt động thành công."
+
+#: hocwp/ext/admin-setting-page-smtp.php:239
+msgid "Test Message Sent"
+msgstr "Tin nhắn thử đã được gửi đi"
+
+#: hocwp/ext/admin-setting-page-smtp.php:243
+#, php-format
+msgid "The result was: %s"
+msgstr "Kết quả tìm kiếm: %s"
+
+#: hocwp/ext/admin-setting-page-smtp.php:244
+msgid "The full debugging output is shown below:"
+msgstr "Thông tin debug chi tiết được hiển thị bên dưới:"
+
+#: hocwp/ext/admin-setting-page-smtp.php:249
+msgid "The SMTP debugging output is shown below:"
+msgstr "Thông tin debug gửi mail bằng SMTP được hiển thị bên dưới:"
+
+#: hocwp/ext/comment-notification.php:53
+#, php-format
+msgid "Your comment on \"%s\" has new reply"
+msgstr "Bình luận của bạn trên \"%s\" có trả lời mới"
+
+#: hocwp/ext/comment-notification.php:59
+#, php-format
+msgid "Hello %s,"
+msgstr "Xin chào %s,"
+
+#: hocwp/ext/comment-notification.php:60
+#, php-format
+msgid ""
+"Your comment on \"%s\" has new reply. You can see more details by clicking "
+"the link below:"
+msgstr ""
+"Bình luận của bạn trên \"%s\" có trả lời mới. Bạn có thể xem thông tin chi "
+"tiết bằng cách click chuột vào đường link bên dưới:"
+
+#: hocwp/ext/comment-notification.php:62
+msgid ""
+"If the link above does not work, you can also copy and paste into the "
+"address bar of the browser to access."
+msgstr ""
+"Nếu đường link bên trên không hoạt động, bạn cũng có thể sao chép và bỏ vào "
+"thanh địa chỉ của trình duyệt để truy cập."
+
+#: hocwp/inc/class-hocwp-theme-minify.php:132
+msgid "File can not be compressed!"
+msgstr "Tập tin không thể nén!"
+
+#: hocwp/inc/functions-development.php:136
+#, php-format
+msgid "Scanning directory %s"
+msgstr "Đang quét đường dẫn %s"
+
+#: hocwp/inc/functions-development.php:147
+#: hocwp/inc/functions-development.php:151
+#, php-format
+msgid "Minifying file %s"
+msgstr "Đang tối giản tập tin %s"
+
+#: hocwp/inc/functions-development.php:165
+msgid "Building theme environment..."
+msgstr "Đang chuẩn bị mỗi trường giao diện..."
+
+#: hocwp/inc/functions-development.php:176
+msgid "Sarting to generate minified files..."
+msgstr "Bắt đầu tạo tập tin nén..."
+
+#: hocwp/inc/functions-development.php:178
+msgid "All files compressed..."
+msgstr "Tất cả các tập tin đã được nén..."
+
+#: hocwp/inc/functions-development.php:182
+msgid "Creating zip file..."
+msgstr "Đang tạo tập tin zip..."
+
+#: hocwp/inc/functions-development.php:185
+msgid "Theme has been compressed successfully."
+msgstr "Giao diện đã được nén thành công."
+
+#: hocwp/inc/functions-development.php:187
+msgid "The theme can not be compressed."
+msgstr "Giao diện không thể nén."
+
+#: hocwp/inc/functions-development.php:190
+msgid "Tasks Finished"
+msgstr "Công việc đã hoàn tất"
+
+#: hocwp/inc/functions-license.php:27
+msgid "Your theme is blocked."
+msgstr "Giao diện của bạn đã bị khóa."
+
+#: hocwp/inc/functions-license.php:28
+msgid "Invalid License"
+msgstr "Bản quyền trái phép"
+
+#: hocwp/inc/functions-license.php:37
+msgid "Notify license"
+msgstr "Thông báo bản quyền"
+
+#: hocwp/inc/template-general.php:118
+#, php-format
+msgid "Search Results: %s"
+msgstr "Kết quả tìm kiếm: %s"
+
+#: hocwp/inc/template-general.php:131
+msgid "Next Posts"
+msgstr "Bài Tiếp"
+
+#: hocwp/inc/template-general.php:134
+msgid "Previous Posts"
+msgstr "Bài Trước"
+
+#: hocwp/inc/template-general.php:162
+#, php-format
+msgid "%s sec"
+msgstr "%s giây"
+
+#: hocwp/inc/template-post.php:27
 #, php-format
 msgid "0 comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr "0 bình luận<span class=\"screen-reader-text\"> cho %s</span>"
+
+#: hocwp/views/module-comments-area.php:10
+#, php-format
+msgid "One thought on &ldquo;%1$s&rdquo;"
+msgstr "1 bình luận cho &ldquo;%1$s&rdquo;"
+
+#: hocwp/views/module-comments-area.php:16
+#, php-format
+msgid "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr "%1$s bình luận cho &ldquo;%2$s&rdquo;"
+
+#: hocwp/views/module-comments-area.php:39
+msgid "Comments are closed."
+msgstr "Bình luận đã được đóng."
+
+#: hocwp/views/module-comments-area.php:43
+msgid "No comments."
+msgstr "Không có bình luận."
+
+#: hocwp/views/module-comments-area.php:44
+msgid "You can be the first one to leave a comment."
+msgstr "Bạn có thể trở thành người đầu tiên để lại bình luận."
 
 #: inc/template-tags.php:29
 #, php-format
@@ -37,9 +542,19 @@ msgstr "Được đăng trong %s"
 msgid "by %s"
 msgstr "bởi %s"
 
-#: inc/template-tags.php:59
+#: inc/template-tags.php:52 inc/template-tags.php:59
 msgid ", "
 msgstr ", "
+
+#: inc/template-tags.php:55
+#, php-format
+msgid "Posted in %1$s"
+msgstr "Được đăng trong %1$s"
+
+#: inc/template-tags.php:62
+#, php-format
+msgid "Tagged %1$s"
+msgstr "Được gắn thẻ %1$s"
 
 #: inc/template-tags.php:72
 #, php-format
@@ -57,10 +572,79 @@ msgid ""
 "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 msgstr "Sẵn sàng đăng bài viết đầu tiên? <a href=\"%1$s\">Bắt đầu tại đây</a>."
 
+#: template-parts/content-page.php:22 template-parts/content.php:45
+msgid "Pages:"
+msgstr "Trang:"
+
 #: template-parts/content.php:34
 #, php-format
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Xem tiếp %s <span class=\"meta-nav\">&rarr;</span>"
 
-#~ msgid "comment"
-#~ msgstr "bình luận"
+#~ msgid "Recent Posts"
+#~ msgstr "Gần đây"
+
+#~ msgid "Featured Posts"
+#~ msgstr "Nổi bật"
+
+#~ msgid "Recent Modified Posts"
+#~ msgstr "Mới cập nhật"
+
+#~ msgid "Recent Commented Posts"
+#~ msgstr "Mới được bình luận"
+
+#~ msgid "Return"
+#~ msgstr "Trả về"
+
+#~ msgid "Parameters"
+#~ msgstr "Tham số"
+
+#~ msgid "Source"
+#~ msgstr "Nguồn"
+
+#~ msgid "Example"
+#~ msgstr "Ví dụ"
+
+#~ msgid "Footer Widgets"
+#~ msgstr "Hiển thị widget dưới chân trang"
+
+#~ msgid "Footer"
+#~ msgstr "Chân trang"
+
+#~ msgid "modified %s ago"
+#~ msgstr "cập nhật %s trước"
+
+#~ msgid "Show"
+#~ msgstr "Hiển thị"
+
+#~ msgid ""
+#~ "%s. Please ask for our permission before using our content outside our "
+#~ "declared rights."
+#~ msgstr "%s. Xin vui lòng ghi rõ nguồn bài viết khi sao chép."
+
+#~ msgid "Logout"
+#~ msgstr "Thoát"
+
+#~ msgid "Login"
+#~ msgstr "Đăng nhập"
+
+#~ msgid "Scroll down to bottom"
+#~ msgstr "Trượt xuống phía dưới"
+
+#~ msgid "Posts"
+#~ msgstr "Bài viết"
+
+#~ msgid "You can see more details here: %s"
+#~ msgstr "Bạn có thể xem thông tin chi tiết tại: %s"
+
+#~ msgid "%s ago"
+#~ msgstr "%s trước"
+
+#~ msgid "%s minute"
+#~ msgstr "%s phút"
+
+#~ msgid "%s hour"
+#~ msgstr "%s giờ"
+
+#~ msgid "Next"
+#~ msgstr "Tiếp"

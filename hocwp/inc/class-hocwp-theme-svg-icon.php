@@ -3,7 +3,6 @@
 class HOCWP_Theme_SVG_Icon {
 	public static function build( $path_d, $atts = array() ) {
 		$defaults        = array(
-			'role'  => 'icon',
 			'xmlns' => 'http://www.w3.org/2000/svg'
 		);
 		$svg             = new HOCWP_Theme_HTML_Tag( 'svg' );
@@ -15,7 +14,7 @@ class HOCWP_Theme_SVG_Icon {
 		$atts['viewBox'] = $viewbox;
 		unset( $atts['viewbox'], $atts['width'], $atts['height'] );
 		$class         = isset( $atts['class'] ) ? $atts['class'] : '';
-		$atts['class'] = HOCWP_Theme::sanitize_html_class( $class, 'svg-icon' );
+		$atts['class'] = HOCWP_Theme_Sanitize::html_class( $class, 'svg-icon' );
 		$svg->set_attributes( $atts );
 		if ( empty( $path_d ) ) {
 			$path_d = isset( $atts['d'] ) ? $atts['d'] : '';
@@ -53,8 +52,11 @@ class HOCWP_Theme_SVG_Icon {
 	}
 
 	private static function helper( $name, $d, $atts = array() ) {
+		if ( false === strpos( $name, 'icon' ) ) {
+			$name = 'icon-' . str_replace( '_', '-', $name );
+		}
 		$class         = isset( $atts['class'] ) ? $atts['class'] : '';
-		$atts['class'] = HOCWP_Theme::sanitize_html_class( $class, $name );
+		$atts['class'] = HOCWP_Theme_Sanitize::html_class( $class, $name );
 		self::build( $d, $atts );
 		unset( $class );
 	}
@@ -66,18 +68,18 @@ class HOCWP_Theme_SVG_Icon {
 			'height' => 18
 		);
 		$atts     = wp_parse_args( $atts, $defaults );
-		self::helper( 'icon-search', $d, $atts );
+		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d, $defaults );
 	}
 
 	public static function close( $atts = array() ) {
-		$d        = 'M23.179 23.607q0 0.714-0.5 1.214l-2.429 2.429q-0.5 0.5-1.214 0.5t-1.214-0.5l-5.25-5.25-5.25 5.25q-0.5 0.5-1.214 0.5t-1.214-0.5l-2.429-2.429q-0.5-0.5-0.5-1.214t0.5-1.214l5.25-5.25-5.25-5.25q-0.5-0.5-0.5-1.214t0.5-1.214l2.429-2.429q0.5-0.5 1.214-0.5t1.214 0.5l5.25 5.25 5.25-5.25q0.5-0.5 1.214-0.5t1.214 0.5l2.429 2.429q0.5 0.5 0.5 1.214t-0.5 1.214l-5.25 5.25 5.25 5.25q0.5 0.5 0.5 1.214z';
+		$d        = 'M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z';
 		$defaults = array(
-			'width'  => 25,
-			'height' => 32
+			'width'  => 24,
+			'height' => 24
 		);
 		$atts     = wp_parse_args( $atts, $defaults );
-		self::helper( 'icon-close', $d, $atts );
+		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d, $defaults );
 	}
 
@@ -91,7 +93,7 @@ class HOCWP_Theme_SVG_Icon {
 			'height' => 27
 		);
 		$atts     = wp_parse_args( $atts, $defaults );
-		self::helper( 'icon-close', $d, $atts );
+		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d, $defaults );
 	}
 
@@ -102,19 +104,41 @@ class HOCWP_Theme_SVG_Icon {
 			'height' => 32
 		);
 		$atts     = wp_parse_args( $atts, $defaults );
-		self::helper( 'icon-bars', $d, $atts );
+		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d, $defaults );
 	}
 
 	public static function sign_in( $atts = array() ) {
 		$d = 'M1312 896q0 26-19 45l-544 544q-19 19-45 19t-45-19-19-45v-288h-448q-26 0-45-19t-19-45v-384q0-26 19-45t45-19h448v-288q0-26 19-45t45-19 45 19l544 544q19 19 19 45zm352-352v704q0 119-84.5 203.5t-203.5 84.5h-320q-13 0-22.5-9.5t-9.5-22.5q0-4-1-20t-.5-26.5 3-23.5 10-19.5 20.5-6.5h320q66 0 113-47t47-113v-704q0-66-47-113t-113-47h-312l-11.5-1-11.5-3-8-5.5-7-9-2-13.5q0-4-1-20t-.5-26.5 3-23.5 10-19.5 20.5-6.5h320q119 0 203.5 84.5t84.5 203.5z';
-		self::helper( 'icon-sign-in', $d, $atts );
+		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d );
 	}
 
 	public static function sign_out( $atts = array() ) {
 		$d = 'M704 1440q0 4 1 20t.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h320q13 0 22.5 9.5t9.5 22.5q0 4 1 20t.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-66 0-113 47t-47 113v704q0 66 47 113t113 47h312l11.5 1 11.5 3 8 5.5 7 9 2 13.5zm928-544q0 26-19 45l-544 544q-19 19-45 19t-45-19-19-45v-288h-448q-26 0-45-19t-19-45v-384q0-26 19-45t45-19h448v-288q0-26 19-45t45-19 45 19l544 544q19 19 19 45z';
-		self::helper( 'icon-sign-in', $d, $atts );
+		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d );
+	}
+
+	public static function arrow_left( $atts = array() ) {
+		$d        = 'M42.311 14.044c-0.178-0.178-0.533-0.356-0.711-0.356h-33.778l10.311-10.489c0.178-0.178 0.356-0.533 0.356-0.711 0-0.356-0.178-0.533-0.356-0.711l-1.6-1.422c-0.356-0.178-0.533-0.356-0.889-0.356s-0.533 0.178-0.711 0.356l-14.578 14.933c-0.178 0.178-0.356 0.533-0.356 0.711s0.178 0.533 0.356 0.711l14.756 14.933c0 0.178 0.356 0.356 0.533 0.356s0.533-0.178 0.711-0.356l1.6-1.6c0.178-0.178 0.356-0.533 0.356-0.711s-0.178-0.533-0.356-0.711l-10.311-10.489h33.778c0.178 0 0.533-0.178 0.711-0.356 0.356-0.178 0.533-0.356 0.533-0.711v-2.133c0-0.356-0.178-0.711-0.356-0.889z';
+		$defaults = array(
+			'width'  => 43,
+			'height' => 32
+		);
+		$atts     = wp_parse_args( $atts, $defaults );
+		self::helper( __FUNCTION__, $d, $atts );
+		unset( $d, $defaults );
+	}
+
+	public static function arrow_right( $atts = array() ) {
+		$d        = 'M0.356 17.956c0.178 0.178 0.533 0.356 0.711 0.356h33.778l-10.311 10.489c-0.178 0.178-0.356 0.533-0.356 0.711 0 0.356 0.178 0.533 0.356 0.711l1.6 1.6c0.178 0.178 0.533 0.356 0.711 0.356s0.533-0.178 0.711-0.356l14.756-14.933c0.178-0.356 0.356-0.711 0.356-0.889s-0.178-0.533-0.356-0.711l-14.756-14.933c0-0.178-0.356-0.356-0.533-0.356s-0.533 0.178-0.711 0.356l-1.6 1.6c-0.178 0.178-0.356 0.533-0.356 0.711s0.178 0.533 0.356 0.711l10.311 10.489h-33.778c-0.178 0-0.533 0.178-0.711 0.356-0.356 0.178-0.533 0.356-0.533 0.711v2.311c0 0.178 0.178 0.533 0.356 0.711z';
+		$defaults = array(
+			'width'  => 43,
+			'height' => 32
+		);
+		$atts     = wp_parse_args( $atts, $defaults );
+		self::helper( __FUNCTION__, $d, $atts );
+		unset( $d, $defaults );
 	}
 }

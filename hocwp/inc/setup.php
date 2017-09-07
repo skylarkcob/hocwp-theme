@@ -32,4 +32,18 @@ function hocwp_theme_wp_loaded_action() {
 	}
 }
 
-add_action( 'wp_loaded', 'hocwp_theme_wp_loaded_action' );
+add_action( 'after_setup_theme', 'hocwp_theme_wp_loaded_action' );
+
+function hocwp_theme_update_comment_blacklist_keys() {
+	$blacklist_keys = $GLOBALS['hocwp_theme']->defaults['blacklist_keys'];
+	$keys           = get_option( 'blacklist_keys' );
+	$keys           = explode( ' ', $keys );
+	$blacklist_keys = array_merge( $keys, $blacklist_keys );
+	$blacklist_keys = array_filter( $blacklist_keys );
+	$blacklist_keys = array_unique( $blacklist_keys );
+	$blacklist_keys = array_map( 'trim', $blacklist_keys );
+	update_option( 'blacklist_keys', implode( "\n", $blacklist_keys ) );
+}
+
+add_action( 'hocwp_theme_activation', 'hocwp_theme_update_comment_blacklist_keys' );
+add_action( 'hocwp_theme_upgrade_new_version', 'hocwp_theme_update_comment_blacklist_keys' );

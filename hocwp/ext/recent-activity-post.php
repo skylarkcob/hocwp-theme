@@ -1,4 +1,13 @@
 <?php
+/*
+ * Name: Recent Activity Posts
+ * Description: Tracking recent activity posts on your site.
+ */
+$load = apply_filters( 'hocwp_theme_load_extension_recent_activity_post', hocwp_theme_is_extension_active( __FILE__ ) );
+if ( ! $load ) {
+	return;
+}
+
 function hocwp_recent_activity_save_post_action( $post_id, $post ) {
 	$date   = strtotime( $post->post_date_gmt );
 	$update = strtotime( $post->post_modified_gmt );

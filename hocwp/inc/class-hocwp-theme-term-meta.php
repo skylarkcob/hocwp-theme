@@ -28,7 +28,7 @@ final class HOCWP_Theme_Term_Meta extends HOCWP_Theme_Meta {
 	public function add_form_fields_callback( $taxonomy ) {
 		$callback     = $this->args['callback'];
 		$add_callback = isset( $callback['add'] ) ? $callback['add'] : '';
-		if ( HOCWP_Theme::callback_exists( $add_callback ) ) {
+		if ( is_callable( $add_callback ) ) {
 			call_user_func( $add_callback, $taxonomy );
 		} else {
 			foreach ( $this->fields as $field ) {

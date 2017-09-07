@@ -10,6 +10,33 @@ function hocwp_theme_body_class_filter( $classes ) {
 			$classes[] = sanitize_html_class( 'theme-' . $theme->get( 'Name' ) );
 		}
 	}
+	if ( isset( $GLOBALS['is_iphone'] ) && $GLOBALS['is_iphone'] ) {
+		$classes[] = 'iphone';
+	} elseif ( isset( $GLOBALS['is_opera'] ) && $GLOBALS['is_opera'] ) {
+		$classes[] = 'opera';
+	} elseif ( isset( $GLOBALS['is_chrome'] ) && $GLOBALS['is_chrome'] ) {
+		$classes[] = 'chrome';
+	} elseif ( isset( $GLOBALS['is_edge'] ) && $GLOBALS['is_edge'] ) {
+		$classes[] = 'edge';
+	} elseif ( isset( $GLOBALS['is_safari'] ) && $GLOBALS['is_safari'] ) {
+		$classes[] = 'safari';
+	} elseif ( isset( $GLOBALS['is_NS4'] ) && $GLOBALS['is_NS4'] ) {
+		$classes[] = 'ns4';
+	} elseif ( isset( $GLOBALS['is_macIE'] ) && $GLOBALS['is_macIE'] ) {
+		$classes[] = 'macie';
+	} elseif ( isset( $GLOBALS['is_winIE'] ) && $GLOBALS['is_winIE'] ) {
+		$classes[] = 'winie';
+	} elseif ( isset( $GLOBALS['is_gecko'] ) && $GLOBALS['is_gecko'] ) {
+		$classes[] = 'gecko';
+		$classes[] = 'firefox';
+	} elseif ( isset( $GLOBALS['is_lynx'] ) && $GLOBALS['is_lynx'] ) {
+		$classes[] = 'lynx';
+	} elseif ( isset( $GLOBALS['is_IE'] ) && $GLOBALS['is_IE'] ) {
+		$classes[] = 'ie';
+	}
+	if ( wp_is_mobile() ) {
+		$classes[] = 'mobile';
+	}
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 

@@ -1,0 +1,26 @@
+.hocwp-theme.ajax-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 999999;
+}
+
+.hocwp-theme.ajax-overlay img {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 5px;
+    display: block;
+    height: auto;
+    left: 50%;
+    max-height: 48px;
+    max-width: 48px;
+    padding: 10px;
+    position: relative;
+    top: 50%;
+    width: auto;
+}

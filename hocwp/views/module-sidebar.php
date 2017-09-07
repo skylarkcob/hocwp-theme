@@ -4,6 +4,6 @@ if ( ! is_active_sidebar( $sidebar ) ) {
 	return;
 }
 ?>
-<aside id="secondary" class="widget-area <?php echo sanitize_html_class( $sidebar ); ?>" role="complementary">
+<aside id="secondary" class="widget-area <?php echo sanitize_html_class( $sidebar ); ?>">
 	<?php dynamic_sidebar( $sidebar ); ?>
 </aside><!-- #secondary -->

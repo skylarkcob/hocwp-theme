@@ -23,6 +23,20 @@ class HOCWP_Theme {
 		return false;
 	}
 
+	public static function array_merge_recursive( array $array1, array $array2 ) {
+		$merged = $array1;
+
+		foreach ( $array2 as $key => &$value ) {
+			if ( is_array( $value ) && isset ( $merged [ $key ] ) && is_array( $merged [ $key ] ) ) {
+				$merged [ $key ] = self::array_merge_recursive( $merged [ $key ], $value );
+			} else {
+				$merged [ $key ] = $value;
+			}
+		}
+
+		return $merged;
+	}
+
 	public static function require_if_exists( $file, $require_once = false ) {
 		if ( file_exists( $file ) ) {
 			if ( $require_once ) {
@@ -46,23 +60,6 @@ class HOCWP_Theme {
 		}
 
 		return '#' . $part;
-	}
-
-	public static function callback_exists( $callback ) {
-		if ( empty( $callback ) || ( ! is_array( $callback ) && ! function_exists( $callback ) ) ) {
-			return false;
-		}
-		if ( ( is_array( $callback ) && count( $callback ) != 2 ) ) {
-			return false;
-		}
-		if ( ( is_array( $callback ) && ! method_exists( $callback[0], $callback[1] ) ) ) {
-			return false;
-		}
-		if ( ! is_callable( $callback ) ) {
-			return false;
-		}
-
-		return true;
 	}
 
 	public static function change_html_attribute( $tag, $attr, $value ) {
@@ -93,42 +90,107 @@ class HOCWP_Theme {
 		return $atts;
 	}
 
-	public static function sanitize_extension( $file, $extension ) {
-		$extension = trim( $extension, '' );
-		$extension = trim( $extension, '.' );
-		$parts     = pathinfo( $file );
-		if ( ! isset( $parts['extension'] ) || $extension != $parts['extension'] ) {
-			$file .= '.' . $extension;
+	public static function json_string_to_array( $json_string ) {
+		if ( ! is_array( $json_string ) ) {
+			$json_string = stripslashes( $json_string );
+			$json_string = json_decode( $json_string, true );
 		}
+		$json_string = (array) $json_string;
 
-		return $file;
+		return $json_string;
 	}
 
-	public static function sanitize_prefix( $string, $prefix, $sep = '-' ) {
-		$pre_len = mb_strlen( $prefix );
-		$sub     = mb_substr( $string, 0, $pre_len );
-		if ( $prefix != $sub ) {
-			$string = $prefix . $sep . $string;
+	public static function url_exists( $url ) {
+		if ( ! class_exists( 'WP_Filesystem_Direct' ) ) {
+			require ABSPATH . 'wp-includes/class-wp-error.php';
+			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+		}
+		$file = new WP_Filesystem_Direct( null );
+		if ( empty( $file->get_contents( $url ) ) ) {
+			return false;
 		}
 
-		return $string;
+		return true;
 	}
 
-	public static function sanitize_html_class( $classes, $add = '' ) {
-		if ( ! is_array( $classes ) ) {
-			$classes = explode( ' ', $classes );
+	public static function is_image_url( $url ) {
+		$img_formats = array( 'png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'ico' );
+		$path_info   = pathinfo( $url );
+		$extension   = isset( $path_info['extension'] ) ? $path_info['extension'] : '';
+		$extension   = trim( strtolower( $extension ) );
+		if ( in_array( $extension, $img_formats ) ) {
+			return true;
 		}
-		if ( ! empty( $add ) ) {
-			if ( is_array( $add ) ) {
-				$classes = wp_parse_args( $classes, $add );
-			} elseif ( ! in_array( $add, $classes ) ) {
-				$classes[] = $add;
+
+		return false;
+	}
+
+	public static function is_image( $url, $id = 0 ) {
+		$result = false;
+		if ( self::is_positive_number( $id ) ) {
+			$result = wp_attachment_is_image( $id );
+		}
+		if ( ! $result && ! empty( $url ) ) {
+			$result = self::is_image_url( $url );
+		}
+
+		return $result;
+	}
+
+	public static function get_first_image_source( $content ) {
+		$doc = new DOMDocument();
+		@$doc->loadHTML( $content );
+		$xpath = new DOMXPath( $doc );
+		$src   = $xpath->evaluate( 'string(//img/@src)' );
+		unset( $doc, $xpath );
+
+		return $src;
+	}
+
+	public static function get_all_image_from_string( $data, $output = 'img' ) {
+		$output = trim( $output );
+		preg_match_all( '/<img[^>]+>/i', $data, $matches );
+		$matches = isset( $matches[0] ) ? $matches[0] : array();
+		if ( ! self::array_has_value( $matches ) && ! empty( $data ) ) {
+			if ( false !== strpos( $data, '//' ) && ( false !== strpos( $data, '.jpg' ) || false !== strpos( $data, '.png' ) || false !== strpos( $data, '.gif' ) ) ) {
+				$sources = explode( PHP_EOL, $data );
+				if ( self::array_has_value( $sources ) ) {
+					foreach ( $sources as $src ) {
+						if ( self::is_image_url( $src ) ) {
+							if ( 'img' == $output ) {
+								$matches[] = '<img src="' . $src . '" alt="">';
+							} else {
+								$matches[] = $src;
+							}
+						}
+					}
+
+				}
 			}
+		} elseif ( 'img' != $output && self::array_has_value( $matches ) ) {
+			$tmp = array();
+			foreach ( $matches as $img ) {
+				$src   = self::get_first_image_source( $img );
+				$tmp[] = $img;
+			}
+			$matches = $tmp;
 		}
-		$classes = array_unique( $classes );
-		$classes = array_filter( $classes );
-		$classes = array_map( 'sanitize_html_class', $classes );
 
-		return implode( ' ', $classes );
+		return $matches;
+	}
+
+	public static function get_domain_name( $url ) {
+		if ( ! is_string( $url ) || empty( $url ) ) {
+			return '';
+		}
+		if ( false === strpos( $url, 'http://' ) && false === strpos( $url, 'https://' ) ) {
+			$url = 'http://' . $url;
+		}
+		$url   = strval( $url );
+		$parse = parse_url( $url );
+		$result = isset( $parse['host'] ) ? $parse['host'] : '';
+
+		return $result;
 	}
 }

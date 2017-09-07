@@ -38,3 +38,12 @@ function hocwp_theme_comments_popup_link() {
 		unset( $class );
 	}
 }
+
+function hocwp_theme_post_thumbnail() {
+	if ( has_post_thumbnail() ) {
+		the_post_thumbnail();
+	} else {
+		do_action( 'hocwp_theme_post_thumbnail_default' );
+	}
+	do_action( 'hocwp_theme_post_thumbnail' );
+}

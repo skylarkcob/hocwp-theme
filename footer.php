@@ -13,7 +13,7 @@
 
 	</div><!-- #content -->
 
-	<footer id="colophon" class="site-footer" role="contentinfo">
+	<footer id="colophon" class="site-footer">
 		<?php do_action('hocwp_theme_module_site_footer'); ?>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
