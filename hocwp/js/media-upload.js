@@ -1,0 +1,78 @@
+window.wp = window.wp || {};
+window.hocwpThemeMediaUpload = window.hocwpThemeMediaUpload || {};
+jQuery(document).ready(function ($) {
+    var body = $("body"), frame = null;
+
+    function hocwpThemeUCWords(str) {
+        return str.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
+
+    body.on("click", ".hocwp-theme .select-media", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (frame) {
+            frame.open();
+        } else {
+            var element = $(this),
+                title = $.trim(element.attr("data-title")) || hocwpThemeMediaUpload.l10n.title,
+                buttonText = $.trim(element.attr("data-button-text")) || hocwpThemeMediaUpload.l10n.buttonText,
+                multiple = Boolean(parseInt(element.attr("data-multiple")) || parseInt(hocwpThemeMediaUpload.multiple)),
+                media_type = $.trim(element.attr("data-media-type")) || "image";
+            title = title.replace("%s", hocwpThemeUCWords(media_type));
+            buttonText = buttonText.replace("%s", media_type);
+            frame = wp.media({
+                title: title,
+                button: {
+                    text: buttonText
+                },
+                multiple: multiple,
+                library: {
+                    type: media_type
+                }
+            });
+            frame.on("select", function () {
+                var items = frame.state().get("selection"),
+                    container = element.closest("div");
+                if (multiple) {
+
+                } else {
+                    var item = items.first().toJSON();
+                    if (item) {
+                        var image = document.createElement("img");
+                        image.setAttribute("src", item.url);
+                        image.setAttribute("alt", item.alt);
+                        image.setAttribute("width", item.width);
+                        image.setAttribute("height", item.height);
+                        container.find("input").val(item.id);
+                        element.html(image);
+                        if (!element.hasClass("has-media")) {
+                            var description = hocwpThemeMediaUpload.updateImageDescription,
+                                removeButton = hocwpThemeMediaUpload.removeImageButton;
+                            description = description.replace("%s", media_type);
+                            removeButton = removeButton.replace("%s", media_type);
+                            $(description).insertAfter(container.find(".hide-if-no-js"));
+                            $(removeButton).insertAfter(container.find(".hide-if-no-js").last());
+                            element.addClass("has-media");
+                        }
+                    }
+                }
+            });
+            frame.open();
+        }
+    });
+
+    body.on("click", ".hocwp-theme .remove-media", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var element = $(this),
+            container = element.closest("div"),
+            selectMedia = container.find(".select-media");
+        selectMedia.html(selectMedia.attr("data-text"));
+        selectMedia.removeClass("has-media");
+        element.parent().remove();
+        container.find(".howto").remove();
+        container.find("input").val("");
+    });
+});

@@ -10,6 +10,7 @@ final class HOCWP_Theme_HTML_Tag {
 	protected $close = true;
 	protected $only_text = false;
 	protected $wrap_tag = '';
+	protected $parent;
 
 	public function set_name( $name ) {
 		$this->name = strtolower( $name );
@@ -23,8 +24,22 @@ final class HOCWP_Theme_HTML_Tag {
 		return array_key_exists( $attribute_name, $this->attributes );
 	}
 
-	public function add_attribute( $attribute_name, $value ) {
-		$this->attributes[ $attribute_name ] = $value;
+	public function add_attribute( $attribute_name, $value = null ) {
+		if ( ! is_array( $this->attributes ) ) {
+			$this->attributes = array();
+		}
+		if ( null === $value || is_array( $attribute_name ) ) {
+			if ( is_array( $attribute_name ) ) {
+				$atts = $attribute_name;
+			} else {
+				$atts = HOCWP_Theme::attribute_to_array( $attribute_name );
+			}
+			foreach ( $atts as $key => $value ) {
+				$this->add_attribute( $key, $value );
+			}
+		} else {
+			$this->attributes[ $attribute_name ] = $value;
+		}
 	}
 
 	public function get_attribute( $attribute_name ) {
@@ -42,7 +57,9 @@ final class HOCWP_Theme_HTML_Tag {
 	}
 
 	public function set_attributes( $attributes ) {
-		$this->attributes = $attributes;
+		if ( is_array( $attributes ) ) {
+			$this->attributes = $attributes;
+		}
 	}
 
 	public function get_attributes() {
@@ -101,6 +118,10 @@ final class HOCWP_Theme_HTML_Tag {
 		return $this->wrap_tag;
 	}
 
+	public function set_parent( HOCWP_Theme_HTML_Tag $parent ) {
+		$this->parent = $parent;
+	}
+
 	public function __construct( $name ) {
 		$this->set_name( $name );
 	}
@@ -136,7 +157,12 @@ final class HOCWP_Theme_HTML_Tag {
 	}
 
 	public function output() {
-		$html = $this->build();
+		if ( $this->parent instanceof HOCWP_Theme_HTML_Tag ) {
+			$this->parent->set_text( $this );
+			$html = $this->parent->build();
+		} else {
+			$html = $this->build();
+		}
 		if ( $this->get_break_line() ) {
 			$html .= PHP_EOL;
 		}

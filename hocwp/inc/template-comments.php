@@ -24,9 +24,11 @@ function hocwp_theme_change_default_avatar( $avatar, $id_or_email, $size, $defau
 add_filter( 'get_avatar', 'hocwp_theme_change_default_avatar', 10, 6 );
 
 function hocwp_theme_comments_template( $args = array() ) {
+	global $hocwp_theme;
+	$options  = $hocwp_theme->options;
 	$defaults = array(
 		'post_id'        => get_the_ID(),
-		'comment_system' => 'default',
+		'comment_system' => $options['discussion']['comment_system'],
 		'tabs'           => array(
 			array(
 				'href' => 'facebook',
@@ -46,16 +48,19 @@ function hocwp_theme_comments_template( $args = array() ) {
 			)
 		)
 	);
-	$post_id  = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+	$args     = wp_parse_args( $args, $defaults );
+	$post_id  = $args['post_id'];
 	$obj      = get_post( $post_id );
 	if ( ! ( $obj instanceof WP_Post ) ) {
 		return;
 	}
 	if ( comments_open( $post_id ) || get_comments_number( $post_id ) ) {
+		$comment_system = $args['comment_system'];
 		switch ( $comment_system ) {
 			case 'tabber':
 				break;
 			case 'facebook':
+				hocwp_theme_comments_template_facebook( $args );
 				break;
 			case 'gplus':
 			case 'google':
@@ -69,6 +74,7 @@ function hocwp_theme_comments_template( $args = array() ) {
 }
 
 function hocwp_theme_comments_template_facebook( $args = array() ) {
+	add_filter( 'hocwp_theme_load_facebook_sdk_javascript', '__return_true' );
 	$defaults    = array(
 		'colorscheme'  => 'light',
 		'href'         => '',

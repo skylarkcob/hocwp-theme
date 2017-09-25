@@ -1,6 +1,6 @@
 <?php
 function hocwp_theme_settings_page_extension_tab( $tabs ) {
-	$tabs['extension'] = __( 'Extension', 'hocwp-theme' );
+	$tabs['extension'] = __( 'Extensions', 'hocwp-theme' );
 
 	return $tabs;
 }

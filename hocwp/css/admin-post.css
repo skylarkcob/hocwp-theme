@@ -1,0 +1,7 @@
+.postbox-container .meta-row label + .widefat {
+    margin-top: 4px;
+}
+
+.postbox-container .meta-row:not(:last-child) {
+    margin-bottom: 15px;
+}

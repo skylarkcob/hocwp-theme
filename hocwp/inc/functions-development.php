@@ -192,7 +192,9 @@ function hocwp_theme_execute_development_ajax_callback() {
 	wp_send_json( $result );
 }
 
-add_action( 'wp_ajax_hocwp_theme_execute_development', 'hocwp_theme_execute_development_ajax_callback' );
+if ( is_admin() ) {
+	add_action( 'wp_ajax_hocwp_theme_execute_development', 'hocwp_theme_execute_development_ajax_callback' );
+}
 
 function hocwp_theme_debug_save_queries() {
 	if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES && current_user_can( 'administrator' ) ) {
@@ -206,5 +208,96 @@ function hocwp_theme_debug_save_queries() {
 	}
 }
 
-add_action( 'admin_footer', 'hocwp_theme_debug_save_queries', 9999 );
+if ( is_admin() ) {
+	add_action( 'admin_footer', 'hocwp_theme_debug_save_queries', 9999 );
+}
 add_action( 'wp_footer', 'hocwp_theme_debug_save_queries', 9999 );
+
+function hocwp_theme_dev_global_scripts() {
+	$domain = HOCWP_Theme::get_domain_name( home_url(), true );
+	if ( 'localhost' == $domain ) {
+		wp_enqueue_script( 'taking-breaks', HOCWP_THEME_CORE_URL . '/js/taking-breaks' . HOCWP_THEME_JS_SUFFIX, array(
+			'jquery',
+			'hocwp-theme'
+		), false, true );
+	}
+}
+
+add_action( 'hocwp_theme_global_enqueue_scripts', 'hocwp_theme_dev_global_scripts' );
+
+function hocwp_theme_dev_taking_breaks_ajax_callback() {
+	$result = array(
+		'taking_break' => false,
+		'message'      => ''
+	);
+	$tb     = 'hocwp_theme_dev_taking_breaks';
+	if ( false === get_transient( $tb ) ) {
+		$tr_name   = 'hocwp_theme_dev_taking_breaks_timestamp';
+		$timestamp = get_transient( $tr_name );
+		$current   = time();
+		if ( false === $timestamp ) {
+			delete_transient( $tb );
+			set_transient( $tr_name, $current );
+		} else {
+			$diff = absint( $current - $timestamp );
+
+			$result['diff'] = $diff;
+			$diff /= MINUTE_IN_SECONDS;
+			$interval = 25;
+			if ( $interval <= $diff ) {
+				$result['taking_break'] = true;
+
+				$count = absint( get_transient( 'hocwp_theme_dev_taking_breaks_count' ) );
+				$count ++;
+				$minute = 5;
+				if ( 4 == $count ) {
+					$minute = 15;
+					$count  = 0;
+				}
+				set_transient( 'hocwp_theme_dev_taking_breaks_count', $count );
+				set_transient( $tb, $minute, $minute * MINUTE_IN_SECONDS );
+			} elseif ( ( $interval - 5 ) <= $diff ) {
+				$result['message'] = __( 'You will take a break for the next 5 minutes.', 'hocwp-theme' );
+			}
+		}
+	} else {
+		$result['taking_break'] = true;
+	}
+	wp_send_json( $result );
+}
+
+add_action( 'wp_ajax_hocwp_theme_dev_taking_breaks', 'hocwp_theme_dev_taking_breaks_ajax_callback' );
+add_action( 'wp_ajax_nopriv_hocwp_theme_dev_taking_breaks', 'hocwp_theme_dev_taking_breaks_ajax_callback' );
+
+function hocwp_theme_dev_init_action() {
+	if ( ! is_admin() ) {
+		$tr_name = 'hocwp_theme_dev_taking_breaks';
+		if ( false !== ( $minute = get_transient( $tr_name ) ) ) {
+			if ( ! wp_doing_ajax() && ! wp_doing_cron() ) {
+				delete_transient( 'hocwp_theme_dev_taking_breaks_timestamp' );
+				$minute  = absint( $minute );
+				$message = sprintf( __( 'You should take a break and relax for %d minutes.', 'hocwp-theme' ), $minute );
+				$message .= '<script>setInterval(function(){window.location.href = window.location.href;},5e3);</script>';
+				$title = __( 'Taking Beaks', 'hocwp-theme' );
+				if ( 15 <= $minute ) {
+					$title = __( 'Taking Long Breaks', 'hocwp-theme' );
+				}
+				wp_die( $message, $title );
+				exit;
+			}
+		}
+	}
+}
+
+//add_action( 'init', 'hocwp_theme_dev_init_action' );
+
+function hocwp_theme_dev_remove_url_ver( $src ) {
+	if ( strpos( $src, 'ver=' ) ) {
+		$src = remove_query_arg( 'ver', $src );
+	}
+
+	return $src;
+}
+
+add_filter( 'style_loader_src', 'hocwp_theme_dev_remove_url_ver', 9999 );
+add_filter( 'script_loader_src', 'hocwp_theme_dev_remove_url_ver', 9999 );

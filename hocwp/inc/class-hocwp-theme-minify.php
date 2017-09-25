@@ -89,7 +89,7 @@ class HOCWP_Theme_Minify {
 		if ( is_readable( $content ) ) {
 			$content = $filesystem->get_contents( $content );
 		}
-		$params   = array(
+		$params = array(
 			'method'      => 'POST',
 			'timeout'     => 45,
 			'redirection' => 5,
@@ -99,10 +99,12 @@ class HOCWP_Theme_Minify {
 			'body'        => array( 'input' => $content ),
 			'cookies'     => array()
 		);
-		$resp     = wp_remote_post( $url, $params );
-		$minified = isset( $resp['body'] ) ? $resp['body'] : '';
+		$resp   = wp_remote_post( $url, $params );
+		if ( ! is_wp_error( $resp ) ) {
+			$content = wp_remote_retrieve_body( $resp );
+		}
 
-		return $minified;
+		return $content;
 	}
 
 	public static function generate( $file ) {

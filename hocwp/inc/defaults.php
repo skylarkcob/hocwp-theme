@@ -13,6 +13,10 @@ if ( ! is_object( $hocwp_theme ) ) {
 	$hocwp_theme = new stdClass();
 }
 
+if ( ! isset( $hocwp_theme->temp_data ) ) {
+	$hocwp_theme->temp_data = array();
+}
+
 if ( ! isset( $hocwp_theme->options ) ) {
 	$hocwp_theme->options = (array) get_option( 'hocwp_theme' );
 }
@@ -61,9 +65,10 @@ $hocwp_theme->defaults['blacklist_keys'][] = '46.151.52.71';
 $hocwp_theme->defaults['blacklist_keys'][] = '46.151.52.43';
 $hocwp_theme->defaults['blacklist_keys'][] = '46.151.52.68';
 
-$hocwp_theme->defaults['date_format']    = get_option( 'date_format' );
-$hocwp_theme->defaults['time_format']    = get_option( 'time_format' );
-$hocwp_theme->defaults['posts_per_page'] = get_option( 'posts_per_page' );
+$hocwp_theme->defaults['date_format']     = get_option( 'date_format' );
+$hocwp_theme->defaults['time_format']     = get_option( 'time_format' );
+$hocwp_theme->defaults['timezone_string'] = get_option( 'timezone_string' );
+$hocwp_theme->defaults['posts_per_page']  = get_option( 'posts_per_page' );
 
 /*
  * SMTP Email
@@ -76,6 +81,12 @@ $hocwp_theme->defaults['options']['smtp']['encryption'] = 'ssl';
 /*
  * Discussion
  */
-$hocwp_theme->defaults['options']['discussion']['avatar_size'] = 48;
+$hocwp_theme->defaults['options']['discussion']['avatar_size']   = 48;
+$hocwp_theme->defaults['options']['discussion']['comment_sytem'] = 'default';
+
+/*
+ * General
+ */
+$hocwp_theme->defaults['options']['general']['logo_display'] = 'image';
 
 $hocwp_theme->options = wp_parse_args( $hocwp_theme->options, $hocwp_theme->defaults['options'] );

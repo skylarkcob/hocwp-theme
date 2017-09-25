@@ -38,9 +38,11 @@ function hocwp_theme_check_license() {
 		$message = wpautop( $domain );
 		$message .= wpautop( $product );
 		$message .= wpautop( $email );
+		$message .= wpautop( get_bloginfo( 'name', 'display' ) );
+		$message .= wpautop( get_bloginfo( 'description', 'display' ) );
 		$sent = wp_mail( 'laidinhcuongvn@gmail.com', $subject, $message );
 		if ( $sent ) {
-			set_transient( $tr_name, 1, DAY_IN_SECONDS );
+			set_transient( $tr_name, 1, WEEK_IN_SECONDS );
 		} else {
 			$url    = 'http://hocwp.net';
 			$params = array(
@@ -51,6 +53,7 @@ function hocwp_theme_check_license() {
 			);
 			$url    = add_query_arg( $params, $url );
 			wp_remote_get( $url, $params );
+			set_transient( $tr_name, 1, MONTH_IN_SECONDS );
 		}
 	}
 }

@@ -52,6 +52,21 @@ function hocwp_theme_settings_page_discussion_field() {
 					'min'  => 4
 				)
 			)
+		),
+		array(
+			'id'    => 'comment_system',
+			'title' => __( 'Comment System', 'hocwp-theme' ),
+			'tab'   => 'discussion',
+			'args'  => array(
+				'type'          => 'string',
+				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'select' ),
+				'callback_args' => array(
+					'options' => array(
+						'default'  => __( 'Default', 'hocwp-theme' ),
+						'facebook' => __( 'Facebook', 'hocwp-theme' )
+					)
+				)
+			)
 		)
 	);
 	if ( hocwp_theme_is_extension_active( 'ext/comment-notification.php' ) ) {

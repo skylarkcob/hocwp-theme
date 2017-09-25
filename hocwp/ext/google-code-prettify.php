@@ -15,7 +15,7 @@ function hocwp_theme_gcp_admin_notices_action() {
 add_action( 'admin_notices', 'hocwp_theme_gcp_admin_notices_action' );
 
 function hocwp_theme_gcp_wp_enqueue_scripts_action() {
-	wp_enqueue_script( 'google-code-prettify', 'https://rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true&amp;skin=desert', array(), false, true );
+	wp_enqueue_script( 'google-code-prettify', 'https://rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true&skin=desert', array(), false, true );
 }
 
 add_action( 'wp_enqueue_scripts', 'hocwp_theme_gcp_wp_enqueue_scripts_action' );

@@ -1,6 +1,10 @@
 <?php
 
 class HOCWP_Theme {
+	public static function wrap_text( $text, $before, $after ) {
+		return $before . $text . $after;
+	}
+
 	public static function array_has_value( $arr ) {
 		return ( is_array( $arr ) && count( $arr ) > 0 );
 	}
@@ -90,6 +94,21 @@ class HOCWP_Theme {
 		return $atts;
 	}
 
+	public static function attribute_to_array( $attr ) {
+		if ( ! empty( $attr ) ) {
+			if ( ! is_array( $attr ) ) {
+				$x    = (array) new SimpleXMLElement( "<element $attr />" );
+				$attr = current( $x );
+
+				return $attr;
+			}
+
+			return $attr;
+		}
+
+		return array();
+	}
+
 	public static function json_string_to_array( $json_string ) {
 		if ( ! is_array( $json_string ) ) {
 			$json_string = stripslashes( $json_string );
@@ -98,6 +117,70 @@ class HOCWP_Theme {
 		$json_string = (array) $json_string;
 
 		return $json_string;
+	}
+
+	public static function javascript_datetime_format( $php_format ) {
+		$matched_symbols = array(
+			'd' => 'dd',
+			'D' => 'D',
+			'j' => 'd',
+			'l' => 'DD',
+			'N' => '',
+			'S' => '',
+			'w' => '',
+			'z' => 'o',
+			'W' => '',
+			'F' => 'MM',
+			'm' => 'mm',
+			'M' => 'M',
+			'n' => 'm',
+			't' => '',
+			'L' => '',
+			'o' => '',
+			'Y' => 'yy',
+			'y' => 'y',
+			'a' => '',
+			'A' => '',
+			'B' => '',
+			'g' => '',
+			'G' => '',
+			'h' => '',
+			'H' => '',
+			'i' => '',
+			's' => '',
+			'u' => ''
+		);
+
+		$result   = '';
+		$escaping = false;
+		for ( $i = 0; $i < strlen( $php_format ); $i ++ ) {
+			$char = $php_format[ $i ];
+			if ( isset( $matched_symbols[ $char ] ) ) {
+				$result .= $matched_symbols[ $char ];
+			} else {
+				$result .= $char;
+			}
+		}
+		if ( $escaping ) {
+			$result = esc_attr( $result );
+		}
+
+		return $result;
+	}
+
+	public static function is_IP( $IP ) {
+		return filter_var( $IP, FILTER_VALIDATE_IP );
+	}
+
+	public static function get_IP() {
+		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && self::is_IP( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			return $_SERVER['HTTP_CLIENT_IP'];
+		}
+		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && self::is_IP( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+
+		return isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
 	}
 
 	public static function url_exists( $url ) {
@@ -180,17 +263,34 @@ class HOCWP_Theme {
 		return $matches;
 	}
 
-	public static function get_domain_name( $url ) {
+	public static function get_domain_name( $url, $root = false ) {
 		if ( ! is_string( $url ) || empty( $url ) ) {
 			return '';
 		}
 		if ( false === strpos( $url, 'http://' ) && false === strpos( $url, 'https://' ) ) {
 			$url = 'http://' . $url;
 		}
-		$url   = strval( $url );
-		$parse = parse_url( $url );
+		$url    = strval( $url );
+		$parse  = parse_url( $url );
 		$result = isset( $parse['host'] ) ? $parse['host'] : '';
+		if ( $root && ! self::is_IP( $result ) ) {
+			$tmp = explode( '.', $result );
+			while ( count( $tmp ) > 2 ) {
+				array_shift( $tmp );
+			}
+			$result = implode( '.', $tmp );
+		}
 
 		return $result;
+	}
+
+	public static function transmit( &$value, &$another ) {
+		if ( $value != $another ) {
+			if ( empty( $value ) && ! empty( $another ) ) {
+				$value = $another;
+			} elseif ( empty( $another ) && ! empty( $value ) ) {
+				$another = $value;
+			}
+		}
 	}
 }

@@ -88,8 +88,8 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			'total_items' => $total_this_page,
 			'per_page'    => $extensions_per_page,
 		) );
-		$columns = $this->get_columns();
-		$hidden  = get_hidden_columns( $screen );
+		$columns               = $this->get_columns();
+		$hidden                = get_hidden_columns( $screen );
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 	}
@@ -103,13 +103,22 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			'Description' => 'Description'
 		);
 		$extensions = array();
-		foreach ( $files as $file ) {
+		foreach ( $files as $key => $file ) {
 			if ( '.' != $file && '..' != $file ) {
 				$file = trailingslashit( $path ) . $file;
+
+				$files[ $key ] = $file;
+			}
+		}
+		$files = apply_filters( 'hocwp_theme_extensions_files', $files );
+		sort( $files );
+		foreach ( $files as $file ) {
+			if ( '.' != $file && '..' != $file ) {
 				if ( is_readable( $file ) ) {
 					$data = get_file_data( $file, $headers );
 					if ( ! empty( $data['Name'] ) ) {
-						$data['dir']         = $file;
+						$data['dir'] = $file;
+
 						$extensions[ $file ] = $data;
 					}
 				}
@@ -230,9 +239,9 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 		);
 		$is_active = hocwp_theme_is_extension_active( $extension_file );
 		if ( $is_active ) {
-			$actions['deactivate'] = '<a href="' . wp_nonce_url( 'themes.php?page=hocwp_theme&tab=extension&action=deactivate&amp;extension=' . $extension_file . '&amp;extension_status=' . $context . '&amp;paged=' . $page . '&amp;s=' . $s, 'deactivate-extension_' . $extension_file ) . '" aria-label="' . esc_attr( sprintf( _x( 'Deactivate %s', 'hocwp theme extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Deactivate', 'hocwp-theme' ) . '</a>';
+			$actions['deactivate'] = '<a href="' . wp_nonce_url( 'themes.php?page=hocwp_theme&tab=extension&action=deactivate&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s, 'deactivate-extension_' . $extension_file ) . '" aria-label="' . esc_attr( sprintf( _x( 'Deactivate %s', 'hocwp theme extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Deactivate', 'hocwp-theme' ) . '</a>';
 		} else {
-			$actions['activate'] = '<a href="' . wp_nonce_url( 'themes.php?page=hocwp_theme&tab=extension&action=activate&amp;extension=' . $extension_file . '&amp;extension_status=' . $context . '&amp;paged=' . $page . '&amp;s=' . $s, 'activate-extension_' . $extension_file ) . '" class="edit" aria-label="' . esc_attr( sprintf( _x( 'Activate %s', 'hocwp-theme-extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Activate', 'hocwp-theme' ) . '</a>';
+			$actions['activate'] = '<a href="' . wp_nonce_url( 'themes.php?page=hocwp_theme&tab=extension&action=activate&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s, 'activate-extension_' . $extension_file ) . '" class="edit" aria-label="' . esc_attr( sprintf( _x( 'Activate %s', 'hocwp-theme-extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Activate', 'hocwp-theme' ) . '</a>';
 		}
 		$actions        = array_filter( $actions );
 		$class          = $is_active ? 'active' : 'inactive';

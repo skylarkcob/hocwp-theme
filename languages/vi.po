@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: hocwp-theme vi\n"
-"POT-Creation-Date: 2017-09-07 08:41+0700\n"
-"PO-Revision-Date: 2017-09-07 09:02+0700\n"
+"POT-Creation-Date: 2017-09-19 14:00+0700\n"
+"PO-Revision-Date: 2017-09-19 14:00+0700\n"
 "Last-Translator: \n"
 "Language-Team: hocwp.net@gmail.com\n"
 "Language: vi\n"
@@ -101,16 +101,29 @@ msgstr ""
 msgid "Avatar Size"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:61
+#: hocwp/admin/admin-setting-page-discussion.php:58
+msgid "Comment System"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:65
+msgid "Default"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:66
+#: hocwp/admin/admin-setting-page-social.php:20
+msgid "Facebook"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:76
 msgid "Mail Subject"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:70
+#: hocwp/admin/admin-setting-page-discussion.php:85
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:3
-msgid "Extension"
+#: hocwp/admin/admin-setting-page-extension.php:3 hocwp/inc/setup-after.php:28
+msgid "Extensions"
 msgstr "Gói mở rộng"
 
 #: hocwp/admin/admin-setting-page-extension.php:45
@@ -129,9 +142,51 @@ msgstr "Lọc danh sách gói mở rộng"
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: hocwp/admin/admin-setting-page-general.php:3
+#: hocwp/admin/admin-setting-page-general.php:4
 msgid "General"
 msgstr "Chung"
+
+#: hocwp/admin/admin-setting-page-general.php:25
+msgid "Site Logo"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-general.php:26
+msgid ""
+"When you install the template you have predefined settings for the logo "
+"within the selected style. Uploading your logo is as easy as opening the "
+"template manager and selecting the style parameters and uploading your logo "
+"in the logo field."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-general.php:44
+msgid "Display"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-general.php:51
+#: hocwp/admin/admin-setting-page-general.php:102
+msgid "Image"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-general.php:55
+#: hocwp/admin/admin-setting-page-general.php:78
+msgid "Text"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-general.php:59
+#, fuzzy
+#| msgid "Custom Code"
+msgid "Custom HTML"
+msgstr "Mã tùy chỉnh"
+
+#: hocwp/admin/admin-setting-page-general.php:81
+msgid ""
+"If empty, site name will be used. You can use <code>[DOMAIN]</code> for "
+"dynamic displaying."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-general.php:88
+msgid "HTML"
+msgstr ""
 
 #: hocwp/admin/admin-setting-page-media.php:3
 msgid "Media"
@@ -141,20 +196,71 @@ msgstr "Tập tin"
 msgid "Permalinks"
 msgstr "Đường dẫn tĩnh"
 
+#: hocwp/admin/admin-setting-page-permalinks.php:20
+msgid ""
+"If you like, you may enter custom structures for your custom taxonomy term "
+"and custom post type URLs here. If you leave these blank the defaults will "
+"be used."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-permalinks.php:25
+#, fuzzy
+#| msgid "Custom Code"
+msgid "Custom Base"
+msgstr "Mã tùy chỉnh"
+
+#: hocwp/admin/admin-setting-page-permalinks.php:44
+#: hocwp/admin/admin-setting-page-permalinks.php:57
+#, php-format
+msgid "%s base"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-permalinks.php:47
+#, php-format
+msgid "Base slug for custom post type %s."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-permalinks.php:60
+#, php-format
+msgid "Base slug for custom taxonomy %s."
+msgstr ""
+
 #: hocwp/admin/admin-setting-page-reading.php:3
 msgid "Reading"
 msgstr "Đọc"
+
+#: hocwp/admin/admin-setting-page-social.php:3
+msgid "Socials"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:21
+msgid ""
+"See what your Facebook friends liked, shared, or commented on across the Web."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:36
+msgid "APP ID"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:45
+msgid "SDK JavaScript"
+msgstr ""
 
 #: hocwp/admin/admin-setting-page-writing.php:3
 msgid "Writing"
 msgstr "Viết"
 
-#: hocwp/admin/admin.php:31
+#: hocwp/admin/admin.php:38
 msgid "phpinfo()"
 msgstr ""
 
-#: hocwp/admin/admin.php:31
+#: hocwp/admin/admin.php:38 hocwp/inc/setup-after.php:35
 msgid "PHP Info"
+msgstr ""
+
+#: hocwp/admin/admin.php:89
+#, php-format
+msgid "Make this %s as featured?"
 msgstr ""
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:16
@@ -222,6 +328,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:240
+#: hocwp/inc/functions-scripts.php:94
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -236,21 +343,64 @@ msgstr "<strong>Thông báo:</strong> %s gói mở rộng được kích hoạt.
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr "<strong>Thông báo:</strong> %s gói mở rộng ngừng kích hoạt."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:187
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:219
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:187
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:219
+#: hocwp/inc/setup-after.php:21
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:270
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:314
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."
 msgstr ""
 "<strong>Thông báo:</strong> Mọi thiết lập đều đã được lưu. Để có thể lưu các "
 "cài đặt, đừng quên nhấn vào nút 'Lưu thiết lập' hoặc 'Lưu thay đổi'."
+
+#: hocwp/admin/class-hocwp-theme-meta-post.php:15
+msgid "Extra Information"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-meta.php:108
+msgid ""
+"You must call this class in callback of <strong>load-{$pagenow}</strong> "
+"action."
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:8
+msgid "JW Player"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:25
+msgid "Streamango"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:26
+msgid "Streamango streaming API settings."
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:31
+msgid "Streamcherry"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:32
+msgid "Streamcherry streaming API settings."
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:46
+msgid "Key"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:59
+msgid "-- Choose skin --"
+msgstr ""
+
+#: hocwp/ext/admin-setting-page-jwplayer.php:67
+msgid "Skin"
+msgstr ""
 
 #: hocwp/ext/admin-setting-page-smtp.php:8
 #: hocwp/ext/admin-setting-page-smtp.php:228
@@ -405,6 +555,15 @@ msgstr "Thông tin debug chi tiết được hiển thị bên dưới:"
 msgid "The SMTP debugging output is shown below:"
 msgstr "Thông tin debug gửi mail bằng SMTP được hiển thị bên dưới:"
 
+#: hocwp/ext/class-hocwp-theme-streaming-streamango.php:16
+#: hocwp/ext/streaming.php:16
+msgid "Link not valid"
+msgstr ""
+
+#: hocwp/ext/class-hocwp-theme-streaming-streamango.php:40
+msgid "Cannot get download ticket!"
+msgstr ""
+
 #: hocwp/ext/comment-notification.php:53
 #, php-format
 msgid "Your comment on \"%s\" has new reply"
@@ -432,9 +591,23 @@ msgstr ""
 "Nếu đường link bên trên không hoạt động, bạn cũng có thể sao chép và bỏ vào "
 "thanh địa chỉ của trình duyệt để truy cập."
 
-#: hocwp/inc/class-hocwp-theme-minify.php:132
+#: hocwp/ext/streaming.php:8
+msgid "JW Player extension not loaded!"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:131
+#: hocwp/inc/functions-scripts.php:95
+#, php-format
+msgid "Choose %s"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-minify.php:134
 msgid "File can not be compressed!"
 msgstr "Tập tin không thể nén!"
+
+#: hocwp/inc/class-hocwp-theme-utility.php:240
+msgid "Page [CURRENT]/[TOTAL]"
+msgstr ""
 
 #: hocwp/inc/functions-development.php:136
 #, php-format
@@ -475,6 +648,15 @@ msgstr "Giao diện không thể nén."
 msgid "Tasks Finished"
 msgstr "Công việc đã hoàn tất"
 
+#: hocwp/inc/functions-development.php:264
+#, php-format
+msgid "You should take a break and relax for %d minutes."
+msgstr ""
+
+#: hocwp/inc/functions-development.php:266
+msgid "Taking Beaks"
+msgstr ""
+
 #: hocwp/inc/functions-license.php:27
 msgid "Your theme is blocked."
 msgstr "Giao diện của bạn đã bị khóa."
@@ -487,23 +669,58 @@ msgstr "Bản quyền trái phép"
 msgid "Notify license"
 msgstr "Thông báo bản quyền"
 
-#: hocwp/inc/template-general.php:118
+#: hocwp/inc/functions-scripts.php:65
+msgid "Are you sure you want to delete?"
+msgstr ""
+
+#: hocwp/inc/functions-scripts.php:91
+#, php-format
+msgid "Remove %s"
+msgstr ""
+
+#: hocwp/inc/functions-scripts.php:92
+#, php-format
+msgid "Click the %s to edit or update"
+msgstr ""
+
+#: hocwp/inc/functions-user.php:18
+#, fuzzy
+#| msgid "Login"
+msgid "Last login"
+msgstr "Đăng nhập"
+
+#: hocwp/inc/functions-user.php:61
+msgid "Phone"
+msgstr ""
+
+#: hocwp/inc/template-comments.php:85 hocwp/inc/template-comments.php:122
+#: hocwp/inc/template-comments.php:136
+msgid "Loading..."
+msgstr ""
+
+#: hocwp/inc/template-general.php:130
 #, php-format
 msgid "Search Results: %s"
 msgstr "Kết quả tìm kiếm: %s"
 
-#: hocwp/inc/template-general.php:131
+#: hocwp/inc/template-general.php:143
 msgid "Next Posts"
 msgstr "Bài Tiếp"
 
-#: hocwp/inc/template-general.php:134
+#: hocwp/inc/template-general.php:146
 msgid "Previous Posts"
 msgstr "Bài Trước"
 
-#: hocwp/inc/template-general.php:162
+#: hocwp/inc/template-general.php:174
 #, php-format
 msgid "%s sec"
 msgstr "%s giây"
+
+#: hocwp/inc/template-general.php:354
+#, fuzzy, php-format
+#| msgid "Posted on %s"
+msgid "Share on %s"
+msgstr "Được đăng trong %s"
 
 #: hocwp/inc/template-post.php:27
 #, php-format
@@ -581,14 +798,240 @@ msgstr "Trang:"
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Xem tiếp %s <span class=\"meta-nav\">&rarr;</span>"
 
+#, fuzzy
+#~| msgid "Footer Widgets"
+#~ msgid "Footer Text"
+#~ msgstr "Hiển thị widget dưới chân trang"
+
+#, fuzzy
+#~| msgid "Footer Widgets"
+#~ msgid "Footer Copyright"
+#~ msgstr "Hiển thị widget dưới chân trang"
+
+#, fuzzy
+#~| msgid "Footer"
+#~ msgid "Guest Footer"
+#~ msgstr "Chân trang"
+
+#~ msgid "Featured Anime"
+#~ msgstr "Anime nổi bật"
+
+#~ msgid "Saved Films"
+#~ msgstr "Phim đã lưu"
+
+#, fuzzy
+#~| msgid "Light on"
+#~ msgid "Light skin"
+#~ msgstr "Bật đèn"
+
+#~ msgid "Logout"
+#~ msgstr "Thoát"
+
+#~ msgid "<strong>Error:</strong> Passwords do not match."
+#~ msgstr "<strong>Lỗi:</strong> Mật khẩu không khớp."
+
+#~ msgid "Japanese Name:"
+#~ msgstr "Tên Nhật:"
+
+#~ msgid "Status:"
+#~ msgstr "Trạng thái:"
+
+#~ msgid "Total Episodes:"
+#~ msgstr "Số tập:"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search Parent:"
+#~ msgstr "Tìm kiếm"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search Fansub"
+#~ msgstr "Tìm kiếm"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search Series"
+#~ msgstr "Tìm kiếm"
+
+#~ msgid "Add New Serie"
+#~ msgstr "Thêm serie mới"
+
+#, fuzzy
+#~| msgid "View more"
+#~ msgid "View Episode"
+#~ msgstr "Xem thêm"
+
+#, fuzzy
+#~| msgid "View more"
+#~ msgid "Anime Episodes."
+#~ msgstr "Xem thêm"
+
+#, fuzzy
+#~| msgid "Add New Serie"
+#~ msgid "Add New Upcoming"
+#~ msgstr "Thêm serie mới"
+
+#, fuzzy
+#~| msgid "View Movie"
+#~ msgid "View Upcoming"
+#~ msgstr "Xem phim"
+
+#~ msgid "Footer Widgets"
+#~ msgstr "Hiển thị widget dưới chân trang"
+
+#, fuzzy
+#~| msgid "Primary"
+#~ msgid "Primary 2"
+#~ msgstr "Chính"
+
+#~ msgid "Home"
+#~ msgstr "Trang chủ"
+
+#~ msgid "Most Viewed"
+#~ msgstr "Xem nhiều"
+
+#~ msgid "Back home"
+#~ msgstr "Trở về trang chủ"
+
+#, fuzzy
+#~| msgid "Nominated Hentai"
+#~ msgid "Nominated Anime"
+#~ msgstr "Hentai được đề cử"
+
+#~ msgid "Movie Information"
+#~ msgstr "Thông tin phim"
+
+#~ msgid "Category:"
+#~ msgstr "Thể loại:"
+
+#~ msgid "Views:"
+#~ msgstr "Lượt xem:"
+
+#~ msgid "Uncensored"
+#~ msgstr "Không che"
+
+#~ msgid "Censored"
+#~ msgstr "Che"
+
+#~ msgid "Censored:"
+#~ msgstr "Che:"
+
+#~ msgid "Episodes:"
+#~ msgstr "Số tập:"
+
+#~ msgid "Producer:"
+#~ msgstr "Nhà sản xuất:"
+
+#~ msgid "Broadcast year:"
+#~ msgstr "Năm phát sóng:"
+
+#~ msgid "Related series:"
+#~ msgstr "Serie liên quan:"
+
+#~ msgid "View Movie"
+#~ msgstr "Xem phim"
+
+#~ msgid "Save Film"
+#~ msgstr "Lưu phim"
+
+#, fuzzy
+#~| msgid "Recent Modified Hentai"
+#~ msgid "Recent Modified Anime"
+#~ msgstr "Hentai mới cập nhật"
+
+#~ msgid "View more"
+#~ msgstr "Xem thêm"
+
+#, fuzzy
+#~| msgid "Featured Anime"
+#~ msgid "Related Anime"
+#~ msgstr "Anime nổi bật"
+
+#~ msgid "%s Episode %d"
+#~ msgstr "%s tập %d"
+
+#~ msgid "Light off"
+#~ msgstr "Tắt đèn"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Change server"
+#~ msgstr "Mật khẩu"
+
+#~ msgid "Previous Episode"
+#~ msgstr "Tập trước"
+
+#~ msgid "Next Episode"
+#~ msgstr "Tập tiếp"
+
+#~ msgid "Information"
+#~ msgstr "Thông tin"
+
+#~ msgid "End"
+#~ msgstr "Hết"
+
+#~ msgid "Light on"
+#~ msgstr "Bật đèn"
+
+#, fuzzy
+#~| msgid "Saved Films"
+#~ msgid "Saved Anime"
+#~ msgstr "Phim đã lưu"
+
+#~ msgid "Login"
+#~ msgstr "Đăng nhập"
+
+#, fuzzy
+#~| msgid "<strong>Error:</strong> Passwords do not match."
+#~ msgid "<strong>Error:</strong> You must choose Premium package first."
+#~ msgstr "<strong>Lỗi:</strong> Mật khẩu không khớp."
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Old password"
+#~ msgstr "Mật khẩu"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "New password"
+#~ msgstr "Mật khẩu"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Change password"
+#~ msgstr "Mật khẩu"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "March"
+#~ msgstr "Tìm kiếm"
+
+#~ msgid "FAP:"
+#~ msgstr "Số lượt FAP:"
+
+#~ msgid "Related Hentai"
+#~ msgstr "Hentai đề cử"
+
+#~ msgid "Top fap"
+#~ msgstr "Top quay tay"
+
+#~ msgid "Screenshot"
+#~ msgstr "Chụp ảnh"
+
+#~ msgid "Fapped"
+#~ msgstr "Đã Fap"
+
+#~ msgid "Page"
+#~ msgstr "Trang"
+
+#, fuzzy
+#~| msgid "Select %s"
+#~ msgid "Select Media"
+#~ msgstr "Lựa chọn %s"
+
 #~ msgid "Recent Posts"
 #~ msgstr "Gần đây"
-
-#~ msgid "Featured Posts"
-#~ msgstr "Nổi bật"
-
-#~ msgid "Recent Modified Posts"
-#~ msgstr "Mới cập nhật"
 
 #~ msgid "Recent Commented Posts"
 #~ msgstr "Mới được bình luận"
@@ -605,12 +1048,6 @@ msgstr "Xem tiếp %s <span class=\"meta-nav\">&rarr;</span>"
 #~ msgid "Example"
 #~ msgstr "Ví dụ"
 
-#~ msgid "Footer Widgets"
-#~ msgstr "Hiển thị widget dưới chân trang"
-
-#~ msgid "Footer"
-#~ msgstr "Chân trang"
-
 #~ msgid "modified %s ago"
 #~ msgstr "cập nhật %s trước"
 
@@ -621,12 +1058,6 @@ msgstr "Xem tiếp %s <span class=\"meta-nav\">&rarr;</span>"
 #~ "%s. Please ask for our permission before using our content outside our "
 #~ "declared rights."
 #~ msgstr "%s. Xin vui lòng ghi rõ nguồn bài viết khi sao chép."
-
-#~ msgid "Logout"
-#~ msgstr "Thoát"
-
-#~ msgid "Login"
-#~ msgstr "Đăng nhập"
 
 #~ msgid "Scroll down to bottom"
 #~ msgstr "Trượt xuống phía dưới"

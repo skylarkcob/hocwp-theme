@@ -17,7 +17,7 @@ if ( ! $load ) {
 
 function hocwp_theme_wp_mail_from_name_filter( $name ) {
 	global $hocwp_theme;
-	if ( isset( $hocwp_theme->options['smtp']['from_name'] ) ) {
+	if ( isset( $hocwp_theme->options['smtp']['from_name'] ) && ! empty( $hocwp_theme->options['smtp']['from_name'] ) ) {
 		$name = $hocwp_theme->options['smtp']['from_name'];
 	}
 
@@ -28,7 +28,7 @@ add_filter( 'wp_mail_from_name', 'hocwp_theme_wp_mail_from_name_filter' );
 
 function hocwp_theme_wp_mail_from_filter( $email ) {
 	global $hocwp_theme;
-	if ( isset( $hocwp_theme->options['smtp']['from_email'] ) ) {
+	if ( isset( $hocwp_theme->options['smtp']['from_email'] ) && is_email( $hocwp_theme->options['smtp']['from_email'] ) ) {
 		$email = sanitize_email( $hocwp_theme->options['smtp']['from_email'] );
 	}
 

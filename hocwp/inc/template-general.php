@@ -47,6 +47,18 @@ function hocwp_theme_module_sidebar() {
 
 add_action( 'hocwp_theme_module_sidebar', 'hocwp_theme_module_sidebar' );
 
+function hocwp_theme_widget_title_filter( $title ) {
+	if ( ! is_admin() && ! empty( $title ) ) {
+		if ( ! mb_strpos( $title, '</span>' ) ) {
+			$title = '<span>' . $title . '</span>';
+		}
+	}
+
+	return $title;
+}
+
+add_filter( 'widget_title', 'hocwp_theme_widget_title_filter' );
+
 function hocwp_theme_template_single() {
 	hocwp_theme_load_custom_template( 'template-single' );
 }
@@ -203,7 +215,12 @@ add_action( 'wp_head', 'hocwp_theme_wp_head_action' );
 function hocwp_theme_wp_footer_action() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;
-	$agent   = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	$load    = apply_filters( 'hocwp_theme_load_facebook_sdk_javascript', false );
+	if ( $load ) {
+		$sdk = isset( $options['social']['facebook_sdk_javascript'] ) ? $options['social']['facebook_sdk_javascript'] : '';
+		echo $sdk;
+	}
+	$agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 	if ( empty( $agent ) || false === strpos( $agent, 'Page Speed' ) || false === strpos( $agent, 'Speed Insights' ) ) {
 		$google_analytics = isset( $options['custom_code']['google_analytics'] ) ? $options['custom_code']['google_analytics'] : '';
 		echo $google_analytics;
@@ -215,23 +232,141 @@ function hocwp_theme_wp_footer_action() {
 
 add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );
 
-function hocwp_theme_pagination( $args = array() ) {
-	$defaults   = array(
-		'query' => $GLOBALS['wp_query']
-	);
-	$args       = wp_parse_args( $args, $defaults );
-	$big        = 999999999;
-	$translated = __( 'Page', 'hocwp-theme' );
-	$query      = $args['query'];
-	echo paginate_links( array(
-		'base'               => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-		'format'             => '?paged=%#%',
-		'current'            => max( 1, get_query_var( 'paged' ) ),
-		'total'              => $query->max_num_pages,
-		'before_page_number' => '<span class="screen-reader-text">' . $translated . ' </span>'
-	) );
+function hocwp_theme_site_branding_action() {
+	?>
+	<div class="site-branding">
+		<?php the_custom_logo(); ?>
+	</div><!-- .site-branding -->
+	<?php
 }
 
-function hocwp_theme_get_paged() {
-	return ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+add_action( 'hocwp_theme_site_branding', 'hocwp_theme_site_branding_action' );
+
+function hocwp_theme_theme_mod_custom_logo_filter( $mod ) {
+	global $hocwp_theme;
+	$options      = $hocwp_theme->options;
+	$logo_display = $options['general']['logo_display'];
+	if ( 'image' == $logo_display ) {
+		$id = isset( $options['general']['logo_image'] ) ? $options['general']['logo_image'] : '';
+		if ( HOCWP_Theme::is_positive_number( $id ) ) {
+			$mod = $id;
+		}
+	} else {
+		$mod = null;
+	}
+
+	return $mod;
+}
+
+add_filter( 'theme_mod_custom_logo', 'hocwp_theme_theme_mod_custom_logo_filter' );
+
+function hocwp_theme_get_custom_logo_filter( $html ) {
+	global $hocwp_theme;
+	$options      = $hocwp_theme->options;
+	$logo_display = $options['general']['logo_display'];
+	if ( 'image' != $logo_display ) {
+		if ( 'text' == $logo_display ) {
+			$text = isset( $options['general']['logo_text'] ) ? $options['general']['logo_text'] : '';
+			if ( empty( $text ) ) {
+				$text = get_bloginfo( 'name', 'display' );
+			} else {
+				$domain = HOCWP_Theme::get_domain_name( home_url() );
+				$text   = str_replace( '[DOMAIN]', $domain, $text );
+			}
+			$text = strip_tags( $text );
+			if ( ! empty( $text ) ) {
+				if ( is_front_page() && is_home() ) : ?>
+					<h1 class="site-title">
+						<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"
+						   rel="home"><?php echo $text; ?></a>
+					</h1>
+				<?php else : ?>
+					<p class="site-title">
+						<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"
+						   rel="home"><?php echo $text; ?></a>
+					</p>
+					<?php
+				endif;
+				$description = get_bloginfo( 'description', 'display' );
+				if ( $description || is_customize_preview() ) : ?>
+					<p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
+					<?php
+				endif;
+			}
+		} elseif ( 'custom' == $logo_display ) {
+			if ( isset( $options['general']['logo_html'] ) ) {
+				echo isset( $options['general']['logo_html'] );
+			}
+		}
+	}
+
+	return $html;
+}
+
+add_filter( 'get_custom_logo', 'hocwp_theme_get_custom_logo_filter' );
+
+function hocwp_theme_socials( $args = array() ) {
+	$defaults = array(
+		'socials' => array(
+			'facebook' => array(
+				'base'  => 'https://www.facebook.com/sharer/sharer.php?u=[URL]',
+				'class' => 'btn btn-primary btn-sm'
+			),
+			'gplus'    => array(
+				'base'  => 'https://plus.google.com/share?url=[URL]',
+				'class' => 'btn btn-danger btn-sm',
+				'name'  => 'Google+'
+			),
+			'twitter'  => array(
+				'base'     => 'https://twitter.com/intent/tweet?url=[URL]',
+				'class'    => 'btn btn-info btn-sm',
+				'username' => ''
+			)
+		),
+		'url'     => '',
+		'post_id' => ''
+	);
+	$args     = wp_parse_args( $args, $defaults );
+	$url      = $args['url'];
+	if ( empty( $url ) ) {
+		$post_id = $args['post_id'];
+		if ( HOCWP_Theme::is_positive_number( $post_id ) ) {
+			$url = get_permalink( $post_id );
+		} else {
+			$url = hocwp_get_current_url();
+		}
+	}
+	$socials = $args['socials'];
+	if ( empty( $url ) ) {
+		return;
+	}
+	?>
+	<div class="social">
+		<?php
+		foreach ( $socials as $social => $data ) {
+			$base  = $data['base'];
+			$base  = str_replace( '[URL]', $url, $base );
+			$class = $data['class'];
+			$class .= ' ' . sanitize_html_class( $social );
+			$name = isset( $data['name'] ) ? $data['name'] : ucwords( $social );
+			?>
+			<a href="<?php echo esc_url( $base ); ?>" rel="nofollow" target="_blank" class="<?php echo $class; ?>"
+			   title="<?php echo esc_attr( sprintf( __( 'Share on %s', 'hocwp-theme' ), $name ) ); ?>"><?php echo $name; ?></a>
+			<?php
+		}
+		?>
+	</div>
+	<?php
+}
+
+function hocwp_theme_get_option( $name, $default = '', $base = 'general' ) {
+	global $hocwp_theme;
+	$options = $hocwp_theme->options;
+	$options = isset( $options[ $base ] ) ? $options[ $base ] : '';
+	$value   = isset( $options[ $name ] ) ? $options[ $name ] : '';
+	if ( empty( $value ) && gettype( $value ) != gettype( $default ) ) {
+		$value = $default;
+	}
+
+	return $value;
 }
