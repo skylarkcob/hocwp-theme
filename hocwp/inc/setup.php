@@ -35,16 +35,30 @@ function hocwp_theme_after_setup_theme_action() {
 
 add_action( 'after_setup_theme', 'hocwp_theme_after_setup_theme_action' );
 
+/**
+ * Check for domain or site url change.
+ */
 function hocwp_theme_check_domain_change() {
 	$old_domain = get_option( 'hocwp_theme_domain' );
 	$new_domain = HOCWP_Theme::get_domain_name( home_url() );
 	if ( $new_domain != $old_domain ) {
 		update_option( 'hocwp_theme_domain', $new_domain );
 		do_action( 'hocwp_theme_change_domain', $old_domain, $new_domain );
+		set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
 	}
+	$old_url = get_option( 'hocwp_theme_siteurl' );
+	$old_url = untrailingslashit( $old_url );
+	$new_url = site_url();
+	$new_url = untrailingslashit( $new_url );
+	if ( $old_url != $new_url ) {
+		update_option( 'hocwp_theme_siteurl', $new_url );
+		do_action( 'hocwp_thene_change_siteurl', $old_url, $new_url );
+		set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
+	}
+	unset( $old_domain, $new_domain, $old_url, $new_url );
 }
 
-add_action( 'admin_init', 'hocwp_theme_check_domain_change' );
+add_action( 'init', 'hocwp_theme_check_domain_change' );
 
 function hocwp_theme_update_comment_blacklist_keys() {
 	$blacklist_keys = $GLOBALS['hocwp_theme']->defaults['blacklist_keys'];
@@ -59,5 +73,16 @@ function hocwp_theme_update_comment_blacklist_keys() {
 
 add_action( 'hocwp_theme_activation', 'hocwp_theme_update_comment_blacklist_keys' );
 add_action( 'hocwp_theme_upgrade_new_version', 'hocwp_theme_update_comment_blacklist_keys' );
+
+function hocwp_theme_required_plugins( $plugins ) {
+	if ( defined( 'HOCWP_THEME_DEVELOPING' ) && HOCWP_THEME_DEVELOPING ) {
+		$plugins[] = 'sb-core';
+		$plugins[] = 'theme-check';
+	}
+
+	return $plugins;
+}
+
+add_filter( 'hocwp_theme_required_plugins', 'hocwp_theme_required_plugins' );
 
 do_action( 'hocwp_theme_setup' );

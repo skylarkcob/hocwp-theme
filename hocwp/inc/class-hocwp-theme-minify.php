@@ -1,6 +1,19 @@
 <?php
 
-class HOCWP_Theme_Minify {
+final class HOCWP_Theme_Minify {
+	protected static $_instance = null;
+
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	private function __construct() {
+	}
+
 	public static function build_css_rule( $elements, $properties ) {
 		$elements   = (array) $elements;
 		$properties = (array) $properties;
@@ -64,7 +77,7 @@ class HOCWP_Theme_Minify {
 		if ( $online ) {
 			$buffer = self::get_minified( 'https://cssminifier.com/raw', $css_content );
 		} else {
-			if ( is_readable( $css_content ) ) {
+			if ( HT()->is_file( $css_content ) ) {
 				$filesystem  = HOCWP_Theme_Utility::filesystem();
 				$css_content = $filesystem->get_contents( $css_content );
 			}
@@ -85,30 +98,42 @@ class HOCWP_Theme_Minify {
 	}
 
 	public static function get_minified( $url, $content ) {
-		$filesystem = HOCWP_Theme_Utility::filesystem();
-		if ( is_readable( $content ) ) {
-			$content = $filesystem->get_contents( $content );
-		}
-		$params = array(
-			'method'      => 'POST',
-			'timeout'     => 45,
-			'redirection' => 5,
-			'httpversion' => '1.0',
-			'blocking'    => true,
-			'headers'     => array(),
-			'body'        => array( 'input' => $content ),
-			'cookies'     => array()
-		);
-		$resp   = wp_remote_post( $url, $params );
-		if ( ! is_wp_error( $resp ) ) {
-			$content = wp_remote_retrieve_body( $resp );
+		if ( ! empty( $content ) ) {
+			$filesystem = HOCWP_Theme_Utility::filesystem();
+			if ( HT()->is_file( $content ) ) {
+				$content = $filesystem->get_contents( $content );
+			}
+			$params = array(
+				'method'      => 'POST',
+				'timeout'     => 45,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking'    => true,
+				'headers'     => array(),
+				'body'        => array( 'input' => $content ),
+				'cookies'     => array()
+			);
+			$resp   = wp_remote_post( $url, $params );
+			if ( ! is_wp_error( $resp ) ) {
+				$content = wp_remote_retrieve_body( $resp );
+			}
 		}
 
 		return $content;
 	}
 
-	public static function generate( $file ) {
-		if ( ! is_readable( $file ) || ! _hocwp_theme_is_css_or_js_file( $file ) ) {
+	public function is_error_content( $content ) {
+		if ( ! empty( $content ) ) {
+			if ( false !== strpos( $content, '<html>' ) || false !== strpos( $content, 'ESCAPED_SOURCE' ) ) {
+				return new WP_Error( 'invalid_minified_content', $content );
+			}
+		}
+
+		return false;
+	}
+
+	public static function generate( $file, $recompress = false ) {
+		if ( ! HT()->is_file( $file ) || ! _hocwp_theme_is_css_or_js_file( $file ) ) {
 			return;
 		}
 		$info = pathinfo( $file );
@@ -118,8 +143,10 @@ class HOCWP_Theme_Minify {
 			$se   = substr( $name, - 4 );
 			if ( '.min' != $se ) {
 				$name .= '.min';
+			} elseif ( ! $recompress ) {
+				return;
 			}
-			$name .= '.' . $info['extension'];
+			$name     .= '.' . $info['extension'];
 			$min_file = $dir . '/' . $name;
 			$minified = '';
 			if ( 'js' == $info['extension'] ) {
@@ -129,10 +156,21 @@ class HOCWP_Theme_Minify {
 			} else {
 				return;
 			}
-			$filesystem = HOCWP_Theme_Utility::filesystem();
-			if ( ! $filesystem->put_contents( $min_file, $minified, FS_CHMOD_FILE ) ) {
-				hocwp_theme_debug( __( 'File can not be compressed!', 'hocwp-theme' ) );
+			HT()->debug( $minified );
+			if ( $error = HT_Minify()->is_error_content( $minified ) ) {
+				if ( $error instanceof WP_Error ) {
+					hocwp_theme_debug( $error->get_error_message() );
+				}
+			} else {
+				$filesystem = HOCWP_Theme_Utility::filesystem();
+				if ( ! $filesystem->put_contents( $min_file, $minified, FS_CHMOD_FILE ) ) {
+					hocwp_theme_debug( __( 'File can not be compressed!', 'hocwp-theme' ) );
+				}
 			}
 		}
 	}
+}
+
+function HT_Minify() {
+	return HOCWP_Theme_Minify::instance();
 }

@@ -14,9 +14,6 @@ function hocwp_theme_wp_list_comments_args_filter( $args ) {
 add_filter( 'wp_list_comments_args', 'hocwp_theme_wp_list_comments_args_filter' );
 
 function hocwp_theme_change_default_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
-	if ( $id_or_email instanceof WP_Comment ) {
-
-	}
 
 	return $avatar;
 }
@@ -118,31 +115,71 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 
 function hocwp_theme_comments_template_google() {
 	?>
-	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-	<div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
-	<script>
-		gapi.comments.render('google_comments', {
-			href: window.location,
-			width: '624',
-			first_party_property: 'BLOGGER',
-			view_type: 'FILTERED_POSTMOD'
-		});
-	</script>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+    <script>
+        gapi.comments.render('google_comments', {
+            href: window.location,
+            width: '624',
+            first_party_property: 'BLOGGER',
+            view_type: 'FILTERED_POSTMOD'
+        });
+    </script>
 	<?php
 }
 
 function hocwp_theme_comments_template_disqus() {
 	?>
-	<div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
-	<script>
-		(function () {
-			var d = document, s = d.createElement('script'), ts = +new Date();
-			s.src = '//hocwp.disqus.com/embed.js';
-			s.setAttribute('data-timestamp', ts.toString());
-			(d.head || d.body).appendChild(s);
-		})();
-	</script>
-	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
-			Disqus.</a></noscript>
+    <div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+    <script>
+        (function () {
+            var d = document, s = d.createElement('script'), ts = +new Date();
+            s.src = '//hocwp.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', ts.toString());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
 	<?php
 }
+
+function hocwp_theme_add_captcha_to_comment_form( $submit_field ) {
+	if ( ! is_user_logged_in() ) {
+		$options = HT_Util()->get_theme_options( 'discussion' );
+		$captcha = isset( $options['captcha'] ) ? $options['captcha'] : '';
+		if ( 1 == $captcha ) {
+			ob_start();
+			HT_Util()->recaptcha();
+			$captcha      = ob_get_clean();
+			$submit_field = $captcha . $submit_field;
+		}
+	}
+
+	return $submit_field;
+}
+
+add_filter( 'comment_form_submit_field', 'hocwp_theme_add_captcha_to_comment_form' );
+
+function hocwp_theme_preprocess_comment_check_captcha( $commentdata ) {
+	if ( ! is_user_logged_in() ) {
+		$options = HT_Util()->get_theme_options( 'discussion' );
+		$captcha = isset( $options['captcha'] ) ? $options['captcha'] : '';
+		if ( 1 == $captcha ) {
+			if ( isset( $_POST['g-recaptcha-response'] ) ) {
+				$response = HT_Util()->recaptcha_valid();
+				if ( ! $response ) {
+					wp_die( __( 'Bots are not allowed to submit comments.', 'hocwp-theme' ) );
+					exit;
+				}
+			} else {
+				wp_die( __( 'Bots are not allowed to submit comments. If you are not a bot then please enable JavaScript in browser.', 'hocwp-theme' ) );
+				exit;
+			}
+		}
+	}
+
+	return $commentdata;
+}
+
+add_filter( 'preprocess_comment', 'hocwp_theme_preprocess_comment_check_captcha' );

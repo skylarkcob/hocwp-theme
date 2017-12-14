@@ -65,7 +65,6 @@ add_filter( 'set-screen-option', 'hocwp_theme_settings_page_extension_set_screen
 function hocwp_theme_settings_page_extension_form_after() {
 	?>
 	<div style="padding-top: 10px;">
-		<hr class="wp-header-end">
 		<?php
 		global $hocwp_theme, $plugin_page;
 		if ( ! ! isset( $hocwp_theme->extensions_list_table ) ) {

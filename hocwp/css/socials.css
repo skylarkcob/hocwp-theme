@@ -1,0 +1,38 @@
+.social.share-tools {
+    border-bottom: 1px solid #dfdfdf;
+    border-top: 1px solid #dfdfdf;
+    padding: 20px 0;
+    margin-top: 10px;
+}
+
+.share-tools .btn {
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: #ff6200;
+    white-space: nowrap;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+.share-tools .btn:hover {
+    opacity: 0.85;
+}
+
+.share-tools .facebook {
+    background-color: #4267b2;
+}
+
+.share-tools .twitter {
+    background-color: #1da1f2;
+}
+
+.share-tools .google-plus,
+.share-tools .gplus {
+    background-color: #db4437;
+}
+
+.share-tools .linkedin {
+    background-color: #0077B5;
+}

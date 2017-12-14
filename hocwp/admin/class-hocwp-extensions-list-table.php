@@ -97,24 +97,18 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	private function get_extensions() {
 		global $hocwp_theme;
 		$path       = HOCWP_THEME_CORE_PATH . '/ext';
-		$files      = scandir( $path );
-		$headers    = array(
+		$extensions = array();
+		$files      = array();
+		hocwp_theme_load_extension_files( $path, $files );
+		$files = apply_filters( 'hocwp_theme_extensions_files', $files );
+		sort( $files );
+		$headers = array(
 			'Name'        => 'Name',
 			'Description' => 'Description'
 		);
-		$extensions = array();
-		foreach ( $files as $key => $file ) {
-			if ( '.' != $file && '..' != $file ) {
-				$file = trailingslashit( $path ) . $file;
-
-				$files[ $key ] = $file;
-			}
-		}
-		$files = apply_filters( 'hocwp_theme_extensions_files', $files );
-		sort( $files );
 		foreach ( $files as $file ) {
 			if ( '.' != $file && '..' != $file ) {
-				if ( is_readable( $file ) ) {
+				if ( HT()->is_file( $file ) ) {
 					$data = get_file_data( $file, $headers );
 					if ( ! empty( $data['Name'] ) ) {
 						$data['dir'] = $file;
@@ -349,9 +343,9 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			}
 			set_transient( 'hocwp_theme_extension_message', $message );
 			?>
-			<script type="text/javascript">
-				window.location.href = '<?php echo admin_url('themes.php?page=hocwp_theme&tab=extension'); ?>';
-			</script>
+            <script type="text/javascript">
+                window.location.href = '<?php echo admin_url( 'themes.php?page=hocwp_theme&tab=extension' ); ?>';
+            </script>
 			<?php
 		}
 	}

@@ -43,3 +43,97 @@ blockquote cite::before {
 #wp-calendar #next {
     text-align: right;
 }
+
+span.edit-link {
+    margin-left: 5px;
+}
+
+.search-form:after,
+.search-form:before,
+.clearfix:after,
+.clearfix:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.loop article span.no-thumbnail {
+    background-color: #fefefe;
+    background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0.07, #eee), color-stop(0.5, #fff), color-stop(1, #eee));
+    background-image: -moz-linear-gradient(left bottom, #eee 7%, #fff 50%, #eee 100%);
+}
+
+.entry-content ul,
+.entry-content ol {
+    margin-left: 0;
+}
+
+.search-form {
+    width: 100%;
+}
+
+.search-form label,
+.search-form input[type="submit"] {
+    float: left;
+}
+
+.search-form label {
+    width: calc(100% - 100px);
+}
+
+.search-form input[type="search"],
+.search-form input[type="text"] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+}
+
+.search-form input[type="submit"] {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+    width: 100px;
+}
+
+.search-form input[type="search"],
+.search-form input[type="text"],
+.search-form input[type="submit"] {
+    line-height: 23px;
+    padding: 5px 15px;
+    font-size: 13px;
+    max-width: 100%;
+}
+
+.page-content .search-form,
+.entry-content .search-form {
+    max-width: 500px;
+}
+
+.widget .widget-inner:empty {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+}
+
+.widget .wp-post-image.alignleft {
+    margin-right: 10px;
+}
+
+.widget .wp-post-image.alignright {
+    margin-left: 10px;
+}
+
+.widget .entry-meta {
+    color: #999;
+    font-size: 13px;
+}
+
+.widget .entry-meta a {
+    text-decoration: none;
+}
+
+.widget .entry-meta .comments-link {
+    margin-left: 10px;
+}

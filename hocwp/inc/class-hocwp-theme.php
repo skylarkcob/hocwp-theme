@@ -1,8 +1,42 @@
 <?php
 
-class HOCWP_Theme {
-	public static function wrap_text( $text, $before, $after ) {
-		return $before . $text . $after;
+final class HOCWP_Theme {
+	public $version = HOCWP_THEME_CORE_VERSION;
+	protected static $_instance = null;
+
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	private function __construct() {
+
+	}
+
+	public function debug( $value ) {
+		if ( function_exists( 'hocwp_theme_debug' ) ) {
+			hocwp_theme_debug( $value );
+		}
+	}
+
+	public static function is_file( $file, $check = 'exists' ) {
+		return ( is_file( $file ) && ( ( 'exists' == $check && file_exists( $file ) ) || ( 'readable' == $check && is_readable( $file ) ) || ( ( 'writable' == $check || 'writeable' == $check ) && is_writable( $file ) ) || ( 'executable' == $check && is_executable( $file ) ) ) ) ? true : false;
+	}
+
+	public static function is_dir( $dir, $check = 'exists' ) {
+		return ( is_dir( $dir ) && ( ( 'exists' == $check && file_exists( $dir ) ) || ( 'readable' == $check && is_readable( $file ) ) ) ) ? true : false;
+	}
+
+	public static function wrap_text( $text, $before, $after, $echo = false ) {
+		$text = $before . $text . $after;
+		if ( $echo ) {
+			echo $text;
+		}
+
+		return $text;
 	}
 
 	public static function array_has_value( $arr ) {
@@ -27,6 +61,100 @@ class HOCWP_Theme {
 		return false;
 	}
 
+	public function is_string_empty( $string ) {
+		return ( is_string( $string ) && empty( $string ) ) ? true : false;
+	}
+
+	public function get_value_in_array( $arr, $key, $default = '' ) {
+		if ( ! is_array( $arr ) || is_object( $key ) || is_object( $arr ) || $this->is_string_empty( $key ) ) {
+			return $default;
+		}
+		$has_key = false;
+
+		$result = '';
+		if ( HT()->array_has_value( $arr ) ) {
+			if ( is_array( $key ) ) {
+				if ( count( $key ) == 1 ) {
+					$key = array_shift( $key );
+					if ( isset( $arr[ $key ] ) ) {
+						return $arr[ $key ];
+					}
+				} else {
+					$tmp = $arr;
+					if ( is_array( $tmp ) ) {
+						$has_value = false;
+						$level     = 0;
+						foreach ( $key as $index => $child_key ) {
+							if ( is_array( $child_key ) ) {
+								if ( count( $child_key ) == 1 ) {
+									$child_key = array_shift( $child_key );
+								}
+								$result = $this->get_value_in_array( $tmp, $child_key );
+							} else {
+								if ( isset( $tmp[ $child_key ] ) ) {
+									$tmp       = $tmp[ $child_key ];
+									$has_value = true;
+									$level ++;
+									$has_key = true;
+								}
+							}
+						}
+						if ( ! $has_value ) {
+							reset( $key );
+							$first_key = current( $key );
+							if ( HT()->array_has_value( $arr ) ) {
+								$tmp = $this->get_value_in_array( $arr, $first_key );
+								if ( HT()->array_has_value( $tmp ) ) {
+									$result = $this->get_value_in_array( $tmp, $key );
+								}
+							}
+						}
+						if ( $has_value && $this->is_string_empty( $result ) ) {
+							$result = $tmp;
+						}
+					}
+				}
+			} else {
+				if ( isset( $arr[ $key ] ) ) {
+					$result  = $arr[ $key ];
+					$has_key = true;
+				} else {
+					foreach ( $arr as $index => $value ) {
+						if ( is_array( $value ) ) {
+							$result = $this->get_value_in_array( $value, $key );
+						} else {
+							if ( $key === $index ) {
+								$has_key = true;
+								$result  = $value;
+							}
+						}
+					}
+				}
+			}
+		}
+		if ( ! $has_key ) {
+			$result = $default;
+		}
+
+		return $result;
+	}
+
+	public function get_method_value( $key, $method = 'post', $default = '' ) {
+		$method = strtoupper( $method );
+		switch ( $method ) {
+			case 'POST':
+				$result = $this->get_value_in_array( $_POST, $key, $default );
+				break;
+			case 'GET':
+				$result = $this->get_value_in_array( $_GET, $key, $default );
+				break;
+			default:
+				$result = $this->get_value_in_array( $_REQUEST, $key, $default );
+		}
+
+		return $result;
+	}
+
 	public static function array_merge_recursive( array $array1, array $array2 ) {
 		$merged = $array1;
 
@@ -42,7 +170,7 @@ class HOCWP_Theme {
 	}
 
 	public static function require_if_exists( $file, $require_once = false ) {
-		if ( file_exists( $file ) ) {
+		if ( self::is_file( $file ) ) {
 			if ( $require_once ) {
 				require_once $file;
 			} else {
@@ -53,6 +181,25 @@ class HOCWP_Theme {
 
 	public static function is_positive_number( $number ) {
 		return ( is_numeric( $number ) && $number > 0 );
+	}
+
+	public static function convert_to_boolean( $value ) {
+		if ( is_numeric( $value ) ) {
+			if ( 0 == $value ) {
+				return false;
+			}
+
+			return true;
+		}
+		if ( is_string( $value ) ) {
+			if ( 'false' == strtolower( $value ) ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		return (bool) $value;
 	}
 
 	public static function random_color_hex() {
@@ -119,6 +266,16 @@ class HOCWP_Theme {
 		return $json_string;
 	}
 
+	public function string_to_datetime( $string, $format = '' ) {
+		if ( empty( $format ) ) {
+			$format = 'Y-m-d H:i:s';
+		}
+		$string = str_replace( '/', '-', $string );
+		$string = trim( $string );
+
+		return date( $format, strtotime( $string ) );
+	}
+
 	public static function javascript_datetime_format( $php_format ) {
 		$matched_symbols = array(
 			'd' => 'dd',
@@ -166,6 +323,38 @@ class HOCWP_Theme {
 		}
 
 		return $result;
+	}
+
+	public function substr( $str, $len, $more = '...', $charset = 'UTF-8', $offset = 0 ) {
+		if ( 1 > $len ) {
+			return $str;
+		}
+		$more = esc_html( $more );
+		$str  = html_entity_decode( $str, ENT_QUOTES, $charset );
+		if ( function_exists( 'mb_strlen' ) ) {
+			$length = mb_strlen( $str, $charset );
+		} else {
+			$length = strlen( $str );
+		}
+		if ( $length > $len ) {
+			$arr = explode( ' ', $str );
+			if ( function_exists( 'mb_substr' ) ) {
+				$str = mb_substr( $str, $offset, $len, $charset );
+			} else {
+				$str = substr( $str, $offset, $len );
+			}
+			$arr_words = explode( ' ', $str );
+			$index     = count( $arr_words ) - 1;
+			$last      = $arr[ $index ];
+			unset( $arr );
+			if ( strcasecmp( $arr_words[ $index ], $last ) ) {
+				unset( $arr_words[ $index ] );
+			}
+
+			return implode( ' ', $arr_words ) . $more;
+		}
+
+		return $str;
 	}
 
 	public static function is_IP( $IP ) {
@@ -285,7 +474,7 @@ class HOCWP_Theme {
 	}
 
 	public static function transmit( &$value, &$another ) {
-		if ( $value != $another ) {
+		if ( ( empty( $value ) || empty( $another ) ) && $value != $another ) {
 			if ( empty( $value ) && ! empty( $another ) ) {
 				$value = $another;
 			} elseif ( empty( $another ) && ! empty( $value ) ) {
@@ -293,4 +482,21 @@ class HOCWP_Theme {
 			}
 		}
 	}
+
+	public function bool_to_string( $value, $uppercase = false ) {
+		$value = ( (bool) $value ) ? 'true' : 'false';
+		if ( $uppercase ) {
+			$value = strtoupper( $value );
+		}
+
+		return $value;
+	}
+
+	public function bool_to_int( $value ) {
+		return ( $value ) ? 1 : 0;
+	}
+}
+
+function HT() {
+	return HOCWP_Theme::instance();
 }

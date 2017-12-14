@@ -4,7 +4,7 @@ $width    = isset( $_GET['width'] ) ? intval( $_GET['width'] ) : '';
 $height   = isset( $_GET['height'] ) ? intval( $_GET['height'] ) : '';
 $crop     = (bool) ( isset( $_GET['crop'] ) ? $_GET['crop'] : 1 );
 $cache    = isset( $_GET['cache'] ) ? $_GET['cache'] : 1;
-$is_file  = is_readable( $src );
+$is_file  = ( is_file( $src ) && is_readable( $src ) );
 $basedir  = dirname( __FILE__ );
 $basename = basename( $basedir );
 while ( ! empty( $basename ) && 'wp-content' != $basename ) {
@@ -34,7 +34,7 @@ if ( ! $is_file && ! filter_var( $src, FILTER_VALIDATE_URL ) && ! hocwp_theme_ur
 	return;
 }
 $basedir .= '/uploads/cache';
-if ( ! is_dir( $basedir ) ) {
+if ( ! is_dir( $basedir ) || ! file_exists( $basedir ) ) {
 	mkdir( $basedir, 0755, true );
 }
 $info      = pathinfo( $src );
@@ -50,10 +50,10 @@ if ( is_numeric( $width ) ) {
 if ( is_numeric( $height ) ) {
 	$filename .= '-' . $height;
 }
-$filename .= '.' . $extension;
+$filename   .= '.' . $extension;
 $regenerate = true;
 $file_path  = $basedir . '/' . $filename;
-if ( 1 == $cache && ( is_readable( $file_path ) && filemtime( $file_path ) >= strtotime( '-14 days' ) ) ) {
+if ( 1 == $cache && ( is_file( $file_path ) && is_readable( $file_path ) && filemtime( $file_path ) >= strtotime( '-14 days' ) ) ) {
 	$regenerate = false;
 }
 if ( $regenerate ) {
@@ -135,10 +135,14 @@ if ( $regenerate ) {
 			$new_width  = $width;
 			$new_height = $im_height / ( $im_width / $width );
 		}
-		$dx     = 0 - ( $new_width - $width ) / 2;
-		$dy     = 0 - ( $new_height - $height ) / 2;
-		$width  = $new_width;
-		$height = $new_height;
+		$dx = 0 - ( $new_width - $width ) / 2;
+		$dy = 0 - ( $new_height - $height ) / 2;
+		if ( ! is_numeric( $width ) ) {
+			$width = $new_width;
+		}
+		if ( ! is_numeric( $height ) ) {
+			$height = $new_height;
+		}
 		if ( $width > $im_width && $height > $im_height ) {
 			$crop = false;
 		}

@@ -3,6 +3,25 @@ if ( function_exists( 'hocwp_theme_sanitize_extension_file' ) ) {
 	return;
 }
 
+function hocwp_theme_load_extension_files( $path, &$arr ) {
+	$tmp     = scandir( $path );
+	$headers = array(
+		'Name'        => 'Name',
+		'Description' => 'Description'
+	);
+	foreach ( $tmp as $key => $file ) {
+		if ( '.' != $file && '..' != $file ) {
+			$file = trailingslashit( $path ) . $file;
+			if ( HT()->is_file( $file ) ) {
+				$data = get_file_data( $file, $headers );
+				if ( ! empty( $data['Name'] ) ) {
+					$arr[] = $file;
+				}
+			}
+		}
+	}
+}
+
 function hocwp_theme_sanitize_extension_file( $extension_file ) {
 	$extension_file = str_replace( "\\\\", "\\", $extension_file );
 	$extension_file = str_replace( "/", "\\", $extension_file );
@@ -32,4 +51,18 @@ function hocwp_theme_is_extension_active( $extension_file ) {
 	$extension_file = hocwp_theme_sanitize_extension_file( $extension_file );
 
 	return in_array( $extension_file, $hocwp_theme->active_extensions );
+}
+
+if ( ! function_exists( 'hocwp_theme_woocommerce_activated' ) ) {
+	function hocwp_theme_woocommerce_activated() {
+		return class_exists( 'WC_Product' );
+	}
+}
+
+function hocwp_theme_is_shop_site() {
+	if ( function_exists( 'hocwp_theme_woocommerce_activated' ) && hocwp_theme_woocommerce_activated() ) {
+		return true;
+	}
+
+	return false;
 }

@@ -124,6 +124,9 @@ final class HOCWP_Theme_HTML_Tag {
 
 	public function __construct( $name ) {
 		$this->set_name( $name );
+		if ( 'img' == strtolower( $name ) ) {
+			$this->add_attribute( 'alt', '' );
+		}
 	}
 
 	public function build() {
@@ -136,6 +139,7 @@ final class HOCWP_Theme_HTML_Tag {
 		if ( ! empty( $wrap_tag ) ) {
 			$result = '<' . $wrap_tag . '>' . $result;
 		}
+		$this->attributes = apply_filters( 'hocwp_theme_html_tag_attributes', $this->attributes, $this );
 		foreach ( (array) $this->attributes as $key => $value ) {
 			$result .= sprintf( ' %1$s="%2$s"', $key, trim( esc_attr( maybe_serialize( $value ) ) ) );
 		}

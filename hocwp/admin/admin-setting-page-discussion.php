@@ -69,6 +69,14 @@ function hocwp_theme_settings_page_discussion_field() {
 			)
 		)
 	);
+
+	$args     = array(
+		'type'  => 'checkbox',
+		'label' => __( 'Using captcha for comment form?', 'hocwp-theme' )
+	);
+	$field    = hocwp_theme_create_setting_field( 'captcha', __( 'Captcha', 'hocwp-theme' ), 'input', $args, 'boolean', 'discussion' );
+	$fields[] = $field;
+
 	if ( hocwp_theme_is_extension_active( 'ext/comment-notification.php' ) ) {
 		$fields[] = array(
 			'section' => 'comment_notification',
@@ -98,3 +106,13 @@ function hocwp_theme_settings_page_discussion_field() {
 }
 
 add_filter( 'hocwp_theme_settings_page_discussion_settings_field', 'hocwp_theme_settings_page_discussion_field' );
+
+function hocwp_theme_sanitize_option_discussion( $input ) {
+	if ( ! is_array( $input ) ) {
+		$input = array();
+	}
+
+	return $input;
+}
+
+add_filter( 'hocwp_theme_sanitize_option_discussion', 'hocwp_theme_sanitize_option_discussion' );

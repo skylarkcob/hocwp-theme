@@ -218,6 +218,7 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 			}
 			if ( is_email( $to_email ) ) {
 				global $phpmailer;
+				$tmp = $phpmailer;
 				if ( ! is_object( $phpmailer ) || ! is_a( $phpmailer, 'PHPMailer' ) ) {
 					load_template( ABSPATH . WPINC . '/class-phpmailer.php' );
 					load_template( ABSPATH . WPINC . '/class-smtp.php' );
@@ -232,6 +233,7 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 					$message = __( 'Thank you for using HocWP, your SMTP mail settings work successfully.', 'hocwp-theme' );
 				}
 				$phpmailer->SMTPDebug = true;
+				$phpmailer->isHTML( true );
 				ob_start();
 				$result       = wp_mail( $to_email, $subject, $message );
 				$sent         = $result;
@@ -255,6 +257,7 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 					$args['type'] = 'error';
 				}
 				HOCWP_Theme_Utility::admin_notice( $args );
+				$phpmailer = $tmp;
 			}
 		}
 	}

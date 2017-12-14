@@ -1,0 +1,13 @@
+.hocwp-theme label + select + .chosen-container {
+    margin-top: 4px;
+}
+
+.hocwp-theme fieldset {
+    border: 1px solid #ddd;
+    padding: 0 10px;
+}
+
+.hocwp-theme fieldset legend {
+    margin-top: -5px;
+    padding: 0 5px;
+}

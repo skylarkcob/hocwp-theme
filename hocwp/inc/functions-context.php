@@ -45,11 +45,11 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 add_filter( 'body_class', 'hocwp_theme_body_class_filter' );
 
-function hocwp_theme_post_class_filter( $classes ) {
+function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
 	if ( ! is_admin() ) {
 		$post      = get_post( get_the_ID() );
 		$post_type = get_post_type();
-		$custom    = array( 'entry' );
+		$custom    = array( 'entry', 'clearfix' );
 		$custom[]  = 'author-' . sanitize_html_class( get_the_author_meta( 'user_nicename' ), get_the_author_meta( 'ID' ) );
 		if ( post_password_required() ) {
 			$custom[] = 'protected';
@@ -63,6 +63,10 @@ function hocwp_theme_post_class_filter( $classes ) {
 		if ( false !== strpos( $post->post_content, '<!--nextpage' ) ) {
 			$custom[] = 'has-pages';
 		}
+		$featured = get_post_meta( $post_id, 'featured', true );
+		if ( 1 == $featured ) {
+			$custom[] = 'featured';
+		}
 		$custom  = array_unique( $custom );
 		$custom  = array_map( 'esc_attr', $custom );
 		$classes = array_merge( $classes, $custom );
@@ -72,4 +76,11 @@ function hocwp_theme_post_class_filter( $classes ) {
 	return $classes;
 }
 
-add_filter( 'post_class', 'hocwp_theme_post_class_filter' );
+add_filter( 'post_class', 'hocwp_theme_post_class_filter', 10, 3 );
+
+function hocwp_theme_attribute( $tag, $context = '' ) {
+	if ( 'body' == $tag ) {
+		$width = hocwp_theme_mobile_menu_media_screen_width();
+		echo ' data-mobile-width="' . $width . '"';
+	}
+}

@@ -9,10 +9,11 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 		if ( 'term.php' == $pagenow ) {
 			parent::__construct();
 			if ( ! empty( $taxonomy ) ) {
+				add_action( $taxonomy . '_term_edit_form_top', array( $this, 'edit_form_top' ), 10, 2 );
 				add_action( $taxonomy . '_edit_form_fields', array( $this, 'edit_form_fields' ), 10, 2 );
 			}
 		}
-		add_action( 'edit_' . $taxonomy, array( $this, 'edit' ), 10 );
+		add_action( 'edited_' . $taxonomy, array( $this, 'edit' ), 10 );
 	}
 
 	public function set_taxonomies( $taxonomies ) {
@@ -42,12 +43,14 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 		}
 	}
 
-	private function callback( $tag, $taxonomy ) {
-		echo '<div class="hocwp-theme">';
+	public function edit_form_top( $tag, $taxonomy ) {
 		wp_nonce_field( $taxonomy, $taxonomy . '_nonce' );
+	}
+
+	private function callback( $tag, $taxonomy ) {
 		foreach ( (array) $this->fields as $field ) {
 			if ( ! isset( $field['callback_args']['value'] ) ) {
-				$id = $field['callback_args']['id'];
+				$id = $this->get_name( $field );
 				if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
 					$tmp = explode( '[', $id );
 					foreach ( $tmp as $key => $a ) {
@@ -83,11 +86,11 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 				$field['callback_args']['value'] = $value;
 			}
 			?>
-			<tr class="form-field term-<?php echo $id; ?>-wrap">
-				<th scope="row">
-					<label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
-				</th>
-				<td>
+            <tr class="hocwp-theme form-field term-<?php echo $id; ?>-wrap">
+                <th scope="row">
+                    <label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
+                </th>
+                <td>
 					<?php
 					unset( $field['callback_args']['label'] );
 					call_user_func( $field['callback'], $field['callback_args'] );
@@ -100,11 +103,10 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 					}
 					do_action( 'hocwp_theme_meta_term_' . $taxonomy . '_' . $id );
 					?>
-				</td>
-			</tr>
+                </td>
+            </tr>
 			<?php
 		}
-		echo '</div>';
 	}
 
 	public function edit( $term_id ) {
@@ -112,8 +114,11 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 		if ( ! HOCWP_Theme_Utility::verify_nonce( $taxonomy, $taxonomy . '_nonce' ) ) {
 			return;
 		}
-		foreach ( $this->fields as $field ) {
-			$id    = $field['id'];
+		foreach ( (array) $this->fields as $field ) {
+			if ( isset( $field['callback_args']['disabled'] ) || isset( $field['callback_args']['readonly'] ) ) {
+				continue;
+			}
+			$id    = $this->get_name( $field );
 			$value = $this->sanitize_data( $field );
 			update_term_meta( $term_id, $id, $value );
 		}

@@ -1,6 +1,19 @@
 <?php
 
-class HOCWP_Theme_Sanitize {
+final class HOCWP_Theme_Sanitize {
+	protected static $_instance = null;
+
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	private function __construct() {
+	}
+
 	public static function extension( $file, $extension ) {
 		$extension = trim( $extension, '' );
 		$extension = trim( $extension, '.' );
@@ -85,4 +98,101 @@ class HOCWP_Theme_Sanitize {
 
 		return $result;
 	}
+
+	public function form_post( $key, $type, $data = null ) {
+		if ( null == $data ) {
+			$data = $_POST;
+		}
+		$value = ( is_array( $data ) && isset( $data[ $key ] ) ) ? $data[ $key ] : '';
+
+		return HT_Sanitize()->data( $value, $type );
+	}
+
+	public static function data( $value, $type ) {
+		switch ( $type ) {
+			case 'text':
+			case 'string':
+				$value = maybe_serialize( $value );
+				$value = wp_strip_all_tags( $value );
+				break;
+			case 'url':
+				$value = esc_url_raw( $value );
+				break;
+			case 'bool':
+			case 'boolean':
+				$value = ( 1 == $value ) ? 1 : 0;
+				break;
+			case 'positive_integer':
+				$value = absint( $value );
+				if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
+					$value = '';
+				}
+				break;
+			case 'integer':
+				$value = intval( $value );
+				break;
+			case 'non_negative_number':
+				$value = abs( $value );
+				break;
+			case 'timestamp':
+				$value = strtotime( $value );
+				break;
+		}
+
+		return $value;
+	}
+
+	public function size( $size ) {
+		if ( is_array( $size ) ) {
+			if ( ! isset( $size['width'] ) ) {
+				if ( isset( $size[0] ) ) {
+					$size['width'] = $size[0];
+				} else {
+					$size['width'] = 0;
+				}
+			}
+			if ( ! isset( $size['height'] ) ) {
+				if ( isset( $size[1] ) ) {
+					$size['height'] = $size[1];
+				} else {
+					$size['height'] = 0;
+				}
+			}
+			$size[0] = $size['width'];
+			$size[1] = $size['height'];
+
+			return $size;
+		}
+		if ( is_numeric( $size ) ) {
+			$size = absint( $size );
+
+			return array( $size, $size );
+		}
+
+		return false;
+	}
+
+	public function html_id( $id ) {
+		if ( is_array( $id ) ) {
+			$id = implode( '@', $id );
+		}
+		$id    = strtolower( $id );
+		$id    = str_replace( '][', '_', $id );
+		$chars = array(
+			'-',
+			' ',
+			'[',
+			']',
+			'@',
+			'.'
+		);
+		$id    = str_replace( $chars, '_', $id );
+		$id    = trim( $id, '_' );
+
+		return $id;
+	}
+}
+
+function HT_Sanitize() {
+	return HOCWP_Theme_Sanitize::instance();
 }

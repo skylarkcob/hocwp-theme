@@ -67,7 +67,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		wp_nonce_field( $this->id, $this->id . '_nonce' );
 		foreach ( (array) $this->fields as $field ) {
 			if ( ! isset( $field['callback_args']['value'] ) ) {
-				$id = $field['callback_args']['id'];
+				$id = $this->get_name( $field );
 				if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
 					$tmp = explode( '[', $id );
 					foreach ( $tmp as $key => $a ) {
@@ -98,12 +98,14 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 					}
 					$field['callback_args']['data-date-format'] = HOCWP_Theme::javascript_datetime_format( $format );
 
-					$value = date( $format, $value );
+					if ( ! empty( $value ) ) {
+						$value = date( $format, $value );
+					}
 				}
 				$field['callback_args']['value'] = $value;
 			}
 			?>
-			<div class="meta-row">
+            <div class="meta-row">
 				<?php
 				call_user_func( $field['callback'], $field['callback_args'] );
 				$desc = isset( $field['description'] ) ? $field['description'] : '';
@@ -115,7 +117,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 				}
 				do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
 				?>
-			</div>
+            </div>
 			<?php
 		}
 		echo '</div>';
@@ -125,8 +127,13 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		if ( ! HOCWP_Theme_Utility::can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
 			return;
 		}
-		foreach ( $this->fields as $field ) {
-			$id    = $field['id'];
+
+		foreach ( (array) $this->fields as $field ) {
+			if ( isset( $field['callback_args']['disabled'] ) || isset( $field['callback_args']['readonly'] ) ) {
+				continue;
+			}
+			$id = $this->get_name( $field );
+
 			$value = $this->sanitize_data( $field );
 			update_post_meta( $post_id, $id, $value );
 		}

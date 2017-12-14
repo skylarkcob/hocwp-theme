@@ -1,6 +1,6 @@
 <?php
 function hocwp_theme_media_file_exists( $id ) {
-	if ( file_exists( get_attached_file( $id ) ) ) {
+	if ( HT()->is_file( get_attached_file( $id ) ) ) {
 		return true;
 	}
 

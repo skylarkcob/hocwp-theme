@@ -1,6 +1,19 @@
 <?php
 
-class HOCWP_Theme_SVG_Icon {
+final class HOCWP_Theme_SVG_Icon {
+	protected static $_instance = null;
+
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	private function __construct() {
+	}
+
 	public static function build( $path_d, $atts = array() ) {
 		$defaults        = array(
 			'xmlns' => 'http://www.w3.org/2000/svg'
@@ -141,4 +154,8 @@ class HOCWP_Theme_SVG_Icon {
 		self::helper( __FUNCTION__, $d, $atts );
 		unset( $d, $defaults );
 	}
+}
+
+function HT_SVG_Icon() {
+	return HOCWP_Theme_SVG_Icon::instance();
 }

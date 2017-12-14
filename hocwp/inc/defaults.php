@@ -17,6 +17,10 @@ if ( ! isset( $hocwp_theme->temp_data ) ) {
 	$hocwp_theme->temp_data = array();
 }
 
+if ( ! isset( $hocwp_theme->loop_data ) ) {
+	$hocwp_theme->loop_data = array();
+}
+
 if ( ! isset( $hocwp_theme->options ) ) {
 	$hocwp_theme->options = (array) get_option( 'hocwp_theme' );
 }
@@ -28,6 +32,8 @@ if ( ! isset( $hocwp_theme->active_extensions ) ) {
 if ( ! isset( $hocwp_theme->option ) ) {
 	$hocwp_theme->option = '';
 }
+
+$hocwp_theme->users_can_register = (bool) get_option( 'users_can_register' );
 
 if ( ! isset( $hocwp_theme->defaults ) ) {
 	$hocwp_theme->defaults = array();
@@ -69,6 +75,7 @@ $hocwp_theme->defaults['date_format']     = get_option( 'date_format' );
 $hocwp_theme->defaults['time_format']     = get_option( 'time_format' );
 $hocwp_theme->defaults['timezone_string'] = get_option( 'timezone_string' );
 $hocwp_theme->defaults['posts_per_page']  = get_option( 'posts_per_page' );
+$hocwp_theme->defaults['locale']          = get_locale();
 
 /*
  * SMTP Email
@@ -81,12 +88,32 @@ $hocwp_theme->defaults['options']['smtp']['encryption'] = 'ssl';
 /*
  * Discussion
  */
-$hocwp_theme->defaults['options']['discussion']['avatar_size']   = 48;
-$hocwp_theme->defaults['options']['discussion']['comment_sytem'] = 'default';
+$hocwp_theme->defaults['options']['discussion']['avatar_size']    = 48;
+$hocwp_theme->defaults['options']['discussion']['comment_system'] = 'default';
 
 /*
  * General
  */
 $hocwp_theme->defaults['options']['general']['logo_display'] = 'image';
+
+/*
+ * Home
+ */
+$hocwp_theme->defaults['options']['home']['posts_per_page'] = isset( $hocwp_theme->options['home']['posts_per_page'] ) ? absint( $hocwp_theme->options['home']['posts_per_page'] ) : $hocwp_theme->defaults['posts_per_page'];
+
+/*
+ * Reading
+ */
+$hocwp_theme->defaults['options']['reading']['excerpt_more'] = '&hellip;';
+
+/*
+ * Media
+ */
+$hocwp_theme->defaults['options']['media']['upload_per_day'] = 10;
+
+/*
+ * VIP
+ */
+$hocwp_theme->defaults['options']['vip']['post_price'] = 100;
 
 $hocwp_theme->options = wp_parse_args( $hocwp_theme->options, $hocwp_theme->defaults['options'] );

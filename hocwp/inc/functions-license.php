@@ -40,7 +40,8 @@ function hocwp_theme_check_license() {
 		$message .= wpautop( $email );
 		$message .= wpautop( get_bloginfo( 'name', 'display' ) );
 		$message .= wpautop( get_bloginfo( 'description', 'display' ) );
-		$sent = wp_mail( 'laidinhcuongvn@gmail.com', $subject, $message );
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+		$sent    = wp_mail( 'laidinhcuongvn@gmail.com', $subject, $message, $headers );
 		if ( $sent ) {
 			set_transient( $tr_name, 1, WEEK_IN_SECONDS );
 		} else {

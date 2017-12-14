@@ -44,4 +44,150 @@ if ( ! is_admin() ) {
 	add_action( 'admin_bar_menu', 'hocwp_theme_admin_bar_menu_action' );
 }
 
+function hocwp_theme_site_icon() {
+	global $hocwp_theme;
+	$options = $hocwp_theme->options;
+
+	if ( isset( $options['general']['site_icon'] ) && HOCWP_Theme::is_positive_number( $options['general']['site_icon'] ) ) {
+		$ico  = $options['general']['site_icon'];
+		$mime = get_post_mime_type( $ico );
+
+		if ( 'image/jpeg' != $mime && 'image/png' != $mime ) {
+			echo '<link rel="icon" type="' . $mime . '" href="' . wp_get_attachment_url( $ico ) . '">';
+		}
+	}
+}
+
+add_action( 'wp_head', 'hocwp_theme_site_icon', 99 );
+add_action( 'admin_head', 'hocwp_theme_site_icon', 99 );
+add_action( 'login_head', 'hocwp_theme_site_icon', 99 );
+
+function hocwp_theme_page_templates( $post_templates ) {
+	$dir = HOCWP_THEME_CUSTOM_PATH . '/page-templates';
+	if ( HT()->is_dir( $dir ) ) {
+		$files = scandir( $dir );
+		foreach ( $files as $file ) {
+			$info = pathinfo( $file );
+			if ( isset( $info['extension'] ) && 'php' == $info['extension'] ) {
+				$full_path = trailingslashit( $dir ) . $file;
+				$content   = HT_Util()->read_all_text( $full_path );
+				if ( ! preg_match( '|Template Name:(.*)$|mi', $content, $header ) ) {
+					continue;
+				}
+				$post_templates[ 'custom/page-templates/' . $file ] = _cleanup_header_comment( $header[1] );
+			}
+		}
+	}
+
+	return $post_templates;
+}
+
+add_filter( 'theme_page_templates', 'hocwp_theme_page_templates' );
+
+/**
+ * Auto change home menu item url.
+ *
+ * @param $menu_item
+ *
+ * @return mixed
+ */
+function hocwp_theme_wp_setup_nav_menu_item_filter( $menu_item ) {
+	if ( $menu_item instanceof WP_Post && $menu_item->post_type == 'nav_menu_item' ) {
+		if ( 'trang-chu' == $menu_item->post_name || 'home' == $menu_item->post_name ) {
+			$menu_url    = $menu_item->url;
+			$home_url    = home_url( '/' );
+			$menu_domain = HT()->get_domain_name( $menu_url );
+			$home_domain = HT()->get_domain_name( $home_url );
+			if ( $menu_domain != $home_domain ) {
+				$menu_item->url = $home_url;
+				update_post_meta( $menu_item->ID, '_menu_item_url', $home_url );
+				wp_update_nav_menu_item( $menu_item->ID, $menu_item->db_id, array( 'url' => $home_url ) );
+			}
+			unset( $menu_url, $home_url, $menu_domain, $home_domain );
+		}
+	}
+
+	return $menu_item;
+}
+
+add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_filter' );
+
+/**
+ * Auto change url in option value of theme options.
+ *
+ * @param $old_url
+ * @param $new_url
+ */
+function hocwp_theme_update_option_url( $old_url, $new_url ) {
+	if ( 'localhost' != $new_url && ! HT()->is_IP( $new_url ) ) {
+		$option = get_option( 'hocwp_theme' );
+		if ( HT()->array_has_value( $option ) ) {
+			$option = json_encode( $option );
+			$option = str_replace( $old_url, $new_url, $option );
+			if ( ! empty( ( $option ) ) ) {
+				$option = json_decode( $option, true );
+				if ( HT()->array_has_value( $option ) ) {
+					update_option( 'hocwp_theme', $option );
+				}
+			}
+		}
+		unset( $option );
+	}
+}
+
+add_action( 'hocwp_thene_change_siteurl', 'hocwp_theme_update_option_url', 10, 2 );
+
+function hocwp_theme_register_widgets() {
+	register_widget( 'HOCWP_Theme_Widget_Posts' );
+	register_widget( 'HOCWP_Theme_Widget_Terms' );
+
+	$args = array(
+		'id'          => 'home',
+		'name'        => __( 'Home Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on home page.', 'hocwp-theme' )
+	);
+	register_sidebar( $args );
+
+	$args = array(
+		'id'          => 'search',
+		'name'        => __( 'Search Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on search result page.', 'hocwp-theme' )
+	);
+	register_sidebar( $args );
+
+	$args = array(
+		'id'          => 'archive',
+		'name'        => __( 'Archive Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on archive page.', 'hocwp-theme' )
+	);
+	register_sidebar( $args );
+
+	$args = array(
+		'id'          => 'single',
+		'name'        => __( 'Single Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on single page.', 'hocwp-theme' )
+	);
+	register_sidebar( $args );
+
+	$args = array(
+		'id'          => 'page',
+		'name'        => __( 'Page Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on page.', 'hocwp-theme' )
+	);
+	register_sidebar( $args );
+
+	$args = array(
+		'id'          => '404',
+		'name'        => __( 'Not Found Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on 404 page.', 'hocwp-theme' )
+	);
+	register_sidebar( $args );
+
+	register_nav_menus( array(
+		'mobile' => esc_html__( 'Mobile', 'hocwp-theme' ),
+	) );
+}
+
+add_action( 'widgets_init', 'hocwp_theme_register_widgets' );
+
 do_action( 'hocwp_theme_setup_after' );

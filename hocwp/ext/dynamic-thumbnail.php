@@ -37,14 +37,16 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 	} else {
 		$url = wp_get_attachment_url( $post_thumbnail_id );
 	}
+	$width  = ( is_array( $sizes ) && isset( $sizes['width'] ) ) ? $sizes['width'] : '';
+	$height = isset( $sizes['height'] ) ? $sizes['height'] : '';
 	if ( HOCWP_Theme::is_image_url( $url ) ) {
 		$src    = HOCWP_THEME_CORE_URL . '/ext/thumbnail.php';
 		$src    = esc_url_raw( $src );
 		$params = array(
 			'src'     => $url,
 			'crop'    => isset( $sizes['crop'] ) ? $sizes['crop'] : 1,
-			'width'   => isset( $sizes['width'] ) ? $sizes['width'] : '',
-			'height'  => isset( $sizes['height'] ) ? $sizes['height'] : '',
+			'width'   => $width,
+			'height'  => $height,
 			'cache'   => isset( $attr['cache'] ) ? $attr['cache'] : 1,
 			'quality' => isset( $attr['quality'] ) ? $attr['quality'] : 60
 		);
@@ -67,6 +69,15 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		} else {
 			$html = sprintf( '<img class="%s" src="%s" alt="%s">', $class, $src, $alt );
 		}
+	} else {
+		$style = '';
+		if ( ! empty( $width ) ) {
+			$style .= "width:{$width}px;";
+		}
+		if ( ! empty( $height ) ) {
+			$style .= "height:{$height}px;";
+		}
+		$html = "<span class='no-thumbnail wp-post-image' style='$style'></span>";
 	}
 
 	return $html;

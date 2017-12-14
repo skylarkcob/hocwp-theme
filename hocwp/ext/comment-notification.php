@@ -66,7 +66,8 @@ function hocwp_theme_comment_reply_notification( $comment ) {
 				}
 				$message = wpautop( $message );
 				$subject = strip_tags( $subject );
-				wp_mail( $parent->comment_author_email, $subject, $message );
+				$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+				wp_mail( $parent->comment_author_email, $subject, $message, $headers );
 				unset( $obj, $subject );
 			}
 			unset( $parent );

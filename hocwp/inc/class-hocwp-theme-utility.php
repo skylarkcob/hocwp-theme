@@ -1,6 +1,19 @@
 <?php
 
-class HOCWP_Theme_Utility {
+final class HOCWP_Theme_Utility {
+	protected static $_instance = null;
+
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
+	}
+
+	private function __construct() {
+	}
+
 	public static function get_wp_image_url( $name ) {
 		return includes_url( 'images/' . $name );
 	}
@@ -10,7 +23,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public static function get_custom_image_url( $name ) {
-		return get_template_directory_uri() . '/custom/images/' . $name;
+		return HOCWP_THEME_CUSTOM_URL . '/images/' . $name;
 	}
 
 	public static function get_current_url( $with_param = false ) {
@@ -34,11 +47,176 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_current_url', $current_url );
 	}
 
+	public function get_the_excerpt( $excerpt_length = null, $excerpt_more = null ) {
+		if ( ! is_numeric( $excerpt_length ) ) {
+			$excerpt_length = apply_filters( 'excerpt_length', 55 );
+		}
+
+		$obj     = get_post( get_the_ID() );
+		$excerpt = ( empty( $obj->post_excerpt ) ) ? $obj->post_content : $obj->post_excerpt;
+		$excerpt = wp_strip_all_tags( $excerpt );
+		$excerpt = strip_shortcodes( $excerpt );
+
+		return wp_trim_words( $excerpt, $excerpt_length, $excerpt_more );
+	}
+
+	public function return_post( $post_or_id = null, $output = OBJECT ) {
+		$output = strtoupper( $output );
+		if ( $post_or_id instanceof WP_Post ) {
+			$current = $post_or_id;
+		} elseif ( HT()->is_positive_number( $post_or_id ) ) {
+			$current = get_post( $post_or_id );
+		} else {
+			$current = get_post( get_the_ID() );
+		}
+		if ( ! ( $current instanceof WP_Post ) ) {
+			return new WP_Error();
+		}
+		if ( OBJECT == $output ) {
+			return $current;
+		} elseif ( 'ID' == $output ) {
+			return $current->ID;
+		}
+
+		return $current->ID;
+	}
+
+	public function get_first_term( $post_id = null, $taxonomy = 'category' ) {
+		$post_id = $this->return_post( $post_id, 'id' );
+		$terms   = wp_get_post_terms( $post_id, $taxonomy );
+
+		return ( HT()->array_has_value( $terms ) ) ? current( $terms ) : null;
+	}
+
+	public function get_term_drop_down( $args = array() ) {
+		$defaults = array(
+			'hide_empty'    => false,
+			'hide_if_empty' => true,
+			'hierarchical'  => true,
+			'orderby'       => 'NAME',
+			'show_count'    => true,
+			'echo'          => false,
+			'taxonomy'      => 'category'
+		);
+		$args     = wp_parse_args( $args, $defaults );
+		$select   = wp_dropdown_categories( $args );
+		if ( ! empty( $select ) ) {
+			$required     = (bool) HT()->get_value_in_array( $args, 'required', false );
+			$autocomplete = (bool) HT()->get_value_in_array( $args, 'autocomplete', false );
+			if ( $required ) {
+				$select = HT()->add_html_attribute( 'select', $select, 'required aria-required="true"' );
+			}
+			if ( ! $autocomplete ) {
+				$select = HT()->add_html_attribute( 'select', $select, 'autocomplete="off"' );
+			}
+		}
+
+		return $select;
+	}
+
+	public function fetch_feed( $args = array() ) {
+		$number = absint( HT()->get_value_in_array( $args, 'number', 5 ) );
+		$offset = HT()->get_value_in_array( $args, 'offset', 0 );
+		$url    = HT()->get_value_in_array( $args, 'url' );
+		if ( empty( $url ) ) {
+			return '';
+		}
+		if ( ! function_exists( 'fetch_feed' ) ) {
+			load_template( ABSPATH . WPINC . '/feed.php' );
+		}
+		$rss = fetch_feed( $url );
+		if ( ! is_wp_error( $rss ) ) {
+			if ( ! $rss->get_item_quantity() ) {
+				$error = new WP_Error( 'feed_down', __( 'An error has occurred, which probably means the feed is down. Try again later.', 'hocwp-theme' ) );
+				$rss->__destruct();
+				unset( $rss );
+
+				return $error;
+			}
+			$max    = $rss->get_item_quantity( $number );
+			$result = $rss->get_items( $offset, $max );
+
+		} else {
+			$result = $rss;
+		}
+
+		return $result;
+	}
+
+	public function get_feed_items( $args = array() ) {
+		$url = HT()->get_value_in_array( $args, 'url' );
+		if ( empty( $url ) ) {
+			return '';
+		}
+		$number         = HT()->get_value_in_array( $args, 'number' );
+		$expiration     = HT()->get_value_in_array( $args, 'expiration', 12 * HOUR_IN_SECONDS );
+		$transient_name = 'hocwp_theme_fetch_feed_' . md5( json_encode( $args ) );
+		if ( HT()->is_positive_number( $number ) ) {
+			$transient_name .= '_' . $number;
+		}
+		if ( false === ( $result = get_transient( $transient_name ) ) ) {
+			$items = $this->fetch_feed( $args );
+			if ( HT()->array_has_value( $items ) ) {
+				$result = array();
+				foreach ( $items as $item ) {
+					if ( ! $this->is_object_valid( $item ) ) {
+						continue;
+					}
+					$description = $item->get_description();
+					$thumbnail   = HT()->get_first_image_source( $description );
+					$description = wp_strip_all_tags( $description );
+					$content     = $item->get_content();
+					if ( empty( $thumbnail ) ) {
+						$thumbnail = HT()->get_first_image_source( $content );
+					}
+					$value = array(
+						'permalink'   => $item->get_permalink(),
+						'title'       => $item->get_title(),
+						'date'        => $item->get_date(),
+						'image_url'   => $thumbnail,
+						'description' => $description,
+						'content'     => $content
+					);
+					array_push( $result, $value );
+				}
+				if ( HT()->array_has_value( $result ) ) {
+					set_transient( $transient_name, $result, $expiration );
+				}
+			} else {
+				return $items;
+			}
+		}
+
+		return $result;
+	}
+
+	public function is_object_valid( $object ) {
+		return ( is_object( $object ) && ! is_wp_error( $object ) ) ? true : false;
+	}
+
+	public static function get_file_or_dir_url( $file_or_dir ) {
+		if ( ! empty( $file_or_dir ) ) {
+			$file_or_dir = wp_normalize_path( $file_or_dir );
+
+			$dir = ABSPATH;
+			$dir = wp_normalize_path( $dir );
+			$dir = untrailingslashit( $dir );
+			$url = untrailingslashit( get_site_url() );
+			$url = str_replace( '/', '\\', $url );
+			$url = str_replace( $dir, $url, $file_or_dir );
+			$url = str_replace( '\\', '/', $url );
+
+			return $url;
+		}
+
+		return '';
+	}
+
 	public static function ajax_overlay() {
 		?>
-		<div class="hocwp-theme ajax-overlay">
-			<img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
-		</div>
+        <div class="hocwp-theme ajax-overlay">
+            <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
+        </div>
 		<?php
 	}
 
@@ -54,8 +232,58 @@ class HOCWP_Theme_Utility {
 		return $wp_filesystem;
 	}
 
+	public function rest_api_get( $base_url, $object = 'posts', $query = '' ) {
+		$base_url = trailingslashit( $base_url ) . 'wp-json/wp/v2/' . $object;
+		if ( ! empty( $query ) ) {
+			$base_url .= '?' . $query;
+		}
+		$data = HT_Util()->read_all_text( $base_url );
+		if ( ! empty( $data ) ) {
+			$data = json_decode( $data );
+		}
+
+		return $data;
+	}
+
+	public static function get_contents( $url ) {
+		$filesystem = self::filesystem();
+		if ( $filesystem instanceof WP_Filesystem_Base ) {
+			return $filesystem->get_contents( $url );
+		}
+
+		return '';
+	}
+
+	public static function read_all_text( $path ) {
+		if ( HT()->is_file( $path ) ) {
+			return self::get_contents( $path );
+		}
+
+		return '';
+	}
+
+	public static function write_all_text( $path, $text ) {
+		$filesystem = self::filesystem();
+		if ( $filesystem instanceof WP_Filesystem_Base ) {
+			return $filesystem->put_contents( $path, $text );
+		}
+
+		return '';
+	}
+
 	public static function wrap_text( $before, $text, $after ) {
 		echo $before . $text . $after;
+	}
+
+	public static function normalize_path( $path, $slash = '/' ) {
+		if ( ! empty( $path ) ) {
+			$path = wp_normalize_path( $path );
+			if ( '/' !== $slash ) {
+				$path = str_replace( '/', '\\', $path );
+			}
+		}
+
+		return $path;
 	}
 
 	public static function admin_notice( $args = array() ) {
@@ -66,35 +294,60 @@ class HOCWP_Theme_Utility {
 		}
 		$defaults = array(
 			'type'        => 'success',
-			'dismissible' => true
+			'dismissible' => true,
+			'autop'       => true
 		);
 		$args     = wp_parse_args( $args, $defaults );
 		$class    = 'notice fade hocwp-theme';
-		$class .= ' notice-' . $args['type'];
+		$class    .= ' notice-' . $args['type'];
 		if ( $args['dismissible'] ) {
 			$class .= ' is-dismissible';
 		}
 		$message = isset( $args['message'] ) ? $args['message'] : '';
 		if ( ! empty( $message ) ) {
-			$message         = wpautop( $message );
+			if ( $args['autop'] ) {
+				$message = wpautop( $message );
+			} else {
+				$message = HT()->wrap_text( $message, '<p>', '</p>' );
+			}
 			$hidden_interval = isset( $args['hidden_interval'] ) ? $args['hidden_interval'] : 0;
 			if ( HOCWP_Theme::is_positive_number( $hidden_interval ) ) {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
-				<script>
-					jQuery(document).ready(function ($) {
-						setTimeout(function () {
-							var notices = $('.hocwp-theme.notice.auto-hide');
-							notices.fadeOut(1000);
-						}, <?php echo $hidden_interval; ?>);
-					});
-				</script>
+                <script>
+                    jQuery(document).ready(function ($) {
+                        setTimeout(function () {
+                            var notices = $('.hocwp-theme.notice.auto-hide');
+                            notices.fadeOut(1000);
+                        }, <?php echo $hidden_interval; ?>);
+                    });
+                </script>
 				<?php
 				$message .= ob_get_clean();
 			}
-			printf( '<div class="%1$s">%2$s</div>', esc_attr( $class ), $message );
+			if ( isset( $args['id'] ) ) {
+				$result = sprintf( '<div id="%s" class="%s">%s</div>', $args['id'], esc_attr( $class ), $message );
+			} else {
+				$result = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $class ), $message );
+			}
+			$echo = isset( $args['echo'] ) ? (bool) $args['echo'] : true;
+			if ( $echo ) {
+				echo $result;
+			}
+
+			return $result;
 		}
+
+		return '';
+	}
+
+	public function get_terms( $taxonomy, $args = array() ) {
+		$defaults = array( 'taxonomy' => $taxonomy );
+		$args     = wp_parse_args( $args, $defaults );
+		$query    = new WP_Term_Query( $args );
+
+		return $query->get_terms();
 	}
 
 	public static function get_image_sizes() {
@@ -118,32 +371,20 @@ class HOCWP_Theme_Utility {
 	}
 
 	public static function get_image_size( $size ) {
-		if ( is_array( $size ) || has_image_size( $size ) ) {
-			if ( ! isset( $size['width'] ) ) {
-				if ( isset( $size[0] ) ) {
-					$size['width'] = $size[0];
-				} else {
-					$size['width'] = 0;
-				}
+		if ( ! ( is_array( $size ) || has_image_size( $size ) ) ) {
+			$size  = strval( $size );
+			$sizes = self::get_image_sizes();
+			if ( 'post-thumbnail' == $size && isset( $sizes['thumbnail'] ) ) {
+				$size = 'thumbnail';
+			} else if ( ( 'thumbnail' == $size && ! isset( $sizes['thumbnail'] ) ) || ( 'thumbnail' == $size && isset( $sizes['post-thumbnail'] ) ) ) {
+				$size = 'post-thumbnail';
 			}
-			if ( ! isset( $size['height'] ) ) {
-				if ( isset( $size[1] ) ) {
-					$size['height'] = $size[1];
-				} else {
-					$size['height'] = 0;
-				}
+			if ( isset( $sizes[ $size ] ) ) {
+				$size = $sizes[ $size ];
 			}
-			$size[0] = $size['width'];
-			$size[1] = $size['height'];
-
-			return $size;
-		}
-		$sizes = self::get_image_sizes();
-		if ( isset( $sizes[ $size ] ) ) {
-			return $sizes[ $size ];
 		}
 
-		return false;
+		return HT_Sanitize()->size( $size );
 	}
 
 	public static function get_image_width( $size ) {
@@ -168,7 +409,7 @@ class HOCWP_Theme_Utility {
 		return false;
 	}
 
-	public static function timestamp_to_string( $timestamp, $format = null ) {
+	public static function timestamp_to_string( $timestamp, $format = null, $timezone = null ) {
 		if ( ! is_int( $timestamp ) ) {
 			$timestamp = intval( $timestamp );
 		}
@@ -181,12 +422,28 @@ class HOCWP_Theme_Utility {
 		}
 		$date = new DateTime();
 		$date->setTimestamp( $timestamp );
-		if ( isset( $defaults['timezone_string'] ) && ! empty( $defaults['timezone_string'] ) ) {
-			$ts = new DateTimeZone( $defaults['timezone_string'] );
+		if ( null == $timezone ) {
+			if ( isset( $defaults['timezone_string'] ) && ! empty( $defaults['timezone_string'] ) ) {
+				$ts = new DateTimeZone( $defaults['timezone_string'] );
+				$date->setTimezone( $ts );
+			}
+		} else {
+			$ts = new DateTimeZone( $timezone );
 			$date->setTimezone( $ts );
 		}
 
 		return $date->format( $format );
+	}
+
+	public function insert_term( $term, $taxonomy, $args = array() ) {
+		$override = HT()->get_value_in_array( $args, 'override', false );
+		if ( ! $override ) {
+			$exists = get_term_by( 'name', $term, $taxonomy );
+			if ( $exists instanceof WP_Term ) {
+				return;
+			}
+		}
+		wp_insert_term( $term, $taxonomy, $args );
 	}
 
 	public static function verify_nonce( $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
@@ -215,56 +472,313 @@ class HOCWP_Theme_Utility {
 	}
 
 	public static function pagination( $args = array() ) {
-		$defaults = array(
-			'query' => $GLOBALS['wp_query']
-		);
-		$args     = wp_parse_args( $args, $defaults );
-		$query    = $args['query'];
-		if ( 2 > $query->max_num_pages ) {
+		if ( function_exists( 'hocwp_pagination' ) ) {
+			hocwp_pagination( $args );
+
 			return;
 		}
-		$big   = 999999999;
-		$pla   = array(
+		$defaults = array(
+			'query'         => $GLOBALS['wp_query'],
+			'dynamic_size'  => 1,
+			'show_all'      => false,
+			'label'         => '',
+			'end_size'      => 1,
+			'mid_size'      => 2,
+			'first_last'    => 0,
+			'current_total' => 0
+		);
+		$args     = wp_parse_args( $args, $defaults );
+		$args     = apply_filters( 'hocwp_theme_pagination_args', $args );
+		$query    = $args['query'];
+		if ( ! ( $query instanceof WP_Query ) ) {
+			return;
+		}
+		$total = $query->max_num_pages;
+		if ( 2 > $total ) {
+			return;
+		}
+		$big     = 999999999;
+		$paged   = self::get_paged();
+		$current = max( 1, $paged );
+		$pla     = array(
 			'base'    => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
 			'format'  => '?paged=%#%',
-			'current' => max( 1, get_query_var( 'paged' ) ),
-			'total'   => $query->max_num_pages,
+			'current' => $current,
+			'total'   => $total,
 			'type'    => 'array'
 		);
-		$args  = wp_parse_args( $args, $pla );
+		$args    = wp_parse_args( $args, $pla );
+		$next    = isset( $args['next'] ) ? $args['next'] : '';
+		if ( empty( $next ) ) {
+			$next = isset( $args['next_text'] ) ? $args['next_text'] : '';
+		}
+		$prev = isset( $args['prev'] ) ? $args['prev'] : '';
+		if ( empty( $prev ) ) {
+			$prev = isset( $args['prev_text'] ) ? $args['prev_text'] : '';
+		}
+		if ( ! empty( $next ) || ! empty( $prev ) ) {
+			$args['prev_next'] = true;
+			if ( is_string( $next ) && ! empty( $next ) ) {
+				$args['next_text'] = $next;
+			}
+			if ( is_string( $prev ) && ! empty( $prev ) ) {
+				$args['prev_text'] = $prev;
+			}
+		}
+		if ( empty( $next ) && empty( $prev ) ) {
+			$args['prev_next'] = false;
+		}
+
+		$dynamic_size = HT()->convert_to_boolean( $args['dynamic_size'] );
+
+		if ( $dynamic_size ) {
+			$show_all = HT()->convert_to_boolean( $args['show_all'] );
+			if ( $show_all ) {
+				$count = 0;
+				$label = $args['label'];
+				if ( ! empty( $label ) ) {
+					$count ++;
+				}
+				$end_size  = absint( $args['end_size'] );
+				$count     += $end_size;
+				$mid_size  = absint( $args['mid_size'] );
+				$count     += $mid_size;
+				$prev_next = $args['prev_next'];
+				if ( 1 == $prev_next ) {
+					$prev_text = $args['prev_text'];
+					if ( ! empty( $prev_text ) ) {
+						$count ++;
+					}
+					$next_text = $args['next_text'];
+					if ( ! empty( $next_text ) ) {
+						$count ++;
+					}
+				}
+				$first_last = $args['first_last'];
+				if ( 1 == $first_last ) {
+					$first_text = $args['first_text'];
+					if ( ! empty( $first_text ) ) {
+						$count ++;
+					}
+					$last_text = $args['last_text'];
+					if ( ! empty( $last_text ) ) {
+						$count ++;
+					}
+				}
+				$current_total = $args['current_total'];
+				if ( ! empty( $current_total ) ) {
+					$count ++;
+				}
+				if ( 1 == $paged && 11 > $count ) {
+					$end_size += ( 11 - $count );
+				} elseif ( 3 < $paged && 7 < $count && $paged < $total ) {
+					$mid_size = 0;
+				} elseif ( $paged == $total && 11 > $count ) {
+					$end_size += ( 11 - $count - 1 );
+				}
+				$args['end_size'] = $end_size;
+				$args['mid_size'] = $mid_size;
+			}
+		}
+
 		$items = paginate_links( $args );
 		if ( HOCWP_Theme::array_has_value( $items ) ) {
-			echo '<ul class="pagination">';
-			if ( isset( $args['label'] ) ) {
-				echo '<li class="label-item">' . $args['label'] . '</li>';
+			$first_last = isset( $args['first_last'] ) ? (bool) $args['first_last'] : false;
+			echo '<ul class="pagination hocwp-pagination">';
+			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
+				echo '<li class="label-item page-item"><span class="page-numbers label">' . $args['label'] . '</span></li>';
+			}
+			if ( $first_last ) {
+				$first = isset( $args['first'] ) ? $args['first'] : isset( $args['first_text'] ) ? $args['first_text'] : '';
+				if ( ! empty( $first ) && 2 < $current ) {
+					if ( true === $first ) {
+						$first = __( 'First', 'hocwp-theme' );
+					}
+					$url = get_pagenum_link( 1 );
+					echo '<li class="page-item"><a class="first page-numbers" href="' . esc_url( $url ) . '">' . $first . '</a></li>';
+				}
 			}
 			foreach ( $items as $item ) {
-				echo '<li>' . $item . '</li>';
+				echo '<li class="page-item">' . $item . '</li>';
 			}
-			echo '</ul>';
+			if ( $first_last ) {
+				$last = isset( $args['last'] ) ? $args['last'] : isset( $args['last_text'] ) ? $args['last_text'] : '';
+				if ( ! empty( $last ) && $current < ( $total - 1 ) ) {
+					if ( true === $last ) {
+						$last = __( 'Last', 'hocwp-theme' );
+					}
+					$url = get_pagenum_link( $total );
+					echo '<li class="page-item"><a class="last page-numbers" href="' . esc_url( $url ) . '">' . $last . '</a></li>';
+				}
+			}
 			$current_total = isset( $args['current_total'] ) ? $args['current_total'] : false;
 			if ( $current_total ) {
-				if ( ! is_string( $current_total ) ) {
+				if ( ! is_string( $current_total ) || ( false === strpos( $current_total, '[CURRENT]' ) && false === strpos( $current_total, '[TOTAL]' ) ) ) {
 					$current_total = __( 'Page [CURRENT]/[TOTAL]', 'hocwp-theme' );
 				}
-				$search        = array(
+				$search = array(
 					'[CURRENT]',
 					'[TOTAL]'
 				);
-				$replace       = array(
-					self::get_paged(),
+
+				$replace = array(
+					$paged,
 					$query->max_num_pages
 				);
+
 				$current_total = str_replace( $search, $replace, $current_total );
 				?>
-				<ul class="pagination current-total">
-					<li>
-						<a href="javascript:" title=""><?php echo $current_total; ?></a>
-					</li>
-				</ul>
+                <li class="page-item current-total">
+                    <a class="page-numbers" href="javascript:" title=""><?php echo $current_total; ?></a>
+                </li>
 				<?php
 			}
+			echo '</ul>';
 		}
+	}
+
+	public function term_link_html( $term ) {
+		if ( ! ( $term instanceof WP_Term ) ) {
+			return '';
+		}
+		$a = new HOCWP_Theme_HTML_Tag( 'a' );
+		$a->add_attribute( 'href', esc_url( get_term_link( $term ) ) );
+		$a->set_text( $term->name );
+		$a->add_attribute( 'class', sanitize_html_class( $term->taxonomy ) );
+		$tax = get_taxonomy( $term->taxonomy );
+		if ( $tax->hierarchical ) {
+			$a->add_attribute( 'rel', 'category' );
+		} else {
+			$a->add_attribute( 'rel', ' tag' );
+		}
+
+		return $a->build();
+	}
+
+	public function the_terms( $args = array() ) {
+		$terms  = HT()->get_value_in_array( $args, 'terms' );
+		$before = HT()->get_value_in_array( $args, 'before' );
+		$sep    = HT()->get_value_in_array( $args, 'separator', ', ' );
+		$after  = HT()->get_value_in_array( $args, 'after' );
+		if ( HT()->array_has_value( $terms ) ) {
+			echo $before;
+			$html = '';
+			foreach ( $terms as $term ) {
+				$html .= $this->term_link_html( $term ) . $sep;
+			}
+			$html = trim( $html, $sep );
+			echo $html;
+			echo $after;
+		} else {
+			$post_id  = HT()->get_value_in_array( $args, 'post_id', get_the_ID() );
+			$taxonomy = HT()->get_value_in_array( $args, 'taxonomy' );
+			the_terms( $post_id, $taxonomy, $before, $sep, $after );
+		}
+	}
+
+	public static function breadcrumb( $args = array() ) {
+		if ( is_home() ) {
+			return;
+		}
+		$separator   = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
+		$home_item   = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
+		$items       = array();
+		$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
+		if ( is_single() ) {
+			$obj     = get_post( get_the_ID() );
+			$terms   = wp_get_post_categories( $obj->ID );
+			$has_cat = false;
+			if ( ! is_wp_error( $terms ) && HT()->array_has_value( $terms ) ) {
+				$term = array_shift( $terms );
+				if ( HT()->is_positive_number( $term ) ) {
+					$term = get_category( $term );
+				}
+				if ( $term instanceof WP_Term ) {
+					$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
+					array_unshift( $items, $item );
+					$has_cat = true;
+					while ( $term->parent > 0 ) {
+						$term = get_category( $term->parent );
+						$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
+						array_unshift( $items, $item );
+					}
+				}
+			}
+			if ( ! $has_cat ) {
+				if ( 'post' != $obj->post_type && 'page' != $obj->post_type ) {
+					$type = get_post_type_object( $obj->post_type );
+					$item = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type->labels->singular_name );
+					array_unshift( $items, $item );
+				}
+			}
+		}
+		$last_item = '';
+		if ( is_category() ) {
+			$last_item = single_cat_title( '', false );
+		} elseif ( is_tag() ) {
+			$last_item = single_tag_title( '', false );
+		} elseif ( is_author() ) {
+			$last_item = '<span class="vcard">' . get_the_author() . '</span>';
+		} elseif ( is_year() ) {
+			$last_item = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
+		} elseif ( is_month() ) {
+			$last_item = get_the_date( _x( 'F Y', 'monthly archives date format', 'hocwp-theme' ) );
+		} elseif ( is_day() ) {
+			$last_item = get_the_date( _x( 'F j, Y', 'daily archives date format', 'hocwp-theme' ) );
+		} elseif ( is_tax( 'post_format' ) ) {
+			if ( is_tax( 'post_format', 'post-format-aside' ) ) {
+				$last_item = _x( 'Asides', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) {
+				$last_item = _x( 'Galleries', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-image' ) ) {
+				$last_item = _x( 'Images', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-video' ) ) {
+				$last_item = _x( 'Videos', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-quote' ) ) {
+				$last_item = _x( 'Quotes', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-link' ) ) {
+				$last_item = _x( 'Links', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-status' ) ) {
+				$last_item = _x( 'Statuses', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-audio' ) ) {
+				$last_item = _x( 'Audio', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-chat' ) ) {
+				$last_item = _x( 'Chats', 'post format archive title', 'hocwp-theme' );
+			}
+		} elseif ( is_post_type_archive() ) {
+			$last_item = post_type_archive_title( '', false );
+		} elseif ( is_tax() ) {
+			$last_item = single_term_title( '', false );
+		} elseif ( is_single() || is_singular() ) {
+			$last_item = get_the_title();
+		} elseif ( is_search() ) {
+			$last_item = get_search_query();
+		} elseif ( is_404() ) {
+			$last_item = __( 'Page not found', 'hocwp-theme' );
+		}
+		if ( ! empty( $last_item ) ) {
+			$items[] = '<span class="breadcrumb_last active breadcrumb-item breadcrumb-last trail-item trail-end">' . $last_item . '</span>';
+		}
+		$count = count( $items );
+		?>
+        <nav class="breadcrumb hocwp-breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+			<span xmlns:v="http://rdf.data-vocabulary.org/#">
+				<span typeof="v:Breadcrumb">
+					<?php echo $home_item . '&nbsp;' . $separator; ?>
+                    <span rel="v:child" typeof="v:Breadcrumb">
+						<?php
+						foreach ( $items as $index => $item ) {
+							echo $item;
+							if ( $index < ( $count - 1 ) ) {
+								echo '&nbsp;' . $separator . '&nbsp;';
+							}
+						}
+						?>
+					</span>
+				</span>
+			</span>
+        </nav>
+		<?php
 	}
 
 	public static function get_paged() {
@@ -278,4 +792,506 @@ class HOCWP_Theme_Utility {
 
 		return $sent;
 	}
+
+	public static function post_types_support_featured() {
+		$post_types = get_post_types( array( 'public' => true ) );
+		unset( $post_types['attachment'] );
+
+		return apply_filters( 'post_types_support_featured', $post_types );
+	}
+
+	public static function get_theme_option( $name, $default = '', $base = 'general' ) {
+		global $hocwp_theme;
+		$options = $hocwp_theme->options;
+		$options = isset( $options[ $base ] ) ? $options[ $base ] : '';
+		$value   = isset( $options[ $name ] ) ? $options[ $name ] : '';
+		if ( empty( $value ) && gettype( $value ) != gettype( $default ) ) {
+			$value = $default;
+		}
+
+		return $value;
+	}
+
+	public static function get_theme_option_term( $name, $taxonomy = 'category', $base = 'general', $slug = '' ) {
+		$term_id = self::get_theme_option( $name, '', $base );
+		if ( ! HT()->is_positive_number( $term_id ) && ! empty( $slug ) ) {
+			$term = get_term_by( 'slug', $slug, $taxonomy );
+
+			return $term;
+		}
+
+		return get_term( $term_id, $taxonomy );
+	}
+
+	public static function get_theme_option_post( $name, $post_type = 'any', $base = 'general', $slug = '' ) {
+		$id = self::get_theme_option( $name, '', $base );
+		if ( ! HT()->is_positive_number( $id ) && ! empty( $slug ) ) {
+			$args  = array(
+				'post_type'   => $post_type,
+				'name'        => $slug,
+				'post_status' => 'publish'
+			);
+			$query = new WP_Query( $args );
+			if ( $query->have_posts() ) {
+				return current( $query->posts );
+			}
+
+			return null;
+		}
+
+		return get_post( $id );
+	}
+
+	public function get_current_post_type() {
+		global $post_type;
+		$result = $post_type;
+		if ( empty( $result ) ) {
+			if ( isset( $_GET['post_type'] ) ) {
+				$result = $_GET['post_type'];
+			} else {
+				$action  = isset( $_GET['action'] ) ? $_GET['action'] : '';
+				$post_id = isset( $_GET['post'] ) ? $_GET['post'] : 0;
+				if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
+					$post   = get_post( $post_id );
+					$result = $post->post_type;
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	public function get_current_new_post() {
+		global $pagenow;
+		$result = null;
+		if ( 'post-new.php' == $pagenow ) {
+			$query_args = array(
+				'post_status'    => 'auto-draft',
+				'orderby'        => 'date',
+				'order'          => 'desc',
+				'posts_per_page' => 1,
+				'cache'          => false
+			);
+			$post_type  = $this->get_current_post_type();
+			if ( ! empty( $post_type ) ) {
+				$query_args['post_type'] = $post_type;
+			}
+			$query = new WP_Query( $query_args );
+			if ( $query->have_posts() ) {
+				$result = array_shift( $query->posts );
+			}
+		}
+
+		return $result;
+	}
+
+	public function post_type_args( $args = array() ) {
+		$name          = isset( $args['name'] ) ? $args['name'] : '';
+		$singular_name = isset( $args['singular_name'] ) ? $args['singular_name'] : '';
+		$menu_name     = isset( $args['menu_name'] ) ? $args['menu_name'] : '';
+
+		if ( empty( $name ) ) {
+			if ( ! empty( $singular_name ) ) {
+				$name = $singular_name;
+			} elseif ( ! empty( $menu_name ) ) {
+				$name = $menu_name;
+			}
+		}
+		if ( empty( $singular_name ) ) {
+			$singular_name = $name;
+		}
+		if ( empty( $menu_name ) ) {
+			$menu_name = $name;
+		}
+
+		$labels = array(
+			'name'                  => $name,
+			'singular_name'         => $singular_name,
+			'menu_name'             => $menu_name,
+			'add_new'               => _x( 'Add New', 'custom post type', 'hocwp-theme' ),
+			'add_new_item'          => sprintf( _x( 'Add New %s', 'cutom-post-type', 'hocwp-theme' ), $singular_name ),
+			'edit_item'             => sprintf( _x( 'Edit %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'new_item'              => sprintf( _x( 'New %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'view_item'             => sprintf( _x( 'View %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'view_items'            => sprintf( _x( 'View %s', 'custom post type', 'hocwp-theme' ), $name ),
+			'search_items'          => sprintf( _x( 'Search %s', 'custom post type', 'hocwp-theme' ), $name ),
+			'not_found'             => sprintf( _x( 'No %s found.', 'custom post type', 'hocwp-theme' ), $name ),
+			'not_found_in_trash'    => sprintf( _x( 'No %s found in Trash.', 'custom post type', 'hocwp-theme' ), $name ),
+			'parent_item_colon'     => sprintf( _x( 'Parent %s:', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'all_items'             => sprintf( _x( 'All %s', 'custom post type', 'hocwp-theme' ), $name ),
+			'archives'              => sprintf( _x( '%s Archives', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'attributes'            => sprintf( _x( '%s Attributes', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'insert_into_item'      => sprintf( _x( 'Insert into %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'uploaded_to_this_item' => sprintf( _x( 'Uploaded to this %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'featured_image'        => _x( 'Featured Image', 'custom post type', 'hocwp-theme' ),
+			'set_featured_image'    => _x( 'Set featured image', 'custom post type', 'hocwp-theme' ),
+			'remove_featured_image' => _x( 'Remove featured image', 'custom post type', 'hocwp-theme' ),
+			'use_featured_image'    => _x( 'Use as featured image', 'custom post type', 'hocwp-theme' ),
+			'filter_items_list'     => sprintf( _x( 'Filter %s list', 'custom post type', 'hocwp-theme' ), $name ),
+			'items_list_navigation' => sprintf( _x( '%s list navigation', 'custom post type', 'hocwp-theme' ), $name ),
+			'items_list'            => sprintf( _x( '%s list', 'custom post type', 'hocwp-theme' ), $name )
+		);
+
+		$defaults = array(
+			'labels' => $labels
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		return apply_filters( 'hocwp_theme_post_type_args', $args );
+	}
+
+	public function taxonomy_args( $args = array() ) {
+		$name          = isset( $args['name'] ) ? $args['name'] : '';
+		$singular_name = isset( $args['singular_name'] ) ? $args['singular_name'] : '';
+		$menu_name     = isset( $args['menu_name'] ) ? $args['menu_name'] : '';
+
+		if ( empty( $name ) ) {
+			if ( ! empty( $singular_name ) ) {
+				$name = $singular_name;
+			} elseif ( ! empty( $menu_name ) ) {
+				$name = $menu_name;
+			}
+		}
+		if ( empty( $singular_name ) ) {
+			$singular_name = $name;
+		}
+		if ( empty( $menu_name ) ) {
+			$menu_name = $name;
+		}
+		$labels = array(
+			'name'                       => $name,
+			'singular_name'              => $singular_name,
+			'menu_name'                  => $menu_name,
+			'search_items'               => sprintf( _x( 'Search %s', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'popular_items'              => sprintf( _x( 'Popular %s', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'all_items'                  => sprintf( _x( 'All %s', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'parent_item'                => sprintf( _x( 'Parent %s', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'parent_item_colon'          => sprintf( _x( 'Parent %s:', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'edit_item'                  => sprintf( _x( 'Edit %s', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'view_item'                  => sprintf( _x( 'View %s', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'update_item'                => sprintf( _x( 'Update %s', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'add_new_item'               => sprintf( _x( 'Add New %s', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'new_item_name'              => sprintf( _x( 'New %s Name', 'custom taxonomy term', 'hocwp-theme' ), $singular_name ),
+			'separate_items_with_commas' => sprintf( _x( 'Separate %s with commas', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'add_or_remove_items'        => sprintf( _x( 'Add or remove %s', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'choose_from_most_used'      => sprintf( _x( 'Choose from the most used %s', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'not_found'                  => sprintf( _x( 'No %s found.', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'no_terms'                   => sprintf( _x( 'No %s', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'items_list_navigation'      => sprintf( _x( '%s list navigation', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'items_list'                 => sprintf( _x( '%s list', 'custom taxonomy term', 'hocwp-theme' ), $name ),
+			'most_used'                  => _x( 'Most Used', 'custom taxonomy term', 'hocwp-theme' ),
+			'back_to_items'              => sprintf( _x( '&larr; Back to %s', 'custom taxonomy term', 'hocwp-theme' ), $name )
+		);
+
+		$defaults = array(
+			'labels' => $labels
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		return apply_filters( 'hocwp_theme_taxonomy_args', $args );
+	}
+
+	public function sidebar_args( $args = array() ) {
+		$defaults = array(
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => "</section>\n",
+			'before_title'  => '<h3 class="widgettitle widget-title">',
+			'after_title'   => "</h3>\n",
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		return apply_filters( 'hocwp_theme_sidebar_args', $args );
+	}
+
+	public function status_text( $current, $text, $active_text ) {
+		$span = new HOCWP_Theme_HTML_Tag( 'span' );
+		$span->add_attribute( 'data-text', $text );
+		$span->add_attribute( 'data-active-text', $active_text );
+		if ( 1 === $current || true === $current ) {
+			$span->set_text( $active_text );
+		} else {
+			$span->set_text( $text );
+		}
+		$span->add_attribute( 'data-current', HT()->bool_to_int( $current ) );
+		$span->add_attribute( 'data-post-id', get_the_ID() );
+		$span->output();
+	}
+
+	public function get_wpseo_post_title( $post_id ) {
+		$title = get_post_meta( $post_id, '_yoast_wpseo_title', true );
+		if ( empty( $title ) ) {
+			$title = get_the_title( $post_id );
+		}
+
+		return $title;
+	}
+
+	public function the_title_link_html( $args = array() ) {
+		$title     = HT()->get_value_in_array( $args, 'title' );
+		$permalink = HT()->get_value_in_array( $args, 'permalink', get_permalink() );
+		if ( empty( $title ) ) {
+			the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ), '</a>' );
+		} else {
+			$title = sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ) . $title . '</a>';
+			echo $title;
+		}
+	}
+
+	public function check_user_password( $password, $user ) {
+		return ( $user instanceof WP_User && wp_check_password( $password, $user->user_pass, $user->ID ) );
+	}
+
+	public function message_html( $message, $type = 'info' ) {
+		$p = new HOCWP_Theme_HTML_Tag( 'p' );
+		if ( ! empty( $type ) ) {
+			$p->add_attribute( 'class', 'text-left alert alert-' . $type );
+		}
+		$p->set_text( $message );
+
+		return $p->build();
+	}
+
+	public function addthis_toolbox( $args = array() ) {
+		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+		$class   = isset( $args['class'] ) ? $args['class'] : 'addthis_native_toolbox';
+		$class   = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class );
+		$class   .= ' addthis-tools';
+		$url     = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
+		$title   = isset( $args['title'] ) ? $args['title'] : get_the_title();
+		?>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
+             data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
+		<?php
+	}
+
+	public function load_google_javascript_sdk( $args = array() ) {
+		global $hocwp_theme;
+		$options = $hocwp_theme->options;
+		$load    = isset( $args['load'] ) ? (bool) $args['load'] : false;
+		$load    = apply_filters( 'hocwp_theme_load_google_sdk_javascript', $load );
+		if ( ! $load ) {
+			return;
+		}
+		$callback = isset( $args['callback'] ) ? $args['callback'] : '';
+		if ( empty( $callback ) ) {
+			return;
+		}
+		$locale = get_user_locale();
+		if ( 'vi' == $locale ) {
+			$locale = 'vi_VN';
+		}
+		?>
+        <script>
+            (function (d, s, id) {
+                var js, gjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.async = "async";
+                js.defer = "defer";
+                js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
+                js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
+                js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
+                gjs.parentNode.insertBefore(js, gjs);
+            }(document, 'script', 'google-jssdk'));
+        </script>
+		<?php
+	}
+
+	public function load_facebook_javascript_sdk( $args = array() ) {
+		$options = $this->get_theme_options( 'social' );
+		$load    = isset( $args['load'] ) ? (bool) $args['load'] : false;
+		$load    = apply_filters( 'hocwp_theme_load_facebook_sdk_javascript', $load );
+		if ( $load ) {
+			$sdk = isset( $options['facebook_sdk_javascript'] ) ? $options['facebook_sdk_javascript'] : '';
+			if ( empty( $sdk ) ) {
+				$app_id = isset( $options['facebook_app_id'] ) ? $options['facebook_app_id'] : '';
+				if ( empty( $app_id ) ) {
+					return;
+				}
+				$locale = get_user_locale();
+				if ( 'vi' == $locale ) {
+					$locale = 'vi_VN';
+				}
+				$version = isset( $args['version'] ) ? $args['version'] : '2.11';
+				$version = trim( $version, 'v' );
+				?>
+                <div id="fb-root"></div>
+                <script>(function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = 'https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
+				<?php
+			} else {
+				echo $sdk;
+			}
+		}
+	}
+
+	public function get_facebook_data_for_url( $url, $key = 'likes' ) {
+		$url     = trailingslashit( $url );
+		$tr_name = 'hocwp_theme_get_facebook_for_url_' . md5( $url );
+		if ( false === ( $res = get_transient( $tr_name ) ) ) {
+			$base = 'https://graph.facebook.com/?fields=og_object{likes.limit(0).summary(true)},share';
+			$url  = add_query_arg( 'ids', $url, $base );
+
+			$res = wp_remote_get( $url );
+			if ( ! is_wp_error( $res ) ) {
+				$res = wp_remote_retrieve_body( $res );
+				$res = json_decode( $res, true );
+				$res = array_shift( $res );
+				if ( ! isset( $res['code'] ) || 4 != $res['code'] ) {
+					set_transient( $tr_name, $res );
+				}
+			}
+		}
+		if ( isset( $res['code'] ) && 4 == $res['code'] ) {
+			delete_transient( $tr_name );
+		}
+		if ( HT()->array_has_value( $res ) && ! empty( $key ) ) {
+			switch ( $key ) {
+				case 'share_count':
+				case 'comment_count':
+					$res = isset( $res['share'][ $key ] ) ? $res['share'][ $key ] : '';
+					break;
+				default:
+					$res = isset( $res['og_object']['likes']['summary']['total_count'] ) ? $res['og_object']['likes']['summary']['total_count'] : '';
+			}
+		}
+
+		return $res;
+	}
+
+	public function facebook_share_button( $args = array() ) {
+		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+		$url     = isset( $args['url'] ) ? $args['url'] : '';
+		if ( empty( $url ) ) {
+			$url = get_permalink( $post_id );
+		}
+		$layout     = isset( $args['layout'] ) ? $args['layout'] : 'button_count';
+		$action     = isset( $args['action'] ) ? $args['action'] : 'like';
+		$show_faces = isset( $args['show_faces'] ) ? $args['show_faces'] : false;
+		$show_faces = HT()->bool_to_string( $show_faces );
+		$share      = isset( $args['share'] ) ? $args['share'] : true;
+		$share      = HT()->bool_to_string( $share );
+		do_action( 'hocwp_theme_facebook_javascript_sdk' );
+		$ajax_url = admin_url( 'admin-ajax.php' );
+		$params   = array(
+			'action'  => 'hocwp_theme_update_facebook_data',
+			'post_id' => $post_id
+		);
+		$ajax_url = add_query_arg( $params, $ajax_url );
+		?>
+        <div class="fb-like-buttons like-share">
+            <div class="item">
+                <div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
+                     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
+                     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
+            </div>
+        </div>
+        <script>
+            function updateFacebookData(event) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
+                xhr.send();
+            }
+
+            window.fbAsyncInit = function () {
+                FB.Event.subscribe("edge.create", function () {
+                    updateFacebookData('like');
+                });
+
+                FB.Event.subscribe("edge.remove", function () {
+                    updateFacebookData('unlike');
+                });
+            };
+        </script>
+		<?php
+	}
+
+	public function enqueue_media() {
+		wp_enqueue_media();
+		wp_enqueue_script( 'hocwp-theme-media-upload' );
+		wp_enqueue_style( 'hocwp-theme-media-upload-style' );
+	}
+
+	public function enqueue_sortable() {
+		wp_enqueue_style( 'hocwp-theme-sortable-style' );
+		wp_enqueue_script( 'hocwp-theme-sortable' );
+	}
+
+	public function get_theme_options( $tab ) {
+		global $hocwp_theme;
+		$options = isset( $hocwp_theme->options[ $tab ] ) ? $hocwp_theme->options[ $tab ] : '';
+		if ( ! is_array( $options ) ) {
+			$options = array();
+		}
+
+		return $options;
+	}
+
+	public function recaptcha() {
+		$options  = $this->get_theme_options( 'social' );
+		$site_key = isset( $options['recaptcha_site_key'] ) ? $options['recaptcha_site_key'] : '';
+		if ( empty( $site_key ) ) {
+			return;
+		}
+		?>
+        <script>
+            (function (d, s, id) {
+                var js, gjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.async = "async";
+                js.defer = "defer";
+                js.src = "https://www.google.com/recaptcha/api.js";
+                gjs.parentNode.insertBefore(js, gjs);
+            }(document, 'script', 'recaptcha-jssdk'));
+        </script>
+        <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
+		<?php
+	}
+
+	public function recaptcha_valid( $response = null ) {
+		if ( null == $response ) {
+			$response = isset( $_POST['g-recaptcha-response'] ) ? $_POST['g-recaptcha-response'] : '';
+		}
+		$options    = $this->get_theme_options( 'social' );
+		$secret_key = isset( $options['recaptcha_secret_key'] ) ? $options['recaptcha_secret_key'] : '';
+		if ( empty( $secret_key ) ) {
+			return false;
+		}
+		$url      = 'https://www.google.com/recaptcha/api/siteverify';
+		$params   = array(
+			'secret'   => $secret_key,
+			'response' => $response
+		);
+		$url      = add_query_arg( $params, $url );
+		$response = HT_Util()->get_contents( $url );
+		$response = json_decode( $response );
+		if ( $this->is_object_valid( $response ) ) {
+			if ( $response->success ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+function HT_Util() {
+	return HOCWP_Theme_Utility::instance();
 }

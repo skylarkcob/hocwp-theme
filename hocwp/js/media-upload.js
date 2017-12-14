@@ -1,7 +1,7 @@
 window.wp = window.wp || {};
 window.hocwpThemeMediaUpload = window.hocwpThemeMediaUpload || {};
 jQuery(document).ready(function ($) {
-    var body = $("body"), frame = null;
+    var body = $("body");
 
     function hocwpThemeUCWords(str) {
         return str.replace(/\w\S*/g, function (txt) {
@@ -12,14 +12,16 @@ jQuery(document).ready(function ($) {
     body.on("click", ".hocwp-theme .select-media", function (e) {
         e.preventDefault();
         e.stopPropagation();
+        var selectMedia = $(this),
+            container = selectMedia.closest("div"),
+            multiple = Boolean(parseInt(selectMedia.attr("data-multiple")) || parseInt(hocwpThemeMediaUpload.multiple)),
+            frame = null;
         if (frame) {
             frame.open();
         } else {
-            var element = $(this),
-                title = $.trim(element.attr("data-title")) || hocwpThemeMediaUpload.l10n.title,
-                buttonText = $.trim(element.attr("data-button-text")) || hocwpThemeMediaUpload.l10n.buttonText,
-                multiple = Boolean(parseInt(element.attr("data-multiple")) || parseInt(hocwpThemeMediaUpload.multiple)),
-                media_type = $.trim(element.attr("data-media-type")) || "image";
+            var title = $.trim(selectMedia.attr("data-title")) || hocwpThemeMediaUpload.l10n.title,
+                buttonText = $.trim(selectMedia.attr("data-button-text")) || hocwpThemeMediaUpload.l10n.buttonText,
+                media_type = $.trim(selectMedia.attr("data-media-type")) || "image";
             title = title.replace("%s", hocwpThemeUCWords(media_type));
             buttonText = buttonText.replace("%s", media_type);
             frame = wp.media({
@@ -32,35 +34,36 @@ jQuery(document).ready(function ($) {
                     type: media_type
                 }
             });
-            frame.on("select", function () {
-                var items = frame.state().get("selection"),
-                    container = element.closest("div");
-                if (multiple) {
 
-                } else {
-                    var item = items.first().toJSON();
-                    if (item) {
-                        var image = document.createElement("img");
-                        image.setAttribute("src", item.url);
-                        image.setAttribute("alt", item.alt);
-                        image.setAttribute("width", item.width);
-                        image.setAttribute("height", item.height);
-                        container.find("input").val(item.id);
-                        element.html(image);
-                        if (!element.hasClass("has-media")) {
-                            var description = hocwpThemeMediaUpload.updateImageDescription,
-                                removeButton = hocwpThemeMediaUpload.removeImageButton;
-                            description = description.replace("%s", media_type);
-                            removeButton = removeButton.replace("%s", media_type);
-                            $(description).insertAfter(container.find(".hide-if-no-js"));
-                            $(removeButton).insertAfter(container.find(".hide-if-no-js").last());
-                            element.addClass("has-media");
-                        }
-                    }
-                }
-            });
             frame.open();
         }
+        frame.on("select", function (e) {
+            var items = frame.state().get("selection");
+            if (multiple) {
+
+            } else {
+                var item = items.first().toJSON();
+                if (item) {
+                    var image = document.createElement("img");
+                    image.setAttribute("src", item.url);
+                    image.setAttribute("alt", item.alt);
+                    image.setAttribute("width", item.width);
+                    image.setAttribute("height", item.height);
+                    container.find("input").val(item.id);
+                    selectMedia.html(image);
+                    if (!selectMedia.hasClass("has-media")) {
+                        var description = hocwpThemeMediaUpload.updateImageDescription,
+                            removeButton = hocwpThemeMediaUpload.removeImageButton;
+                        description = description.replace("%s", media_type);
+                        removeButton = removeButton.replace("%s", media_type);
+                        $(description).insertAfter(container.find(".hide-if-no-js"));
+                        $(removeButton).insertAfter(container.find(".hide-if-no-js").last());
+                        selectMedia.addClass("has-media");
+                    }
+                }
+            }
+            container.find("a, img").trigger("blur");
+        });
     });
 
     body.on("click", ".hocwp-theme .remove-media", function (e) {

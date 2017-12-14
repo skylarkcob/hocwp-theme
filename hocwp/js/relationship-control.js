@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
             container = element.closest("div"),
             relationGroup = element.attr("data-relation-group");
         container.find("." + relationGroup).fadeOut();
-        if ("SELECT" == tagName) {
+        if ("SELECT" === tagName) {
             var option = element.children("option[value='" + element.val() + "']");
             $(option.attr("data-relation")).fadeIn();
         }

@@ -35,6 +35,14 @@ abstract class HOCWP_Theme_Meta {
 		if ( ! is_array( $this->fields ) ) {
 			$this->fields = array();
 		}
+		$callback = $field['callback'];
+		if ( is_array( $callback ) ) {
+			if ( $callback === array( 'HOCWP_Theme_HTML_Field', 'media_upload' ) ) {
+				$this->load_script( 'hocwp-theme-media-upload' );
+			} elseif ( $callback === array( 'HOCWP_Theme_HTML_Field', 'google_maps' ) ) {
+				$this->load_script( 'hocwp-theme-google-maps' );
+			}
+		}
 		$this->fields[] = $field;
 	}
 
@@ -49,8 +57,13 @@ abstract class HOCWP_Theme_Meta {
 		$field    = wp_parse_args( $field, $defaults );
 		$type     = $field['type'];
 		switch ( $type ) {
+			case 'positive_number':
 			case 'positive_integer':
 				$field['callback_args']['min'] = 1;
+				break;
+			case 'non_negative_integer':
+			case 'non_negative_number':
+				$field['callback_args']['min'] = 0;
 				break;
 		}
 		$id   = isset( $field['id'] ) ? $field['id'] : '';
@@ -67,34 +80,27 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	protected function sanitize_data( $field ) {
-		$id = $field['id'];
+		$id = $this->get_name( $field );
 		if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
 			$tmp = explode( '[', $id );
 			$id  = array_shift( $tmp );
 		}
 		$value = isset( $_POST[ $id ] ) ? $_POST[ $id ] : '';
 		$type  = $field['type'];
-		switch ( $type ) {
-			case 'string':
-				$value = maybe_serialize( $value );
-				$value = strip_tags( $value );
-				break;
-			case 'bool':
-			case 'boolean':
-				$value = ( 1 == $value ) ? 1 : 0;
-				break;
-			case 'positive_integer':
-				$value = absint( $value );
-				if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
-					$value = '';
-				}
-				break;
-			case 'timestamp':
-				$value = strtotime( $value );
-				break;
-		}
+		$value = HOCWP_Theme_Sanitize::data( $value, $type );
 
 		return $value;
+	}
+
+	public function get_name( $field ) {
+		$id   = $field['id'];
+		$name = isset( $field['name'] ) ? $field['name'] : '';
+		if ( empty( $name ) ) {
+			$name = isset( $field['callback_args']['name'] ) ? $field['callback_args']['name'] : '';
+		}
+		HT()->transmit( $id, $name );
+
+		return $name;
 	}
 
 	private function add_style_or_script( &$arr, $handle ) {
@@ -128,8 +134,7 @@ abstract class HOCWP_Theme_Meta {
 
 	public function admin_scripts() {
 		if ( is_array( $this->scripts ) && in_array( 'hocwp-theme-media-upload', $this->scripts ) ) {
-			wp_enqueue_media();
-			$this->load_style( 'hocwp-theme-media-upload-style' );
+			HT_Util()->enqueue_media();
 		}
 		$this->enqueue( $this->styles );
 		$this->enqueue( $this->scripts, true );
