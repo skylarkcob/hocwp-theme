@@ -9,6 +9,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 	public function __construct() {
 		global $pagenow;
+
 		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
 			parent::__construct();
 			$this->set_id( 'extra-information' );

@@ -885,25 +885,7 @@ final class HOCWP_Theme_Utility {
 		return $result;
 	}
 
-	public function post_type_args( $args = array() ) {
-		$name          = isset( $args['name'] ) ? $args['name'] : '';
-		$singular_name = isset( $args['singular_name'] ) ? $args['singular_name'] : '';
-		$menu_name     = isset( $args['menu_name'] ) ? $args['menu_name'] : '';
-
-		if ( empty( $name ) ) {
-			if ( ! empty( $singular_name ) ) {
-				$name = $singular_name;
-			} elseif ( ! empty( $menu_name ) ) {
-				$name = $menu_name;
-			}
-		}
-		if ( empty( $singular_name ) ) {
-			$singular_name = $name;
-		}
-		if ( empty( $menu_name ) ) {
-			$menu_name = $name;
-		}
-
+	private function post_type_labels( $name, $singular_name, $menu_name ) {
 		$labels = array(
 			'name'                  => $name,
 			'singular_name'         => $singular_name,
@@ -932,33 +914,10 @@ final class HOCWP_Theme_Utility {
 			'items_list'            => sprintf( _x( '%s list', 'custom post type', 'hocwp-theme' ), $name )
 		);
 
-		$defaults = array(
-			'labels' => $labels
-		);
-
-		$args = wp_parse_args( $args, $defaults );
-
-		return apply_filters( 'hocwp_theme_post_type_args', $args );
+		return $labels;
 	}
 
-	public function taxonomy_args( $args = array() ) {
-		$name          = isset( $args['name'] ) ? $args['name'] : '';
-		$singular_name = isset( $args['singular_name'] ) ? $args['singular_name'] : '';
-		$menu_name     = isset( $args['menu_name'] ) ? $args['menu_name'] : '';
-
-		if ( empty( $name ) ) {
-			if ( ! empty( $singular_name ) ) {
-				$name = $singular_name;
-			} elseif ( ! empty( $menu_name ) ) {
-				$name = $menu_name;
-			}
-		}
-		if ( empty( $singular_name ) ) {
-			$singular_name = $name;
-		}
-		if ( empty( $menu_name ) ) {
-			$menu_name = $name;
-		}
+	private function taxonomy_labels( $name, $singular_name, $menu_name ) {
 		$labels = array(
 			'name'                       => $name,
 			'singular_name'              => $singular_name,
@@ -984,15 +943,91 @@ final class HOCWP_Theme_Utility {
 			'back_to_items'              => sprintf( _x( '&larr; Back to %s', 'custom taxonomy term', 'hocwp-theme' ), $name )
 		);
 
+		return $labels;
+	}
+
+	private function post_type_or_taxonomy_defaults( $args, $post_type = true ) {
+		$args          = HT_Sanitize()->post_type_or_taxonomy_args( $args );
+		$name          = $args['name'];
+		$singular_name = $args['singular_name'];
+		$menu_name     = $args['menu_name'];
+
+		if ( empty( $name ) ) {
+			return $args;
+		}
+
+		if ( $post_type ) {
+			$labels = $this->post_type_labels( $name, $singular_name, $menu_name );
+		} else {
+			$labels = $this->taxonomy_labels( $name, $singular_name, $menu_name );
+		}
+
 		$defaults = array(
-			'labels' => $labels
+			'labels' => $labels,
+			'public' => true
 		);
 
+		$private = isset( $args['private'] ) ? $args['private'] : false;
+
+		if ( $private ) {
+			$defaults['public']              = false;
+			$defaults['show_ui']             = true;
+			$defaults['public']              = false;
+			$defaults['exclude_from_search'] = true;
+			$defaults['show_in_nav_menus']   = false;
+			$defaults['show_in_admin_bar']   = false;
+			$defaults['menu_position']       = 9999999;
+			$defaults['has_archive']         = false;
+			$defaults['query_var']           = false;
+			$defaults['rewrite']             = false;
+			$defaults['feeds']               = false;
+			if ( ! $post_type ) {
+				$args['show_in_quick_edit'] = false;
+				$args['show_admin_column']  = false;
+				$args['show_tagcloud']      = false;
+			}
+		}
+
+		unset( $args['labels'], $args['name'], $args['singular_name'], $args['menu_name'], $args['private'] );
+
 		$args = wp_parse_args( $args, $defaults );
+
+		return $args;
+	}
+
+	/**
+	 * Generate arguments for register_post_type function.
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public function post_type_args( $args = array() ) {
+		$args = $this->post_type_or_taxonomy_defaults( $args );
+
+		return apply_filters( 'hocwp_theme_post_type_args', $args );
+	}
+
+	/**
+	 * Generate arguments for register_taxonomy function.
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public function taxonomy_args( $args = array() ) {
+		$args = $this->post_type_or_taxonomy_defaults( $args, false );
 
 		return apply_filters( 'hocwp_theme_taxonomy_args', $args );
 	}
 
+	/**
+	 * Generate arguments for register_sidebar function.
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
 	public function sidebar_args( $args = array() ) {
 		$defaults = array(
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
@@ -1228,6 +1263,15 @@ final class HOCWP_Theme_Utility {
 	public function enqueue_sortable() {
 		wp_enqueue_style( 'hocwp-theme-sortable-style' );
 		wp_enqueue_script( 'hocwp-theme-sortable' );
+	}
+
+	public function enqueue_jquery_ui_style() {
+		wp_enqueue_style( 'jquery-ui-style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' );
+	}
+
+	public function enqueue_datepicker() {
+		$this->enqueue_jquery_ui_style();
+		wp_enqueue_script( 'hocwp-theme-datepicker' );
 	}
 
 	public function get_theme_options( $tab ) {

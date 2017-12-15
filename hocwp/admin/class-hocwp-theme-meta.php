@@ -32,10 +32,13 @@ abstract class HOCWP_Theme_Meta {
 
 	public function add_field( $field ) {
 		$field = $this->sanitize_field( $field );
+
 		if ( ! is_array( $this->fields ) ) {
 			$this->fields = array();
 		}
+
 		$callback = $field['callback'];
+
 		if ( is_array( $callback ) ) {
 			if ( $callback === array( 'HOCWP_Theme_HTML_Field', 'media_upload' ) ) {
 				$this->load_script( 'hocwp-theme-media-upload' );
@@ -43,6 +46,7 @@ abstract class HOCWP_Theme_Meta {
 				$this->load_script( 'hocwp-theme-google-maps' );
 			}
 		}
+
 		$this->fields[] = $field;
 	}
 
@@ -81,10 +85,12 @@ abstract class HOCWP_Theme_Meta {
 
 	protected function sanitize_data( $field ) {
 		$id = $this->get_name( $field );
+
 		if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
 			$tmp = explode( '[', $id );
 			$id  = array_shift( $tmp );
 		}
+
 		$value = isset( $_POST[ $id ] ) ? $_POST[ $id ] : '';
 		$type  = $field['type'];
 		$value = HOCWP_Theme_Sanitize::data( $value, $type );

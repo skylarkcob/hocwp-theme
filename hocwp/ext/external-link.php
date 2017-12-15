@@ -15,29 +15,8 @@ if ( ! $load ) {
 	return;
 }
 
-function hocwp_theme_external_link_script() {
-	wp_enqueue_script( 'hocwp-theme-external-link', HOCWP_THEME_CORE_URL . '/js/external-link' . HOCWP_THEME_JS_SUFFIX, array( 'hocwp-theme' ), false, true );
-}
-
 if ( ! is_admin() ) {
-	add_action( 'wp_enqueue_scripts', 'hocwp_theme_external_link_script' );
+	load_template( dirname( __FILE__ ) . '/external-link/front-end.php' );
+} else {
+	load_template( dirname( __FILE__ ) . '/external-link/admin.php' );
 }
-
-function hocwp_theme_external_link_template_include( $template ) {
-	$goto = isset( $_GET['goto'] ) ? $_GET['goto'] : '';
-	if ( ! empty( $goto ) ) {
-		if ( HT()->is_positive_number( $goto ) ) {
-			$obj = get_post( $goto );
-			if ( $obj instanceof WP_Post ) {
-				wp_redirect( get_permalink( $obj ) );
-				exit;
-			}
-		} else {
-			$template = HOCWP_THEME_CORE_PATH . '/ext/external-link/confirm-goout.php';
-		}
-	}
-
-	return $template;
-}
-
-add_filter( 'template_include', 'hocwp_theme_external_link_template_include' );

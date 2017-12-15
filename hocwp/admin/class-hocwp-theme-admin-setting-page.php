@@ -296,7 +296,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		?>
         <div class="wrap hocwp-theme">
             <h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
-            <hr class="wp-header-end">
+            <hr class="wp-header-end" style="clear: both;">
 			<?php
 			$this->tabs = apply_filters( 'hocwp_theme_settings_page_tabs', $this->tabs );
 			if ( HOCWP_Theme::array_has_value( $this->tabs ) ) {
@@ -390,6 +390,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function admin_enqueue_scripts_action() {
+		do_action( 'hocwp_theme_admin_setting_page_scripts', $this );
 		do_action( 'hocwp_theme_admin_setting_page_' . $this->tab . '_scripts' );
 	}
 }

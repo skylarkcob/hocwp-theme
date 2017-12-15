@@ -79,15 +79,20 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 		}
 		$order = strtoupper( $order );
 		uasort( $this->items, array( $this, '_order_callback' ) );
+
 		$extensions_per_page = $this->get_items_per_page( str_replace( '-', '_', $screen->id . '_per_page' ), get_option( 'posts_per_page' ) );
-		$start               = ( $page - 1 ) * $extensions_per_page;
+
+		$start = ( $page - 1 ) * $extensions_per_page;
+
 		if ( $total_this_page > $extensions_per_page ) {
 			$this->items = array_slice( $this->items, $start, $extensions_per_page );
 		}
+
 		$this->set_pagination_args( array(
 			'total_items' => $total_this_page,
 			'per_page'    => $extensions_per_page,
 		) );
+
 		$columns               = $this->get_columns();
 		$hidden                = get_hidden_columns( $screen );
 		$sortable              = $this->get_sortable_columns();

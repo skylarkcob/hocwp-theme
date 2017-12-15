@@ -270,10 +270,13 @@ final class HOCWP_Theme {
 		if ( empty( $format ) ) {
 			$format = 'Y-m-d H:i:s';
 		}
+
 		$string = str_replace( '/', '-', $string );
 		$string = trim( $string );
 
-		return date( $format, strtotime( $string ) );
+		$result = date( $format, strtotime( $string ) );
+
+		return $result;
 	}
 
 	public static function javascript_datetime_format( $php_format ) {

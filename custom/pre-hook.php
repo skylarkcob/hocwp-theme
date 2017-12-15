@@ -18,4 +18,4 @@ define( 'HOCWP_THEME_REQUIRED_PLUGINS', '' );
  *
  * If you still want to continue working, just define this value to TRUE.
  */
-define( 'HOCWP_THEME_OVERTIME', false );
+define( 'HOCWP_THEME_OVERTIME', true );

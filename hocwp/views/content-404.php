@@ -57,7 +57,7 @@
         <!-- .error-404 -->
 		<?php
 		do_action( 'hocwp_theme_content_area_after' );
-		get_sidebar( '404' );
+		get_sidebar();
 		?>
     </div>
 </div>

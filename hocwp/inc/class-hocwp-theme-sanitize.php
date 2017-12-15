@@ -109,34 +109,37 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function data( $value, $type ) {
-		switch ( $type ) {
-			case 'text':
-			case 'string':
-				$value = maybe_serialize( $value );
-				$value = wp_strip_all_tags( $value );
-				break;
-			case 'url':
-				$value = esc_url_raw( $value );
-				break;
-			case 'bool':
-			case 'boolean':
-				$value = ( 1 == $value ) ? 1 : 0;
-				break;
-			case 'positive_integer':
-				$value = absint( $value );
-				if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
-					$value = '';
-				}
-				break;
-			case 'integer':
-				$value = intval( $value );
-				break;
-			case 'non_negative_number':
-				$value = abs( $value );
-				break;
-			case 'timestamp':
-				$value = strtotime( $value );
-				break;
+		if ( ! empty( $value ) && ! empty( $type ) ) {
+			switch ( $type ) {
+				case 'text':
+				case 'string':
+					$value = maybe_serialize( $value );
+					$value = wp_strip_all_tags( $value );
+					break;
+				case 'url':
+					$value = esc_url_raw( $value );
+					break;
+				case 'bool':
+				case 'boolean':
+					$value = ( 1 == $value ) ? 1 : 0;
+					break;
+				case 'positive_integer':
+					$value = absint( $value );
+					if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
+						$value = '';
+					}
+					break;
+				case 'integer':
+					$value = intval( $value );
+					break;
+				case 'non_negative_number':
+					$value = abs( $value );
+					break;
+				case 'timestamp':
+					$value = HT()->string_to_datetime( $value );
+					$value = strtotime( $value );
+					break;
+			}
 		}
 
 		return $value;
@@ -190,6 +193,48 @@ final class HOCWP_Theme_Sanitize {
 		$id    = trim( $id, '_' );
 
 		return $id;
+	}
+
+	public function post_type_or_taxonomy_args( $args ) {
+		$name = isset( $args['name'] ) ? $args['name'] : '';
+
+		if ( empty( $name ) ) {
+			$name = isset( $args['labels']['name'] ) ? $args['labels']['name'] : '';
+		}
+
+		$singular_name = isset( $args['singular_name'] ) ? $args['singular_name'] : '';
+
+		if ( empty( $singular_name ) ) {
+			$singular_name = isset( $args['labels']['singular_name'] ) ? $args['labels']['singular_name'] : '';
+		}
+
+		$menu_name = isset( $args['menu_name'] ) ? $args['menu_name'] : '';
+
+		if ( empty( $menu_name ) ) {
+			$menu_name = isset( $args['labels']['menu_name'] ) ? $args['labels']['menu_name'] : '';
+		}
+
+		if ( empty( $name ) ) {
+			if ( ! empty( $singular_name ) ) {
+				$name = $singular_name;
+			} elseif ( ! empty( $menu_name ) ) {
+				$name = $menu_name;
+			}
+		}
+
+		if ( empty( $singular_name ) ) {
+			$singular_name = $name;
+		}
+
+		if ( empty( $menu_name ) ) {
+			$menu_name = $name;
+		}
+
+		$args['name']          = $name;
+		$args['singular_name'] = $singular_name;
+		$args['menu_name']     = $menu_name;
+
+		return $args;
 	}
 }
 

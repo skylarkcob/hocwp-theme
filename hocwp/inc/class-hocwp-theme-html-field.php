@@ -16,6 +16,39 @@ final class HOCWP_Theme_HTML_Field {
 
 	}
 
+	private static function field_label( &$args, &$tag = '' ) {
+		$label = isset( $args['label'] ) ? $args['label'] : '';
+
+		if ( ! empty( $label ) ) {
+			$lb  = new HOCWP_Theme_HTML_Tag( 'label' );
+			$for = isset( $args['for'] ) ? $args['for'] : '';
+
+			if ( empty( $for ) ) {
+				$for = isset( $args['label_for'] ) ? $args['label_for'] : '';
+			}
+
+			if ( empty( $for ) ) {
+				$for = $args['id'];
+			}
+
+			$lb->add_attribute( 'for', $args['id'] );
+			$lb->set_text( $label );
+
+			if ( isset( $args['type'] ) && ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) ) {
+				if ( $tag instanceof HOCWP_Theme_HTML_Tag ) {
+					$tag->set_text( $label );
+					$tag->set_parent( $lb );
+				}
+			} else {
+				$lb->output();
+			}
+
+			unset( $args['label'] );
+		}
+
+		unset( $args['label'], $args['for'], $args['label_for'] );
+	}
+
 	public static function input( $args = array() ) {
 		$defaults = array(
 			'type' => 'text'
@@ -28,7 +61,6 @@ final class HOCWP_Theme_HTML_Field {
 			}
 			$args['value'] = 1;
 		}
-		$label = isset( $args['label'] ) ? $args['label'] : '';
 		if ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) {
 			$options = isset( $args['options'] ) ? $args['options'] : '';
 			if ( is_array( $options ) && count( $options ) > 0 ) {
@@ -60,18 +92,7 @@ final class HOCWP_Theme_HTML_Field {
 			}
 		}
 		$input = new HOCWP_Theme_HTML_Tag( 'input' );
-		if ( ! empty( $label ) ) {
-			$lb = new HOCWP_Theme_HTML_Tag( 'label' );
-			$lb->add_attribute( 'for', $args['id'] );
-			$lb->set_text( $label );
-			if ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) {
-				$input->set_text( $label );
-				$input->set_parent( $lb );
-			} else {
-				$lb->output();
-			}
-			unset( $args['label'] );
-		}
+		self::field_label( $args, $input );
 		$input->set_attributes( $args );
 		$input->output();
 	}
@@ -86,6 +107,7 @@ final class HOCWP_Theme_HTML_Field {
 		$value    = isset( $args['value'] ) ? $args['value'] : '';
 		unset( $args['value'] );
 		$textarea->set_text( $value );
+		self::field_label( $args );
 		$textarea->set_attributes( $args );
 		$textarea->output();
 	}
@@ -152,19 +174,29 @@ final class HOCWP_Theme_HTML_Field {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
 		unset( $args['value'], $args['options'] );
 		$oh = '';
+
 		if ( ! empty( $options ) ) {
+			$option_all = isset( $args['option_all'] ) ? $args['option_all'] : '';
+
+			if ( ! empty( $option_all ) ) {
+				$oh .= self::option( $value, '', $option_all );
+			}
+
 			foreach ( (array) $options as $key => $option ) {
 				if ( is_array( $option ) && isset( $option['label'] ) ) {
 					$optgroup = new HOCWP_Theme_HTML_Tag( 'optgroup' );
 					$ops_html = '';
 					$label    = $option['label'];
 					unset( $option['label'] );
+
 					foreach ( $option as $k => $child ) {
 						if ( isset( $child['value'] ) ) {
 							$k = $child['value'];
 						}
+
 						$ops_html .= self::option( $value, $k, $child );
 					}
+
 					$optgroup->set_text( $ops_html );
 					$optgroup->add_attribute( 'label', $label );
 					$oh .= $optgroup->build();
@@ -173,6 +205,8 @@ final class HOCWP_Theme_HTML_Field {
 				}
 			}
 		}
+
+		self::field_label( $args );
 		$select->set_attributes( $args );
 		$select->set_text( $oh );
 		$select->output();
@@ -421,12 +455,13 @@ final class HOCWP_Theme_HTML_Field {
 			}
 			$args['connect_sub'] = trim( $connect_sub );
 		} else {
+			$tax   = get_taxonomy( $taxonomy );
 			$terms = HT_Util()->get_terms( $taxonomy, $term_args );
 			foreach ( $terms as $obj ) {
 				if ( array_key_exists( $obj->term_id, $results ) ) {
 					continue;
 				}
-				$lists[] = '<li class="ui-state-default" data-taxonomy="category" data-id="' . $obj->term_id . '"> ' . $obj->name . '( ' . $tax->labels->singular_name . ')</li> ';
+				$lists[] = '<li class="ui-state-default" data-taxonomy="category" data-id="' . $obj->term_id . '"> ' . $obj->name . ' (' . $tax->labels->singular_name . ')</li> ';
 			}
 		}
 		$args['lists'] = $lists;
@@ -447,6 +482,7 @@ final class HOCWP_Theme_HTML_Field {
 		$size          = HT_Sanitize()->size( $size );
 		$args['name']  = $name_width;
 		$args['value'] = $size[0];
+		self::field_label( $args );
 		self::input( $args );
 		echo ' <span>x </span>&nbsp;';
 		$args['name']  = $name_height;
