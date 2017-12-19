@@ -27,6 +27,10 @@ final class HOCWP_Theme_Query {
 		return array_shift( $pages );
 	}
 
+	public function pages( $args = array() ) {
+		return get_pages( $args );
+	}
+
 	public static function related_posts( $args = array() ) {
 		$post_id  = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 		$obj      = get_post( $post_id );

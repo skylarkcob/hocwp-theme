@@ -1,10 +1,10 @@
 (function () {
     var container, button, menu, items, link, subMenu, i, len;
 
-    container = document.getElementById("site-navigation");
+    container = document.getElementById("mobile-navigation");
 
     if (!container) {
-        container = document.getElementById("mobile-navigation");
+        container = document.getElementById("site-navigation");
     }
 
     if (!container) {
@@ -12,6 +12,7 @@
     }
 
     button = container.getElementsByTagName("button")[0];
+
     if ("undefined" === typeof button) {
         return;
     }
@@ -28,20 +29,25 @@
     window.onresize = function () {
         if (window.innerWidth > mobileWidth) {
             button.style.display = "none";
+
             if ("undefined" !== typeof menu) {
                 menu.className = menu.className.replace(mobileMenuClass, "");
             }
+
             container.className = container.className.replace(mobileMenuClass, "");
         } else {
             button.style.display = "block";
+
             if ("undefined" !== typeof menu) {
                 menu.className += mobileMenuClass;
             }
+            
             container.className += mobileMenuClass;
         }
     };
 
     var mobileWidth = document.getElementsByTagName("body")[0].getAttribute("data-mobile-width");
+
     if (window.innerWidth > mobileWidth) {
         button.style.display = "none";
         return;
@@ -78,6 +84,7 @@
 
     for (i = 0, len = items.length; i < len; i++) {
         link = items[i].getElementsByTagName("a")[0];
+
         if ("undefined" !== typeof link) {
             link.addEventListener("click", clickMenuItemHasChildren, true);
         }
@@ -87,8 +94,10 @@
         e.preventDefault();
         e.stopPropagation();
         subMenu = this.parentNode.getElementsByTagName("ul")[0];
+
         if ("undefined" !== typeof subMenu) {
             this.parentNode.className = this.parentNode.className.replace(" focus", "");
+
             if (-1 !== this.className.indexOf("toggled")) {
                 this.className = container.className.replace(" toggled", "");
                 this.setAttribute("aria-expanded", "false");

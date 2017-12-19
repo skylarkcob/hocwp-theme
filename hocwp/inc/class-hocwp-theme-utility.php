@@ -805,6 +805,7 @@ final class HOCWP_Theme_Utility {
 		$options = $hocwp_theme->options;
 		$options = isset( $options[ $base ] ) ? $options[ $base ] : '';
 		$value   = isset( $options[ $name ] ) ? $options[ $name ] : '';
+
 		if ( empty( $value ) && gettype( $value ) != gettype( $default ) ) {
 			$value = $default;
 		}
@@ -825,21 +826,29 @@ final class HOCWP_Theme_Utility {
 
 	public static function get_theme_option_post( $name, $post_type = 'any', $base = 'general', $slug = '' ) {
 		$id = self::get_theme_option( $name, '', $base );
-		if ( ! HT()->is_positive_number( $id ) && ! empty( $slug ) ) {
-			$args  = array(
-				'post_type'   => $post_type,
-				'name'        => $slug,
-				'post_status' => 'publish'
-			);
-			$query = new WP_Query( $args );
-			if ( $query->have_posts() ) {
-				return current( $query->posts );
+
+		if ( ! HT()->is_positive_number( $id ) ) {
+			if ( ! empty( $slug ) ) {
+				$args  = array(
+					'post_type'   => $post_type,
+					'name'        => $slug,
+					'post_status' => 'publish'
+				);
+				$query = new WP_Query( $args );
+
+				if ( $query->have_posts() ) {
+					return current( $query->posts );
+				}
 			}
 
 			return null;
 		}
 
 		return get_post( $id );
+	}
+
+	public function get_theme_option_page( $option_name, $tab, $slug = '' ) {
+		return HT_Util()->get_theme_option_post( $option_name, 'page', $tab, $slug );
 	}
 
 	public function get_current_post_type() {

@@ -207,6 +207,9 @@ final class HOCWP_Theme_HTML_Field {
 		}
 
 		self::field_label( $args );
+
+		unset( $args['option_all'] );
+
 		$select->set_attributes( $args );
 		$select->set_text( $oh );
 		$select->output();
@@ -214,15 +217,19 @@ final class HOCWP_Theme_HTML_Field {
 
 	public static function select_term( $args = array() ) {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
+
 		if ( ! HT()->array_has_value( $options ) ) {
 			$options  = array();
 			$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : 'category';
 			unset( $args['taxonomy'] );
+
 			if ( is_array( $taxonomy ) && 1 == count( $taxonomy ) ) {
 				$taxonomy = array_shift( $taxonomy );
 			}
+
 			if ( is_array( $taxonomy ) ) {
 				$taxonomies = $taxonomy;
+
 				foreach ( $taxonomies as $taxonomy ) {
 					$tax = get_taxonomy( $taxonomy );
 
@@ -231,6 +238,7 @@ final class HOCWP_Theme_HTML_Field {
 					);
 
 					$terms = HT_Util()->get_terms( $taxonomy );
+
 					foreach ( $terms as $obj ) {
 						$options[ $taxonomy ][] = array(
 							'text'          => $obj->name,
@@ -242,25 +250,52 @@ final class HOCWP_Theme_HTML_Field {
 				}
 			} else {
 				$terms = HT_Util()->get_terms( $taxonomy );
+
 				foreach ( $terms as $obj ) {
 					$options[ $obj->term_id ] = $obj->name;
 				}
 			}
+
 			$args['options'] = $options;
-			self::select( $args );
-		} else {
-			self::select( $args );
 		}
+
+		self::select( $args );
+	}
+
+	public static function select_page( $args = array() ) {
+		$options = isset( $args['options'] ) ? $args['options'] : '';
+
+		if ( ! HT()->array_has_value( $options ) ) {
+			$options = array();
+			$pages   = HT_Query()->pages();
+
+			if ( $pages ) {
+				foreach ( $pages as $obj ) {
+					$options[ $obj->ID ] = $obj->post_title;
+				}
+			}
+
+			if ( ! isset( $args['option_all'] ) ) {
+				$args['option_all'] = __( '-- Choose page --', 'hocwp-theme' );
+			}
+
+			$args['options'] = $options;
+		}
+
+		self::select( $args );
 	}
 
 	public static function chosen( $args = array() ) {
 		$args['data-chosen'] = 1;
+
 		if ( isset( $args['multiple'] ) ) {
 			$args['name'] = $args['name'] . '[]';
 		}
+
 		if ( isset( $args['callback'] ) ) {
 			$callback = $args['callback'];
 			unset( $args['callback'] );
+
 			if ( is_callable( $callback ) ) {
 				call_user_func( $callback, $args );
 			} elseif ( is_callable( array( __CLASS__, $callback ) ) ) {
@@ -276,6 +311,7 @@ final class HOCWP_Theme_HTML_Field {
 		$lists    = (array) $lists;
 		$lists    = array_filter( $lists );
 		$connects = isset( $args['connects'] ) ? $args['connects'] : true;
+
 		if ( HT()->array_has_value( $lists ) || HT()->array_has_value( $connects ) ) {
 			$id = $args['id'];
 			$id = sanitize_html_class( $id );
@@ -287,11 +323,13 @@ final class HOCWP_Theme_HTML_Field {
 
 			$list_type = isset( $args['list_type'] ) ? $args['list_type'] : '';
 			unset( $args['list_type'] );
+
 			if ( empty( $list_type ) ) {
 				_doing_it_wrong( __CLASS__ . ':' . __FUNCTION__, __( 'You must pass list_type in arguments for this sortable list.', 'hocwp-theme' ), '6.1.8' );
 
 				return;
 			}
+
 			$ul = new HOCWP_Theme_HTML_Tag( 'ul' );
 			$ul->add_attribute( 'data-list-type', $list_type );
 			$class = 'sortable hocwp-theme-sortable';
@@ -300,10 +338,12 @@ final class HOCWP_Theme_HTML_Field {
 
 			if ( $connects || HT()->array_has_value( $connects ) ) {
 				$ul->add_attribute( 'data-connect-with', $id );
+
 				if ( ! $has_sub ) {
 					$class .= ' ' . $id;
 				}
 			}
+
 			$ul->add_attribute( 'class', $class );
 
 			if ( ! $has_sub ) {
@@ -311,10 +351,12 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			$li_html = '';
+
 			foreach ( $lists as $list ) {
 				if ( empty( $list ) ) {
 					continue;
 				}
+
 				if ( false === strpos( $list, '</li>' ) ) {
 					$li = new HOCWP_Theme_HTML_Tag( 'li' );
 					$li->add_attribute( 'class', 'ui-state-default' );
@@ -324,12 +366,15 @@ final class HOCWP_Theme_HTML_Field {
 					$li_html .= $list;
 				}
 			}
+
 			$ul->set_text( $li_html );
 			$ul->output();
+
 			if ( $connects || HT()->array_has_value( $connects ) ) {
 				$class .= ' connected-result ';
 				$ul    = new HOCWP_Theme_HTML_Tag( 'ul' );
 				$ul->add_attribute( 'data-list-type', $list_type );
+
 				if ( ! $has_sub ) {
 					$ul->add_attribute( 'data-connect-with', $id );
 				} else {
@@ -338,14 +383,17 @@ final class HOCWP_Theme_HTML_Field {
 						$class .= ' ' . $connect_sub;
 					}
 				}
+
 				$ul->add_attribute( 'class', $class );
 				$ul->add_attribute( 'data-sortable', 1 );
 				$li_html = '';
+
 				if ( HT()->array_has_value( $connects ) ) {
 					foreach ( $connects as $list ) {
 						if ( empty( $list ) ) {
 							continue;
 						}
+
 						if ( false === strpos( $list, '</li>' ) ) {
 							$li = new HOCWP_Theme_HTML_Tag( 'li' );
 							$li->add_attribute( 'class', 'ui-state-default' );
@@ -356,9 +404,11 @@ final class HOCWP_Theme_HTML_Field {
 						}
 					}
 				}
+
 				$ul->set_text( $li_html );
 				$ul->output();
 			}
+
 			$args['type'] = 'hidden';
 			self::input( $args );
 		}
