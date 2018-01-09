@@ -138,3 +138,58 @@ span.edit-link {
 .widget .entry-meta .comments-link {
     margin-left: 10px;
 }
+
+.hocwp-widget-top-commenters img {
+    vertical-align: top;
+}
+
+.fixed {
+    position: fixed;
+    z-index: 9999;
+}
+
+.entry-content .post-pagination > * {
+    display: inline-block;
+    padding: 0 9px;
+    margin-right: 4px;
+    border-radius: 3px;
+    border: solid 1px #c0c0c0;
+    background: #e9e9e9;
+    font-size: 0.875em;
+    font-weight: 700;
+    text-decoration: none;
+    color: #717171;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+    line-height: 24px;
+}
+
+.entry-content .post-pagination > * {
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.entry-content .post-pagination > a:hover {
+    background: rgb(254, 254, 254);
+    background: -moz-linear-gradient(270deg, rgba(254, 254, 254, 1) 1%, rgba(240, 240, 240, 1) 100%);
+    background: -webkit-linear-gradient(270deg, rgba(254, 254, 254, 1) 1%, rgba(240, 240, 240, 1) 100%);
+    background: linear-gradient(270deg, rgba(254, 254, 254, 1) 1%, rgba(240, 240, 240, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#f0f0f0', GradientType=1);
+}
+
+.entry-content .post-pagination > .page-number {
+    border: none;
+    background: #616161;
+    color: #f0f0f0;
+    text-shadow: 0 0 3px rgba(0, 0, 0, .5);
+}
+
+.entry-content .post-pagination > .page-number {
+    -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .8);
+    -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .8);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.entry-content li {
+    margin-bottom: 5px;
+}

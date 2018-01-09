@@ -268,13 +268,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$related            = isset( $instance['related'] ) ? (bool) $instance['related'] : $this->defaults['related'];
 		$term_as_title      = isset( $instance['term_as_title'] ) ? (bool) $instance['term_as_title'] : $this->defaults['term_as_title'];
 		$title_term_link    = isset( $instance['title_term_link'] ) ? (bool) $instance['title_term_link'] : $this->defaults['title_term_link'];
-		$date_intervals     = array(
-			'all'     => __( 'All date', 'hocwp-theme' ),
-			'daily'   => __( 'Daily', 'hocwp-theme' ),
-			'weekly'  => __( 'Weekly', 'hocwp-theme' ),
-			'monthly' => __( 'Monthly', 'hocwp-theme' ),
-			'yearly'  => __( 'Yearly', 'hocwp-theme' )
-		);
+		$date_intervals     = HT_Util()->date_intervals();
 		$date_interval      = isset( $instance['date_interval'] ) ? $instance['date_interval'] : $this->defaults['date_interval'];
 		$orders             = array(
 			'DESC' => __( 'DESC', 'hocwp-theme' ),

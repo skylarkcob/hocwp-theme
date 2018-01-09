@@ -24,6 +24,24 @@ function hocwp_theme_template_404() {
 add_action( 'hocwp_theme_template_404', 'hocwp_theme_template_404' );
 
 function hocwp_theme_template_archive() {
+	if ( is_post_type_archive() ) {
+		global $post_type;
+		if ( ! empty( $post_type ) ) {
+			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $post_type . '.php';
+			if ( file_exists( $file ) ) {
+				load_template( $file );
+
+				return;
+			}
+			$tmp  = str_replace( '_', '-', $post_type );
+			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $tmp . '.php';
+			if ( file_exists( $file ) ) {
+				load_template( $file );
+
+				return;
+			}
+		}
+	}
 	hocwp_theme_load_custom_template( 'template-archive' );
 }
 
@@ -450,7 +468,16 @@ add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );
 function hocwp_theme_site_branding_action() {
 	?>
     <div class="site-branding">
-		<?php the_custom_logo(); ?>
+		<?php
+		the_custom_logo();
+		do_action( 'hocwp_theme_site_branding_middle' );
+		$description = get_bloginfo( 'description', 'display' );
+		if ( $description || is_customize_preview() ) {
+			?>
+            <p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
+			<?php
+		}
+		?>
     </div><!-- .site-branding -->
 	<?php
 }
@@ -530,6 +557,16 @@ function hocwp_theme_get_custom_logo_filter( $html ) {
 			if ( isset( $options['general']['logo_html'] ) ) {
 				echo isset( $options['general']['logo_html'] );
 			}
+		}
+	} else {
+		if ( empty( $html ) ) {
+			$html = get_bloginfo( 'name', 'display' );
+			$html = HT()->wrap_text( $html, '<a href="' . esc_url( home_url( '/' ) ) . '">', '</a>' );
+		}
+		if ( is_home() ) {
+			$html = HT()->wrap_text( $html, '<h1 class="site-title">', '</h1>' );
+		} else {
+			$html = HT()->wrap_text( $html, '<p class="site-title">', '</p>' );
 		}
 	}
 
@@ -655,6 +692,7 @@ function hocwp_theme_loop( $query ) {
 		echo '<div class="' . $class . '">';
 		do_action( 'hocwp_theme_loop_before' );
 		$template_valid = true;
+
 		if ( ! empty( $template ) ) {
 			ob_start();
 			hocwp_theme_load_custom_loop( $template );
@@ -663,6 +701,13 @@ function hocwp_theme_loop( $query ) {
 				$template_valid = false;
 			}
 		}
+
+		$list = isset( $hocwp_theme->loop_data['list'] ) ? $hocwp_theme->loop_data['list'] : false;
+
+		if ( $list ) {
+			echo '<ul>';
+		}
+
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			if ( $template_valid ) {
@@ -677,6 +722,11 @@ function hocwp_theme_loop( $query ) {
 			}
 			$count ++;
 		}
+
+		if ( $list ) {
+			echo '</ul>';
+		}
+
 		do_action( 'hocwp_theme_loop_after' );
 		echo '</div>';
 		$pa = isset( $hocwp_theme->loop_data['pagination_args'] ) ? $hocwp_theme->loop_data['pagination_args'] : array();
@@ -730,6 +780,10 @@ function hocwp_theme_socials( $args = array() ) {
 			'linkedin' => array(
 				'base'  => 'https://www.linkedin.com/cws/share?url=[URL]',
 				'class' => 'btn btn-primary btn-sm'
+			),
+			'email'    => array(
+				'base'  => 'mailto:?subject=[TITLE]&body=[URL]',
+				'class' => 'btn btn-default'
 			)
 		),
 		'url'     => '',
@@ -759,11 +813,14 @@ function hocwp_theme_socials( $args = array() ) {
     <div class="social share-tools">
 		<?php
 		foreach ( $socials as $social => $data ) {
-			$base  = $data['base'];
-			$base  = str_replace( '[URL]', $url, $base );
-			$class = $data['class'];
-			$class .= ' ' . sanitize_html_class( $social );
-			$name  = isset( $data['name'] ) ? $data['name'] : ucwords( $social );
+			$base   = $data['base'];
+			$base   = str_replace( '[URL]', $url, $base );
+			$base   = str_replace( '[TITLE]', $title, $base );
+			$class  = $data['class'];
+			$class  .= ' ' . sanitize_html_class( $social );
+			$name   = isset( $data['name'] ) ? $data['name'] : ucwords( $social );
+			$target = '_blank';
+
 			if ( 'twitter' == $social ) {
 				$params = array(
 					'original_referer' => urlencode( home_url( '/' ) ),
@@ -774,10 +831,17 @@ function hocwp_theme_socials( $args = array() ) {
 					$params['via'] = $data['username'];
 				}
 				$base = add_query_arg( $params, $base );
+			} elseif ( 'email' == $social ) {
+				$target = '_self';
+			}
+			$real_name = strip_tags( $name );
+			if ( empty( $real_name ) ) {
+				$real_name = ucwords( $social );
 			}
 			?>
-            <a href="<?php echo esc_url( $base ); ?>" rel="nofollow" target="_blank" class="<?php echo $class; ?>"
-               title="<?php echo esc_attr( sprintf( __( 'Share on %s', 'hocwp-theme' ), $name ) ); ?>"><?php echo $name; ?></a>
+            <a href="<?php echo esc_url( $base ); ?>" rel="nofollow" target="<?php echo $target; ?>"
+               class="<?php echo $class; ?>"
+               title="<?php echo esc_attr( sprintf( __( 'Share on %s', 'hocwp-theme' ), $real_name ) ); ?>"><?php echo $name; ?></a>
 			<?php
 		}
 		if ( current_user_can( 'publish_posts' ) ) {

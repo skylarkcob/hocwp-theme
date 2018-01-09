@@ -97,6 +97,11 @@ final class HOCWP_Theme_HTML_Field {
 		$input->output();
 	}
 
+	public static function input_url( $args = array() ) {
+		$args['type'] = 'url';
+		self::input( $args );
+	}
+
 	public static function textarea( $args = array() ) {
 		$defaults = array(
 			'class' => 'widefat',
@@ -227,6 +232,15 @@ final class HOCWP_Theme_HTML_Field {
 				$taxonomy = array_shift( $taxonomy );
 			}
 
+			$term_args = isset( $args['term_args'] ) ? $args['term_args'] : '';
+
+			if ( ! is_array( $term_args ) ) {
+				$term_args = array();
+			}
+
+			$default_args = array( 'hide_empty' => false );
+			$term_args    = wp_parse_args( $term_args, $default_args );
+
 			if ( is_array( $taxonomy ) ) {
 				$taxonomies = $taxonomy;
 
@@ -237,7 +251,7 @@ final class HOCWP_Theme_HTML_Field {
 						'label' => $tax->label
 					);
 
-					$terms = HT_Util()->get_terms( $taxonomy );
+					$terms = HT_Util()->get_terms( $taxonomy, $term_args );
 
 					foreach ( $terms as $obj ) {
 						$options[ $taxonomy ][] = array(
@@ -249,7 +263,7 @@ final class HOCWP_Theme_HTML_Field {
 					}
 				}
 			} else {
-				$terms = HT_Util()->get_terms( $taxonomy );
+				$terms = HT_Util()->get_terms( $taxonomy, $term_args );
 
 				foreach ( $terms as $obj ) {
 					$options[ $obj->term_id ] = $obj->name;
@@ -257,6 +271,10 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			$args['options'] = $options;
+
+			if ( ! isset( $args['option_all'] ) ) {
+				$args['option_all'] = __( '-- Choose term --', 'hocwp-theme' );
+			}
 		}
 
 		self::select( $args );

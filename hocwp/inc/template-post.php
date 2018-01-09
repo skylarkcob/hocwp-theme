@@ -72,10 +72,21 @@ function hocwp_theme_the_title() {
 		$in_loop = $query->in_the_loop;
 	}
 	$is_single = isset( $hocwp_theme->loop_data['is_single'] ) ? $hocwp_theme->loop_data['is_single'] : false;
-	if ( $in_loop && ! $is_single ) {
-		the_title( '<h2 class="entry-title post-title"><a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a></h2>' );
+
+	$list = isset( $hocwp_theme->loop_data['list'] ) ? $hocwp_theme->loop_data['list'] : false;
+
+	if ( $list || ( isset( $hocwp_theme->loop_data['only_link'] ) && $hocwp_theme->loop_data['only_link'] ) ) {
+		if ( $list ) {
+			the_title( '<li><a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a></li>' );
+		} else {
+			the_title( '<a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a>' );
+		}
 	} else {
-		the_title( '<h1 class="entry-title post-title">', '</h1>' );
+		if ( $in_loop && ! $is_single ) {
+			the_title( '<h2 class="entry-title post-title"><a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a></h2>' );
+		} else {
+			the_title( '<h1 class="entry-title post-title">', '</h1>' );
+		}
 	}
 }
 
@@ -123,6 +134,14 @@ add_filter( 'post_thumbnail_html', 'hocwp_theme_post_thumbnail_html_auto_link', 
 function hocwp_theme_the_content() {
 	echo '<div class="entry-content">';
 	the_content();
+
+	wp_link_pages( array(
+		'before'      => '<div class="page-links post-pagination"><span class="pages">' . __( 'Pages:', 'hocwp-theme' ) . '</span>',
+		'after'       => '</div>',
+		'link_before' => '<span class="page-number">',
+		'link_after'  => '</span>',
+	) );
+
 	echo '</div>';
 }
 
@@ -137,11 +156,15 @@ function hocwp_theme_the_excerpt() {
 add_action( 'hocwp_theme_the_excerpt', 'hocwp_theme_the_excerpt' );
 
 function hocwp_theme_related_posts( $args ) {
-	$defaults  = array();
+	$defaults  = array(
+		'posts_per_page' => 6
+	);
 	$args      = (array) $args;
+	$args      = array_filter( $args );
 	$args      = wp_parse_args( $args, $defaults );
 	$box_title = isset( $args['box_title'] ) ? $args['box_title'] : '';
 	unset( $args['box_title'] );
+	$args  = apply_filters( 'hocwp_theme_related_posts_args', $args );
 	$query = HT_Query()->related_posts( $args );
 	if ( $query->have_posts() ) {
 		if ( ! isset( $box_title ) || empty( $box_title ) ) {
@@ -151,11 +174,14 @@ function hocwp_theme_related_posts( $args ) {
 		echo HT()->wrap_text( $box_title, '<h3 class="box-title">', '</h3>' );
 		global $hocwp_theme;
 		$hocwp_theme->loop_data['template']        = 'related';
-		$hocwp_theme->loop_data['pagination_args'] = null;
+		$hocwp_theme->loop_data['pagination_args'] = false;
 		$hocwp_theme->loop_data['content_none']    = false;
+		$hocwp_theme->loop_data['only_link']       = true;
+		$hocwp_theme->loop_data['list']            = true;
 		do_action( 'hocwp_theme_loop', $query );
 		echo '</div>';
 	}
+	HT_Util()->display_ads( 'related_posts' );
 }
 
 add_action( 'hocwp_theme_related_posts', 'hocwp_theme_related_posts' );

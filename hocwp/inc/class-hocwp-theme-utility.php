@@ -114,6 +114,16 @@ final class HOCWP_Theme_Utility {
 		return $select;
 	}
 
+	public function get_include_url( $path ) {
+		$path = ltrim( $path, '/' );
+
+		return home_url( 'wp-includes/' . $path );
+	}
+
+	public function blank_image_url() {
+		return $this->get_include_url( 'images/blank.gif' );
+	}
+
 	public function fetch_feed( $args = array() ) {
 		$number = absint( HT()->get_value_in_array( $args, 'number', 5 ) );
 		$offset = HT()->get_value_in_array( $args, 'offset', 0 );
@@ -284,6 +294,18 @@ final class HOCWP_Theme_Utility {
 		}
 
 		return $path;
+	}
+
+	public function date_intervals() {
+		$date_intervals = array(
+			'all'     => __( 'All date', 'hocwp-theme' ),
+			'daily'   => __( 'Daily', 'hocwp-theme' ),
+			'weekly'  => __( 'Weekly', 'hocwp-theme' ),
+			'monthly' => __( 'Monthly', 'hocwp-theme' ),
+			'yearly'  => __( 'Yearly', 'hocwp-theme' )
+		);
+
+		return apply_filters( 'hocwp_theme_date_intervals', $date_intervals );
 	}
 
 	public static function admin_notice( $args = array() ) {
@@ -1214,6 +1236,32 @@ final class HOCWP_Theme_Utility {
 		}
 
 		return $res;
+	}
+
+	public function delete_transient( $transient_name = '' ) {
+		global $wpdb;
+
+		$query_root = "DELETE FROM $wpdb->options";
+		$query_root .= " WHERE option_name like %s";
+		$key_1      = '_transient_';
+		$key_2      = '_transient_timeout_';
+		if ( ! empty( $transient_name ) ) {
+			$transient_name = '%' . $transient_name . '%';
+
+			$key_1 .= $transient_name;
+			$key_2 .= $transient_name;
+		}
+		$key_1 = $wpdb->prepare( $query_root, $key_1 );
+		$key_2 = $wpdb->prepare( $query_root, $key_2 );
+
+		$wpdb->query( $key_1 );
+		$wpdb->query( $key_2 );
+	}
+
+	public function display_ads( $args ) {
+		if ( function_exists( 'hocwp_ext_ads_display' ) ) {
+			hocwp_ext_ads_display( $args );
+		}
 	}
 
 	public function facebook_share_button( $args = array() ) {

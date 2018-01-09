@@ -293,25 +293,24 @@ function hocwp_theme_user_profile_updated( $user_id ) {
 add_action( 'personal_options_update', 'hocwp_theme_user_profile_updated' );
 add_action( 'edit_user_profile_update', 'hocwp_theme_user_profile_updated' );
 
-function hocwp_theme_update_facebook_data_ajax_callback() {
-	$post_id = isset( $_GET['post_id'] ) ? $_GET['post_id'] : '';
-	if ( HT()->is_positive_number( $post_id ) ) {
-		$event = isset( $_GET['event'] ) ? $_GET['event'] : '';
-		if ( 'like' == $event || 'unlike' == $event ) {
-			$likes = get_post_meta( $post_id, 'likes', true );
-			$likes = absint( $likes );
-			if ( 'like' == $event ) {
-				$likes ++;
-			} else {
-				$likes --;
-			}
-			update_post_meta( $post_id, 'likes', absint( $likes ) );
-		}
-	}
-	exit;
+function hocwp_theme_default_ads_positions( $positions ) {
+	$positions['related_posts'] = __( 'Related posts', 'hocwp-theme' );
+
+	return $positions;
 }
 
-add_action( 'wp_ajax_hocwp_theme_update_facebook_data', 'hocwp_theme_update_facebook_data_ajax_callback' );
-add_action( 'wp_ajax_nopriv_hocwp_theme_update_facebook_data', 'hocwp_theme_update_facebook_data_ajax_callback' );
+add_filter( 'hocwp_theme_ads_positions', 'hocwp_theme_default_ads_positions' );
+
+function hocwp_theme_mce_buttons_filter( $mce_buttons, $editor_id ) {
+	if ( 'content' == $editor_id ) {
+		array_splice( $mce_buttons, 13, 0, 'wp_page' );
+	}
+
+	return $mce_buttons;
+}
+
+add_filter( 'mce_buttons', 'hocwp_theme_mce_buttons_filter', 10, 2 );
+
+require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';
 
 require HOCWP_THEME_CORE_PATH . '/admin/dashboard-widgets.php';

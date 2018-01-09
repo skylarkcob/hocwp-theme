@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.2.1' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.2.2' );
 
 /**
  * Theme developing mode.
@@ -86,6 +86,7 @@ function hocwp_theme_load() {
 	 */
 	require HOCWP_THEME_CORE_PATH . '/widgets/class-hocwp-theme-widget-terms.php';
 	require HOCWP_THEME_CORE_PATH . '/widgets/class-hocwp-theme-widget-posts.php';
+	require HOCWP_THEME_CORE_PATH . '/widgets/class-hocwp-theme-widget-top-commenters.php';
 
 	/**
 	 * Extensions.

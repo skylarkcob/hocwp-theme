@@ -140,6 +140,7 @@ add_action( 'hocwp_thene_change_siteurl', 'hocwp_theme_update_option_url', 10, 2
 function hocwp_theme_register_widgets() {
 	register_widget( 'HOCWP_Theme_Widget_Posts' );
 	register_widget( 'HOCWP_Theme_Widget_Terms' );
+	register_widget( 'HOCWP_Theme_Widget_Top_Commenters' );
 
 	$args = array(
 		'id'          => 'home',

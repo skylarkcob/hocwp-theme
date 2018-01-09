@@ -24,6 +24,12 @@
     var mobileMenuClass = " mobile-menu",
         parent = container.parentNode;
 
+    var mobileWidth = parseInt(document.getElementsByTagName("body")[0].getAttribute("data-mobile-width"));
+
+    if (null === mobileWidth || 'number' !== typeof mobileWidth || isNaN(mobileWidth) || 1 > mobileWidth) {
+        return;
+    }
+
     parent.style.position = "relative";
 
     window.onresize = function () {
@@ -41,12 +47,10 @@
             if ("undefined" !== typeof menu) {
                 menu.className += mobileMenuClass;
             }
-            
+
             container.className += mobileMenuClass;
         }
     };
-
-    var mobileWidth = document.getElementsByTagName("body")[0].getAttribute("data-mobile-width");
 
     if (window.innerWidth > mobileWidth) {
         button.style.display = "none";

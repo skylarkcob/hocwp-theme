@@ -32,30 +32,66 @@ final class HOCWP_Theme_Query {
 	}
 
 	public static function related_posts( $args = array() ) {
-		$post_id  = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
-		$obj      = get_post( $post_id );
+		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+		$obj     = get_post( $post_id );
+
 		$defaults = array(
 			'post__not_in' => array( $post_id ),
 			'post_type'    => $obj->post_type
 		);
-		$args     = wp_parse_args( $args, $defaults );
-		$taxs     = get_object_taxonomies( $obj );
+
+		$args = wp_parse_args( $args, $defaults );
+		$taxs = get_object_taxonomies( $obj );
+
 		if ( HOCWP_Theme::array_has_value( $taxs ) ) {
 			$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
-			$new       = array();
-			foreach ( $taxs as $tax ) {
-				$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
-				if ( HOCWP_Theme::array_has_value( $ids ) ) {
-					$new[] = array(
-						'taxonomy' => $tax,
-						'field'    => 'id',
-						'terms'    => $ids
-					);
+
+			if ( ! is_array( $tax_query ) ) {
+				$tax_query = array();
+			}
+
+			$new = array();
+
+			foreach ( $taxs as $key => $tax ) {
+				$taxonomy = get_taxonomy( $tax );
+				if ( $taxonomy instanceof WP_Taxonomy ) {
+					if ( ! $taxonomy->hierarchical ) {
+						$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
+						if ( HOCWP_Theme::array_has_value( $ids ) ) {
+							$new[] = array(
+								'taxonomy' => $tax,
+								'field'    => 'id',
+								'terms'    => $ids
+							);
+						}
+						unset( $taxs[ $key ] );
+					}
+				} else {
+					unset( $taxs[ $key ] );
 				}
 			}
-			shuffle( $new );
-			$new['relation']   = 'or';
-			$tax_query[]       = $new;
+
+			if ( HT()->array_has_value( $new ) ) {
+				$new['relation'] = 'or';
+				$tax_query[]     = $new;
+			} else {
+				foreach ( $taxs as $tax ) {
+					$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
+					if ( HOCWP_Theme::array_has_value( $ids ) ) {
+						$new[] = array(
+							'taxonomy' => $tax,
+							'field'    => 'id',
+							'terms'    => $ids
+						);
+					}
+				}
+			}
+
+			if ( HT()->array_has_value( $new ) ) {
+				$new['relation'] = 'or';
+				$tax_query[]     = $new;
+			}
+
 			$args['tax_query'] = $tax_query;
 		}
 
@@ -96,11 +132,31 @@ final class HOCWP_Theme_Query {
 		return new WP_Query( $args );
 	}
 
-	public static function get_top_commenters( $number = 10 ) {
+	public static function get_top_commenters( $number = 10, $interval = 'all' ) {
 		global $wpdb;
 		$sql = "SELECT COUNT(comment_author_email) AS comments_count, comment_author_email, comment_author, comment_author_url";
 		$sql .= " FROM $wpdb->comments";
 		$sql .= " WHERE comment_author_email != '' AND comment_type = '' AND comment_approved = 1";
+
+		switch ( $interval ) {
+			case 'daily':
+			case 'today':
+				$sql .= " AND DATE(comment_date) = curdate()";
+				break;
+			case 'weekly':
+			case 'thisweek':
+				$sql .= " AND YEAR(comment_date) = YEAR(curdate()) AND WEEK(comment_date) = WEEK(curdate())";
+				break;
+			case 'monthly':
+			case 'thismonth':
+				$sql .= " AND YEAR(comment_date) = YEAR(curdate()) AND MONTH(comment_date) = MONTH(curdate())";
+				break;
+			case 'yearly':
+			case 'thisyear':
+				$sql .= " AND YEAR(comment_date) = YEAR(curdate())";
+				break;
+		}
+
 		$sql .= " GROUP BY comment_author_email ORDER BY comments_count DESC, comment_author ASC LIMIT $number";
 
 		return $wpdb->get_results( $sql );
