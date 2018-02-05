@@ -125,16 +125,34 @@ final class HOCWP_Theme_Utility {
 	}
 
 	public function fetch_feed( $args = array() ) {
+		if ( ! is_array( $args ) ) {
+			$args = array(
+				'url' => $args
+			);
+		}
+
+		$defaults = array(
+			'number' => 5,
+			'offset' => 0,
+			'url'    => ''
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
 		$number = absint( HT()->get_value_in_array( $args, 'number', 5 ) );
 		$offset = HT()->get_value_in_array( $args, 'offset', 0 );
 		$url    = HT()->get_value_in_array( $args, 'url' );
+
 		if ( empty( $url ) ) {
 			return '';
 		}
+
 		if ( ! function_exists( 'fetch_feed' ) ) {
 			load_template( ABSPATH . WPINC . '/feed.php' );
 		}
+
 		$rss = fetch_feed( $url );
+
 		if ( ! is_wp_error( $rss ) ) {
 			if ( ! $rss->get_item_quantity() ) {
 				$error = new WP_Error( 'feed_down', __( 'An error has occurred, which probably means the feed is down. Try again later.', 'hocwp-theme' ) );
@@ -143,9 +161,9 @@ final class HOCWP_Theme_Utility {
 
 				return $error;
 			}
+
 			$max    = $rss->get_item_quantity( $number );
 			$result = $rss->get_items( $offset, $max );
-
 		} else {
 			$result = $rss;
 		}
@@ -154,47 +172,38 @@ final class HOCWP_Theme_Utility {
 	}
 
 	public function get_feed_items( $args = array() ) {
-		$url = HT()->get_value_in_array( $args, 'url' );
-		if ( empty( $url ) ) {
-			return '';
-		}
-		$number         = HT()->get_value_in_array( $args, 'number' );
-		$expiration     = HT()->get_value_in_array( $args, 'expiration', 12 * HOUR_IN_SECONDS );
-		$transient_name = 'hocwp_theme_fetch_feed_' . md5( json_encode( $args ) );
-		if ( HT()->is_positive_number( $number ) ) {
-			$transient_name .= '_' . $number;
-		}
-		if ( false === ( $result = get_transient( $transient_name ) ) ) {
-			$items = $this->fetch_feed( $args );
-			if ( HT()->array_has_value( $items ) ) {
-				$result = array();
-				foreach ( $items as $item ) {
-					if ( ! $this->is_object_valid( $item ) ) {
-						continue;
-					}
-					$description = $item->get_description();
-					$thumbnail   = HT()->get_first_image_source( $description );
-					$description = wp_strip_all_tags( $description );
-					$content     = $item->get_content();
-					if ( empty( $thumbnail ) ) {
-						$thumbnail = HT()->get_first_image_source( $content );
-					}
-					$value = array(
-						'permalink'   => $item->get_permalink(),
-						'title'       => $item->get_title(),
-						'date'        => $item->get_date(),
-						'image_url'   => $thumbnail,
-						'description' => $description,
-						'content'     => $content
-					);
-					array_push( $result, $value );
+		$items = $this->fetch_feed( $args );
+
+		if ( HT()->array_has_value( $items ) ) {
+			$result = array();
+
+			foreach ( $items as $item ) {
+				if ( ! $this->is_object_valid( $item ) ) {
+					continue;
 				}
-				if ( HT()->array_has_value( $result ) ) {
-					set_transient( $transient_name, $result, $expiration );
+
+				$description = $item->get_description();
+				$thumbnail   = HT()->get_first_image_source( $description );
+				$description = wp_strip_all_tags( $description );
+				$content     = $item->get_content();
+
+				if ( empty( $thumbnail ) ) {
+					$thumbnail = HT()->get_first_image_source( $content );
 				}
-			} else {
-				return $items;
+
+				$value = array(
+					'permalink'   => $item->get_permalink(),
+					'title'       => $item->get_title(),
+					'date'        => $item->get_date(),
+					'image_url'   => $thumbnail,
+					'description' => $description,
+					'content'     => $content
+				);
+
+				array_push( $result, $value );
 			}
+		} else {
+			return $items;
 		}
 
 		return $result;
@@ -224,9 +233,9 @@ final class HOCWP_Theme_Utility {
 
 	public static function ajax_overlay() {
 		?>
-        <div class="hocwp-theme ajax-overlay">
-            <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
-        </div>
+		<div class="hocwp-theme ajax-overlay">
+			<img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
+		</div>
 		<?php
 	}
 
@@ -257,6 +266,7 @@ final class HOCWP_Theme_Utility {
 
 	public static function get_contents( $url ) {
 		$filesystem = self::filesystem();
+
 		if ( $filesystem instanceof WP_Filesystem_Base ) {
 			return $filesystem->get_contents( $url );
 		}
@@ -321,7 +331,7 @@ final class HOCWP_Theme_Utility {
 		);
 		$args     = wp_parse_args( $args, $defaults );
 		$class    = 'notice fade hocwp-theme';
-		$class    .= ' notice-' . $args['type'];
+		$class .= ' notice-' . $args['type'];
 		if ( $args['dismissible'] ) {
 			$class .= ' is-dismissible';
 		}
@@ -337,14 +347,14 @@ final class HOCWP_Theme_Utility {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
-                <script>
-                    jQuery(document).ready(function ($) {
-                        setTimeout(function () {
-                            var notices = $('.hocwp-theme.notice.auto-hide');
-                            notices.fadeOut(1000);
-                        }, <?php echo $hidden_interval; ?>);
-                    });
-                </script>
+				<script>
+					jQuery(document).ready(function ($) {
+						setTimeout(function () {
+							var notices = $('.hocwp-theme.notice.auto-hide');
+							notices.fadeOut(1000);
+						}, <?php echo $hidden_interval; ?>);
+					});
+				</script>
 				<?php
 				$message .= ob_get_clean();
 			}
@@ -561,10 +571,10 @@ final class HOCWP_Theme_Utility {
 				if ( ! empty( $label ) ) {
 					$count ++;
 				}
-				$end_size  = absint( $args['end_size'] );
-				$count     += $end_size;
-				$mid_size  = absint( $args['mid_size'] );
-				$count     += $mid_size;
+				$end_size = absint( $args['end_size'] );
+				$count += $end_size;
+				$mid_size = absint( $args['mid_size'] );
+				$count += $mid_size;
 				$prev_next = $args['prev_next'];
 				if ( 1 == $prev_next ) {
 					$prev_text = $args['prev_text'];
@@ -650,9 +660,9 @@ final class HOCWP_Theme_Utility {
 
 				$current_total = str_replace( $search, $replace, $current_total );
 				?>
-                <li class="page-item current-total">
-                    <a class="page-numbers" href="javascript:" title=""><?php echo $current_total; ?></a>
-                </li>
+				<li class="page-item current-total">
+					<a class="page-numbers" href="javascript:" title=""><?php echo $current_total; ?></a>
+				</li>
 				<?php
 			}
 			echo '</ul>';
@@ -782,29 +792,85 @@ final class HOCWP_Theme_Utility {
 			$items[] = '<span class="breadcrumb_last active breadcrumb-item breadcrumb-last trail-item trail-end">' . $last_item . '</span>';
 		}
 		$count = count( $items );
+		$nav   = new HOCWP_Theme_HTML_Tag( 'nav' );
+		$nav->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
+		$nav->add_attribute( 'itemtype', '' );
+		$nav->add_attribute( 'itemtype', 'https://schema.org/BreadcrumbList' );
+
+		$span = new HOCWP_Theme_HTML_Tag( 'span' );
+		$span->add_attribute( 'xmlns:v', 'http://rdf.data-vocabulary.org/#' );
+		ob_start();
 		?>
-        <nav class="breadcrumb hocwp-breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
-			<span xmlns:v="http://rdf.data-vocabulary.org/#">
-				<span typeof="v:Breadcrumb">
-					<?php echo $home_item . '&nbsp;' . $separator; ?>
-                    <span rel="v:child" typeof="v:Breadcrumb">
-						<?php
-						foreach ( $items as $index => $item ) {
-							echo $item;
-							if ( $index < ( $count - 1 ) ) {
-								echo '&nbsp;' . $separator . '&nbsp;';
-							}
-						}
-						?>
-					</span>
-				</span>
+		<span typeof="v:Breadcrumb">
+			<?php echo $home_item . '&nbsp;' . $separator; ?>
+			<span rel="v:child" typeof="v:Breadcrumb">
+				<?php
+				foreach ( $items as $index => $item ) {
+					echo $item;
+					if ( $index < ( $count - 1 ) ) {
+						echo '&nbsp;' . $separator . '&nbsp;';
+					}
+				}
+				?>
 			</span>
-        </nav>
+		</span>
 		<?php
+		$span->set_text( ob_get_clean() );
+		$nav->set_text( $span );
+		$nav->output();
+	}
+
+	public function get_youtube_video_id( $url ) {
+		$parse = parse_url( $url, PHP_URL_QUERY );
+		parse_str( $parse, $params );
+
+		$id = '';
+
+		if ( isset( $params['v'] ) && strlen( $params['v'] ) > 0 ) {
+			$id = $params['v'];
+		}
+
+		return $id;
+	}
+
+	public function get_youtube_video_info( $url, $api_key = '' ) {
+		if ( empty( $api_key ) ) {
+			$api_key = hocwp_theme_get_option( 'google_api_key', '', 'social' );
+		}
+
+		$base = 'https://www.googleapis.com/youtube/v3/videos/';
+
+		$params = array(
+			'part' => 'snippet,contentDetails,statistics',
+			'id'   => $this->get_youtube_video_id( $url ),
+			'key'  => $api_key
+		);
+
+		$api_url = add_query_arg( $params, $base );
+
+		$data = HT_Util()->get_contents( $api_url );
+
+		return json_decode( $data );
 	}
 
 	public static function get_paged() {
 		return ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+	}
+
+	public static function get_posts_per_page( $home = false ) {
+		global $hocwp_theme;
+
+		if ( $home ) {
+			$ppp = $hocwp_theme->options['home']['posts_per_page'];
+		} else {
+			$ppp = $hocwp_theme->defaults['posts_per_page'];
+		}
+
+		if ( ! is_numeric( $ppp ) ) {
+			$ppp = get_option( 'posts_per_page' );
+		}
+
+		return apply_filters( 'hocwp_theme_posts_per_page', $ppp, $home );
 	}
 
 	public static function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
@@ -1065,6 +1131,7 @@ final class HOCWP_Theme_Utility {
 			'after_widget'  => "</section>\n",
 			'before_title'  => '<h3 class="widgettitle widget-title">',
 			'after_title'   => "</h3>\n",
+			'description'   => __( 'Add widgets here.', 'hocwp-theme' )
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -1120,17 +1187,58 @@ final class HOCWP_Theme_Utility {
 		return $p->build();
 	}
 
+	public function get_google_drive_file_url( $url, $api_key = '' ) {
+		if ( empty( $api_key ) ) {
+			$api_key = $this->get_theme_option( 'google_api_key', '', 'social' );
+		}
+
+		if ( ! empty( $api_key ) ) {
+			$url = esc_url_raw( $url );
+
+			$domain = HT()->get_domain_name( $url, true );
+
+			if ( 'google.com' != $domain ) {
+				return $url;
+			}
+
+			$parts = parse_url( $url );
+			parse_str( $parts['query'], $query );
+			$id = '';
+
+			if ( isset( $query['id'] ) ) {
+				$id = $query['id'];
+			} else {
+				$parts = explode( '/', $url );
+				$key   = array_search( 'd', $parts );
+				if ( is_int( $key ) && isset( $parts[ $key + 1 ] ) ) {
+					$id = $parts[ $key + 1 ];
+				}
+			}
+
+			if ( empty( $id ) ) {
+				$last = array_pop( $parts );
+				$id   = remove_query_arg( 'e', $last );
+			}
+
+			if ( ! empty( $id ) ) {
+				$url = 'https://www.googleapis.com/drive/v3/files/' . $id . '?alt=media&key=' . $api_key;
+			}
+		}
+
+		return $url;
+	}
+
 	public function addthis_toolbox( $args = array() ) {
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 		$class   = isset( $args['class'] ) ? $args['class'] : 'addthis_native_toolbox';
 		$class   = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class );
-		$class   .= ' addthis-tools';
-		$url     = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
-		$title   = isset( $args['title'] ) ? $args['title'] : get_the_title();
+		$class .= ' addthis-tools';
+		$url   = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
+		$title = isset( $args['title'] ) ? $args['title'] : get_the_title();
 		?>
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-        <div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
-             data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
+		<!-- Go to www.addthis.com/dashboard to customize your tools -->
+		<div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
+		     data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
 		<?php
 	}
 
@@ -1151,22 +1259,22 @@ final class HOCWP_Theme_Utility {
 			$locale = 'vi_VN';
 		}
 		?>
-        <script>
-            (function (d, s, id) {
-                var js, gjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement(s);
-                js.id = id;
-                js.async = "async";
-                js.defer = "defer";
-                js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
-                js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
-                js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
-                gjs.parentNode.insertBefore(js, gjs);
-            }(document, 'script', 'google-jssdk'));
-        </script>
+		<script>
+			(function (d, s, id) {
+				var js, gjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement(s);
+				js.id = id;
+				js.async = "async";
+				js.defer = "defer";
+				js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
+				js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
+				js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
+				gjs.parentNode.insertBefore(js, gjs);
+			}(document, 'script', 'google-jssdk'));
+		</script>
 		<?php
 	}
 
@@ -1188,15 +1296,15 @@ final class HOCWP_Theme_Utility {
 				$version = isset( $args['version'] ) ? $args['version'] : '2.11';
 				$version = trim( $version, 'v' );
 				?>
-                <div id="fb-root"></div>
-                <script>(function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = 'https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>';
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));</script>
+				<div id="fb-root"></div>
+				<script>(function (d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) return;
+						js = d.createElement(s);
+						js.id = id;
+						js.src = 'https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>';
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));</script>
 				<?php
 			} else {
 				echo $sdk;
@@ -1205,24 +1313,15 @@ final class HOCWP_Theme_Utility {
 	}
 
 	public function get_facebook_data_for_url( $url, $key = 'likes' ) {
-		$url     = trailingslashit( $url );
-		$tr_name = 'hocwp_theme_get_facebook_for_url_' . md5( $url );
-		if ( false === ( $res = get_transient( $tr_name ) ) ) {
-			$base = 'https://graph.facebook.com/?fields=og_object{likes.limit(0).summary(true)},share';
-			$url  = add_query_arg( 'ids', $url, $base );
+		$url  = trailingslashit( $url );
+		$base = 'https://graph.facebook.com/?fields=og_object{likes.limit(0).summary(true)},share';
+		$url  = add_query_arg( 'ids', $url, $base );
 
-			$res = wp_remote_get( $url );
-			if ( ! is_wp_error( $res ) ) {
-				$res = wp_remote_retrieve_body( $res );
-				$res = json_decode( $res, true );
-				$res = array_shift( $res );
-				if ( ! isset( $res['code'] ) || 4 != $res['code'] ) {
-					set_transient( $tr_name, $res );
-				}
-			}
-		}
-		if ( isset( $res['code'] ) && 4 == $res['code'] ) {
-			delete_transient( $tr_name );
+		$res = wp_remote_get( $url );
+		if ( ! is_wp_error( $res ) ) {
+			$res = wp_remote_retrieve_body( $res );
+			$res = json_decode( $res, true );
+			$res = array_shift( $res );
 		}
 		if ( HT()->array_has_value( $res ) && ! empty( $key ) ) {
 			switch ( $key ) {
@@ -1243,8 +1342,8 @@ final class HOCWP_Theme_Utility {
 
 		$query_root = "DELETE FROM $wpdb->options";
 		$query_root .= " WHERE option_name like %s";
-		$key_1      = '_transient_';
-		$key_2      = '_transient_timeout_';
+		$key_1 = '_transient_';
+		$key_2 = '_transient_timeout_';
 		if ( ! empty( $transient_name ) ) {
 			$transient_name = '%' . $transient_name . '%';
 
@@ -1284,30 +1383,30 @@ final class HOCWP_Theme_Utility {
 		);
 		$ajax_url = add_query_arg( $params, $ajax_url );
 		?>
-        <div class="fb-like-buttons like-share">
-            <div class="item">
-                <div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
-                     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
-                     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
-            </div>
-        </div>
-        <script>
-            function updateFacebookData(event) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
-                xhr.send();
-            }
+		<div class="fb-like-buttons like-share">
+			<div class="item">
+				<div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
+				     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
+				     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
+			</div>
+		</div>
+		<script>
+			function updateFacebookData(event) {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
+				xhr.send();
+			}
 
-            window.fbAsyncInit = function () {
-                FB.Event.subscribe("edge.create", function () {
-                    updateFacebookData('like');
-                });
+			window.fbAsyncInit = function () {
+				FB.Event.subscribe("edge.create", function () {
+					updateFacebookData('like');
+				});
 
-                FB.Event.subscribe("edge.remove", function () {
-                    updateFacebookData('unlike');
-                });
-            };
-        </script>
+				FB.Event.subscribe("edge.remove", function () {
+					updateFacebookData('unlike');
+				});
+			};
+		</script>
 		<?php
 	}
 
@@ -1331,6 +1430,16 @@ final class HOCWP_Theme_Utility {
 		wp_enqueue_script( 'hocwp-theme-datepicker' );
 	}
 
+	public function enqueue_chosen() {
+		wp_enqueue_style( 'chosen-style' );
+		wp_enqueue_script( 'chosen-select' );
+	}
+
+	public function enqueue_ajax_overlay() {
+		wp_enqueue_style( 'hocwp-theme-ajax-overlay-style' );
+		wp_enqueue_script( 'hocwp-theme-ajax-button' );
+	}
+
 	public function get_theme_options( $tab ) {
 		global $hocwp_theme;
 		$options = isset( $hocwp_theme->options[ $tab ] ) ? $hocwp_theme->options[ $tab ] : '';
@@ -1348,21 +1457,21 @@ final class HOCWP_Theme_Utility {
 			return;
 		}
 		?>
-        <script>
-            (function (d, s, id) {
-                var js, gjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement(s);
-                js.id = id;
-                js.async = "async";
-                js.defer = "defer";
-                js.src = "https://www.google.com/recaptcha/api.js";
-                gjs.parentNode.insertBefore(js, gjs);
-            }(document, 'script', 'recaptcha-jssdk'));
-        </script>
-        <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
+		<script>
+			(function (d, s, id) {
+				var js, gjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement(s);
+				js.id = id;
+				js.async = "async";
+				js.defer = "defer";
+				js.src = "https://www.google.com/recaptcha/api.js";
+				gjs.parentNode.insertBefore(js, gjs);
+			}(document, 'script', 'recaptcha-jssdk'));
+		</script>
+		<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
 		<?php
 	}
 
@@ -1390,6 +1499,44 @@ final class HOCWP_Theme_Utility {
 		}
 
 		return false;
+	}
+
+	public function back_to_top_button() {
+		?>
+		<button id="backToTop" class="back-to-top"
+		        onclick="scrollToTop(1000);"
+		        title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"><?php _ex( 'Top', 'back to top', 'hocwp-theme' ); ?></button>
+		<script>
+			window.onscroll = function () {
+				scrollFunction()
+			};
+
+			function scrollFunction() {
+				if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+					document.getElementById("backToTop").style.display = "block";
+				} else {
+					document.getElementById("backToTop").style.display = "none";
+				}
+			}
+
+			function scrollToTop(scrollDuration) {
+				var cosParameter = window.scrollY / 2,
+					scrollCount = 0,
+					oldTimestamp = performance.now();
+
+				function step(newTimestamp) {
+					scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+					if (scrollCount >= Math.PI) window.scrollTo(0, 0);
+					if (window.scrollY === 0) return;
+					window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+					oldTimestamp = newTimestamp;
+					window.requestAnimationFrame(step);
+				}
+
+				window.requestAnimationFrame(step);
+			}
+		</script>
+		<?php
 	}
 }
 

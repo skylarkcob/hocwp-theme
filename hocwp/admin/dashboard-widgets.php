@@ -10,7 +10,12 @@ function hocwp_theme_wp_dashboard_setup_action() {
 		'post_status'    => 'draft'
 	);
 
+	if ( ! current_user_can( 'delete_others_posts' ) ) {
+		$args['author'] = get_current_user_id();
+	}
+
 	$query = new WP_Query( $args );
+
 	if ( $query->have_posts() ) {
 		wp_add_dashboard_widget(
 			'hocwp_theme_dashboard_widget_recent_draft',
@@ -26,6 +31,7 @@ add_action( 'wp_dashboard_setup', 'hocwp_theme_wp_dashboard_setup_action' );
 
 function hocwp_theme_dashboard_widget_recent_draft_callback( $tmp, $args ) {
 	$query = isset( $args['args']['query'] ) ? $args['args']['query'] : null;
+
 	if ( ! ( $query instanceof WP_Query ) || ! $query->have_posts() ) {
 		return;
 	}

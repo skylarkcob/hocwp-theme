@@ -72,7 +72,8 @@ function hocwp_theme_comments_template( $args = array() ) {
 
 function hocwp_theme_comments_template_facebook( $args = array() ) {
 	add_filter( 'hocwp_theme_load_facebook_sdk_javascript', '__return_true' );
-	$defaults    = array(
+
+	$defaults = array(
 		'colorscheme'  => 'light',
 		'href'         => '',
 		'mobile'       => '',
@@ -81,24 +82,29 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 		'width'        => '100%',
 		'loading_text' => __( 'Loading...', 'hocwp-theme' )
 	);
+
 	$args        = wp_parse_args( $args, $defaults );
 	$args        = apply_filters( 'hocwp_theme_facebook_comment_args', $args );
 	$colorscheme = $args['colorscheme'];
 	$href        = $args['href'];
+
 	if ( empty( $href ) ) {
 		if ( is_single() || is_page() || is_singular() ) {
 			$href = get_the_permalink();
 		}
 	}
+
 	if ( empty( $href ) ) {
 		$href = HOCWP_Theme_Utility::get_current_url();
 	}
+
 	$mobile       = $args['mobile'];
 	$num_posts    = $args['num_posts'];
 	$order_by     = $args['order_by'];
 	$width        = $args['width'];
 	$loading_text = $args['loading_text'];
 	$div          = new HOCWP_Theme_HTML_Tag( 'div' );
+
 	$atts         = array(
 		'class'            => 'fb-comments',
 		'data-colorscheme' => $colorscheme,
@@ -108,6 +114,7 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 		'data-order-by'    => $order_by,
 		'data-width'       => $width
 	);
+
 	$div->set_attributes( $atts );
 	$div->set_text( $loading_text );
 	$div->output();
@@ -115,32 +122,32 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 
 function hocwp_theme_comments_template_google() {
 	?>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    <div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
-    <script>
-        gapi.comments.render('google_comments', {
-            href: window.location,
-            width: '624',
-            first_party_property: 'BLOGGER',
-            view_type: 'FILTERED_POSTMOD'
-        });
-    </script>
+	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+	<div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+	<script>
+		gapi.comments.render('google_comments', {
+			href: window.location,
+			width: '624',
+			first_party_property: 'BLOGGER',
+			view_type: 'FILTERED_POSTMOD'
+		});
+	</script>
 	<?php
 }
 
 function hocwp_theme_comments_template_disqus() {
 	?>
-    <div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
-    <script>
-        (function () {
-            var d = document, s = d.createElement('script'), ts = +new Date();
-            s.src = '//hocwp.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', ts.toString());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript>
+	<div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+	<script>
+		(function () {
+			var d = document, s = d.createElement('script'), ts = +new Date();
+			s.src = '//hocwp.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', ts.toString());
+			(d.head || d.body).appendChild(s);
+		})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+			Disqus.</a></noscript>
 	<?php
 }
 

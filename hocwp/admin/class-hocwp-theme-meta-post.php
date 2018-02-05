@@ -58,7 +58,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 	public function add_meta_boxes_action() {
 		global $post_type;
-		if ( in_array( $post_type, $this->post_types ) ) {
+		if ( is_array( $this->post_types ) && in_array( $post_type, $this->post_types ) ) {
 			add_meta_box( $this->id, $this->title, $this->callback, $this->post_types, $this->context, $this->priority, $this->callback_args );
 		}
 	}

@@ -57,10 +57,15 @@
         if (wpadminbar) {
             top = wpadminbar.offsetHeight;
         }
+
         hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer);
         window.addEventListener("scroll", function () {
             if (window.innerWidth < 1240) {
                 return;
+            }
+            wpadminbar = document.getElementById("wpadminbar")
+            if (wpadminbar) {
+                top = wpadminbar.offsetHeight;
             }
             scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
             hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer, true);

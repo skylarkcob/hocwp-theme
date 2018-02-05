@@ -46,31 +46,44 @@ function hocwp_theme_body_class_filter( $classes ) {
 add_filter( 'body_class', 'hocwp_theme_body_class_filter' );
 
 function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
-	if ( ! is_admin() ) {
-		$post      = get_post( get_the_ID() );
+	if ( ! is_admin() || ( defined( 'HOCWP_THEME_LOAD_FRONTEND' ) && HOCWP_THEME_LOAD_FRONTEND ) ) {
+		$post = get_post( get_the_ID() );
+
 		$post_type = get_post_type();
-		$custom    = array( 'entry', 'clearfix' );
+		$custom    = array( 'entry', 'clearfix', 'hocwp-post' );
 		$custom[]  = 'author-' . sanitize_html_class( get_the_author_meta( 'user_nicename' ), get_the_author_meta( 'ID' ) );
+
 		if ( post_password_required() ) {
 			$custom[] = 'protected';
 		}
+
 		if ( post_type_supports( $post_type, 'excerpt' ) && has_excerpt() ) {
 			$custom[] = 'has-excerpt';
 		}
+
 		if ( ! is_singular() && false !== strpos( $post->post_content, '<!--more' ) ) {
 			$custom[] = 'has-more-link';
 		}
+
 		if ( false !== strpos( $post->post_content, '<!--nextpage' ) ) {
 			$custom[] = 'has-pages';
 		}
+
 		$featured = get_post_meta( $post_id, 'featured', true );
+
 		if ( 1 == $featured ) {
 			$custom[] = 'featured';
 		}
+
 		$custom  = array_unique( $custom );
 		$custom  = array_map( 'esc_attr', $custom );
 		$classes = array_merge( $classes, $custom );
+
 		unset( $custom );
+
+		if ( defined( 'HOCWP_THEME_SUPPORT_MICROFORMATS' ) && ! HOCWP_THEME_SUPPORT_MICROFORMATS ) {
+			$classes = array_diff( $classes, array( 'hentry', 'h-entry' ) );
+		}
 	}
 
 	return $classes;

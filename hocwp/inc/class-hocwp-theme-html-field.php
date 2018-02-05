@@ -184,7 +184,19 @@ final class HOCWP_Theme_HTML_Field {
 			$option_all = isset( $args['option_all'] ) ? $args['option_all'] : '';
 
 			if ( ! empty( $option_all ) ) {
-				$oh .= self::option( $value, '', $option_all );
+				if ( isset( $args['data-chosen'] ) && 1 == $args['data-chosen'] ) {
+					$option_all = str_replace( '--', '', $option_all );
+					$option_all = trim( $option_all );
+					$lasts      = substr( $option_all, 0, - 3 );
+					if ( '...' != $lasts && '&hellip;' != $lasts ) {
+						$option_all .= '&hellip;';
+					}
+					$args['data-placeholder'] = $option_all;
+
+					$oh .= '<option value=""></option>';
+				} else {
+					$oh .= self::option( $value, '', $option_all );
+				}
 			}
 
 			foreach ( (array) $options as $key => $option ) {
@@ -224,6 +236,8 @@ final class HOCWP_Theme_HTML_Field {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
 
 		if ( ! HT()->array_has_value( $options ) ) {
+			global $pagenow;
+
 			$options  = array();
 			$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : 'category';
 			unset( $args['taxonomy'] );
@@ -272,7 +286,7 @@ final class HOCWP_Theme_HTML_Field {
 
 			$args['options'] = $options;
 
-			if ( ! isset( $args['option_all'] ) ) {
+			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
 				$args['option_all'] = __( '-- Choose term --', 'hocwp-theme' );
 			}
 		}
@@ -284,6 +298,8 @@ final class HOCWP_Theme_HTML_Field {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
 
 		if ( ! HT()->array_has_value( $options ) ) {
+			global $pagenow;
+
 			$options = array();
 			$pages   = HT_Query()->pages();
 
@@ -293,8 +309,51 @@ final class HOCWP_Theme_HTML_Field {
 				}
 			}
 
-			if ( ! isset( $args['option_all'] ) ) {
+			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
 				$args['option_all'] = __( '-- Choose page --', 'hocwp-theme' );
+			}
+
+			$args['options'] = $options;
+		}
+
+		self::select( $args );
+	}
+
+	public static function select_post( $args = array() ) {
+		$options = isset( $args['options'] ) ? $args['options'] : '';
+
+		if ( ! HT()->array_has_value( $options ) ) {
+			global $pagenow;
+
+			$options = array();
+
+			$post_type = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
+			unset( $args['post_type'] );
+
+			$query = new WP_Query( array( 'post_type' => $post_type, 'post_status' => 'publish' ) );
+
+			if ( $query->have_posts() ) {
+				if ( isset( $args['value'] ) ) {
+					$value = $args['value'];
+					$obj   = get_post( $value );
+					if ( $obj instanceof WP_Post ) {
+						array_unshift( $query->posts, $obj );
+					}
+				}
+				foreach ( $query->posts as $obj ) {
+					$options[ $obj->ID ] = $obj->post_title;
+				}
+			}
+
+			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
+				$default_text = __( '-- Choose post --', 'hocwp-theme' );
+				if ( ! is_array( $post_type ) ) {
+					$type = get_post_type_object( $post_type );
+					if ( $type instanceof WP_Post_Type ) {
+						$default_text = sprintf( __( '-- Choose %s --', 'hocwp-theme' ), $type->labels->singular_name );
+					}
+				}
+				$args['option_all'] = $default_text;
 			}
 
 			$args['options'] = $options;
@@ -569,7 +628,7 @@ final class HOCWP_Theme_HTML_Field {
 		if ( 'button' == $type ) {
 
 		} else {
-			$text = sprintf( __( 'Choose % s', 'hocwp-theme' ), $media_type );
+			$text = sprintf( __( 'Choose %s', 'hocwp-theme' ), $media_type );
 			?>
             <div class="media-box">
                 <p class="hide-if-no-js">
@@ -607,7 +666,7 @@ final class HOCWP_Theme_HTML_Field {
 			'longitude'    => '105.820141',
 			'scrollwheel'  => false,
 			'zoom'         => 5,
-			'marker_title' => __( 'Drag to find address! ', 'hocwp-theme' ),
+			'marker_title' => __( 'Drag to find address!', 'hocwp-theme' ),
 			'draggable'    => false,
 			'address'      => '',
 			'id'           => 'google_maps',

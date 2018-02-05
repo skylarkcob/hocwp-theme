@@ -32,6 +32,8 @@ final class HOCWP_Theme_Query {
 	}
 
 	public static function related_posts( $args = array() ) {
+		$query = new WP_Query();
+
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 		$obj     = get_post( $post_id );
 
@@ -52,18 +54,30 @@ final class HOCWP_Theme_Query {
 
 			$new = array();
 
+			$has_tag = false;
+
+			$tax_item = array(
+				'field'    => 'term_id',
+				'operator' => 'IN'
+			);
+
 			foreach ( $taxs as $key => $tax ) {
 				$taxonomy = get_taxonomy( $tax );
+
 				if ( $taxonomy instanceof WP_Taxonomy ) {
 					if ( ! $taxonomy->hierarchical ) {
 						$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
+
 						if ( HOCWP_Theme::array_has_value( $ids ) ) {
-							$new[] = array(
-								'taxonomy' => $tax,
-								'field'    => 'id',
-								'terms'    => $ids
-							);
+							$tax_item['taxonomy'] = $tax;
+
+							$tax_item['terms'] = $ids;
+
+							$new[] = $tax_item;
+
+							$has_tag = true;
 						}
+
 						unset( $taxs[ $key ] );
 					}
 				} else {
@@ -71,31 +85,48 @@ final class HOCWP_Theme_Query {
 				}
 			}
 
-			if ( HT()->array_has_value( $new ) ) {
+			if ( $has_tag ) {
 				$new['relation'] = 'or';
-				$tax_query[]     = $new;
-			} else {
+
+				$tax_query[] = $new;
+			}
+
+			if ( $has_tag ) {
+				$args['tax_query'] = $tax_query;
+
+				$query = new WP_Query( $args );
+			}
+
+			if ( ! $query->have_posts() ) {
 				foreach ( $taxs as $tax ) {
 					$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
+
 					if ( HOCWP_Theme::array_has_value( $ids ) ) {
-						$new[] = array(
-							'taxonomy' => $tax,
-							'field'    => 'id',
-							'terms'    => $ids
-						);
+						$tax_item['taxonomy'] = $tax;
+
+						$tax_item['terms'] = $ids;
+
+						$new[] = $tax_item;
 					}
 				}
 			}
 
 			if ( HT()->array_has_value( $new ) ) {
 				$new['relation'] = 'or';
-				$tax_query[]     = $new;
+
+				$tax_query[] = $new;
+			}
+
+			if ( ! isset( $tax_query['relation'] ) ) {
+				$tax_query['relation'] = 'or';
 			}
 
 			$args['tax_query'] = $tax_query;
+
+			$query = new WP_Query( $args );
 		}
 
-		return new WP_Query( $args );
+		return $query;
 	}
 
 	public static function terms( $args = array() ) {
@@ -164,11 +195,11 @@ final class HOCWP_Theme_Query {
 
 	public function meta_keys( $search = '' ) {
 		global $wpdb;
-		$sql  = "SELECT meta_key";
-		$sql  .= " FROM $wpdb->postmeta";
-		$sql  .= " WHERE meta_key like '%$search%'";
-		$sql  .= " GROUP BY meta_key";
-		$sql  .= " ORDER BY meta_key";
+		$sql = "SELECT meta_key";
+		$sql .= " FROM $wpdb->postmeta";
+		$sql .= " WHERE meta_key like '%$search%'";
+		$sql .= " GROUP BY meta_key";
+		$sql .= " ORDER BY meta_key";
 		$keys = $wpdb->get_col( $sql );
 
 		return $keys;

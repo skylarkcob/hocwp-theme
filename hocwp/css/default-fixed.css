@@ -57,6 +57,7 @@ span.edit-link {
     clear: both;
 }
 
+.loop-posts .entry span.no-thumbnail,
 .loop article span.no-thumbnail {
     background-color: #fefefe;
     background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0.07, #eee), color-stop(0.5, #fff), color-stop(1, #eee));
@@ -66,6 +67,14 @@ span.edit-link {
 .entry-content ul,
 .entry-content ol {
     margin-left: 0;
+}
+
+.entry-content > form {
+    margin-bottom: 20px;
+}
+
+.entry-content p:first-child {
+    margin-top: 0;
 }
 
 .search-form {
@@ -191,5 +200,175 @@ span.edit-link {
 }
 
 .entry-content li {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.entry-content fieldset {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-color: #eee;
+    border-radius: 5px;
+}
+
+.widget select,
+.entry-content select,
+.entry-content input[type="text"],
+.entry-content input[type="email"],
+.entry-content input[type="url"],
+.entry-content input[type="password"],
+.entry-content input[type="search"],
+.entry-content input[type="number"],
+.entry-content input[type="tel"],
+.entry-content input[type="range"],
+.entry-content input[type="date"],
+.entry-content input[type="month"],
+.entry-content input[type="week"],
+.entry-content input[type="time"],
+.entry-content input[type="datetime"],
+.entry-content input[type="datetime-local"],
+.entry-content input[type="color"], textarea {
+    padding: 5px 10px;
+}
+
+.entry-content input[type="checkbox"],
+.entry-content input[type="radio"] {
+    margin-bottom: 10px;
+    vertical-align: -1px;
+    margin-right: 2px;
+}
+
+.entry-content input[type="file"] {
+    background: #eee;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+.entry-content th,
+.entry-content td,
+.entry-content table {
+    border: 1px solid #ddd;
+}
+
+.entry-content th,
+.entry-content td {
+    padding: 5px 10px;
+    text-align: left;
+}
+
+.entry-content button,
+.entry-content input[type="button"],
+.entry-content input[type="reset"],
+.entry-content input[type="submit"]:not(.search-submit) {
+    padding: 10px 20px;
+    border-color: #d5d5d5;
+}
+
+.entry-content button:hover,
+.entry-content input[type="button"]:hover,
+.entry-content input[type="reset"]:hover,
+.entry-content input[type="submit"]:hover {
+    background-color: #eee;
+}
+
+.entry-content select {
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+button.back-to-top {
+    position: fixed;
+    right: 10px;
+    bottom: 40px;
+    z-index: 499;
+    display: none;
+    border: 1px solid #ddd;
+}
+
+button.back-to-top:hover {
+    background-color: #f5f5f5;
+    border-color: #eee;
+    color: #999;
+}
+
+.entry-content .wp-video + p {
+    margin-top: 1.5em;
+}
+
+.hocwp-theme > .site, .container {
+    max-width: 100%;
+}
+
+.site-title img {
+    display: block;
+}
+
+.sub-menu {
+    position: absolute;
+    min-width: 200px;
+    display: none;
+    z-index: 499;
+}
+
+.menu-item-has-children {
+    position: relative;
+}
+
+.menu-item-has-children:hover > .sub-menu {
+    display: block;
+}
+
+.sub-menu .sub-menu {
+    left: 100%;
+    top: 0;
+}
+
+.menu.hocwp-menu,
+div.menu > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.menu.hocwp-menu li,
+div.menu > ul li {
+    list-style: none;
+}
+
+.menu.hocwp-menu > li,
+div.menu > ul > li {
+    display: inline-block;
+}
+
+.widget .menu li {
+    display: block;
+}
+
+.menu.hocwp-menu > li > a,
+div.menu > ul > li > a {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.widget .menu li a {
+
+}
+
+.menu.hocwp-menu li a,
+div.menu li a {
+    display: block;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+@media only screen and (max-width: 1024px) {
+    .widget_media_image img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
 }

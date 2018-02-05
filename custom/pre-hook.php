@@ -2,7 +2,12 @@
 /**
  * Define the theme name.
  */
-define( 'HOCWP_THEME_NAME', 'Default' );
+define( 'HOCWP_THEME_NAME', 'Computer Services' );
+
+/**
+ * Define theme support microformats or not.
+ */
+define( 'HOCWP_THEME_SUPPORT_MICROFORMATS', false );
 
 /**
  * Define the required plugins for current theme.
@@ -19,3 +24,5 @@ define( 'HOCWP_THEME_REQUIRED_PLUGINS', '' );
  * If you still want to continue working, just define this value to TRUE.
  */
 define( 'HOCWP_THEME_OVERTIME', true );
+
+define( 'HOCWP_THEME_BREAK_MINUTES', 0 );

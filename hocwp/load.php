@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.2.2' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.2.3' );
 
 /**
  * Theme developing mode.
@@ -59,10 +59,13 @@ function hocwp_theme_load() {
 	if ( class_exists( 'HOCWP_Theme' ) ) {
 		return;
 	}
+
 	$pre_hook = HOCWP_THEME_CUSTOM_PATH . '/pre-hook.php';
+
 	if ( ( is_file( $pre_hook ) && file_exists( $pre_hook ) ) ) {
 		require $pre_hook;
 	}
+
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-deprecated.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-sanitize.php';
@@ -72,6 +75,7 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-html-tag.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-html-field.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-query.php';
+	require HOCWP_THEME_CORE_PATH . '/inc/template-tags.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-scripts.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-media.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-user.php';
@@ -97,15 +101,18 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/ext/dynamic-thumbnail.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/external-link.php';
+
 	if ( is_admin() ) {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin.php';
 	} else {
 		require HOCWP_THEME_CORE_PATH . '/inc/functions-context.php';
 	}
+
 	/**
 	 * Setup After.
 	 */
 	require HOCWP_THEME_CORE_PATH . '/inc/setup-after.php';
+
 	if ( ! is_admin() ) {
 		require HOCWP_THEME_CORE_PATH . '/inc/template.php';
 		require HOCWP_THEME_CORE_PATH . '/inc/template-general.php';
@@ -114,13 +121,17 @@ function hocwp_theme_load() {
 	} else {
 		require HOCWP_THEME_CORE_PATH . '/admin/meta.php';
 	}
+
 	HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/functions.php' );
 	HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/register.php' );
 	HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/hook.php' );
+
 	if ( is_admin() ) {
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/admin.php' );
 	}
+
 	HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/extensions.php' );
+
 	if ( is_admin() ) {
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/meta.php' );
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/ajax.php' );

@@ -191,4 +191,14 @@ function hocwp_theme_register_widgets() {
 
 add_action( 'widgets_init', 'hocwp_theme_register_widgets' );
 
+function hocwp_theme_wp_calculate_image_srcset( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
+	if ( ! is_array( $sources ) ) {
+		$sources = array();
+	}
+
+	return $sources;
+}
+
+add_filter( 'wp_calculate_image_srcset', 'hocwp_theme_wp_calculate_image_srcset', 99, 5 );
+
 do_action( 'hocwp_theme_setup_after' );

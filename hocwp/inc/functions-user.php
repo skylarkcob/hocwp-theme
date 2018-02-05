@@ -58,7 +58,13 @@ if ( is_admin() ) {
 }
 
 function hocwp_theme_user_contactmethods_filter( $methods ) {
-	$methods['phone'] = __( 'Phone', 'hocwp-theme' );
+	$methods['facebook']    = __( 'Facebook URL', 'hocwp-theme' );
+	$methods['youtube']     = __( 'YouTube URL', 'hocwp-theme' );
+	$methods['google_plus'] = __( 'Google Plus URL', 'hocwp-theme' );
+	$methods['twitter']     = __( 'Twitter URL', 'hocwp-theme' );
+	$methods['donate']      = __( 'Donate URL', 'hocwp-theme' );
+	$methods['phone']       = __( 'Phone', 'hocwp-theme' );
+	$methods['identity']    = __( 'Identity', 'hocwp-theme' );
 
 	return $methods;
 }

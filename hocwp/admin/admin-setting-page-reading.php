@@ -44,6 +44,14 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'excerpt_length', __( 'Excerpt Length', 'hocwp-theme' ), '', $args, 'positive_integer', 'reading' );
 	$fields[] = $field;
 
+	$args     = array(
+		'class' => 'medium-text',
+		'type'  => 'checkbox',
+		'label' => __( 'Make last widget on sidebar sticky.', 'hocwp-theme' )
+	);
+	$field    = hocwp_theme_create_setting_field( 'sticky_last_widget', __( 'Sticky Last Widget', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
+
 	if ( hocwp_theme_is_shop_site() ) {
 		$fields[] = array(
 			'tab'     => 'reading',
@@ -60,6 +68,14 @@ function hocwp_theme_settings_page_reading_field() {
 			)
 		);
 	}
+
+	$args     = array(
+		'class' => 'medium-text',
+		'type'  => 'checkbox',
+		'label' => __( 'Displays the back to top button when user scrolls down the bottom of site.', 'hocwp-theme' )
+	);
+	$field    = hocwp_theme_create_setting_field( 'back_to_top', __( 'Back To Top', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
 
 	return $fields;
 }

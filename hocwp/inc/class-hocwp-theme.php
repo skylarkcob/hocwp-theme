@@ -39,6 +39,12 @@ final class HOCWP_Theme {
 		return $text;
 	}
 
+	public function get_email_from_string( $string ) {
+		preg_match_all( "/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches );
+
+		return $matches[0];
+	}
+
 	public static function array_has_value( $arr ) {
 		return ( is_array( $arr ) && count( $arr ) > 0 );
 	}

@@ -9,11 +9,11 @@ function hocwp_theme_post_submitbox_misc_actions_action( $post ) {
 	$value = get_post_meta( $post->ID, 'featured', true );
 	do_action( 'hocwp_theme_post_submitbox_meta_field', $post );
 	?>
-    <div class="misc-pub-section misc-pub-featured">
-        <input type="checkbox" id="featured" name="featured" value="1" <?php checked( 1, $value ); ?>>
-        <label
-                for="featured"><?php printf( __( 'Make this %s as featured?', 'hocwp-theme' ), $type->labels->singular_name ); ?></label>
-    </div>
+	<div class="misc-pub-section misc-pub-featured">
+		<input type="checkbox" id="featured" name="featured" value="1" <?php checked( 1, $value ); ?>>
+		<label
+			for="featured"><?php printf( __( 'Make this %s as featured?', 'hocwp-theme' ), $type->labels->singular_name ); ?></label>
+	</div>
 	<?php
 }
 
@@ -23,14 +23,17 @@ function hocwp_theme_save_post_action( $post_id ) {
 	if ( ! in_array( get_post_type( $post_id ), HT_Util()->post_types_support_featured() ) ) {
 		return;
 	}
+
 	if ( ! HOCWP_Theme_Utility::can_save_post( $post_id, 'hocwp_theme_post_submitbox', 'hocwp_theme_post_submitbox_nonce' ) ) {
 		return;
 	}
+
 	if ( isset( $_POST['featured'] ) ) {
 		update_post_meta( $post_id, 'featured', 1 );
 	} else {
 		update_post_meta( $post_id, 'featured', 0 );
 	}
+
 	do_action( 'hocwp_theme_post_submitbox_meta_field_save', $post_id );
 }
 
@@ -125,11 +128,14 @@ function hocwp_theme_hocwp_theme_featured_post_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_featured_post_ajax', 'hocwp_theme_hocwp_theme_featured_post_ajax_callback' );
 
-function hocwp_theme_manage_column_pre_get_posts( WP_Query $query ) {
-	$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
-	if ( 'featured' == $orderby ) {
-		$query->set( 'orderby', 'meta_value_num' );
-		$query->set( 'meta_key', 'featured' );
+function hocwp_theme_manage_column_pre_get_posts( $query ) {
+	if ( $query instanceof WP_Query ) {
+		$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
+
+		if ( 'featured' == $orderby ) {
+			$query->set( 'orderby', 'meta_value_num' );
+			$query->set( 'meta_key', 'featured' );
+		}
 	}
 }
 
