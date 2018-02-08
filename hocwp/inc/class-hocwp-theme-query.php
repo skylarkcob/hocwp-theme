@@ -124,6 +124,19 @@ final class HOCWP_Theme_Query {
 			$args['tax_query'] = $tax_query;
 
 			$query = new WP_Query( $args );
+		} else {
+			$args['s'] = $obj->post_title;
+			$query     = new WP_Query( $args );
+
+			if ( ! $query->have_posts() ) {
+				$parts = explode( ' ', $obj->post_title );
+
+				while ( ! $query->have_posts() && count( $parts ) > 0 ) {
+					$key       = array_shift( $parts );
+					$args['s'] = $key;
+					$query     = new WP_Query( $args );
+				}
+			}
 		}
 
 		return $query;

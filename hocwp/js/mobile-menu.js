@@ -9,6 +9,7 @@
 
     if (!container) {
         var tmp = document.getElementsByClassName("hocwp-menu")[0];
+
         if (tmp && tmp.tagName == "div") {
             container = tmp;
         }
@@ -58,17 +59,23 @@
             }
 
             container.className = container.className.replace(mobileMenuClass, "");
+            menu.className = menu.className.replace(mobileMenuClass, "");
         } else {
             button.style.display = "block";
 
             if ("undefined" !== typeof menu) {
-                menu.className += mobileMenuClass;
+                if (-1 === menu.className.indexOf(mobileMenuID)) {
+                    menu.className += mobileMenuClass;
+                }
+
                 if (-1 !== menu.getAttribute("id").indexOf(mobileMenuID)) {
                     menu.style.display = "block";
                 }
             }
 
-            container.className += mobileMenuClass;
+            if (-1 === container.className.indexOf(mobileMenuID)) {
+                container.className += mobileMenuClass;
+            }
         }
     };
 
@@ -94,8 +101,15 @@
         }
     });
 
-    container.className += mobileMenuClass;
-    menu.className += mobileMenuClass;
+    if (-1 === container.className.indexOf(mobileMenuID)) {
+        container.className += mobileMenuClass;
+    }
+
+    container.style.display = "block";
+
+    if (-1 === menu.className.indexOf(mobileMenuID)) {
+        menu.className += mobileMenuClass;
+    }
 
     button.onclick = function () {
         if (-1 !== container.className.indexOf("toggled")) {
