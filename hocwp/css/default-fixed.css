@@ -64,6 +64,10 @@ span.edit-link {
     background-image: -moz-linear-gradient(left bottom, #eee 7%, #fff 50%, #eee 100%);
 }
 
+.loop .hocwp-post .post-title {
+    clear: none;
+}
+
 .entry-content ul,
 .entry-content ol {
     margin-left: 0;

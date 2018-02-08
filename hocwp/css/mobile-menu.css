@@ -208,6 +208,10 @@
     z-index: 499;
 }
 
+button.menu-toggle[aria-expanded="true"] {
+    padding-left: 9px;
+}
+
 @media only screen and (max-width: 780px) {
     .admin-bar .mobile-menu > .menu {
         top: 46px;
