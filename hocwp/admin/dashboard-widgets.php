@@ -1,5 +1,9 @@
 <?php
 function hocwp_theme_wp_dashboard_setup_action() {
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		return;
+	}
+
 	$post_types   = get_post_types( array( 'public' => true, '_builtin' => false ) );
 	$post_types[] = 'post';
 	$post_types[] = 'page';

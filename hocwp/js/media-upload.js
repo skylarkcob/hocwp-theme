@@ -1,5 +1,6 @@
 window.wp = window.wp || {};
 window.hocwpThemeMediaUpload = window.hocwpThemeMediaUpload || {};
+
 jQuery(document).ready(function ($) {
     var body = $("body");
 
@@ -44,7 +45,9 @@ jQuery(document).ready(function ($) {
             } else {
                 var item = items.first().toJSON();
                 if (item) {
-                    var image = document.createElement("img");
+                    var image = document.createElement("img"),
+                        widget = container.closest(".widget"),
+                        alert = false;
                     image.setAttribute("src", item.url);
                     image.setAttribute("alt", item.alt);
                     image.setAttribute("width", item.width);
@@ -59,6 +62,10 @@ jQuery(document).ready(function ($) {
                         $(description).insertAfter(container.find(".hide-if-no-js"));
                         $(removeButton).insertAfter(container.find(".hide-if-no-js").last());
                         selectMedia.addClass("has-media");
+                    }
+                    if (widget.length) {
+                        widget.find("input[type='submit']").val(wpWidgets.l10n.save).prop("disabled", false);
+                        alert = wpWidgets.l10n.saveAlert;
                     }
                 }
             }

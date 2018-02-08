@@ -141,6 +141,7 @@ function hocwp_theme_register_widgets() {
 	register_widget( 'HOCWP_Theme_Widget_Posts' );
 	register_widget( 'HOCWP_Theme_Widget_Terms' );
 	register_widget( 'HOCWP_Theme_Widget_Top_Commenters' );
+	register_widget( 'HOCWP_Theme_Widget_Icon' );
 
 	$args = array(
 		'id'          => 'home',

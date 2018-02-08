@@ -91,9 +91,96 @@ function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
 
 add_filter( 'post_class', 'hocwp_theme_post_class_filter', 10, 3 );
 
-function hocwp_theme_attribute( $tag, $context = '' ) {
-	if ( 'body' == $tag ) {
-		$width = hocwp_theme_mobile_menu_media_screen_width();
-		echo ' data-mobile-width="' . $width . '"';
+function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
+	$tag = trim( $tag );
+	$tag = strtolower( $tag );
+
+	$atts = hocwp_theme_html_tag_attribute( $tag, $context, $attr, false );
+
+	if ( ! empty( $atts ) ) {
+		$tag .= ' ' . $atts;
 	}
+
+	printf( '<%s>', $tag );
 }
+
+function hocwp_theme_html_tag_close( $tag ) {
+	$tag = trim( $tag );
+	$tag = strtolower( $tag );
+
+	printf( '</%s>', $tag );
+}
+
+function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo = true ) {
+	$attributes = apply_filters( 'hocwp_theme_html_tag_with_context_attributes', array(), $tag, $context );
+
+	if ( is_array( $attributes ) ) {
+		$atts = $attributes;
+
+		$attributes = '';
+
+		foreach ( $atts as $att => $attribute ) {
+			$attributes .= sprintf( '%s="%s" ', $att, $attribute );
+		}
+	}
+
+	if ( ! empty( $attr ) ) {
+		$attributes .= ' ' . $attr;
+	}
+
+	$attributes = trim( $attributes );
+
+	if ( $echo ) {
+		echo $attributes;
+	}
+
+	return $attributes;
+}
+
+function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
+	$tag = strtolower( $tag );
+
+	$atts = (array) $atts;
+
+	switch ( $tag ) {
+		case 'html':
+			break;
+		case 'body':
+			$atts['data-mobile-width'] = hocwp_theme_mobile_menu_media_screen_width();
+
+			$atts['class'] = join( ' ', get_body_class() );
+
+			if ( HOCWP_THEME_STRUCTURED_DATA ) {
+				$atts['itemscope'] = 'itemscope';
+				$atts['itemtype']  = 'http://schema.org/WebSite';
+			}
+			break;
+		case 'footer':
+			switch ( $context ) {
+				case 'site_footer':
+					$atts['id']    = 'colophon';
+					$atts['class'] = 'site-footer';
+					break;
+			}
+			break;
+		case 'div':
+			switch ( $context ) {
+				case 'site_container':
+					$atts['id']    = 'page';
+					$atts['class'] = 'site';
+					break;
+				case 'site_content':
+					$atts['id']    = 'content';
+					$atts['class'] = 'site-content';
+					break;
+			}
+			break;
+	}
+
+	$atts = array_filter( $atts );
+	$atts = array_unique( $atts );
+
+	return $atts;
+}
+
+add_filter( 'hocwp_theme_html_tag_with_context_attributes', 'hocwp_theme_html_tag_with_context_attributes', 10, 3 );

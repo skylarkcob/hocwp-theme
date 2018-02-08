@@ -84,6 +84,8 @@
     margin-right: 0;
     padding-left: 0;
     padding-right: 0;
+    border-right: none;
+    border-left: none;
 }
 
 .mobile-menu > .menu li a {

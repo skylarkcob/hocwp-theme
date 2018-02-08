@@ -2,6 +2,26 @@
     display: inline-block;
 }
 
+.widget .hocwp-theme .select-media,
+.hocwp-theme .widget .select-media {
+    text-decoration: none;
+    width: 100%;
+    background: #f1f1f1;
+    border: 1px dashed #b4b9be;
+    text-align: center;
+    color: #444;
+    line-height: 20px;
+    padding: 9px 0;
+}
+
+
+.widget .hocwp-theme .select-media.has-media,
+.hocwp-theme .widget .select-media.has-media {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
 .hocwp-theme .select-media img {
     display: block;
     height: auto;

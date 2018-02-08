@@ -1430,6 +1430,15 @@ final class HOCWP_Theme_Utility {
 		wp_enqueue_script( 'hocwp-theme-datepicker' );
 	}
 
+	public function enqueue_datetime_picker() {
+		$this->enqueue_datepicker();
+	}
+
+	public function enqueue_color_picker() {
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'hocwp-theme-color-picker' );
+	}
+
 	public function enqueue_chosen() {
 		wp_enqueue_style( 'chosen-style' );
 		wp_enqueue_script( 'chosen-select' );
@@ -1502,10 +1511,35 @@ final class HOCWP_Theme_Utility {
 	}
 
 	public function back_to_top_button() {
+		$text = _x( 'Top', 'back to top', 'hocwp-theme' );
+		$icon = hocwp_theme_get_option( 'back_top_icon', '', 'reading' );
+
+		$style = '';
+
+		if ( HT()->is_positive_number( $icon ) ) {
+			$text = sprintf( '<img src="%s" alt="">', wp_get_attachment_url( $icon ) );
+
+			$style .= 'padding:0;border:none;border-radius:0;';
+		}
+
+		$bg_color = HT_Util()->get_theme_option( 'back_top_bg', '', 'reading' );
+
+		if ( ! empty( $bg_color ) ) {
+			$style .= 'background-color:' . $bg_color . ';';
+		}
+
+		$custom_style = HT_Util()->get_theme_option( 'back_top_style', '', 'reading' );
+
+		if ( ! empty( $custom_style ) ) {
+			$style .= $custom_style;
+		}
+
+		$style = trim( $style );
 		?>
 		<button id="backToTop" class="back-to-top"
 		        onclick="scrollToTop(1000);"
-		        title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"><?php _ex( 'Top', 'back to top', 'hocwp-theme' ); ?></button>
+		        title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
+		        style="<?php echo $style; ?>"><?php echo $text; ?></button>
 		<script>
 			window.onscroll = function () {
 				scrollFunction()

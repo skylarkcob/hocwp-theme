@@ -23,6 +23,12 @@ function hocwp_theme_settings_page_reading_section() {
 		);
 	}
 
+	$sections['back_top_section'] = array(
+		'tab'   => 'reading',
+		'id'    => 'back_top_section',
+		'title' => __( 'Back To Top Button', 'hocwp-theme' )
+	);
+
 	return $sections;
 }
 
@@ -74,10 +80,33 @@ function hocwp_theme_settings_page_reading_field() {
 		'type'  => 'checkbox',
 		'label' => __( 'Displays the back to top button when user scrolls down the bottom of site.', 'hocwp-theme' )
 	);
-	$field    = hocwp_theme_create_setting_field( 'back_to_top', __( 'Back To Top', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$field    = hocwp_theme_create_setting_field( 'back_to_top', __( 'Active', 'hocwp-theme' ), '', $args, 'boolean', 'reading', 'back_top_section' );
+	$fields[] = $field;
+
+	$color = HT_Util()->get_theme_option( 'back_top_bg', '', 'reading' );
+
+	$args = array(
+		'background_color' => $color,
+		'style'            => HT_Util()->get_theme_option( 'back_top_style', '', 'reading' )
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'back_top_icon', __( 'Icon', 'hocwp-theme' ), 'media_upload', $args, 'positive_number', 'reading', 'back_top_section' );
+	$fields[] = $field;
+
+	$field    = hocwp_theme_create_setting_field( 'back_top_bg', __( 'Background Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading', 'back_top_section' );
+	$fields[] = $field;
+
+	$field    = hocwp_theme_create_setting_field( 'back_top_style', __( 'Style Attribute', 'hocwp-theme' ), 'input', '', 'string', 'reading', 'back_top_section' );
 	$fields[] = $field;
 
 	return $fields;
 }
 
 add_filter( 'hocwp_theme_settings_page_reading_settings_field', 'hocwp_theme_settings_page_reading_field' );
+
+function hocwp_theme_admin_setting_page_reading_scripts() {
+	HT_Util()->enqueue_media();
+	HT_Util()->enqueue_color_picker();
+}
+
+add_action( 'hocwp_theme_admin_setting_page_reading_scripts', 'hocwp_theme_admin_setting_page_reading_scripts' );
