@@ -1,7 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: skyla
- * Date: 11/06/2017
- * Time: 8:42 PM
- */
+function hocwp_theme_attribute( $deprecated ) {
+	_deprecated_function( __FUNCTION__, '6.2.3', 'hocwp_theme_html_tag_attribute' );
+}

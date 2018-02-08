@@ -53,35 +53,46 @@ final class HOCWP_Theme_HTML_Field {
 		$defaults = array(
 			'type' => 'text'
 		);
-		$args     = wp_parse_args( $args, $defaults );
+
+		$args = wp_parse_args( $args, $defaults );
+
 		if ( 'checkbox' == $args['type'] ) {
 			$value = isset( $args['value'] ) ? absint( $args['value'] ) : 0;
+
 			if ( 1 == $value ) {
 				$args['checked'] = 'checked';
 			}
+
 			$args['value'] = 1;
 		}
+
 		if ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) {
 			$options = isset( $args['options'] ) ? $args['options'] : '';
+
 			if ( is_array( $options ) && count( $options ) > 0 ) {
 				unset( $args['options'] );
 				$value = isset( $args['value'] ) ? $args['value'] : '';
+
 				foreach ( $options as $key => $label ) {
 					$atts  = $args;
 					$lb    = new HOCWP_Theme_HTML_Tag( 'label' );
 					$input = new HOCWP_Theme_HTML_Tag( 'input' );
 					$id    = isset( $atts['id'] ) ? $atts['id'] : '';
-					$id    .= '_' . $key;
+					$id .= '_' . $key;
 					$lb->add_attribute( 'for', $id );
+
 					if ( ! empty( $label ) ) {
 						$input->set_text( $label );
 						unset( $atts['label'] );
 					}
+
 					$atts['value'] = $key;
 					$atts['id']    = $id;
+
 					if ( $key == $value ) {
 						$atts['checked'] = 'checked';
 					}
+
 					$input->set_attributes( $atts );
 					$lb->set_text( $input );
 					$lb->output();
@@ -91,6 +102,7 @@ final class HOCWP_Theme_HTML_Field {
 				return;
 			}
 		}
+
 		$input = new HOCWP_Theme_HTML_Tag( 'input' );
 		self::field_label( $args, $input );
 		$input->set_attributes( $args );
@@ -99,6 +111,23 @@ final class HOCWP_Theme_HTML_Field {
 
 	public static function input_url( $args = array() ) {
 		$args['type'] = 'url';
+		self::input( $args );
+	}
+
+	public static function input_email( $args = array() ) {
+		$args['type'] = 'email';
+		self::input( $args );
+	}
+
+	public static function datetime_picker( $args = array() ) {
+		$args['data-datetime-picker'] = 1;
+		self::input( $args );
+	}
+
+	public static function color_picker( $args = array() ) {
+		$args['data-color-picker'] = 1;
+
+		$args['class'] = 'medium-text';
 		self::input( $args );
 	}
 
@@ -389,6 +418,28 @@ final class HOCWP_Theme_HTML_Field {
 		$lists    = array_filter( $lists );
 		$connects = isset( $args['connects'] ) ? $args['connects'] : true;
 
+		$value = isset( $args['value'] ) ? $args['value'] : '';
+
+		if ( empty( $lists ) ) {
+			$options = isset( $args['options'] ) ? $args['options'] : '';
+			$options = (array) $options;
+			$options = array_filter( $options );
+
+			if ( HT()->array_has_value( $options ) ) {
+				if ( empty( $value ) ) {
+					$value = array_keys( $options );
+					$value = json_encode( $value );
+					$lists = $options;
+				} else {
+					$items = json_decode( $value, true );
+
+					foreach ( $items as $item ) {
+						$lists[] = $options[ $item ];
+					}
+				}
+			}
+		}
+
 		if ( HT()->array_has_value( $lists ) || HT()->array_has_value( $connects ) ) {
 			$id = $args['id'];
 			$id = sanitize_html_class( $id );
@@ -415,6 +466,8 @@ final class HOCWP_Theme_HTML_Field {
 
 			if ( $connects || HT()->array_has_value( $connects ) ) {
 				$ul->add_attribute( 'data-connect-with', $id );
+
+				$class .= ' connect-lists';
 
 				if ( ! $has_sub ) {
 					$class .= ' ' . $id;
@@ -449,7 +502,7 @@ final class HOCWP_Theme_HTML_Field {
 
 			if ( $connects || HT()->array_has_value( $connects ) ) {
 				$class .= ' connected-result ';
-				$ul    = new HOCWP_Theme_HTML_Tag( 'ul' );
+				$ul = new HOCWP_Theme_HTML_Tag( 'ul' );
 				$ul->add_attribute( 'data-list-type', $list_type );
 
 				if ( ! $has_sub ) {
@@ -466,7 +519,7 @@ final class HOCWP_Theme_HTML_Field {
 				$li_html = '';
 
 				if ( HT()->array_has_value( $connects ) ) {
-					foreach ( $connects as $list ) {
+					foreach ( (array) $connects as $list ) {
 						if ( empty( $list ) ) {
 							continue;
 						}
@@ -485,6 +538,8 @@ final class HOCWP_Theme_HTML_Field {
 				$ul->set_text( $li_html );
 				$ul->output();
 			}
+
+			unset( $args['options'] );
 
 			$args['type'] = 'hidden';
 			self::input( $args );
@@ -577,7 +632,7 @@ final class HOCWP_Theme_HTML_Field {
 
 					$item .= $ul->build();
 				}
-				$item    .= '</li> ';
+				$item .= '</li> ';
 				$lists[] = $item;
 			}
 			$args['connect_sub'] = trim( $connect_sub );
@@ -596,11 +651,11 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	public static function size( $args = array() ) {
-		$name          = $args['name'];
-		$name_width    = $name . '[width]';
-		$name_height   = $name . '[height]';
-		$class         = isset( $args['class'] ) ? $args['class'] : '';
-		$class         .= ' small-text';
+		$name        = $args['name'];
+		$name_width  = $name . '[width]';
+		$name_height = $name . '[height]';
+		$class       = isset( $args['class'] ) ? $args['class'] : '';
+		$class .= ' small-text';
 		$args['class'] = trim( $class );
 		$args['type']  = 'number';
 		$args['min']   = 0;
@@ -622,19 +677,35 @@ final class HOCWP_Theme_HTML_Field {
 		$value      = isset( $args['value'] ) ? $args['value'] : '';
 		$class      = 'select-media';
 		$media_type = isset( $args['media_type'] ) ? $args['media_type'] : 'image';
+
 		if ( HOCWP_Theme::is_positive_number( $value ) ) {
 			$class .= ' has-media';
 		}
+
+		$style = '';
+
+		$background_color = isset( $args['background_color'] ) ? $args['background_color'] : '';
+
+		if ( ! empty( $background_color ) && HOCWP_Theme::is_positive_number( $value ) ) {
+			$style .= 'background-color:' . $background_color . ';';
+		}
+
+		$custom_style = isset( $args['style'] ) ? $args['style'] : '';
+
+		if ( ! empty( $custom_style ) ) {
+			$style .= $custom_style;
+		}
+
 		if ( 'button' == $type ) {
 
 		} else {
 			$text = sprintf( __( 'Choose %s', 'hocwp-theme' ), $media_type );
 			?>
-            <div class="media-box">
-                <p class="hide-if-no-js">
-                    <a href="javascript:" class="<?php echo $class; ?>"
-                       data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
-                       data-target="<?php echo $args['id']; ?>">
+			<div class="media-box">
+				<p class="hide-if-no-js">
+					<a href="javascript:" class="<?php echo $class; ?>"
+					   data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
+					   data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
 						<?php
 						if ( HOCWP_Theme::is_positive_number( $value ) ) {
 							$img = new HOCWP_Theme_HTML_Tag( 'img' );
@@ -644,8 +715,8 @@ final class HOCWP_Theme_HTML_Field {
 							echo $text;
 						}
 						?>
-                    </a>
-                </p>
+					</a>
+				</p>
 				<?php
 				if ( HOCWP_Theme::is_positive_number( $value ) ) {
 					$l10n = hocwp_theme_localize_script_l10n_media_upload();
@@ -653,9 +724,9 @@ final class HOCWP_Theme_HTML_Field {
 					printf( $l10n['removeImageButton'], $media_type );
 				}
 				?>
-                <input id="<?php echo $args['id']; ?>" name="<?php echo $args['name']; ?>" value="<?php echo $value; ?>"
-                       type="hidden">
-            </div>
+				<input id="<?php echo $args['id']; ?>" name="<?php echo $args['name']; ?>" value="<?php echo $value; ?>"
+				       type="hidden">
+			</div>
 			<?php
 		}
 	}
@@ -719,6 +790,59 @@ final class HOCWP_Theme_HTML_Field {
 				$input_args['required'] = 'required';
 			}
 			self::input( $input_args );
+		}
+	}
+
+	public function widget_field( $widget, $name, $label, $value, $callback = 'input', $args = array() ) {
+		if ( $widget instanceof WP_Widget ) {
+			$defaults = array(
+				'id'    => $widget->get_field_id( $name ),
+				'name'  => $widget->get_field_name( $name ),
+				'value' => $value,
+				'class' => 'widefat'
+			);
+
+			if ( is_string( $callback ) && 'input' == $callback ) {
+				$defaults['type'] = 'text';
+			}
+
+			$args = wp_parse_args( $args, $defaults );
+
+			$container = isset( $args['container'] ) ? $args['container'] : 'p';
+
+			if ( 'p' == $container && is_string( $callback ) ) {
+				if ( false !== strpos( $callback, 'sortable' ) || false !== strpos( $callback, 'editor' ) || false !== strpos( $callback, 'media' ) ) {
+					$container = 'div';
+				}
+			}
+
+			$c_atts = isset( $args['container_attributes'] ) ? $args['container_attributes'] : '';
+			if ( is_array( $c_atts ) ) {
+				$c_atts = HT()->attributes_to_string( $c_atts );
+			}
+			$c_atts = $container . ' ' . $c_atts;
+			$c_atts = trim( $c_atts );
+			printf( '<%s>', $c_atts );
+			HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
+
+			if ( ! is_callable( $callback ) ) {
+				$callback = array( __CLASS__, $callback );
+			}
+
+			if ( 'p' != $container ) {
+				echo '<div class="clearfix">';
+			}
+
+			call_user_func( $callback, $args );
+
+			if ( 'p' != $container ) {
+				echo '</div>';
+			}
+
+			if ( isset( $args['description'] ) ) {
+				HT()->wrap_text( $args['description'], '<p class="description">', '</p>', true );
+			}
+			printf( '</%s>', $container );
 		}
 	}
 }

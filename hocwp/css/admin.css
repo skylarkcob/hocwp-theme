@@ -11,3 +11,22 @@
     margin-top: -5px;
     padding: 0 5px;
 }
+
+.hocwp-theme .clearfix {
+
+}
+
+.hocwp-theme .clearfix:after,
+.hocwp-theme .clearfix:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.widget .hocwp-theme label + .clearfix {
+    margin-top: 2px;
+}
+
+.widget .hocwp-theme > div {
+    margin: 1em 0;
+}

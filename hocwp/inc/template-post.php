@@ -1,12 +1,14 @@
 <?php
-function hocwp_theme_article_before() {
-	echo '<article ' . 'class="' . join( ' ', get_post_class() ) . '">';
+function hocwp_theme_article_before( $args ) {
+	$container = isset( $args['container'] ) ? $args['container'] : 'article';
+	echo '<' . $container . ' class="' . join( ' ', get_post_class() ) . '">';
 }
 
 add_action( 'hocwp_theme_article_before', 'hocwp_theme_article_before' );
 
-function hocwp_theme_article_after() {
-	echo '</article>';
+function hocwp_theme_article_after( $args ) {
+	$container = isset( $args['container'] ) ? $args['container'] : 'article';
+	echo '</' . $container . '>';
 }
 
 add_action( 'hocwp_theme_article_after', 'hocwp_theme_article_after' );
@@ -163,6 +165,16 @@ function hocwp_theme_post_thumbnail_default( $size, $attr ) {
 
 add_action( 'hocwp_theme_post_thumbnail_default', 'hocwp_theme_post_thumbnail_default', 10, 2 );
 
+function hocwp_theme_wp_get_attachment_image_attributes_filter( $attr ) {
+	if ( is_array( $attr ) && isset( $attr['post_link'] ) && 1 == $attr['post_link'] ) {
+		unset( $attr['post_link'] );
+	}
+
+	return $attr;
+}
+
+add_filter( 'wp_get_attachment_image_attributes', 'hocwp_theme_wp_get_attachment_image_attributes_filter', 99 );
+
 function hocwp_theme_the_content() {
 	echo '<div class="entry-content">';
 	the_content();
@@ -171,7 +183,7 @@ function hocwp_theme_the_content() {
 		'before'      => '<div class="page-links post-pagination"><span class="pages">' . __( 'Pages:', 'hocwp-theme' ) . '</span>',
 		'after'       => '</div>',
 		'link_before' => '<span class="page-number">',
-		'link_after'  => '</span>',
+		'link_after'  => '</span>'
 	) );
 
 	echo '</div>';

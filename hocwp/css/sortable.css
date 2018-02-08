@@ -1,10 +1,23 @@
+.hocwp-theme .sortable {
+    box-sizing: border-box;
+}
+
 .hocwp-theme ul.sortable:not(.sub-sortable) {
     background-color: #f5f5f5;
     border: 1px solid #eaeaea;
     float: left;
-    margin: 0 20px 0 0;
+    margin: 0 2% 0 0;
     padding: 10px;
-    width: 45%;
+    width: 49%;
+}
+
+.widget .hocwp-theme ul.sortable:not(.sub-sortable) {
+
+}
+
+.widget .hocwp-theme .clearfix > ul.sortable:not(.connect-lists) {
+    width: 100%;
+    margin-right: 0;
 }
 
 .hocwp-theme ul.sortable:not(.sub-sortable),

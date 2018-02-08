@@ -5,24 +5,10 @@ jQuery(document).ready(function ($) {
         return;
     }
 
-    if (typeof hocwpSelectChosen !== "function") {
-        function hocwpSelectChosen(select) {
-            var chosenOptions = {
-                width: "100%"
-            };
-            if ($.fn.chosen && select.length) {
-                if (1 !== select.attr("data-loaded")) {
-                    select.chosen(chosenOptions);
-                    select.attr("data-loaded", 1);
-                    select.next(".chosen-container").show();
-                }
-            }
-        }
-    }
-
     (function () {
         $(document).on("widget-updated", function (event, widget) {
-            hocwpSelectChosen($(widget).find("select[data-chosen='1']"));
+            $(widget).find("select[data-chosen='1']").hocwpSelectChosen();
+            $(widget).find("[data-sortable='1']").hocwpSortable();
         });
 
         $("div.widgets-sortables").bind("sortreceive", function (event, ui) {
@@ -41,7 +27,8 @@ jQuery(document).ready(function ($) {
                 if (chosenContainer.length > 0) {
                     chosenContainer.hide();
                 }
-                hocwpSelectChosen(container.find("select[data-chosen='1']"));
+                container.find("select[data-chosen='1']").hocwpSelectChosen();
+                container.find("[data-sortable='1']").hocwpSortable();
             }
         });
 
