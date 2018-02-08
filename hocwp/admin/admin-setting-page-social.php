@@ -30,14 +30,14 @@ function hocwp_theme_settings_page_social_section() {
 	$sections['facebook'] = array(
 		'tab'         => 'social',
 		'id'          => 'facebook',
-		'title'       => __( 'Facebook', 'hocwp-theme' ),
+		'title'       => 'Facebook',
 		'description' => __( 'See what your Facebook friends liked, shared, or commented on across the Web.', 'hocwp-theme' )
 	);
 
 	$sections['google'] = array(
 		'tab'         => 'social',
 		'id'          => 'google',
-		'title'       => __( 'Google', 'hocwp-theme' ),
+		'title'       => 'Google',
 		'description' => __( 'All information about Google account and Google console.', 'hocwp-theme' )
 	);
 
@@ -66,7 +66,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'facebook',
 		'id'      => 'facebook_app_id',
-		'title'   => __( 'APP ID', 'hocwp-theme' ),
+		'title'   => 'APP ID',
 		'args'    => array(
 			'label_for' => true
 		)
@@ -76,7 +76,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'facebook',
 		'id'      => 'facebook_sdk_javascript',
-		'title'   => __( 'SDK JavaScript', 'hocwp-theme' ),
+		'title'   => 'SDK JavaScript',
 		'args'    => array(
 			'label_for'     => true,
 			'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
@@ -95,9 +95,9 @@ function hocwp_theme_settings_page_social_field() {
 		$socials = explode( ',', $socials );
 		$socials = array_map( 'trim', $socials );
 		foreach ( $socials as $social ) {
-			$key      = sanitize_title( $social );
-			$key      = str_replace( '-', '_', $social );
-			$key      .= '_url';
+			$key = sanitize_title( $social );
+			$key = str_replace( '-', '_', $social );
+			$key .= '_url';
 			$fields[] = array(
 				'tab'     => 'social',
 				'section' => 'social_url',
@@ -119,7 +119,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'google',
 		'id'      => 'google_api_key',
-		'title'   => __( 'API Key', 'hocwp-theme' ),
+		'title'   => 'API Key',
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(
@@ -132,7 +132,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'google',
 		'id'      => 'google_client_id',
-		'title'   => __( 'Client ID', 'hocwp-theme' ),
+		'title'   => 'Client ID',
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(
@@ -145,7 +145,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'google',
 		'id'      => 'recaptcha_site_key',
-		'title'   => __( 'reCAPTCHA Site Key', 'hocwp-theme' ),
+		'title'   => 'reCAPTCHA Site Key',
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(
@@ -158,7 +158,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'google',
 		'id'      => 'recaptcha_secret_key',
-		'title'   => __( 'reCAPTCHA Secret Key', 'hocwp-theme' ),
+		'title'   => 'reCAPTCHA Secret Key',
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(
@@ -170,7 +170,7 @@ function hocwp_theme_settings_page_social_field() {
 	$fields[] = array(
 		'tab'   => 'social',
 		'id'    => 'addthis_id',
-		'title' => __( 'AddThis ID', 'hocwp-theme' ),
+		'title' => 'AddThis ID',
 		'args'  => array(
 			'label_for'     => true,
 			'callback_args' => array(

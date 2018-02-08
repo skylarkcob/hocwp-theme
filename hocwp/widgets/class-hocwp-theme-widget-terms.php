@@ -112,7 +112,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			<?php
 			$args = array(
 				'for'  => $this->get_field_id( 'taxonomy' ),
-				'text' => __( 'Taxonomy:', 'hocwp-theme' )
+				'text' => 'Taxonomy:'
 			);
 			HT_HTML_Field()->label( $args );
 			$args = array(
