@@ -62,8 +62,8 @@ function hocwp_theme_settings_page_discussion_field() {
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'select' ),
 				'callback_args' => array(
 					'options' => array(
-						'default'  => __( 'Default', 'hocwp-theme' ),
-						'facebook' => __( 'Facebook', 'hocwp-theme' )
+						'default'  => _x( 'Default', 'comment system', 'hocwp-theme' ),
+						'facebook' => _x( 'Facebook', 'comment system', 'hocwp-theme' )
 					)
 				)
 			)

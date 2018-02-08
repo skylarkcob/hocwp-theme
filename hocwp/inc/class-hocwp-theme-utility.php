@@ -712,23 +712,29 @@ final class HOCWP_Theme_Utility {
 		if ( is_home() ) {
 			return;
 		}
+
 		$separator   = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
 		$home_item   = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
 		$items       = array();
 		$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
+
 		if ( is_single() ) {
 			$obj     = get_post( get_the_ID() );
 			$terms   = wp_get_post_categories( $obj->ID );
 			$has_cat = false;
+
 			if ( ! is_wp_error( $terms ) && HT()->array_has_value( $terms ) ) {
 				$term = array_shift( $terms );
+
 				if ( HT()->is_positive_number( $term ) ) {
 					$term = get_category( $term );
 				}
+
 				if ( $term instanceof WP_Term ) {
 					$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
 					array_unshift( $items, $item );
 					$has_cat = true;
+
 					while ( $term->parent > 0 ) {
 						$term = get_category( $term->parent );
 						$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
@@ -736,6 +742,7 @@ final class HOCWP_Theme_Utility {
 					}
 				}
 			}
+
 			if ( ! $has_cat ) {
 				if ( 'post' != $obj->post_type && 'page' != $obj->post_type ) {
 					$type = get_post_type_object( $obj->post_type );
@@ -744,19 +751,27 @@ final class HOCWP_Theme_Utility {
 				}
 			}
 		}
+
 		$last_item = '';
+
 		if ( is_category() ) {
 			$last_item = single_cat_title( '', false );
 		} elseif ( is_tag() ) {
 			$last_item = single_tag_title( '', false );
 		} elseif ( is_author() ) {
 			$last_item = '<span class="vcard">' . get_the_author() . '</span>';
-		} elseif ( is_year() ) {
-			$last_item = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
-		} elseif ( is_month() ) {
-			$last_item = get_the_date( _x( 'F Y', 'monthly archives date format', 'hocwp-theme' ) );
-		} elseif ( is_day() ) {
-			$last_item = get_the_date( _x( 'F j, Y', 'daily archives date format', 'hocwp-theme' ) );
+		} elseif ( is_date() ) {
+			$year  = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
+			if ( is_year() ) {
+				$last_item = sprintf( _x( 'Year %s', 'yearly archives', 'hocwp-theme' ), $year );
+			} elseif ( is_month() ) {
+				$month = get_the_date( _x( 'F', 'monthly archives date format', 'hocwp-theme' ) );
+				$last_item = sprintf( _x( '%1$s %2$s', 'monthly archives', 'hocwp-theme' ), $month, $year );
+			} elseif ( is_day() ) {
+				$month = get_the_date( _x( 'F', 'daily archives date format', 'hocwp-theme' ) );
+				$day   = get_the_date( _x( 'j', 'daily archives date format', 'hocwp-theme' ) );
+				$last_item = sprintf( _x( '%1$s %2$s, %3$s', 'daily archives', 'hocwp-theme' ), $month, $day, $year );
+			}
 		} elseif ( is_tax( 'post_format' ) ) {
 			if ( is_tax( 'post_format', 'post-format-aside' ) ) {
 				$last_item = _x( 'Asides', 'post format archive title', 'hocwp-theme' );
@@ -788,9 +803,11 @@ final class HOCWP_Theme_Utility {
 		} elseif ( is_404() ) {
 			$last_item = __( 'Page not found', 'hocwp-theme' );
 		}
+
 		if ( ! empty( $last_item ) ) {
 			$items[] = '<span class="breadcrumb_last active breadcrumb-item breadcrumb-last trail-item trail-end">' . $last_item . '</span>';
 		}
+
 		$count = count( $items );
 		$nav   = new HOCWP_Theme_HTML_Tag( 'nav' );
 		$nav->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );

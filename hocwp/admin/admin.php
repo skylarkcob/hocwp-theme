@@ -38,7 +38,7 @@ require HOCWP_THEME_CORE_PATH . '/admin/featured.php';
 
 function hocwp_theme_admin_menu_extra() {
 	add_theme_page( __( 'Theme Plugins', 'hocwp-theme' ), __( 'Theme Plugins', 'hocwp-theme' ), 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
-	add_theme_page( __( 'phpinfo()', 'hocwp-theme' ), __( 'PHP Info', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
+	add_theme_page( 'phpinfo()', __( 'PHP Info', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
 }
 
 add_action( 'admin_menu', 'hocwp_theme_admin_menu_extra' );
