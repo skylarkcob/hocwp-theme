@@ -19,6 +19,12 @@ final class HOCWP_Theme {
 	public function debug( $value ) {
 		if ( function_exists( 'hocwp_theme_debug' ) ) {
 			hocwp_theme_debug( $value );
+		} else {
+			if ( is_array( $value ) || is_object( $value ) ) {
+				error_log( print_r( $value, true ) );
+			} else {
+				error_log( $value );
+			}
 		}
 	}
 
