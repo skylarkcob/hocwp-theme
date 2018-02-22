@@ -1,6 +1,8 @@
 <?php
 /**
  * Define the theme name.
+ *
+ * Data type: string
  */
 if ( ! defined( 'HOCWP_THEME_NAME' ) ) {
 	$path = get_template_directory();
@@ -14,6 +16,8 @@ if ( ! defined( 'HOCWP_THEME_NAME' ) ) {
 
 /**
  * Define theme support microformats or not.
+ *
+ * Data type: boolean
  */
 if ( ! defined( 'HOCWP_THEME_SUPPORT_MICROFORMATS' ) ) {
 	define( 'HOCWP_THEME_SUPPORT_MICROFORMATS', false );
@@ -21,6 +25,8 @@ if ( ! defined( 'HOCWP_THEME_SUPPORT_MICROFORMATS' ) ) {
 
 /*
  * Using Structured Data Markup on your site.
+ *
+ * Data type: boolean
  *
  * Google Search works hard to understand the content of a page. You can help us by providing explicit clues about
  * the meaning of a page to Google by including structured data on the page. Structured data is a standardized format

@@ -1,6 +1,8 @@
 <?php
 /**
  * Define theme support microformats or not.
+ *
+ * Data type: boolean
  */
 define( 'HOCWP_THEME_SUPPORT_MICROFORMATS', false );
 
@@ -16,8 +18,18 @@ define( 'HOCWP_THEME_REQUIRED_PLUGINS', '' );
 /**
  * Skip work time checking.
  *
+ * Data type: boolean
+ *
  * If you still want to continue working, just define this value to TRUE.
  */
 define( 'HOCWP_THEME_OVERTIME', true );
 
-define( 'HOCWP_THEME_BREAK_MINUTES', 0 );
+/**
+ * Working time interval.
+ *
+ * Data type: integer
+ *
+ * You should take a short break every 25 minutes. You can increase this number to work more longer. Define this
+ * number to zero to skip this function.
+ */
+define( 'HOCWP_THEME_BREAK_MINUTES', 25 );
