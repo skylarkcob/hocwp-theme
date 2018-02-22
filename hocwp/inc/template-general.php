@@ -1052,6 +1052,10 @@ function hocwp_theme_get_option( $name, $default = '', $base = 'general' ) {
 	return HT_Util()->get_theme_option( $name, $default, $base );
 }
 
+function hocwp_theme_get_option_home( $name, $default = '' ) {
+	return HT_Util()->get_theme_option( $name, $default, 'home' );
+}
+
 remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head' );
 
 function hocwp_theme_pre_get_posts_action( $query ) {

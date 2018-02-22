@@ -123,7 +123,8 @@ jQuery(document).ready(function ($) {
 
                 if ($.trim(connectWith)) {
                     connectWith = connectWith.replace(" ", ", .");
-                    options.connectWith = "." + connectWith;
+                    connectWith = "." + connectWith;
+                    settings.connectWith = connectWith;
                     var lists = container.find(".sortable"),
                         first = lists.first(),
                         last = lists.last();
