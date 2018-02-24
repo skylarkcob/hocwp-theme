@@ -708,6 +708,90 @@ final class HOCWP_Theme_Utility {
 		}
 	}
 
+	public function get_archive_title( $prefix = true ) {
+		if ( is_category() ) {
+			$title = single_cat_title( '', false );
+
+			if ( $prefix ) {
+				$title = sprintf( __( 'Category: %s', 'hocwp-theme' ), $title );
+			}
+		} elseif ( is_tag() ) {
+			$title = single_tag_title( '', false );
+
+			if ( $prefix ) {
+				$title = sprintf( __( 'Tag: %s', 'hocwp-theme' ), $title );
+			}
+		} elseif ( is_author() ) {
+			$title = '<span class="vcard">' . get_the_author() . '</span>';
+
+			if ( $prefix ) {
+				$title = sprintf( __( 'Author: %s', 'hocwp-theme' ), $title );
+			}
+		} elseif ( is_date() ) {
+			$year = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
+
+			if ( is_year() ) {
+				$title = $year;
+				$title = sprintf( _x( 'Year %s', 'yearly archives', 'hocwp-theme' ), $title );
+			} elseif ( is_month() ) {
+				$title = get_the_date( _x( 'F', 'monthly archives date format', 'hocwp-theme' ) );
+				$title = sprintf( _x( '%1$s %2$s', 'monthly archives', 'hocwp-theme' ), $title, $year );
+			} elseif ( is_day() ) {
+				$month = get_the_date( _x( 'F', 'daily archives date format', 'hocwp-theme' ) );
+				$day   = get_the_date( _x( 'j', 'daily archives date format', 'hocwp-theme' ) );
+				$title = sprintf( _x( '%1$s %2$s, %3$s', 'daily archives', 'hocwp-theme' ), $month, $day, $year );
+			}
+
+			if ( $prefix ) {
+				$title = sprintf( __( 'Archives: %s', 'hocwp-theme' ), $title );
+			}
+		} elseif ( is_tax( 'post_format' ) ) {
+			if ( is_tax( 'post_format', 'post-format-aside' ) ) {
+				$title = _x( 'Asides', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) {
+				$title = _x( 'Galleries', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-image' ) ) {
+				$title = _x( 'Images', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-video' ) ) {
+				$title = _x( 'Videos', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-quote' ) ) {
+				$title = _x( 'Quotes', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-link' ) ) {
+				$title = _x( 'Links', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-status' ) ) {
+				$title = _x( 'Statuses', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-audio' ) ) {
+				$title = _x( 'Audio', 'post format archive title', 'hocwp-theme' );
+			} elseif ( is_tax( 'post_format', 'post-format-chat' ) ) {
+				$title = _x( 'Chats', 'post format archive title', 'hocwp-theme' );
+			}
+		} elseif ( is_post_type_archive() ) {
+			$title = post_type_archive_title( '', false );
+
+			if ( $prefix ) {
+				$title = sprintf( __( 'Archives: %s', 'hocwp-theme' ), post_type_archive_title( '', false ) );
+			}
+		} elseif ( is_tax() ) {
+			$title = single_term_title( '', false );
+
+			if ( $prefix ) {
+				$tax = get_taxonomy( get_queried_object()->taxonomy );
+
+				$title = sprintf( '%1$s: %2$s', $tax->labels->singular_name, $title );
+			}
+		} elseif ( is_search() ) {
+			$title = get_search_query();
+
+			if ( $prefix ) {
+				$title = sprintf( __( 'Search results for: %s', 'hocwp-theme' ), $title );
+			}
+		} else {
+			$title = __( 'Archives', 'hocwp-theme' );
+		}
+
+		return apply_filters( 'get_the_archive_title', $title, $prefix );
+	}
+
 	public static function breadcrumb( $args = array() ) {
 		if ( is_home() ) {
 			return;
@@ -754,52 +838,10 @@ final class HOCWP_Theme_Utility {
 
 		$last_item = '';
 
-		if ( is_category() ) {
-			$last_item = single_cat_title( '', false );
-		} elseif ( is_tag() ) {
-			$last_item = single_tag_title( '', false );
-		} elseif ( is_author() ) {
-			$last_item = '<span class="vcard">' . get_the_author() . '</span>';
-		} elseif ( is_date() ) {
-			$year  = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
-			if ( is_year() ) {
-				$last_item = sprintf( _x( 'Year %s', 'yearly archives', 'hocwp-theme' ), $year );
-			} elseif ( is_month() ) {
-				$month = get_the_date( _x( 'F', 'monthly archives date format', 'hocwp-theme' ) );
-				$last_item = sprintf( _x( '%1$s %2$s', 'monthly archives', 'hocwp-theme' ), $month, $year );
-			} elseif ( is_day() ) {
-				$month = get_the_date( _x( 'F', 'daily archives date format', 'hocwp-theme' ) );
-				$day   = get_the_date( _x( 'j', 'daily archives date format', 'hocwp-theme' ) );
-				$last_item = sprintf( _x( '%1$s %2$s, %3$s', 'daily archives', 'hocwp-theme' ), $month, $day, $year );
-			}
-		} elseif ( is_tax( 'post_format' ) ) {
-			if ( is_tax( 'post_format', 'post-format-aside' ) ) {
-				$last_item = _x( 'Asides', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) {
-				$last_item = _x( 'Galleries', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-image' ) ) {
-				$last_item = _x( 'Images', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-video' ) ) {
-				$last_item = _x( 'Videos', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-quote' ) ) {
-				$last_item = _x( 'Quotes', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-link' ) ) {
-				$last_item = _x( 'Links', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-status' ) ) {
-				$last_item = _x( 'Statuses', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-audio' ) ) {
-				$last_item = _x( 'Audio', 'post format archive title', 'hocwp-theme' );
-			} elseif ( is_tax( 'post_format', 'post-format-chat' ) ) {
-				$last_item = _x( 'Chats', 'post format archive title', 'hocwp-theme' );
-			}
-		} elseif ( is_post_type_archive() ) {
-			$last_item = post_type_archive_title( '', false );
-		} elseif ( is_tax() ) {
-			$last_item = single_term_title( '', false );
+		if ( is_archive() ) {
+			$last_item = HT_Util()->get_archive_title( false );
 		} elseif ( is_single() || is_singular() ) {
 			$last_item = get_the_title();
-		} elseif ( is_search() ) {
-			$last_item = get_search_query();
 		} elseif ( is_404() ) {
 			$last_item = __( 'Page not found', 'hocwp-theme' );
 		}
@@ -890,6 +932,48 @@ final class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_posts_per_page', $ppp, $home );
 	}
 
+	public function get_attachment_id( $url ) {
+		$attachment_id = 0;
+
+		$dir = wp_upload_dir();
+
+		if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) {
+			$file = basename( $url );
+
+			$query_args = array(
+				'post_type'   => 'attachment',
+				'post_status' => 'inherit',
+				'fields'      => 'ids',
+				'meta_query'  => array(
+					array(
+						'value'   => $file,
+						'compare' => 'LIKE',
+						'key'     => '_wp_attachment_metadata',
+					),
+				)
+			);
+
+			$query = new WP_Query( $query_args );
+
+			if ( $query->have_posts() ) {
+
+				foreach ( $query->posts as $post_id ) {
+					$meta          = wp_get_attachment_metadata( $post_id );
+					$original_file = basename( $meta['file'] );
+
+					$cropped_image_files = wp_list_pluck( $meta['sizes'], 'file' );
+
+					if ( $original_file === $file || in_array( $file, $cropped_image_files ) ) {
+						$attachment_id = $post_id;
+						break;
+					}
+				}
+			}
+		}
+
+		return $attachment_id;
+	}
+
 	public static function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
 		add_filter( 'wp_mail_content_type', 'hocwp_theme_wp_mail_content_type_filter', 99 );
 		$sent = wp_mail( $to, $subject, $message, $headers, $attachments );
@@ -959,12 +1043,14 @@ final class HOCWP_Theme_Utility {
 	public function get_current_post_type() {
 		global $post_type;
 		$result = $post_type;
+
 		if ( empty( $result ) ) {
 			if ( isset( $_GET['post_type'] ) ) {
 				$result = $_GET['post_type'];
 			} else {
 				$action  = isset( $_GET['action'] ) ? $_GET['action'] : '';
 				$post_id = isset( $_GET['post'] ) ? $_GET['post'] : 0;
+
 				if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
 					$post   = get_post( $post_id );
 					$result = $post->post_type;

@@ -3,7 +3,7 @@ if ( post_password_required() ) {
 	return;
 }
 
-hocwp_theme_html_tag( 'div', 'comments_area' );
+hocwp_theme_html_tag( 'div', 'comments_area', 'class="comments-area"' );
 
 if ( have_comments() ) {
 	?>

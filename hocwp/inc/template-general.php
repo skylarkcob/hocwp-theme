@@ -69,6 +69,7 @@ function hocwp_theme_template_archive() {
 
 				return;
 			}
+
 			$tmp  = str_replace( '_', '-', $post_type );
 			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $tmp . '.php';
 
@@ -80,6 +81,7 @@ function hocwp_theme_template_archive() {
 		}
 	} elseif ( is_tax() || is_category() || is_tag() ) {
 		$object = get_queried_object();
+		global $post_type;
 
 		if ( $object instanceof WP_Term ) {
 			$tmp  = $object->taxonomy;
@@ -1050,6 +1052,10 @@ function hocwp_theme_get_option( $name, $default = '', $base = 'general' ) {
 	return HT_Util()->get_theme_option( $name, $default, $base );
 }
 
+function hocwp_theme_get_option_home( $name, $default = '' ) {
+	return HT_Util()->get_theme_option( $name, $default, 'home' );
+}
+
 remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head' );
 
 function hocwp_theme_pre_get_posts_action( $query ) {
@@ -1119,3 +1125,12 @@ function hocwp_theme_style_loader_tag_filter( $tag ) {
 }
 
 add_filter( 'style_loader_tag', 'hocwp_theme_style_loader_tag_filter' );
+
+function hocwp_theme_get_archive_title( $prefix = true ) {
+	return HT_Util()->get_archive_title( $prefix );
+}
+
+function hocwp_theme_the_archive_title( $prefix = true ) {
+	$title = hocwp_theme_get_archive_title( $prefix );
+	HT()->wrap_text( $title, '<h1 class="archive-title main-title">', '</h1>', true );
+}

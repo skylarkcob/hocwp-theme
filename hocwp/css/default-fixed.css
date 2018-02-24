@@ -64,6 +64,11 @@ span.edit-link {
     background-image: -moz-linear-gradient(left bottom, #eee 7%, #fff 50%, #eee 100%);
 }
 
+.loop-posts .entry span.no-thumbnail,
+.loop article span.no-thumbnail {
+    display: inline-block;
+}
+
 .loop .hocwp-post .post-title {
     clear: none;
 }
@@ -356,6 +361,12 @@ div.menu > ul > li > a {
     padding-right: 20px;
 }
 
+.widget .menu.hocwp-menu > li > a,
+.widget div.menu > ul > li > a {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .widget .menu li a {
 
 }
@@ -379,6 +390,10 @@ div.menu li a {
 
 .text-right {
     text-align: right;
+}
+
+.widget_media_image {
+    text-align: center;
 }
 
 @media only screen and (max-width: 1024px) {
