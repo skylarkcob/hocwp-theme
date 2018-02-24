@@ -932,6 +932,48 @@ final class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_posts_per_page', $ppp, $home );
 	}
 
+	public function get_attachment_id( $url ) {
+		$attachment_id = 0;
+
+		$dir = wp_upload_dir();
+
+		if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) {
+			$file = basename( $url );
+
+			$query_args = array(
+				'post_type'   => 'attachment',
+				'post_status' => 'inherit',
+				'fields'      => 'ids',
+				'meta_query'  => array(
+					array(
+						'value'   => $file,
+						'compare' => 'LIKE',
+						'key'     => '_wp_attachment_metadata',
+					),
+				)
+			);
+
+			$query = new WP_Query( $query_args );
+
+			if ( $query->have_posts() ) {
+
+				foreach ( $query->posts as $post_id ) {
+					$meta          = wp_get_attachment_metadata( $post_id );
+					$original_file = basename( $meta['file'] );
+
+					$cropped_image_files = wp_list_pluck( $meta['sizes'], 'file' );
+
+					if ( $original_file === $file || in_array( $file, $cropped_image_files ) ) {
+						$attachment_id = $post_id;
+						break;
+					}
+				}
+			}
+		}
+
+		return $attachment_id;
+	}
+
 	public static function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
 		add_filter( 'wp_mail_content_type', 'hocwp_theme_wp_mail_content_type_filter', 99 );
 		$sent = wp_mail( $to, $subject, $message, $headers, $attachments );

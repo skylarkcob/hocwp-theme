@@ -53,6 +53,8 @@ define( 'HOCWP_THEME_CUSTOM_URL', HOCWP_THEME_URL . '/custom' );
  * Theme load
  */
 function hocwp_theme_load() {
+	global $pagenow;
+
 	/**
 	 * Check class HocWP_Theme exists.
 	 */
@@ -119,6 +121,10 @@ function hocwp_theme_load() {
 		require HOCWP_THEME_CORE_PATH . '/inc/template-general.php';
 		require HOCWP_THEME_CORE_PATH . '/inc/template-comments.php';
 		require HOCWP_THEME_CORE_PATH . '/inc/template-post.php';
+
+		if ( 'wp-login.php' == $pagenow ) {
+			require HOCWP_THEME_CORE_PATH . '/inc/template-user.php';
+		}
 	} else {
 		require HOCWP_THEME_CORE_PATH . '/admin/meta.php';
 	}

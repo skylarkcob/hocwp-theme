@@ -361,6 +361,12 @@ div.menu > ul > li > a {
     padding-right: 20px;
 }
 
+.widget .menu.hocwp-menu > li > a,
+.widget div.menu > ul > li > a {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .widget .menu li a {
 
 }

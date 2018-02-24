@@ -439,9 +439,11 @@ final class HOCWP_Theme {
 		$output = trim( $output );
 		preg_match_all( '/<img[^>]+>/i', $data, $matches );
 		$matches = isset( $matches[0] ) ? $matches[0] : array();
+
 		if ( ! self::array_has_value( $matches ) && ! empty( $data ) ) {
 			if ( false !== strpos( $data, '//' ) && ( false !== strpos( $data, '.jpg' ) || false !== strpos( $data, '.png' ) || false !== strpos( $data, '.gif' ) ) ) {
 				$sources = explode( PHP_EOL, $data );
+
 				if ( self::array_has_value( $sources ) ) {
 					foreach ( $sources as $src ) {
 						if ( self::is_image_url( $src ) ) {
@@ -457,10 +459,12 @@ final class HOCWP_Theme {
 			}
 		} elseif ( 'img' != $output && self::array_has_value( $matches ) ) {
 			$tmp = array();
+
 			foreach ( $matches as $img ) {
 				$src   = self::get_first_image_source( $img );
 				$tmp[] = $img;
 			}
+
 			$matches = $tmp;
 		}
 
