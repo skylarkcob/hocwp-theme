@@ -393,8 +393,12 @@ final class HOCWP_Theme {
 			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
 			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
 		}
+
 		$file = new WP_Filesystem_Direct( null );
-		if ( empty( $file->get_contents( $url ) ) ) {
+
+		$content = $file->get_contents( $url );
+
+		if ( empty( $content ) ) {
 			return false;
 		}
 
