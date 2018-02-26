@@ -270,7 +270,7 @@ function hocwp_theme_backup_wp_content_folders_theme( $folders ) {
 
 add_filter( 'hocwp_theme_backup_wp_content_folders', 'hocwp_theme_backup_wp_content_folders_theme' );
 
-if ( 'widgets.php' == $pagenow ) {
+if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow ) {
 	function hocwp_theme_widget_form_before( $instance, $widget ) {
 		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 		echo '<div class="hocwp-theme">';
