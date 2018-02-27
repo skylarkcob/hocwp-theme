@@ -21,7 +21,7 @@ add_filter( 'hocwp_theme_setting_fields', 'hocwp_theme_custom_setting_fields', 9
  * @param $fields
  * @param $options
  *
- * @return mixed
+ * @return array
  */
 function hocwp_theme_custom_setting_page_home_fields( $fields, $options ) {
 
@@ -35,7 +35,7 @@ add_filter( 'hocwp_theme_setting_page_home_fields', 'hocwp_theme_custom_setting_
  *
  * @param $sections
  *
- * @return mixed
+ * @return array
  */
 function hocwp_theme_custom_setting_sections( $sections ) {
 
@@ -49,7 +49,7 @@ add_filter( 'hocwp_theme_setting_sections', 'hocwp_theme_custom_setting_sections
  *
  * @param $sections
  *
- * @return mixed
+ * @return array
  */
 function hocwp_theme_custom_setting_page_home_sections( $sections ) {
 

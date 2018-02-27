@@ -9,6 +9,7 @@ jQuery(document).ready(function ($) {
                     alert = false,
                     container = shortable.parent(),
                     connectWith = shortable.attr("data-connect-with");
+
                 var settings = $.extend({
                     placeholder: "ui-state-highlight",
                     cancel: ".ui-state-disabled",
@@ -109,10 +110,9 @@ jQuery(document).ready(function ($) {
 
                         if (connectList && $.trim(connectList)) {
                             if (!receiver.hasClass(connectList) && !receiver.hasClass("connected-result")) {
-                                var tmp = item.detach(),
-                                    thisParent = container.find("." + connectList).not(".connected-result");
-
-                                if (thisParent.length) {
+                                var thisParent = container.find("." + connectList).not(".connected-result");
+                                if (thisParent.length && !thisParent.hasClass("connected-result")) {
+                                    var tmp = item.detach();
                                     //thisParent.css({height: "auto", minHeight: "50px"});
                                     thisParent.append(tmp);
                                 }
@@ -125,6 +125,7 @@ jQuery(document).ready(function ($) {
                     connectWith = connectWith.replace(" ", ", .");
                     connectWith = "." + connectWith;
                     settings.connectWith = connectWith;
+
                     var lists = container.find(".sortable"),
                         first = lists.first(),
                         last = lists.last();
