@@ -23,6 +23,10 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 	$sizes = $size;
 
+	if ( is_string( $sizes ) ) {
+		$sizes = HT_Util()->get_image_size( $sizes );
+	}
+
 	unset( $size );
 
 	$class = 'wp-post-image';

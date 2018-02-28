@@ -804,26 +804,38 @@ final class HOCWP_Theme_Utility {
 
 		if ( is_single() ) {
 			$obj     = get_post( get_the_ID() );
-			$terms   = wp_get_post_categories( $obj->ID );
-			$has_cat = false;
+			$term = null;
 
-			if ( ! is_wp_error( $terms ) && HT()->array_has_value( $terms ) ) {
-				$term = array_shift( $terms );
+			if ( defined( 'WPSEO_FILE' ) || defined( 'WPSEO_PATH' ) ) {
+				$primary = get_post_meta( $obj->ID, '_yoast_wpseo_primary_category', true );
 
-				if ( HT()->is_positive_number( $term ) ) {
-					$term = get_category( $term );
+				if ( HT()->is_positive_number( $primary ) ) {
+					$term = get_category( $primary );
 				}
+			}
 
-				if ( $term instanceof WP_Term ) {
+			if ( ! ( $term instanceof WP_Term ) ) {
+				$terms   = wp_get_post_categories( $obj->ID );
+				$has_cat = false;
+
+				if ( ! is_wp_error( $terms ) && HT()->array_has_value( $terms ) ) {
+					$term = array_shift( $terms );
+
+					if ( HT()->is_positive_number( $term ) ) {
+						$term = get_category( $term );
+					}
+				}
+			}
+
+			if ( $term instanceof WP_Term ) {
+				$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
+				array_unshift( $items, $item );
+				$has_cat = true;
+
+				while ( $term->parent > 0 ) {
+					$term = get_category( $term->parent );
 					$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
 					array_unshift( $items, $item );
-					$has_cat = true;
-
-					while ( $term->parent > 0 ) {
-						$term = get_category( $term->parent );
-						$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
-						array_unshift( $items, $item );
-					}
 				}
 			}
 

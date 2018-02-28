@@ -579,7 +579,10 @@ final class HOCWP_Theme_HTML_Field {
 					$connects[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '">' . $obj->name . ' (' . $tax->labels->singular_name . ')</li>';
 				}
 			}
-			$args['connects'] = $connects;
+
+			if ( 0 < count( $connects ) ) {
+				$args['connects'] = $connects;
+			}
 		}
 		$lists = array();
 		if ( is_array( $taxonomy ) ) {
