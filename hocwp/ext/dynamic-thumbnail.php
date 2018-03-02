@@ -84,19 +84,34 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		}
 
 		if ( ! file_exists( $file_path ) ) {
-			$src = HOCWP_THEME_CORE_URL . '/ext/thumbnail.php';
-			$src = esc_url_raw( $src );
+			$pos = strpos( $url, 'wp-content/uploads' );
 
-			$params = array(
-				'src'     => $url,
-				'crop'    => 0,
-				'cache'   => isset( $attr['cache'] ) ? $attr['cache'] : 1,
-				'quality' => isset( $attr['quality'] ) ? $attr['quality'] : 100
-			);
+			if ( false !== $pos ) {
+				$sub       = substr( $url, $pos );
+				$file_path = ABSPATH . $sub;
 
-			$udir = $dirs['basedir'];
+				if ( file_exists( $file_path ) ) {
+					$external = false;
 
-			$file_path = trailingslashit( $udir ) . 'cache/' . $file_name;
+					$url = home_url( $sub );
+				}
+			}
+
+			if ( ! file_exists( $file_path ) ) {
+				$src = HOCWP_THEME_CORE_URL . '/ext/thumbnail.php';
+				$src = esc_url_raw( $src );
+
+				$params = array(
+					'src'     => $url,
+					'crop'    => 0,
+					'cache'   => isset( $attr['cache'] ) ? $attr['cache'] : 1,
+					'quality' => isset( $attr['quality'] ) ? $attr['quality'] : 100
+				);
+
+				$udir = $dirs['basedir'];
+
+				$file_path = trailingslashit( $udir ) . 'cache/' . $file_name;
+			}
 		}
 
 		if ( ! file_exists( $file_path ) ) {
@@ -110,7 +125,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 		$regen = false;
 
-		if ( HT()->is_file( $file_path, 'readable' ) && ( ! file_exists( $new_path ) || ( ! $external && HT()->is_positive_number( $post_thumbnail_id ) ) ) ) {
+		if ( HT()->is_file( $file_path, 'readable' ) && ! file_exists( $new_path ) ) {
 			$crop    = (bool) $crop;
 			$resized = image_make_intermediate_size( $file_path, $width, $height, $crop );
 
@@ -129,9 +144,13 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		if ( $regen ) {
 			$new_name = preg_replace( '/^(.*)\.' . $ext . '$/', sprintf( '$1-%sx%s.%s', $width, $height, $ext ), $file_name );
 
-			$src = trailingslashit( $dirs['baseurl'] );
+			if ( $external ) {
+				$src = trailingslashit( $dirs['baseurl'] );
 
-			$src .= 'cache/' . $new_name;
+				$src .= 'cache/' . $new_name;
+			} else {
+				$src = str_replace( $file_name, $new_name, $url );
+			}
 		}
 
 		if ( $lazyload ) {

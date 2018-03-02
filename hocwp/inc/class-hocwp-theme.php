@@ -407,9 +407,11 @@ final class HOCWP_Theme {
 
 	public static function is_image_url( $url ) {
 		$img_formats = array( 'png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'ico' );
-		$path_info   = pathinfo( $url );
-		$extension   = isset( $path_info['extension'] ) ? $path_info['extension'] : '';
-		$extension   = trim( strtolower( $extension ) );
+
+		$path_info = pathinfo( $url );
+		$extension = isset( $path_info['extension'] ) ? $path_info['extension'] : '';
+		$extension = trim( strtolower( $extension ) );
+
 		if ( in_array( $extension, $img_formats ) ) {
 			return true;
 		}
@@ -439,26 +441,42 @@ final class HOCWP_Theme {
 		return $src;
 	}
 
+	public function has_image( $string ) {
+		$result = false;
+
+		if ( false !== HT()->string_contain( $data, '.jpg' ) ) {
+			$result = true;
+		} elseif ( false !== HT()->string_contain( $data, '.png' ) ) {
+			$result = true;
+		} elseif ( false !== HT()->string_contain( $data, '.gif' ) ) {
+			$result = true;
+		}
+
+		return $result;
+	}
+
 	public static function get_all_image_from_string( $data, $output = 'img' ) {
 		$output = trim( $output );
 		preg_match_all( '/<img[^>]+>/i', $data, $matches );
 		$matches = isset( $matches[0] ) ? $matches[0] : array();
 
 		if ( ! self::array_has_value( $matches ) && ! empty( $data ) ) {
-			if ( false !== strpos( $data, '//' ) && ( false !== strpos( $data, '.jpg' ) || false !== strpos( $data, '.png' ) || false !== strpos( $data, '.gif' ) ) ) {
-				$sources = explode( PHP_EOL, $data );
+			if ( false !== HT()->string_contain( $data, '//' ) ) {
+				if ( HT()->has_image( $data ) ) {
+					$sources = explode( PHP_EOL, $data );
 
-				if ( self::array_has_value( $sources ) ) {
-					foreach ( $sources as $src ) {
-						if ( self::is_image_url( $src ) ) {
-							if ( 'img' == $output ) {
-								$matches[] = '<img src="' . $src . '" alt="">';
-							} else {
-								$matches[] = $src;
+					if ( self::array_has_value( $sources ) ) {
+						foreach ( $sources as $src ) {
+							if ( self::is_image_url( $src ) ) {
+								if ( 'img' == $output ) {
+									$matches[] = '<img src="' . $src . '" alt="">';
+								} else {
+									$matches[] = $src;
+								}
 							}
 						}
-					}
 
+					}
 				}
 			}
 		} elseif ( 'img' != $output && self::array_has_value( $matches ) ) {
@@ -475,21 +493,34 @@ final class HOCWP_Theme {
 		return $matches;
 	}
 
+	public function string_contain( $haystack, $needle, $offset = 0 ) {
+		if ( function_exists( 'mb_strpos' ) ) {
+			return mb_strpos( $haystack, $needle, $offset );
+		}
+
+		return strpos( $haystack, $needle, $offset );
+	}
+
 	public static function get_domain_name( $url, $root = false ) {
 		if ( ! is_string( $url ) || empty( $url ) ) {
 			return '';
 		}
-		if ( false === strpos( $url, 'http://' ) && false === strpos( $url, 'https://' ) ) {
+
+		if ( false === HT()->string_contain( $url, 'http://' ) && false === HT()->string_contain( $url, 'https://' ) ) {
 			$url = 'http://' . $url;
 		}
+
 		$url    = strval( $url );
 		$parse  = parse_url( $url );
 		$result = isset( $parse['host'] ) ? $parse['host'] : '';
+
 		if ( $root && ! self::is_IP( $result ) ) {
 			$tmp = explode( '.', $result );
+
 			while ( count( $tmp ) > 2 ) {
 				array_shift( $tmp );
 			}
+
 			$result = implode( '.', $tmp );
 		}
 

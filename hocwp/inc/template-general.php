@@ -118,6 +118,7 @@ add_action( 'hocwp_theme_template_search', 'hocwp_theme_template_search' );
 function hocwp_theme_widget_title_filter( $title ) {
 	if ( ! is_admin() && ! empty( $title ) ) {
 		$first = substr( $title, 0, 1 );
+
 		if ( '!' == $first ) {
 			$title = '';
 		} else {
@@ -216,6 +217,7 @@ function hocwp_theme_module_sidebar() {
 	if ( ! did_action( 'hocwp_theme_module_sidebar' ) ) {
 		_doing_it_wrong( __FUNCTION__, __( 'Please call function get_sidebar instead!', 'hocwp-theme' ), '5.2.2' );
 	}
+
 	hocwp_theme_load_views( 'module-sidebar' );
 }
 
@@ -322,15 +324,19 @@ add_filter( 'dynamic_sidebar_params', 'hocwp_theme_dynamic_sidebar_params_filter
 function hocwp_theme_template_single() {
 	if ( ! is_page() && is_singular() ) {
 		$tmp = get_post_type( get_the_ID() );
+
 		if ( 'post' != $tmp ) {
 			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-single-' . $tmp . '.php';
+
 			if ( file_exists( $file ) ) {
 				load_template( $file );
 
 				return;
 			}
+
 			$tmp  = str_replace( '_', '-', $tmp );
 			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-single-' . $tmp . '.php';
+
 			if ( file_exists( $file ) ) {
 				load_template( $file );
 
@@ -338,6 +344,7 @@ function hocwp_theme_template_single() {
 			}
 		}
 	}
+
 	hocwp_theme_load_custom_template( 'template-single' );
 }
 
@@ -378,6 +385,7 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 	if ( empty( $form ) ) {
 		$form = get_search_form( false );
 	}
+
 	ob_start();
 	?>
 	<button type="submit" class="btn js-search-submit search-submit">
@@ -392,9 +400,11 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 	<?php
 	$button = ob_get_clean();
 	$search = '</label>';
+
 	if ( false !== ( $pos = strpos( $form, $search ) ) ) {
 		$form = substr( $form, 0, $pos + strlen( $search ) );
 	}
+
 	$form .= "\n";
 	$form .= $button;
 	$form .= '</form>';
@@ -415,6 +425,7 @@ add_filter( 'get_the_archive_title', 'hocwp_theme_get_the_archive_title_filter' 
 function hocwp_theme_adjacent_post_link_filter( $output, $format, $link, $post, $adjacent ) {
 	if ( $post instanceof WP_Post ) {
 		$attr = '';
+
 		switch ( $adjacent ) {
 			case 'next':
 				$attr = sprintf( 'data-text="%s"', __( 'Next Posts', 'hocwp-theme' ) );
@@ -571,9 +582,11 @@ add_filter( 'wp_nav_menu_items', 'hocwp_theme_wp_nav_menu_items_filter', 10, 2 )
 function hocwp_theme_human_time_diff_filter( $since, $diff ) {
 	if ( $diff < MINUTE_IN_SECONDS ) {
 		$secs = $diff;
+
 		if ( $secs <= 1 ) {
 			$secs = 1;
 		}
+
 		$since = sprintf( _n( '%s sec', '%s secs', $secs, 'hocwp-theme' ), $secs );
 	}
 
@@ -596,17 +609,22 @@ add_filter( 'navigation_markup_template', 'hocwp_theme_navigation_markup_templat
 function hocwp_theme_wp_head_action() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;
+
 	if ( isset( $options['custom_code']['head'] ) ) {
 		echo $options['custom_code']['head'];
 	}
+
 	$css = isset( $options['custom_code']['css'] ) ? $options['custom_code']['css'] : '';
+
 	if ( ! empty( $css ) ) {
 		if ( ! class_exists( 'HOCWP_Theme_Minify' ) ) {
 			require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-minify.php';
 		}
+
 		$css   = strip_tags( $css );
 		$css   = HOCWP_Theme_Minify::css( $css );
 		$style = new HOCWP_Theme_HTML_Tag( 'style' );
+
 		$style->set_text( $css );
 		$style->add_attribute( 'type', 'text/css' );
 		$style->output();
@@ -634,6 +652,7 @@ function hocwp_theme_wp_footer_action() {
 
 	if ( $load ) {
 		$addthis_id = isset( $options['social']['addthis_id'] ) ? $options['social']['addthis_id'] : '';
+
 		if ( ! empty( $addthis_id ) ) {
 			?>
 			<!-- Go to www.addthis.com/dashboard to customize your tools -->
