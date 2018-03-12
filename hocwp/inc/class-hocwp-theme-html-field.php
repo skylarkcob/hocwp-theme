@@ -552,9 +552,11 @@ final class HOCWP_Theme_HTML_Field {
 
 		$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : 'category';
 		unset( $args['taxonomy'] );
+
 		if ( is_array( $taxonomy ) && 1 == count( $taxonomy ) ) {
 			$taxonomy = array_shift( $taxonomy );
 		}
+
 		$default_args = array( 'hide_empty' => false );
 		$term_args    = isset( $args['term_args'] ) ? $args['term_args'] : array();
 		$term_args    = wp_parse_args( $term_args, $default_args );
@@ -564,11 +566,14 @@ final class HOCWP_Theme_HTML_Field {
 		$value = isset( $args['value'] ) ? $args['value'] : '';
 
 		$results = array();
+
 		if ( ! empty( $value ) ) {
 			$values   = json_decode( $value );
 			$connects = array();
+
 			foreach ( $values as $std ) {
 				$obj = get_term_by( 'id', $std->id, $std->taxonomy );
+
 				if ( $obj instanceof WP_Term ) {
 					$results[ $obj->term_id ] = $obj;
 
@@ -584,7 +589,9 @@ final class HOCWP_Theme_HTML_Field {
 				$args['connects'] = $connects;
 			}
 		}
+
 		$lists = array();
+
 		if ( is_array( $taxonomy ) ) {
 			$taxonomies = $taxonomy;
 
@@ -601,6 +608,7 @@ final class HOCWP_Theme_HTML_Field {
 				$item .= '<a href="javascript:">' . $tax->label . '</a>';
 
 				$terms = HT_Util()->get_terms( $taxonomy, $term_args );
+
 				if ( HT()->array_has_value( $terms ) ) {
 					$args['has_sub'] = true;
 
@@ -624,10 +632,12 @@ final class HOCWP_Theme_HTML_Field {
 					$ul->add_attribute( 'data-connect-with', $sub );
 
 					$tmp = '';
+
 					foreach ( $terms as $obj ) {
 						if ( array_key_exists( $obj->term_id, $results ) ) {
 							continue;
 						}
+
 						$tmp .= '<li class="ui-state-default" data-taxonomy="' . $taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '">' . $obj->name . ' (' . $tax->labels->singular_name . ')</li>';
 					}
 
@@ -635,20 +645,25 @@ final class HOCWP_Theme_HTML_Field {
 
 					$item .= $ul->build();
 				}
+
 				$item .= '</li> ';
 				$lists[] = $item;
 			}
+
 			$args['connect_sub'] = trim( $connect_sub );
 		} else {
 			$tax   = get_taxonomy( $taxonomy );
 			$terms = HT_Util()->get_terms( $taxonomy, $term_args );
+
 			foreach ( $terms as $obj ) {
 				if ( array_key_exists( $obj->term_id, $results ) ) {
 					continue;
 				}
-				$lists[] = '<li class="ui-state-default" data-taxonomy="category" data-id="' . $obj->term_id . '"> ' . $obj->name . ' (' . $tax->labels->singular_name . ')</li> ';
+
+				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '"> ' . $obj->name . ' (' . $tax->labels->singular_name . ')</li> ';
 			}
 		}
+
 		$args['lists'] = $lists;
 		self::sortable( $args );
 	}

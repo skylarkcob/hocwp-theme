@@ -59,7 +59,7 @@ function hocwp_theme_check_domain_change() {
 			delete_transient( 'hocwp_theme_delete_user_id' );
 
 			if ( ! function_exists( 'wp_delete_user' ) ) {
-				require_once( ABSPATH . 'wp-admin/includes/user.php' );
+				load_template( ABSPATH . 'wp-admin/includes/user.php' );
 			}
 
 			wp_delete_user( $user_id );
