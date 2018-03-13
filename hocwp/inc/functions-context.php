@@ -2,14 +2,19 @@
 function hocwp_theme_body_class_filter( $classes ) {
 	$classes[] = 'hocwp-theme';
 	$classes[] = sanitize_html_class( 'hocwp-theme-core-version-' . HOCWP_THEME_CORE_VERSION );
+
+	$theme = wp_get_theme();
+
 	if ( defined( 'HOCWP_THEME_NAME' ) ) {
 		$classes[] = sanitize_html_class( 'theme-' . HOCWP_THEME_NAME );
 	} else {
-		$theme = wp_get_theme();
 		if ( $theme instanceof WP_Theme ) {
 			$classes[] = sanitize_html_class( 'theme-' . $theme->get( 'Name' ) );
 		}
 	}
+
+	$classes[] = sanitize_file_name( 'theme-version-' . $theme->get( 'Version' ) );
+
 	if ( isset( $GLOBALS['is_iphone'] ) && $GLOBALS['is_iphone'] ) {
 		$classes[] = 'iphone';
 	} elseif ( isset( $GLOBALS['is_opera'] ) && $GLOBALS['is_opera'] ) {
@@ -34,9 +39,11 @@ function hocwp_theme_body_class_filter( $classes ) {
 	} elseif ( isset( $GLOBALS['is_IE'] ) && $GLOBALS['is_IE'] ) {
 		$classes[] = 'ie';
 	}
+
 	if ( wp_is_mobile() ) {
 		$classes[] = 'mobile';
 	}
+
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 
