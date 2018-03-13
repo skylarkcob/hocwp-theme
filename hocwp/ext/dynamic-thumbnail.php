@@ -121,7 +121,9 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 		$ext = pathinfo( $file_path, PATHINFO_EXTENSION );
 
-		$new_path = preg_replace( '/^(.*)\.' . $ext . '$/', sprintf( '$1-%sx%s.%s', $width, $height, $ext ), $file_path );
+		$new_size = sprintf( '$1-%sx%s.%s', $width, $height, $ext );
+
+		$new_path = preg_replace( '/^(.*)\.' . $ext . '$/', $new_size, $file_path );
 
 		$regen = false;
 
@@ -142,7 +144,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		}
 
 		if ( $regen ) {
-			$new_name = preg_replace( '/^(.*)\.' . $ext . '$/', sprintf( '$1-%sx%s.%s', $width, $height, $ext ), $file_name );
+			$new_name = basename( $new_path );
 
 			if ( $external ) {
 				$src = trailingslashit( $dirs['baseurl'] );

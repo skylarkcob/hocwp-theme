@@ -86,6 +86,10 @@ span.edit-link {
     margin-top: 0;
 }
 
+p > ins > br {
+    display: none;
+}
+
 .search-form {
     width: 100%;
 }

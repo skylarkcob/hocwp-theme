@@ -265,15 +265,6 @@ function hocwp_theme_post_author() {
 	echo '<span class="byline"> ' . $byline . '</span>';
 }
 
-function hocwp_theme_the_date_filter( $the_date, $d, $before, $after ) {
-	if ( empty( $the_date ) ) {
-	}
-
-	return $the_date;
-}
-
-//add_filter( 'the_date', 'hocwp_theme_the_date_filter', 10, 4 );
-
 function hocwp_theme_image_downsize_filter( $downsize, $id, $size ) {
 	global $hocwp_theme;
 
@@ -361,13 +352,18 @@ function hocwp_theme_image_downsize_filter( $downsize, $id, $size ) {
 			}
 
 			if ( $data ) {
-				if ( $data[1] > $data[2] ) {
+				if ( $data[1] == $data[2] ) {
+					$new_width = $new_height = $data[1];
+				} elseif ( $data[1] > $data[2] && 0 != $new_width ) {
 					$ratio      = $data[1] / $new_width;
 					$new_height = round( $data[2] / $ratio );
-				} else {
+				} elseif ( 0 != $new_height ) {
 					$ratio     = $data[2] / $new_height;
 					$new_width = round( $data[1] / $ratio );
 				}
+
+				$new_width  = abs( $new_width );
+				$new_height = abs( $new_height );
 			}
 		}
 
