@@ -789,7 +789,7 @@ final class HOCWP_Theme_Utility {
 			$title = __( 'Archives', 'hocwp-theme' );
 		}
 
-		return apply_filters( 'get_the_archive_title', $title, $prefix );
+		return apply_filters( 'hocwp_theme_get_the_archive_title', $title, $prefix );
 	}
 
 	public static function breadcrumb( $args = array() ) {
@@ -850,7 +850,7 @@ final class HOCWP_Theme_Utility {
 
 		$last_item = '';
 
-		if ( is_archive() ) {
+		if ( is_archive() || is_search() ) {
 			$last_item = HT_Util()->get_archive_title( false );
 		} elseif ( is_single() || is_singular() ) {
 			$last_item = get_the_title();

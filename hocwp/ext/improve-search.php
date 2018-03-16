@@ -38,99 +38,105 @@ function hocwp_ext_improve_search_build_term_query( $search, $chunk_size, $colum
 	return $search;
 }
 
+function hocwp_ext_improve_search_query_post_ids( $search, $sql, $ppp, $chunk_size, $column_name = 'post_title' ) {
+	global $wpdb;
+
+	$search = hocwp_ext_improve_search_build_term_query( $search, $chunk_size, $column_name );
+
+	$sql .= $search;
+
+	$sql .= " LIMIT 0, " . $ppp;
+
+	return $wpdb->get_col( $sql );
+}
+
 function hocwp_ext_improve_search_pre_get_posts_action( $query ) {
 	if ( $query instanceof WP_Query && $query->is_main_query() ) {
 		if ( $query->is_search() || ( is_admin() && isset( $_GET['s'] ) ) ) {
-			remove_action( 'pre_get_posts', 'hocwp_ext_improve_search_pre_get_posts_action', 99 );
+			$search = isset( $query->query_vars['s'] ) ? $query->query_vars['s'] : '';
 
-			$tmp = $query;
-			$tmp->get_posts();
+			if ( ! empty( $search ) ) {
+				global $wpdb;
 
-			if ( ! $tmp->have_posts() ) {
-				$search = isset( $query->query_vars['s'] ) ? $query->query_vars['s'] : '';
+				$ppp = isset( $query->query_vars['posts_per_page'] ) ? $query->query_vars['posts_per_page'] : HT_Util()->get_posts_per_page();
 
-				if ( ! empty( $search ) ) {
-					global $wpdb;
+				$sql = "SELECT ID FROM";
+				$sql .= " `$wpdb->posts` WHERE post_status = 'publish' AND ";
 
-					$parts = explode( ' ', $search );
+				$post_type  = isset( $query->query_vars['post_type'] ) ? $query->query_vars['post_type'] : 'post';
+				$post_types = (array) $post_type;
 
-					if ( 1 < count( $parts ) ) {
-						$sql = "SELECT ID FROM";
-						$sql .= " `$wpdb->posts` WHERE post_status = 'publish' AND ";
+				$post_type = array_shift( $post_types );
 
-						$post_type  = isset( $query->query_vars['post_type'] ) ? $query->query_vars['post_type'] : 'post';
-						$post_types = (array) $post_type;
+				$type = "post_type = '$post_type'";
 
-						$post_type = array_shift( $post_types );
+				foreach ( $post_types as $post_type ) {
+					$type .= " OR post_type = '$post_type'";
+				}
 
-						$type = "post_type = '$post_type'";
+				$type = trim( $type );
 
-						foreach ( $post_types as $post_type ) {
-							$type .= " OR post_type = '$post_type'";
-						}
+				if ( 0 < count( $post_types ) ) {
+					$type = '(' . $type . ')';
+				}
 
-						$type = trim( $type );
+				$post_type = $type;
 
-						if ( 0 < count( $post_types ) ) {
-							$type = '(' . $type . ')';
-						}
+				$sql .= $post_type;
+				$sql .= ' AND ';
 
-						$post_type = $type;
+				$save = $sql;
 
-						$sql .= $post_type;
-						$sql .= ' AND ';
+				$slug = sanitize_title( $search );
+				$sql .= "post_name = '$slug'";
+				$post_ids = $wpdb->get_col( $sql );
 
-						$save = $sql;
+				if ( ! HT()->array_has_value( $post_ids ) ) {
+					$sql = $save;
+					$sql .= "post_name LIKE '%$slug%'";
+					$post_ids = $wpdb->get_col( $sql );
 
-						$search = hocwp_ext_improve_search_build_term_query( $search, 2 );
+					if ( ! HT()->array_has_value( $post_ids ) ) {
+						$parts = explode( ' ', $search );
 
-						$sql .= $search;
+						if ( 1 < count( $parts ) ) {
+							$post_ids = hocwp_ext_improve_search_query_post_ids( $search, $save, $ppp, 2 );
 
-						$ppp = isset( $query->query_vars['posts_per_page'] ) ? $query->query_vars['posts_per_page'] : HT_Util()->get_posts_per_page();
+							if ( ! HT()->array_has_value( $post_ids ) ) {
+								$post_ids = hocwp_ext_improve_search_query_post_ids( $search, $save, $ppp, 1 );
 
-						$sql .= " LIMIT 0, " . $ppp;
-
-						$result = $wpdb->get_col( $sql );
-
-						if ( ! HT()->array_has_value( $result ) ) {
-							$sql = $save;
-
-							$search = hocwp_ext_improve_search_build_term_query( $search, 1 );
-
-							$sql .= $search;
-
-							$sql .= " LIMIT 0, " . $ppp;
-
-							$result = $wpdb->get_col( $sql );
-
-							if ( ! HT()->array_has_value( $result ) ) {
-								$sql = $save;
-
-								$search = hocwp_ext_improve_search_build_term_query( $search, 2, 'post_content' );
-
-								$sql .= $search;
-
-								$sql .= " LIMIT 0, " . $ppp;
-
-								$result = $wpdb->get_col( $sql );
+								if ( ! HT()->array_has_value( $post_ids ) ) {
+									$post_ids = hocwp_ext_improve_search_query_post_ids( $search, $save, $ppp, 2, 'post_content' );
+								}
 							}
 						}
 
-						if ( HT()->array_has_value( $result ) ) {
-							$query->set( 'post__in', $result );
-							$query->set( 's', '' );
-						}
-
-						unset( $sql, $post_type, $post_types, $type, $save, $ppp, $result );
+						unset( $parts );
 					}
 
-					unset( $parts );
+					$args = $query->query_vars;
+
+					$args['fields'] = 'ids';
+
+					remove_action( 'pre_get_posts', 'hocwp_ext_improve_search_pre_get_posts_action', 99 );
+
+					$tmp = new WP_Query( $args );
+
+					if ( $tmp->have_posts() ) {
+						$post_ids += $tmp->posts;
+						$query->set( 'orderby', 'post__in' );
+					}
 				}
 
-				unset( $search );
+				if ( HT()->array_has_value( $post_ids ) ) {
+					$query->set( 'post__in', $post_ids );
+					$query->set( 's', '' );
+				}
+
+				unset( $ppp, $post_ids, $sql, $tmp, $post_type, $post_types, $type, $save, $slug );
 			}
 
-			unset( $tmp );
+			unset( $search );
 		}
 	}
 }
