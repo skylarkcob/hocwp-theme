@@ -87,7 +87,7 @@ function hocwp_ext_improve_search_pre_get_posts_action( $query ) {
 
 				$save = $sql;
 
-				$slug = sanitize_title_for_query( $search );
+				$slug = sanitize_title( $search );
 				$sql .= "post_name = '$slug'";
 				$post_ids = $wpdb->get_col( $sql );
 
