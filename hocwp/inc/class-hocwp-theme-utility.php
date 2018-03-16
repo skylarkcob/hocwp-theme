@@ -803,7 +803,7 @@ final class HOCWP_Theme_Utility {
 		$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
 
 		if ( is_single() ) {
-			$obj     = get_post( get_the_ID() );
+			$obj  = get_post( get_the_ID() );
 			$term = null;
 
 			if ( defined( 'WPSEO_FILE' ) || defined( 'WPSEO_PATH' ) ) {
@@ -930,6 +930,10 @@ final class HOCWP_Theme_Utility {
 
 	public static function get_posts_per_page( $home = false ) {
 		global $hocwp_theme;
+
+		if ( null === $home ) {
+			$home = is_home();
+		}
 
 		if ( $home ) {
 			$ppp = $hocwp_theme->options['home']['posts_per_page'];

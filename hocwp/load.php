@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.2.8' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.2.9' );
 
 /**
  * Theme developing mode.
@@ -104,6 +104,7 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/ext/dynamic-thumbnail.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/external-link.php';
+	require HOCWP_THEME_CORE_PATH . '/ext/improve-search.php';
 
 	if ( is_admin() ) {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin.php';
