@@ -11,6 +11,7 @@ function hocwp_theme_load_extension_external_link() {
 }
 
 $load = hocwp_theme_load_extension_external_link();
+
 if ( ! $load ) {
 	return;
 }

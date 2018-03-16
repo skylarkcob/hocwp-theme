@@ -45,6 +45,36 @@ final class HOCWP_Theme {
 		return $text;
 	}
 
+	public function string_chunk( $string, $size, $delimiter = ' ' ) {
+		$size  = absint( $size );
+		$parts = explode( $delimiter, $string );
+
+		if ( 1 == $size ) {
+			return $parts;
+		}
+
+		if ( ( $size - 1 ) < count( $parts ) ) {
+			$chunks = array_chunk( $parts, $size );
+
+			foreach ( $chunks as $index => $value ) {
+				if ( is_array( $value ) ) {
+					$chunks[ $index ] = implode( $delimiter, $value );
+				}
+			}
+
+			return $chunks;
+		}
+
+		return (array) $string;
+	}
+
+	public function string_concatenate( $string, $open = '', $close = '' ) {
+		$string = $open . $string;
+		$string .= $close;
+
+		return $string;
+	}
+
 	public function get_email_from_string( $string ) {
 		preg_match_all( "/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches );
 
