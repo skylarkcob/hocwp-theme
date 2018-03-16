@@ -11,11 +11,13 @@ if ( 'post-new.php' !== $pagenow && 'post.php' !== $pagenow ) {
 
 function hocwp_theme_meta_box_google_maps( $id = 'google_maps', $post_type = 'post' ) {
 	$meta = new HOCWP_Theme_Meta_Post();
+
 	if ( is_array( $post_type ) ) {
 		$meta->set_post_types( $post_type );
 	} else {
 		$meta->add_post_type( $post_type );
 	}
+
 	$meta->set_title( __( 'Maps', 'hocwp-theme' ) );
 	$meta->set_id( $id . '-box' );
 
@@ -27,19 +29,25 @@ function hocwp_theme_meta_box_editor( $args = array() ) {
 	$post_type    = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
 	$box_title    = isset( $args['title'] ) ? $args['title'] : __( 'Additional Information', 'hocwp-theme' );
 	$current_type = HT_Util()->get_current_post_type();
+
 	if ( is_array( $current_type ) ) {
 		$current_type = current( $current_type );
 	}
+
 	$box_id = isset( $args['id'] ) ? $args['id'] : '';
+
 	if ( empty( $box_id ) ) {
 		$box_id = HT_Sanitize()->html_id( $box_title );
+
 		if ( empty( $box_id ) ) {
 			return;
 		}
 	}
+
 	if ( empty( $current_type ) ) {
 		$current_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
 	}
+
 	if ( ! empty( $current_type ) ) {
 		$box_id = $current_type . '_' . $box_id;
 	}
@@ -48,11 +56,13 @@ function hocwp_theme_meta_box_editor( $args = array() ) {
 	$field_args = (array) $field_args;
 
 	$meta = new HOCWP_Theme_Meta_Post();
+
 	if ( is_array( $post_type ) ) {
 		$meta->set_post_types( $post_type );
 	} else {
 		$meta->add_post_type( $post_type );
 	}
+
 	$meta->set_title( $box_title );
 	$meta->set_id( $box_id );
 
@@ -75,6 +85,7 @@ function hocwp_theme_meta_box_editor_gallery( $args = array() ) {
 			'name'    => 'gallery'
 		)
 	);
-	$args     = wp_parse_args( $args, $defaults );
+
+	$args = wp_parse_args( $args, $defaults );
 	hocwp_theme_meta_box_editor( $args );
 }
