@@ -62,3 +62,24 @@ function hocwp_theme_update_meta_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_update_meta', 'hocwp_theme_update_meta_ajax_callback' );
 add_action( 'wp_ajax_nopriv_hocwp_theme_update_meta', 'hocwp_theme_update_meta_ajax_callback' );
+
+function hocwp_theme_change_post_name_ajax_callback() {
+	$post_id = HT()->get_method_value( 'post_id' );
+
+	if ( HT()->is_positive_number( $post_id ) ) {
+		$post_name = HT()->get_method_value( 'post_name' );
+
+		if ( ! empty( $post_name ) ) {
+			$data = array(
+				'ID'        => $post_id,
+				'post_name' => $post_name
+			);
+
+			wp_update_post( $data );
+		}
+	}
+
+	exit;
+}
+
+add_action( 'wp_ajax_hocwp_theme_change_post_name', 'hocwp_theme_change_post_name_ajax_callback' );
