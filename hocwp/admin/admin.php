@@ -43,7 +43,7 @@ if ( 'themes.php' == $pagenow && $plugin_page == $hocwp_theme->option->get_slug(
 	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';
 }
 
-if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
+if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow || HOCWP_THEME_DOING_AJAX ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/featured.php';
 }
 

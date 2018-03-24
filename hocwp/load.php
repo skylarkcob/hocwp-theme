@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.3.0' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.3.1' );
 
 /**
  * Theme developing mode.
@@ -48,6 +48,11 @@ define( 'HOCWP_THEME_CUSTOM_PATH', HOCWP_THEME_PATH . '/custom' );
  * Theme custom base url.
  */
 define( 'HOCWP_THEME_CUSTOM_URL', HOCWP_THEME_URL . '/custom' );
+
+/**
+ * Detect doing ajax or not.
+ */
+define( 'HOCWP_THEME_DOING_AJAX', ( ( defined( 'DOING_AJAX' ) && true === DOING_AJAX ) ? true : false ) );
 
 /**
  * Theme load
@@ -142,7 +147,10 @@ function hocwp_theme_load() {
 
 	if ( is_admin() ) {
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/meta.php' );
-		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/ajax.php' );
+
+		if ( HOCWP_THEME_DOING_AJAX ) {
+			HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/ajax.php' );
+		}
 	} else {
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/front-end.php' );
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/template.php' );
