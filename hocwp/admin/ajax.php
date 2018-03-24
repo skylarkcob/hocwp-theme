@@ -1,4 +1,8 @@
 <?php
+if ( ! HOCWP_THEME_DOING_AJAX ) {
+	return;
+}
+
 function hocwp_theme_update_facebook_data_ajax_callback() {
 	$post_id = isset( $_GET['post_id'] ) ? $_GET['post_id'] : '';
 	if ( HT()->is_positive_number( $post_id ) ) {
