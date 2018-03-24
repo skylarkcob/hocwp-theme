@@ -637,7 +637,7 @@ function hocwp_theme_wp_footer_action() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;
 	HT_Util()->load_facebook_javascript_sdk();
-	$agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	$agent = HT()->get_user_agent();
 
 	if ( empty( $agent ) || false === strpos( $agent, 'Page Speed' ) || false === strpos( $agent, 'Speed Insights' ) ) {
 		$google_analytics = isset( $options['custom_code']['google_analytics'] ) ? $options['custom_code']['google_analytics'] : '';

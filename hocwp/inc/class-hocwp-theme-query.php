@@ -31,8 +31,46 @@ final class HOCWP_Theme_Query {
 		return get_pages( $args );
 	}
 
+	public static function related( $args = array(), $type = 'post' ) {
+		return self::related_posts( $args );
+	}
+
 	public static function related_posts( $args = array() ) {
-		$query = new WP_Query();
+		$by_term = false;
+
+		if ( isset( $args['cat'] ) && is_numeric( $args['cat'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['category_name'] ) && ! empty( $args['category_name'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['category__and'] ) && HT()->array_has_value( $args['category__and'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['category__in'] ) && HT()->array_has_value( $args['category__in'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tag_id'] ) && is_numeric( $args['tag_id'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tag'] ) && ! empty( $args['tag'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tag__and'] ) && HT()->array_has_value( $args['tag__and'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tag__in'] ) && HT()->array_has_value( $args['tag__in'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tag_slug__and'] ) && HT()->array_has_value( $args['tag_slug__and'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tag_slug__in'] ) && HT()->array_has_value( $args['tag_slug__in'] ) ) {
+			$by_term = true;
+		} elseif ( isset( $args['tax_query'] ) && HT()->array_has_value( $args['tax_query'] ) ) {
+			$by_term = true;
+		}
+
+		if ( $by_term ) {
+			$query = new WP_Query( $args );
+		} else {
+			$query = new WP_Query();
+		}
+
+		if ( $query->have_posts() ) {
+			return $query;
+		}
 
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 		$obj     = get_post( $post_id );
