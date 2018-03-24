@@ -402,6 +402,10 @@ final class HOCWP_Theme {
 		return $str;
 	}
 
+	public function get_user_agent() {
+		return isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	}
+
 	public static function is_IP( $IP ) {
 		return filter_var( $IP, FILTER_VALIDATE_IP );
 	}
@@ -474,11 +478,11 @@ final class HOCWP_Theme {
 	public function has_image( $string ) {
 		$result = false;
 
-		if ( false !== HT()->string_contain( $data, '.jpg' ) ) {
+		if ( false !== HT()->string_contain( $string, '.jpg' ) ) {
 			$result = true;
-		} elseif ( false !== HT()->string_contain( $data, '.png' ) ) {
+		} elseif ( false !== HT()->string_contain( $string, '.png' ) ) {
 			$result = true;
-		} elseif ( false !== HT()->string_contain( $data, '.gif' ) ) {
+		} elseif ( false !== HT()->string_contain( $string, '.gif' ) ) {
 			$result = true;
 		}
 

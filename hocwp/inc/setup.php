@@ -1,4 +1,12 @@
 <?php
+function hocwp_theme_setup_start_session() {
+	if ( ! session_id() ) {
+		session_start();
+	}
+}
+
+add_action( 'init', 'hocwp_theme_setup_start_session' );
+
 function hocwp_theme_after_switch_theme_action( $old_name, $old_theme ) {
 	if ( ! current_user_can( 'switch_themes' ) ) {
 		return;
