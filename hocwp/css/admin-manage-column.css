@@ -7,6 +7,14 @@ th.column-featured {
     text-align: center;
 }
 
+th.column-featured:not(:last-child) {
+    text-align: left;
+}
+
+th.column-featured:not(:last-child) > span {
+    margin-left: 4px;
+}
+
 th.column-featured .featured-star:before {
     content: "\f155";
 }

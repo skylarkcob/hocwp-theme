@@ -6,13 +6,19 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 	public function __construct() {
 		global $pagenow;
 		$taxonomy = isset( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
+
 		if ( 'term.php' == $pagenow ) {
 			parent::__construct();
+
+			$this->set_get_value_callback( 'get_term_meta' );
+			$this->set_update_value_callback( 'update_term_meta' );
+
 			if ( ! empty( $taxonomy ) ) {
 				add_action( $taxonomy . '_term_edit_form_top', array( $this, 'edit_form_top' ), 10, 2 );
 				add_action( $taxonomy . '_edit_form_fields', array( $this, 'edit_form_fields' ), 10, 2 );
 			}
 		}
+
 		add_action( 'edited_' . $taxonomy, array( $this, 'edit' ), 10 );
 	}
 
@@ -27,6 +33,7 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 			if ( ! is_array( $this->taxonomies ) ) {
 				$this->taxonomies = array();
 			}
+
 			if ( ! in_array( $taxonomy, $this->taxonomies ) ) {
 				$this->taxonomies[] = $taxonomy;
 			}
@@ -49,78 +56,41 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 
 	private function callback( $tag, $taxonomy ) {
 		foreach ( (array) $this->fields as $field ) {
-			if ( ! isset( $field['callback_args']['value'] ) ) {
-				$id = $this->get_name( $field );
-				if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
-					$tmp = explode( '[', $id );
-					foreach ( $tmp as $key => $a ) {
-						$tmp[ $key ] = trim( $a, '[]' );
-					}
-					$id    = array_shift( $tmp );
-					$meta  = get_term_meta( $tag->term_id, $id, true );
-					$count = count( $tmp );
-					$k     = 0;
-					while ( $k < $count && isset( $meta[ $tmp[ $k ] ] ) ) {
-						$meta = $meta[ $tmp[ $k ] ];
-						$k ++;
-					}
-					if ( 0 != $k ) {
-						$value = $meta;
-					} else {
-						$value = '';
-					}
-				} else {
-					$value = get_term_meta( $tag->term_id, $id, true );
-				}
-				$type = $field['type'];
-				if ( 'timestamp' == $type ) {
-					$format = isset( $field['callback_args']['data-date-format'] ) ? $field['callback_args']['data-date-format'] : '';
-					if ( empty( $format ) ) {
-						global $hocwp_theme;
-						$format = $hocwp_theme->defaults['date_format'];
-					}
-					$field['callback_args']['data-date-format'] = HOCWP_Theme::javascript_datetime_format( $format );
-
-					$value = date( $format, $value );
-				}
-				$field['callback_args']['value'] = $value;
-			}
+			$id    = $this->get_field_id( $field );
+			$field = $this->sanitize_value( $tag->term_id, $field );
 			?>
-            <tr class="hocwp-theme form-field term-<?php echo $id; ?>-wrap">
-                <th scope="row">
-                    <label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
-                </th>
-                <td>
+			<tr class="hocwp-theme form-field term-<?php echo $id; ?>-wrap">
+				<th scope="row">
+					<label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
+				</th>
+				<td>
 					<?php
 					unset( $field['callback_args']['label'] );
 					call_user_func( $field['callback'], $field['callback_args'] );
 					$desc = isset( $field['description'] ) ? $field['description'] : '';
+
 					if ( ! empty( $desc ) ) {
 						$p = new HOCWP_Theme_HTML_Tag( 'p' );
 						$p->add_attribute( 'class', 'description' );
 						$p->set_text( $desc );
 						$p->output();
 					}
+
 					do_action( 'hocwp_theme_meta_term_' . $taxonomy . '_' . $id );
 					?>
-                </td>
-            </tr>
+				</td>
+			</tr>
 			<?php
 		}
 	}
 
 	public function edit( $term_id ) {
 		$taxonomy = isset( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
+
 		if ( ! HOCWP_Theme_Utility::verify_nonce( $taxonomy, $taxonomy . '_nonce' ) ) {
 			return;
 		}
-		foreach ( (array) $this->fields as $field ) {
-			if ( isset( $field['callback_args']['disabled'] ) || isset( $field['callback_args']['readonly'] ) ) {
-				continue;
-			}
-			$id    = $this->get_name( $field );
-			$value = $this->sanitize_data( $field );
-			update_term_meta( $term_id, $id, $value );
-		}
+
+		$this->save( $term_id );
 	}
 }

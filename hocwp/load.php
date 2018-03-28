@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.3.1' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.3.2' );
 
 /**
  * Theme developing mode.
