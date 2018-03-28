@@ -17,6 +17,8 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			$this->set_callback( array( $this, 'callback' ) );
 			$this->set_context( 'advanced' );
 			$this->set_priority( 'default' );
+			$this->set_get_value_callback( 'get_post_meta' );
+			$this->set_update_value_callback( 'update_post_meta' );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_action' ) );
 			add_action( 'save_post', array( $this, 'save_post_action' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 20 );
@@ -34,6 +36,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			if ( ! is_array( $this->post_types ) ) {
 				$this->post_types = array();
 			}
+
 			if ( ! in_array( $post_type, $this->post_types ) ) {
 				$this->post_types[] = $post_type;
 			}
@@ -58,6 +61,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 	public function add_meta_boxes_action() {
 		global $post_type;
+
 		if ( is_array( $this->post_types ) && in_array( $post_type, $this->post_types ) ) {
 			add_meta_box( $this->id, $this->title, $this->callback, $this->post_types, $this->context, $this->priority, $this->callback_args );
 		}
@@ -66,59 +70,26 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	public function callback( $post, $args ) {
 		echo '<div class="hocwp-theme">';
 		wp_nonce_field( $this->id, $this->id . '_nonce' );
-		foreach ( (array) $this->fields as $field ) {
-			if ( ! isset( $field['callback_args']['value'] ) ) {
-				$id = $this->get_name( $field );
-				if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
-					$tmp = explode( '[', $id );
-					foreach ( $tmp as $key => $a ) {
-						$tmp[ $key ] = trim( $a, '[]' );
-					}
-					$id    = array_shift( $tmp );
-					$meta  = get_post_meta( $post->ID, $id, true );
-					$count = count( $tmp );
-					$k     = 0;
-					while ( $k < $count && isset( $meta[ $tmp[ $k ] ] ) ) {
-						$meta = $meta[ $tmp[ $k ] ];
-						$k ++;
-					}
-					if ( 0 != $k ) {
-						$value = $meta;
-					} else {
-						$value = '';
-					}
-				} else {
-					$value = get_post_meta( $post->ID, $id, true );
-				}
-				$type = $field['type'];
-				if ( 'timestamp' == $type ) {
-					$format = isset( $field['callback_args']['data-date-format'] ) ? $field['callback_args']['data-date-format'] : '';
-					if ( empty( $format ) ) {
-						global $hocwp_theme;
-						$format = $hocwp_theme->defaults['date_format'];
-					}
-					$field['callback_args']['data-date-format'] = HOCWP_Theme::javascript_datetime_format( $format );
 
-					if ( ! empty( $value ) ) {
-						$value = date( $format, $value );
-					}
-				}
-				$field['callback_args']['value'] = $value;
-			}
+		foreach ( (array) $this->fields as $field ) {
+			$id    = $this->get_field_id( $field );
+			$field = $this->sanitize_value( $post->ID, $field );
 			?>
-            <div class="meta-row">
+			<div class="meta-row">
 				<?php
 				call_user_func( $field['callback'], $field['callback_args'] );
 				$desc = isset( $field['description'] ) ? $field['description'] : '';
+
 				if ( ! empty( $desc ) ) {
 					$p = new HOCWP_Theme_HTML_Tag( 'p' );
 					$p->add_attribute( 'class', 'description' );
 					$p->set_text( $desc );
 					$p->output();
 				}
+
 				do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
 				?>
-            </div>
+			</div>
 			<?php
 		}
 		echo '</div>';
@@ -129,15 +100,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			return;
 		}
 
-		foreach ( (array) $this->fields as $field ) {
-			if ( isset( $field['callback_args']['disabled'] ) || isset( $field['callback_args']['readonly'] ) ) {
-				continue;
-			}
-			$id = $this->get_name( $field );
-
-			$value = $this->sanitize_data( $field );
-			update_post_meta( $post_id, $id, $value );
-		}
+		$this->save( $post_id );
 	}
 
 	public function admin_enqueue_scripts_action() {
