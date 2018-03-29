@@ -1018,7 +1018,7 @@ function hocwp_theme_socials( $args = array() ) {
 	?>
 	<div class="social share-tools">
 		<?php
-		$link = '<a href="%s" rel="nofollow" target="%s" class="%s" title="%s">%s</a>';
+		$link = '<a href="%s" rel="nofollow" target="%s" class="%s" title="%s" data-new-tab="1">%s</a>';
 		foreach ( $socials as $social => $data ) {
 			$base  = $data['base'];
 			$base  = str_replace( '[URL]', $url, $base );
