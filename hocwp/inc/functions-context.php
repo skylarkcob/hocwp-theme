@@ -108,14 +108,14 @@ function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
 		$tag .= ' ' . $atts;
 	}
 
-	printf( '<%s>', $tag );
+	printf( "<%s>\n", $tag );
 }
 
 function hocwp_theme_html_tag_close( $tag ) {
 	$tag = trim( $tag );
 	$tag = strtolower( $tag );
 
-	printf( '</%s>', $tag );
+	printf( "</%s>\n", $tag );
 }
 
 function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo = true ) {
