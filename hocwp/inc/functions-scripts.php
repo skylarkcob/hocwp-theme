@@ -75,12 +75,8 @@ function hocwp_theme_enqueue_scripts_action() {
 		wp_enqueue_script( 'hocwp-theme-sticky-widget', HOCWP_THEME_CORE_URL . '/js/sticky-widget' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
 	}
 
-	$client_info = HT_Util()->get_client_info();
-
-	if ( ! isset( $client_info['screen_width'] ) ) {
-		$src = HOCWP_THEME_CORE_URL . '/js/detect-client-info' . HOCWP_THEME_JS_SUFFIX;
-		wp_enqueue_script( 'hocwp-theme-detect-client-info', $src, array( 'hocwp-theme' ), false, true );
-	}
+	$src = HOCWP_THEME_CORE_URL . '/js/detect-client-info' . HOCWP_THEME_JS_SUFFIX;
+	wp_enqueue_script( 'hocwp-theme-detect-client-info', $src, array( 'hocwp-theme' ), false, true );
 }
 
 function hocwp_theme_add_editor_style() {
