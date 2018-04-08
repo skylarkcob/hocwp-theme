@@ -87,3 +87,16 @@ function hocwp_theme_change_post_name_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_change_post_name', 'hocwp_theme_change_post_name_ajax_callback' );
+
+function hocwp_theme_detect_client_info_ajax_callback() {
+	$screen_width = isset( $_GET['screen_width'] ) ? $_GET['screen_width'] : '';
+
+	if ( HT()->is_positive_number( $screen_width ) ) {
+		$_SESSION['screen_width'] = $screen_width;
+	}
+
+	exit;
+}
+
+add_action( 'wp_ajax_hocwp_theme_detect_client_info', 'hocwp_theme_detect_client_info_ajax_callback' );
+add_action( 'wp_ajax_nopriv_hocwp_theme_detect_client_info', 'hocwp_theme_detect_client_info_ajax_callback' );

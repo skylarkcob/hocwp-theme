@@ -13,6 +13,12 @@ if ( ! is_object( $hocwp_theme ) ) {
 	$hocwp_theme = new stdClass();
 }
 
+if ( ! isset( $hocwp_theme->client_info ) ) {
+	$hocwp_theme->client_info = array();
+}
+
+$hocwp_theme->client_info['screen_width'] = isset( $_SESSION['screen_width'] ) ? $_SESSION['screen_width'] : 'unknown';
+
 if ( ! isset( $hocwp_theme->temp_data ) ) {
 	$hocwp_theme->temp_data = array();
 }

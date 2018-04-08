@@ -129,6 +129,8 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 		foreach ( $atts as $att => $attribute ) {
 			$attributes .= sprintf( '%s="%s" ', $att, $attribute );
 		}
+
+		unset( $atts );
 	}
 
 	if ( ! empty( $attr ) ) {
@@ -151,6 +153,10 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 	switch ( $tag ) {
 		case 'html':
+			$screen_width = isset( $_SESSION['screen_width'] ) ? $_SESSION['screen_width'] : 'unknown';
+
+			$atts['data-screen-width'] = $screen_width;
+
 			break;
 		case 'body':
 			$atts['data-mobile-width'] = hocwp_theme_mobile_menu_media_screen_width();
@@ -161,6 +167,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 				$atts['itemscope'] = 'itemscope';
 				$atts['itemtype']  = 'http://schema.org/WebSite';
 			}
+
 			break;
 		case 'footer':
 			switch ( $context ) {
@@ -169,6 +176,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 					$atts['class'] = 'site-footer';
 					break;
 			}
+
 			break;
 		case 'div':
 			switch ( $context ) {
@@ -181,6 +189,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 					$atts['class'] = 'site-content';
 					break;
 			}
+
 			break;
 	}
 
