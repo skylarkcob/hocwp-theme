@@ -92,7 +92,12 @@ function hocwp_theme_detect_client_info_ajax_callback() {
 	$screen_width = isset( $_GET['screen_width'] ) ? $_GET['screen_width'] : '';
 
 	if ( HT()->is_positive_number( $screen_width ) ) {
-		$_SESSION['screen_width'] = $screen_width;
+		$client_info = HT_Util()->get_client_info( true );
+
+		$client_info['screen_width'] = $screen_width;
+
+		$_SESSION['hocwp_theme_client_info'] = $client_info;
+		setcookie( 'hocwp_theme_client_info', $client_info );
 	}
 
 	exit;

@@ -29,17 +29,22 @@ final class HOCWP_Theme_Utility {
 	public static function get_current_url( $with_param = false ) {
 		global $hocwp_theme_protocol;
 		$current_url = $hocwp_theme_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
 		if ( $with_param ) {
 			$params = isset( $_SERVER['QUERY_STRING'] ) ? $_SERVER['QUERY_STRING'] : '';
+
 			if ( ! empty( $params ) ) {
 				$params = explode( '&', $params );
 				$parts  = array();
+
 				foreach ( $params as $param ) {
 					$param = explode( '=', $param );
+
 					if ( 2 == count( $param ) ) {
 						$parts[ $param[0] ] = $param[1];
 					}
 				}
+
 				$current_url = add_query_arg( $parts, $current_url );
 			}
 		}
@@ -62,6 +67,7 @@ final class HOCWP_Theme_Utility {
 
 	public function return_post( $post_or_id = null, $output = OBJECT ) {
 		$output = strtoupper( $output );
+
 		if ( $post_or_id instanceof WP_Post ) {
 			$current = $post_or_id;
 		} elseif ( HT()->is_positive_number( $post_or_id ) ) {
@@ -69,9 +75,11 @@ final class HOCWP_Theme_Utility {
 		} else {
 			$current = get_post( get_the_ID() );
 		}
+
 		if ( ! ( $current instanceof WP_Post ) ) {
 			return new WP_Error();
 		}
+
 		if ( OBJECT == $output ) {
 			return $current;
 		} elseif ( 'ID' == $output ) {
@@ -98,14 +106,18 @@ final class HOCWP_Theme_Utility {
 			'echo'          => false,
 			'taxonomy'      => 'category'
 		);
-		$args     = wp_parse_args( $args, $defaults );
-		$select   = wp_dropdown_categories( $args );
+
+		$args   = wp_parse_args( $args, $defaults );
+		$select = wp_dropdown_categories( $args );
+
 		if ( ! empty( $select ) ) {
 			$required     = (bool) HT()->get_value_in_array( $args, 'required', false );
 			$autocomplete = (bool) HT()->get_value_in_array( $args, 'autocomplete', false );
+
 			if ( $required ) {
 				$select = HT()->add_html_attribute( 'select', $select, 'required aria-required="true"' );
 			}
+
 			if ( ! $autocomplete ) {
 				$select = HT()->add_html_attribute( 'select', $select, 'autocomplete="off"' );
 			}
@@ -253,10 +265,13 @@ final class HOCWP_Theme_Utility {
 
 	public function rest_api_get( $base_url, $object = 'posts', $query = '' ) {
 		$base_url = trailingslashit( $base_url ) . 'wp-json/wp/v2/' . $object;
+
 		if ( ! empty( $query ) ) {
 			$base_url .= '?' . $query;
 		}
+
 		$data = HT_Util()->read_all_text( $base_url );
+
 		if ( ! empty( $data ) ) {
 			$data = json_decode( $data );
 		}
@@ -284,6 +299,7 @@ final class HOCWP_Theme_Utility {
 
 	public static function write_all_text( $path, $text ) {
 		$filesystem = self::filesystem();
+
 		if ( $filesystem instanceof WP_Filesystem_Base ) {
 			return $filesystem->put_contents( $path, $text );
 		}
@@ -298,6 +314,7 @@ final class HOCWP_Theme_Utility {
 	public static function normalize_path( $path, $slash = '/' ) {
 		if ( ! empty( $path ) ) {
 			$path = wp_normalize_path( $path );
+
 			if ( '/' !== $slash ) {
 				$path = str_replace( '/', '\\', $path );
 			}
@@ -324,25 +341,33 @@ final class HOCWP_Theme_Utility {
 				'message' => $args
 			);
 		}
+
 		$defaults = array(
 			'type'        => 'success',
 			'dismissible' => true,
 			'autop'       => true
 		);
-		$args     = wp_parse_args( $args, $defaults );
-		$class    = 'notice fade hocwp-theme';
+
+		$args  = wp_parse_args( $args, $defaults );
+		$class = 'notice fade hocwp-theme';
+
 		$class .= ' notice-' . $args['type'];
+
 		if ( $args['dismissible'] ) {
 			$class .= ' is-dismissible';
 		}
+
 		$message = isset( $args['message'] ) ? $args['message'] : '';
+
 		if ( ! empty( $message ) ) {
 			if ( $args['autop'] ) {
 				$message = wpautop( $message );
 			} else {
 				$message = HT()->wrap_text( $message, '<p>', '</p>' );
 			}
+
 			$hidden_interval = isset( $args['hidden_interval'] ) ? $args['hidden_interval'] : 0;
+
 			if ( HOCWP_Theme::is_positive_number( $hidden_interval ) ) {
 				$class .= ' auto-hide';
 				ob_start();
@@ -358,12 +383,15 @@ final class HOCWP_Theme_Utility {
 				<?php
 				$message .= ob_get_clean();
 			}
+
 			if ( isset( $args['id'] ) ) {
 				$result = sprintf( '<div id="%s" class="%s">%s</div>', $args['id'], esc_attr( $class ), $message );
 			} else {
 				$result = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $class ), $message );
 			}
+
 			$echo = isset( $args['echo'] ) ? (bool) $args['echo'] : true;
+
 			if ( $echo ) {
 				echo $result;
 			}
@@ -385,6 +413,7 @@ final class HOCWP_Theme_Utility {
 	public static function get_image_sizes() {
 		global $_wp_additional_image_sizes;
 		$sizes = array();
+
 		foreach ( get_intermediate_image_sizes() as $_size ) {
 			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
 				$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
@@ -406,11 +435,13 @@ final class HOCWP_Theme_Utility {
 		if ( ! ( is_array( $size ) || has_image_size( $size ) ) ) {
 			$size  = strval( $size );
 			$sizes = self::get_image_sizes();
+
 			if ( 'post-thumbnail' == $size && isset( $sizes['thumbnail'] ) ) {
 				$size = 'thumbnail';
 			} else if ( ( 'thumbnail' == $size && ! isset( $sizes['thumbnail'] ) ) || ( 'thumbnail' == $size && isset( $sizes['post-thumbnail'] ) ) ) {
 				$size = 'post-thumbnail';
 			}
+
 			if ( isset( $sizes[ $size ] ) ) {
 				$size = $sizes[ $size ];
 			}
@@ -423,6 +454,7 @@ final class HOCWP_Theme_Utility {
 		if ( ! $size = self::get_image_size( $size ) ) {
 			return false;
 		}
+
 		if ( isset( $size['width'] ) ) {
 			return $size['width'];
 		}
@@ -434,6 +466,7 @@ final class HOCWP_Theme_Utility {
 		if ( ! $size = self::get_image_size( $size ) ) {
 			return false;
 		}
+
 		if ( isset( $size['height'] ) ) {
 			return $size['height'];
 		}
@@ -445,15 +478,19 @@ final class HOCWP_Theme_Utility {
 		if ( ! is_int( $timestamp ) ) {
 			$timestamp = intval( $timestamp );
 		}
+
 		global $hocwp_theme;
 		$defaults = $hocwp_theme->defaults;
+
 		if ( null == $format ) {
 			$df     = ( isset( $defaults['date_format'] ) && ! empty( $defaults['date_format'] ) ) ? $defaults['date_format'] : 'Y-m-d';
 			$tf     = ( isset( $defaults['time_format'] ) && ! empty( $defaults['time_format'] ) ) ? $defaults['time_format'] : 'H:i:s';
 			$format = "$df $tf";
 		}
+
 		$date = new DateTime();
 		$date->setTimestamp( $timestamp );
+
 		if ( null == $timezone ) {
 			if ( isset( $defaults['timezone_string'] ) && ! empty( $defaults['timezone_string'] ) ) {
 				$ts = new DateTimeZone( $defaults['timezone_string'] );
@@ -469,18 +506,22 @@ final class HOCWP_Theme_Utility {
 
 	public function insert_term( $term, $taxonomy, $args = array() ) {
 		$override = HT()->get_value_in_array( $args, 'override', false );
+
 		if ( ! $override ) {
 			$exists = get_term_by( 'name', $term, $taxonomy );
+
 			if ( $exists instanceof WP_Term ) {
 				return;
 			}
 		}
+
 		wp_insert_term( $term, $taxonomy, $args );
 	}
 
 	public static function verify_nonce( $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
 		if ( null != $nonce_action ) {
 			$nonce = isset( $_POST[ $nonce_name ] ) ? $_POST[ $nonce_name ] : '';
+
 			if ( ! wp_verify_nonce( $nonce, $nonce_action ) ) {
 				return false;
 			}
@@ -493,14 +534,36 @@ final class HOCWP_Theme_Utility {
 		if ( ! self::verify_nonce( $nonce_action, $nonce_name ) ) {
 			return false;
 		}
+
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return false;
 		}
+
 		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
 			return false;
 		}
 
 		return true;
+	}
+
+	public function get_client_info( $save = false ) {
+		if ( $save ) {
+			$client_info = isset( $_COOKIE['hocwp_theme_client_info'] ) ? $_COOKIE['hocwp_theme_client_info'] : '';
+
+			if ( empty( $client_info ) ) {
+				$client_info = isset( $_SESSION['hocwp_theme_client_info'] ) ? $_SESSION['hocwp_theme_client_info'] : '';
+			}
+		} else {
+			global $hocwp_theme;
+
+			if ( isset( $hocwp_theme->client_info ) ) {
+				$client_info = $hocwp_theme->client_info;
+			} else {
+				$client_info = array();
+			}
+		}
+
+		return (array) $client_info;
 	}
 
 	public static function pagination( $args = array() ) {
@@ -1581,6 +1644,7 @@ final class HOCWP_Theme_Utility {
 	public function recaptcha() {
 		$options  = $this->get_theme_options( 'social' );
 		$site_key = isset( $options['recaptcha_site_key'] ) ? $options['recaptcha_site_key'] : '';
+
 		if ( empty( $site_key ) ) {
 			return;
 		}
@@ -1607,19 +1671,25 @@ final class HOCWP_Theme_Utility {
 		if ( null == $response ) {
 			$response = isset( $_POST['g-recaptcha-response'] ) ? $_POST['g-recaptcha-response'] : '';
 		}
+
 		$options    = $this->get_theme_options( 'social' );
 		$secret_key = isset( $options['recaptcha_secret_key'] ) ? $options['recaptcha_secret_key'] : '';
+
 		if ( empty( $secret_key ) ) {
 			return false;
 		}
-		$url      = 'https://www.google.com/recaptcha/api/siteverify';
-		$params   = array(
+
+		$url = 'https://www.google.com/recaptcha/api/siteverify';
+
+		$params = array(
 			'secret'   => $secret_key,
 			'response' => $response
 		);
+
 		$url      = add_query_arg( $params, $url );
 		$response = HT_Util()->get_contents( $url );
 		$response = json_decode( $response );
+
 		if ( $this->is_object_valid( $response ) ) {
 			if ( $response->success ) {
 				return true;

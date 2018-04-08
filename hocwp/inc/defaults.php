@@ -14,10 +14,14 @@ if ( ! is_object( $hocwp_theme ) ) {
 }
 
 if ( ! isset( $hocwp_theme->client_info ) ) {
-	$hocwp_theme->client_info = array();
-}
+	$client_info = isset( $_COOKIE['hocwp_theme_client_info'] ) ? $_COOKIE['hocwp_theme_client_info'] : '';
 
-$hocwp_theme->client_info['screen_width'] = isset( $_SESSION['screen_width'] ) ? $_SESSION['screen_width'] : 'unknown';
+	if ( empty( $client_info ) ) {
+		$client_info = isset( $_SESSION['hocwp_theme_client_info'] ) ? $_SESSION['hocwp_theme_client_info'] : '';
+	}
+
+	$hocwp_theme->client_info = (array) $client_info;
+}
 
 if ( ! isset( $hocwp_theme->temp_data ) ) {
 	$hocwp_theme->temp_data = array();
