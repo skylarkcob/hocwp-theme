@@ -96,6 +96,8 @@ function hocwp_theme_detect_client_info_ajax_callback() {
 
 		$client_info['screen_width'] = $screen_width;
 
+		$client_info = json_encode( $client_info, JSON_UNESCAPED_SLASHES );
+
 		$_SESSION['hocwp_theme_client_info'] = $client_info;
 		setcookie( 'hocwp_theme_client_info', $client_info );
 	}

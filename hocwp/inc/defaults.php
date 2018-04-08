@@ -20,6 +20,10 @@ if ( ! isset( $hocwp_theme->client_info ) ) {
 		$client_info = isset( $_SESSION['hocwp_theme_client_info'] ) ? $_SESSION['hocwp_theme_client_info'] : '';
 	}
 
+	if ( is_string( $client_info ) ) {
+		$client_info = HT()->json_string_to_array( $client_info );
+	}
+
 	$hocwp_theme->client_info = (array) $client_info;
 }
 

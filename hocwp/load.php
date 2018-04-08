@@ -89,7 +89,9 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-preprocess.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-extensions.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/setup.php';
+
 	require HOCWP_THEME_CORE_PATH . '/inc/defaults.php';
+
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-permalinks.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-license.php';
 
