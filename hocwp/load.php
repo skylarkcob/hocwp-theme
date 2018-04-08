@@ -87,6 +87,7 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-media.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-user.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-preprocess.php';
+	require HOCWP_THEME_CORE_PATH . '/inc/functions-extensions.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/setup.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/defaults.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-permalinks.php';
@@ -103,7 +104,6 @@ function hocwp_theme_load() {
 	/**
 	 * Extensions.
 	 */
-	require HOCWP_THEME_CORE_PATH . '/inc/functions-extensions.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/comment-notification.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/security.php';
 	require HOCWP_THEME_CORE_PATH . '/ext/dynamic-thumbnail.php';

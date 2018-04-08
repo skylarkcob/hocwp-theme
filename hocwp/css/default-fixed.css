@@ -307,6 +307,10 @@ button.back-to-top:hover {
     margin-top: 1.5em;
 }
 
+button[aria-expanded="false"] {
+    display: none;
+}
+
 .hocwp-theme > .site, .container {
     max-width: 100%;
 }
@@ -373,6 +377,11 @@ div.menu > ul > li > a {
 
 .widget .menu li a {
 
+}
+
+.widget ins *,
+.widget ins {
+    max-width: 100%;
 }
 
 .menu.hocwp-menu li a,
