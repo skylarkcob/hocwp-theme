@@ -48,7 +48,12 @@ if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $page
 }
 
 function hocwp_theme_admin_menu_extra() {
-	add_theme_page( __( 'Theme Plugins', 'hocwp-theme' ), __( 'Theme Plugins', 'hocwp-theme' ), 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
+	$title = __( 'Extensions', 'hocwp-theme' );
+	add_theme_page( $title, $title, 'manage_options', 'themes.php?page=hocwp_theme&tab=extension' );
+
+	$title = __( 'Theme Plugins', 'hocwp-theme' );
+	add_theme_page( $title, $title, 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
+
 	add_theme_page( 'phpinfo()', __( 'PHP Info', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
 }
 

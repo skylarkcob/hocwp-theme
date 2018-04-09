@@ -55,6 +55,40 @@ define( 'HOCWP_THEME_CUSTOM_URL', HOCWP_THEME_URL . '/custom' );
 define( 'HOCWP_THEME_DOING_AJAX', ( ( defined( 'DOING_AJAX' ) && true === DOING_AJAX ) ? true : false ) );
 
 /**
+ * Load all extensions.
+ *
+ * @param string $base_path The path contains ext folder.
+ */
+function hocwp_load_all_extensions( $base_path ) {
+	$exts = get_option( 'hocwp_theme_active_extensions' );
+
+	if ( is_array( $exts ) && 0 < count( $exts ) ) {
+		$path = trailingslashit( $base_path );
+
+		global $hocwp_theme;
+
+		if ( ! isset( $hocwp_theme->loaded_extensions ) ) {
+			$hocwp_theme->loaded_extensions = array();
+		}
+
+		$exts = array_diff( $exts, $hocwp_theme->loaded_extensions );
+
+		foreach ( $exts as $ext ) {
+			$ext_file = $path . $ext;
+
+			if ( file_exists( $ext_file ) ) {
+				load_template( $ext_file );
+				$hocwp_theme->loaded_extensions[] = $ext;
+			}
+		}
+
+		unset( $path, $ext, $ext_file );
+	}
+
+	unset( $exts );
+}
+
+/**
  * Theme load
  */
 function hocwp_theme_load() {
@@ -89,7 +123,9 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-preprocess.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-extensions.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/setup.php';
+
 	require HOCWP_THEME_CORE_PATH . '/inc/defaults.php';
+
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-permalinks.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-license.php';
 
@@ -104,12 +140,7 @@ function hocwp_theme_load() {
 	/**
 	 * Extensions.
 	 */
-	require HOCWP_THEME_CORE_PATH . '/ext/comment-notification.php';
-	require HOCWP_THEME_CORE_PATH . '/ext/security.php';
-	require HOCWP_THEME_CORE_PATH . '/ext/dynamic-thumbnail.php';
-	require HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
-	require HOCWP_THEME_CORE_PATH . '/ext/external-link.php';
-	require HOCWP_THEME_CORE_PATH . '/ext/improve-search.php';
+	hocwp_load_all_extensions( HOCWP_THEME_CORE_PATH );
 
 	if ( is_admin() ) {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin.php';

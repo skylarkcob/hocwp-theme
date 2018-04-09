@@ -1,5 +1,6 @@
 <?php
-$load = $load = hocwp_theme_load_extension_smtp();
+$load = ( function_exists( 'hocwp_theme_load_extension_smtp' ) && hocwp_theme_load_extension_smtp() );
+
 if ( ! $load ) {
 	return;
 }

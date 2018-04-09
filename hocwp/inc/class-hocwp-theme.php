@@ -103,6 +103,35 @@ final class HOCWP_Theme {
 		return false;
 	}
 
+	public function insert_to_array( $array, $item, $index, $key = '' ) {
+		if ( is_array( $array ) ) {
+			if ( 'head' == $index ) {
+				if ( empty( $key ) ) {
+					array_unshift( $array, $item );
+				} else {
+					$tmp   = array( $key => $item );
+					$array = $tmp + $array;
+				}
+			} elseif ( 'tail' == $index ) {
+				if ( empty( $key ) ) {
+					$array[] = $item;
+				} else {
+					$tmp = array( $key => $item );
+					$array += $tmp;
+				}
+			} elseif ( HT()->is_nonnegative_number( $index ) ) {
+				$tmp   = array();
+				$count = 0;
+
+				foreach ( $array as $key => $value ) {
+					$count ++;
+				}
+			}
+		}
+
+		return $array;
+	}
+
 	public function is_string_empty( $string ) {
 		return ( is_string( $string ) && empty( $string ) ) ? true : false;
 	}
@@ -223,6 +252,10 @@ final class HOCWP_Theme {
 
 	public static function is_positive_number( $number ) {
 		return ( is_numeric( $number ) && $number > 0 );
+	}
+
+	public function is_nonnegative_number( $number ) {
+		return ( is_numeric( $number ) && $number >= 0 );
 	}
 
 	public static function convert_to_boolean( $value ) {

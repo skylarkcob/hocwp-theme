@@ -7,6 +7,8 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	private $context;
 	private $priority;
 
+	public $form_table = false;
+
 	public function __construct() {
 		global $pagenow;
 
@@ -15,7 +17,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			$this->set_id( 'extra-information' );
 			$this->set_title( __( 'Extra Information', 'hocwp-theme' ) );
 			$this->set_callback( array( $this, 'callback' ) );
-			$this->set_context( 'advanced' );
+			$this->set_context( 'normal' );
 			$this->set_priority( 'default' );
 			$this->set_get_value_callback( 'get_post_meta' );
 			$this->set_update_value_callback( 'update_post_meta' );
@@ -71,27 +73,64 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		echo '<div class="hocwp-theme">';
 		wp_nonce_field( $this->id, $this->id . '_nonce' );
 
-		foreach ( (array) $this->fields as $field ) {
-			$id    = $this->get_field_id( $field );
-			$field = $this->sanitize_value( $post->ID, $field );
-			?>
-			<div class="meta-row">
-				<?php
-				call_user_func( $field['callback'], $field['callback_args'] );
-				$desc = isset( $field['description'] ) ? $field['description'] : '';
+		if ( $this->form_table ) {
+			echo '<table class="form-table">';
+			foreach ( (array) $this->fields as $field ) {
+				$id    = $this->get_field_id( $field );
+				$field = $this->sanitize_value( $post->ID, $field );
+				$title = $field['title'];
 
-				if ( ! empty( $desc ) ) {
-					$p = new HOCWP_Theme_HTML_Tag( 'p' );
-					$p->add_attribute( 'class', 'description' );
-					$p->set_text( $desc );
-					$p->output();
-				}
-
-				do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
+				unset( $field['callback_args']['label'] );
 				?>
-			</div>
-			<?php
+				<tr>
+					<th>
+						<label for="<?php echo esc_attr( $id ); ?>"><?php echo $title; ?></label>
+					</th>
+					<td>
+						<div class="meta-row">
+							<?php
+							call_user_func( $field['callback'], $field['callback_args'] );
+							$desc = isset( $field['description'] ) ? $field['description'] : '';
+
+							if ( ! empty( $desc ) ) {
+								$p = new HOCWP_Theme_HTML_Tag( 'p' );
+								$p->add_attribute( 'class', 'description' );
+								$p->set_text( $desc );
+								$p->output();
+							}
+
+							do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
+							?>
+						</div>
+					</td>
+				</tr>
+				<?php
+			}
+			echo '</table>';
+		} else {
+			foreach ( (array) $this->fields as $field ) {
+				$id    = $this->get_field_id( $field );
+				$field = $this->sanitize_value( $post->ID, $field );
+				?>
+				<div class="meta-row">
+					<?php
+					call_user_func( $field['callback'], $field['callback_args'] );
+					$desc = isset( $field['description'] ) ? $field['description'] : '';
+
+					if ( ! empty( $desc ) ) {
+						$p = new HOCWP_Theme_HTML_Tag( 'p' );
+						$p->add_attribute( 'class', 'description' );
+						$p->set_text( $desc );
+						$p->output();
+					}
+
+					do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
+					?>
+				</div>
+				<?php
+			}
 		}
+
 		echo '</div>';
 	}
 
