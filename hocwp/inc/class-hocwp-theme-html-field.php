@@ -487,7 +487,7 @@ final class HOCWP_Theme_HTML_Field {
 					continue;
 				}
 
-				if ( false === strpos( $list, '</li>' ) ) {
+				if ( ! HT()->string_contain( $list, '</li>' ) ) {
 					$li = new HOCWP_Theme_HTML_Tag( 'li' );
 					$li->add_attribute( 'class', 'ui-state-default' );
 					$li->set_text( $list );
@@ -524,7 +524,7 @@ final class HOCWP_Theme_HTML_Field {
 							continue;
 						}
 
-						if ( false === strpos( $list, '</li>' ) ) {
+						if ( ! HT()->string_contain( $list, '</li>' ) ) {
 							$li = new HOCWP_Theme_HTML_Tag( 'li' );
 							$li->add_attribute( 'class', 'ui-state-default' );
 							$li->set_text( $list );
@@ -829,7 +829,7 @@ final class HOCWP_Theme_HTML_Field {
 			$container = isset( $args['container'] ) ? $args['container'] : 'p';
 
 			if ( 'p' == $container && is_string( $callback ) ) {
-				if ( false !== strpos( $callback, 'sortable' ) || false !== strpos( $callback, 'editor' ) || false !== strpos( $callback, 'media' ) ) {
+				if ( HT()->string_contain( $callback, 'sortable' ) || HT()->string_contain( $callback, 'editor' ) || HT()->string_contain( $callback, 'media' ) ) {
 					$container = 'div';
 				}
 			}

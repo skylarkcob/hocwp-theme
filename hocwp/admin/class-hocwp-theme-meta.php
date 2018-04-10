@@ -118,7 +118,7 @@ abstract class HOCWP_Theme_Meta {
 		HT()->transmit( $id, $name );
 
 		if ( $base ) {
-			if ( false !== strpos( $name, '[' ) && false !== strpos( $name, ']' ) ) {
+			if ( HT()->string_contain( $name, '[' ) && HT()->string_contain( $name, ']' ) ) {
 				$tmp  = explode( '[', $name );
 				$name = array_shift( $tmp );
 			}
@@ -147,7 +147,7 @@ abstract class HOCWP_Theme_Meta {
 
 			$id = $this->get_name( $field );
 
-			if ( false !== strpos( $id, '[' ) && false !== strpos( $id, '[' ) ) {
+			if ( HT()->string_contain( $id, '[' ) && HT()->string_contain( $id, '[' ) ) {
 				$tmp = explode( '[', $id );
 
 				foreach ( $tmp as $key => $a ) {

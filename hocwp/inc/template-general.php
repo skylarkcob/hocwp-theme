@@ -122,7 +122,7 @@ function hocwp_theme_widget_title_filter( $title ) {
 		if ( '!' == $first ) {
 			$title = '';
 		} else {
-			if ( ! mb_strpos( $title, '</span>' ) ) {
+			if ( ! HT()->string_contain( $title, '</span>' ) ) {
 				$title = '<span>' . $title . '</span>';
 			}
 		}
@@ -251,7 +251,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 
 		$id = isset( $args['id'] ) ? $args['id'] : '';
 
-		$wrap = ( $wrap && false === strpos( $id, 'sidebar' ) ) ? true : false;
+		$wrap = ( $wrap && ! HT()->string_contain( $id, 'sidebar' ) ) ? true : false;
 
 		if ( isset( $args['before_widget'] ) ) {
 			$before_widget = $args['before_widget'];
@@ -271,7 +271,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 			$search       = array( 'h1', 'h2' );
 			$replace      = array( 'h3', 'h3' );
 
-			if ( false === strpos( $before_title, 'widget-title' ) ) {
+			if ( ! HT()->string_contain( $before_title, 'widget-title' ) ) {
 				array_unshift( $search, 'widgettitle' );
 				array_unshift( $replace, 'widget-title widgettitle' );
 			}
@@ -401,7 +401,7 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 	$button = ob_get_clean();
 	$search = '</label>';
 
-	if ( false !== ( $pos = strpos( $form, $search ) ) ) {
+	if ( false !== ( $pos = HT()->string_contain( $form, $search, 0, 'int' ) ) ) {
 		$form = substr( $form, 0, $pos + strlen( $search ) );
 	}
 
@@ -639,7 +639,7 @@ function hocwp_theme_wp_footer_action() {
 	HT_Util()->load_facebook_javascript_sdk();
 	$agent = HT()->get_user_agent();
 
-	if ( empty( $agent ) || false === strpos( $agent, 'Page Speed' ) || false === strpos( $agent, 'Speed Insights' ) ) {
+	if ( empty( $agent ) || ! HT()->string_contain( $agent, 'Page Speed' ) || ! HT()->string_contain( $agent, 'Speed Insights' ) ) {
 		$google_analytics = isset( $options['custom_code']['google_analytics'] ) ? $options['custom_code']['google_analytics'] : '';
 		echo $google_analytics;
 	}

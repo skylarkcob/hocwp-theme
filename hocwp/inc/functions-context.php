@@ -68,11 +68,11 @@ function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
 			$custom[] = 'has-excerpt';
 		}
 
-		if ( ! is_singular() && false !== strpos( $post->post_content, '<!--more' ) ) {
+		if ( ! is_singular() && HT()->string_contain( $post->post_content, '<!--more' ) ) {
 			$custom[] = 'has-more-link';
 		}
 
-		if ( false !== strpos( $post->post_content, '<!--nextpage' ) ) {
+		if ( HT()->string_contain( $post->post_content, '<!--nextpage' ) ) {
 			$custom[] = 'has-pages';
 		}
 

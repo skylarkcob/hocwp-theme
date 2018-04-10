@@ -23,7 +23,7 @@ final class HOCWP_Theme_Minify {
 				continue;
 			}
 			$first_char = substr( $element, 0, 1 );
-			if ( '.' !== $first_char && strpos( $element, '.' ) === false ) {
+			if ( '.' !== $first_char && ! HT()->string_contain( $element, '.' ) ) {
 				$element = '.' . $element;
 			}
 			$before .= $element . ',';
@@ -124,7 +124,7 @@ final class HOCWP_Theme_Minify {
 
 	public function is_error_content( $content ) {
 		if ( ! empty( $content ) ) {
-			if ( false !== strpos( $content, '<html>' ) || false !== strpos( $content, 'ESCAPED_SOURCE' ) ) {
+			if ( HT()->string_contain( $content, '<html>' ) || HT()->string_contain( $content, 'ESCAPED_SOURCE' ) ) {
 				return new WP_Error( 'invalid_minified_content', $content );
 			}
 		}
@@ -146,7 +146,7 @@ final class HOCWP_Theme_Minify {
 			} elseif ( ! $recompress ) {
 				return;
 			}
-			$name     .= '.' . $info['extension'];
+			$name .= '.' . $info['extension'];
 			$min_file = $dir . '/' . $name;
 			$minified = '';
 			if ( 'js' == $info['extension'] ) {

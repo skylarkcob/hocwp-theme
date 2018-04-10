@@ -10,8 +10,8 @@ function hocwp_theme_style_loader_src_filter( $src, $handle ) {
 	$load = apply_filters( 'hocwp_theme_load_default_style', true );
 
 	if ( $load ) {
-		if ( false !== strpos( $src, HOCWP_THEME_URL ) ) {
-			if ( false === strpos( $src, '.min.' ) && 'hocwp-theme-style' == $handle ) {
+		if ( HT()->string_contain( $src, HOCWP_THEME_URL ) ) {
+			if ( ! HT()->string_contain( $src, '.min.' ) && 'hocwp-theme-style' == $handle ) {
 				$src = HOCWP_THEME_CORE_URL . '/css/default' . HOCWP_THEME_CSS_SUFFIX;
 				$src = add_query_arg( array( 'ver' => $GLOBALS['wp_version'] ), $src );
 			}
@@ -24,8 +24,8 @@ function hocwp_theme_style_loader_src_filter( $src, $handle ) {
 add_filter( 'style_loader_src', 'hocwp_theme_style_loader_src_filter', 10, 2 );
 
 function hocwp_theme_script_loader_src_filter( $src, $handle ) {
-	if ( false !== strpos( $src, HOCWP_THEME_URL ) && false !== strpos( 'custom/lib', HOCWP_THEME_URL ) ) {
-		if ( false === strpos( $src, '.min.' ) ) {
+	if ( HT()->string_contain( $src, HOCWP_THEME_URL ) && HT()->string_contain( 'custom/lib', HOCWP_THEME_URL ) ) {
+		if ( ! HT()->string_contain( $src, '.min.' ) ) {
 			$src = str_replace( '.js', HOCWP_THEME_JS_SUFFIX, $src );
 		}
 	}

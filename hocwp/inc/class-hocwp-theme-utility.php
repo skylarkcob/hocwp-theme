@@ -716,7 +716,7 @@ final class HOCWP_Theme_Utility {
 			}
 			$current_total = isset( $args['current_total'] ) ? $args['current_total'] : false;
 			if ( $current_total ) {
-				if ( ! is_string( $current_total ) || ( false === strpos( $current_total, '[CURRENT]' ) && false === strpos( $current_total, '[TOTAL]' ) ) ) {
+				if ( ! is_string( $current_total ) || ( ! HT()->string_contain( $current_total, '[CURRENT]' ) && ! HT()->string_contain( $current_total, '[TOTAL]' ) ) ) {
 					$current_total = __( 'Page [CURRENT]/[TOTAL]', 'hocwp-theme' );
 				}
 				$search = array(
@@ -1024,7 +1024,7 @@ final class HOCWP_Theme_Utility {
 
 		$dir = wp_upload_dir();
 
-		if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) {
+		if ( HT()->string_contain( $url, $dir['baseurl'] . '/' ) ) {
 			$file = basename( $url );
 
 			$query_args = array(

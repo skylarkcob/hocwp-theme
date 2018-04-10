@@ -65,7 +65,7 @@ final class HOCWP_Theme_SVG_Icon {
 	}
 
 	private static function helper( $name, $d, $atts = array() ) {
-		if ( false === strpos( $name, 'icon' ) ) {
+		if ( ! HT()->string_contain( $name, 'icon' ) ) {
 			$name = 'icon-' . str_replace( '_', '-', $name );
 		}
 		$class         = isset( $atts['class'] ) ? $atts['class'] : '';

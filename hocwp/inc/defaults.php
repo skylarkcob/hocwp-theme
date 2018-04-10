@@ -6,7 +6,7 @@ if ( empty( $hocwp_theme_protocol ) ) {
 }
 
 if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-	$is_opera = ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
+	$is_opera = ( HT()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || HT()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
 }
 
 if ( ! is_object( $hocwp_theme ) ) {

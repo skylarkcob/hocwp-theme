@@ -105,6 +105,12 @@ final class HOCWP_Theme {
 
 	public function insert_to_array( $array, $item, $index, $key = '' ) {
 		if ( is_array( $array ) ) {
+			if ( 2 > $index ) {
+				$index = 'head';
+			} elseif ( $index > count( $array ) ) {
+				$index = 'tail';
+			}
+
 			if ( 'head' == $index ) {
 				if ( empty( $key ) ) {
 					array_unshift( $array, $item );
@@ -123,10 +129,24 @@ final class HOCWP_Theme {
 				$tmp   = array();
 				$count = 0;
 
-				foreach ( $array as $key => $value ) {
+				foreach ( $array as $k => $value ) {
 					$count ++;
+
+					if ( $index == $count ) {
+						if ( empty( $key ) ) {
+							$tmp[] = $item;
+						} else {
+							$tmp[ $key ] = $item;
+						}
+					}
+
+					$tmp[ $k ] = $value;
 				}
+
+				$array = $tmp;
 			}
+
+			unset( $tmp );
 		}
 
 		return $array;
@@ -560,12 +580,18 @@ final class HOCWP_Theme {
 		return $matches;
 	}
 
-	public function string_contain( $haystack, $needle, $offset = 0 ) {
-		if ( function_exists( 'mb_strpos' ) ) {
-			return mb_strpos( $haystack, $needle, $offset );
+	public function string_contain( $haystack, $needle, $offset = 0, $output = 'boolean' ) {
+		$pos = strpos( $haystack, $needle, $offset );
+
+		if ( false === $pos && function_exists( 'mb_strpos' ) ) {
+			$pos = mb_strpos( $haystack, $needle, $offset );
 		}
 
-		return strpos( $haystack, $needle, $offset );
+		if ( 'int' == $output || 'integer' == $output || 'numeric' == $output ) {
+			return $pos;
+		}
+
+		return ( false !== $pos );
 	}
 
 	public static function get_domain_name( $url, $root = false ) {

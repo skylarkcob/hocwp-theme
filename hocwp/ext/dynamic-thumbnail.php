@@ -84,7 +84,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		}
 
 		if ( ! file_exists( $file_path ) ) {
-			$pos = strpos( $url, 'wp-content/uploads' );
+			$pos = HT()->string_contain( $url, 'wp-content/uploads' );
 
 			if ( false !== $pos ) {
 				$sub       = substr( $url, $pos );
@@ -203,7 +203,7 @@ function hocwp_theme_check_post_has_thumbnail( $check, $post_id, $meta_key ) {
 					foreach ( $images as $image ) {
 						$tmp = HOCWP_Theme::get_first_image_source( $image );
 
-						if ( false !== strpos( $tmp, home_url() ) ) {
+						if ( HT()->string_contain( $tmp, home_url() ) ) {
 							$src   = $image;
 							$check = - 1;
 							break;
