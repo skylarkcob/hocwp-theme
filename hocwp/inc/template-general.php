@@ -224,7 +224,15 @@ function hocwp_theme_module_sidebar() {
 add_action( 'hocwp_theme_module_sidebar', 'hocwp_theme_module_sidebar' );
 
 function hocwp_theme_sidebar_filter( $sidebar ) {
-	if ( is_home() && is_active_sidebar( 'home' ) ) {
+	$dynamic_sidebar = '';
+
+	if ( is_singular() || is_single() || is_page() ) {
+		$dynamic_sidebar = get_post_meta( get_the_ID(), 'sidebar', true );
+	}
+
+	if ( ! empty( $dynamic_sidebar ) && is_active_sidebar( $dynamic_sidebar ) ) {
+		$sidebar = $dynamic_sidebar;
+	} elseif ( is_home() && is_active_sidebar( 'home' ) ) {
 		$sidebar = 'home';
 	} elseif ( is_archive() && is_active_sidebar( 'archive' ) ) {
 		$sidebar = 'archive';
@@ -237,6 +245,8 @@ function hocwp_theme_sidebar_filter( $sidebar ) {
 	} elseif ( is_404() && is_active_sidebar( '404' ) ) {
 		$sidebar = '404';
 	}
+
+	unset( $dynamic_sidebar );
 
 	return $sidebar;
 }

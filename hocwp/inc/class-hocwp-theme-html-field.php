@@ -835,12 +835,15 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			$c_atts = isset( $args['container_attributes'] ) ? $args['container_attributes'] : '';
+
 			if ( is_array( $c_atts ) ) {
 				$c_atts = HT()->attributes_to_string( $c_atts );
 			}
+
 			$c_atts = $container . ' ' . $c_atts;
 			$c_atts = trim( $c_atts );
 			printf( '<%s>', $c_atts );
+
 			HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
 
 			if ( ! is_callable( $callback ) ) {
@@ -858,8 +861,9 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			if ( isset( $args['description'] ) ) {
-				HT()->wrap_text( $args['description'], '<p class="description">', '</p>', true );
+				HT()->wrap_text( $args['description'], '<em class="desc">', '</em>', true );
 			}
+
 			printf( '</%s>', $container );
 		}
 	}

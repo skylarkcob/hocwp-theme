@@ -132,6 +132,7 @@ final class HOCWP_Theme_Sanitize {
 				case 'integer':
 					$value = intval( $value );
 					break;
+				case 'nonnegative_number':
 				case 'non_negative_number':
 					$value = abs( $value );
 					break;

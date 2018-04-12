@@ -277,8 +277,10 @@ add_filter( 'hocwp_theme_backup_wp_content_folders', 'hocwp_theme_backup_wp_cont
 
 if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow ) {
 	function hocwp_theme_widget_form_before( $instance, $widget ) {
-		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		echo '<div class="hocwp-theme">';
+		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+		$box_class = $widget->id_base;
+		$box_class .= ' hocwp-theme';
+		echo '<div class="' . $box_class . '">';
 		?>
 		<p>
 			<label for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>

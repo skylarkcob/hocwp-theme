@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.3.2' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.3.4' );
 
 /**
  * Theme developing mode.
@@ -88,7 +88,7 @@ function hocwp_load_all_extensions( $base_path ) {
 	unset( $exts );
 }
 
-function hocwp_load_all_widgets( $base_path = '' ) {
+function hocwp_get_all_widgets_classes( $base_path = '' ) {
 	if ( empty( $base_path ) ) {
 		$base_path = HOCWP_THEME_CORE_PATH;
 	}
@@ -96,6 +96,8 @@ function hocwp_load_all_widgets( $base_path = '' ) {
 	$base_path = trailingslashit( $base_path );
 
 	$base_path .= 'widgets';
+
+	$result = array();
 
 	if ( is_dir( $base_path ) ) {
 		$files = scandir( $base_path );
@@ -106,13 +108,27 @@ function hocwp_load_all_widgets( $base_path = '' ) {
 
 			if ( isset( $info['extension'] ) && 'php' == $info['extension'] ) {
 				if ( HT()->string_contain( $info['filename'], 'class-' ) ) {
-					load_template( $path );
+					$name = HT_Util()->get_class_name_from_file( $path );
+
+					$result[ $path ] = $name;
 				}
 			}
 		}
 
-		unset( $files, $path, $info );
+		unset( $files, $file, $path, $info, $name );
 	}
+
+	return $result;
+}
+
+function hocwp_load_all_widgets( $base_path = '' ) {
+	$widgets = hocwp_get_all_widgets_classes( $base_path );
+
+	foreach ( $widgets as $path => $class ) {
+		load_template( $path );
+	}
+
+	unset( $widgets, $path, $class );
 }
 
 /**

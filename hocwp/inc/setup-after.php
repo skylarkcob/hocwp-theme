@@ -138,52 +138,23 @@ function hocwp_theme_update_option_url( $old_url, $new_url ) {
 add_action( 'hocwp_thene_change_siteurl', 'hocwp_theme_update_option_url', 10, 2 );
 
 function hocwp_theme_register_widgets() {
-	register_widget( 'HOCWP_Theme_Widget_Posts' );
-	register_widget( 'HOCWP_Theme_Widget_Terms' );
-	register_widget( 'HOCWP_Theme_Widget_Top_Commenters' );
-	register_widget( 'HOCWP_Theme_Widget_Icon' );
+	global $hocwp_theme;
 
-	$args = array(
-		'id'          => 'home',
-		'name'        => __( 'Home Sidebar', 'hocwp-theme' ),
-		'description' => __( 'Display widgets on home page.', 'hocwp-theme' )
-	);
-	register_sidebar( $args );
+	$widgets = hocwp_get_all_widgets_classes();
 
-	$args = array(
-		'id'          => 'search',
-		'name'        => __( 'Search Sidebar', 'hocwp-theme' ),
-		'description' => __( 'Display widgets on search result page.', 'hocwp-theme' )
-	);
-	register_sidebar( $args );
+	foreach ( $widgets as $widget ) {
+		if ( class_exists( $widget ) ) {
+			register_widget( $widget );
+		}
+	}
 
-	$args = array(
-		'id'          => 'archive',
-		'name'        => __( 'Archive Sidebar', 'hocwp-theme' ),
-		'description' => __( 'Display widgets on archive page.', 'hocwp-theme' )
-	);
-	register_sidebar( $args );
+	unset( $widgets, $widget );
 
-	$args = array(
-		'id'          => 'single',
-		'name'        => __( 'Single Sidebar', 'hocwp-theme' ),
-		'description' => __( 'Display widgets on single page.', 'hocwp-theme' )
-	);
-	register_sidebar( $args );
+	foreach ( $hocwp_theme->default_sidebars as $sidebar ) {
+		register_sidebar( $sidebar );
+	}
 
-	$args = array(
-		'id'          => 'page',
-		'name'        => __( 'Page Sidebar', 'hocwp-theme' ),
-		'description' => __( 'Display widgets on page.', 'hocwp-theme' )
-	);
-	register_sidebar( $args );
-
-	$args = array(
-		'id'          => '404',
-		'name'        => __( 'Not Found Sidebar', 'hocwp-theme' ),
-		'description' => __( 'Display widgets on 404 page.', 'hocwp-theme' )
-	);
-	register_sidebar( $args );
+	unset( $sidebar );
 
 	$args = array(
 		'post_type'      => 'hocwp_sidebar',
