@@ -4,11 +4,11 @@ jQuery(document).ready(function ($) {
     $.fn.hocwpSortable = function (options) {
         if ($.fn.sortable) {
             return this.each(function () {
-                var shortable = $(this),
-                    element = shortable,
+                var sortable = $(this),
+                    element = sortable,
                     alert = false,
-                    container = shortable.parent(),
-                    connectWith = shortable.attr("data-connect-with");
+                    container = sortable.parent(),
+                    connectWith = sortable.attr("data-connect-with");
 
                 var settings = $.extend({
                     placeholder: "ui-state-highlight",

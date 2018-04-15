@@ -120,3 +120,39 @@ function hocwp_theme_detect_client_info_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_detect_client_info', 'hocwp_theme_detect_client_info_ajax_callback' );
 add_action( 'wp_ajax_nopriv_hocwp_theme_detect_client_info', 'hocwp_theme_detect_client_info_ajax_callback' );
+
+function hocwp_theme_boolean_meta_ajax_callback() {
+	$meta_type  = HT()->get_method_value( 'meta_type' );
+	$meta_key   = HT()->get_method_value( 'meta_key' );
+	$meta_value = absint( HT()->get_method_value( 'meta_value' ) );
+	$object_id  = HT()->get_method_value( 'object_id' );
+
+	if ( 1 == $meta_value ) {
+		$meta_value = 0;
+	} else {
+		$meta_value = 1;
+	}
+
+	$updated = false;
+
+	switch ( $meta_type ) {
+		case 'post':
+			$updated = update_post_meta( $object_id, $meta_key, $meta_value );
+			break;
+		case 'term':
+			$updated = update_term_meta( $object_id, $meta_key, $meta_value );
+			break;
+	}
+
+	if ( $updated ) {
+		$data = array(
+			'meta_value' => $meta_value
+		);
+
+		wp_send_json_success( $data );
+	}
+
+	wp_send_json_error();
+}
+
+add_action( 'wp_ajax_hocwp_theme_boolean_meta_ajax', 'hocwp_theme_boolean_meta_ajax_callback' );

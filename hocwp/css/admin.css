@@ -7,6 +7,11 @@
     padding: 0 10px;
 }
 
+.hocwp-theme td > fieldset {
+    border: none;
+    padding: 0;
+}
+
 .hocwp-theme fieldset legend {
     margin-top: -5px;
     padding: 0 5px;

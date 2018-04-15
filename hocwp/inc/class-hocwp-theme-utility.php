@@ -993,15 +993,51 @@ final class HOCWP_Theme_Utility {
 					$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
 					array_unshift( $items, $item );
 				}
+
+				unset( $item );
 			}
 
 			if ( ! $has_cat ) {
 				if ( 'post' != $obj->post_type && 'page' != $obj->post_type ) {
 					$type = get_post_type_object( $obj->post_type );
-					$item = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type->labels->singular_name );
-					array_unshift( $items, $item );
+
+					$tmp = '';
+
+					if ( ! $type->has_archive ) {
+						$taxonomies = get_object_taxonomies( $obj, 'objects' );
+
+						$taxonomy = null;
+
+						foreach ( $taxonomies as $tax ) {
+							if ( $tax->hierarchical ) {
+								$taxonomy = $tax;
+								break;
+							}
+						}
+
+						if ( $taxonomy instanceof WP_Taxonomy ) {
+							$terms = wp_get_post_terms( $obj->ID, $taxonomy->name );
+							$term  = current( $terms );
+
+							if ( $term instanceof WP_Term ) {
+								$tmp = sprintf( $link_schema, get_term_link( $term ), $term->name );
+							}
+						}
+					} else {
+						$tmp = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type->labels->singular_name );
+					}
+
+					if ( empty( $tmp ) ) {
+						$tmp = $type->labels->singular_name;
+					}
+
+					array_unshift( $items, $tmp );
+
+					unset( $tmp );
 				}
 			}
+
+			unset( $has_cat );
 		}
 
 		$last_item = '';
@@ -1017,6 +1053,8 @@ final class HOCWP_Theme_Utility {
 		if ( ! empty( $last_item ) ) {
 			$items[] = '<span class="breadcrumb_last active breadcrumb-item breadcrumb-last trail-item trail-end">' . $last_item . '</span>';
 		}
+
+		unset( $last_item );
 
 		$count = count( $items );
 		$nav   = new HOCWP_Theme_HTML_Tag( 'nav' );
@@ -1045,6 +1083,8 @@ final class HOCWP_Theme_Utility {
 		$span->set_text( ob_get_clean() );
 		$nav->set_text( $span );
 		$nav->output();
+
+		unset( $nav, $span, $home_item, $items, $index, $item, $count, $separator );
 	}
 
 	public function get_youtube_video_id( $url ) {
@@ -1210,6 +1250,24 @@ final class HOCWP_Theme_Utility {
 
 	public function get_theme_option_page( $option_name, $tab, $slug = '' ) {
 		return HT_Util()->get_theme_option_post( $option_name, 'page', $tab, $slug );
+	}
+
+	public function is_post_new_update_page() {
+		return $this->is_admin_page( array( 'post.php', 'post-new.php' ) );
+	}
+
+	public function is_edit_post_new_update_page() {
+		return ( $this->is_post_new_update_page() || $this->is_admin_page( 'edit.php' ) );
+	}
+
+	public function is_admin_page( $pages ) {
+		global $pagenow;
+
+		if ( ! is_array( $pages ) ) {
+			$pages = array( $pages );
+		}
+
+		return in_array( $pagenow, $pages );
 	}
 
 	public function get_current_post_type() {

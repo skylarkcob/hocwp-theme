@@ -67,6 +67,7 @@ final class HOCWP_Theme_Sanitize {
 		$url  = '';
 		$icon = '';
 		$size = '';
+
 		if ( ! is_array( $value ) ) {
 			if ( is_numeric( $value ) ) {
 				$id = $value;
@@ -78,14 +79,17 @@ final class HOCWP_Theme_Sanitize {
 			$id  = isset( $value['id'] ) ? $value['id'] : '';
 			$id  = absint( $id );
 		}
+
 		if ( ! HOCWP_Theme::is_positive_number( $id ) ) {
 			$id = attachment_url_to_postid( $url );
 		}
+
 		if ( HOCWP_Theme::is_positive_number( $id ) ) {
 			$url  = self::media_url( $url, $id );
 			$icon = wp_mime_type_icon( $id );
 			$size = filesize( get_attached_file( $id ) );
 		}
+
 		$result = array(
 			'id'          => $id,
 			'url'         => $url,

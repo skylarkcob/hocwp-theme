@@ -16,10 +16,13 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	public function __construct() {
 		global $hocwp_theme, $plugin_page, $pagenow;
+
 		if ( isset( $hocwp_theme->option ) && $hocwp_theme->option instanceof HOCWP_Theme_Admin_Setting_Page ) {
 			return;
 		}
+
 		add_action( 'admin_menu', array( $this, 'admin_menu_action' ) );
+
 		if ( 'options.php' == $pagenow || $this->menu_slug == $plugin_page ) {
 			add_action( 'admin_init', array( $this, 'settings_init' ) );
 		}
@@ -51,6 +54,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	private function get_option_group_and_name() {
 		$option_group = $this->menu_slug;
 		$option_name  = $this->menu_slug;
+
 		if ( ! empty( $this->tab ) ) {
 			$option_group .= '_' . $this->tab;
 			$option_name .= '[' . $this->tab . ']';
@@ -65,6 +69,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		 */
 		$data = $this->get_option_group_and_name();
 		register_setting( $this->menu_slug, $this->menu_slug, array( $this, 'sanitize' ) );
+
 		/**
 		 * Add settings section
 		 */
@@ -98,16 +103,21 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		if ( ! isset( $data['id'] ) && isset( $data['title'] ) ) {
 			$data['id'] = sanitize_title( $data['title'] );
 		}
+
 		$tab = isset( $data['tab'] ) ? $data['tab'] : '';
+
 		if ( ! empty( $tab ) ) {
 			if ( $tab == $this->tab ) {
 				$data['args']['tab'] = $tab;
 			}
 		}
+
 		$data['tab'] = $tab;
+
 		if ( ! isset( $data['page'] ) ) {
 			$data['page'] = $this->menu_slug;
 		}
+
 		if ( isset( $data['callback'] ) && ! is_callable( $data['callback'] ) ) {
 			unset( $data['callback'] );
 		}
@@ -117,6 +127,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	private function sanitize_section( $section ) {
 		$section = $this->sanitize_section_or_field( $section );
+
 		if ( ! isset( $section['callback'] ) ) {
 			$section['callback'] = array( $this, 'section_callback' );
 		}
@@ -236,9 +247,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	public function section_callback( $args ) {
 		$callback = isset( $args['callback'][0] ) ? $args['callback'][0] : '';
+
 		if ( $callback instanceof HOCWP_Theme_Admin_Setting_Page ) {
 			$secs = $callback->settings_section;
 			$id   = $args['id'];
+
 			if ( isset( $secs[ $id ]['description'] ) ) {
 				echo wpautop( $secs[ $id ]['description'] );
 			}
@@ -249,21 +262,27 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		if ( ! isset( $args['callback'] ) || ! is_callable( $args['callback'] ) ) {
 			$args['callback'] = array( 'HOCWP_Theme_HTML_Field', 'input' );
 		}
+
 		$callback_args = isset( $args['callback_args'] ) ? $args['callback_args'] : '';
+
 		if ( isset( $args['before'] ) ) {
 			echo $args['before'];
 		}
+
 		call_user_func( $args['callback'], $callback_args );
 		$desc = isset( $args['description'] ) ? $args['description'] : '';
+
 		if ( ! empty( $desc ) ) {
 			$p = new HOCWP_Theme_HTML_Tag( 'p' );
 			$p->add_attribute( 'class', 'description' );
 			$p->set_text( $desc );
 			$p->output();
 		}
+
 		if ( isset( $args['after'] ) ) {
 			echo $args['after'];
 		}
+
 		if ( isset( $args['action'] ) ) {
 			do_action( $args['action'] );
 		}
@@ -320,6 +339,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			<hr class="wp-header-end" style="clear: both;">
 			<?php
 			$this->tabs = apply_filters( 'hocwp_theme_settings_page_tabs', $this->tabs );
+
 			if ( HOCWP_Theme::array_has_value( $this->tabs ) ) {
 				?>
 				<div id="nav">
@@ -328,12 +348,15 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						$current_url = HOCWP_Theme_Utility::get_current_url();
 						$current_url = remove_query_arg( 'settings-updated', $current_url );
 						$count       = 0;
+
 						foreach ( $this->tabs as $key => $tab ) {
 							$url   = add_query_arg( array( 'tab' => $key ), $current_url );
 							$class = 'nav-tab';
+
 							if ( $this->tab == $key || ( empty( $this->tab ) && 0 == $count ) ) {
 								$class .= ' nav-tab-active';
 							}
+
 							if ( is_array( $tab ) ) {
 								$text = isset( $tab['text'] ) ? $tab['text'] : $key;
 							} else {
@@ -343,6 +366,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 									$text = $tab;
 								}
 							}
+
 							$text = ucwords( $text );
 							?>
 							<a class="<?php echo $class; ?>"
@@ -355,11 +379,14 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				</div>
 				<?php
 			}
+
 			do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_before' );
 			$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_display_form', true );
+
 			if ( $display ) {
 				$this->form_table();
 			}
+
 			do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_after' );
 			?>
 		</div>
@@ -375,6 +402,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$data = $this->get_option_group_and_name();
 			settings_fields( $this->menu_slug );
 			global $wp_settings_fields;
+
 			if ( isset( $wp_settings_fields[ $this->menu_slug ]['default'] ) ) {
 				?>
 				<table class="form-table">
@@ -384,8 +412,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				</table>
 				<?php
 			}
+
 			do_settings_sections( $this->menu_slug );
 			do_action( 'hocwp_theme_settings_page_' . $this->tab );
+
 			$defaults = array(
 				'text'       => '',
 				'type'       => 'primary',
@@ -393,7 +423,8 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				'wrap'       => true,
 				'attributes' => null
 			);
-			$args     = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_submit_button_args', $defaults );
+
+			$args = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_submit_button_args', $defaults );
 			submit_button( $args['text'], $args['type'], $args['name'], $args['wrap'], $args['attributes'] );
 			?>
 		</form>
@@ -406,6 +437,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				'message'         => __( "<strong>Notice:</strong> All settings have been changed. In order to save them please don't forget to click the 'Save Changes' button.", 'hocwp-theme' ),
 				'hidden_interval' => 2000
 			);
+
 			HOCWP_Theme_Utility::admin_notice( $args );
 		}
 	}

@@ -226,13 +226,32 @@ add_action( 'hocwp_theme_module_sidebar', 'hocwp_theme_module_sidebar' );
 function hocwp_theme_sidebar_filter( $sidebar ) {
 	$dynamic_sidebar = '';
 
-	if ( is_singular() || is_single() || is_page() ) {
+	if ( ( is_single() || is_page() ) && ! is_singular() ) {
 		$dynamic_sidebar = get_post_meta( get_the_ID(), 'sidebar', true );
+	} elseif ( is_post_type_archive() || is_tax() || is_singular() ) {
+		if ( is_singular() ) {
+			$dynamic_sidebar = get_post_meta( get_the_ID(), 'sidebar', true );
+		}
+
+		if ( ! is_active_sidebar( $dynamic_sidebar ) ) {
+			$obj = get_queried_object();
+
+			if ( $obj instanceof WP_Post_Type ) {
+				$dynamic_sidebar = $obj->name;
+			} elseif ( $obj instanceof WP_Post ) {
+				$dynamic_sidebar = $obj->post_type;
+			} elseif ( $obj instanceof WP_Term ) {
+				$taxonomy        = get_taxonomy( $obj->taxonomy );
+				$dynamic_sidebar = current( $taxonomy->object_type );
+			}
+
+			unset( $obj );
+		}
 	}
 
 	if ( ! empty( $dynamic_sidebar ) && is_active_sidebar( $dynamic_sidebar ) ) {
 		$sidebar = $dynamic_sidebar;
-	} elseif ( is_home() && is_active_sidebar( 'home' ) ) {
+	} elseif ( ( is_home() || is_front_page() ) && is_active_sidebar( 'home' ) ) {
 		$sidebar = 'home';
 	} elseif ( is_archive() && is_active_sidebar( 'archive' ) ) {
 		$sidebar = 'archive';

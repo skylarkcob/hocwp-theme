@@ -121,10 +121,22 @@ function hocwp_theme_meta_box_advanced_settings() {
 		}
 	}
 
-	$args  = array(
+	$args = array(
 		'options' => $sidebars
 	);
+
 	$field = hocwp_theme_create_meta_field( 'sidebar', __( 'Sidebar', 'hocwp-theme' ), 'select', $args );
+	$meta->add_field( $field );
+
+	$args = array(
+		'options' => array(
+			''      => __( 'Default', 'hocwp-theme' ),
+			'right' => _x( 'Right', 'sidebar position', 'hocwp-theme' ),
+			'left'  => _x( 'Left', 'sidebar position', 'hocwp-theme' )
+		)
+	);
+
+	$field = hocwp_theme_create_meta_field( 'sidebar_position', __( 'Sidebar Position', 'hocwp-theme' ), 'select', $args );
 	$meta->add_field( $field );
 
 	$args  = array(

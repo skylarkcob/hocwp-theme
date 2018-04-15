@@ -103,50 +103,66 @@ final class HOCWP_Theme {
 		return false;
 	}
 
+	private function _insert_to_array_helper( $array, $item, $key = '' ) {
+		if ( empty( $key ) ) {
+			$array[] = $item;
+		} else {
+			$array[ $key ] = $item;
+		}
+
+		return $array;
+	}
+
 	public function insert_to_array( $array, $item, $index, $key = '' ) {
 		if ( is_array( $array ) ) {
-			if ( 2 > $index ) {
-				$index = 'head';
-			} elseif ( $index > count( $array ) ) {
-				$index = 'tail';
+			$count = count( $array );
+
+			if ( is_numeric( $index ) ) {
+				$index = absint( $index );
 			}
 
 			if ( 'head' == $index ) {
-				if ( empty( $key ) ) {
-					array_unshift( $array, $item );
-				} else {
-					$tmp   = array( $key => $item );
-					$array = $tmp + $array;
-				}
+				$index = 1;
+			} elseif ( 'after_head' == $index ) {
+				$index = 2;
 			} elseif ( 'tail' == $index ) {
-				if ( empty( $key ) ) {
-					$array[] = $item;
-				} else {
-					$tmp = array( $key => $item );
-					$array += $tmp;
-				}
-			} elseif ( HT()->is_nonnegative_number( $index ) ) {
-				$tmp   = array();
-				$count = 0;
-
-				foreach ( $array as $k => $value ) {
-					$count ++;
-
-					if ( $index == $count ) {
-						if ( empty( $key ) ) {
-							$tmp[] = $item;
-						} else {
-							$tmp[ $key ] = $item;
-						}
-					}
-
-					$tmp[ $k ] = $value;
-				}
-
-				$array = $tmp;
+				$index = $count + 1;
+			} elseif ( 'before_tail' == $index ) {
+				$index = $count;
+			} elseif ( 'rand' == $index || 'random' == $index ) {
+				$index = rand( 1, $count );
 			}
 
-			unset( $tmp );
+			if ( is_numeric( $index ) ) {
+				if ( $index > $count ) {
+					$array = $this->_insert_to_array_helper( $array, $item, $key );
+				} else {
+					$count = $j = 0;
+					$tmp   = array();
+
+					foreach ( $array as $i => $value ) {
+						if ( $count == ( $index - 1 ) ) {
+							if ( is_numeric( $key ) ) {
+								$tmp[] = $item;
+							} else {
+								$tmp[ $key ] = $item;
+							}
+						}
+
+						if ( is_numeric( $i ) ) {
+							$tmp[] = $value;
+						} else {
+							$tmp[ $i ] = $value;
+						}
+
+						$count ++;
+					}
+
+					$array = $tmp;
+				}
+			}
+
+			unset( $tmp, $count );
 		}
 
 		return $array;

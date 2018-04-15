@@ -57,20 +57,3 @@ function hocwp_theme_custom_setting_page_home_sections( $sections ) {
 }
 
 add_filter( 'hocwp_theme_setting_page_home_sections', 'hocwp_theme_custom_setting_page_home_sections' );
-
-function hocwp_theme_custom_slider_posts_columns_filter( $columns ) {
-	HT()->debug( $columns );
-	$columns['slider_image'] = __( 'Slider Image', 'hocwp-theme' );
-
-	return $columns;
-}
-
-add_filter( 'manage_slider_posts_columns', 'hocwp_theme_custom_slider_posts_columns_filter' );
-
-function hocwp_theme_custom_slider_posts_custom_column_action( $column, $post_id ) {
-	if ( 'slider_image' == $column ) {
-		echo get_the_post_thumbnail( $post_id, 'thumbnail' );
-	}
-}
-
-add_action( 'manage_slider_posts_custom_column', 'hocwp_theme_custom_slider_posts_custom_column_action', 10, 2 );

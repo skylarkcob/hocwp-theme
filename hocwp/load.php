@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.3.4' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.3.5' );
 
 /**
  * Theme developing mode.
@@ -226,6 +226,8 @@ function hocwp_theme_load() {
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/front-end.php' );
 		HOCWP_Theme::require_if_exists( HOCWP_THEME_CUSTOM_PATH . '/template.php' );
 	}
+
+	do_action( 'hocwp_theme_loaded' );
 }
 
 if ( ! has_action( 'after_setup_theme', 'hocwp_theme_load' ) ) {
