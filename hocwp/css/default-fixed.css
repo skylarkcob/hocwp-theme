@@ -409,6 +409,16 @@ div.menu li a {
     text-align: center;
 }
 
+.sidebar-position-left .content-area + .sidebar,
+.sidebar-position-right .content-area {
+    float: left;
+}
+
+.sidebar-position-left .content-area,
+.sidebar-position-right .content-area + .sidebar {
+    float: right;
+}
+
 @media only screen and (max-width: 1024px) {
     .widget_media_image img {
         margin-left: auto;

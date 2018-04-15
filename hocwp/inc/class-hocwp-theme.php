@@ -103,6 +103,71 @@ final class HOCWP_Theme {
 		return false;
 	}
 
+	private function _insert_to_array_helper( $array, $item, $key = '' ) {
+		if ( empty( $key ) ) {
+			$array[] = $item;
+		} else {
+			$array[ $key ] = $item;
+		}
+
+		return $array;
+	}
+
+	public function insert_to_array( $array, $item, $index, $key = '' ) {
+		if ( is_array( $array ) ) {
+			$count = count( $array );
+
+			if ( is_numeric( $index ) ) {
+				$index = absint( $index );
+			}
+
+			if ( 'head' == $index ) {
+				$index = 1;
+			} elseif ( 'after_head' == $index ) {
+				$index = 2;
+			} elseif ( 'tail' == $index ) {
+				$index = $count + 1;
+			} elseif ( 'before_tail' == $index ) {
+				$index = $count;
+			} elseif ( 'rand' == $index || 'random' == $index ) {
+				$index = rand( 1, $count );
+			}
+
+			if ( is_numeric( $index ) ) {
+				if ( $index > $count ) {
+					$array = $this->_insert_to_array_helper( $array, $item, $key );
+				} else {
+					$count = $j = 0;
+					$tmp   = array();
+
+					foreach ( $array as $i => $value ) {
+						if ( $count == ( $index - 1 ) ) {
+							if ( is_numeric( $key ) ) {
+								$tmp[] = $item;
+							} else {
+								$tmp[ $key ] = $item;
+							}
+						}
+
+						if ( is_numeric( $i ) ) {
+							$tmp[] = $value;
+						} else {
+							$tmp[ $i ] = $value;
+						}
+
+						$count ++;
+					}
+
+					$array = $tmp;
+				}
+			}
+
+			unset( $tmp, $count );
+		}
+
+		return $array;
+	}
+
 	public function is_string_empty( $string ) {
 		return ( is_string( $string ) && empty( $string ) ) ? true : false;
 	}
@@ -223,6 +288,10 @@ final class HOCWP_Theme {
 
 	public static function is_positive_number( $number ) {
 		return ( is_numeric( $number ) && $number > 0 );
+	}
+
+	public function is_nonnegative_number( $number ) {
+		return ( is_numeric( $number ) && $number >= 0 );
 	}
 
 	public static function convert_to_boolean( $value ) {
@@ -527,12 +596,18 @@ final class HOCWP_Theme {
 		return $matches;
 	}
 
-	public function string_contain( $haystack, $needle, $offset = 0 ) {
-		if ( function_exists( 'mb_strpos' ) ) {
-			return mb_strpos( $haystack, $needle, $offset );
+	public function string_contain( $haystack, $needle, $offset = 0, $output = 'boolean' ) {
+		$pos = strpos( $haystack, $needle, $offset );
+
+		if ( false === $pos && function_exists( 'mb_strpos' ) ) {
+			$pos = mb_strpos( $haystack, $needle, $offset );
 		}
 
-		return strpos( $haystack, $needle, $offset );
+		if ( 'int' == $output || 'integer' == $output || 'numeric' == $output ) {
+			return $pos;
+		}
+
+		return ( false !== $pos );
 	}
 
 	public static function get_domain_name( $url, $root = false ) {

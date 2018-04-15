@@ -26,12 +26,12 @@ function hocwp_theme_is_image_url( $url ) {
 
 function hocwp_theme_attachment_path_to_postid( $path ) {
 	global $wpdb;
-	$upload  = wp_upload_dir();
-	$path    = str_replace( $upload['basedir'], '', $path );
-	$sql     = $wpdb->prepare(
-		"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_attached_file' AND meta_value = %s",
-		$path
-	);
+	$upload = wp_upload_dir();
+	$path   = str_replace( $upload['basedir'], '', $path );
+	$sql    = 'SELECT post_id FROM ';
+	$sql .= $wpdb->postmeta;
+	$sql .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
+	$sql     = $wpdb->prepare( $sql, $path );
 	$post_id = $wpdb->get_var( $sql );
 
 	return $post_id;

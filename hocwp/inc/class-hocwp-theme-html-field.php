@@ -487,7 +487,7 @@ final class HOCWP_Theme_HTML_Field {
 					continue;
 				}
 
-				if ( false === strpos( $list, '</li>' ) ) {
+				if ( ! HT()->string_contain( $list, '</li>' ) ) {
 					$li = new HOCWP_Theme_HTML_Tag( 'li' );
 					$li->add_attribute( 'class', 'ui-state-default' );
 					$li->set_text( $list );
@@ -524,7 +524,7 @@ final class HOCWP_Theme_HTML_Field {
 							continue;
 						}
 
-						if ( false === strpos( $list, '</li>' ) ) {
+						if ( ! HT()->string_contain( $list, '</li>' ) ) {
 							$li = new HOCWP_Theme_HTML_Tag( 'li' );
 							$li->add_attribute( 'class', 'ui-state-default' );
 							$li->set_text( $list );
@@ -829,18 +829,21 @@ final class HOCWP_Theme_HTML_Field {
 			$container = isset( $args['container'] ) ? $args['container'] : 'p';
 
 			if ( 'p' == $container && is_string( $callback ) ) {
-				if ( false !== strpos( $callback, 'sortable' ) || false !== strpos( $callback, 'editor' ) || false !== strpos( $callback, 'media' ) ) {
+				if ( HT()->string_contain( $callback, 'sortable' ) || HT()->string_contain( $callback, 'editor' ) || HT()->string_contain( $callback, 'media' ) ) {
 					$container = 'div';
 				}
 			}
 
 			$c_atts = isset( $args['container_attributes'] ) ? $args['container_attributes'] : '';
+
 			if ( is_array( $c_atts ) ) {
 				$c_atts = HT()->attributes_to_string( $c_atts );
 			}
+
 			$c_atts = $container . ' ' . $c_atts;
 			$c_atts = trim( $c_atts );
 			printf( '<%s>', $c_atts );
+
 			HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
 
 			if ( ! is_callable( $callback ) ) {
@@ -858,8 +861,9 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			if ( isset( $args['description'] ) ) {
-				HT()->wrap_text( $args['description'], '<p class="description">', '</p>', true );
+				HT()->wrap_text( $args['description'], '<em class="desc">', '</em>', true );
 			}
+
 			printf( '</%s>', $container );
 		}
 	}

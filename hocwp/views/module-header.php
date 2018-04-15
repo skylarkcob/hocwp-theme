@@ -2,8 +2,15 @@
 <?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<?php wp_head(); ?>
+	<?php
+	$responsive = apply_filters( 'hocwp_theme_enable_responsive', true );
+
+	if ( $responsive ) {
+		echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+	}
+
+	wp_head();
+	?>
 </head>
 <?php
 hocwp_theme_html_tag( 'body' );

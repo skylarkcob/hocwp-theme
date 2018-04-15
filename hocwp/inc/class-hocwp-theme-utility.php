@@ -253,14 +253,30 @@ final class HOCWP_Theme_Utility {
 
 	public static function filesystem() {
 		global $wp_filesystem;
+
 		if ( ! $wp_filesystem ) {
 			if ( ! function_exists( 'get_file_description' ) ) {
 				require ABSPATH . 'wp-admin/includes/file.php';
 			}
+
 			WP_Filesystem();
 		}
 
 		return $wp_filesystem;
+	}
+
+	public function get_class_name_from_file( $file ) {
+		$class = '';
+
+		$buffer = HT_Util()->read_all_text( $file );
+
+		if ( preg_match( '/class\s+(\w+)(.*)?\{/', $buffer, $matches ) ) {
+			$class = $matches[1];
+		}
+
+		unset( $buffer, $matches );
+
+		return $class;
 	}
 
 	public function rest_api_get( $base_url, $object = 'posts', $query = '' ) {
@@ -574,12 +590,36 @@ final class HOCWP_Theme_Utility {
 		return (array) $client_info;
 	}
 
+	public function get_sidebars() {
+		return $GLOBALS['wp_registered_sidebars'];
+	}
+
+	public function get_sidebar_by( $key, $value ) {
+		$sidebars = $this->get_sidebars();
+
+		$result = array();
+
+		foreach ( $sidebars as $id => $sidebar ) {
+			switch ( $key ) {
+				default:
+					if ( $id == $value ) {
+						$result = $sidebar;
+					}
+			}
+		}
+
+		unset( $sidebars, $id, $sidebar );
+
+		return $result;
+	}
+
 	public static function pagination( $args = array() ) {
 		if ( function_exists( 'hocwp_pagination' ) ) {
 			hocwp_pagination( $args );
 
 			return;
 		}
+
 		$defaults = array(
 			'query'         => $GLOBALS['wp_query'],
 			'dynamic_size'  => 1,
@@ -590,44 +630,58 @@ final class HOCWP_Theme_Utility {
 			'first_last'    => 0,
 			'current_total' => 0
 		);
-		$args     = wp_parse_args( $args, $defaults );
-		$args     = apply_filters( 'hocwp_theme_pagination_args', $args );
-		$query    = $args['query'];
+
+		$args  = wp_parse_args( $args, $defaults );
+		$args  = apply_filters( 'hocwp_theme_pagination_args', $args );
+		$query = $args['query'];
+
 		if ( ! ( $query instanceof WP_Query ) ) {
 			return;
 		}
+
 		$total = $query->max_num_pages;
+
 		if ( 2 > $total ) {
 			return;
 		}
+
 		$big     = 999999999;
 		$paged   = self::get_paged();
 		$current = max( 1, $paged );
-		$pla     = array(
+
+		$pla = array(
 			'base'    => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
 			'format'  => '?paged=%#%',
 			'current' => $current,
 			'total'   => $total,
 			'type'    => 'array'
 		);
-		$args    = wp_parse_args( $args, $pla );
-		$next    = isset( $args['next'] ) ? $args['next'] : '';
+
+		$args = wp_parse_args( $args, $pla );
+		$next = isset( $args['next'] ) ? $args['next'] : '';
+
 		if ( empty( $next ) ) {
 			$next = isset( $args['next_text'] ) ? $args['next_text'] : '';
 		}
+
 		$prev = isset( $args['prev'] ) ? $args['prev'] : '';
+
 		if ( empty( $prev ) ) {
 			$prev = isset( $args['prev_text'] ) ? $args['prev_text'] : '';
 		}
+
 		if ( ! empty( $next ) || ! empty( $prev ) ) {
 			$args['prev_next'] = true;
+
 			if ( is_string( $next ) && ! empty( $next ) ) {
 				$args['next_text'] = $next;
 			}
+
 			if ( is_string( $prev ) && ! empty( $prev ) ) {
 				$args['prev_text'] = $prev;
 			}
 		}
+
 		if ( empty( $next ) && empty( $prev ) ) {
 			$args['prev_next'] = false;
 		}
@@ -636,42 +690,57 @@ final class HOCWP_Theme_Utility {
 
 		if ( $dynamic_size ) {
 			$show_all = HT()->convert_to_boolean( $args['show_all'] );
+
 			if ( $show_all ) {
 				$count = 0;
 				$label = $args['label'];
+
 				if ( ! empty( $label ) ) {
 					$count ++;
 				}
+
 				$end_size = absint( $args['end_size'] );
 				$count += $end_size;
 				$mid_size = absint( $args['mid_size'] );
 				$count += $mid_size;
 				$prev_next = $args['prev_next'];
+
 				if ( 1 == $prev_next ) {
 					$prev_text = $args['prev_text'];
+
 					if ( ! empty( $prev_text ) ) {
 						$count ++;
 					}
+
 					$next_text = $args['next_text'];
+
 					if ( ! empty( $next_text ) ) {
 						$count ++;
 					}
 				}
+
 				$first_last = $args['first_last'];
+
 				if ( 1 == $first_last ) {
 					$first_text = $args['first_text'];
+
 					if ( ! empty( $first_text ) ) {
 						$count ++;
 					}
+
 					$last_text = $args['last_text'];
+
 					if ( ! empty( $last_text ) ) {
 						$count ++;
 					}
 				}
+
 				$current_total = $args['current_total'];
+
 				if ( ! empty( $current_total ) ) {
 					$count ++;
 				}
+
 				if ( 1 == $paged && 11 > $count ) {
 					$end_size += ( 11 - $count );
 				} elseif ( 3 < $paged && 7 < $count && $paged < $total ) {
@@ -679,46 +748,59 @@ final class HOCWP_Theme_Utility {
 				} elseif ( $paged == $total && 11 > $count ) {
 					$end_size += ( 11 - $count - 1 );
 				}
+
 				$args['end_size'] = $end_size;
 				$args['mid_size'] = $mid_size;
 			}
 		}
 
 		$items = paginate_links( $args );
+
 		if ( HOCWP_Theme::array_has_value( $items ) ) {
 			$first_last = isset( $args['first_last'] ) ? (bool) $args['first_last'] : false;
 			echo '<ul class="pagination hocwp-pagination">';
+
 			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
 				echo '<li class="label-item page-item"><span class="page-numbers label">' . $args['label'] . '</span></li>';
 			}
+
 			if ( $first_last ) {
 				$first = isset( $args['first'] ) ? $args['first'] : isset( $args['first_text'] ) ? $args['first_text'] : '';
+
 				if ( ! empty( $first ) && 2 < $current ) {
 					if ( true === $first ) {
 						$first = __( 'First', 'hocwp-theme' );
 					}
+
 					$url = get_pagenum_link( 1 );
 					echo '<li class="page-item"><a class="first page-numbers" href="' . esc_url( $url ) . '">' . $first . '</a></li>';
 				}
 			}
+
 			foreach ( $items as $item ) {
 				echo '<li class="page-item">' . $item . '</li>';
 			}
+
 			if ( $first_last ) {
 				$last = isset( $args['last'] ) ? $args['last'] : isset( $args['last_text'] ) ? $args['last_text'] : '';
+
 				if ( ! empty( $last ) && $current < ( $total - 1 ) ) {
 					if ( true === $last ) {
 						$last = __( 'Last', 'hocwp-theme' );
 					}
+
 					$url = get_pagenum_link( $total );
 					echo '<li class="page-item"><a class="last page-numbers" href="' . esc_url( $url ) . '">' . $last . '</a></li>';
 				}
 			}
+
 			$current_total = isset( $args['current_total'] ) ? $args['current_total'] : false;
+
 			if ( $current_total ) {
-				if ( ! is_string( $current_total ) || ( false === strpos( $current_total, '[CURRENT]' ) && false === strpos( $current_total, '[TOTAL]' ) ) ) {
+				if ( ! is_string( $current_total ) || ( ! HT()->string_contain( $current_total, '[CURRENT]' ) && ! HT()->string_contain( $current_total, '[TOTAL]' ) ) ) {
 					$current_total = __( 'Page [CURRENT]/[TOTAL]', 'hocwp-theme' );
 				}
+
 				$search = array(
 					'[CURRENT]',
 					'[TOTAL]'
@@ -736,6 +818,7 @@ final class HOCWP_Theme_Utility {
 				</li>
 				<?php
 			}
+
 			echo '</ul>';
 		}
 	}
@@ -856,6 +939,8 @@ final class HOCWP_Theme_Utility {
 			if ( $prefix ) {
 				$title = sprintf( __( 'Search results for: %s', 'hocwp-theme' ), $title );
 			}
+		} elseif ( ! ( is_home() && is_front_page() ) && ! is_front_page() ) {
+			$title = __( 'Recent posts', 'hocwp-theme' );
 		} else {
 			$title = __( 'Archives', 'hocwp-theme' );
 		}
@@ -908,15 +993,51 @@ final class HOCWP_Theme_Utility {
 					$item = sprintf( $link_schema, get_term_link( $term ), $term->name );
 					array_unshift( $items, $item );
 				}
+
+				unset( $item );
 			}
 
 			if ( ! $has_cat ) {
 				if ( 'post' != $obj->post_type && 'page' != $obj->post_type ) {
 					$type = get_post_type_object( $obj->post_type );
-					$item = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type->labels->singular_name );
-					array_unshift( $items, $item );
+
+					$tmp = '';
+
+					if ( ! $type->has_archive ) {
+						$taxonomies = get_object_taxonomies( $obj, 'objects' );
+
+						$taxonomy = null;
+
+						foreach ( $taxonomies as $tax ) {
+							if ( $tax->hierarchical ) {
+								$taxonomy = $tax;
+								break;
+							}
+						}
+
+						if ( $taxonomy instanceof WP_Taxonomy ) {
+							$terms = wp_get_post_terms( $obj->ID, $taxonomy->name );
+							$term  = current( $terms );
+
+							if ( $term instanceof WP_Term ) {
+								$tmp = sprintf( $link_schema, get_term_link( $term ), $term->name );
+							}
+						}
+					} else {
+						$tmp = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type->labels->singular_name );
+					}
+
+					if ( empty( $tmp ) ) {
+						$tmp = $type->labels->singular_name;
+					}
+
+					array_unshift( $items, $tmp );
+
+					unset( $tmp );
 				}
 			}
+
+			unset( $has_cat );
 		}
 
 		$last_item = '';
@@ -932,6 +1053,8 @@ final class HOCWP_Theme_Utility {
 		if ( ! empty( $last_item ) ) {
 			$items[] = '<span class="breadcrumb_last active breadcrumb-item breadcrumb-last trail-item trail-end">' . $last_item . '</span>';
 		}
+
+		unset( $last_item );
 
 		$count = count( $items );
 		$nav   = new HOCWP_Theme_HTML_Tag( 'nav' );
@@ -960,6 +1083,8 @@ final class HOCWP_Theme_Utility {
 		$span->set_text( ob_get_clean() );
 		$nav->set_text( $span );
 		$nav->output();
+
+		unset( $nav, $span, $home_item, $items, $index, $item, $count, $separator );
 	}
 
 	public function get_youtube_video_id( $url ) {
@@ -1024,7 +1149,7 @@ final class HOCWP_Theme_Utility {
 
 		$dir = wp_upload_dir();
 
-		if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) {
+		if ( HT()->string_contain( $url, $dir['baseurl'] . '/' ) ) {
 			$file = basename( $url );
 
 			$query_args = array(
@@ -1125,6 +1250,24 @@ final class HOCWP_Theme_Utility {
 
 	public function get_theme_option_page( $option_name, $tab, $slug = '' ) {
 		return HT_Util()->get_theme_option_post( $option_name, 'page', $tab, $slug );
+	}
+
+	public function is_post_new_update_page() {
+		return $this->is_admin_page( array( 'post.php', 'post-new.php' ) );
+	}
+
+	public function is_edit_post_new_update_page() {
+		return ( $this->is_post_new_update_page() || $this->is_admin_page( 'edit.php' ) );
+	}
+
+	public function is_admin_page( $pages ) {
+		global $pagenow;
+
+		if ( ! is_array( $pages ) ) {
+			$pages = array( $pages );
+		}
+
+		return in_array( $pagenow, $pages );
 	}
 
 	public function get_current_post_type() {

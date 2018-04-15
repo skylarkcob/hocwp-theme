@@ -16,6 +16,7 @@
     list-style: none outside none;
     float: left;
     margin-bottom: 5px;
+    display: inline-block;
 }
 
 .hocwp-pagination li:not(:first-child) {

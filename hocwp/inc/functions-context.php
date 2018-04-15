@@ -15,6 +15,8 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	$classes[] = sanitize_file_name( 'theme-version-' . $theme->get( 'Version' ) );
 
+	unset( $theme );
+
 	if ( isset( $GLOBALS['is_iphone'] ) && $GLOBALS['is_iphone'] ) {
 		$classes[] = 'iphone';
 	} elseif ( isset( $GLOBALS['is_opera'] ) && $GLOBALS['is_opera'] ) {
@@ -44,6 +46,26 @@ function hocwp_theme_body_class_filter( $classes ) {
 		$classes[] = 'mobile';
 	}
 
+	$sidebar_position = HT_Util()->get_theme_option( 'sidebar_position', '', 'reading' );
+
+	if ( is_single() || is_page() || is_singular() ) {
+		$tmp = get_post_meta( get_the_ID(), 'sidebar_position', true );
+
+		if ( ! empty( $tmp ) ) {
+			$sidebar_position = $tmp;
+		}
+
+		unset( $tmp );
+	}
+
+	if ( empty( $sidebar_position ) ) {
+		$sidebar_position = 'default';
+	}
+
+	$classes[] = 'sidebar-position-' . $sidebar_position;
+
+	unset( $sidebar_position );
+
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 
@@ -68,11 +90,11 @@ function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
 			$custom[] = 'has-excerpt';
 		}
 
-		if ( ! is_singular() && false !== strpos( $post->post_content, '<!--more' ) ) {
+		if ( ! is_singular() && HT()->string_contain( $post->post_content, '<!--more' ) ) {
 			$custom[] = 'has-more-link';
 		}
 
-		if ( false !== strpos( $post->post_content, '<!--nextpage' ) ) {
+		if ( HT()->string_contain( $post->post_content, '<!--nextpage' ) ) {
 			$custom[] = 'has-pages';
 		}
 

@@ -4,17 +4,21 @@ if ( function_exists( 'hocwp_theme_sanitize_extension_file' ) ) {
 }
 
 function hocwp_theme_load_extension_files( $path, &$arr ) {
-	$tmp     = scandir( $path );
+	$tmp = scandir( $path );
+
 	$headers = array(
 		'Name'        => 'Name',
 		'Description' => 'Description'
 	);
+
 	foreach ( $tmp as $key => $file ) {
 		if ( '.' != $file && '..' != $file ) {
 			$file = trailingslashit( $path ) . $file;
+
 			if ( HT()->is_file( $file ) ) {
 				$data = get_file_data( $file, $headers );
-				if ( ! empty( $data['Name'] ) ) {
+
+				if ( ! empty( $data['Name'] ) && ! in_array( $file, $arr ) ) {
 					$arr[] = $file;
 				}
 			}
@@ -28,9 +32,12 @@ function hocwp_theme_sanitize_extension_file( $extension_file ) {
 	$extension_file = str_replace( HOCWP_THEME_CORE_PATH, '', $extension_file );
 	$extension_file = str_replace( "\\", "/", $extension_file );
 	$extension_file = ltrim( $extension_file, '/' );
-	$parts          = explode( '/', $extension_file );
+
+	$parts = explode( '/', $extension_file );
+
 	if ( 2 < count( $parts ) ) {
-		$parts          = array_slice( $parts, - 2, 2 );
+		$parts = array_slice( $parts, - 2, 2 );
+
 		$extension_file = implode( '/', $parts );
 	}
 

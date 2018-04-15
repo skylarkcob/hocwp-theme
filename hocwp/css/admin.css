@@ -7,6 +7,11 @@
     padding: 0 10px;
 }
 
+.hocwp-theme td > fieldset {
+    border: none;
+    padding: 0;
+}
+
 .hocwp-theme fieldset legend {
     margin-top: -5px;
     padding: 0 5px;
@@ -29,4 +34,8 @@
 
 .widget .hocwp-theme > div {
     margin: 1em 0;
+}
+
+#adminmenu li.current + li a[href="themes.php?page=hocwp_theme&tab=extension"] {
+    display: none;
 }

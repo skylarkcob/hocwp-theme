@@ -6,7 +6,7 @@ if ( empty( $hocwp_theme_protocol ) ) {
 }
 
 if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-	$is_opera = ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
+	$is_opera = ( HT()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || HT()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
 }
 
 if ( ! is_object( $hocwp_theme ) ) {
@@ -48,6 +48,39 @@ if ( ! isset( $hocwp_theme->option ) ) {
 }
 
 $hocwp_theme->users_can_register = (bool) get_option( 'users_can_register' );
+
+$hocwp_theme->default_sidebars = array(
+	array(
+		'id'          => 'home',
+		'name'        => __( 'Home Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on home page.', 'hocwp-theme' )
+	),
+	array(
+		'id'          => 'search',
+		'name'        => __( 'Search Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on search result page.', 'hocwp-theme' )
+	),
+	array(
+		'id'          => 'archive',
+		'name'        => __( 'Archive Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on archive page.', 'hocwp-theme' )
+	),
+	array(
+		'id'          => 'single',
+		'name'        => __( 'Single Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on single page.', 'hocwp-theme' )
+	),
+	array(
+		'id'          => 'page',
+		'name'        => __( 'Page Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on page.', 'hocwp-theme' )
+	),
+	array(
+		'id'          => '404',
+		'name'        => __( 'Not Found Sidebar', 'hocwp-theme' ),
+		'description' => __( 'Display widgets on 404 page.', 'hocwp-theme' )
+	)
+);
 
 if ( ! isset( $hocwp_theme->defaults ) ) {
 	$hocwp_theme->defaults = array();

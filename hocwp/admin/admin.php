@@ -48,7 +48,12 @@ if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $page
 }
 
 function hocwp_theme_admin_menu_extra() {
-	add_theme_page( __( 'Theme Plugins', 'hocwp-theme' ), __( 'Theme Plugins', 'hocwp-theme' ), 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
+	$title = __( 'Extensions', 'hocwp-theme' );
+	add_theme_page( $title, $title, 'manage_options', 'themes.php?page=hocwp_theme&tab=extension' );
+
+	$title = __( 'Theme Plugins', 'hocwp-theme' );
+	add_theme_page( $title, $title, 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
+
 	add_theme_page( 'phpinfo()', __( 'PHP Info', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
 }
 
@@ -270,10 +275,26 @@ function hocwp_theme_backup_wp_content_folders_theme( $folders ) {
 
 add_filter( 'hocwp_theme_backup_wp_content_folders', 'hocwp_theme_backup_wp_content_folders_theme' );
 
+function hocwp_theme_admin_head_action() {
+	$icon = HT_Util()->get_theme_option( 'site_icon' );
+
+	if ( HT()->is_positive_number( $icon ) ) {
+		$icon = HT_Sanitize()->media_value( $icon );
+
+		if ( ! empty( $icon['url'] ) ) {
+			echo '<link rel="shortcut icon" type="' . $icon['mime_type'] . '" href="' . $icon['url'] . '"/>';
+		}
+	}
+}
+
+add_action( 'admin_head', 'hocwp_theme_admin_head_action' );
+
 if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow ) {
 	function hocwp_theme_widget_form_before( $instance, $widget ) {
-		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		echo '<div class="hocwp-theme">';
+		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+		$box_class = $widget->id_base;
+		$box_class .= ' hocwp-theme';
+		echo '<div class="' . $box_class . '">';
 		?>
 		<p>
 			<label for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>

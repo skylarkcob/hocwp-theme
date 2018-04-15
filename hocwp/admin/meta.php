@@ -89,3 +89,62 @@ function hocwp_theme_meta_box_editor_gallery( $args = array() ) {
 	$args = wp_parse_args( $args, $defaults );
 	hocwp_theme_meta_box_editor( $args );
 }
+
+function hocwp_theme_meta_box_advanced_settings() {
+	$meta = new HOCWP_Theme_Meta_Post();
+	$meta->set_context( 'side' );
+	$meta->set_priority( 'low' );
+	$meta->set_id( 'hocwp-post-advanced-settings' );
+
+	$args  = array(
+		'public' => true
+	);
+	$types = get_post_types( $args );
+
+	$meta->set_post_types( $types );
+	$meta->set_title( __( 'Advanced Settings', 'hocwp-theme' ) );
+
+	$sidebars = array(
+		'' => __( 'Default Sidebar', 'hocwp-theme' )
+	);
+
+	$args = array(
+		'post_type'      => 'hocwp_sidebar',
+		'posts_per_page' => - 1
+	);
+
+	$query = new WP_Query( $args );
+
+	if ( $query->have_posts() ) {
+		foreach ( $query->posts as $post ) {
+			$sidebars[ $post->post_name ] = $post->post_title;
+		}
+	}
+
+	$args = array(
+		'options' => $sidebars
+	);
+
+	$field = hocwp_theme_create_meta_field( 'sidebar', __( 'Sidebar', 'hocwp-theme' ), 'select', $args );
+	$meta->add_field( $field );
+
+	$args = array(
+		'options' => array(
+			''      => __( 'Default', 'hocwp-theme' ),
+			'right' => _x( 'Right', 'sidebar position', 'hocwp-theme' ),
+			'left'  => _x( 'Left', 'sidebar position', 'hocwp-theme' )
+		)
+	);
+
+	$field = hocwp_theme_create_meta_field( 'sidebar_position', __( 'Sidebar Position', 'hocwp-theme' ), 'select', $args );
+	$meta->add_field( $field );
+
+	$args  = array(
+		'type' => 'checkbox'
+	);
+	$field = hocwp_theme_create_meta_field( 'full_width', __( 'Display content box as full width.', 'hocwp-theme' ), 'input', $args );
+	$meta->add_field( $field );
+}
+
+add_action( 'load-post.php', 'hocwp_theme_meta_box_advanced_settings' );
+add_action( 'load-post-new.php', 'hocwp_theme_meta_box_advanced_settings' );

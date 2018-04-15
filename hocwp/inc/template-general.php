@@ -122,7 +122,7 @@ function hocwp_theme_widget_title_filter( $title ) {
 		if ( '!' == $first ) {
 			$title = '';
 		} else {
-			if ( ! mb_strpos( $title, '</span>' ) ) {
+			if ( ! HT()->string_contain( $title, '</span>' ) ) {
 				$title = '<span>' . $title . '</span>';
 			}
 		}
@@ -224,7 +224,34 @@ function hocwp_theme_module_sidebar() {
 add_action( 'hocwp_theme_module_sidebar', 'hocwp_theme_module_sidebar' );
 
 function hocwp_theme_sidebar_filter( $sidebar ) {
-	if ( is_home() && is_active_sidebar( 'home' ) ) {
+	$dynamic_sidebar = '';
+
+	if ( ( is_single() || is_page() ) && ! is_singular() ) {
+		$dynamic_sidebar = get_post_meta( get_the_ID(), 'sidebar', true );
+	} elseif ( is_post_type_archive() || is_tax() || is_singular() ) {
+		if ( is_singular() ) {
+			$dynamic_sidebar = get_post_meta( get_the_ID(), 'sidebar', true );
+		}
+
+		if ( ! is_active_sidebar( $dynamic_sidebar ) ) {
+			$obj = get_queried_object();
+
+			if ( $obj instanceof WP_Post_Type ) {
+				$dynamic_sidebar = $obj->name;
+			} elseif ( $obj instanceof WP_Post ) {
+				$dynamic_sidebar = $obj->post_type;
+			} elseif ( $obj instanceof WP_Term ) {
+				$taxonomy        = get_taxonomy( $obj->taxonomy );
+				$dynamic_sidebar = current( $taxonomy->object_type );
+			}
+
+			unset( $obj );
+		}
+	}
+
+	if ( ! empty( $dynamic_sidebar ) && is_active_sidebar( $dynamic_sidebar ) ) {
+		$sidebar = $dynamic_sidebar;
+	} elseif ( ( is_home() || is_front_page() ) && is_active_sidebar( 'home' ) ) {
 		$sidebar = 'home';
 	} elseif ( is_archive() && is_active_sidebar( 'archive' ) ) {
 		$sidebar = 'archive';
@@ -237,6 +264,8 @@ function hocwp_theme_sidebar_filter( $sidebar ) {
 	} elseif ( is_404() && is_active_sidebar( '404' ) ) {
 		$sidebar = '404';
 	}
+
+	unset( $dynamic_sidebar );
 
 	return $sidebar;
 }
@@ -251,7 +280,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 
 		$id = isset( $args['id'] ) ? $args['id'] : '';
 
-		$wrap = ( $wrap && false === strpos( $id, 'sidebar' ) ) ? true : false;
+		$wrap = ( $wrap && ! HT()->string_contain( $id, 'sidebar' ) ) ? true : false;
 
 		if ( isset( $args['before_widget'] ) ) {
 			$before_widget = $args['before_widget'];
@@ -271,7 +300,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 			$search       = array( 'h1', 'h2' );
 			$replace      = array( 'h3', 'h3' );
 
-			if ( false === strpos( $before_title, 'widget-title' ) ) {
+			if ( ! HT()->string_contain( $before_title, 'widget-title' ) ) {
 				array_unshift( $search, 'widgettitle' );
 				array_unshift( $replace, 'widget-title widgettitle' );
 			}
@@ -401,7 +430,7 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 	$button = ob_get_clean();
 	$search = '</label>';
 
-	if ( false !== ( $pos = strpos( $form, $search ) ) ) {
+	if ( false !== ( $pos = HT()->string_contain( $form, $search, 0, 'int' ) ) ) {
 		$form = substr( $form, 0, $pos + strlen( $search ) );
 	}
 
@@ -639,7 +668,7 @@ function hocwp_theme_wp_footer_action() {
 	HT_Util()->load_facebook_javascript_sdk();
 	$agent = HT()->get_user_agent();
 
-	if ( empty( $agent ) || false === strpos( $agent, 'Page Speed' ) || false === strpos( $agent, 'Speed Insights' ) ) {
+	if ( empty( $agent ) || ! HT()->string_contain( $agent, 'Page Speed' ) || ! HT()->string_contain( $agent, 'Speed Insights' ) ) {
 		$google_analytics = isset( $options['custom_code']['google_analytics'] ) ? $options['custom_code']['google_analytics'] : '';
 		echo $google_analytics;
 	}

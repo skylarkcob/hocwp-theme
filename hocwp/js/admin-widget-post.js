@@ -1,3 +1,3 @@
-/**
- * Created by skyla on 11/06/2017.
- */
+jQuery(document).ready(function ($) {
+
+});

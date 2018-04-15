@@ -1,6 +1,6 @@
 <?php
 function hocwp_theme_load_template( $_template_file, $include_once = false ) {
-	if ( false == strpos( $_template_file, '.php' ) ) {
+	if ( ! HT()->string_contain( $_template_file, '.php' ) ) {
 		$_template_file .= '.php';
 	}
 	if ( HT()->is_file( $_template_file ) ) {
