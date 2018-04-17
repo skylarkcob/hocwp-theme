@@ -415,7 +415,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				</div>
 				<div class="module-footer clearfix">
 					<div class="author-info">
-						<p><?php printf( __( 'This theme is created by HocWP Team. If you have any questions please feel free to <a href="%s">contact us</a>.', 'hocwp-theme' ), $theme->get( 'AuthorURI' ) ); ?></p>
+						<p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
 					</div>
 					<div class="core-version">
 						<p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>

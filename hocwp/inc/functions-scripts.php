@@ -208,7 +208,7 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 	$l10n = array(
 		'multiple'               => 0,
 		'removeImageButton'      => '<p class="hide-if-no-js remove"><a href="javascript:" class="remove-media">' . __( 'Remove %s', 'hocwp-theme' ) . '</a></p>',
-		'updateImageDescription' => '<p class="hide-if-no-js howto"> ' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',
+		'updateImageDescription' => '<p class="hide-if-no-js howto">' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',
 		'l10n'                   => array(
 			'title'      => __( 'Select %s', 'hocwp-theme' ),
 			'buttonText' => __( 'Choose %s', 'hocwp-theme' )
