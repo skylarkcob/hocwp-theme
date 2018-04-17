@@ -7,14 +7,22 @@ if ( ! $using ) {
 }
 
 function hocwp_theme_style_loader_src_filter( $src, $handle ) {
-	$load = apply_filters( 'hocwp_theme_load_default_style', true );
+	if ( ! is_admin() ) {
+		$load = apply_filters( 'hocwp_theme_load_default_style', true );
 
-	if ( $load ) {
-		if ( HT()->string_contain( $src, HOCWP_THEME_URL ) ) {
-			if ( ! HT()->string_contain( $src, '.min.' ) && 'hocwp-theme-style' == $handle ) {
-				$src = HOCWP_THEME_CORE_URL . '/css/default' . HOCWP_THEME_CSS_SUFFIX;
-				$src = add_query_arg( array( 'ver' => $GLOBALS['wp_version'] ), $src );
+		if ( $load ) {
+			if ( HT()->string_contain( $src, HOCWP_THEME_URL ) ) {
+				if ( ! HT()->string_contain( $src, '.min.' ) && 'hocwp-theme-style' == $handle ) {
+					$src = HOCWP_THEME_CORE_URL . '/css/default' . HOCWP_THEME_CSS_SUFFIX;
+					$src = add_query_arg( array( 'ver' => $GLOBALS['wp_version'] ), $src );
+				}
 			}
+		}
+	}
+
+	if ( HT()->string_contain( $src, HOCWP_THEME_URL ) ) {
+		if ( ! HT()->string_contain( $src, '.min.' ) ) {
+			$src = str_replace( '.css', HOCWP_THEME_CSS_SUFFIX, $src );
 		}
 	}
 
@@ -24,7 +32,7 @@ function hocwp_theme_style_loader_src_filter( $src, $handle ) {
 add_filter( 'style_loader_src', 'hocwp_theme_style_loader_src_filter', 10, 2 );
 
 function hocwp_theme_script_loader_src_filter( $src, $handle ) {
-	if ( HT()->string_contain( $src, HOCWP_THEME_URL ) && HT()->string_contain( 'custom/lib', HOCWP_THEME_URL ) ) {
+	if ( HT()->string_contain( $src, HOCWP_THEME_URL ) ) {
 		if ( ! HT()->string_contain( $src, '.min.' ) ) {
 			$src = str_replace( '.js', HOCWP_THEME_JS_SUFFIX, $src );
 		}
@@ -101,7 +109,8 @@ function hocwp_theme_localize_script_l10n() {
 		'homeUrl'     => home_url( '/' ),
 		'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
 		'l10n'        => array(
-			'confirmDeleteMessage' => __( 'Are you sure you want to delete?', 'hocwp-theme' )
+			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
+			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' )
 		),
 		'ajaxOverlay' => $ajax_overlay,
 		'nonce'       => wp_create_nonce( 'hocwp-theme' )
@@ -141,6 +150,10 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 			'chosen-select',
 			'hocwp-theme-autocomplete'
 		), false, true );
+	} elseif ( HT_Util()->is_admin_page( 'themes.php', 'hocwp-theme' ) ) {
+		$src = HOCWP_THEME_CORE_URL . '/css/admin-theme-options' . HOCWP_THEME_CSS_SUFFIX;
+		wp_enqueue_style( 'hocwp-theme-options-style', $src );
+		wp_enqueue_script( 'hocwp-theme-admin' );
 	}
 
 	if ( 'widgets.php' == $pagenow || 'appearance_page_hocwp_theme' == $screen->id ) {
@@ -170,13 +183,32 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 			wp_enqueue_script( 'hocwp-theme-admin-manage-column' );
 		}
 	}
+
+	$colors = HT_Util()->get_admin_colors( get_user_option( 'admin_color' ) );
+
+	if ( is_object( $colors ) ) {
+		$bg     = end( $colors->colors );
+		$border = isset( $colors->colors[2] ) ? $colors->colors[2] : end( $colors->colors );
+
+		$css = '.hocwp-theme .settings-box .header {
+				background: ' . $bg . ';
+				border-bottom-color: ' . $border . ';
+			}
+		';
+
+		wp_add_inline_style( 'hocwp-theme-admin-style', $css );
+
+		unset( $bg, $border, $css );
+	}
+
+	unset( $colors );
 }
 
 function hocwp_theme_localize_script_l10n_media_upload() {
 	$l10n = array(
 		'multiple'               => 0,
 		'removeImageButton'      => '<p class="hide-if-no-js remove"><a href="javascript:" class="remove-media">' . __( 'Remove %s', 'hocwp-theme' ) . '</a></p>',
-		'updateImageDescription' => '<p class="hide-if-no-js howto">' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',
+		'updateImageDescription' => '<p class="hide-if-no-js howto"> ' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',
 		'l10n'                   => array(
 			'title'      => __( 'Select %s', 'hocwp-theme' ),
 			'buttonText' => __( 'Choose %s', 'hocwp-theme' )

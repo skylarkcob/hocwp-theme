@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "POT-Creation-Date: 2018-04-15 07:26+0700\n"
-"PO-Revision-Date: 2018-04-15 07:31+0700\n"
+"PO-Revision-Date: 2018-04-16 07:23+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -332,7 +332,7 @@ msgstr "Viết"
 
 #: hocwp/admin/admin.php:54 hocwp/admin/views/admin-theme-plugins.php:8
 msgid "Theme Plugins"
-msgstr "Gói mở rộng"
+msgstr "Danh sách plugin"
 
 #: hocwp/admin/admin.php:57 hocwp/inc/setup-after.php:35
 msgid "PHP Info"
