@@ -13,6 +13,10 @@ jQuery(document).ready(function ($) {
             unSave = true;
         });
 
+        formOptions.on("submit", function() {
+            unSave = false;
+        });
+
         window.addEventListener("beforeunload", function (e) {
             if (!unSave) {
                 return;
