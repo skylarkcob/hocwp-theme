@@ -333,69 +333,118 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function html() {
+		$theme = wp_get_theme();
 		?>
 		<div class="wrap hocwp-theme">
 			<h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
 			<hr class="wp-header-end" style="clear: both;">
-			<?php
-			$this->tabs = apply_filters( 'hocwp_theme_settings_page_tabs', $this->tabs );
+			<div class="settings-box clearfix module">
+				<div class="header module-header">
+					<div class="inner clearfix">
+						<div class="theme-info">
+							<h2><?php printf( __( '%s options', 'hocwp-theme' ), $theme->get( 'Name' ) ); ?></h2>
 
-			if ( HOCWP_Theme::array_has_value( $this->tabs ) ) {
-				?>
-				<div id="nav">
-					<h2 class="nav-tab-wrapper">
-						<?php
-						$current_url = HOCWP_Theme_Utility::get_current_url();
-						$current_url = remove_query_arg( 'settings-updated', $current_url );
-						$count       = 0;
-
-						foreach ( $this->tabs as $key => $tab ) {
-							$url   = add_query_arg( array( 'tab' => $key ), $current_url );
-							$class = 'nav-tab';
-
-							if ( $this->tab == $key || ( empty( $this->tab ) && 0 == $count ) ) {
-								$class .= ' nav-tab-active';
-							}
-
-							if ( is_array( $tab ) ) {
-								$text = isset( $tab['text'] ) ? $tab['text'] : $key;
-							} else {
-								if ( empty( $tab ) ) {
-									$text = $key;
-								} else {
-									$text = $tab;
-								}
-							}
-
-							$text = ucwords( $text );
-							?>
-							<a class="<?php echo $class; ?>"
-							   href="<?php echo esc_url( $url ); ?>"><?php echo strip_tags( $text ); ?></a>
-							<?php
-							$count ++;
-						}
-						?>
-					</h2>
+							<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
+						</div>
+						<div class="save-changes">
+							<?php $this->submit_button( array( 'attributes' => array( 'form' => 'hocwpOptions' ) ) ); ?>
+						</div>
+					</div>
 				</div>
-				<?php
-			}
+				<div class="module-body clearfix">
+					<?php
+					$this->tabs = apply_filters( 'hocwp_theme_settings_page_tabs', $this->tabs );
 
-			do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_before' );
-			$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_display_form', true );
+					if ( HOCWP_Theme::array_has_value( $this->tabs ) ) {
+						?>
+						<div id="nav">
+							<ul class="nav-tab-wrapper">
+								<?php
+								$current_url = HOCWP_Theme_Utility::get_current_url();
+								$current_url = remove_query_arg( 'settings-updated', $current_url );
+								$count       = 0;
 
-			if ( $display ) {
-				$this->form_table();
-			}
+								foreach ( $this->tabs as $key => $tab ) {
+									$url   = add_query_arg( array( 'tab' => $key ), $current_url );
+									$class = 'nav-tab';
 
-			do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_after' );
-			?>
+									$li_class = 'menu-item';
+
+									if ( $this->tab == $key || ( empty( $this->tab ) && 0 == $count ) ) {
+										$class .= ' nav-tab-active';
+										$li_class .= ' active';
+									}
+
+									if ( is_array( $tab ) ) {
+										$text = isset( $tab['text'] ) ? $tab['text'] : $key;
+									} else {
+										if ( empty( $tab ) ) {
+											$text = $key;
+										} else {
+											$text = $tab;
+										}
+									}
+
+									$text = ucwords( $text );
+									?>
+									<li class="<?php echo $li_class; ?>">
+										<a class="<?php echo $class; ?>"
+										   href="<?php echo esc_url( $url ); ?>"><?php echo strip_tags( $text ); ?></a>
+									</li>
+									<?php
+									$count ++;
+								}
+								?>
+							</ul>
+						</div>
+						<?php
+					}
+					?>
+					<div class="settings-content">
+						<?php
+						do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_before' );
+						$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_display_form', true );
+
+						if ( $display ) {
+							$this->form_table();
+						}
+
+						do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_after' );
+						?>
+					</div>
+				</div>
+				<div class="module-footer clearfix">
+					<div class="author-info">
+						<p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
+					</div>
+					<div class="core-version">
+						<p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
+					</div>
+				</div>
+			</div>
 		</div>
 		<?php
 	}
 
+	private function submit_button( $args = array() ) {
+		$defaults = array(
+			'text'       => '',
+			'type'       => 'primary',
+			'name'       => 'submit',
+			'wrap'       => true,
+			'attributes' => null
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$args = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_submit_button_args', $args );
+
+		submit_button( $args['text'], $args['type'], $args['name'], $args['wrap'], $args['attributes'] );
+	}
+
 	private function form_table() {
 		?>
-		<form method="post" action="options.php" autocomplete="off">
+		<form id="hocwpOptions" method="post" action="options.php" autocomplete="off">
 			<input type="hidden" name="tab"
 			       value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
 			<?php
@@ -416,16 +465,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			do_settings_sections( $this->menu_slug );
 			do_action( 'hocwp_theme_settings_page_' . $this->tab );
 
-			$defaults = array(
-				'text'       => '',
-				'type'       => 'primary',
-				'name'       => 'submit',
-				'wrap'       => true,
-				'attributes' => null
-			);
-
-			$args = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_submit_button_args', $defaults );
-			submit_button( $args['text'], $args['type'], $args['name'], $args['wrap'], $args['attributes'] );
+			$this->submit_button();
 			?>
 		</form>
 		<?php

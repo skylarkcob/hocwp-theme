@@ -38,22 +38,24 @@ jQuery(document).ready(function ($) {
 
             frame.open();
         }
-        frame.on("select", function (e) {
+        frame.on("select", function () {
             var items = frame.state().get("selection");
+
             if (multiple) {
 
             } else {
                 var item = items.first().toJSON();
                 if (item) {
                     var image = document.createElement("img"),
-                        widget = container.closest(".widget"),
-                        alert = false;
+                        widget = container.closest(".widget");
+
                     image.setAttribute("src", item.url);
                     image.setAttribute("alt", item.alt);
                     image.setAttribute("width", item.width);
                     image.setAttribute("height", item.height);
-                    container.find("input").val(item.id);
+                    container.find("input").val(item.id).trigger("change");
                     selectMedia.html(image);
+
                     if (!selectMedia.hasClass("has-media")) {
                         var description = hocwpThemeMediaUpload.updateImageDescription,
                             removeButton = hocwpThemeMediaUpload.removeImageButton;
@@ -63,12 +65,13 @@ jQuery(document).ready(function ($) {
                         $(removeButton).insertAfter(container.find(".hide-if-no-js").last());
                         selectMedia.addClass("has-media");
                     }
+
                     if (widget.length) {
                         widget.find("input[type='submit']").val(wpWidgets.l10n.save).prop("disabled", false);
-                        alert = wpWidgets.l10n.saveAlert;
                     }
                 }
             }
+
             container.find("a, img").trigger("blur");
         });
     });
@@ -83,6 +86,6 @@ jQuery(document).ready(function ($) {
         selectMedia.removeClass("has-media");
         element.parent().remove();
         container.find(".howto").remove();
-        container.find("input").val("");
+        container.find("input").val("").trigger("change");
     });
 });

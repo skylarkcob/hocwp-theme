@@ -1260,14 +1260,25 @@ final class HOCWP_Theme_Utility {
 		return ( $this->is_post_new_update_page() || $this->is_admin_page( 'edit.php' ) );
 	}
 
-	public function is_admin_page( $pages ) {
+	public function is_admin_page( $pages, $admin_page = '' ) {
 		global $pagenow;
 
-		if ( ! is_array( $pages ) ) {
-			$pages = array( $pages );
+		if ( ! empty( $admin_page ) ) {
+			$admin_page = str_replace( '-', '_', $admin_page );
+			$screen     = get_current_screen();
+
+			$admin_page = 'appearance_page_' . $admin_page;
+
+			if ( $admin_page != $screen->id ) {
+				return false;
+			}
 		}
 
-		return in_array( $pagenow, $pages );
+		if ( is_string( $pages ) && $pagenow == $pages ) {
+			return true;
+		}
+
+		return ( is_array( $pages ) && in_array( $pagenow, $pages ) ) ? true : false;
 	}
 
 	public function get_current_post_type() {
@@ -1848,6 +1859,18 @@ final class HOCWP_Theme_Utility {
 		}
 
 		return false;
+	}
+
+	public function get_admin_colors( $color = '' ) {
+		global $_wp_admin_css_colors;
+
+		$colors = $_wp_admin_css_colors;
+
+		if ( ! empty( $color ) ) {
+			$color = isset( $colors[ $color ] ) ? $colors[ $color ] : '';
+		}
+
+		return $color;
 	}
 
 	public function back_to_top_button() {
