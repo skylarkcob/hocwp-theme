@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-04-17 12:18+0700\n"
-"PO-Revision-Date: 2018-04-17 12:19+0700\n"
+"POT-Creation-Date: 2018-04-19 13:33+0700\n"
+"PO-Revision-Date: 2018-04-19 13:33+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -1431,16 +1431,16 @@ msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1081
+#: hocwp/inc/template-general.php:1121
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1090
+#: hocwp/inc/template-general.php:1133
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1091
+#: hocwp/inc/template-general.php:1134
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 

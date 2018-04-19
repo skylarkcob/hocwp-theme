@@ -55,8 +55,18 @@ function hocwp_theme_excerpt_more_filter( $more ) {
 add_filter( 'excerpt_more', 'hocwp_theme_excerpt_more_filter' );
 
 function hocwp_theme_excerpt_length_filter( $length ) {
-	global $hocwp_theme;
+	global $hocwp_theme, $wp_query;
+
+	if ( isset( $wp_query->query_vars['excerpt_length'] ) ) {
+		$length = $wp_query->query_vars['excerpt_length'];
+
+		if ( HT()->is_positive_number( $length ) ) {
+			return $length;
+		}
+	}
+
 	$options = isset( $hocwp_theme->options['reading'] ) ? $hocwp_theme->options['reading'] : '';
+
 	if ( is_array( $options ) && isset( $options['excerpt_length'] ) && ! empty( $options['excerpt_length'] ) ) {
 		$length = $options['excerpt_length'];
 	}

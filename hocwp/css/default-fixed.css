@@ -82,6 +82,7 @@ span.edit-link {
     margin-bottom: 20px;
 }
 
+.entry-summary p:first-child,
 .entry-content p:first-child {
     margin-top: 0;
 }
