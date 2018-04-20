@@ -55,8 +55,18 @@ function hocwp_theme_excerpt_more_filter( $more ) {
 add_filter( 'excerpt_more', 'hocwp_theme_excerpt_more_filter' );
 
 function hocwp_theme_excerpt_length_filter( $length ) {
-	global $hocwp_theme;
+	global $hocwp_theme, $wp_query;
+
+	if ( isset( $wp_query->query_vars['excerpt_length'] ) ) {
+		$length = $wp_query->query_vars['excerpt_length'];
+
+		if ( HT()->is_positive_number( $length ) ) {
+			return $length;
+		}
+	}
+
 	$options = isset( $hocwp_theme->options['reading'] ) ? $hocwp_theme->options['reading'] : '';
+
 	if ( is_array( $options ) && isset( $options['excerpt_length'] ) && ! empty( $options['excerpt_length'] ) ) {
 		$length = $options['excerpt_length'];
 	}
@@ -141,6 +151,10 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 add_filter( 'post_thumbnail_html', 'hocwp_theme_post_thumbnail_html_auto_link', 10, 5 );
 
 function hocwp_theme_post_thumbnail_default( $size, $attr ) {
+	if ( HT_Util()->is_amp() ) {
+		return;
+	}
+
 	if ( is_string( $size ) ) {
 		$size = HT_Util()->get_image_size( $size );
 	}
