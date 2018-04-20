@@ -151,6 +151,10 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 add_filter( 'post_thumbnail_html', 'hocwp_theme_post_thumbnail_html_auto_link', 10, 5 );
 
 function hocwp_theme_post_thumbnail_default( $size, $attr ) {
+	if ( HT_Util()->is_amp() ) {
+		return;
+	}
+
 	if ( is_string( $size ) ) {
 		$size = HT_Util()->get_image_size( $size );
 	}

@@ -14,6 +14,10 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		return $html;
 	}
 
+	if ( HT_Util()->is_amp() ) {
+		return $html;
+	}
+
 	$obj = get_post( $post_id );
 	$alt = $obj->post_title;
 

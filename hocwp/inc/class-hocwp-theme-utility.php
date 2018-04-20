@@ -14,6 +14,16 @@ final class HOCWP_Theme_Utility {
 	private function __construct() {
 	}
 
+	public function is_amp() {
+		$amp = HT()->get_method_value( 'amp', 'get' );
+
+		if ( 1 != $amp ) {
+			$amp = get_query_var( 'amp' );
+		}
+
+		return ( 1 == $amp );
+	}
+
 	public static function get_wp_image_url( $name ) {
 		return includes_url( 'images/' . $name );
 	}
