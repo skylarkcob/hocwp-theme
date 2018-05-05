@@ -39,6 +39,8 @@ if ( ! isset( $hocwp_theme->options ) ) {
 	$hocwp_theme->options = (array) get_option( 'hocwp_theme' );
 }
 
+$hocwp_theme->is_wc_activated = class_exists( 'WC_Product' );
+
 if ( ! isset( $hocwp_theme->active_extensions ) ) {
 	$hocwp_theme->active_extensions = (array) get_option( 'hocwp_theme_active_extensions', array() );
 }

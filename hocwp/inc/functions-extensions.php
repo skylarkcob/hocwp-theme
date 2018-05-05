@@ -60,16 +60,6 @@ function hocwp_theme_is_extension_active( $extension_file ) {
 	return in_array( $extension_file, $hocwp_theme->active_extensions );
 }
 
-if ( ! function_exists( 'hocwp_theme_woocommerce_activated' ) ) {
-	function hocwp_theme_woocommerce_activated() {
-		return class_exists( 'WC_Product' );
-	}
-}
-
 function hocwp_theme_is_shop_site() {
-	if ( function_exists( 'hocwp_theme_woocommerce_activated' ) && hocwp_theme_woocommerce_activated() ) {
-		return true;
-	}
-
-	return false;
+	return $GLOBALS['hocwp_theme']->is_wc_activated;
 }

@@ -76,8 +76,9 @@ final class HOCWP_Theme_Requirement {
 	}
 
 	public static function check_extension_woocommerce() {
-		$is_wc = ( function_exists( 'hocwp_theme_woocommerce_activated' ) ) ? hocwp_theme_woocommerce_activated() : class_exists( 'WC_Product' );
-		if ( $is_wc && function_exists( 'hocwp_theme_load_extension_woocommerce' ) && ! hocwp_theme_load_extension_woocommerce() ) {
+		$is_wc = $GLOBALS['hocwp_theme']->is_wc_activated;
+
+		if ( $is_wc && ( function_exists( 'hocwp_theme_load_extension_woocommerce' ) && ! hocwp_theme_load_extension_woocommerce() || ! function_exists( 'hocwp_theme_load_extension_woocommerce' ) ) ) {
 			return false;
 		}
 
@@ -86,11 +87,13 @@ final class HOCWP_Theme_Requirement {
 
 	public static function check() {
 		$rp = self::check_required_plugins();
+
 		if ( ! $rp ) {
 			return false;
 		}
 
 		$ewc = self::check_extension_woocommerce();
+
 		if ( ! $ewc ) {
 			return false;
 		}

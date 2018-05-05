@@ -46,7 +46,7 @@ function hocwp_theme_manage_posts_columns_filter( $columns ) {
 		global $post_type;
 
 		if ( in_array( $post_type, HT_Util()->post_types_support_featured() ) ) {
-			if ( ! ( 'product' == $post_type && hocwp_theme_woocommerce_activated() ) ) {
+			if ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) {
 				$text = _x( 'Featured', 'manage posts columns', 'hocwp-theme' );
 
 				$columns['featured'] = '<span class="vers comment-grey-bubble featured-star" title="' . $text . '"><span class="screen-reader-text">' . $text . '</span></span>';
@@ -62,8 +62,9 @@ add_filter( 'manage_page_posts_columns', 'hocwp_theme_manage_posts_columns_filte
 
 function hocwp_theme_manage_sortable_columns_filter( $columns ) {
 	global $post_type;
+
 	if ( in_array( $post_type, HT_Util()->post_types_support_featured() ) ) {
-		if ( ! ( 'product' == $post_type && hocwp_theme_woocommerce_activated() ) ) {
+		if ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) {
 			$columns['featured'] = 'featured';
 		}
 	}
@@ -90,7 +91,7 @@ function hocwp_theme_manage_posts_custom_column_action( $column_name, $post_id )
 	$post_type = $obj->post_type;
 
 	if ( in_array( $post_type, HT_Util()->post_types_support_featured() ) ) {
-		if ( ( ! ( 'product' == $post_type && hocwp_theme_woocommerce_activated() ) ) ) {
+		if ( ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) ) {
 			if ( 'featured' == $column_name ) {
 				$value = get_post_meta( $post_id, 'featured', true );
 				$value = absint( $value );
@@ -110,7 +111,7 @@ add_action( 'manage_posts_custom_column', 'hocwp_theme_manage_posts_custom_colum
 add_action( 'manage_page_posts_custom_column', 'hocwp_theme_manage_posts_custom_column_action', 10, 2 );
 
 function hocwp_theme_hocwp_theme_featured_post_ajax_callback() {
-	$result  = array(
+	$result = array(
 		'success' => false
 	);
 
