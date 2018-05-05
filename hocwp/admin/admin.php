@@ -120,21 +120,25 @@ if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == $plugin_page ) {
 
 
 function hocwp_theme_admin_notices_required_plugins() {
-	if ( ! HOCWP_Theme_Requirement::check_required_plugins() ) {
+	if ( ! HT_Requirement()->check_required_plugins() ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '">' . _x( 'this list', 'required plugins list', 'hocwp-theme' ) . '</a>';
+
 		$args = array(
 			'type'    => 'error',
 			'message' => sprintf( __( 'You must install required plugins for theme can work properly. Try to install and activate all plugins in %s.', 'hocwp-theme' ), $link )
 		);
+
 		HOCWP_Theme_Utility::admin_notice( $args );
 	}
 
-	if ( ! HOCWP_Theme_Requirement::check_extension_woocommerce() ) {
+	if ( ! HT_Requirement()->check_extension_woocommerce() ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme&tab=extension' ) . '">' . _x( 'here', 'list extensions link', 'hocwp-theme' ) . '</a>';
+
 		$args = array(
 			'type'    => 'error',
-			'message' => sprintf( __( 'You must enable WooCommerce extension for this theme. Try to activate it  %s.', 'hocwp-theme' ), $link )
+			'message' => sprintf( __( 'You must enable WooCommerce extension for this theme. Try to activate it %s.', 'hocwp-theme' ), $link )
 		);
+
 		HOCWP_Theme_Utility::admin_notice( $args );
 	}
 }

@@ -178,7 +178,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 	if ( 'edit.php' == $pagenow ) {
 		global $post_type;
 
-		if ( ! ( 'product' == $post_type && hocwp_theme_woocommerce_activated() ) ) {
+		if ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) {
 			wp_enqueue_style( 'hocwp-theme-admin-manage-column-style' );
 			wp_enqueue_script( 'hocwp-theme-admin-manage-column' );
 		}

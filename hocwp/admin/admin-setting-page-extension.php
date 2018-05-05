@@ -67,9 +67,11 @@ function hocwp_theme_settings_page_extension_form_after() {
 	<div style="padding-top: 10px;">
 		<?php
 		global $hocwp_theme, $plugin_page;
+
 		if ( ! ! isset( $hocwp_theme->extensions_list_table ) ) {
 			$hocwp_theme->extensions_list_table = new HOCWP_Extensions_List_Table();
 		}
+
 		$hocwp_theme->extensions_list_table->process_bulk_action();
 		$hocwp_theme->extensions_list_table->prepare_items();
 		$hocwp_theme->extensions_list_table->admin_notices();
