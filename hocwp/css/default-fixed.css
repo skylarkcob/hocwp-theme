@@ -427,3 +427,8 @@ div.menu li a {
         display: block;
     }
 }
+
+.google-auto-placed {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
