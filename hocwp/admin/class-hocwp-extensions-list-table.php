@@ -230,7 +230,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 					$text = _n( 'Inactive <span class="count">(%s)</span>', 'Inactive <span class="count">(%s)</span>', $count, 'hocwp-theme' );
 					break;
 			}
-			
+
 			if ( 'search' !== $type ) {
 				$status_links[ $type ] = sprintf( "<a href='%s' %s>%s</a>",
 					add_query_arg( 'extension_status', $type, 'themes.php?page=hocwp_theme&tab=extension' ),
