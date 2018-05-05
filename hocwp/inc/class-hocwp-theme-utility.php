@@ -1292,8 +1292,12 @@ final class HOCWP_Theme_Utility {
 	}
 
 	public function get_current_post_type() {
-		global $post_type;
+		global $post_type, $typenow;
 		$result = $post_type;
+
+		if ( empty( $result ) ) {
+			$result = $typenow;
+		}
 
 		if ( empty( $result ) ) {
 			if ( isset( $_GET['post_type'] ) ) {
