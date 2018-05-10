@@ -1,10 +1,14 @@
 function hocwpIsExternalLink(url) {
-    if (url.indexOf("mailto") !== -1) {
+    if (url.indexOf("mailto") !== -1 || url.indexOf("javascript") !== -1) {
         return false;
     }
 
     var tempLink = document.createElement("a");
     tempLink.href = url;
+
+    if (!tempLink.hostname) {
+        return false;
+    }
 
     return tempLink.hostname !== window.location.hostname;
 }

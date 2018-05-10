@@ -1057,8 +1057,8 @@ function hocwp_theme_socials( $args = array() ) {
 		'title'   => ''
 	);
 
-	$args     = wp_parse_args( $args, $defaults );
-	$url      = $args['url'];
+	$args = wp_parse_args( $args, $defaults );
+	$url  = $args['url'];
 
 	if ( empty( $url ) ) {
 		$post_id = $args['post_id'];
@@ -1122,15 +1122,15 @@ function hocwp_theme_socials( $args = array() ) {
 		}
 
 		if ( current_user_can( 'publish_posts' ) ) {
-			$base   = 'https://www.google.com/webmasters/tools/submit-url';
+			$base = 'https://www.google.com/webmasters/tools/submit-url';
 
 			$params = array(
 				'urlnt' => $url
 			);
 
-			$base   = add_query_arg( $params, $base );
-			$class  = 'btn btn-submit-url';
-			$name   = __( 'Submit URL', 'hocwp-theme' );
+			$base  = add_query_arg( $params, $base );
+			$class = 'btn btn-submit-url';
+			$name  = __( 'Submit URL', 'hocwp-theme' );
 			printf( $link, esc_url( $base ), $target, $class, esc_attr( __( 'Submit URL to Google Search Console', 'hocwp-theme' ) ), $name );
 		}
 		?>
@@ -1230,3 +1230,17 @@ function hocwp_theme_the_archive_title( $prefix = true ) {
 	$title = hocwp_theme_get_archive_title( $prefix );
 	HT()->wrap_text( $title, '<h1 class="archive-title main-title">', '</h1>', true );
 }
+
+function hocwp_theme_wp_title_filter( $title ) {
+	$paged = HT_Util()->get_paged();
+	$sep   = HT_Util()->get_title_separator();
+
+	if ( 1 < $paged && false === strpos( $title, $paged ) && false === strpos( $title, $sep ) ) {
+		$title = sprintf( _x( '%s %s Page %s', 'title with pagination', 'hocwp-theme' ), $title, $sep, $paged );
+	}
+
+	return $title;
+}
+
+add_filter( 'wp_title', 'hocwp_theme_wp_title_filter' );
+add_filter( 'wpseo_title', 'hocwp_theme_wp_title_filter' );

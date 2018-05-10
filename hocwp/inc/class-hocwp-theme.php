@@ -610,6 +610,47 @@ final class HOCWP_Theme {
 		return ( false !== $pos );
 	}
 
+	public function is_valid_domain( $url ) {
+		$validation = false;
+
+		$url = filter_var( $url, FILTER_SANITIZE_URL );
+
+		if ( false !== $url ) {
+			$urlparts = parse_url( $url );
+
+			if ( ! isset( $urlparts['host'] ) ) {
+				$urlparts['host'] = $urlparts['path'];
+			}
+
+			if ( ! empty( $urlparts['host'] ) ) {
+				if ( ! isset( $urlparts['scheme'] ) ) {
+					$urlparts['scheme'] = 'http';
+				}
+
+				$protocols = array(
+					'http',
+					'https'
+				);
+
+				if ( checkdnsrr( $urlparts['host'], 'A' ) ) {
+					$validation = true;
+				} elseif ( in_array( $urlparts['scheme'], $protocols ) && ! HT()->is_IP( $urlparts['host'] ) ) {
+					$urlparts['host'] = preg_replace( '/^www\./', '', $urlparts['host'] );
+
+					$url = $urlparts['scheme'] . '://' . $urlparts['host'] . '/';
+
+					if ( filter_var( $url, FILTER_VALIDATE_URL ) !== false && @get_headers( $url ) ) {
+						$validation = true;
+					}
+				}
+			}
+
+			unset( $urlparts, $protocols );
+		}
+
+		return $validation;
+	}
+
 	public static function get_domain_name( $url, $root = false ) {
 		if ( ! is_string( $url ) || empty( $url ) ) {
 			return '';
