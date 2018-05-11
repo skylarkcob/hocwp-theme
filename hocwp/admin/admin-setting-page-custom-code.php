@@ -78,7 +78,6 @@ add_filter( 'hocwp_theme_settings_page_custom_code_settings_field', 'hocwp_theme
 
 function hocwp_theme_admin_setting_page_custom_code_scripts() {
 	wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
-	wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
 	wp_enqueue_script( 'hocwp-theme-code-editor' );
 }
 
