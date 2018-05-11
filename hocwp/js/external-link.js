@@ -1,10 +1,14 @@
 function hocwpIsExternalLink(url) {
-    if (url.indexOf("mailto") !== -1) {
+    if (url.indexOf("mailto") !== -1 || url.indexOf("javascript") !== -1) {
         return false;
     }
 
     var tempLink = document.createElement("a");
     tempLink.href = url;
+
+    if (!tempLink.hostname) {
+        return false;
+    }
 
     return tempLink.hostname !== window.location.hostname;
 }
@@ -16,9 +20,10 @@ function hocwpIsExternalLink(url) {
     links = container.getElementsByTagName("a");
 
     for (i = 0, len = links.length; i < len; i++) {
-        if (hocwpIsExternalLink(links[i].href)) {
-            var link = links[i],
-                newTab = parseInt(link.getAttribute("data-new-tab")),
+        var link = links[i];
+
+        if (hocwpIsExternalLink(link.href)) {
+            var newTab = parseInt(link.getAttribute("data-new-tab")),
                 rel = link.getAttribute("rel");
 
             if ((!isNaN(newTab) && 1 === newTab) || "dofollow" === rel) {

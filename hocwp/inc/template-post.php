@@ -205,6 +205,24 @@ function hocwp_theme_the_content() {
 
 add_action( 'hocwp_theme_the_content', 'hocwp_theme_the_content' );
 
+function hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content( $content ) {
+	if ( false !== strpos( $content, '[' ) ) {
+		$data = array(
+			'<p>['    => '[',
+			']</p>'   => ']',
+			']<br />' => ']',
+			']<br>'   => ']',
+			']<br/>'  => ']'
+		);
+
+		$content = strtr( $content, $data );
+	}
+
+	return $content;
+}
+
+add_filter( 'the_content', 'hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content' );
+
 function hocwp_theme_the_excerpt() {
 	echo '<div class="entry-summary">';
 	the_excerpt();

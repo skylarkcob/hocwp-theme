@@ -37,7 +37,10 @@ body {
 
 }
 
-@media only screen and (max-width: 780px) {
+/*
+ * WordPress Admin Bar change height.
+ */
+@media only screen and (max-width: 782px) {
 
 }
 
@@ -82,6 +85,10 @@ body {
 }
 
 @media only screen and (max-width: 480px) {
+
+}
+
+@media only screen and (max-width: 420px) {
 
 }
 

@@ -28,16 +28,22 @@ final class HOCWP_Theme_HTML_Tag {
 		if ( ! is_array( $this->attributes ) ) {
 			$this->attributes = array();
 		}
+
 		if ( null === $value || is_array( $attribute_name ) ) {
 			if ( is_array( $attribute_name ) ) {
 				$atts = $attribute_name;
 			} else {
 				$atts = HOCWP_Theme::attribute_to_array( $attribute_name );
 			}
+
 			foreach ( $atts as $key => $value ) {
 				$this->add_attribute( $key, $value );
 			}
 		} else {
+			if ( is_bool( $value ) ) {
+				$value = HT()->bool_to_string( $value );
+			}
+
 			$this->attributes[ $attribute_name ] = $value;
 		}
 	}
