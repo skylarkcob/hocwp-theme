@@ -22,7 +22,8 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'type'          => 'string',
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
 				'callback_args' => array(
-					'class' => 'widefat'
+					'class'            => 'widefat',
+					'data-code-editor' => 1
 				)
 			)
 		),
@@ -34,7 +35,9 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'type'          => 'string',
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
 				'callback_args' => array(
-					'class' => 'widefat'
+					'class'            => 'widefat',
+					'data-code-editor' => 1,
+					'data-mode'        => 'css'
 				)
 			)
 		),
@@ -47,7 +50,8 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
 				'description'   => __( 'Add code at the end of the <code>&lt;head&gt;</code> tag.', 'hocwp-theme' ),
 				'callback_args' => array(
-					'class' => 'widefat'
+					'class'            => 'widefat',
+					'data-code-editor' => 1
 				)
 			)
 		),
@@ -60,7 +64,8 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
 				'description'   => __( 'Add code before <code>&lt;/body&gt;</code> tag.', 'hocwp-theme' ),
 				'callback_args' => array(
-					'class' => 'widefat'
+					'class'            => 'widefat',
+					'data-code-editor' => 1
 				)
 			)
 		)
@@ -70,3 +75,11 @@ function hocwp_theme_settings_page_custom_code_field() {
 }
 
 add_filter( 'hocwp_theme_settings_page_custom_code_settings_field', 'hocwp_theme_settings_page_custom_code_field' );
+
+function hocwp_theme_admin_setting_page_custom_code_scripts() {
+	wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
+	wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+	wp_enqueue_script( 'hocwp-theme-code-editor' );
+}
+
+add_action( 'hocwp_theme_admin_setting_page_custom_code_scripts', 'hocwp_theme_admin_setting_page_custom_code_scripts' );
