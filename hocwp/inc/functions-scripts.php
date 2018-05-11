@@ -184,6 +184,9 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		}
 	}
 
+	$src = HOCWP_THEME_CORE_URL . '/js/code-editor' . HOCWP_THEME_JS_SUFFIX;
+	wp_register_script( 'hocwp-theme-code-editor', $src, array( 'jquery' ), false, true );
+
 	$colors = HT_Util()->get_admin_colors( get_user_option( 'admin_color' ) );
 
 	if ( is_object( $colors ) ) {
