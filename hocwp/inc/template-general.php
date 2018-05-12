@@ -1235,9 +1235,18 @@ function hocwp_theme_wp_title_filter( $title ) {
 	$paged = HT_Util()->get_paged();
 	$sep   = HT_Util()->get_title_separator();
 
-	if ( 1 < $paged && false === strpos( $title, $paged ) && false === strpos( $title, $sep ) ) {
-		$title = sprintf( _x( '%s %s Page %s', 'title with pagination', 'hocwp-theme' ), $title, $sep, $paged );
+	if ( 1 < $paged ) {
+		$add = sprintf( _x( 'Page %d', 'pagination', 'hocwp-theme' ), $paged );
+		$add = $sep . ' ' . $add;
+
+		if ( false == strpos( $title, $add ) ) {
+			$title .= ' ' . $add;
+		}
+
+		unset( $add );
 	}
+
+	unset( $paged, $sep );
 
 	return $title;
 }

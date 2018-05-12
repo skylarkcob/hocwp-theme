@@ -136,10 +136,13 @@ final class HOCWP_Theme_HTML_Field {
 			'class' => 'widefat',
 			'rows'  => 10
 		);
+
 		$args     = wp_parse_args( $args, $defaults );
 		$textarea = new HOCWP_Theme_HTML_Tag( 'textarea' );
 		$value    = isset( $args['value'] ) ? $args['value'] : '';
+
 		unset( $args['value'] );
+
 		$textarea->set_text( $value );
 		self::field_label( $args );
 		$textarea->set_attributes( $args );

@@ -150,7 +150,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 			'chosen-select',
 			'hocwp-theme-autocomplete'
 		), false, true );
-	} elseif ( HT_Util()->is_admin_page( 'themes.php', 'hocwp-theme' ) ) {
+	} elseif ( HT_Util()->is_admin_page( 'themes.php', 'hocwp_theme' ) ) {
 		$src = HOCWP_THEME_CORE_URL . '/css/admin-theme-options' . HOCWP_THEME_CSS_SUFFIX;
 		wp_enqueue_style( 'hocwp-theme-options-style', $src );
 		wp_enqueue_script( 'hocwp-theme-admin' );
