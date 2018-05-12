@@ -23,7 +23,8 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
 				'callback_args' => array(
 					'class'            => 'widefat',
-					'data-code-editor' => 1
+					'data-code-editor' => 1,
+					'rows'             => 8
 				)
 			)
 		),
@@ -37,7 +38,8 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'callback_args' => array(
 					'class'            => 'widefat',
 					'data-code-editor' => 1,
-					'data-mode'        => 'css'
+					'data-mode'        => 'css',
+					'rows'             => 15
 				)
 			)
 		),
@@ -48,10 +50,11 @@ function hocwp_theme_settings_page_custom_code_field() {
 			'args'  => array(
 				'type'          => 'string',
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
-				'description'   => __( 'Add code at the end of the <code>&lt;head&gt;</code> tag.', 'hocwp-theme' ),
+				'description'   => __( 'Add code between <code>&lt;head&gt;</code> and  <code>&lt;/head&gt;</code> tag.', 'hocwp-theme' ),
 				'callback_args' => array(
 					'class'            => 'widefat',
-					'data-code-editor' => 1
+					'data-code-editor' => 1,
+					'rows'             => 15
 				)
 			)
 		),
@@ -62,10 +65,26 @@ function hocwp_theme_settings_page_custom_code_field() {
 			'args'  => array(
 				'type'          => 'string',
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
-				'description'   => __( 'Add code before <code>&lt;/body&gt;</code> tag.', 'hocwp-theme' ),
+				'description'   => __( 'Add code between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> tag.', 'hocwp-theme' ),
 				'callback_args' => array(
 					'class'            => 'widefat',
-					'data-code-editor' => 1
+					'data-code-editor' => 1,
+					'rows'             => 15
+				)
+			)
+		),
+		array(
+			'id'    => 'footer',
+			'title' => __( 'Footer Code', 'hocwp-theme' ),
+			'tab'   => 'custom_code',
+			'args'  => array(
+				'type'          => 'string',
+				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
+				'description'   => __( 'Add code before closing <code>&lt;body&gt;</code> tag.', 'hocwp-theme' ),
+				'callback_args' => array(
+					'class'            => 'widefat',
+					'data-code-editor' => 1,
+					'rows'             => 15
 				)
 			)
 		)

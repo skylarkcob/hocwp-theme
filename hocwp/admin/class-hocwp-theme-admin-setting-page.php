@@ -367,6 +367,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 								foreach ( $this->tabs as $key => $tab ) {
 									$url   = add_query_arg( array( 'tab' => $key ), $current_url );
 									$class = 'nav-tab';
+									$icon  = '<span class="dashicons dashicons-admin-page"></span>';
+
+									if ( is_array( $icon ) && isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
+										$icon = $tab['icon'];
+									}
 
 									$li_class = 'menu-item';
 
@@ -386,10 +391,12 @@ final class HOCWP_Theme_Admin_Setting_Page {
 									}
 
 									$text = ucwords( $text );
+									$text = strip_tags( $text );
+									$text = $icon . ' ' . $text;
 									?>
 									<li class="<?php echo $li_class; ?>">
 										<a class="<?php echo $class; ?>"
-										   href="<?php echo esc_url( $url ); ?>"><?php echo strip_tags( $text ); ?></a>
+										   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
 									</li>
 									<?php
 									$count ++;

@@ -677,6 +677,10 @@ function hocwp_theme_wp_footer_action() {
 		echo $options['custom_code']['body'];
 	}
 
+	if ( isset( $options['custom_code']['footer'] ) ) {
+		echo $options['custom_code']['footer'];
+	}
+
 	$load = apply_filters( 'hocwp_theme_load_addthis', false );
 
 	if ( $load ) {

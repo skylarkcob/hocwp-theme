@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-05-12 17:06+0700\n"
+"POT-Creation-Date: 2018-05-12 22:10+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,24 +40,32 @@ msgstr ""
 msgid "Google Analytics"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-custom-code.php:32
+#: hocwp/admin/admin-setting-page-custom-code.php:33
 msgid "Cascading Style Sheets"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-custom-code.php:46
+#: hocwp/admin/admin-setting-page-custom-code.php:48
 msgid "Head Code"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-custom-code.php:51
-msgid "Add code at the end of the <code>&lt;head&gt;</code> tag."
+#: hocwp/admin/admin-setting-page-custom-code.php:53
+msgid "Add code between <code>&lt;head&gt;</code> and  <code>&lt;/head&gt;</code> tag."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-custom-code.php:60
+#: hocwp/admin/admin-setting-page-custom-code.php:63
 msgid "Body Code"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-custom-code.php:65
-msgid "Add code before <code>&lt;/body&gt;</code> tag."
+#: hocwp/admin/admin-setting-page-custom-code.php:68
+msgid "Add code between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> tag."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:78
+msgid "Footer Code"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:83
+msgid "Add code before closing <code>&lt;body&gt;</code> tag."
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-discussion.php:3
@@ -1374,20 +1382,20 @@ msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/inc/template-general.php:1121
+#: hocwp/inc/template-general.php:1125
 #, php-format
 msgid "Share on %s"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1133
+#: hocwp/inc/template-general.php:1137
 msgid "Submit URL"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1134
+#: hocwp/inc/template-general.php:1138
 msgid "Submit URL to Google Search Console"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1239
+#: hocwp/inc/template-general.php:1243
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
