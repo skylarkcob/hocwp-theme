@@ -73,8 +73,15 @@
     background: none;
     padding: 8px 10px;
     border-bottom: 1px solid #dedede;
-    color: #555;
-    opacity: 0.7;
+    color: #000;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.hocwp-theme .settings-box #nav li a .dashicons {
+    margin-right: 1px;
+    line-height: 22px;
+    color: #999;
 }
 
 .hocwp-theme .settings-box .module-footer,
@@ -97,8 +104,13 @@
 
 .hocwp-theme .settings-box #nav li.active a {
     background: #fcfcfc;
-    color: #333;
+    color: #555;
     opacity: 1;
+    font-weight: 600;
+}
+
+.hocwp-theme .settings-box #nav li.active a .dashicons {
+    color: #555;
 }
 
 .hocwp-theme .settings-box #nav + div {

@@ -15,7 +15,8 @@ jQuery(document).ready(function ($) {
                 }
 
                 defaultSettings.codemirror.mode = mode;
-                wp.codeEditor.initialize(element, defaultSettings);
+                var instance = wp.codeEditor.initialize(element, defaultSettings);
+                instance.codemirror.setSize(null, element.height());
             });
         }
 

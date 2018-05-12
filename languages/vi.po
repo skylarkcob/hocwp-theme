@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-05-12 17:06+0700\n"
-"PO-Revision-Date: 2018-05-12 17:07+0700\n"
+"POT-Creation-Date: 2018-05-12 22:10+0700\n"
+"PO-Revision-Date: 2018-05-12 22:34+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -38,25 +38,40 @@ msgstr "Mã tùy chỉnh"
 msgid "Google Analytics"
 msgstr "Mã Google Analytics"
 
-#: hocwp/admin/admin-setting-page-custom-code.php:32
+#: hocwp/admin/admin-setting-page-custom-code.php:33
 msgid "Cascading Style Sheets"
 msgstr "Mã CSS"
 
-#: hocwp/admin/admin-setting-page-custom-code.php:46
+#: hocwp/admin/admin-setting-page-custom-code.php:48
 msgid "Head Code"
 msgstr "Mã ở thẻ head"
 
-#: hocwp/admin/admin-setting-page-custom-code.php:51
-msgid "Add code at the end of the <code>&lt;head&gt;</code> tag."
-msgstr "Thêm mã vào giữa thẻ <code>&lt;head&gt;</code>."
+#: hocwp/admin/admin-setting-page-custom-code.php:53
+msgid ""
+"Add code between <code>&lt;head&gt;</code> and  <code>&lt;/head&gt;</code> "
+"tag."
+msgstr ""
+"Thêm mã vào giữa thẻ <code>&lt;head&gt;</code> và <code>&lt;/head&gt;</code>."
 
-#: hocwp/admin/admin-setting-page-custom-code.php:60
+#: hocwp/admin/admin-setting-page-custom-code.php:63
 msgid "Body Code"
 msgstr "Mã ở thẻ body"
 
-#: hocwp/admin/admin-setting-page-custom-code.php:65
-msgid "Add code before <code>&lt;/body&gt;</code> tag."
-msgstr "Thêm mã vào giữa thẻ <code>&lt;/body&gt;</code>."
+#: hocwp/admin/admin-setting-page-custom-code.php:68
+msgid ""
+"Add code between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> "
+"tag."
+msgstr ""
+"Thêm mã vào giữa thẻ <code>&lt;body&gt;</code> và <code>&lt;/body&gt;</code>."
+
+#: hocwp/admin/admin-setting-page-custom-code.php:78
+msgid "Footer Code"
+msgstr "Mã dưới chân trang"
+
+#: hocwp/admin/admin-setting-page-custom-code.php:83
+msgid "Add code before closing <code>&lt;body&gt;</code> tag."
+msgstr ""
+"Thêm mã vào chân trang trước khi kết thúc thẻ <code>&lt;/body&gt;</code>."
 
 #: hocwp/admin/admin-setting-page-discussion.php:3
 msgid "Discussion"
@@ -1469,20 +1484,20 @@ msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1121
+#: hocwp/inc/template-general.php:1125
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1133
+#: hocwp/inc/template-general.php:1137
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1134
+#: hocwp/inc/template-general.php:1138
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1239
+#: hocwp/inc/template-general.php:1243
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
@@ -2006,9 +2021,6 @@ msgstr "Xem tiếp %s <span class=\"meta-nav\">&rarr;</span>"
 #~| msgid "View Movie"
 #~ msgid "View Upcoming"
 #~ msgstr "Xem phim"
-
-#~ msgid "Footer Widgets"
-#~ msgstr "Hiển thị widget dưới chân trang"
 
 #, fuzzy
 #~| msgid "Primary"
