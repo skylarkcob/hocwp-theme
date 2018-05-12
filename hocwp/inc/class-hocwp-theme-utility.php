@@ -21,6 +21,15 @@ final class HOCWP_Theme_Utility {
 			$amp = get_query_var( 'amp' );
 		}
 
+		if ( 1 != $amp ) {
+			$request = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
+			$request = basename( $request );
+
+			if ( 'amp' === $request ) {
+				return true;
+			}
+		}
+
 		return ( 1 == $amp );
 	}
 
@@ -1284,12 +1293,9 @@ final class HOCWP_Theme_Utility {
 		global $pagenow;
 
 		if ( ! empty( $admin_page ) ) {
-			$admin_page = str_replace( '-', '_', $admin_page );
-			$screen     = get_current_screen();
+			global $plugin_page;
 
-			$admin_page = 'appearance_page_' . $admin_page;
-
-			if ( $admin_page != $screen->id ) {
+			if ( ! empty( $plugin_page ) && $admin_page != $plugin_page ) {
 				return false;
 			}
 		}
@@ -1815,6 +1821,11 @@ final class HOCWP_Theme_Utility {
 	public function enqueue_ajax_overlay() {
 		wp_enqueue_style( 'hocwp-theme-ajax-overlay-style' );
 		wp_enqueue_script( 'hocwp-theme-ajax-button' );
+	}
+
+	public function enqueue_code_editor() {
+		wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
+		wp_enqueue_script( 'hocwp-theme-code-editor' );
 	}
 
 	public function get_theme_options( $tab ) {
