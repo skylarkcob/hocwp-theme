@@ -850,63 +850,6 @@ class HOCWP_Theme_Utility {
 		return HT_Util()->get_theme_option_post( $option_name, 'page', $tab, $slug );
 	}
 
-	public function is_post_new_update_page() {
-		return $this->is_admin_page( array( 'post.php', 'post-new.php' ) );
-	}
-
-	public function is_edit_post_new_update_page() {
-		return ( $this->is_post_new_update_page() || $this->is_admin_page( 'edit.php' ) );
-	}
-
-	public function get_current_post_type() {
-		global $post_type, $typenow;
-		$result = $post_type;
-
-		if ( empty( $result ) ) {
-			$result = $typenow;
-		}
-
-		if ( empty( $result ) ) {
-			if ( isset( $_GET['post_type'] ) ) {
-				$result = $_GET['post_type'];
-			} else {
-				$action  = isset( $_GET['action'] ) ? $_GET['action'] : '';
-				$post_id = isset( $_GET['post'] ) ? $_GET['post'] : 0;
-
-				if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
-					$post   = get_post( $post_id );
-					$result = $post->post_type;
-				}
-			}
-		}
-
-		return $result;
-	}
-
-	public function get_current_new_post() {
-		global $pagenow;
-		$result = null;
-		if ( 'post-new.php' == $pagenow ) {
-			$query_args = array(
-				'post_status'    => 'auto-draft',
-				'orderby'        => 'date',
-				'order'          => 'desc',
-				'posts_per_page' => 1,
-				'cache'          => false
-			);
-			$post_type  = $this->get_current_post_type();
-			if ( ! empty( $post_type ) ) {
-				$query_args['post_type'] = $post_type;
-			}
-			$query = new WP_Query( $query_args );
-			if ( $query->have_posts() ) {
-				$result = array_shift( $query->posts );
-			}
-		}
-
-		return $result;
-	}
-
 	private function post_type_labels( $name, $singular_name, $menu_name ) {
 		$labels = array(
 			'name'                  => $name,
@@ -1433,6 +1376,30 @@ class HOCWP_Theme_Utility {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Admin()->' . __FUNCTION__ . '()' );
 
 		return HT_Admin()->is_admin_page( $pages, $admin_page );
+	}
+
+	public function is_post_new_update_page() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Admin()->' . __FUNCTION__ . '()' );
+
+		return HT_Admin()->is_post_new_update_page();
+	}
+
+	public function is_edit_post_new_update_page() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Admin()->' . __FUNCTION__ . '()' );
+
+		return HT_Admin()->is_edit_post_new_update_page();
+	}
+
+	public function get_current_post_type() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Admin()->' . __FUNCTION__ . '()' );
+
+		return HT_Admin()->get_current_post_type();
+	}
+
+	public function get_current_new_post() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Admin()->' . __FUNCTION__ . '()' );
+
+		return HT_Admin()->get_current_new_post();
 	}
 }
 

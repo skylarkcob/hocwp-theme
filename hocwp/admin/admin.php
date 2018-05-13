@@ -6,7 +6,7 @@ if ( empty( $plugin_page ) && isset( $_GET['page'] ) ) {
 }
 
 if ( empty( $post_type ) ) {
-	$post_type = HT_Util()->get_current_post_type();
+	$post_type = HT_Admin()->get_current_post_type();
 }
 
 function hocwp_theme_admin_notices_action() {

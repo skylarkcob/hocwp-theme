@@ -28,7 +28,7 @@ function hocwp_theme_meta_box_google_maps( $id = 'google_maps', $post_type = 'po
 function hocwp_theme_meta_box_editor( $args = array() ) {
 	$post_type    = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
 	$box_title    = isset( $args['title'] ) ? $args['title'] : __( 'Additional Information', 'hocwp-theme' );
-	$current_type = HT_Util()->get_current_post_type();
+	$current_type = HT_Admin()->get_current_post_type();
 
 	if ( is_array( $current_type ) ) {
 		$current_type = current( $current_type );
