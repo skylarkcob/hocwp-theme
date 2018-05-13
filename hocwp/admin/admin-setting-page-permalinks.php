@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_permalinks_tab( $tabs ) {
-	$tabs['permalinks'] = __( 'Permalinks', 'hocwp-theme' );
+	$tabs['permalinks'] = array(
+		'text' => __( 'Permalinks', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-admin-links"></span>'
+	);
 
 	return $tabs;
 }

@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_media_tab( $tabs ) {
-	$tabs['media'] = __( 'Media', 'hocwp-theme' );
+	$tabs['media'] = array(
+		'text' => __( 'Media', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-paperclip"></span>'
+	);
 
 	return $tabs;
 }

@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.3.8' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.3.9' );
 
 /**
  * Theme developing mode.
@@ -154,6 +154,13 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-sanitize.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-utility.php';
+
+	if ( is_admin() ) {
+		require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin.php';
+	} else {
+		require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-frontend.php';
+	}
+
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-requirement.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-svg-icon.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-html-tag.php';

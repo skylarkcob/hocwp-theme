@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_general_tab( $tabs ) {
-	$tabs['general'] = __( 'General', 'hocwp-theme' );
+	$tabs['general'] = array(
+		'text' => __( 'General', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-admin-site"></span>'
+	);
 
 	return $tabs;
 }

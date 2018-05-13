@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_discussion_tab( $tabs ) {
-	$tabs['discussion'] = __( 'Discussion', 'hocwp-theme' );
+	$tabs['discussion'] = array(
+		'text' => __( 'Discussion', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-testimonial"></span>'
+	);
 
 	return $tabs;
 }

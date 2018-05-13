@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_custom_code_tab( $tabs ) {
-	$tabs['custom_code'] = __( 'Custom Code', 'hocwp-theme' );
+	$tabs['custom_code'] = array(
+		'text' => __( 'Custom Code', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-editor-code"></span>'
+	);
 
 	return $tabs;
 }

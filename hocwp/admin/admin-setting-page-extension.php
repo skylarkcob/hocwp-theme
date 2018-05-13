@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_extension_tab( $tabs ) {
-	$tabs['extension'] = __( 'Extensions', 'hocwp-theme' );
+	$tabs['extension'] = array(
+		'text' => __( 'Extensions', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-admin-plugins"></span>'
+	);
 
 	return $tabs;
 }
@@ -8,6 +11,7 @@ function hocwp_theme_settings_page_extension_tab( $tabs ) {
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_extension_tab' );
 
 global $hocwp_theme;
+
 if ( 'extension' != $hocwp_theme->option->tab ) {
 	return;
 }

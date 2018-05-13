@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_reading_tab( $tabs ) {
-	$tabs['reading'] = __( 'Reading', 'hocwp-theme' );
+	$tabs['reading'] = array(
+		'text' => __( 'Reading', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-visibility"></span>'
+	);
 
 	return $tabs;
 }
