@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_home_tab( $tabs ) {
-	$tabs['home'] = __( 'Home', 'hocwp-theme' );
+	$tabs['home'] = array(
+		'text' => __( 'Home', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-admin-home"></span>'
+	);
 
 	return $tabs;
 }

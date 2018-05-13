@@ -369,7 +369,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 									$class = 'nav-tab';
 									$icon  = '<span class="dashicons dashicons-admin-page"></span>';
 
-									if ( is_array( $icon ) && isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
+									if ( is_array( $tab ) && isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
 										$icon = $tab['icon'];
 									}
 

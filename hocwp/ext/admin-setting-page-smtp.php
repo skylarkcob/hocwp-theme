@@ -6,7 +6,10 @@ if ( ! $load ) {
 }
 
 function hocwp_theme_settings_page_smtp_tab( $tabs ) {
-	$tabs['smtp'] = __( 'SMTP Email', 'hocwp-theme' );
+	$tabs['smtp'] = array(
+		'text' => __( 'SMTP Email', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-email-alt"></span>'
+	);
 
 	return $tabs;
 }

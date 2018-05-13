@@ -698,7 +698,7 @@ function hocwp_theme_wp_footer_action() {
 	$back_to_top = isset( $options['reading']['back_to_top'] ) ? $options['reading']['back_to_top'] : '';
 
 	if ( 1 == $back_to_top ) {
-		HT_Util()->back_to_top_button();
+		HT_Frontend()->back_to_top_button();
 	}
 }
 

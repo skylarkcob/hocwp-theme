@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_writing_tab( $tabs ) {
-	$tabs['writing'] = __( 'Writing', 'hocwp-theme' );
+	$tabs['writing'] = array(
+		'text' => __( 'Writing', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-edit"></span>'
+	);
 
 	return $tabs;
 }

@@ -1,6 +1,9 @@
 <?php
 function hocwp_theme_settings_page_social_tab( $tabs ) {
-	$tabs['social'] = __( 'Socials', 'hocwp-theme' );
+	$tabs['social'] = array(
+		'text' => __( 'Socials', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-share"></span>'
+	);
 
 	return $tabs;
 }
