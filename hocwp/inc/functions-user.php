@@ -70,3 +70,47 @@ function hocwp_theme_user_contactmethods_filter( $methods ) {
 }
 
 add_filter( 'user_contactmethods', 'hocwp_theme_user_contactmethods_filter' );
+
+function hocwp_theme_wp_new_user_notification_email_filter( $data, $user, $blog_name ) {
+	if ( $user instanceof WP_User ) {
+		$message = isset( $data['message'] ) ? $data['message'] : '';
+
+		preg_match_all( '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $message, $matches );
+
+		$matches = isset( $matches[0] ) ? $matches[0] : '';
+
+		$matches = (array) $matches;
+
+		if ( isset( $matches[1] ) && ! empty( $matches[0] ) ) {
+			$message = str_replace( '<' . $matches[0] . '>', '', $message );
+			$url     = '<a href="' . esc_url( $matches[0] ) . '" target="_blank">' . $matches[1] . '</a>' . PHP_EOL;
+			$message = str_replace( $matches[1], $url, $message );
+		}
+
+		if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
+			if ( ! empty( $message ) ) {
+				$message .= PHP_EOL;
+			}
+
+			$message .= __( 'If the link above not working, just copy the link below and paste it to browser address bar:', 'hocwp-theme' ) . PHP_EOL;
+			$message .= $matches[0];
+		}
+
+		$data['message'] = $message;
+	}
+
+	return $data;
+}
+
+add_filter( 'wp_new_user_notification_email', 'hocwp_theme_wp_new_user_notification_email_filter', 10, 3 );
+
+function hocwp_theme_wp_mail_filter( $data ) {
+	if ( ! isset( $data['headers'] ) || empty( $data['headers'] ) ) {
+		$data['headers'] = "Content-Type: text/html; charset=UTF-8\r\n";
+		$data['message'] = wpautop( $data['message'] );
+	}
+
+	return $data;
+}
+
+add_filter( 'wp_mail', 'hocwp_theme_wp_mail_filter' );
