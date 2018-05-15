@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-05-14 21:43+0700\n"
+"POT-Creation-Date: 2018-05-15 09:41+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -115,7 +115,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:4 hocwp/admin/admin.php:51 hocwp/inc/setup-after.php:28
+#: hocwp/admin/admin-setting-page-extension.php:4 hocwp/admin/admin.php:51 hocwp/inc/setup-after.php:30
 msgid "Extensions"
 msgstr ""
 
@@ -317,7 +317,7 @@ msgstr ""
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:57 hocwp/inc/setup-after.php:35
+#: hocwp/admin/admin.php:57 hocwp/inc/setup-after.php:39
 msgid "PHP Info"
 msgstr ""
 
@@ -1251,15 +1251,15 @@ msgstr ""
 msgid "Display widgets on 404 page."
 msgstr ""
 
-#: hocwp/inc/functions-license.php:27
+#: hocwp/inc/functions-license.php:33
 msgid "Your theme is blocked."
 msgstr ""
 
-#: hocwp/inc/functions-license.php:28
+#: hocwp/inc/functions-license.php:34
 msgid "Invalid License"
 msgstr ""
 
-#: hocwp/inc/functions-license.php:37
+#: hocwp/inc/functions-license.php:45
 msgid "Notify license"
 msgstr ""
 
@@ -1342,8 +1342,19 @@ msgstr ""
 msgid "If the link above not working, just copy the link below and paste it to browser address bar:"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:181
+#: hocwp/inc/setup-after.php:197
 msgid "Mobile"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:234
+#, php-format
+msgid ""
+"Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
+"working normally."
+msgstr ""
+
+#: hocwp/inc/setup-after.php:235
+msgid "Missing Required Plugins"
 msgstr ""
 
 #: hocwp/inc/template-comments.php:83 hocwp/inc/template-comments.php:126 hocwp/inc/template-comments.php:140

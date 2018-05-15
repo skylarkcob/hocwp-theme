@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-05-14 21:43+0700\n"
-"PO-Revision-Date: 2018-05-14 21:44+0700\n"
+"POT-Creation-Date: 2018-05-15 09:41+0700\n"
+"PO-Revision-Date: 2018-05-15 09:42+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -125,7 +125,7 @@ msgid "Mail Message"
 msgstr "Nội dung thư"
 
 #: hocwp/admin/admin-setting-page-extension.php:4 hocwp/admin/admin.php:51
-#: hocwp/inc/setup-after.php:28
+#: hocwp/inc/setup-after.php:30
 msgid "Extensions"
 msgstr "Gói mở rộng"
 
@@ -349,7 +349,7 @@ msgstr "Viết"
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:57 hocwp/inc/setup-after.php:35
+#: hocwp/admin/admin.php:57 hocwp/inc/setup-after.php:39
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
@@ -1349,15 +1349,15 @@ msgstr "Thanh bên trang 404"
 msgid "Display widgets on 404 page."
 msgstr "Hiển thị widget trên trang 404."
 
-#: hocwp/inc/functions-license.php:27
+#: hocwp/inc/functions-license.php:33
 msgid "Your theme is blocked."
 msgstr "Giao diện của bạn đã bị khóa."
 
-#: hocwp/inc/functions-license.php:28
+#: hocwp/inc/functions-license.php:34
 msgid "Invalid License"
 msgstr "Bản quyền trái phép"
 
-#: hocwp/inc/functions-license.php:37
+#: hocwp/inc/functions-license.php:45
 msgid "Notify license"
 msgstr "Thông báo bản quyền"
 
@@ -1444,9 +1444,24 @@ msgstr ""
 "Nếu đường link bên trên không hoạt động, bạn chỉ cần sao chép đường dẫn bên "
 "dưới và bỏ vào thanh địa chỉ của trình duyệt:"
 
-#: hocwp/inc/setup-after.php:181
+#: hocwp/inc/setup-after.php:197
 msgid "Mobile"
 msgstr "Điện thoại"
+
+#: hocwp/inc/setup-after.php:234
+#, php-format
+msgid ""
+"Sorry! Theme gets error because of missing required plugins. If you are "
+"admin of this site, please install and activate plugin %s for theme working "
+"normally."
+msgstr ""
+"Xin lỗi! Giao diện bị lỗi do thiếu các plugin bắt buộc. Nếu bạn là người "
+"quản trị trang web này, xin vui lòng cài đặt và kích hoạt plugin %s để giao "
+"diện được hoạt động bình thường."
+
+#: hocwp/inc/setup-after.php:235
+msgid "Missing Required Plugins"
+msgstr "Thiếu các plugin bắt buộc"
 
 #: hocwp/inc/template-comments.php:83 hocwp/inc/template-comments.php:126
 #: hocwp/inc/template-comments.php:140
