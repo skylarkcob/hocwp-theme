@@ -1415,7 +1415,11 @@ class HOCWP_Theme_Utility {
 		}
 
 		if ( ! $name && ! empty( $folder_name ) ) {
-			$plugin_dir = trailingslashit( WP_PLUGIN_DIR ) . $folder_name;
+			$plugin_dir = $folder_name;
+
+			if ( ! is_dir( $plugin_dir ) ) {
+				$plugin_dir = trailingslashit( WP_PLUGIN_DIR ) . $folder_name;
+			}
 
 			if ( is_dir( $plugin_dir ) ) {
 				$files = scandir( $plugin_dir );
