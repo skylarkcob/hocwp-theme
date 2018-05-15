@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-05-15 09:41+0700\n"
+"POT-Creation-Date: 2018-05-15 10:59+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1346,14 +1346,14 @@ msgstr ""
 msgid "Mobile"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:234
+#: hocwp/inc/setup-after.php:265
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
 "working normally."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:235
+#: hocwp/inc/setup-after.php:266
 msgid "Missing Required Plugins"
 msgstr ""
 

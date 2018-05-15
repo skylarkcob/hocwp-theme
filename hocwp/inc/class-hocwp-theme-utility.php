@@ -1341,6 +1341,40 @@ class HOCWP_Theme_Utility {
 		return $color;
 	}
 
+	public function is_plugin_active( $plugin ) {
+		if ( false !== strpos( $plugin, '.php' ) ) {
+			return is_plugin_active( $plugin );
+		}
+
+		$plugin_dir = trailingslashit( WP_PLUGIN_DIR ) . $plugin;
+
+		if ( ! is_dir( $plugin_dir ) ) {
+			return false;
+		} else {
+			$files = scandir( $plugin_dir );
+
+			foreach ( $files as $file ) {
+				if ( '.' !== $file && '..' !== $file ) {
+					$file = trailingslashit( $plugin_dir ) . $file;
+
+					if ( is_file( $file ) ) {
+						$data = get_file_data( $file, array( 'Name' => 'Plugin Name' ) );
+
+						if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) ) {
+							$data = HT_Util()->get_plugin_info( $data['Name'] );
+
+							if ( empty( $data ) || ! isset( $data['basename'] ) ) {
+								return is_plugin_active( $data['basename'] );
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public function get_wp_plugin_info( $name, $args = array(), $cache = true, $action = 'plugin_information' ) {
 		$defaults = array(
 			'fields' => array(
@@ -1375,18 +1409,58 @@ class HOCWP_Theme_Utility {
 		return $api;
 	}
 
-	public function get_plugin_info( $name ) {
+	public function get_plugin_info( $name, $folder_name = '' ) {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		$plugins = get_plugins();
+		if ( ! $name && ! empty( $folder_name ) ) {
+			$plugin_dir = trailingslashit( WP_PLUGIN_DIR ) . $folder_name;
 
-		foreach ( $plugins as $file => $data ) {
-			if ( $name == $data['Name'] ) {
-				$data['basename'] = $file;
+			if ( is_dir( $plugin_dir ) ) {
+				$files = scandir( $plugin_dir );
 
-				return $data;
+				foreach ( $files as $file ) {
+					if ( '.' !== $file && '..' !== $file ) {
+						$file = trailingslashit( $plugin_dir ) . $file;
+
+						if ( is_file( $file ) ) {
+							$headers = array(
+								'Name' => 'Plugin Name'
+							);
+
+							$data = get_file_data( $file, $headers );
+
+							if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) ) {
+								return HT_Util()->get_plugin_info( $data['Name'] );
+							}
+						}
+					}
+				}
+			}
+
+			$api = HT_Util()->get_wp_plugin_info( $folder_name );
+
+			if ( ! is_wp_error( $api ) ) {
+				if ( ! is_array( $api ) ) {
+					$api = (array) $api;
+				}
+
+				return $api;
+			}
+
+			return null;
+		}
+
+		if ( is_string( $name ) && ! empty( $name ) ) {
+			$plugins = get_plugins();
+
+			foreach ( $plugins as $file => $data ) {
+				if ( $name == $data['Name'] ) {
+					$data['basename'] = $file;
+
+					return $data;
+				}
 			}
 		}
 

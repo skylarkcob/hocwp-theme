@@ -48,18 +48,22 @@ final class HOCWP_Theme_Requirement {
 
 			foreach ( $plugins as $plugin ) {
 				$path = trailingslashit( $root ) . $plugin;
+
 				if ( ! HT()->is_dir( $path ) ) {
 					$required = true;
 					break;
 				} else {
 					$tmp = get_plugins();
+
 					foreach ( $tmp as $key => $value ) {
 						$slug = dirname( $key );
+
 						if ( $slug == $plugin ) {
 							$plugin = $key;
 							break;
 						}
 					}
+
 					if ( ! in_array( $plugin, $active_plugins ) ) {
 						$required = true;
 						break;
