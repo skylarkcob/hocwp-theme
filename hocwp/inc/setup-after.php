@@ -223,18 +223,48 @@ function hocwp_theme_check_environment() {
 
 			$plugins = array_map( 'trim', $plugins );
 
+			$url = admin_url( 'plugins.php' );
+
+			$die = false;
+
 			foreach ( $plugins as $plugin ) {
+				$name = $plugin;
 				$info = HT_Util()->get_wp_plugin_info( $plugin );
 
 				if ( ! is_wp_error( $info ) ) {
 					$data = HT_Util()->get_plugin_info( $info->name );
 
 					if ( empty( $data ) || ! isset( $data['basename'] ) || ! is_plugin_active( $data['basename'] ) ) {
-						$plugin  = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '">' . $info->name . '</a>';
-						$message = sprintf( __( 'Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme working normally.', 'hocwp-theme' ), $plugin );
-						wp_die( $message, __( 'Missing Required Plugins', 'hocwp-theme' ) );
-						exit;
+						$url  = admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' );
+						$die  = true;
+						$name = $info->name;
 					}
+				} else {
+					$plugin_dir = WP_CONTENT_DIR . '/plugins/' . $plugin;
+
+					if ( ! is_dir( $plugin_dir ) ) {
+						$die = true;
+					} else {
+						$data = HT_Util()->get_plugin_info( null, $plugin );
+
+						if ( empty( $data ) || ! isset( $data['basename'] ) || ! is_plugin_active( $data['basename'] ) ) {
+							$die = true;
+							$url = admin_url( 'plugins.php?plugin_status=inactive' );
+
+							if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) ) {
+								$name = $data['Name'];
+							}
+						}
+					}
+				}
+
+				if ( $die ) {
+					do_action( 'hocwp_theme_missing_required_plugins', $plugin, $info, $plugins );
+
+					$plugin  = '<a href="' . esc_url( $url ) . '">' . $name . '</a>';
+					$message = sprintf( __( 'Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme working normally.', 'hocwp-theme' ), $plugin );
+					wp_die( $message, __( 'Missing Required Plugins', 'hocwp-theme' ) );
+					exit;
 				}
 			}
 		}
