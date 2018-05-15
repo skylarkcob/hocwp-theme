@@ -172,27 +172,6 @@ function hocwp_theme_register_widgets() {
 
 	unset( $sidebar );
 
-	$args = array(
-		'post_type'      => 'hocwp_sidebar',
-		'posts_per_page' => - 1
-	);
-
-	$query = new WP_Query( $args );
-
-	if ( $query->have_posts() ) {
-		foreach ( $query->posts as $post ) {
-			$args = array(
-				'id'          => $post->post_name,
-				'name'        => $post->post_title,
-				'description' => $post->post_excerpt
-			);
-
-			register_sidebar( $args );
-		}
-	}
-
-	unset( $args, $query );
-
 	register_nav_menus( array(
 		'mobile' => esc_html__( 'Mobile', 'hocwp-theme' ),
 	) );
