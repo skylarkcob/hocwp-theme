@@ -65,23 +65,9 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			$lists   = array();
 
 			foreach ( $plugins as $name ) {
-				$args    = array(
-					'fields' => array(
-						'last_updated'      => true,
-						'icons'             => true,
-						'active_installs'   => true,
-						'short_description' => true
-					),
-					'slug'   => $name
-				);
-				$tr_name = 'hocwp_theme_plugin_api_' . md5( json_encode( $args ) );
-
-				if ( false === ( $api = get_transient( $tr_name ) ) ) {
-					$api = plugins_api( 'plugin_information', $args );
-				}
+				$api = HT_Util()->get_wp_plugin_info( $name );
 
 				if ( ! is_wp_error( $api ) ) {
-					set_transient( $tr_name, $api, DAY_IN_SECONDS );
 					$lists[] = $api;
 				}
 			}
@@ -159,6 +145,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$display_tabs = array();
 		$url          = self_admin_url( 'themes.php?page=hocwp_theme_plugins' );
+
 		foreach ( (array) $tabs as $action => $text ) {
 			$class = ( $action === $tab ) ? ' current' : '';
 			$href  = add_query_arg( 'tab', $action, $url );
@@ -169,6 +156,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 			$display_tabs[ 'plugin-install-' . $action ] = "<a href='$href' class='$class'>$text</a>";
 		}
+
 		// No longer a real tab.
 		unset( $display_tabs['plugin-install-upload'] );
 
@@ -190,6 +178,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 					foreach ( $views as $class => $view ) {
 						$views[ $class ] = "\t<li class='$class'>$view";
 					}
+
 					echo implode( " </li>\n", $views ) . "</li>\n";
 				}
 				?>

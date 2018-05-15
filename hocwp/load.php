@@ -2,7 +2,7 @@
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.3.9' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.4.0' );
 
 /**
  * Theme developing mode.
@@ -188,6 +188,7 @@ function hocwp_theme_load() {
 	 * Extensions.
 	 */
 	hocwp_load_all_extensions( HOCWP_THEME_CORE_PATH );
+	hocwp_load_all_extensions( HOCWP_THEME_CUSTOM_PATH );
 
 	if ( is_admin() ) {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin.php';

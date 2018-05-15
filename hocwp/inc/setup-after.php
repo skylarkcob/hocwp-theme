@@ -22,20 +22,25 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			'href'   => admin_url( 'themes.php?page=hocwp_theme' ),
 			'parent' => 'themes'
 		);
+
 		$wp_admin_bar->add_node( $args );
+
 		$args = array(
 			'id'     => 'theme-extensions',
 			'title'  => __( 'Extensions', 'hocwp-theme' ),
 			'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=extension' ),
 			'parent' => 'themes'
 		);
+
 		$wp_admin_bar->add_node( $args );
+
 		$args = array(
 			'id'     => 'theme-phpinfo',
 			'title'  => __( 'PHP Info', 'hocwp-theme' ),
 			'href'   => admin_url( 'themes.php?page=hocwp_theme_phpinfo' ),
 			'parent' => 'themes'
 		);
+
 		$wp_admin_bar->add_node( $args );
 	}
 }
@@ -64,16 +69,21 @@ add_action( 'login_head', 'hocwp_theme_site_icon', 99 );
 
 function hocwp_theme_page_templates( $post_templates ) {
 	$dir = HOCWP_THEME_CUSTOM_PATH . '/page-templates';
+
 	if ( HT()->is_dir( $dir ) ) {
 		$files = scandir( $dir );
+
 		foreach ( $files as $file ) {
 			$info = pathinfo( $file );
+
 			if ( isset( $info['extension'] ) && 'php' == $info['extension'] ) {
 				$full_path = trailingslashit( $dir ) . $file;
 				$content   = HT_Util()->read_all_text( $full_path );
+
 				if ( ! preg_match( '|Template Name:(.*)$|mi', $content, $header ) ) {
 					continue;
 				}
+
 				$post_templates[ 'custom/page-templates/' . $file ] = _cleanup_header_comment( $header[1] );
 			}
 		}
@@ -98,11 +108,13 @@ function hocwp_theme_wp_setup_nav_menu_item_filter( $menu_item ) {
 			$home_url    = home_url( '/' );
 			$menu_domain = HT()->get_domain_name( $menu_url );
 			$home_domain = HT()->get_domain_name( $home_url );
+
 			if ( $menu_domain != $home_domain ) {
 				$menu_item->url = $home_url;
 				update_post_meta( $menu_item->ID, '_menu_item_url', $home_url );
 				wp_update_nav_menu_item( $menu_item->ID, $menu_item->db_id, array( 'url' => $home_url ) );
 			}
+
 			unset( $menu_url, $home_url, $menu_domain, $home_domain );
 		}
 	}
@@ -121,16 +133,20 @@ add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_filter
 function hocwp_theme_update_option_url( $old_url, $new_url ) {
 	if ( 'localhost' != $new_url && ! HT()->is_IP( $new_url ) ) {
 		$option = get_option( 'hocwp_theme' );
+
 		if ( HT()->array_has_value( $option ) ) {
 			$option = json_encode( $option );
 			$option = str_replace( $old_url, $new_url, $option );
+
 			if ( ! empty( ( $option ) ) ) {
 				$option = json_decode( $option, true );
+
 				if ( HT()->array_has_value( $option ) ) {
 					update_option( 'hocwp_theme', $option );
 				}
 			}
 		}
+
 		unset( $option );
 	}
 }
@@ -193,5 +209,38 @@ function hocwp_theme_wp_calculate_image_srcset( $sources, $size_array, $image_sr
 }
 
 add_filter( 'wp_calculate_image_srcset', 'hocwp_theme_wp_calculate_image_srcset', 99, 5 );
+
+function hocwp_theme_check_environment() {
+	global $pagenow;
+
+	if ( ! is_admin() && 'wp-login.php' != $pagenow ) {
+		$plugins = HT_Requirement()->get_required_plugins();
+
+		if ( ! empty( $plugins ) ) {
+			if ( ! is_array( $plugins ) ) {
+				$plugins = explode( ',', $plugins );
+			}
+
+			$plugins = array_map( 'trim', $plugins );
+
+			foreach ( $plugins as $plugin ) {
+				$info = HT_Util()->get_wp_plugin_info( $plugin );
+
+				if ( ! is_wp_error( $info ) ) {
+					$data = HT_Util()->get_plugin_info( $info->name );
+
+					if ( empty( $data ) || ! isset( $data['basename'] ) || ! is_plugin_active( $data['basename'] ) ) {
+						$plugin  = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '">' . $info->name . '</a>';
+						$message = sprintf( __( 'Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme working normally.', 'hocwp-theme' ), $plugin );
+						wp_die( $message, __( 'Missing Required Plugins', 'hocwp-theme' ) );
+						exit;
+					}
+				}
+			}
+		}
+	}
+}
+
+add_action( 'init', 'hocwp_theme_check_environment' );
 
 do_action( 'hocwp_theme_setup_after' );

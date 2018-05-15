@@ -1341,6 +1341,58 @@ class HOCWP_Theme_Utility {
 		return $color;
 	}
 
+	public function get_wp_plugin_info( $name, $args = array(), $cache = true, $action = 'plugin_information' ) {
+		$defaults = array(
+			'fields' => array(
+				'last_updated'      => true,
+				'icons'             => true,
+				'active_installs'   => true,
+				'short_description' => true
+			),
+			'slug'   => $name
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$tr_name = 'hocwp_theme_plugin_api_' . md5( json_encode( $args ) );
+
+		if ( ! $cache || false === ( $api = get_transient( $tr_name ) ) ) {
+			if ( ! function_exists( 'plugins_api' ) ) {
+				require ABSPATH . 'wp-admin/includes/plugin-install.php';
+			}
+
+			$api = plugins_api( $action, $args );
+		}
+
+		if ( $cache && ! is_wp_error( $api ) ) {
+			if ( ! is_numeric( $cache ) ) {
+				$cache = DAY_IN_SECONDS;
+			}
+
+			set_transient( $tr_name, $api, $cache );
+		}
+
+		return $api;
+	}
+
+	public function get_plugin_info( $name ) {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$plugins = get_plugins();
+
+		foreach ( $plugins as $file => $data ) {
+			if ( $name == $data['Name'] ) {
+				$data['basename'] = $file;
+
+				return $data;
+			}
+		}
+
+		return null;
+	}
+
 	public static function pagination( $args = array() ) {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Frontend()->' . __FUNCTION__ . '()' );
 		HT_Frontend()->pagination( $args );
