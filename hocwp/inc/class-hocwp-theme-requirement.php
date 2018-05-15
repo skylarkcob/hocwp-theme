@@ -17,7 +17,7 @@ final class HOCWP_Theme_Requirement {
 	public static function get_required_plugins() {
 		$plugins = array();
 
-		if ( defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) ) {
+		if ( defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) && ! empty( HOCWP_THEME_REQUIRED_PLUGINS ) ) {
 
 			if ( is_string( HOCWP_THEME_REQUIRED_PLUGINS ) ) {
 				$plugins = explode( ',', HOCWP_THEME_REQUIRED_PLUGINS );
