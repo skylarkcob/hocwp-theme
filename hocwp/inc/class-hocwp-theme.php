@@ -689,6 +689,7 @@ final class HOCWP_Theme {
 
 	public function bool_to_string( $value, $uppercase = false ) {
 		$value = ( (bool) $value ) ? 'true' : 'false';
+
 		if ( $uppercase ) {
 			$value = strtoupper( $value );
 		}
@@ -698,6 +699,14 @@ final class HOCWP_Theme {
 
 	public function bool_to_int( $value ) {
 		return ( $value ) ? 1 : 0;
+	}
+
+	public function int_to_bool( $value ) {
+		return ! ( 0 === $value );
+	}
+
+	public function int_to_bool_string( $value, $uppercase = false ) {
+		return $this->bool_to_string( $this->int_to_bool( $value ), $uppercase );
 	}
 }
 

@@ -204,13 +204,13 @@ function hocwp_theme_check_environment() {
 
 			$url = admin_url( 'plugins.php' );
 
-			$die = false;
+			$die = $recheck = false;
 
 			foreach ( $plugins as $plugin ) {
 				$name = $plugin;
 				$info = HT_Util()->get_wp_plugin_info( $plugin );
 
-				if ( ! is_wp_error( $info ) ) {
+				if ( ! is_wp_error( $info ) && isset( $info->name ) ) {
 					$data = HT_Util()->get_plugin_info( $info->name );
 
 					if ( empty( $data ) || ! isset( $data['basename'] ) || ! is_plugin_active( $data['basename'] ) ) {
@@ -219,6 +219,10 @@ function hocwp_theme_check_environment() {
 						$name = $info->name;
 					}
 				} else {
+					$recheck = true;
+				}
+
+				if ( $die || $recheck ) {
 					$plugin_dir = WP_CONTENT_DIR . '/plugins/' . $plugin;
 
 					if ( ! is_dir( $plugin_dir ) ) {
@@ -230,9 +234,15 @@ function hocwp_theme_check_environment() {
 							$die = true;
 							$url = admin_url( 'plugins.php?plugin_status=inactive' );
 
-							if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) ) {
-								$name = $data['Name'];
+							if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) && $name == $plugin ) {
+								if ( ! is_wp_error( $info ) && isset( $info->name ) ) {
+									$name = $info->name;
+								} else {
+									$name = $data['Name'];
+								}
 							}
+						} else {
+							$die = false;
 						}
 					}
 				}
