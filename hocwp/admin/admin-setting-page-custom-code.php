@@ -53,7 +53,7 @@ function hocwp_theme_settings_page_custom_code_field() {
 			'args'  => array(
 				'type'          => 'string',
 				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
-				'description'   => __( 'Add code between <code>&lt;head&gt;</code> and  <code>&lt;/head&gt;</code> tag.', 'hocwp-theme' ),
+				'description'   => __( 'Add code between <code>&lt;head&gt;</code> and <code>&lt;/head&gt;</code> tag.', 'hocwp-theme' ),
 				'callback_args' => array(
 					'class'            => 'widefat',
 					'data-code-editor' => 1,
