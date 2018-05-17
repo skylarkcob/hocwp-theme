@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_check_license() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;

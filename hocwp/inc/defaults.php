@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 global $hocwp_theme, $is_opera, $hocwp_theme_protocol;
 
 if ( empty( $hocwp_theme_protocol ) ) {

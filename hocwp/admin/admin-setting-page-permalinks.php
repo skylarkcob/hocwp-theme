@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_settings_page_permalinks_tab( $tabs ) {
 	$tabs['permalinks'] = array(
 		'text' => __( 'Permalinks', 'hocwp-theme' ),

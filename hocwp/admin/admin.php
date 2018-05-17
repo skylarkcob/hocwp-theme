@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 global $pagenow, $plugin_page, $hocwp_theme, $post_type;
 
 if ( empty( $plugin_page ) && isset( $_GET['page'] ) ) {

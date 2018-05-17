@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_settings_page_writing_tab( $tabs ) {
 	$tabs['writing'] = array(
 		'text' => __( 'Writing', 'hocwp-theme' ),

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_after_setup_theme() {
 	add_theme_support( 'custom-header' );
 	add_theme_support( 'custom-logo' );

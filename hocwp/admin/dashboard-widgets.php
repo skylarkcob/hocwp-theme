@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_get_feed_items() {
 	$tr_name = 'hocwp_theme_feed_items';
 

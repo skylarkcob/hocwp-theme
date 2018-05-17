@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 global $tabs, $tab;
 load_template( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-plugin-install-list-table.php' );
 $table = new HOCWP_Theme_Plugin_Install_List_Table();

@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public static $instance;

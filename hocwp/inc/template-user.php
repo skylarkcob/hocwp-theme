@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_login_headerurl_filter( $login_header_url ) {
 	if ( HT()->string_contain( $login_header_url, 'wordpress.org' ) ) {
 		$login_header_url = home_url( '/' );

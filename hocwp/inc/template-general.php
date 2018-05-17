@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_module_site_header() {
 	hocwp_theme_load_custom_module( 'module-site-header' );
 }

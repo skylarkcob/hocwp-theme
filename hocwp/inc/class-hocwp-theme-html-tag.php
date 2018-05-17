@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class HOCWP_Theme_HTML_Tag {
 	private $self_closers = array( 'input', 'img', 'hr', 'br', 'meta', 'link', 'path' );
