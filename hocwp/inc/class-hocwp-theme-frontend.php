@@ -408,7 +408,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$last_item = '';
 
 		if ( is_archive() || is_search() ) {
-			$last_item = HT_Util()->get_archive_title( false );
+			$last_item = HT_Frontend()->get_archive_title( false );
 		} elseif ( is_single() || is_singular() ) {
 			$last_item = get_the_title();
 		} elseif ( is_404() ) {
