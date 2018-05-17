@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_settings_page_discussion_tab( $tabs ) {
 	$tabs['discussion'] = array(
 		'text' => __( 'Discussion', 'hocwp-theme' ),

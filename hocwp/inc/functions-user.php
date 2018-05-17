@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_wp_login_action( $user_login, $user ) {
 	update_user_meta( $user->ID, 'last_login', time() );
 }

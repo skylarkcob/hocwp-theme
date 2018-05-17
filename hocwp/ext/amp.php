@@ -3,6 +3,11 @@
  * Name: AMP
  * Description: The AMP Project is an open-source initiative aiming to make the web better for all.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_ext_amp_missing_plugin_notice() {
 	$plugin = '<a href="https://wordpress.org/plugins/amp/" target="_blank">AMP for WordPress</a>';
 

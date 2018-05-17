@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_settings_page_extension_tab( $tabs ) {
 	$tabs['extension'] = array(
 		'text' => __( 'Extensions', 'hocwp-theme' ),

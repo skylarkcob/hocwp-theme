@@ -3,6 +3,11 @@
  * Name: Improve Search
  * Description: Help search results on your site more accurate instead of using the default search engine of WordPress.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_load_extension_improve_search() {
 	$load = hocwp_theme_is_extension_active( __FILE__ );
 	$load = apply_filters( 'hocwp_theme_load_extension_improve_search', $load );

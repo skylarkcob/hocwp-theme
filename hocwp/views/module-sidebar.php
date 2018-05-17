@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 do_action( 'hocwp_theme_sidebar_before' );
 $sidebar = apply_filters( 'hocwp_theme_sidebar', 'sidebar-1' );
 ?>

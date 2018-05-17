@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_post_submitbox_misc_actions_action( $post ) {
 	$post_types = HT_Util()->post_types_support_featured();
 

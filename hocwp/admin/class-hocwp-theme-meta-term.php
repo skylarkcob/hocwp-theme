@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 	protected $taxonomies = array();
@@ -7,7 +10,7 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 		global $pagenow;
 		$taxonomy = isset( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
 
-		if ( 'term.php' == $pagenow ) {
+		if ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {
 			parent::__construct();
 
 			$this->set_get_value_callback( 'get_term_meta' );

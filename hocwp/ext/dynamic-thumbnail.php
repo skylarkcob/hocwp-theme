@@ -3,6 +3,11 @@
  * Name: Dynamic Thumbnail
  * Description: Auto detect post thumbnail and displaying it dynamically.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 $load = apply_filters( 'hocwp_theme_load_extension_dynamic_thumbnail', hocwp_theme_is_extension_active( __FILE__ ) );
 
 if ( ! $load ) {

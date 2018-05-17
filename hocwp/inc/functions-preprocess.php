@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_preprocess_comment_filter( $commentdata ) {
 	if ( isset( $commentdata['comment_author_url'] ) && ! empty( $commentdata['comment_author_url'] ) ) {
 		$domain                            = HOCWP_Theme::get_domain_name( $commentdata['comment_author_url'] );

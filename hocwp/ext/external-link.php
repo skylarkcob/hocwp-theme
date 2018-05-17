@@ -3,6 +3,11 @@
  * Name: External Link
  * Description: Make all external link as nofollow and contro go out url.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_load_extension_external_link() {
 	$load = hocwp_theme_is_extension_active( __FILE__ );
 	$load = apply_filters( 'hocwp_theme_load_extension_external_link', $load );

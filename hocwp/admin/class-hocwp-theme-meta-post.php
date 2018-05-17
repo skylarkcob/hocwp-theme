@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	private $post_types;

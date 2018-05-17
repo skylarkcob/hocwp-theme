@@ -1,20 +1,25 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+?>
 <div class="section 404">
-    <div class="container">
+	<div class="container">
 		<?php do_action( 'hocwp_theme_content_area_before' ); ?>
-        <section class="error-404 not-found">
+		<section class="error-404 not-found">
 			<?php
 			$html = apply_filters( 'hocwp_theme_404_content', '' );
 			if ( ! empty( $html ) ) {
 				echo $html;
 			} else {
 				?>
-                <header class="page-header">
-                    <h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h1>
-                </header>
-                <!-- .page-header -->
+				<header class="page-header">
+					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h1>
+				</header>
+				<!-- .page-header -->
 
-                <div class="page-content entry-content">
-                    <p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
+				<div class="page-content entry-content">
+					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
 
 					<?php
 					get_search_form();
@@ -22,9 +27,9 @@
 					the_widget( 'WP_Widget_Recent_Posts' );
 					?>
 
-                    <div class="widget widget_categories">
-                        <h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
-                        <ul>
+					<div class="widget widget_categories">
+						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
+						<ul>
 							<?php
 							wp_list_categories( array(
 								'orderby'    => 'count',
@@ -34,9 +39,9 @@
 								'number'     => 10,
 							) );
 							?>
-                        </ul>
-                    </div>
-                    <!-- .widget -->
+						</ul>
+					</div>
+					<!-- .widget -->
 
 					<?php
 
@@ -47,17 +52,17 @@
 					the_widget( 'WP_Widget_Tag_Cloud' );
 					?>
 
-                </div>
-                <!-- .page-content -->
+				</div>
+				<!-- .page-content -->
 				<?php
 			}
 			do_action( 'hocwp_theme_content_404' );
 			?>
-        </section>
-        <!-- .error-404 -->
+		</section>
+		<!-- .error-404 -->
 		<?php
 		do_action( 'hocwp_theme_content_area_after' );
 		get_sidebar();
 		?>
-    </div>
+	</div>
 </div>

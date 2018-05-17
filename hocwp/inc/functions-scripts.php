@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 $using = apply_filters( 'hocwp_theme_using_emoji', false );
 
 if ( ! $using ) {

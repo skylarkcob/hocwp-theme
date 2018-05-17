@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_settings_page_custom_code_tab( $tabs ) {
 	$tabs['custom_code'] = array(
 		'text' => __( 'Custom Code', 'hocwp-theme' ),

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 define( 'HOCWP_EXT_AMP_PATH', dirname( __FILE__ ) );
 define( 'HOCWP_EXT_AMP_URL', HOCWP_THEME_CORE_PATH . '/ext/amp' );
 

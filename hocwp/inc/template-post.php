@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_article_before( $args ) {
 	$container = isset( $args['container'] ) ? $args['container'] : 'article';
 	echo '<' . $container . ' class="' . join( ' ', get_post_class() ) . '">';

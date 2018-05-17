@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 if ( ! class_exists( 'WP_Plugin_Install_List_Table' ) ) {
 	load_template( ABSPATH . 'wp-admin/includes/class-wp-plugin-install-list-table.php' );
 }

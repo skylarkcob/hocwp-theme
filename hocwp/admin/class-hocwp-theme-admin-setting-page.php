@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class HOCWP_Theme_Admin_Setting_Page {
 	private $menu_slug = 'hocwp_theme';

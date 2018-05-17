@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 if ( function_exists( 'hocwp_theme_sanitize_extension_file' ) ) {
 	return;
 }

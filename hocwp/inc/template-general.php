@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_module_site_header() {
 	hocwp_theme_load_custom_module( 'module-site-header' );
 }
@@ -1005,7 +1009,7 @@ function hocwp_theme_loop( $query ) {
 			}
 
 			$pa['query'] = $query;
-			HT_Util()->pagination( $pa );
+			HT_Frontend()->pagination( $pa );
 		}
 	} elseif ( false !== $content_none ) {
 		if ( HT()->is_file( $content_none ) ) {
@@ -1227,7 +1231,7 @@ function hocwp_theme_style_loader_tag_filter( $tag ) {
 add_filter( 'style_loader_tag', 'hocwp_theme_style_loader_tag_filter' );
 
 function hocwp_theme_get_archive_title( $prefix = true ) {
-	return HT_Util()->get_archive_title( $prefix );
+	return HT_Frontend()->get_archive_title( $prefix );
 }
 
 function hocwp_theme_the_archive_title( $prefix = true ) {

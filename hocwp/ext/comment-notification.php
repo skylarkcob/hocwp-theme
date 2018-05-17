@@ -3,6 +3,11 @@
  * Name: Comment Notification
  * Description: Notify for commenters when his comment has new reply.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 $load = apply_filters( 'hocwp_theme_load_extension_comment_notification', hocwp_theme_is_extension_active( __FILE__ ) );
 if ( ! $load ) {
 	return;

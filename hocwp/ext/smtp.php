@@ -3,6 +3,11 @@
  * Name: SMTP Email
  * Description: Sending mail by using SMTP.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_load_extension_smtp() {
 	$load = hocwp_theme_is_extension_active( __FILE__ );
 	$load = apply_filters( 'hocwp_theme_load_extension_smtp', $load );

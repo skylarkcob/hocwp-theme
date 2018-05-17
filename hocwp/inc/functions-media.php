@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_media_file_exists( $id ) {
 	if ( HT()->is_file( get_attached_file( $id ) ) ) {
 		return true;

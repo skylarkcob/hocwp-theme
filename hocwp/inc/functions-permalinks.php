@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_check_rewrite_rules() {
 	if ( false !== get_transient( 'hocwp_theme_flush_rewrite_rules' ) ) {
 		flush_rewrite_rules();

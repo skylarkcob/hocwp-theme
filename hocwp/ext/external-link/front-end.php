@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_external_link_script() {
 	wp_enqueue_script( 'hocwp-theme-external-link', HOCWP_THEME_CORE_URL . '/js/external-link' . HOCWP_THEME_JS_SUFFIX, array( 'hocwp-theme' ), false, true );
 }

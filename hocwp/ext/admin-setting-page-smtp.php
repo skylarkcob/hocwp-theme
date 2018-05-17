@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 $load = ( function_exists( 'hocwp_theme_load_extension_smtp' ) && hocwp_theme_load_extension_smtp() );
 
 if ( ! $load ) {

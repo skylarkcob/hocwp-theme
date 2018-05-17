@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class HOCWP_Theme_Sanitize {
 	protected static $_instance = null;

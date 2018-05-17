@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hocwp_theme_load_template( $_template_file, $include_once = false ) {
 	if ( ! HT()->string_contain( $_template_file, '.php' ) ) {
 		$_template_file .= '.php';
