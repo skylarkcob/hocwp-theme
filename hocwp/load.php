@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.4.0' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.4.1' );
 
 /**
  * Theme developing mode.
@@ -242,6 +242,34 @@ function hocwp_theme_load() {
 	do_action( 'hocwp_theme_loaded' );
 }
 
-if ( ! has_action( 'after_setup_theme', 'hocwp_theme_load' ) ) {
-	add_action( 'after_setup_theme', 'hocwp_theme_load', 0 );
+final class HOCWP_Theme_Controller {
+	private static $instance;
+
+	public function __construct() {
+		if ( self::$instance ) {
+			_doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
+
+			return;
+		}
+
+		self::$instance = $this;
+
+		if ( ! has_action( 'after_setup_theme', 'hocwp_theme_load' ) ) {
+			add_action( 'after_setup_theme', 'hocwp_theme_load', 0 );
+		}
+	}
+
+	public static function get_instance() {
+		if ( ! ( self::$instance instanceof self ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 }
+
+function HOCWP_Theme_Controller() {
+	return HOCWP_Theme_Controller::get_instance();
+}
+
+HOCWP_Theme_Controller();

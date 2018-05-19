@@ -1292,7 +1292,7 @@ class HOCWP_Theme_Utility {
 				js.id = id;
 				js.async = "async";
 				js.defer = "defer";
-				js.src = "https://www.google.com/recaptcha/api.js";
+				js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
 				gjs.parentNode.insertBefore(js, gjs);
 			}(document, 'script', 'recaptcha-jssdk'));
 		</script>
