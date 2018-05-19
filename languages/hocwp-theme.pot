@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-05-17 17:19+0700\n"
+"POT-Creation-Date: 2018-05-19 16:12+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -697,32 +697,32 @@ msgstr ""
 msgid "Please install and activate plugin %s for AMP extension works normally."
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:7
+#: hocwp/ext/amp/admin-setting-page.php:8
 msgid "AMP"
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:30
+#: hocwp/ext/amp/admin-setting-page.php:33
 msgid "Disable default font from AMP page styles."
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:33
+#: hocwp/ext/amp/admin-setting-page.php:36
 msgid "Remove Default Font"
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:37
+#: hocwp/ext/amp/admin-setting-page.php:40
 msgid "These fonts are used on the AMP site. Each font is separated by commas."
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:40
+#: hocwp/ext/amp/admin-setting-page.php:43
 msgid "Fonts"
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:57
+#: hocwp/ext/amp/admin-setting-page.php:60
 #, php-format
 msgid "Font %s URL"
 msgstr ""
 
-#: hocwp/ext/amp/admin-setting-page.php:67
+#: hocwp/ext/amp/admin-setting-page.php:70
 msgid "Custom CSS"
 msgstr ""
 
