@@ -4,7 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_settings_page_amp_tab( $tabs ) {
-	$tabs['amp'] = __( 'AMP', 'hocwp-theme' );
+	$tabs['amp'] = array(
+		'text' => __( 'AMP', 'hocwp-theme' ),
+		'icon' => '<span class="dashicons dashicons-smartphone"></span>'
+	);
 
 	return $tabs;
 }
