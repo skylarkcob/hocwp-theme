@@ -89,9 +89,16 @@
 }
 
 .comment-respond .comment-form textarea,
-.comment-respond .comment-form input {
+.comment-respond .comment-form input[type="url"],
+.comment-respond .comment-form input[type="email"],
+.comment-respond .comment-form input[type="text"] {
     display: block;
     padding: 10px 15px;
+}
+
+.comment-respond .comment-form input[type="checkbox"] {
+    display: inline-block;
+    vertical-align: -1px;
 }
 
 .comment .comment-awaiting-moderation {
