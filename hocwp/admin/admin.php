@@ -135,6 +135,17 @@ function hocwp_theme_admin_notices_required_plugins() {
 		HOCWP_Theme_Utility::admin_notice( $args );
 	}
 
+	if ( ! HT_Requirement()->check_required_extensions() ) {
+		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=required' ) . '">' . _x( 'this list', 'required plugins list', 'hocwp-theme' ) . '</a>';
+
+		$args = array(
+			'type'    => 'error',
+			'message' => sprintf( __( 'You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s.', 'hocwp-theme' ), $link )
+		);
+
+		HOCWP_Theme_Utility::admin_notice( $args );
+	}
+
 	if ( ! HT_Requirement()->check_extension_woocommerce() ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme&tab=extension' ) . '">' . _x( 'here', 'list extensions link', 'hocwp-theme' ) . '</a>';
 

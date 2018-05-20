@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.4.1' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.4.2' );
 
 /**
  * Theme developing mode.
@@ -176,6 +176,7 @@ function hocwp_theme_load() {
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-user.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-preprocess.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/functions-extensions.php';
+	require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-extension.php';
 	require HOCWP_THEME_CORE_PATH . '/inc/setup.php';
 
 	require HOCWP_THEME_CORE_PATH . '/inc/defaults.php';
@@ -245,6 +246,8 @@ function hocwp_theme_load() {
 final class HOCWP_Theme_Controller {
 	private static $instance;
 
+	public $object;
+
 	public function __construct() {
 		if ( self::$instance ) {
 			_doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
@@ -257,6 +260,14 @@ final class HOCWP_Theme_Controller {
 		if ( ! has_action( 'after_setup_theme', 'hocwp_theme_load' ) ) {
 			add_action( 'after_setup_theme', 'hocwp_theme_load', 0 );
 		}
+
+		global $hocwp_theme;
+
+		if ( ! is_object( $hocwp_theme ) ) {
+			$hocwp_theme = new stdClass();
+		}
+
+		$this->object = $hocwp_theme;
 	}
 
 	public static function get_instance() {
@@ -268,8 +279,8 @@ final class HOCWP_Theme_Controller {
 	}
 }
 
-function HOCWP_Theme_Controller() {
+function HOCWP_Theme() {
 	return HOCWP_Theme_Controller::get_instance();
 }
 
-HOCWP_Theme_Controller();
+HOCWP_Theme();

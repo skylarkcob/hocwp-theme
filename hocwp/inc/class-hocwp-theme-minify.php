@@ -139,19 +139,24 @@ final class HOCWP_Theme_Minify {
 		if ( ! HT()->is_file( $file ) || ! _hocwp_theme_is_css_or_js_file( $file ) ) {
 			return;
 		}
+
 		$info = pathinfo( $file );
+
 		if ( isset( $info['extension'] ) ) {
 			$dir  = dirname( $file );
 			$name = $info['filename'];
 			$se   = substr( $name, - 4 );
+
 			if ( '.min' != $se ) {
 				$name .= '.min';
 			} elseif ( ! $recompress ) {
 				return;
 			}
+
 			$name .= '.' . $info['extension'];
 			$min_file = $dir . '/' . $name;
 			$minified = '';
+
 			if ( 'js' == $info['extension'] ) {
 				$minified = self::js( $file );
 			} elseif ( 'css' == $info['extension'] ) {
@@ -159,7 +164,7 @@ final class HOCWP_Theme_Minify {
 			} else {
 				return;
 			}
-			HT()->debug( $minified );
+
 			if ( $error = HT_Minify()->is_error_content( $minified ) ) {
 				if ( $error instanceof WP_Error ) {
 					hocwp_theme_debug( $error->get_error_message() );

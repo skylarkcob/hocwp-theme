@@ -8,60 +8,20 @@ if ( function_exists( 'hocwp_theme_sanitize_extension_file' ) ) {
 }
 
 function hocwp_theme_load_extension_files( $path, &$arr ) {
-	$tmp = scandir( $path );
-
-	$headers = array(
-		'Name'        => 'Name',
-		'Description' => 'Description'
-	);
-
-	foreach ( $tmp as $key => $file ) {
-		if ( '.' != $file && '..' != $file ) {
-			$file = trailingslashit( $path ) . $file;
-
-			if ( HT()->is_file( $file ) ) {
-				$data = get_file_data( $file, $headers );
-
-				if ( ! empty( $data['Name'] ) && ! in_array( $file, $arr ) ) {
-					$arr[] = $file;
-				}
-			}
-		}
-	}
+	_deprecated_function( __FUNCTION__, '6.4.2', 'HT_Extension()->get_files()' );
+	$arr = HT_Extension()->get_files();
 }
 
 function hocwp_theme_sanitize_extension_file( $extension_file ) {
-	$extension_file = str_replace( "\\\\", "\\", $extension_file );
-	$extension_file = str_replace( "/", "\\", $extension_file );
-	$extension_file = str_replace( HOCWP_THEME_CORE_PATH, '', $extension_file );
-	$extension_file = str_replace( "\\", "/", $extension_file );
-	$extension_file = ltrim( $extension_file, '/' );
+	_deprecated_function( __FUNCTION__, '6.4.2', 'HT_Extension()->sanitize_file( $file )' );
 
-	$parts = explode( '/', $extension_file );
-
-	if ( 2 < count( $parts ) ) {
-		$parts = array_slice( $parts, - 2, 2 );
-
-		$extension_file = implode( '/', $parts );
-	}
-
-	return $extension_file;
+	return HT_Extension()->sanitize_file( $extension_file );
 }
 
 function hocwp_theme_is_extension_active( $extension_file ) {
-	global $hocwp_theme;
+	_deprecated_function( __FUNCTION__, '6.4.2', 'HT_Extension()->is_active( $file )' );
 
-	if ( ! is_object( $hocwp_theme ) ) {
-		$hocwp_theme = new stdClass();
-	}
-
-	if ( ! isset( $hocwp_theme->active_extensions ) ) {
-		$hocwp_theme->active_extensions = (array) get_option( 'hocwp_theme_active_extensions', array() );
-	}
-
-	$extension_file = hocwp_theme_sanitize_extension_file( $extension_file );
-
-	return in_array( $extension_file, $hocwp_theme->active_extensions );
+	return HT_Extension()->is_active( $extension_file );
 }
 
 function hocwp_theme_is_shop_site() {
