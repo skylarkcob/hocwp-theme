@@ -99,6 +99,7 @@
 .comment-respond .comment-form input[type="checkbox"] {
     display: inline-block;
     vertical-align: -1px;
+    margin-right: 4px;
 }
 
 .comment .comment-awaiting-moderation {
