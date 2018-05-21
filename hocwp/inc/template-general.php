@@ -643,6 +643,15 @@ function hocwp_theme_wp_head_action() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;
 
+	if ( isset( $options['reading']['theme_color'] ) && ! empty( $options['reading']['theme_color'] ) ) {
+		$color = $options['reading']['theme_color'];
+		$color = sanitize_hex_color( $color );
+
+		if ( ! empty( $color ) ) {
+			echo '<meta name="theme-color" content="' . $color . '">' . PHP_EOL;
+		}
+	}
+
 	if ( isset( $options['custom_code']['head'] ) ) {
 		echo $options['custom_code']['head'];
 	}
@@ -1261,3 +1270,30 @@ function hocwp_theme_wp_title_filter( $title ) {
 
 add_filter( 'wp_title', 'hocwp_theme_wp_title_filter' );
 add_filter( 'wpseo_title', 'hocwp_theme_wp_title_filter' );
+
+function hocwp_theme_check_endpoint() {
+	global $wp_query;
+
+	$random = HT_Util()->get_theme_option( 'random', '', 'reading' );
+
+	if ( 1 == $random && isset( $wp_query->query_vars['random'] ) ) {
+		$post_types   = get_post_types( array( 'public' => true, '_builtin' => false ) );
+		$post_types[] = 'post';
+
+		$args = array(
+			'fields'         => 'ids',
+			'post_type'      => $post_types,
+			'posts_per_page' => 1,
+			'orderby'        => 'rand'
+		);
+
+		$query = new WP_Query( $args );
+
+		if ( $query->have_posts() ) {
+			wp_redirect( get_permalink( $query->posts[0] ) );
+			exit;
+		}
+	}
+}
+
+add_action( 'wp', 'hocwp_theme_check_endpoint' );
