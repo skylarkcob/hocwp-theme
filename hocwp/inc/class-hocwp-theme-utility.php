@@ -937,6 +937,10 @@ class HOCWP_Theme_Utility {
 
 		$private = isset( $args['private'] ) ? $args['private'] : false;
 
+		if ( ! $private && isset( $args['public'] ) ) {
+			$private = ! ( $args['public'] );
+		}
+
 		if ( $private ) {
 			$defaults['public']              = false;
 			$defaults['show_ui']             = true;
@@ -949,6 +953,7 @@ class HOCWP_Theme_Utility {
 			$defaults['query_var']           = false;
 			$defaults['rewrite']             = false;
 			$defaults['feeds']               = false;
+
 			if ( ! $post_type ) {
 				$args['show_in_quick_edit'] = false;
 				$args['show_admin_column']  = false;
@@ -959,6 +964,18 @@ class HOCWP_Theme_Utility {
 		unset( $args['labels'], $args['name'], $args['singular_name'], $args['menu_name'], $args['private'] );
 
 		$args = wp_parse_args( $args, $defaults );
+
+		$slug = isset( $args['rewrite']['slug'] ) ? $args['rewrite']['slug'] : '';
+
+		if ( isset( $args['public'] ) && $args['public'] ) {
+			if ( empty( $slug ) ) {
+				$slug = sanitize_title( $singular_name );
+			}
+
+			$slug = str_replace( '_', '-', $slug );
+
+			$args['rewrite']['slug'] = $slug;
+		}
 
 		return $args;
 	}

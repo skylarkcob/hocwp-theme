@@ -45,6 +45,9 @@ add_filter( 'hocwp_theme_settings_page_reading_settings_section', 'hocwp_theme_s
 function hocwp_theme_settings_page_reading_field() {
 	$fields = array();
 
+	$field    = hocwp_theme_create_setting_field( 'theme_color', __( 'Theme Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading' );
+	$fields[] = $field;
+
 	$args = array(
 		'class' => 'medium-text'
 	);
@@ -79,6 +82,14 @@ function hocwp_theme_settings_page_reading_field() {
 	);
 
 	$field    = hocwp_theme_create_setting_field( 'sidebar_position', __( 'Sidebar Position', 'hocwp-theme' ), 'select', $args, 'string', 'reading' );
+	$fields[] = $field;
+
+	$args = array(
+		'type'  => 'checkbox',
+		'label' => __( 'Add random end point to url for displaying random post?', 'hocwp-theme' )
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'random', __( 'Random', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
 	$fields[] = $field;
 
 	if ( hocwp_theme_is_shop_site() ) {

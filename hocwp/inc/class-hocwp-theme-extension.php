@@ -34,6 +34,14 @@ class HOCWP_Theme_Extension {
 		}
 
 		$this->basename = HT_Extension()->get_basename( $this->file );
+
+		add_filter( 'hocwp_theme_required_extensions', array( $this, 'required_extensions' ) );
+	}
+
+	public function required_extensions( $extensions ) {
+		$extensions = array_merge( $this->required_extensions, $extensions );
+
+		return $extensions;
 	}
 
 	public function get_headers() {

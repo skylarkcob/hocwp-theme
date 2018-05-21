@@ -266,4 +266,14 @@ function hocwp_theme_check_environment() {
 
 add_action( 'init', 'hocwp_theme_check_environment' );
 
+function hocwp_theme_add_url_endpoint() {
+	$random = HT_Util()->get_theme_option( 'random', '', 'reading' );
+
+	if ( 1 == $random ) {
+		add_rewrite_endpoint( 'random', EP_ROOT );
+	}
+}
+
+add_action( 'init', 'hocwp_theme_add_url_endpoint' );
+
 do_action( 'hocwp_theme_setup_after' );
