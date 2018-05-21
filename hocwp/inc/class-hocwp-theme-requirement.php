@@ -40,9 +40,12 @@ final class HOCWP_Theme_Requirement {
 		}
 
 		$extensions = apply_filters( 'hocwp_theme_required_extensions', $extensions );
-		$extensions = array_filter( $extensions );
-		$extensions = array_unique( $extensions );
-		$extensions = array_map( array( $this, 'sanitize_extension_basename' ), $extensions );
+
+		if ( HT()->array_has_value( $extensions ) ) {
+			$extensions = array_filter( $extensions );
+			$extensions = array_unique( $extensions );
+			$extensions = array_map( array( $this, 'sanitize_extension_basename' ), $extensions );
+		}
 
 		return $extensions;
 	}

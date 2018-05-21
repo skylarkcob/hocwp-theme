@@ -39,7 +39,9 @@ class HOCWP_Theme_Extension {
 	}
 
 	public function required_extensions( $extensions ) {
-		$extensions = array_merge( $this->required_extensions, $extensions );
+		if ( HT()->array_has_value( $this->required_extensions ) ) {
+			$extensions = array_merge( $this->required_extensions, $extensions );
+		}
 
 		return $extensions;
 	}

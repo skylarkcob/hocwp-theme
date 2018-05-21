@@ -34,7 +34,7 @@ if ( ! defined( 'AMP__VERSION' ) ) {
 }
 
 function hocwp_theme_load_extension_amp() {
-	$load = hocwp_theme_is_extension_active( __FILE__ );
+	$load = HT_Extension()->is_active( __FILE__ );
 	$load = apply_filters( 'hocwp_theme_load_extension_amp', $load );
 
 	return $load;
