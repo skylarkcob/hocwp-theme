@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-05-19 23:05+0700\n"
-"PO-Revision-Date: 2018-05-19 23:05+0700\n"
+"POT-Creation-Date: 2018-05-20 15:33+0700\n"
+"PO-Revision-Date: 2018-05-20 15:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -77,11 +77,11 @@ msgstr ""
 msgid "Discussion"
 msgstr "Thảo luận"
 
-#: hocwp/admin/admin-setting-page-discussion.php:27
+#: hocwp/admin/admin-setting-page-discussion.php:28
 msgid "Comment Notification"
 msgstr "Thông báo bình luận"
 
-#: hocwp/admin/admin-setting-page-discussion.php:45
+#: hocwp/admin/admin-setting-page-discussion.php:46
 #, php-format
 msgid ""
 "Notify commenters when their comment has new reply. You can use these tags "
@@ -90,37 +90,37 @@ msgstr ""
 "Thông báo cho độc giả khi bình luận của họ có trả lời mới. Bạn có thể sử "
 "dụng những thẻ sau ở tiêu đề và nội dung tin nhắn: %s"
 
-#: hocwp/admin/admin-setting-page-discussion.php:53
+#: hocwp/admin/admin-setting-page-discussion.php:54
 msgid "Avatar Size"
 msgstr "Kích thước ảnh đại diện"
 
-#: hocwp/admin/admin-setting-page-discussion.php:65
+#: hocwp/admin/admin-setting-page-discussion.php:66
 msgid "Comment System"
 msgstr "Hệ thống bình luận"
 
-#: hocwp/admin/admin-setting-page-discussion.php:72
+#: hocwp/admin/admin-setting-page-discussion.php:73
 msgctxt "comment system"
 msgid "Default"
 msgstr "Dùng form mặc định"
 
-#: hocwp/admin/admin-setting-page-discussion.php:73
+#: hocwp/admin/admin-setting-page-discussion.php:74
 msgctxt "comment system"
 msgid "Facebook"
 msgstr "Dùng bình luận của Facebook"
 
-#: hocwp/admin/admin-setting-page-discussion.php:82
+#: hocwp/admin/admin-setting-page-discussion.php:83
 msgid "Using captcha for comment form?"
 msgstr "Sử dụng mã bảo mật cho khung bình luận?"
 
-#: hocwp/admin/admin-setting-page-discussion.php:84
+#: hocwp/admin/admin-setting-page-discussion.php:85
 msgid "Captcha"
 msgstr "Mã bảo mật"
 
-#: hocwp/admin/admin-setting-page-discussion.php:91
+#: hocwp/admin/admin-setting-page-discussion.php:92
 msgid "Mail Subject"
 msgstr "Tiêu đề thư"
 
-#: hocwp/admin/admin-setting-page-discussion.php:100
+#: hocwp/admin/admin-setting-page-discussion.php:101
 msgid "Mail Message"
 msgstr "Nội dung thư"
 
@@ -353,7 +353,7 @@ msgstr "Danh sách plugin"
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:128
+#: hocwp/admin/admin.php:128 hocwp/admin/admin.php:139
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
@@ -367,12 +367,21 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:139
+#: hocwp/admin/admin.php:143
+#, php-format
+msgid ""
+"You must install all required extensions for theme can work properly. Try to "
+"install and activate all extensions in %s."
+msgstr ""
+"Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
+"thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
+
+#: hocwp/admin/admin.php:150
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:143
+#: hocwp/admin/admin.php:154
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -380,11 +389,11 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:308
+#: hocwp/admin/admin.php:319
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:348 hocwp/inc/template-post.php:256
+#: hocwp/admin/admin.php:359 hocwp/inc/template-post.php:256
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
@@ -396,81 +405,87 @@ msgstr "gói mở rộng"
 msgid "extensions"
 msgstr "gói mở rộng"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:190
+#: hocwp/admin/class-hocwp-extensions-list-table.php:174
 #, php-format
 msgid "No extensions found for &#8220;%s&#8221;."
 msgstr "Không tìm thấy gói mở rộng cho &#8220;%s&#8221;."
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:192
+#: hocwp/admin/class-hocwp-extensions-list-table.php:176
 msgid "No extensions found."
 msgstr "Không tìm thấy gói mở rộng."
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:194
+#: hocwp/admin/class-hocwp-extensions-list-table.php:178
 msgid "You do not appear to have any extensions available at this time."
 msgstr "Bạn không có gói mở rộng nào khả dụng tại thời điểm hiện tại."
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:201
+#: hocwp/admin/class-hocwp-extensions-list-table.php:185
 msgid "Name"
 msgstr "Tên"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:202
+#: hocwp/admin/class-hocwp-extensions-list-table.php:186
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:96
 msgid "Description"
 msgstr "Mô tả"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:228
+#: hocwp/admin/class-hocwp-extensions-list-table.php:212
 #, php-format
 msgctxt "hocwp theme extensions"
 msgid "All <span class=\"count\">(%s)</span>"
 msgid_plural "All <span class=\"count\">(%s)</span>"
 msgstr[0] "Tất cả <span class=\"count\">(%s)</span>"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:231
+#: hocwp/admin/class-hocwp-extensions-list-table.php:215
 #, php-format
 msgid "Active <span class=\"count\">(%s)</span>"
 msgid_plural "Active <span class=\"count\">(%s)</span>"
 msgstr[0] "Kích hoạt <span class=\"count\">(%s)</span>"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:234
+#: hocwp/admin/class-hocwp-extensions-list-table.php:218
 #, php-format
 msgid "Inactive <span class=\"count\">(%s)</span>"
 msgid_plural "Inactive <span class=\"count\">(%s)</span>"
 msgstr[0] "Không kích hoạt <span class=\"count\">(%s)</span>"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:254
-#: hocwp/admin/class-hocwp-extensions-list-table.php:276
+#: hocwp/admin/class-hocwp-extensions-list-table.php:221
+#, php-format
+msgid "Required <span class=\"count\">(%s)</span>"
+msgid_plural "Required <span class=\"count\">(%s)</span>"
+msgstr[0] "Bắt buộc <span class=\"count\">(%s)</span>"
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:242
+#: hocwp/admin/class-hocwp-extensions-list-table.php:268
 msgid "Activate"
 msgstr "Kích hoạt"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:257
-#: hocwp/admin/class-hocwp-extensions-list-table.php:274
+#: hocwp/admin/class-hocwp-extensions-list-table.php:246
+#: hocwp/admin/class-hocwp-extensions-list-table.php:266
 msgid "Deactivate"
 msgstr "Ngừng kích hoạt"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:274
+#: hocwp/admin/class-hocwp-extensions-list-table.php:266
 #, php-format
 msgctxt "hocwp theme extension"
 msgid "Deactivate %s"
 msgstr "Nừng kích hoạt %s"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:276
+#: hocwp/admin/class-hocwp-extensions-list-table.php:268
 #, php-format
 msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:281
+#: hocwp/admin/class-hocwp-extensions-list-table.php:274
 #: hocwp/inc/functions-scripts.php:220
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:376
+#: hocwp/admin/class-hocwp-extensions-list-table.php:383
 #, php-format
 msgid "<strong>Notice:</strong> %s extension(s) activated."
 msgstr "<strong>Thông báo:</strong> %s gói mở rộng được kích hoạt."
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:379
+#: hocwp/admin/class-hocwp-extensions-list-table.php:386
 #, php-format
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr "<strong>Thông báo:</strong> %s gói mở rộng ngừng kích hoạt."
@@ -863,6 +878,36 @@ msgstr "Tiếp tục đến url"
 msgid "Go back"
 msgstr "Quay lại"
 
+#: hocwp/inc/class-hocwp-theme-extension.php:31
+msgid "Please declare extension with Name and Description in header."
+msgstr ""
+"Xin vui lòng khai báo gói mở rộng với đầy đủ tên và mô tả đặt tại ví trí "
+"trên cùng của tập tin."
+
+#: hocwp/inc/class-hocwp-theme-extension.php:88
+#: hocwp/inc/class-hocwp-theme-requirement.php:19 hocwp/load.php:253
+#, php-format
+msgid "%s is a singleton class and you cannot create a second instance."
+msgstr "%s là lớp khai báo một lần nên bạn không thể khai báo lần hai."
+
+#: hocwp/inc/class-hocwp-theme-extension.php:135
+#, php-format
+msgid ""
+"Extension %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s "
+"instead."
+msgstr ""
+"Gói mở rộng %1$s đã <strong>không còn được dùng nữa</strong> kể từ phiên bản "
+"%2$s! Sử dụng %3$s để thay thế."
+
+#: hocwp/inc/class-hocwp-theme-extension.php:138
+#, php-format
+msgid ""
+"Extension %1$s is <strong>deprecated</strong> since version %2$s with no "
+"alternative available."
+msgstr ""
+"Gói mở rộng %1$s đã <strong>không còn được dùng nữa</strong> kể từ phiên bản "
+"%2$s và không có lựa chọn thay thế nào."
+
 #: hocwp/inc/class-hocwp-theme-frontend.php:176
 msgid "First"
 msgstr "Đầu"
@@ -1036,7 +1081,7 @@ msgstr "Chọn %s"
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
-#: hocwp/inc/class-hocwp-theme-minify.php:170
+#: hocwp/inc/class-hocwp-theme-minify.php:175
 msgid "File can not be compressed!"
 msgstr "Tập tin không thể nén!"
 
@@ -1547,11 +1592,6 @@ msgstr "Đăng ngày %s"
 msgctxt "post author"
 msgid "by %s"
 msgstr "bởi %s"
-
-#: hocwp/load.php:250
-#, php-format
-msgid "%s is a singleton class and you cannot create a second instance."
-msgstr "%s là lớp khai báo một lần nên bạn không thể khai báo lần hai."
 
 #: hocwp/views/content-404.php:17
 msgid "Oops! That page can&rsquo;t be found."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-05-19 23:05+0700\n"
+"POT-Creation-Date: 2018-05-20 15:33+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,46 +72,46 @@ msgstr ""
 msgid "Discussion"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:27
+#: hocwp/admin/admin-setting-page-discussion.php:28
 msgid "Comment Notification"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:45
+#: hocwp/admin/admin-setting-page-discussion.php:46
 #, php-format
 msgid "Notify commenters when their comment has new reply. You can use these tags in subject and message: %s"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:53
+#: hocwp/admin/admin-setting-page-discussion.php:54
 msgid "Avatar Size"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:65
+#: hocwp/admin/admin-setting-page-discussion.php:66
 msgid "Comment System"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-discussion.php:72
-msgctxt "comment system"
-msgid "Default"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-discussion.php:73
 msgctxt "comment system"
+msgid "Default"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-discussion.php:74
+msgctxt "comment system"
 msgid "Facebook"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:82
+#: hocwp/admin/admin-setting-page-discussion.php:83
 msgid "Using captcha for comment form?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:84
+#: hocwp/admin/admin-setting-page-discussion.php:85
 msgid "Captcha"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:91
+#: hocwp/admin/admin-setting-page-discussion.php:92
 msgid "Mail Subject"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-discussion.php:100
+#: hocwp/admin/admin-setting-page-discussion.php:101
 msgid "Mail Message"
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:128
+#: hocwp/admin/admin.php:128 hocwp/admin/admin.php:139
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
@@ -331,21 +331,26 @@ msgstr ""
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:139
+#: hocwp/admin/admin.php:143
+#, php-format
+msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
+msgstr ""
+
+#: hocwp/admin/admin.php:150
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:143
+#: hocwp/admin/admin.php:154
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:308
+#: hocwp/admin/admin.php:319
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:348 hocwp/inc/template-post.php:256
+#: hocwp/admin/admin.php:359 hocwp/inc/template-post.php:256
 msgid "Related posts"
 msgstr ""
 
@@ -357,28 +362,28 @@ msgstr ""
 msgid "extensions"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:190
+#: hocwp/admin/class-hocwp-extensions-list-table.php:174
 #, php-format
 msgid "No extensions found for &#8220;%s&#8221;."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:192
+#: hocwp/admin/class-hocwp-extensions-list-table.php:176
 msgid "No extensions found."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:194
+#: hocwp/admin/class-hocwp-extensions-list-table.php:178
 msgid "You do not appear to have any extensions available at this time."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:201
+#: hocwp/admin/class-hocwp-extensions-list-table.php:185
 msgid "Name"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:202 hocwp/widgets/class-hocwp-theme-widget-terms.php:96
+#: hocwp/admin/class-hocwp-extensions-list-table.php:186 hocwp/widgets/class-hocwp-theme-widget-terms.php:96
 msgid "Description"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:228
+#: hocwp/admin/class-hocwp-extensions-list-table.php:212
 #, php-format
 msgctxt "hocwp theme extensions"
 msgid "All <span class=\"count\">(%s)</span>"
@@ -386,51 +391,58 @@ msgid_plural "All <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:231
+#: hocwp/admin/class-hocwp-extensions-list-table.php:215
 #, php-format
 msgid "Active <span class=\"count\">(%s)</span>"
 msgid_plural "Active <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:234
+#: hocwp/admin/class-hocwp-extensions-list-table.php:218
 #, php-format
 msgid "Inactive <span class=\"count\">(%s)</span>"
 msgid_plural "Inactive <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:254 hocwp/admin/class-hocwp-extensions-list-table.php:276
+#: hocwp/admin/class-hocwp-extensions-list-table.php:221
+#, php-format
+msgid "Required <span class=\"count\">(%s)</span>"
+msgid_plural "Required <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: hocwp/admin/class-hocwp-extensions-list-table.php:242 hocwp/admin/class-hocwp-extensions-list-table.php:268
 msgid "Activate"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:257 hocwp/admin/class-hocwp-extensions-list-table.php:274
+#: hocwp/admin/class-hocwp-extensions-list-table.php:246 hocwp/admin/class-hocwp-extensions-list-table.php:266
 msgid "Deactivate"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:274
+#: hocwp/admin/class-hocwp-extensions-list-table.php:266
 #, php-format
 msgctxt "hocwp theme extension"
 msgid "Deactivate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:276
+#: hocwp/admin/class-hocwp-extensions-list-table.php:268
 #, php-format
 msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:281 hocwp/inc/functions-scripts.php:220
+#: hocwp/admin/class-hocwp-extensions-list-table.php:274 hocwp/inc/functions-scripts.php:220
 #, php-format
 msgid "Select %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:376
+#: hocwp/admin/class-hocwp-extensions-list-table.php:383
 #, php-format
 msgid "<strong>Notice:</strong> %s extension(s) activated."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:379
+#: hocwp/admin/class-hocwp-extensions-list-table.php:386
 #, php-format
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr ""
@@ -770,6 +782,25 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
+#: hocwp/inc/class-hocwp-theme-extension.php:31
+msgid "Please declare extension with Name and Description in header."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-extension.php:88 hocwp/inc/class-hocwp-theme-requirement.php:19 hocwp/load.php:253
+#, php-format
+msgid "%s is a singleton class and you cannot create a second instance."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-extension.php:135
+#, php-format
+msgid "Extension %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-extension.php:138
+#, php-format
+msgid "Extension %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
+msgstr ""
+
 #: hocwp/inc/class-hocwp-theme-frontend.php:176
 msgid "First"
 msgstr ""
@@ -941,7 +972,7 @@ msgstr ""
 msgid "Drag to find address!"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-minify.php:170
+#: hocwp/inc/class-hocwp-theme-minify.php:175
 msgid "File can not be compressed!"
 msgstr ""
 
@@ -1435,11 +1466,6 @@ msgstr ""
 #, php-format
 msgctxt "post author"
 msgid "by %s"
-msgstr ""
-
-#: hocwp/load.php:250
-#, php-format
-msgid "%s is a singleton class and you cannot create a second instance."
 msgstr ""
 
 #: hocwp/views/content-404.php:17

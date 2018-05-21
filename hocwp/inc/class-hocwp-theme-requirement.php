@@ -15,6 +15,56 @@ final class HOCWP_Theme_Requirement {
 	}
 
 	private function __construct() {
+		if ( self::$_instance ) {
+			_doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.2' );
+
+			return;
+		}
+
+		self::$_instance = $this;
+	}
+
+	public function get_required_extensions() {
+		$extensions = array();
+
+		if ( defined( 'HOCWP_THEME_REQUIRED_EXTENSIONS' ) && ! empty( HOCWP_THEME_REQUIRED_EXTENSIONS ) ) {
+
+			if ( is_string( HOCWP_THEME_REQUIRED_EXTENSIONS ) ) {
+				$extensions = explode( ',', HOCWP_THEME_REQUIRED_EXTENSIONS );
+				$extensions = array_map( 'trim', $extensions );
+			} else {
+				$extensions = HOCWP_THEME_REQUIRED_EXTENSIONS;
+			}
+
+			$extensions = (array) $extensions;
+		}
+
+		$extensions = apply_filters( 'hocwp_theme_required_extensions', $extensions );
+		$extensions = array_filter( $extensions );
+		$extensions = array_unique( $extensions );
+		$extensions = array_map( array( $this, 'sanitize_extension_basename' ), $extensions );
+
+		return $extensions;
+	}
+
+	public function sanitize_extension_basename( $basename ) {
+		$basename = HT_Extension()->sanitize_basename( $basename );
+
+		return $basename;
+	}
+
+	public function check_required_extensions() {
+		$extensions = $this->get_required_extensions();
+
+		if ( HT()->array_has_value( $extensions ) ) {
+			foreach ( $extensions as $basename ) {
+				if ( ! HT_extension()->is_active( $basename ) ) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public static function get_required_plugins() {
@@ -96,6 +146,12 @@ final class HOCWP_Theme_Requirement {
 		$rp = self::check_required_plugins();
 
 		if ( ! $rp ) {
+			return false;
+		}
+
+		$re = HT_Requirement()->check_required_extensions();
+
+		if ( ! $re ) {
 			return false;
 		}
 

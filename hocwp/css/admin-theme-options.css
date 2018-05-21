@@ -92,8 +92,12 @@
     box-shadow: inset 0 1px 0 #fcfcfc;
 }
 
-.hocwp-theme .settings-box #nav li:last-child a {
-    border-bottom: none;
+.hocwp-theme .settings-box #nav li:last-child {
+    border-bottom: 1px solid #fcfcfc;
+}
+
+.hocwp-theme .settings-box #nav li:last-child {
+    margin-bottom: 100px;
 }
 
 .hocwp-theme .settings-box #nav li:hover a {

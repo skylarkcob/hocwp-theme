@@ -21,7 +21,8 @@ if ( 'discussion' != $hocwp_theme->option->tab ) {
 
 function hocwp_theme_settings_page_discussion_section() {
 	$sections = array();
-	if ( hocwp_theme_is_extension_active( 'ext/comment-notification.php' ) ) {
+
+	if ( HT_extension()->is_active( 'ext/comment-notification.php' ) ) {
 		$sections[] = array(
 			'id'       => 'comment_notification',
 			'title'    => __( 'Comment Notification', 'hocwp-theme' ),
@@ -84,7 +85,7 @@ function hocwp_theme_settings_page_discussion_field() {
 	$field    = hocwp_theme_create_setting_field( 'captcha', __( 'Captcha', 'hocwp-theme' ), 'input', $args, 'boolean', 'discussion' );
 	$fields[] = $field;
 
-	if ( hocwp_theme_is_extension_active( 'ext/comment-notification.php' ) ) {
+	if ( HT_extension()->is_active( 'ext/comment-notification.php' ) ) {
 		$fields[] = array(
 			'section' => 'comment_notification',
 			'id'      => 'cn_mail_subject',
