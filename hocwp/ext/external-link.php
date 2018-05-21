@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_load_extension_external_link() {
-	$load = hocwp_theme_is_extension_active( __FILE__ );
+	$load = HT_Extension()->is_active( __FILE__ );
 	$load = apply_filters( 'hocwp_theme_load_extension_external_link', $load );
 
 	return $load;
