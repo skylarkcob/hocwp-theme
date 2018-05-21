@@ -639,7 +639,7 @@ function hocwp_theme_navigation_markup_template_filter() {
 
 add_filter( 'navigation_markup_template', 'hocwp_theme_navigation_markup_template_filter' );
 
-function hocwp_theme_wp_head_action() {
+function hocwp_theme_color_meta() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;
 
@@ -651,6 +651,14 @@ function hocwp_theme_wp_head_action() {
 			echo '<meta name="theme-color" content="' . $color . '">' . PHP_EOL;
 		}
 	}
+}
+
+add_action( 'wp_head', 'hocwp_theme_color_meta' );
+add_action( 'login_head', 'hocwp_theme_color_meta' );
+
+function hocwp_theme_wp_head_action() {
+	global $hocwp_theme;
+	$options = $hocwp_theme->options;
 
 	if ( isset( $options['custom_code']['head'] ) ) {
 		echo $options['custom_code']['head'];
