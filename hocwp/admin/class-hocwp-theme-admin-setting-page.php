@@ -4,6 +4,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class HOCWP_Theme_Admin_Setting_Page {
+	protected static $instance;
+
+	public static function get_instance() {
+		if ( ! ( self::$instance instanceof self ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 	private $menu_slug = 'hocwp_theme';
 
 	public $tabs;
@@ -18,6 +28,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	public $scripts;
 
 	public function __construct() {
+		if ( self::$instance instanceof self ) {
+			return;
+		}
+
 		global $hocwp_theme, $plugin_page, $pagenow;
 
 		if ( isset( $hocwp_theme->option ) && $hocwp_theme->option instanceof HOCWP_Theme_Admin_Setting_Page ) {

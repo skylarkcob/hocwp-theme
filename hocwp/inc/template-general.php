@@ -838,7 +838,7 @@ function hocwp_theme_get_custom_logo_filter( $html ) {
 
 add_filter( 'get_custom_logo', 'hocwp_theme_get_custom_logo_filter' );
 
-function _hocwp_theme_widget_posts_loop() {
+function hocwp_theme_widget_posts_loop_html() {
 	global $hocwp_theme;
 	$widget = isset( $hocwp_theme->loop_data['widget'] ) ? $hocwp_theme->loop_data['widget'] : '';
 
@@ -857,7 +857,16 @@ function _hocwp_theme_widget_posts_loop() {
 	$show_date          = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : $widget->defaults['show_date'];
 	$show_author        = isset( $instance['show_author'] ) ? (bool) $instance['show_author'] : $widget->defaults['show_author'];
 	$show_comment_count = isset( $instance['show_comment_count'] ) ? (bool) $instance['show_comment_count'] : $widget->defaults['show_comment_count'];
-	do_action( 'hocwp_theme_article_before', array( 'container' => 'div' ) );
+
+	$container_tag = 'div';
+
+	$list = isset( $hocwp_theme->loop_data['list'] ) ? $hocwp_theme->loop_data['list'] : false;
+
+	if ( $list ) {
+		$container_tag = 'li';
+	}
+
+	do_action( 'hocwp_theme_article_before', array( 'container' => $container_tag ) );
 
 	if ( ! empty( $width ) || ! empty( $height ) ) {
 		if ( has_post_thumbnail() ) {
@@ -921,7 +930,7 @@ function _hocwp_theme_widget_posts_loop() {
 		HT()->wrap_text( $excerpt, '<div class="entry-summary">', '</div>', true );
 	}
 
-	do_action( 'hocwp_theme_article_after', array( 'container' => 'div' ) );
+	do_action( 'hocwp_theme_article_after', array( 'container' => $container_tag ) );
 }
 
 function hocwp_theme_loop_before() {
@@ -1003,7 +1012,7 @@ function hocwp_theme_loop( $query ) {
 				$instance = isset( $hocwp_theme->loop_data['widget_instance'] ) ? $hocwp_theme->loop_data['widget_instance'] : '';
 
 				if ( $on_sidebar && is_array( $instance ) ) {
-					_hocwp_theme_widget_posts_loop();
+					hocwp_theme_widget_posts_loop_html();
 				} else {
 					do_action( 'hocwp_theme_the_title' );
 				}

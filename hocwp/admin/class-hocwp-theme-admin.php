@@ -72,7 +72,21 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 		return $result;
 	}
 
-	public function get_current_new_post() {
+	public function get_current_post_id() {
+		$post_id = isset( $_GET['post'] ) ? $_GET['post'] : '';
+
+		if ( isset( $_POST['post_ID'] ) ) {
+			$post_id = $_POST['post_ID'];
+		}
+
+		if ( ! HT()->is_positive_number( $post_id ) && HT_Admin()->is_admin_page( 'post-new.php' ) ) {
+			$post_id = HT_Admin()->get_current_new_post( 'ID' );
+		}
+
+		return $post_id;
+	}
+
+	public function get_current_new_post( $output = OBJECT ) {
 		global $pagenow;
 		$result = null;
 
@@ -100,7 +114,15 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 			unset( $query_args, $post_type, $query );
 		}
 
+		if ( OBJECT != $output && $result instanceof WP_Post ) {
+			$result = $result->ID;
+		}
+
 		return $result;
+	}
+
+	public function is_theme_option_page() {
+		return $this->is_admin_page( 'themes.php', 'hocwp_theme' );
 	}
 }
 

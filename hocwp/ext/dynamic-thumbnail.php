@@ -8,6 +8,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
+	protected static $instance;
+
+	public static function get_instance() {
+		if ( ! ( self::$instance instanceof self ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	public function __construct() {
+		if ( self::$instance instanceof self ) {
+			return;
+		}
+
+		parent::__construct( __FILE__ );
+
+		if ( is_admin() ) {
+			add_action( 'load-post.php', array( $this, 'meta_boxes' ) );
+			add_action( 'load-post-new.php', array( $this, 'meta_boxes' ) );
+		}
+	}
+
+	public function meta_boxes() {
+		$post_types = get_post_types();
+		$meta       = new HOCWP_Theme_Meta_Post();
+
+		foreach ( $post_types as $post_type ) {
+			if ( post_type_supports( $post_type, 'thumbnail' ) ) {
+				$meta->add_post_type( $post_type );
+			}
+		}
+
+		$meta->set_id( 'dynamic-thumbnail' );
+		$meta->set_title( __( 'Dynamic Thumbnail', 'sb-core' ) );
+		$meta->form_table = true;
+
+		$field = hocwp_theme_create_meta_field( '_thumbnail_url', __( 'Thumbnail Url:', 'sb-core' ) );
+		$meta->add_field( $field );
+	}
+}
+
+function HTE_Dynamic_Thumbnail() {
+	return HOCWP_Ext_Dynamic_Thumbnail::get_instance();
+}
+
+HTE_Dynamic_Thumbnail()->get_instance();
+
 $load = apply_filters( 'hocwp_theme_load_extension_dynamic_thumbnail', HT_Extension()->is_active( __FILE__ ) );
 
 if ( ! $load ) {
@@ -48,7 +97,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 	$lazyload = isset( $attr['lazyload'] ) ? $attr['lazyload'] : false;
 
-	$url = get_post_meta( $post_id, '_thumbnail_url', true );
+	$url     = get_post_meta( $post_id, '_thumbnail_url', true );
+	$ext_url = $url;
 
 	if ( ! HOCWP_Theme::is_image_url( $url ) ) {
 		$url = HOCWP_Theme::get_first_image_source( $obj->post_content );
@@ -95,8 +145,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		if ( ! file_exists( $file_path ) ) {
 			$pos = HT()->string_contain( $url, 'wp-content/uploads' );
 
-			if ( false !== $pos ) {
-				$sub       = substr( $url, $pos );
+			if ( false !== $pos && ! $external ) {
+				$sub       = substr( $url, $pos - 1 );
 				$file_path = ABSPATH . $sub;
 
 				if ( file_exists( $file_path ) ) {
@@ -116,6 +166,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 					'cache'   => isset( $attr['cache'] ) ? $attr['cache'] : 1,
 					'quality' => isset( $attr['quality'] ) ? $attr['quality'] : 100
 				);
+
+				$src = add_query_arg( $params, $src );
 
 				$udir = $dirs['basedir'];
 
@@ -148,19 +200,41 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 			} else {
 				$regen = true;
 			}
-		} elseif ( file_exists( $new_path ) ) {
+		} elseif ( ! file_exists( $new_path ) ) {
 			$regen = true;
 		}
 
 		if ( $regen ) {
-			$new_name = basename( $new_path );
+			if ( file_exists( $new_path ) ) {
+				$new_name = basename( $new_path );
 
-			if ( $external ) {
-				$src = trailingslashit( $dirs['baseurl'] );
+				if ( $external ) {
+					$src = trailingslashit( $dirs['baseurl'] );
 
-				$src .= 'cache/' . $new_name;
+					$src .= 'cache/' . $new_name;
+				} else {
+					$src = str_replace( $file_name, $new_name, $url );
+				}
 			} else {
-				$src = str_replace( $file_name, $new_name, $url );
+				$src = $ext_url;
+			}
+		}
+
+		if ( HT()->string_contain( $src, 'thumbnail.php' ) && file_exists( $file_path ) ) {
+			$new_size = sprintf( '$1-%sx%s.%s', $width, $height, $ext );
+
+			$new_path = preg_replace( '/^(.*)\.' . $ext . '$/', $new_size, $file_path );
+
+			if ( file_exists( $new_path ) ) {
+				$new_name = basename( $new_path );
+
+				if ( $external ) {
+					$src = trailingslashit( $dirs['baseurl'] );
+
+					$src .= 'cache/' . $new_name;
+				} else {
+					$src = str_replace( $file_name, $new_name, $url );
+				}
 			}
 		}
 

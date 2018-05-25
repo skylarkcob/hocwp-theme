@@ -16,12 +16,39 @@ class HOCWP_Theme_Extension {
 	public $required_extensions;
 	public $is_active;
 
+	public $basedir;
+	public $folder_name = '';
+
+	public $folder_path;
+	public $folder_url;
+
+	public $option_name;
+
 	public function __construct( $file = null ) {
 		if ( null == $file ) {
 			$file = __FILE__;
 		}
 
-		$this->file = $file;
+		$this->file    = $file;
+		$this->basedir = dirname( $this->file );
+
+		$this->folder_path = $this->basedir;
+		$this->folder_url  = HOCWP_EXT_URL . '/ext';
+
+		if ( empty( $this->folder_name ) ) {
+			$this->set_folder_name();
+		}
+
+		if ( empty( $this->option_name ) ) {
+			$this->set_option_name();
+		}
+
+		$this->folder_path = trailingslashit( $this->folder_path );
+		$this->folder_path .= $this->folder_name;
+
+		$this->folder_url = trailingslashit( $this->folder_url );
+		$this->folder_url .= $this->folder_name;
+
 		$this->get_headers();
 
 		if ( isset( $this->data['Name'] ) && ! empty( $this->data['Name'] ) ) {
@@ -36,6 +63,62 @@ class HOCWP_Theme_Extension {
 		$this->basename = HT_Extension()->get_basename( $this->file );
 
 		add_filter( 'hocwp_theme_required_extensions', array( $this, 'required_extensions' ) );
+
+		if ( is_admin() ) {
+			if ( HT_Admin()->is_theme_option_page() ) {
+				add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'option_tabs' ) );
+				add_filter( 'hocwp_theme_settings_page_' . $this->option_name . '_settings_section', array(
+					$this,
+					'option_sections'
+				) );
+				add_filter( 'hocwp_theme_settings_page_' . $this->option_name . '_settings_field', array(
+					$this,
+					'option_fields'
+				) );
+				add_filter( 'hocwp_theme_sanitize_option_' . $this->option_name, array( $this, 'sanitize_options' ) );
+				add_action( 'hocwp_theme_admin_setting_page_' . $this->option_name . '_scripts', array(
+					$this,
+					'option_scripts'
+				) );
+			}
+		}
+	}
+
+	public function option_tabs( $tabs ) {
+		return $tabs;
+	}
+
+	public function option_sections() {
+		return array();
+	}
+
+	public function option_fields() {
+		return array();
+	}
+
+	public function sanitize_options( $input ) {
+		return $input;
+	}
+
+	public function option_scripts() {
+
+	}
+
+	public function set_option_name( $name = '' ) {
+		if ( empty( $name ) ) {
+			$name = $this->folder_name;
+			$name = str_replace( '-', '_', $name );
+		}
+
+		$this->option_name = $name;
+	}
+
+	public function set_folder_name( $name = '' ) {
+		if ( empty( $name ) ) {
+			$name = sanitize_title( $this->name );
+		}
+
+		$this->folder_name = $name;
 	}
 
 	public function required_extensions( $extensions ) {

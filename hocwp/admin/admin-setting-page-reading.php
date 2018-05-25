@@ -48,6 +48,9 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'theme_color', __( 'Theme Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading' );
 	$fields[] = $field;
 
+	$field    = hocwp_theme_create_setting_field( '404', __( 'Not Found Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
+	$fields[] = $field;
+
 	$args = array(
 		'class' => 'medium-text'
 	);

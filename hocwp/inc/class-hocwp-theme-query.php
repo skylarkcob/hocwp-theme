@@ -75,6 +75,8 @@ final class HOCWP_Theme_Query {
 			return $query;
 		}
 
+		$term_relation = array();
+
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 		$obj     = get_post( $post_id );
 
@@ -117,6 +119,8 @@ final class HOCWP_Theme_Query {
 							$new[] = $tax_item;
 
 							$has_tag = true;
+
+							$term_relation[ $tax ] = $ids;
 						}
 
 						unset( $taxs[ $key ] );
@@ -148,23 +152,25 @@ final class HOCWP_Theme_Query {
 						$tax_item['terms'] = $ids;
 
 						$new[] = $tax_item;
+
+						$term_relation[ $tax ] = $ids;
 					}
 				}
+
+				if ( HT()->array_has_value( $new ) ) {
+					$new['relation'] = 'or';
+
+					$tax_query[] = $new;
+				}
+
+				if ( ! isset( $tax_query['relation'] ) ) {
+					$tax_query['relation'] = 'or';
+				}
+
+				$args['tax_query'] = $tax_query;
+
+				$query = new WP_Query( $args );
 			}
-
-			if ( HT()->array_has_value( $new ) ) {
-				$new['relation'] = 'or';
-
-				$tax_query[] = $new;
-			}
-
-			if ( ! isset( $tax_query['relation'] ) ) {
-				$tax_query['relation'] = 'or';
-			}
-
-			$args['tax_query'] = $tax_query;
-
-			$query = new WP_Query( $args );
 		} else {
 			$args['s'] = $obj->post_title;
 			$query     = new WP_Query( $args );
@@ -178,6 +184,10 @@ final class HOCWP_Theme_Query {
 					$query     = new WP_Query( $args );
 				}
 			}
+		}
+
+		if ( ! isset( $query->query_vars['term_relation'] ) ) {
+			$query->query_vars['term_relation'] = $term_relation;
 		}
 
 		return $query;
@@ -204,6 +214,57 @@ final class HOCWP_Theme_Query {
 		$args     = wp_parse_args( $args, $defaults );
 
 		return new WP_Query( $args );
+	}
+
+	public function get_post_by_column( $column_name, $column_value, $output = 'OBJECT', $args = array() ) {
+		global $wpdb;
+		$post_types = isset( $args['post_type'] ) ? $args['post_type'] : '';
+		$post_types = (array) $post_types;
+
+		$output = strtoupper( $output );
+
+		if ( is_string( $column_value ) ) {
+			$column_value = "'" . $column_value . "'";
+		}
+
+		$sql = "SELECT ID FROM %s WHERE ";
+		$sql = sprintf( $sql, $wpdb->posts );
+		$sql .= "$column_name = %s";
+
+		$sql = $wpdb->prepare( $sql, $column_value );
+
+		$count_type = 0;
+
+		foreach ( $post_types as $post_type ) {
+			if ( empty( $post_type ) ) {
+				continue;
+			}
+
+			if ( 0 == $count_type ) {
+				$sql .= " AND post_type = '$post_type'";
+			} else {
+				$sql .= " OR post_type = '$post_type'";
+			}
+
+			$count_type ++;
+		}
+		HT()->debug( $sql );
+
+		$post_id = $wpdb->get_var( $sql );
+		$result  = '';
+
+		switch ( $output ) {
+			case OBJECT:
+				if ( HT()->is_positive_number( $post_id ) ) {
+					$result = get_post( $post_id );
+				}
+
+				break;
+			default:
+				$result = $post_id;
+		}
+
+		return $result;
 	}
 
 	public static function posts_orderby_meta( $meta_key, $args = array() ) {
