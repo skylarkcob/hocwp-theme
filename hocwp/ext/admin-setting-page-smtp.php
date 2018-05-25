@@ -219,7 +219,7 @@ add_action( 'hocwp_theme_settings_page_smtp_form_after', 'hocwp_theme_settings_p
 
 function hocwp_theme_settings_page_smtp_admin_notices_action() {
 	if ( isset( $_POST['submit'] ) ) {
-		if ( wp_verify_nonce( $_POST['hocwp_theme_test_smtp_nonce'], 'hocwp_theme_test_smtp' ) ) {
+		if ( HT_Util()->verify_nonce( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ) ) {
 			$to_email = isset( $_POST['hocwp_theme_test_smtp_to'] ) ? $_POST['hocwp_theme_test_smtp_to'] : '';
 			if ( ! is_email( $to_email ) ) {
 				$to_email = get_option( 'admin_email' );

@@ -248,6 +248,13 @@ final class HOCWP_Theme_Controller {
 
 	public $object;
 
+	public $loop_data = array();
+	public $temp_data = array();
+
+	protected $textdomain = 'hocwp-theme';
+	protected $prefix = 'hocwp_theme';
+	protected $short_name = 'ht_';
+
 	public function __construct() {
 		if ( self::$instance ) {
 			_doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
@@ -268,6 +275,30 @@ final class HOCWP_Theme_Controller {
 		}
 
 		$this->object = $hocwp_theme;
+	}
+
+	public function get_textdomain() {
+		return $this->textdomain;
+	}
+
+	public function get_prefix() {
+		return $this->prefix;
+	}
+
+	public function get_short_name() {
+		return $this->short_name;
+	}
+
+	public function verify_nonce( $nonce_name ) {
+		return HT_Util()->verify_nonce( $this->textdomain, $nonce_name );
+	}
+
+	public function the_date( $format = '', $post = null ) {
+		if ( empty( $format ) ) {
+			$format = $this->object->defaults['date_format'] . ' ' . $this->object->defaults['time_format'];
+		}
+
+		echo get_the_time( $format, $post );
 	}
 
 	public static function get_instance() {

@@ -185,8 +185,10 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		if ( $query->have_posts() ) {
 			do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
 			$html = apply_filters( 'hocwp_theme_widget_posts_html', '', $query, $instance, $args, $this );
+
 			if ( empty( $html ) ) {
 				global $hocwp_theme;
+				$hocwp_theme->loop_data['list']       = true;
 				$hocwp_theme->loop_data['on_sidebar'] = true;
 				$hocwp_theme->loop_data['template']   = 'sidebar';
 
@@ -235,6 +237,8 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 	public function form( $instance ) {
 		$post_types = get_post_types( array( 'public' => true ) );
 		unset( $post_types['attachment'] );
+		$post_types = apply_filters( 'hocwp_theme_widget_posts_post_types', $post_types, $this );
+
 		$post_type  = isset( $instance['post_type'] ) ? $instance['post_type'] : $this->defaults['post_type'];
 		$taxonomies = array();
 

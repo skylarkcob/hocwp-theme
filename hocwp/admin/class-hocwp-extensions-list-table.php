@@ -262,10 +262,12 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 		$is_active = HT_extension()->is_active( $extension_file );
 
+		$baseurl = 'themes.php?page=hocwp_theme&tab=extension&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s;
+
 		if ( $is_active ) {
-			$actions['deactivate'] = '<a href="' . wp_nonce_url( 'themes.php?page=hocwp_theme&tab=extension&action=deactivate&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s, 'deactivate-extension_' . $extension_file ) . '" aria-label="' . esc_attr( sprintf( _x( 'Deactivate %s', 'hocwp theme extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Deactivate', 'hocwp-theme' ) . '</a>';
+			$actions['deactivate'] = '<a href="' . wp_nonce_url( $baseurl . '&action=deactivate', 'deactivate-extension_' . $extension_file ) . '" aria-label="' . esc_attr( sprintf( _x( 'Deactivate %s', 'hocwp theme extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Deactivate', 'hocwp-theme' ) . '</a>';
 		} else {
-			$actions['activate'] = '<a href="' . wp_nonce_url( 'themes.php?page=hocwp_theme&tab=extension&action=activate&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s, 'activate-extension_' . $extension_file ) . '" class="edit" aria-label="' . esc_attr( sprintf( _x( 'Activate %s', 'hocwp-theme-extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Activate', 'hocwp-theme' ) . '</a>';
+			$actions['activate'] = '<a href="' . wp_nonce_url( $baseurl . '&action=activate', 'activate-extension_' . $extension_file ) . '" class="edit" aria-label="' . esc_attr( sprintf( _x( 'Activate %s', 'hocwp-theme-extension', 'hocwp-theme' ), $extension_data['Name'] ) ) . '">' . __( 'Activate', 'hocwp-theme' ) . '</a>';
 		}
 
 		$actions        = array_filter( $actions );
@@ -340,16 +342,18 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	}
 
 	public function process_bulk_action() {
-		if ( isset( $_POST['_wpnonce'] ) && ! empty( $_POST['_wpnonce'] ) ) {
-			$nonce  = filter_input( INPUT_POST, '_wpnonce', FILTER_SANITIZE_STRING );
-			$action = 'bulk-' . $this->_args['plural'];
+		$action    = $this->current_action();
+		$extension = isset( $_GET['extension'] ) ? $_GET['extension'] : '';
+		$extension = str_replace( '\\\\', '\\', $extension );
 
-			if ( ! wp_verify_nonce( $nonce, $action ) ) {
-				wp_die( 'Nope! Security check failed!', 'hocwp-theme' );
+		if ( isset( $_REQUEST['_wpnonce'] ) ) {
+			$nonce = $_REQUEST['_wpnonce'];
+
+			if ( ! HT_Util()->verify_nonce( $action . '-extension_' . $extension, $nonce ) ) {
+				return;
 			}
 		}
 
-		$action  = $this->current_action();
 		$checked = isset( $_POST['checked'] ) ? $_POST['checked'] : '';
 		$options = $GLOBALS['hocwp_theme']->active_extensions;
 		$change  = false;

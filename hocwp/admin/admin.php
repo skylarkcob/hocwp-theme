@@ -247,7 +247,9 @@ function hocwp_theme_create_meta_field( $id, $title, $callback = 'input', $callb
 		if ( empty( $callback ) ) {
 			$callback = 'input';
 		}
+
 		$callback = array( 'HOCWP_Theme_HTML_Field', $callback );
+
 		if ( ! is_callable( $callback ) ) {
 			$callback = array( 'HOCWP_Theme_HTML_Field', 'input' );
 		}

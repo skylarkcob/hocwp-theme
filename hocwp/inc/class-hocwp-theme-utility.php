@@ -561,12 +561,10 @@ class HOCWP_Theme_Utility {
 	}
 
 	public static function verify_nonce( $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
-		if ( null != $nonce_action ) {
-			$nonce = isset( $_POST[ $nonce_name ] ) ? $_POST[ $nonce_name ] : '';
+		if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+			$nonce = isset( $_REQUEST[ $nonce_name ] ) ? $_REQUEST[ $nonce_name ] : '';
 
-			if ( ! wp_verify_nonce( $nonce, $nonce_action ) ) {
-				return false;
-			}
+			return wp_verify_nonce( $nonce, $nonce_action );
 		}
 
 		return true;

@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
                     sidebar = $("#" + sidebarID),
                     widgetIDBase = hocwpTheme.getParamByName(settings.data, "id_base"),
                     widgetID = hocwpTheme.getParamByName(settings.data, "widget-id"),
-                    widget = $("#" + widgetID);
+                    widget = container.find("div[id$='" + widgetID + "']");
 
                 if ("hocwp_widget_tabber" == widgetIDBase) {
                     sidebar.find("select option[value='" + sidebarID + "']").remove();

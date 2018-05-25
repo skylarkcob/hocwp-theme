@@ -24,6 +24,6 @@ jQuery(document).ready(function ($) {
     };
 
     (function () {
-        $("select[data-chosen='1']").hocwpSelectChosen();
+        $("select[data-chosen='1'], #parent_id").hocwpSelectChosen();
     })();
 });

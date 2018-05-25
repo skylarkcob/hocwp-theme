@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
     var body = $("body");
 
-    $.fn.hocwpSetBooleanMetaStatus = function (options) {
+    $.fn.hocwpUpdateMeta = function (options) {
         return this.each(function () {
             var element = $(this),
                 meta_type = element.attr("data-meta-type"),
@@ -9,54 +9,72 @@ jQuery(document).ready(function ($) {
                 meta_value = element.attr("data-meta-value"),
                 object_id = element.attr("data-id");
 
-            var settings = $.extend({}, $.fn.hocwpSetBooleanMetaStatus.defaults, options);
+            var settings = $.extend({}, $.fn.hocwpUpdateMeta.defaults, options);
 
             if (!$.trim(meta_type)) {
                 meta_type = settings.meta_type;
             }
 
             element.on("click", function () {
+                var value_type = element.attr("data-value-type");
+
+                body.trigger("hocwpTheme:ajaxStart", [element]);
+
                 $.ajax({
                     type: "POST",
                     dataType: "JSON",
                     url: hocwpTheme.ajaxUrl,
                     cache: true,
                     data: {
-                        action: "hocwp_theme_boolean_meta_ajax",
+                        action: "hocwp_theme_ajax",
+                        callback: "update_meta",
+                        method: "post",
                         meta_type: meta_type,
                         meta_key: meta_key,
                         meta_value: meta_value,
                         object_id: object_id,
+                        value_type: value_type,
                         nonce: hocwpTheme.nonce
                     },
                     success: function (response) {
                         if (response.success) {
                             meta_value = response.data.meta_value;
 
-                            if (1 === meta_value) {
-                                element.addClass("active");
-                            } else {
-                                element.removeClass("active");
+                            element.attr("data-meta-value", meta_value);
+
+                            var container = element.parent(),
+                                displayResult = container.find(element.attr("data-display-result"));
+
+                            if (displayResult.length && response.data.formatted_meta_value) {
+                                displayResult.html(response.data.formatted_meta_value);
                             }
 
-                            element.attr("data-meta-value", meta_value);
+                            if ("up_down" === value_type) {
+                                element.addClass("disabled");
+                                element.prop("disabled", true);
+                            }
                         }
 
-                        element.trigger("hocwpThemeBooleanMeta:ajaxSuccess", [element, response]);
+                        element.trigger("hocwpUpdateMeta:ajaxSuccess", [element, response]);
+
+                        if (response.data && response.data.message && $.trim(response.data.message)) {
+                            alert(response.data.message);
+                        }
                     },
                     complete: function (response) {
                         body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        element.blur();
                     }
                 });
             });
         });
     };
 
-    $.fn.hocwpSetBooleanMetaStatus.defaults = {
+    $.fn.hocwpUpdateMeta.defaults = {
         meta_type: 'post'
     };
 
     (function () {
-        $("[data-boolean-meta='1']").hocwpSetBooleanMetaStatus();
+        $("[data-ajax-meta='1']").hocwpUpdateMeta();
     })();
 });

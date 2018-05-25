@@ -32,7 +32,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			'end_size'      => 1,
 			'mid_size'      => 2,
 			'first_last'    => 0,
-			'current_total' => 0
+			'current_total' => 0,
+			'class'         => 'hocwp-pagination'
 		);
 
 		$args  = wp_parse_args( $args, $defaults );
@@ -49,8 +50,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			return;
 		}
 
-		$big     = 999999999;
-		$paged   = self::get_paged();
+		$big = 999999999;
+
+		if ( isset( $args['paged'] ) && is_numeric( $args['paged'] ) ) {
+			$paged = $args['paged'];
+		} else {
+			$paged = self::get_paged();
+		}
+
 		$current = max( 1, $paged );
 
 		$pla = array(
@@ -92,6 +99,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$dynamic_size = HT()->convert_to_boolean( $args['dynamic_size'] );
 
+		$first_last = isset( $args['first_last'] ) ? (bool) $args['first_last'] : false;
+
+		if ( ! $first_last ) {
+			if ( isset( $args['first'] ) && isset( $args['last'] ) ) {
+				$first_last = true;
+			}
+		}
+
 		if ( $dynamic_size ) {
 			$show_all = HT()->convert_to_boolean( $args['show_all'] );
 
@@ -123,9 +138,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					}
 				}
 
-				$first_last = $args['first_last'];
-
-				if ( 1 == $first_last ) {
+				if ( 1 == $first_last || true == $first_last ) {
 					$first_text = $args['first_text'];
 
 					if ( ! empty( $first_text ) ) {
@@ -161,11 +174,15 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$items = paginate_links( $args );
 
 		if ( HOCWP_Theme::array_has_value( $items ) ) {
-			$first_last = isset( $args['first_last'] ) ? (bool) $args['first_last'] : false;
-			echo '<ul class="pagination hocwp-pagination">';
+			$class = $args['class'];
+			$class = sanitize_html_class( $class );
+			$class .= ' pagination';
+			$class = trim( $class );
+
+			echo '<ul class="' . $class . '">';
 
 			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
-				echo '<li class="label-item page-item"><span class="page-numbers label">' . $args['label'] . '</span></li>';
+				echo '<li class="label-item page-item"><span class="page-numbers label page-link">' . $args['label'] . '</span></li>';
 			}
 
 			if ( $first_last ) {
@@ -177,7 +194,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					}
 
 					$url = get_pagenum_link( 1 );
-					echo '<li class="page-item"><a class="first page-numbers" href="' . esc_url( $url ) . '">' . $first . '</a></li>';
+					echo '<li class="page-item"><a class="first page-numbers page-link" href="' . esc_url( $url ) . '">' . $first . '</a></li>';
 				}
 			}
 
@@ -194,7 +211,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					}
 
 					$url = get_pagenum_link( $total );
-					echo '<li class="page-item"><a class="last page-numbers" href="' . esc_url( $url ) . '">' . $last . '</a></li>';
+					echo '<li class="page-item"><a class="last page-numbers page-link" href="' . esc_url( $url ) . '">' . $last . '</a></li>';
 				}
 			}
 
@@ -218,7 +235,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				$current_total = str_replace( $search, $replace, $current_total );
 				?>
 				<li class="page-item current-total">
-					<a class="page-numbers" href="javascript:" title=""><?php echo $current_total; ?></a>
+					<a class="page-numbers page-link" href="javascript:" title=""><?php echo $current_total; ?></a>
 				</li>
 				<?php
 			}
