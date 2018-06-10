@@ -33,7 +33,10 @@ class HOCWP_Theme_Extension {
 		$this->basedir = dirname( $this->file );
 
 		$this->folder_path = $this->basedir;
-		$this->folder_url  = HOCWP_EXT_URL . '/ext';
+
+		if ( empty( $this->folder_url ) ) {
+			$this->folder_url = HOCWP_Theme()->core_url . '/ext';
+		}
 
 		if ( empty( $this->folder_name ) ) {
 			$this->set_folder_name();

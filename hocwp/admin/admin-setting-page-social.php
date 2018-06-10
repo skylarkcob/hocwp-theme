@@ -82,6 +82,29 @@ function hocwp_theme_settings_page_social_field() {
 	$fields[] = array(
 		'tab'     => 'social',
 		'section' => 'facebook',
+		'id'      => 'facebook_app_secret',
+		'title'   => 'APP Secret',
+		'args'    => array(
+			'label_for' => true
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'facebook',
+		'id'      => 'facebook_access_token',
+		'title'   => 'Access Token',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'widefat'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'facebook',
 		'id'      => 'facebook_sdk_javascript',
 		'title'   => 'SDK JavaScript',
 		'args'    => array(

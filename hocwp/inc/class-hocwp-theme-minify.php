@@ -103,9 +103,11 @@ final class HOCWP_Theme_Minify {
 	public static function get_minified( $url, $content ) {
 		if ( ! empty( $content ) ) {
 			$filesystem = HOCWP_Theme_Utility::filesystem();
+
 			if ( HT()->is_file( $content ) ) {
 				$content = $filesystem->get_contents( $content );
 			}
+
 			$params = array(
 				'method'      => 'POST',
 				'timeout'     => 45,
@@ -116,7 +118,9 @@ final class HOCWP_Theme_Minify {
 				'body'        => array( 'input' => $content ),
 				'cookies'     => array()
 			);
+
 			$resp   = wp_remote_post( $url, $params );
+
 			if ( ! is_wp_error( $resp ) ) {
 				$content = wp_remote_retrieve_body( $resp );
 			}

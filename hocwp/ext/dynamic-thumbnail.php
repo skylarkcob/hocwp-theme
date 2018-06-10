@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
+final class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
 	protected static $instance;
 
 	public static function get_instance() {
@@ -43,10 +43,10 @@ class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
 		}
 
 		$meta->set_id( 'dynamic-thumbnail' );
-		$meta->set_title( __( 'Dynamic Thumbnail', 'sb-core' ) );
+		$meta->set_title( __( 'Dynamic Thumbnail', 'hocwp-theme' ) );
 		$meta->form_table = true;
 
-		$field = hocwp_theme_create_meta_field( '_thumbnail_url', __( 'Thumbnail Url:', 'sb-core' ) );
+		$field = hocwp_theme_create_meta_field( '_thumbnail_url', __( 'Thumbnail Url:', 'hocwp-theme' ) );
 		$meta->add_field( $field );
 	}
 }

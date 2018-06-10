@@ -143,6 +143,7 @@
         subMenu = link.parentNode.getElementsByTagName("ul")[0];
 
         if ("undefined" !== typeof subMenu) {
+            console.log("click");
             link.parentNode.className = link.parentNode.className.replace(" focus", "");
 
             if (-1 !== link.className.indexOf("toggled")) {

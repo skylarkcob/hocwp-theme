@@ -327,6 +327,20 @@ final class HOCWP_Theme {
 		return '#' . $part;
 	}
 
+	public function keep_only_number( $string, $keep = ',' ) {
+		if ( is_numeric( $string ) ) {
+			return $string;
+		}
+
+		$tmp = preg_replace( '/[^0-9\.' . $keep . ']/', '', $string );
+
+		if ( null != $tmp && false != $tmp ) {
+			return $tmp;
+		}
+
+		return '';
+	}
+
 	public static function change_html_attribute( $tag, $attr, $value ) {
 		$tag = preg_replace( '/' . $attr . '="(.*?)"/i', $attr . '="' . $value . '"', $tag );
 
@@ -680,7 +694,19 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
-	public static function transmit( &$value, &$another ) {
+	public static function transmit( &$value, &$another, $filter = FILTER_SANITIZE_STRING ) {
+		if ( $filter == FILTER_SANITIZE_NUMBER_INT || $filter == FILTER_SANITIZE_NUMBER_FLOAT ) {
+			if ( ( is_numeric( $value ) && ! is_numeric( $another ) ) || ( ! is_numeric( $value ) && is_numeric( $another ) ) ) {
+				if ( is_numeric( $value ) && ! is_numeric( $another ) ) {
+					$another = $value;
+				} elseif ( ! is_numeric( $value ) && is_numeric( $another ) ) {
+					$value = $another;
+				}
+			}
+
+			return;
+		}
+
 		if ( ( empty( $value ) || empty( $another ) ) && $value != $another ) {
 			if ( empty( $value ) && ! empty( $another ) ) {
 				$value = $another;

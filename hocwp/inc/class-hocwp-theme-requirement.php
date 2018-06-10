@@ -50,6 +50,32 @@ final class HOCWP_Theme_Requirement {
 		return $extensions;
 	}
 
+	public function get_recommended_extensions() {
+		$extensions = array();
+
+		if ( defined( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS' ) && ! empty( HOCWP_THEME_RECOMMENDED_EXTENSIONS ) ) {
+
+			if ( is_string( HOCWP_THEME_RECOMMENDED_EXTENSIONS ) ) {
+				$extensions = explode( ',', HOCWP_THEME_RECOMMENDED_EXTENSIONS );
+				$extensions = array_map( 'trim', $extensions );
+			} else {
+				$extensions = HOCWP_THEME_RECOMMENDED_EXTENSIONS;
+			}
+
+			$extensions = (array) $extensions;
+		}
+
+		$extensions = apply_filters( 'hocwp_theme_recommended_extensions', $extensions );
+
+		if ( HT()->array_has_value( $extensions ) ) {
+			$extensions = array_filter( $extensions );
+			$extensions = array_unique( $extensions );
+			$extensions = array_map( array( $this, 'sanitize_extension_basename' ), $extensions );
+		}
+
+		return $extensions;
+	}
+
 	public function sanitize_extension_basename( $basename ) {
 		$basename = HT_Extension()->sanitize_basename( $basename );
 

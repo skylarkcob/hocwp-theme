@@ -76,12 +76,23 @@ final class HOCWP_Theme_HTML_Field {
 				unset( $args['options'] );
 				$value = isset( $args['value'] ) ? $args['value'] : '';
 
-				foreach ( $options as $key => $label ) {
+				foreach ( $options as $key => $data ) {
+					if ( is_string( $data ) ) {
+						$label = $data;
+					} else {
+						$label = ( is_array( $data ) && isset( $data['label'] ) ) ? $data['label'] : '';
+					}
+
 					$atts  = $args;
 					$lb    = new HOCWP_Theme_HTML_Tag( 'label' );
 					$input = new HOCWP_Theme_HTML_Tag( 'input' );
 					$id    = isset( $atts['id'] ) ? $atts['id'] : '';
 					$id .= '_' . $key;
+
+					if ( empty( $label ) ) {
+						$label = $id;
+					}
+
 					$lb->add_attribute( 'for', $id );
 
 					if ( ! empty( $label ) ) {
@@ -94,6 +105,17 @@ final class HOCWP_Theme_HTML_Field {
 
 					if ( $key == $value ) {
 						$atts['checked'] = 'checked';
+					}
+
+					if ( 'checkbox' == $args['type'] ) {
+						$atts['name']  = $key;
+						$atts['value'] = 1;
+
+						if ( is_array( $data ) && isset( $data['value'] ) && 1 == $data['value'] ) {
+							$atts['checked'] = 'checked';
+						} else {
+							unset( $atts['checked'] );
+						}
 					}
 
 					$input->set_attributes( $atts );

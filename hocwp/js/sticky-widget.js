@@ -2,24 +2,41 @@
     if (window.innerWidth < 1240) {
         return;
     }
+
+    var siteContent = document.getElementsByClassName("site-content")[0],
+        contentArea;
+
+    if (siteContent) {
+        contentArea = siteContent.getElementsByClassName("content-area")[0];
+    }
+
     var sidebars = document.getElementsByClassName("sidebar");
 
     function hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer, scroll) {
         scroll = scroll || false;
+
         for (var i = 0; i < sidebars.length; i++) {
             var sidebar = sidebars[i],
                 widgets = sidebar.getElementsByClassName("widget");
+
             if (widgets) {
+                if (siteContent && contentArea && siteContent.contains(sidebar) && contentArea.height() <= sidebar.height()) {
+                    continue;
+                }
+
                 var widget = widgets[widgets.length - 1],
                     offsetTop = widget.offsetTop;
+
                 widget.style.width = widget.offsetWidth + "px";
+
                 if (!scroll) {
-                    widget.setAttribute("data-offset-top", offsetTop);
+                    widget.setAttribute("data-offset-top", offsetTop.toString());
                 } else {
                     if (widget.getAttribute("data-offset-top")) {
                         offsetTop = parseInt(widget.getAttribute("data-offset-top"));
                     }
                 }
+
                 if (scrollPos > 0 && scrollPos > offsetTop) {
                     if (-1 === widget.className.indexOf("fixed")) {
                         widget.className += " fixed";
@@ -35,6 +52,7 @@
                             if (widget.style.bottom) {
                                 widget.style.bottom = "";
                             }
+
                             widget.style.top = top + "px";
                         }
                     } else {
@@ -54,19 +72,24 @@
             wpadminbar = document.getElementById("wpadminbar"),
             top = 0,
             footer = document.getElementById("colophon");
+
         if (wpadminbar) {
             top = wpadminbar.offsetHeight;
         }
 
         hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer);
+
         window.addEventListener("scroll", function () {
             if (window.innerWidth < 1240) {
                 return;
             }
-            wpadminbar = document.getElementById("wpadminbar")
+
+            wpadminbar = document.getElementById("wpadminbar");
+
             if (wpadminbar) {
                 top = wpadminbar.offsetHeight;
             }
+
             scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
             hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer, true);
         });

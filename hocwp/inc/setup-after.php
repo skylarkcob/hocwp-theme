@@ -160,7 +160,7 @@ add_action( 'hocwp_thene_change_siteurl', 'hocwp_theme_update_option_url', 10, 2
 function hocwp_theme_register_widgets() {
 	global $hocwp_theme;
 
-	$widgets = hocwp_get_all_widgets_classes();
+	$widgets = HOCWP_Theme()->get_widget_classes();
 
 	foreach ( $widgets as $widget ) {
 		if ( class_exists( $widget ) ) {

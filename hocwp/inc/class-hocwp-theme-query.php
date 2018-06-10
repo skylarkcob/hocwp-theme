@@ -39,6 +39,60 @@ final class HOCWP_Theme_Query {
 	}
 
 	public static function related_posts( $args = array() ) {
+		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+
+		$obj = get_post( $post_id );
+
+		$defaults = array(
+			'post__not_in'  => array( $post_id ),
+			'post_type'     => $obj->post_type,
+			'orderby'       => 'rand',
+			'related_posts' => true
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$query = new WP_Query();
+
+		$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : '';
+		unset( $args['taxonomy'] );
+
+		if ( ! empty( $taxonomy ) ) {
+			if ( ! is_array( $taxonomy ) ) {
+				$taxonomy = array( $taxonomy );
+			}
+
+			$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : '';
+
+			if ( ! is_array( $tax_query ) ) {
+				$tax_query = array();
+			}
+
+			foreach ( $taxonomy as $tax ) {
+				$term_ids = wp_get_object_terms( get_the_ID(), $tax, array( 'fields' => 'ids' ) );
+
+				if ( HT()->array_has_value( $term_ids ) ) {
+					$tax_query[] = array(
+						'taxonomy' => $tax,
+						'field'    => 'term_id',
+						'terms'    => $term_ids
+					);
+				}
+			}
+
+			if ( ! isset( $tax_query['relation'] ) ) {
+				$tax_query['relation'] = 'OR';
+			}
+
+			$args['tax_query'] = $tax_query;
+
+			$query = new WP_Query( $args );
+		}
+
+		if ( $query->have_posts() ) {
+			return $query;
+		}
+
 		$by_term = false;
 
 		if ( isset( $args['cat'] ) && is_numeric( $args['cat'] ) ) {
@@ -67,8 +121,6 @@ final class HOCWP_Theme_Query {
 
 		if ( $by_term ) {
 			$query = new WP_Query( $args );
-		} else {
-			$query = new WP_Query();
 		}
 
 		if ( $query->have_posts() ) {
@@ -77,15 +129,6 @@ final class HOCWP_Theme_Query {
 
 		$term_relation = array();
 
-		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
-		$obj     = get_post( $post_id );
-
-		$defaults = array(
-			'post__not_in' => array( $post_id ),
-			'post_type'    => $obj->post_type
-		);
-
-		$args = wp_parse_args( $args, $defaults );
 		$taxs = get_object_taxonomies( $obj );
 
 		if ( HOCWP_Theme::array_has_value( $taxs ) ) {

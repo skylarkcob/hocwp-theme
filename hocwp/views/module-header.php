@@ -26,5 +26,6 @@ hocwp_theme_html_tag( 'div', 'site_container' );
 		<?php do_action( 'hocwp_theme_module_site_header' ); ?>
 	</header>
 <?php
+do_action( 'hocwp_theme_site_header_after' );
 hocwp_theme_html_tag( 'div', 'site_content' );
 do_action( 'hocwp_theme_site_content_top' );

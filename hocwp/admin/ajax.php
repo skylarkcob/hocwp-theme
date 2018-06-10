@@ -40,7 +40,7 @@ class HOCWP_Theme_AJAX {
 		$method = HT()->get_method_value( 'method', 'request', 'post' );
 		$nonce  = HT()->get_method_value( 'nonce', $method );
 		$data   = array(
-			'message' => __( 'AJAX nonce is invalid!', 'hocwp-theme' )
+			'message' => __( 'AJAX nonce is invalid.', 'hocwp-theme' )
 		);
 
 		if ( HOCWP_Theme()->verify_nonce( $nonce ) ) {
@@ -59,7 +59,7 @@ class HOCWP_Theme_AJAX {
 				wp_send_json_success( $data );
 			}
 
-			$data['message'] = __( 'AJAX callback is invalid!', 'hocwp-theme' );
+			$data['message'] = __( 'Invalid AJAX callback.', 'hocwp-theme' );
 		}
 
 		wp_send_json_error( $data );

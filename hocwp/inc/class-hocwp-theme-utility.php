@@ -73,6 +73,8 @@ class HOCWP_Theme_Utility {
 
 				$current_url = add_query_arg( $parts, $current_url );
 			}
+		} else {
+			$current_url = strtok( $current_url, '?' );
 		}
 
 		return apply_filters( 'hocwp_theme_current_url', $current_url );
@@ -580,6 +582,12 @@ class HOCWP_Theme_Utility {
 		}
 
 		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+			return false;
+		}
+
+		$obj = get_post( $post_id );
+
+		if ( 'trash' == $obj->post_status || ( isset( $_REQUEST['action'] ) && ( 'untrash' == $_REQUEST['action'] || 'trash' == $_REQUEST['action'] ) ) ) {
 			return false;
 		}
 
@@ -1190,11 +1198,13 @@ class HOCWP_Theme_Utility {
 		$url  = add_query_arg( 'ids', $url, $base );
 
 		$res = wp_remote_get( $url );
+
 		if ( ! is_wp_error( $res ) ) {
 			$res = wp_remote_retrieve_body( $res );
 			$res = json_decode( $res, true );
 			$res = array_shift( $res );
 		}
+
 		if ( HT()->array_has_value( $res ) && ! empty( $key ) ) {
 			switch ( $key ) {
 				case 'share_count':

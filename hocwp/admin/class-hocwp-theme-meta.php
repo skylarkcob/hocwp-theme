@@ -73,8 +73,8 @@ abstract class HOCWP_Theme_Meta {
 			)
 		);
 
-		$field    = wp_parse_args( $field, $defaults );
-		$type     = $field['type'];
+		$field = wp_parse_args( $field, $defaults );
+		$type  = $field['type'];
 
 		switch ( $type ) {
 			case 'positive_number':
@@ -105,7 +105,7 @@ abstract class HOCWP_Theme_Meta {
 
 		$value = isset( $_POST[ $id ] ) ? $_POST[ $id ] : '';
 		$type  = $field['type'];
-		$value = HOCWP_Theme_Sanitize::data( $value, $type );
+		$value = HT_Sanitize()->data( $value, $type );
 
 		return $value;
 	}
@@ -148,9 +148,35 @@ abstract class HOCWP_Theme_Meta {
 				return $field;
 			}
 
+			if ( $this->is_checkbox_field( $field, true ) ) {
+				$options = $field['callback_args']['options'];
+
+				foreach ( (array) $options as $key => $data ) {
+					if ( ! is_array( $data ) ) {
+						$data = array(
+							'label' => $data
+						);
+					}
+
+					if ( ! isset( $data['value'] ) ) {
+						$tmp         = $field;
+						$tmp['name'] = $key;
+						unset( $tmp['callback'], $tmp['callback_args']['options'] );
+						$tmp           = $this->sanitize_value( $obj_id, $tmp );
+						$data['value'] = $tmp['callback_args']['value'];
+					}
+
+					$options[ $key ] = $data;
+				}
+
+				$field['callback_args']['options'] = $options;
+
+				return $field;
+			}
+
 			$id = $this->get_name( $field );
 
-			if ( HT()->string_contain( $id, '[' ) && HT()->string_contain( $id, '[' ) ) {
+			if ( HT()->string_contain( $id, '[' ) && HT()->string_contain( $id, ']' ) ) {
 				$tmp = explode( '[', $id );
 
 				foreach ( $tmp as $key => $a ) {
@@ -199,6 +225,30 @@ abstract class HOCWP_Theme_Meta {
 		return $field;
 	}
 
+	public function is_checkbox_field( $field, $check_multi = false ) {
+		$checkbox = false;
+
+		if ( is_array( $field ) ) {
+			if ( isset( $field['callback'][1] ) && 'input' == $field['callback'][1] ) {
+				$input_type = isset( $field['callback_args']['type'] ) ? $field['callback_args']['type'] : '';
+
+				if ( 'checkbox' == $input_type ) {
+					if ( $check_multi ) {
+						$options = isset( $field['callback_args']['options'] ) ? $field['callback_args']['options'] : '';
+
+						if ( HT()->array_has_value( $options ) ) {
+							$checkbox = true;
+						}
+					} else {
+						$checkbox = true;
+					}
+				}
+			}
+		}
+
+		return $checkbox;
+	}
+
 	protected function save( $obj_id ) {
 		if ( ! is_callable( $this->update_value_callback ) ) {
 			_doing_it_wrong( __FUNCTION__, __( 'Please set update_value_callback.', 'hocwp-theme' ), '6.3.2' );
@@ -212,6 +262,21 @@ abstract class HOCWP_Theme_Meta {
 			}
 
 			$id = $this->get_name( $field, true );
+
+			if ( $this->is_checkbox_field( $field, true ) ) {
+				$options = $field['callback_args']['options'];
+
+				$tmp = $field;
+
+				foreach ( (array) $options as $key => $data ) {
+					$name = $key;
+
+					$tmp['name'] = $name;
+
+					$value = $this->sanitize_data( $tmp );
+					call_user_func( $this->update_value_callback, $obj_id, $name, $value );
+				}
+			}
 
 			$value = $this->sanitize_data( $field );
 			call_user_func( $this->update_value_callback, $obj_id, $id, $value );

@@ -18,6 +18,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public static function pagination( $args = array() ) {
+		if ( $args instanceof WP_Query ) {
+			$args = array( 'query' => $args );
+		}
+
 		if ( function_exists( 'hocwp_pagination' ) ) {
 			hocwp_pagination( $args );
 
@@ -330,7 +334,23 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_get_the_archive_title', $title, $prefix );
 	}
 
+	public function get_separator( $context = 'title' ) {
+		$separator = '-';
+
+		if ( class_exists( 'WPSEO_Utils' ) ) {
+			$separator = WPSEO_Utils::get_title_separator();
+		}
+
+		return apply_filters( 'hocwp_theme_separator', $separator, $context );
+	}
+
 	public static function breadcrumb( $args = array() ) {
+		if ( function_exists( 'yoast_breadcrumb' ) ) {
+			yoast_breadcrumb();
+
+			return;
+		}
+
 		if ( is_home() ) {
 			return;
 		}
