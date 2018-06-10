@@ -377,7 +377,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						<div id="nav">
 							<ul class="nav-tab-wrapper">
 								<?php
-								$current_url = HOCWP_Theme_Utility::get_current_url();
+								$current_url = HT_Util()->get_current_url( true );
 								$current_url = remove_query_arg( 'settings-updated', $current_url );
 								$count       = 0;
 
