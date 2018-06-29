@@ -8,12 +8,14 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 	public function __construct() {
 		$this->defaults = array(
-			'icon_image' => '',
-			'icon_url'   => '',
-			'icon_html'  => '',
-			'text'       => '',
-			'sortable'   => '',
-			'sortables'  => array(
+			'icon_image'       => '',
+			'icon_url'         => '',
+			'icon_html'        => '',
+			'hover_icon_image' => '',
+			'hover_icon_html'  => '',
+			'text'             => '',
+			'sortable'         => '',
+			'sortables'        => array(
 				'icon'  => '<li class="ui-state-default ui-sortable-handle" data-value="icon">' . __( 'Icon', 'hocwp-theme' ) . '</li>',
 				'title' => '<li class="ui-state-default ui-sortable-handle" data-value="title">' . __( 'Title', 'hocwp-theme' ) . '</li>',
 				'text'  => '<li class="ui-state-default ui-sortable-handle" data-value="text">' . __( 'Text', 'hocwp-theme' ) . '</li>'
@@ -66,13 +68,26 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 			$name      = 'icon_html';
 			$icon_html = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+			$icon      = $icon_html;
 
 			if ( empty( $icon_html ) && HT()->is_positive_number( $icon_image ) ) {
-				$icon_html = sprintf( '<img class="icon" src="%s" alt="%s">', wp_get_attachment_url( $icon_image ), $instance['title'] );
+				$icon      = wp_get_attachment_url( $icon_image );
+				$icon_html = sprintf( '<img class="icon" src="%s" alt="%s">', $icon, $instance['title'] );
 			}
 
 			if ( ! empty( $icon_html ) && ! empty( $icon_url ) ) {
 				$icon_html = sprintf( '<a href="%s">%s</a>', esc_attr( $icon_url ), $icon_html );
+			}
+
+			$name = 'hover_icon_image';
+
+			$icon_image = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+
+			$name       = 'hover_icon_html';
+			$hover_icon = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+
+			if ( empty( $hover_icon ) && HT()->is_positive_number( $icon_image ) ) {
+				$hover_icon = wp_get_attachment_url( $icon_image );
 			}
 
 			$name = 'text';
@@ -92,7 +107,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			$before_title = isset( $args['before_title'] ) ? $args['before_title'] : '<h3 class="widget-title">';
 			$after_title  = isset( $args['after_title'] ) ? $args['after_title'] : '</h3>';
 
-			echo '<div class="icon-box">';
+			echo '<div class="icon-box" data-icon="' . esc_attr( $icon ) . '" data-hover-icon=' . esc_attr( $hover_icon ) . '>';
 
 			foreach ( $sortables as $sortable ) {
 				if ( 'icon' == $sortable ) {
@@ -127,6 +142,14 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 		HT_HTML_Field()->widget_field( $this, $name, __( 'Icon HTML:', 'hocwp-theme' ), $value );
 
+		$name  = 'hover_icon_image';
+		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+		HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
+
+		$name  = 'hover_icon_html';
+		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+		HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon HTML:', 'hocwp-theme' ), $value );
+
 		$name  = 'text';
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 		HT_HTML_Field()->widget_field( $this, $name, __( 'Text:', 'hocwp-theme' ), $value, 'textarea', array( 'rows' => 3 ) );
@@ -146,12 +169,14 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title']      = sanitize_text_field( $new_instance['title'] );
-		$instance['icon_image'] = $new_instance['icon_image'];
-		$instance['icon_url']   = esc_url( $new_instance['icon_url'] );
-		$instance['icon_html']  = $new_instance['icon_html'];
-		$instance['text']       = $new_instance['text'];
-		$instance['sortable']   = $new_instance['sortable'];
+		$instance['title']            = sanitize_text_field( $new_instance['title'] );
+		$instance['icon_image']       = $new_instance['icon_image'];
+		$instance['icon_url']         = esc_url( $new_instance['icon_url'] );
+		$instance['icon_html']        = $new_instance['icon_html'];
+		$instance['text']             = $new_instance['text'];
+		$instance['sortable']         = $new_instance['sortable'];
+		$instance['hover_icon_image'] = $new_instance['hover_icon_image'];
+		$instance['hover_icon_html']  = $new_instance['hover_icon_html'];
 
 		return $instance;
 	}
