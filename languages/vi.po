@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-06-29 17:47+0700\n"
-"PO-Revision-Date: 2018-06-29 17:47+0700\n"
+"POT-Creation-Date: 2018-06-29 22:06+0700\n"
+"PO-Revision-Date: 2018-06-29 22:08+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -180,7 +180,7 @@ msgid "Image"
 msgstr "Hình ảnh"
 
 #: hocwp/admin/admin-setting-page-general.php:79
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:19
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Text"
 msgstr "Văn bản"
 
@@ -310,7 +310,7 @@ msgid "Active"
 msgstr "Kích hoạt"
 
 #: hocwp/admin/admin-setting-page-reading.php:131
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:17
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:19
 msgid "Icon"
 msgstr "Biểu tượng"
 
@@ -570,7 +570,7 @@ msgstr ""
 
 #: hocwp/admin/class-hocwp-theme-admin-setting-tab.php:13
 msgid "The tab name is not valid."
-msgstr ""
+msgstr "Tên tab không đúng."
 
 #: hocwp/admin/class-hocwp-theme-meta-post.php:21
 msgid "Extra Information"
@@ -1167,17 +1167,12 @@ msgid "You must pass list_type in arguments for this sortable list."
 msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:764
-#, fuzzy
-#| msgctxt "custom post type"
-#| msgid "Add New"
 msgid "Add media"
-msgstr "Thêm mới"
+msgstr "Thêm tập tin"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:787
-#, fuzzy
-#| msgid "Remove %s"
 msgid "Remove media"
-msgstr "Xóa %s"
+msgstr "Xóa tập tin"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:795
 #: hocwp/inc/functions-scripts.php:226
@@ -1700,31 +1695,39 @@ msgstr "Bạn có thể trở thành người đầu tiên để lại bình lu�
 msgid "Skip to content"
 msgstr "Chuyển đến nội dung"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:18
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:20
 msgid "Title"
 msgstr "Tiêu đề"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:26
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:28
 msgid "Show icon with text."
 msgstr "Hiển thị biểu tượng và văn bản."
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:120
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:135
 msgid "Icon URL:"
 msgstr "Đường dẫn trỏ đến của biểu tượng:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:124
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:139
 msgid "Icon Image:"
 msgstr "Biểu tượng bằng hình:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:128
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:143
 msgid "Icon HTML:"
 msgstr "Dùng HTML làm biểu tượng:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:132
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:147
+msgid "Hover Icon Image:"
+msgstr "Biểu tượng khi di chuyển chuột qua bằng hình:"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:151
+msgid "Hover Icon HTML:"
+msgstr "Biểu tượng khi di chuyển chuột qua bằng HTML:"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:155
 msgid "Text:"
 msgstr "Văn bản:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:141
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:164
 msgid "Sortable:"
 msgstr "Sắp xếp:"
 
