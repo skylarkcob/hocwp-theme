@@ -38,13 +38,17 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			return;
 		}
 
+		load_template( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-tabs.php' );
+
+		$this->tabs = HT_Admin_Setting_Tabs();
+
 		add_action( 'admin_menu', array( $this, 'admin_menu_action' ) );
 
 		if ( 'options.php' == $pagenow || $this->menu_slug == $plugin_page ) {
 			add_action( 'admin_init', array( $this, 'settings_init' ) );
 		}
 		if ( $this->menu_slug == $plugin_page ) {
-			$this->tab = isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general';
+			$this->tab = $this->tabs->tab_name;
 			add_action( 'admin_notices', array( $this, 'saved_notices' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 99 );
 		}
@@ -72,9 +76,9 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$option_group = $this->menu_slug;
 		$option_name  = $this->menu_slug;
 
-		if ( ! empty( $this->tab ) ) {
-			$option_group .= '_' . $this->tab;
-			$option_name .= '[' . $this->tab . ']';
+		if ( ! empty( $this->tabs->tab_name ) ) {
+			$option_group .= '_' . $this->tabs->tab_name;
+			$option_name .= '[' . $this->tabs->tab_name . ']';
 		}
 
 		return array( 'option_group' => $option_group, 'option_name' => $option_name );
@@ -90,25 +94,27 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		/**
 		 * Add settings section
 		 */
-		$this->settings_section = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_settings_section', $this->settings_section );
+		$this->settings_section = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_section', $this->settings_section );
 
 		foreach ( (array) $this->settings_section as $section ) {
 			$section = $this->sanitize_section( $section );
-			if ( $this->tab != $section['tab'] ) {
+
+			if ( $this->tabs->tab_name != $section['tab'] ) {
 				continue;
 			}
+
 			add_settings_section( $section['id'], $section['title'], $section['callback'], $section['page'] );
 		}
 
 		/**
 		 * Add Settings Field
 		 */
-		$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_settings_field', $this->settings_field );
+		$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
 
 		foreach ( (array) $this->settings_field as $field ) {
 			$field = $this->sanitize_field( $field );
 
-			if ( $this->tab != $field['tab'] ) {
+			if ( $this->tabs->tab_name != $field['tab'] ) {
 				continue;
 			}
 
@@ -124,7 +130,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$tab = isset( $data['tab'] ) ? $data['tab'] : '';
 
 		if ( ! empty( $tab ) ) {
-			if ( $tab == $this->tab ) {
+			if ( $tab == $this->tabs->tab_name ) {
 				$data['args']['tab'] = $tab;
 			}
 		}
@@ -163,7 +169,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$field_id = isset( $field['args']['callback_args']['id'] ) ? $field['args']['callback_args']['id'] : $field['id'];
 
 		if ( ! empty( $field_id ) ) {
-			$field_id = $this->tab . '_' . $field_id;
+			$field_id = $this->tabs->tab_name . '_' . $field_id;
 		}
 
 		$label_for = isset( $field['args']['label_for'] ) ? $field['args']['label_for'] : '';
@@ -221,13 +227,13 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$options = $GLOBALS['hocwp_theme']->options;
 			$name    = $this->get_field_name( $field );
 
-			if ( isset( $options[ $this->tab ][ $field['id'] ] ) ) {
-				$value = $options[ $this->tab ][ $field['id'] ];
+			if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
+				$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
 			} else {
 				$options = $GLOBALS['hocwp_theme']->defaults['options'];
 
-				if ( isset( $options[ $this->tab ][ $field['id'] ] ) ) {
-					$value = $options[ $this->tab ][ $field['id'] ];
+				if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
+					$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
 				} elseif ( isset( $field['args']['default'] ) ) {
 					$value = $field['args']['default'];
 				} else {
@@ -307,11 +313,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	public function sanitize( $input ) {
 		if ( empty( $this->tab ) ) {
-			$this->tab = HT()->get_method_value( 'tab', 'request' );
+			$this->tab = $this->tabs->get_tab_name();
 		}
 
-		if ( ! empty( $this->tab ) && is_array( $input ) && isset( $input[ $this->tab ] ) ) {
-			$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_settings_field', $this->settings_field );
+		if ( ! empty( $this->tabs->tab_name ) && is_array( $input ) && isset( $input[ $this->tabs->tab_name ] ) ) {
+			$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
 
 			if ( HT()->array_has_value( $this->settings_field ) ) {
 				foreach ( $this->settings_field as $field ) {
@@ -320,16 +326,16 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					$type  = isset( $field['args']['type'] ) ? $field['args']['type'] : '';
 
 					if ( ! empty( $type ) ) {
-						$data = isset( $input[ $this->tab ] ) ? $input[ $this->tab ] : array();
+						$data = isset( $input[ $this->tabs->tab_name ] ) ? $input[ $this->tabs->tab_name ] : array();
 
-						$input[ $this->tab ][ $name ] = HT_Sanitize()->form_post( $name, $type, $data );
+						$input[ $this->tabs->tab_name ][ $name ] = HT_Sanitize()->form_post( $name, $type, $data );
 					}
 				}
 			}
 		}
 
 		$input   = apply_filters( 'hocwp_theme_sanitize_option', $input );
-		$input   = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tab, $input );
+		$input   = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tabs->tab_name, $input );
 		$options = (array) get_option( 'hocwp_theme' );
 
 		if ( ! is_array( $input ) ) {
@@ -369,71 +375,17 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					</div>
 				</div>
 				<div class="module-body clearfix">
-					<?php
-					$this->tabs = apply_filters( 'hocwp_theme_settings_page_tabs', $this->tabs );
-
-					if ( HOCWP_Theme::array_has_value( $this->tabs ) ) {
-						?>
-						<div id="nav">
-							<ul class="nav-tab-wrapper">
-								<?php
-								$current_url = HT_Util()->get_current_url( true );
-								$current_url = remove_query_arg( 'settings-updated', $current_url );
-								$count       = 0;
-
-								foreach ( $this->tabs as $key => $tab ) {
-									$url   = add_query_arg( array( 'tab' => $key ), $current_url );
-									$class = 'nav-tab';
-									$icon  = '<span class="dashicons dashicons-admin-page"></span>';
-
-									if ( is_array( $tab ) && isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) {
-										$icon = $tab['icon'];
-									}
-
-									$li_class = 'menu-item';
-
-									if ( $this->tab == $key || ( empty( $this->tab ) && 0 == $count ) ) {
-										$class .= ' nav-tab-active';
-										$li_class .= ' active';
-									}
-
-									if ( is_array( $tab ) ) {
-										$text = isset( $tab['text'] ) ? $tab['text'] : $key;
-									} else {
-										if ( empty( $tab ) ) {
-											$text = $key;
-										} else {
-											$text = $tab;
-										}
-									}
-
-									$text = ucwords( $text );
-									$text = strip_tags( $text );
-									$text = $icon . ' ' . $text;
-									?>
-									<li class="<?php echo $li_class; ?>">
-										<a class="<?php echo $class; ?>"
-										   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
-									</li>
-									<?php
-									$count ++;
-								}
-								?>
-							</ul>
-						</div>
-						<?php
-					}
-					?>
+					<?php $this->tabs->html() ?>
 					<div class="settings-content">
 						<?php
-						do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_before' );
-						$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_display_form', true );
+						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
+						$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
 
 						if ( $display ) {
 							$this->form_table();
 						}
 
-						do_action( 'hocwp_theme_settings_page_' . $this->tab . '_form_after' );
+						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
 						?>
 					</div>
 				</div>
@@ -461,7 +413,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$args = apply_filters( 'hocwp_theme_settings_page_' . $this->tab . '_submit_button_args', $args );
+		$args = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_submit_button_args', $args );
 
 		submit_button( $args['text'], $args['type'], $args['name'], $args['wrap'], $args['attributes'] );
 	}
@@ -487,7 +439,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			}
 
 			do_settings_sections( $this->menu_slug );
-			do_action( 'hocwp_theme_settings_page_' . $this->tab );
+			do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name );
 
 			$this->submit_button();
 			?>
@@ -508,7 +460,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	public function admin_enqueue_scripts_action() {
 		do_action( 'hocwp_theme_admin_setting_page_scripts', $this );
-		do_action( 'hocwp_theme_admin_setting_page_' . $this->tab . '_scripts' );
+		do_action( 'hocwp_theme_admin_setting_page_' . $this->tabs->tab_name . '_scripts' );
 
 		$fields = $this->settings_field;
 
@@ -516,7 +468,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			foreach ( $fields as $field ) {
 				$tab = isset( $field['tab'] ) ? $field['tab'] : '';
 
-				if ( $tab == $this->tab ) {
+				if ( $tab == $this->tabs->tab_name ) {
 					$callback = isset( $field['args']['callback'][1] ) ? $field['args']['callback'][1] : '';
 
 					switch ( $callback ) {

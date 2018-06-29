@@ -29,6 +29,15 @@ define( 'HOCWP_THEME_REQUIRED_PLUGINS', '' );
 define( 'HOCWP_THEME_REQUIRED_EXTENSIONS', '' );
 
 /**
+ * Define the recommended extensions for current theme.
+ *
+ * Data type: string
+ *
+ * Each extension slug separates by commas.
+ */
+define( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS', '' );
+
+/**
  * Skip work time checking.
  *
  * Data type: boolean

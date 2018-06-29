@@ -8,6 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
+	return;
+}
+
 function hocwp_theme_load_extension_improve_search() {
 	$load = HT_extension()->is_active( __FILE__ );
 	$load = apply_filters( 'hocwp_theme_load_extension_improve_search', $load );
@@ -88,7 +92,7 @@ final class HOCWP_Ext_Improve_Search extends HOCWP_Theme_Extension {
 				$save = $sql;
 
 				$slug = sanitize_title( $search );
-				$sql .= "post_name = '$slug'";
+				$sql .= "post_name LIKE '%$search%'";
 				$post_ids = $wpdb->get_col( $sql );
 
 				if ( ! HT()->array_has_value( $post_ids ) ) {
@@ -203,7 +207,9 @@ final class HOCWP_Ext_Improve_Search extends HOCWP_Theme_Extension {
 
 		$sql .= $search;
 
-		$sql .= " LIMIT 0, " . $ppp;
+		if ( 0 < $ppp ) {
+			$sql .= " LIMIT 0, " . $ppp;
+		}
 
 		return $wpdb->get_col( $sql );
 	}

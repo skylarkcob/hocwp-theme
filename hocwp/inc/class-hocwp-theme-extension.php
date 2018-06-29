@@ -32,6 +32,17 @@ class HOCWP_Theme_Extension {
 		$this->file    = $file;
 		$this->basedir = dirname( $this->file );
 
+		$this->get_headers();
+
+		if ( isset( $this->data['Name'] ) && ! empty( $this->data['Name'] ) ) {
+			$this->name        = $this->data['Name'];
+			$this->description = $this->data['Description'];
+		} else {
+			_doing_it_wrong( __CLASS__, __( 'Please declare extension with Name and Description in header.', 'hocwp-theme' ), '6.4.2' );
+
+			return;
+		}
+
 		$this->folder_path = $this->basedir;
 
 		if ( empty( $this->folder_url ) ) {
@@ -51,17 +62,6 @@ class HOCWP_Theme_Extension {
 
 		$this->folder_url = trailingslashit( $this->folder_url );
 		$this->folder_url .= $this->folder_name;
-
-		$this->get_headers();
-
-		if ( isset( $this->data['Name'] ) && ! empty( $this->data['Name'] ) ) {
-			$this->name        = $this->data['Name'];
-			$this->description = $this->data['Description'];
-		} else {
-			_doing_it_wrong( __CLASS__, __( 'Please declare extension with Name and Description in header.', 'hocwp-theme' ), '6.4.2' );
-
-			return;
-		}
 
 		$this->basename = HT_Extension()->get_basename( $this->file );
 
@@ -203,6 +203,10 @@ class HOCWP_Theme_Extension_Controller {
 		}
 
 		return self::$instance;
+	}
+
+	public function get_data() {
+		return get_file_data( $this->headers );
 	}
 
 	public function deprecated( $extension, $version, $replacement = null ) {

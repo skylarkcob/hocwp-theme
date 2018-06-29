@@ -185,7 +185,21 @@ final class HOCWP_Theme_Query {
 				$query = new WP_Query( $args );
 			}
 
-			if ( ! $query->have_posts() ) {
+			$missing = false;
+
+			if ( $query->have_posts() ) {
+				$ppp = $query->get( 'posts_per_page' );
+
+				if ( ! is_numeric( $ppp ) ) {
+					$ppp = HT_Util()->get_posts_per_page();
+				}
+
+				if ( $query->found_posts < ( $ppp / 2 ) ) {
+					$missing = true;
+				}
+			}
+
+			if ( ! $query->have_posts() || $missing ) {
 				foreach ( $taxs as $tax ) {
 					$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
@@ -234,6 +248,56 @@ final class HOCWP_Theme_Query {
 		}
 
 		return $query;
+	}
+
+	public function get_posts_by_menu_order( $menu_order, $args = array() ) {
+		global $wpdb;
+
+		$join    = isset( $args['join'] ) ? $args['join'] : '';
+		$where   = isset( $args['where'] ) ? $args['where'] : '';
+		$groupby = isset( $args['groupby'] ) ? $args['groupby'] : '';
+		$orderby = isset( $args['orderby'] ) ? $args['orderby'] : '';
+		$limit   = isset( $args['limit'] ) ? $args['limit'] : '';
+
+		$query = "SELECT ID FROM ";
+		$query .= $wpdb->posts;
+
+		if ( ! empty( $join ) ) {
+			$query .= " $join";
+		}
+
+		$query .= " WHERE menu_order = " . $menu_order;
+
+		if ( ! empty( $where ) ) {
+			$query .= " $where";
+		}
+
+		if ( ! empty( $groupby ) ) {
+			$query .= " $groupby";
+		}
+
+		if ( ! empty( $orderby ) ) {
+			$query .= " $orderby";
+		}
+
+		if ( ! empty( $limit ) ) {
+			$query .= " $limit";
+		}
+
+		$columns = $wpdb->get_col( $query );
+
+		$output = isset( $args['output'] ) ? $args['output'] : object;
+
+		HT()->debug( $query );
+		HT()->debug( $columns );
+
+		if ( HT()->array_has_value( $columns ) ) {
+			if ( object == $output ) {
+				$columns = array_map( 'get_post', $columns );
+			}
+		}
+
+		return $columns;
 	}
 
 	public static function terms( $args = array() ) {

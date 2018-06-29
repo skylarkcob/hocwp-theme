@@ -8,6 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
+	return;
+}
+
 final class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
 	protected static $instance;
 

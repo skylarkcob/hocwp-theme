@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $load = apply_filters( 'hocwp_theme_load_extension_security', HT_extension()->is_active( __FILE__ ) );
+
 if ( ! $load ) {
 	return;
 }

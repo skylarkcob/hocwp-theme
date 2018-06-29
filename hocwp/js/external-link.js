@@ -1,5 +1,5 @@
 function hocwpIsExternalLink(url) {
-    if (url.indexOf("mailto") !== -1 || url.indexOf("javascript") !== -1) {
+    if (url.indexOf("mailto") !== -1 || url.indexOf("javascript") !== -1 || url.indexOf("tel")) {
         return false;
     }
 

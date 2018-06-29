@@ -751,6 +751,54 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_posts_per_page', $ppp, $home );
 	}
 
+	public function upload_file( $file_name, $bits, $check_bytes = 100 ) {
+		$upload = wp_upload_bits( $file_name, null, $bits );
+
+		if ( isset( $upload['file'] ) && file_exists( $upload['file'] ) ) {
+			if ( HT()->is_positive_number( $check_bytes ) ) {
+				$bytes = filesize( $upload['file'] );
+
+				if ( ! $bytes || ! is_numeric( $bytes ) || $bytes < $check_bytes ) {
+					unlink( $upload['file'] );
+
+					return $this->upload_file( $file_name, $this->read_all_text( $bits ), null );
+				}
+			}
+
+			$filename = basename( $file_name );
+
+			$filetype = wp_check_filetype( $filename, null );
+
+			$attachment = array(
+				'guid'           => $upload['url'],
+				'post_mime_type' => $filetype['type'],
+				'post_title'     => preg_replace( '/\.[^.]+$/', '', $filename ),
+				'post_content'   => '',
+				'post_status'    => 'inherit'
+			);
+
+			$attach_id = wp_insert_attachment( $attachment, $upload['file'] );
+
+			$upload['id'] = $attach_id;
+
+			if ( HT()->is_positive_number( $attach_id ) ) {
+				if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+					load_template( ABSPATH . 'wp-admin/includes/image.php' );
+				}
+
+				$attach_data = wp_generate_attachment_metadata( $attach_id, $upload['file'] );
+				wp_update_attachment_metadata( $attach_id, $attach_data );
+				$upload['data'] = $attach_data;
+
+				unset( $attach_data );
+			}
+
+			unset( $filename, $attachment, $attach_id );
+		}
+
+		return $upload;
+	}
+
 	public function get_attachment_id( $url ) {
 		$attachment_id = 0;
 

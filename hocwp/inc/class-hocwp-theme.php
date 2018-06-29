@@ -31,6 +31,15 @@ final class HOCWP_Theme {
 		}
 	}
 
+	public function get_max_upload_size() {
+		$max_upload   = (int) ( ini_get( 'upload_max_filesize' ) );
+		$max_post     = (int) ( ini_get( 'post_max_size' ) );
+		$memory_limit = (int) ( ini_get( 'memory_limit' ) );
+		$upload_mb    = min( $max_upload, $max_post, $memory_limit );
+
+		return $upload_mb;
+	}
+
 	public static function is_file( $file, $check = 'exists' ) {
 		return ( is_file( $file ) && ( ( 'exists' == $check && file_exists( $file ) ) || ( 'readable' == $check && is_readable( $file ) ) || ( ( 'writable' == $check || 'writeable' == $check ) && is_writable( $file ) ) || ( 'executable' == $check && is_executable( $file ) ) ) ) ? true : false;
 	}

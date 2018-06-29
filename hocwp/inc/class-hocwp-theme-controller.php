@@ -352,6 +352,7 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme.php';
 		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
 		require $this->core_path . '/inc/class-hocwp-theme-utility.php';
+		require $this->core_path . '/inc/class-hocwp-theme-options.php';
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/class-hocwp-theme-admin.php';

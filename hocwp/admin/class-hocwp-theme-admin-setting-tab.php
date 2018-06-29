@@ -1,0 +1,101 @@
+<?php
+
+class HOCWP_Theme_Admin_Setting_Tab {
+	public $name;
+	public $label;
+	public $icon;
+
+	public $sections = array();
+	public $fields = array();
+
+	public function __construct( $name, $label, $icon = '', $args = array() ) {
+		if ( empty( $name ) ) {
+			_doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
+		}
+
+		if ( empty( $icon ) ) {
+			$icon = '<span class="dashicons dashicons-admin-page"></span>';
+		}
+
+		if ( empty( $label ) ) {
+			$label = $name;
+		}
+
+		$label = ucwords( $label );
+		$label = strip_tags( $label );
+
+		$this->name  = $name;
+		$this->label = $label;
+		$this->icon  = $icon;
+
+		add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'setting_tabs_filter' ) );
+
+		if ( $this->name != HT_Admin_Setting_Tabs()->tab_name ) {
+			return;
+		}
+
+		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_section', array(
+			$this,
+			'sections_filter'
+		) );
+
+		$esc = isset( $args['enqueue_scripts_callback'] ) ? $args['enqueue_scripts_callback'] : '';
+
+		if ( is_callable( $esc ) ) {
+			add_action( 'hocwp_theme_admin_setting_page_' . $this->name . '_scripts', $esc );
+		}
+
+		$cff = isset( $args['custom_fields_filter'] ) ? $args['custom_fields_filter'] : '';
+
+		if ( ! empty( $cff ) ) {
+			$this->fields = apply_filters( $cff, $this->fields, HT_Options()->get( $this->name ) );
+		}
+
+		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_field', array( $this, 'fields_filter' ) );
+	}
+
+	public function setting_tabs_filter( $tabs ) {
+		$tabs[ $this->name ] = $this;
+
+		return $tabs;
+	}
+
+	public function add_section( $name, $args = array() ) {
+		$defaults = array(
+			'tab'         => $this->name,
+			'id'          => $name,
+			'title'       => '',
+			'description' => ''
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$this->sections[ $name ] = $args;
+	}
+
+	public function sections_filter() {
+		$this->sections = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_sections', $this->sections );
+
+		return $this->sections;
+	}
+
+	public function add_field_array( $data ) {
+		$defaults = array(
+			'tab' => $this->name
+		);
+
+		$data = wp_parse_args( $data, $defaults );
+
+		$this->fields[] = $data;
+	}
+
+	public function add_field( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string', $section = 'default' ) {
+		$this->fields[] = hocwp_theme_create_setting_field( $id, $title, $callback, $callback_args, $data_type, $this->name, $section );
+	}
+
+	public function fields_filter() {
+		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, HT_Options()->get( $this->name ) );
+
+		return $this->fields;
+	}
+}
