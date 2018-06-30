@@ -288,9 +288,6 @@ final class HOCWP_Theme_Query {
 
 		$output = isset( $args['output'] ) ? $args['output'] : object;
 
-		HT()->debug( $query );
-		HT()->debug( $columns );
-
 		if ( HT()->array_has_value( $columns ) ) {
 			if ( object == $output ) {
 				$columns = array_map( 'get_post', $columns );
@@ -355,7 +352,6 @@ final class HOCWP_Theme_Query {
 
 			$count_type ++;
 		}
-		HT()->debug( $sql );
 
 		$post_id = $wpdb->get_var( $sql );
 		$result  = '';
