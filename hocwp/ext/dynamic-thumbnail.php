@@ -8,55 +8,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
-	return;
-}
+if ( ! class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
+	final class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
+		protected static $instance;
 
-final class HOCWP_Ext_Dynamic_Thumbnail extends HOCWP_Theme_Extension {
-	protected static $instance;
+		public static function get_instance() {
+			if ( ! ( self::$instance instanceof self ) ) {
+				self::$instance = new self();
+			}
 
-	public static function get_instance() {
-		if ( ! ( self::$instance instanceof self ) ) {
-			self::$instance = new self();
+			return self::$instance;
 		}
 
-		return self::$instance;
-	}
+		public function __construct() {
+			if ( self::$instance instanceof self ) {
+				return;
+			}
 
-	public function __construct() {
-		if ( self::$instance instanceof self ) {
-			return;
-		}
+			parent::__construct( __FILE__ );
 
-		parent::__construct( __FILE__ );
-
-		if ( is_admin() ) {
-			add_action( 'load-post.php', array( $this, 'meta_boxes' ) );
-			add_action( 'load-post-new.php', array( $this, 'meta_boxes' ) );
-		}
-	}
-
-	public function meta_boxes() {
-		$post_types = get_post_types();
-		$meta       = new HOCWP_Theme_Meta_Post();
-
-		foreach ( $post_types as $post_type ) {
-			if ( post_type_supports( $post_type, 'thumbnail' ) ) {
-				$meta->add_post_type( $post_type );
+			if ( is_admin() ) {
+				add_action( 'load-post.php', array( $this, 'meta_boxes' ) );
+				add_action( 'load-post-new.php', array( $this, 'meta_boxes' ) );
 			}
 		}
 
-		$meta->set_id( 'dynamic-thumbnail' );
-		$meta->set_title( __( 'Dynamic Thumbnail', 'hocwp-theme' ) );
-		$meta->form_table = true;
+		public function meta_boxes() {
+			$post_types = get_post_types();
+			$meta       = new HOCWP_Theme_Meta_Post();
 
-		$field = hocwp_theme_create_meta_field( '_thumbnail_url', __( 'Thumbnail Url:', 'hocwp-theme' ) );
-		$meta->add_field( $field );
+			foreach ( $post_types as $post_type ) {
+				if ( post_type_supports( $post_type, 'thumbnail' ) ) {
+					$meta->add_post_type( $post_type );
+				}
+			}
+
+			$meta->set_id( 'dynamic-thumbnail' );
+			$meta->set_title( __( 'Dynamic Thumbnail', 'hocwp-theme' ) );
+			$meta->form_table = true;
+
+			$field = hocwp_theme_create_meta_field( '_thumbnail_url', __( 'Thumbnail Url:', 'hocwp-theme' ) );
+			$meta->add_field( $field );
+		}
 	}
 }
 
-function HTE_Dynamic_Thumbnail() {
-	return HOCWP_Ext_Dynamic_Thumbnail::get_instance();
+if ( ! function_exists( 'HTE_Dynamic_Thumbnail' ) ) {
+	function HTE_Dynamic_Thumbnail() {
+		return HOCWP_Ext_Dynamic_Thumbnail::get_instance();
+	}
 }
 
 HTE_Dynamic_Thumbnail()->get_instance();

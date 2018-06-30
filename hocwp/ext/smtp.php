@@ -8,14 +8,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-function hocwp_theme_load_extension_smtp() {
-	$load = HT_extension()->is_active( __FILE__ );
-	$load = apply_filters( 'hocwp_theme_load_extension_smtp', $load );
+if ( ! function_exists( 'hocwp_theme_load_extension_smtp' ) ) {
+	function hocwp_theme_load_extension_smtp() {
+		$load = HT_extension()->is_active( __FILE__ );
+		$load = apply_filters( 'hocwp_theme_load_extension_smtp', $load );
 
-	return $load;
+		return $load;
+	}
 }
 
 $load = hocwp_theme_load_extension_smtp();
+
 if ( ! $load ) {
 	return;
 }
