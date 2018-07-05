@@ -91,6 +91,13 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 					echo $message;
 				} else {
 					if ( ! empty( $id ) ) {
+						if ( ! $this->form_table && isset( $field['title'] ) && ! empty( $field['title'] ) ) {
+							HT_HTML_Field()->label( array( 'text' => $field['title'], 'for' => $id ) );
+							unset( $field['title'] );
+							unset( $field['label'] );
+							unset( $field['callback_args']['label'] );
+						}
+
 						call_user_func( $field['callback'], $field['callback_args'] );
 						$desc = isset( $field['description'] ) ? $field['description'] : '';
 
