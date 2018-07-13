@@ -249,6 +249,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function get_archive_title( $prefix = true ) {
+		$title = '';
+
 		if ( is_category() ) {
 			$title = single_cat_title( '', false );
 
@@ -371,6 +373,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$term = get_category( $primary );
 				}
 			}
+
+			$has_cat = false;
 
 			if ( ! ( $term instanceof WP_Term ) ) {
 				$terms   = wp_get_post_categories( $obj->ID );

@@ -166,6 +166,7 @@ final class HOCWP_Theme_Sanitize {
 					$size['width'] = 0;
 				}
 			}
+
 			if ( ! isset( $size['height'] ) ) {
 				if ( isset( $size[1] ) ) {
 					$size['height'] = $size[1];
@@ -173,11 +174,13 @@ final class HOCWP_Theme_Sanitize {
 					$size['height'] = 0;
 				}
 			}
+
 			$size[0] = $size['width'];
 			$size[1] = $size['height'];
 
 			return $size;
 		}
+
 		if ( is_numeric( $size ) ) {
 			$size = absint( $size );
 
@@ -191,8 +194,10 @@ final class HOCWP_Theme_Sanitize {
 		if ( is_array( $id ) ) {
 			$id = implode( '@', $id );
 		}
-		$id    = strtolower( $id );
-		$id    = str_replace( '][', '_', $id );
+
+		$id = strtolower( $id );
+		$id = str_replace( '][', '_', $id );
+
 		$chars = array(
 			'-',
 			' ',
@@ -201,13 +206,18 @@ final class HOCWP_Theme_Sanitize {
 			'@',
 			'.'
 		);
-		$id    = str_replace( $chars, '_', $id );
-		$id    = trim( $id, '_' );
+
+		$id = str_replace( $chars, '_', $id );
+		$id = trim( $id, '_' );
 
 		return $id;
 	}
 
 	public function post_type_or_taxonomy_args( $args ) {
+		if ( ! is_array( $args ) ) {
+			$args = (array) $args;
+		}
+
 		$name = isset( $args['name'] ) ? $args['name'] : '';
 
 		if ( empty( $name ) ) {

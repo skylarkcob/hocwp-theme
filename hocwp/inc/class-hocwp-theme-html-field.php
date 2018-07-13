@@ -300,6 +300,11 @@ final class HOCWP_Theme_HTML_Field {
 		$select->output();
 	}
 
+	public static function select_category( $args = array() ) {
+		$args['taxonomy'] = 'category';
+		self::select_term( $args );
+	}
+
 	public static function select_term( $args = array() ) {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
 
@@ -700,6 +705,140 @@ final class HOCWP_Theme_HTML_Field {
 				}
 
 				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '"> ' . $obj->name . ' (' . $tax->labels->singular_name . ')</li> ';
+			}
+		}
+
+		$args['lists'] = $lists;
+		self::sortable( $args );
+	}
+
+	public static function sortable_page( $args = array() ) {
+		$args['post_type'] = 'page';
+		self::sortable_post( $args );
+	}
+
+	public static function sortable_post( $args = array() ) {
+		$id = $args['id'];
+		$id = sanitize_html_class( $id );
+
+		$post_type = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
+		unset( $args['post_type'] );
+
+		if ( is_array( $post_type ) && 1 == count( $post_type ) ) {
+			$post_type = array_shift( $post_type );
+		}
+
+		$post_args = isset( $args['post_args'] ) ? $args['post_args'] : array();
+
+		$defaults = array(
+			'post_type'   => $post_type,
+			'numberposts' => 50
+		);
+
+		$post_args = wp_parse_args( $post_args, $defaults );
+
+		unset( $args['post_args'] );
+
+		$args['list_type'] = 'post';
+
+		$value = isset( $args['value'] ) ? $args['value'] : '';
+
+		$results = array();
+
+		if ( ! empty( $value ) ) {
+			$values   = json_decode( $value );
+			$connects = array();
+
+			foreach ( $values as $std ) {
+				$obj = get_post( $std->id );
+
+				if ( $obj instanceof WP_Post ) {
+					$results[ $obj->ID ] = $obj;
+
+					$type = get_post_type_object( $obj->post_type );
+
+					$sub = $id . '_' . $type->name;
+
+					$connects[] = '<li class="ui-state-default" data-post-type="' . $obj->post_type . '" data-id="' . $obj->ID . '" data-connect-list="' . $sub . '">' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li>';
+				}
+			}
+
+			if ( 0 < count( $connects ) ) {
+				$args['connects'] = $connects;
+			}
+		}
+
+		$lists = array();
+
+		if ( is_array( $post_type ) ) {
+			$post_types = $post_type;
+
+			$connect_sub = '';
+
+			foreach ( $post_types as $post_type ) {
+				$type = get_post_type_object( $post_type );
+
+				if ( ! ( $type instanceof WP_Post_Type ) ) {
+					continue;
+				}
+
+				$item = '<li class="ui-state-default has-child">';
+				$item .= '<a href="javascript:">' . $type->label . '</a>';
+
+				$posts = get_posts( $post_args );
+
+				if ( HT()->array_has_value( $posts ) ) {
+					$args['has_sub'] = true;
+
+					$connects = isset( $args['connects'] ) ? $args['connects'] : true;
+
+					$ul = new HOCWP_Theme_HTML_Tag( 'ul' );
+
+					$class = 'sortable sub-sortable';
+
+					$sub = $id . '_' . $post_type;
+
+					if ( $connects || HT()->array_has_value( $connects ) ) {
+						$ul->add_attribute( 'data-connect-with', $id );
+						$class .= ' ' . $sub;
+
+						$connect_sub .= $sub . ' ';
+					}
+
+					$ul->add_attribute( 'class', $class );
+					$ul->add_attribute( 'data-sortable', 1 );
+					$ul->add_attribute( 'data-connect-with', $sub );
+
+					$tmp = '';
+
+					foreach ( $posts as $obj ) {
+						if ( array_key_exists( $obj->ID, $results ) ) {
+							continue;
+						}
+
+						$tmp .= '<li class="ui-state-default" data-post-type="' . $post_type . '" data-id="' . $obj->ID . '" data-connect-list="' . $sub . '">' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li>';
+					}
+
+					$ul->set_text( $tmp );
+
+					$item .= $ul->build();
+				}
+
+				$item .= '</li> ';
+				$lists[] = $item;
+			}
+
+			$args['connect_sub'] = trim( $connect_sub );
+		} else {
+			$type  = get_post_type_object( $post_type );
+			$posts = get_posts( $post_args );
+
+			foreach ( $posts as $obj ) {
+				if ( array_key_exists( $obj->ID, $results ) ) {
+					continue;
+				}
+
+				$lists[] = '<li class="ui-state-default" data-post-type="' . $obj->post_type . '" data-id="' . $obj->ID . '"> ' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li> ';
 			}
 		}
 

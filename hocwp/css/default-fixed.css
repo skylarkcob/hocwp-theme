@@ -67,6 +67,7 @@ span.edit-link {
 .loop-posts .entry span.no-thumbnail,
 .loop article span.no-thumbnail {
     display: inline-block;
+    max-width: 100%;
 }
 
 .loop .hocwp-post .post-title {

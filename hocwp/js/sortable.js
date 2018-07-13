@@ -67,6 +67,18 @@ jQuery(document).ready(function ($) {
                                 value = JSON.stringify(value);
                                 input.val(value);
                                 break;
+                            case "post":
+                                sortableResult.find("li").each(function () {
+                                    var element = $(this),
+                                        item = {
+                                            id: element.attr("data-id"),
+                                            post_type: element.attr("data-post-type")
+                                        };
+                                    value.push(item);
+                                });
+                                value = JSON.stringify(value);
+                                input.val(value);
+                                break;
                             case "custom":
                                 sortableResult.find("li").each(function () {
                                     var element = $(this),

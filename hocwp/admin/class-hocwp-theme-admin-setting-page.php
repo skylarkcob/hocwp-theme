@@ -365,7 +365,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				<div class="header module-header">
 					<div class="inner clearfix">
 						<div class="theme-info">
-							<h2><?php printf( __( '%s options', 'hocwp-theme' ), $theme->get( 'Name' ) ); ?></h2>
+							<h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
 
 							<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
 						</div>

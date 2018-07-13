@@ -27,6 +27,18 @@ class HOCWP_Theme_Options {
 
 		return $options;
 	}
+
+	public function get_home( $key = null, $default = '' ) {
+		return HT_Util()->get_theme_option( $key, $default, 'home' );
+	}
+
+	public function get_general( $key = null, $default = '' ) {
+		return HT_Util()->get_theme_option( $key, $default );
+	}
+
+	public function get_tab( $key = null, $default = '', $tab = 'general' ) {
+		return HT_Util()->get_theme_option( $key, $default, $tab );
+	}
 }
 
 function HT_Options() {
