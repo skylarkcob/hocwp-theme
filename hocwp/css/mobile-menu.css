@@ -161,16 +161,16 @@
     right: 8px;
     font-size: 44px;
     width: 10px;
-    height: 10px;
     border-style: solid;
-    top: 20px;
+    top: 50%;
     border-width: 6px 0 6px 6px;
     border-color: transparent transparent transparent #fff;
+    margin-top: -8px;
 }
 
 .mobile-menu .menu-item-has-children > a[aria-expanded="true"] span.arrow {
     transform: rotate(90deg);
-    top: 25px;
+    margin-top: -4px;
 }
 
 .mobile-menu .menu-item-has-children > a[aria-expanded="false"] {

@@ -50,6 +50,10 @@ add_filter( 'script_loader_src', 'hocwp_theme_script_loader_src_filter', 10, 2 )
 function hocwp_theme_mobile_menu_media_screen_width() {
 	$width = apply_filters( 'hocwp_theme_mobile_menu_media_screen_width', 980 );
 
+	if ( 1 > $width ) {
+		$width = 999999;
+	}
+
 	return $width;
 }
 
@@ -87,11 +91,19 @@ function hocwp_theme_enqueue_scripts_action() {
 
 	$src = HOCWP_Theme()->core_url . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX;
 
+	$mobile_loaded = false;
+
 	if ( isset( $wp_scripts->registered['hocwp-theme-navigation'] ) ) {
 		$wp_scripts->registered['hocwp-theme-navigation']->src = $src;
+		$mobile_loaded                                         = true;
 	}
+
 	wp_enqueue_script( 'hocwp-theme-navigation', $src, array(), false, true );
-	wp_enqueue_script( 'hocwp-theme-mobile-menu', HOCWP_THEME_CORE_URL . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
+
+	if ( ! $mobile_loaded ) {
+		wp_enqueue_script( 'hocwp-theme-mobile-menu', HOCWP_THEME_CORE_URL . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
+	}
+
 	wp_enqueue_script( 'hocwp-theme-custom', HOCWP_THEME_CUSTOM_URL . '/js/custom' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
 	$sticky = hocwp_theme_get_option( 'sticky_last_widget', '', 'reading' );
 

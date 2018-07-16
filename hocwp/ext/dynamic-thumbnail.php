@@ -108,6 +108,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		$url = HOCWP_Theme::get_first_image_source( $obj->post_content );
 	}
 
+	$src = $url;
+
 	$width  = ( is_array( $sizes ) && isset( $sizes['width'] ) ) ? $sizes['width'] : '';
 	$height = isset( $sizes['height'] ) ? $sizes['height'] : '';
 

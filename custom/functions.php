@@ -24,3 +24,5 @@ class HOCWP_Theme_Custom {
 function HT_Custom() {
 	return HOCWP_Theme_Custom::get_instance();
 }
+
+HT_Custom();

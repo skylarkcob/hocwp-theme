@@ -20,7 +20,7 @@
                 widgets = sidebar.getElementsByClassName("widget");
 
             if (widgets) {
-                if (siteContent && contentArea && siteContent.contains(sidebar) && contentArea.height() <= sidebar.height()) {
+                if (siteContent && contentArea && siteContent.contains(sidebar) && contentArea.innerHeight <= sidebar.innerHeight) {
                     continue;
                 }
 

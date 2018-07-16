@@ -129,9 +129,14 @@
         link = items[i].getElementsByTagName("a")[0];
 
         if ("undefined" !== typeof link) {
-            var span = document.createElement("span");
-            span.setAttribute("class", "arrow");
-            link.appendChild(span);
+            var span = link.getElementsByTagName("span")[0];
+
+            if (!span) {
+                span = document.createElement("span");
+                span.setAttribute("class", "arrow");
+                link.appendChild(span);
+            }
+
             span.addEventListener("click", clickMenuItemHasChildren);
         }
     }
@@ -143,7 +148,6 @@
         subMenu = link.parentNode.getElementsByTagName("ul")[0];
 
         if ("undefined" !== typeof subMenu) {
-            console.log("click");
             link.parentNode.className = link.parentNode.className.replace(" focus", "");
 
             if (-1 !== link.className.indexOf("toggled")) {

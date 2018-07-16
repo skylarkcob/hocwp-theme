@@ -221,7 +221,6 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 			break;
 	}
 
-	$atts = array_filter( $atts );
 	$atts = array_unique( $atts );
 
 	return $atts;
