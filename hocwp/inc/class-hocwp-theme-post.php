@@ -37,4 +37,8 @@ class HOCWP_Theme_Post {
 	public function get_terms( $taxonomy = 'post_tag', $args = array() ) {
 		return wp_get_object_terms( $this->get_id(), $taxonomy, $args );
 	}
+
+	public function thumbnail( $size = 'thumbnail', $attr = '' ) {
+		hocwp_theme_post_thumbnail( $size, $attr );
+	}
 }

@@ -441,3 +441,14 @@ div.menu li a {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
+.table {
+    display: table;
+}
+
+.table > * {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    padding: 10px;
+}

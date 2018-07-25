@@ -111,6 +111,10 @@ function hocwp_theme_the_title() {
 add_action( 'hocwp_theme_the_title', 'hocwp_theme_the_title' );
 
 function hocwp_theme_post_thumbnail( $size = 'thumbnail', $attr = '' ) {
+	if ( empty( $size ) || null == $size ) {
+		$size = 'thumbnail';
+	}
+
 	if ( has_post_thumbnail() ) {
 		the_post_thumbnail( $size, $attr );
 	} else {
@@ -144,7 +148,7 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 		do_action( 'hocwp_theme_post_thumbnail_default', $size, $attr );
 	} else {
 		if ( is_array( $attr ) && isset( $attr['post_link'] ) && (bool) $attr['post_link'] ) {
-			$before = sprintf( '<a class="img-hyperlink" href="%s" title="%s">', get_the_permalink(), get_the_title() );
+			$before = sprintf( '<a class="img-hyperlink post-link" href="%s" title="%s">', get_the_permalink(), get_the_title() );
 			$html   = HT()->wrap_text( $html, $before, '</a>' );
 		}
 	}

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				if ( $page instanceof WP_Post && 'page' == $page->post_type ) {
 					?>
 					<header class="page-header">
-						<h1 class="page-title"><?php echo get_the_title( $page ); ?></h1>
+						<h2 class="page-title"><?php echo get_the_title( $page ); ?></h2>
 					</header>
 					<!-- .page-header -->
 
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				} else {
 					?>
 					<header class="page-header">
-						<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h1>
+						<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h2>
 					</header>
 					<!-- .page-header -->
 
