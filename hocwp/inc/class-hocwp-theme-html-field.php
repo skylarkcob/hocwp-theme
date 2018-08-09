@@ -95,6 +95,10 @@ final class HOCWP_Theme_HTML_Field {
 
 					$lb->add_attribute( 'for', $id );
 
+					if ( empty( $label ) ) {
+						$label = isset( $data['text'] ) ? $data['text'] : '';
+					}
+
 					if ( ! empty( $label ) ) {
 						$input->set_text( $label );
 						unset( $atts['label'] );
@@ -129,6 +133,11 @@ final class HOCWP_Theme_HTML_Field {
 		}
 
 		$input = new HOCWP_Theme_HTML_Tag( 'input' );
+
+		if ( ( ! isset( $args['label'] ) || empty( $args['label'] ) ) && isset( $args['text'] ) && ! empty( $args['text'] ) ) {
+			$args['label'] = $args['text'];
+		}
+
 		self::field_label( $args, $input );
 		$input->set_attributes( $args );
 		$input->output();

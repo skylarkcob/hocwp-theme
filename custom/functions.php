@@ -14,6 +14,14 @@ class HOCWP_Theme_Custom {
 		return self::$instance;
 	}
 
+	public function get_url() {
+		return HOCWP_THEME_CUSTOM_URL;
+	}
+
+	public function get_path() {
+		return HOCWP_THEME_CUSTOM_PATH;
+	}
+
 	public function __construct() {
 		if ( self::$instance instanceof self ) {
 			return;

@@ -74,7 +74,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			$args['widget_id'] = $this->id;
 		}
 
-		$post_type     = isset( $instance['post_type'] ) ? $instance['post_type'] : $this->defaults['post_type'];
+		$post_type     = $this->get_post_type_from_instance( $instance );
 		$term          = isset( $instance['term'] ) ? $instance['term'] : '';
 		$number        = isset( $instance['number'] ) ? absint( $instance['number'] ) : $this->defaults['number'];
 		$orderby       = isset( $instance['orderby'] ) ? $instance['orderby'] : $this->defaults['orderby'];
@@ -117,13 +117,16 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$query_args['orderby'] = $orderby;
 
 		if ( ! empty( $term ) ) {
-			$term      = (array) $term;
+			$term = (array) $term;
+
 			$tax_query = array(
 				'relation' => 'or'
 			);
+
 			foreach ( $term as $value ) {
 				$value = str_replace( ' ', '', $value );
 				$parts = explode( ',', $value );
+
 				if ( 2 == count( $parts ) ) {
 					$tax_query[] = array(
 						'taxonomy' => $parts[0],
@@ -132,6 +135,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					);
 				}
 			}
+
 			$query_args['tax_query'] = $tax_query;
 		}
 
@@ -183,7 +187,38 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		}
 
 		if ( $query->have_posts() ) {
+			$term_as_title = isset( $instance['term_as_title'] ) ? $instance['term_as_title'] : $this->defaults['term_as_title'];
+
+			if ( ( 1 == $term_as_title || $term_as_title ) && HT()->array_has_value( $term ) ) {
+				reset( $term );
+				$value = current( $term );
+
+				$value = str_replace( ' ', '', $value );
+				$parts = explode( ',', $value );
+
+				if ( 2 == count( $parts ) ) {
+					$term = get_term( $parts[1], $parts[0] );
+
+					if ( $term instanceof WP_Term ) {
+						$instance['show_title'] = false;
+					}
+				}
+			}
+
 			do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+
+			if ( $term instanceof WP_Term ) {
+				$title_term_link = isset( $instance['title_term_link'] ) ? $instance['title_term_link'] : $this->defaults['title_term_link'];
+
+				$text = $term->name;
+
+				if ( 1 == $title_term_link || $title_term_link ) {
+					$text = '<a href="' . get_term_link( $term ) . '">' . $text . '</a>';
+				}
+
+				echo '<h2 class="widget-title">' . $text . '</h2>';
+			}
+
 			$html = apply_filters( 'hocwp_theme_widget_posts_html', '', $query, $instance, $args, $this );
 
 			if ( empty( $html ) ) {
@@ -203,6 +238,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			} else {
 				echo $html;
 			}
+
 			do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 		}
 	}

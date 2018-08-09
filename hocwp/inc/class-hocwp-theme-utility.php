@@ -587,8 +587,10 @@ class HOCWP_Theme_Utility {
 
 		$obj = get_post( $post_id );
 
-		if ( 'trash' == $obj->post_status || ( isset( $_REQUEST['action'] ) && ( 'untrash' == $_REQUEST['action'] || 'trash' == $_REQUEST['action'] ) ) ) {
-			return false;
+		if ( $obj instanceof WP_Post ) {
+			if ( 'trash' == $obj->post_status || ( isset( $_REQUEST['action'] ) && ( 'untrash' == $_REQUEST['action'] || 'trash' == $_REQUEST['action'] ) ) ) {
+				return false;
+			}
 		}
 
 		return true;
