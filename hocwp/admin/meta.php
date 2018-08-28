@@ -68,6 +68,11 @@ function hocwp_theme_meta_box_editor( $args = array() ) {
 
 	$id   = isset( $field_args['id'] ) ? $field_args['id'] : '';
 	$name = isset( $field_args['name'] ) ? $field_args['name'] : '';
+
+	if ( empty( $id ) && empty( $name ) ) {
+		$name = $box_id;
+	}
+
 	HT()->transmit( $id, $name );
 	$field_args['name'] = $name;
 
