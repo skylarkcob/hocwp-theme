@@ -16,7 +16,8 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			'order'            => 'ASC',
 			'show_count'       => false,
 			'taxonomy'         => 'category',
-			'current_as_title' => false
+			'current_as_title' => false,
+			'hierarchical'     => false
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_terms_defaults', $this->defaults, $this );
@@ -44,9 +45,11 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			$orderby = array_shift( $orderby );
 		}
 
-		$order      = isset( $instance['order'] ) ? $instance['order'] : $this->defaults['order'];
-		$hide_empty = isset( $instance['hide_empty'] ) ? (bool) $instance['hide_empty'] : $this->defaults['hide_empty'];
-		$child_of   = isset( $instance['child_of'] ) ? (bool) $instance['child_of'] : $this->defaults['child_of'];
+		$order        = isset( $instance['order'] ) ? $instance['order'] : $this->defaults['order'];
+		$hide_empty   = isset( $instance['hide_empty'] ) ? (bool) $instance['hide_empty'] : $this->defaults['hide_empty'];
+		$child_of     = isset( $instance['child_of'] ) ? (bool) $instance['child_of'] : $this->defaults['child_of'];
+		$hierarchical = isset( $instance['hierarchical'] ) ? (bool) $instance['hierarchical'] : $this->defaults['hierarchical'];
+		$show_count   = isset( $instance['show_count'] ) ? (bool) $instance['show_count'] : $this->defaults['show_count'];
 
 		$query_args = array(
 			'number'     => $number,
@@ -66,6 +69,20 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			$query_args['child_of'] = $obj->term_id;
 		}
 
+		if ( $hierarchical ) {
+			if ( is_array( $taxonomy ) ) {
+				$taxonomy = current( $taxonomy );
+			}
+
+			$targs = array(
+				'taxonomy'   => $taxonomy,
+				'title_li'   => '',
+				'show_count' => $show_count
+			);
+
+			$query_args = wp_parse_args( $targs, $query_args );
+		}
+
 		$query_args = apply_filters( 'hocwp_theme_widget_terms_query_args', $query_args, $instance, $args, $this );
 
 		$terms = HT_Util()->get_terms( 'category', $query_args );
@@ -82,13 +99,17 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			?>
 			<ul>
 				<?php
-				foreach ( $terms as $term ) {
-					?>
-					<li>
-						<a class="<?php echo $term->taxonomy; ?>"
-						   href="<?php echo get_term_link( $term ); ?>"><?php echo $term->name; ?></a>
-					</li>
-					<?php
+				if ( $hierarchical ) {
+					wp_list_categories( $query_args );
+				} else {
+					foreach ( $terms as $term ) {
+						?>
+						<li>
+							<a class="<?php echo $term->taxonomy; ?>"
+							   href="<?php echo get_term_link( $term ); ?>"><?php echo $term->name; ?></a>
+						</li>
+						<?php
+					}
 				}
 				?>
 			</ul>
@@ -127,6 +148,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 		$child_of         = isset( $instance['child_of'] ) ? (bool) $instance['child_of'] : $this->defaults['child_of'];
 		$show_count       = isset( $instance['show_count'] ) ? (bool) $instance['show_count'] : $this->defaults['show_count'];
 		$current_as_title = isset( $instance['current_as_title'] ) ? (bool) $instance['current_as_title'] : $this->defaults['current_as_title'];
+		$hierarchical     = isset( $instance['hierarchical'] ) ? (bool) $instance['hierarchical'] : $this->defaults['hierarchical'];
 
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 		?>
@@ -233,6 +255,13 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			<label
 				for="<?php echo $this->get_field_id( 'current_as_title' ); ?>"><?php _e( 'Display current term name as widget title?', 'hocwp-theme' ); ?></label>
 		</p>
+		<p>
+			<input class="checkbox" type="checkbox"<?php checked( $hierarchical ); ?>
+			       id="<?php echo $this->get_field_id( 'hierarchical' ); ?>"
+			       name="<?php echo $this->get_field_name( 'hierarchical' ); ?>"/>
+			<label
+				for="<?php echo $this->get_field_id( 'hierarchical' ); ?>"><?php _e( 'Whether to include terms that have non-empty descendants?', 'hocwp-theme' ); ?></label>
+		</p>
 		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
@@ -250,6 +279,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 		$instance['child_of']         = isset( $new_instance['child_of'] ) ? (bool) $new_instance['child_of'] : $this->defaults['child_of'];
 		$instance['show_count']       = isset( $new_instance['show_count'] ) ? (bool) $new_instance['show_count'] : $this->defaults['show_count'];
 		$instance['current_as_title'] = isset( $new_instance['current_as_title'] ) ? (bool) $new_instance['current_as_title'] : $this->defaults['current_as_title'];
+		$instance['hierarchical']     = isset( $new_instance['hierarchical'] ) ? (bool) $new_instance['hierarchical'] : false;
 
 		return $instance;
 	}

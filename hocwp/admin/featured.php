@@ -34,16 +34,48 @@ function hocwp_theme_save_post_action( $post_id ) {
 		return;
 	}
 
-	if ( isset( $_POST['featured'] ) ) {
-		update_post_meta( $post_id, 'featured', 1 );
-	} else {
-		update_post_meta( $post_id, 'featured', 0 );
-	}
+	$obj = get_post( $post_id );
 
-	do_action( 'hocwp_theme_post_submitbox_meta_field_save', $post_id );
+	if ( $obj instanceof WP_Post ) {
+		if ( 'product' == $obj->post_type && class_exists( 'WooCommerce' ) && taxonomy_exists( 'product_visibility' ) ) {
+			if ( isset( $_POST['featured'] ) && 1 == $_POST['featured'] ) {
+				wp_set_object_terms( $post_id, 'featured', 'product_visibility' );
+			} else {
+				wp_remove_object_terms( $post_id, 'featured', 'product_visibility' );
+			}
+		} else {
+			if ( isset( $_POST['featured'] ) ) {
+				update_post_meta( $post_id, 'featured', 1 );
+			} else {
+				update_post_meta( $post_id, 'featured', 0 );
+			}
+		}
+
+		do_action( 'hocwp_theme_post_submitbox_meta_field_save', $post_id );
+	}
 }
 
 add_action( 'save_post', 'hocwp_theme_save_post_action' );
+
+function hocwp_theme_set_post_term_featured( $object_id, $terms ) {
+	$obj = get_post( $object_id );
+
+	if ( $obj instanceof WP_Post && 'product' == $obj->post_type && class_exists( 'WooCommerce' ) && taxonomy_exists( 'product_visibility' ) ) {
+		$search = array_search( 'featured', $terms );
+
+		if ( false !== $search ) {
+			update_post_meta( $object_id, 'featured', 1 );
+		} else {
+			$visi = wp_get_object_terms( $object_id, 'product_visibility', array( 'slug' => 'featured' ) );
+
+			if ( ! HT()->array_has_value( $visi ) ) {
+				delete_post_meta( $object_id, 'featured' );
+			}
+		}
+	}
+}
+
+add_action( 'set_object_terms', 'hocwp_theme_set_post_term_featured', 10, 2 );
 
 function hocwp_theme_manage_posts_columns_filter( $columns ) {
 	if ( current_user_can( 'publish_posts' ) ) {
