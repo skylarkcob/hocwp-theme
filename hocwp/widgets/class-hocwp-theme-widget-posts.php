@@ -23,7 +23,8 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			'title_length'       => 75,
 			'term_as_title'      => false,
 			'title_term_link'    => false,
-			'date_interval'      => 'all'
+			'date_interval'      => 'all',
+			'group_category'     => false
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_posts_defaults', $this->defaults, $this );
@@ -74,14 +75,15 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			$args['widget_id'] = $this->id;
 		}
 
-		$post_type     = $this->get_post_type_from_instance( $instance );
-		$term          = isset( $instance['term'] ) ? $instance['term'] : '';
-		$number        = isset( $instance['number'] ) ? absint( $instance['number'] ) : $this->defaults['number'];
-		$orderby       = isset( $instance['orderby'] ) ? $instance['orderby'] : $this->defaults['orderby'];
-		$meta_key      = isset( $instance['meta_key'] ) ? $instance['meta_key'] : '';
-		$meta_value    = isset( $instance['meta_value'] ) ? $instance['meta_value'] : '';
-		$date_interval = isset( $instance['date_interval'] ) ? $instance['date_interval'] : $this->defaults['date_interval'];
-		$order         = isset( $instance['order'] ) ? $instance['order'] : $this->defaults['order'];
+		$post_type      = $this->get_post_type_from_instance( $instance );
+		$term           = isset( $instance['term'] ) ? $instance['term'] : '';
+		$number         = isset( $instance['number'] ) ? absint( $instance['number'] ) : $this->defaults['number'];
+		$orderby        = isset( $instance['orderby'] ) ? $instance['orderby'] : $this->defaults['orderby'];
+		$meta_key       = isset( $instance['meta_key'] ) ? $instance['meta_key'] : '';
+		$meta_value     = isset( $instance['meta_value'] ) ? $instance['meta_value'] : '';
+		$date_interval  = isset( $instance['date_interval'] ) ? $instance['date_interval'] : $this->defaults['date_interval'];
+		$order          = isset( $instance['order'] ) ? $instance['order'] : $this->defaults['order'];
+		$group_category = isset( $instance['group_category'] ) ? (bool) $instance['group_category'] : $this->defaults['group_category'];
 
 		$query_args = array(
 			'post_type'           => $post_type,
@@ -116,7 +118,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 
 		$query_args['orderby'] = $orderby;
 
-		if ( ! empty( $term ) ) {
+		if ( ! empty( $term ) && ! $group_category ) {
 			$term = (array) $term;
 
 			$tax_query = array(
@@ -180,66 +182,127 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 
 		$query_args = apply_filters( 'hocwp_theme_widget_posts_query_args', $query_args, $instance, $args, $this );
 
-		if ( $related ) {
-			$query = HT_Query()->related_posts( $query_args );
-		} else {
-			$query = new WP_Query( $query_args );
-		}
+		if ( $group_category ) {
+			$term = (array) $term;
 
-		if ( $query->have_posts() ) {
-			$term_as_title = isset( $instance['term_as_title'] ) ? $instance['term_as_title'] : $this->defaults['term_as_title'];
+			if ( HT()->array_has_value( $term ) ) {
+				$list = '';
 
-			if ( ( 1 == $term_as_title || $term_as_title ) && HT()->array_has_value( $term ) ) {
-				reset( $term );
-				$value = current( $term );
+				foreach ( $term as $td ) {
+					$value = str_replace( ' ', '', $td );
+					$parts = explode( ',', $value );
 
-				$value = str_replace( ' ', '', $value );
-				$parts = explode( ',', $value );
+					if ( 2 == count( $parts ) ) {
+						$term = get_term( $parts[1], $parts[0] );
 
-				if ( 2 == count( $parts ) ) {
-					$term = get_term( $parts[1], $parts[0] );
+						$query_args['tax_query'] = array(
+							array(
+								'taxonomy' => $parts[0],
+								'field'    => 'id',
+								'terms'    => $parts[1]
+							)
+						);
 
-					if ( $term instanceof WP_Term ) {
-						$instance['show_title'] = false;
+						$query = new WP_Query( $query_args );
+
+						if ( $query->have_posts() && $term instanceof WP_Term ) {
+							$tmp = '<li>';
+
+							$tmp .= '<a href="' . get_term_link( $term ) . '">' . $term->name . ' <span>(' . $query->post_count . ')</span></a>';
+
+							$tmp .= '<ul class="posts">';
+
+							while ( $query->have_posts() ) {
+								$query->the_post();
+								ob_start();
+								?>
+								<li>
+									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+								</li>
+								<?php
+								$tmp .= ob_get_clean();
+							}
+
+							wp_reset_postdata();
+
+							$tmp .= '</ul></li>';
+							$list .= $tmp;
+						}
 					}
 				}
+
+				if ( ! empty( $list ) ) {
+					$list = '<ul class="group-posts">' . $list . '</ul>';
+
+					do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+
+					echo $list;
+
+					do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
+				}
+			}
+		} else {
+			if ( $related ) {
+				$query = HT_Query()->related_posts( $query_args );
+			} else {
+				$query = new WP_Query( $query_args );
 			}
 
-			do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+			if ( $query->have_posts() ) {
+				$term_as_title = isset( $instance['term_as_title'] ) ? $instance['term_as_title'] : $this->defaults['term_as_title'];
 
-			if ( $term instanceof WP_Term ) {
-				$title_term_link = isset( $instance['title_term_link'] ) ? $instance['title_term_link'] : $this->defaults['title_term_link'];
+				if ( ( 1 == $term_as_title || $term_as_title ) && HT()->array_has_value( $term ) ) {
+					reset( $term );
+					$value = current( $term );
 
-				$text = $term->name;
+					$value = str_replace( ' ', '', $value );
+					$parts = explode( ',', $value );
 
-				if ( 1 == $title_term_link || $title_term_link ) {
-					$text = '<a href="' . get_term_link( $term ) . '">' . $text . '</a>';
+					if ( 2 == count( $parts ) ) {
+						$term = get_term( $parts[1], $parts[0] );
+
+						if ( $term instanceof WP_Term ) {
+							$instance['show_title'] = false;
+						}
+					}
 				}
 
-				echo '<h2 class="widget-title">' . $text . '</h2>';
+				do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+
+				if ( $term instanceof WP_Term ) {
+					$title_term_link = isset( $instance['title_term_link'] ) ? $instance['title_term_link'] : $this->defaults['title_term_link'];
+
+					$text = $term->name;
+
+					if ( 1 == $title_term_link || $title_term_link ) {
+						$text = '<a href="' . get_term_link( $term ) . '">' . $text . '</a>';
+					}
+
+					echo '<h2 class="widget-title">' . $text . '</h2>';
+				}
+
+				$html = apply_filters( 'hocwp_theme_widget_posts_html', '', $query, $instance, $args, $this );
+
+				if ( empty( $html ) ) {
+					global $hocwp_theme;
+					$hocwp_theme->loop_data['list']       = true;
+					$hocwp_theme->loop_data['on_sidebar'] = true;
+					$hocwp_theme->loop_data['template']   = 'sidebar';
+
+					$hocwp_theme->loop_data['widget'] = $this;
+
+					$hocwp_theme->loop_data['widget_args']     = $args;
+					$hocwp_theme->loop_data['widget_instance'] = $instance;
+
+					$hocwp_theme->loop_data['pagination_args'] = null;
+					$hocwp_theme->loop_data['content_none']    = false;
+					do_action( 'hocwp_theme_loop', $query );
+				} else {
+					echo $html;
+				}
+
+				do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 			}
-
-			$html = apply_filters( 'hocwp_theme_widget_posts_html', '', $query, $instance, $args, $this );
-
-			if ( empty( $html ) ) {
-				global $hocwp_theme;
-				$hocwp_theme->loop_data['list']       = true;
-				$hocwp_theme->loop_data['on_sidebar'] = true;
-				$hocwp_theme->loop_data['template']   = 'sidebar';
-
-				$hocwp_theme->loop_data['widget'] = $this;
-
-				$hocwp_theme->loop_data['widget_args']     = $args;
-				$hocwp_theme->loop_data['widget_instance'] = $instance;
-
-				$hocwp_theme->loop_data['pagination_args'] = null;
-				$hocwp_theme->loop_data['content_none']    = false;
-				do_action( 'hocwp_theme_loop', $query );
-			} else {
-				echo $html;
-			}
-
-			do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 		}
 	}
 
@@ -293,6 +356,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 
 		foreach ( $taxonomies as $key => $tax_name ) {
 			$tax_obj = get_taxonomy( $tax_name );
+
 			if ( ! $tax_obj->public ) {
 				unset( $taxonomies[ $key ] );
 			}
@@ -302,6 +366,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$thumbnail_size = isset( $instance['thumbnail_size'] ) ? $instance['thumbnail_size'] : $this->defaults['thumbnail_size'];
 		$crop_thumbnail = isset( $instance['crop_thumbnail'] ) ? $instance['crop_thumbnail'] : $this->defaults['crop_thumbnail'];
 		$number         = isset( $instance['number'] ) ? absint( $instance['number'] ) : $this->defaults['number'];
+		$group_category = isset( $instance['group_category'] ) ? (bool) $instance['group_category'] : $this->defaults['group_category'];
 
 		$orderbys = array(
 			'none'           => __( 'No order', 'hocwp-theme' ),
@@ -353,7 +418,9 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'for'  => $this->get_field_id( 'post_type' ),
 				'text' => __( 'Post type:', 'hocwp-theme' )
 			);
+
 			HT_HTML_Field()->label( $args );
+
 			$args = array(
 				'id'       => $this->get_field_id( 'post_type' ),
 				'name'     => $this->get_field_name( 'post_type' ),
@@ -362,6 +429,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'multiple' => 'multiple',
 				'value'    => $post_type
 			);
+
 			HT_HTML_Field()->chosen( $args );
 			?>
 		</div>
@@ -371,7 +439,9 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'for'  => $this->get_field_id( 'term' ),
 				'text' => __( 'Term:', 'hocwp-theme' )
 			);
+
 			HT_HTML_Field()->label( $args );
+
 			$args = array(
 				'id'       => $this->get_field_id( 'term' ),
 				'name'     => $this->get_field_name( 'term' ),
@@ -381,6 +451,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'value'    => $term,
 				'callback' => 'select_term'
 			);
+
 			HT_HTML_Field()->chosen( $args );
 			?>
 		</div>
@@ -390,12 +461,15 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'for'  => $this->get_field_id( 'thumbnail_size' ),
 				'text' => __( 'Thumbnail size:', 'hocwp-theme' )
 			);
+
 			HT_HTML_Field()->label( $args );
+
 			$args = array(
 				'id'    => $this->get_field_id( 'thumbnail_size' ),
 				'name'  => $this->get_field_name( 'thumbnail_size' ),
 				'value' => $thumbnail_size
 			);
+
 			HT_HTML_Field()->size( $args );
 			?>
 		</p>
@@ -412,7 +486,9 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'for'  => $this->get_field_id( 'orderby' ),
 				'text' => __( 'Order by:', 'hocwp-theme' )
 			);
+
 			HT_HTML_Field()->label( $args );
+
 			$args = array(
 				'id'       => $this->get_field_id( 'orderby' ),
 				'name'     => $this->get_field_name( 'orderby' ),
@@ -421,6 +497,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				'multiple' => 'multiple',
 				'value'    => $orderby
 			);
+
 			HT_HTML_Field()->chosen( $args );
 			?>
 		</div>
@@ -550,6 +627,13 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			<label
 				for="<?php echo $this->get_field_id( 'title_term_link' ); ?>"><?php _e( 'Use term link for widget title?', 'hocwp-theme' ); ?></label>
 		</p>
+		<p>
+			<input class="checkbox" type="checkbox"<?php checked( $group_category ); ?>
+			       id="<?php echo $this->get_field_id( 'group_category' ); ?>"
+			       name="<?php echo $this->get_field_name( 'group_category' ); ?>"/>
+			<label
+				for="<?php echo $this->get_field_id( 'group_category' ); ?>"><?php _e( 'Group posts by each category?', 'hocwp-theme' ); ?></label>
+		</p>
 		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
@@ -577,6 +661,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$instance['show_excerpt']       = isset( $new_instance['show_excerpt'] ) ? (bool) $new_instance['show_excerpt'] : $this->defaults['show_excerpt'];
 		$instance['show_comment_count'] = isset( $new_instance['show_comment_count'] ) ? (bool) $new_instance['show_comment_count'] : $this->defaults['show_comment_count'];
 		$instance['excerpt_length']     = isset( $new_instance['excerpt_length'] ) ? $new_instance['excerpt_length'] : $this->defaults['excerpt_length'];
+		$instance['group_category']     = isset( $new_instance['group_category'] ) ? (bool) $new_instance['group_category'] : $this->defaults['group_category'];
 
 		return $instance;
 	}

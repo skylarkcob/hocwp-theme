@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.5.0' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.5.1' );
 
 /**
  * Theme developing mode.
