@@ -398,6 +398,7 @@ final class HOCWP_Theme {
 			$json_string = stripslashes( $json_string );
 			$json_string = json_decode( $json_string, true );
 		}
+
 		$json_string = (array) $json_string;
 
 		return $json_string;
@@ -604,7 +605,6 @@ final class HOCWP_Theme {
 								}
 							}
 						}
-
 					}
 				}
 			}
@@ -613,7 +613,7 @@ final class HOCWP_Theme {
 
 			foreach ( $matches as $img ) {
 				$src   = self::get_first_image_source( $img );
-				$tmp[] = $img;
+				$tmp[] = $src;
 			}
 
 			$matches = $tmp;
