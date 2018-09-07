@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-08-30 19:53+0700\n"
-"PO-Revision-Date: 2018-08-30 19:54+0700\n"
+"POT-Creation-Date: 2018-09-07 21:30+0700\n"
+"PO-Revision-Date: 2018-09-07 21:31+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -509,7 +509,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:285
-#: hocwp/inc/functions-scripts.php:237
+#: hocwp/inc/functions-scripts.php:238
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -1175,7 +1175,7 @@ msgid "Remove media"
 msgstr "Xóa tập tin"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:943
-#: hocwp/inc/functions-scripts.php:238
+#: hocwp/inc/functions-scripts.php:239
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
@@ -1469,37 +1469,42 @@ msgstr "Bạn có chắc là muốn xóa hay không?"
 msgid "Changes you made may not be saved."
 msgstr "Những thay đổi của bạn có thể chưa được lưu."
 
-#: hocwp/inc/functions-scripts.php:234
+#: hocwp/inc/functions-scripts.php:139
+#, php-format
+msgid "Theme created by %s"
+msgstr "Giao diện được tạo bởi %s"
+
+#: hocwp/inc/functions-scripts.php:235
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:235
+#: hocwp/inc/functions-scripts.php:236
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:308
+#: hocwp/inc/functions-scripts.php:309
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:309
+#: hocwp/inc/functions-scripts.php:310
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:310
+#: hocwp/inc/functions-scripts.php:311
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:311
+#: hocwp/inc/functions-scripts.php:312
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:312
+#: hocwp/inc/functions-scripts.php:313
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."

@@ -135,7 +135,8 @@ function hocwp_theme_localize_script_l10n() {
 		'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
 		'l10n'        => array(
 			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
-			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' )
+			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),
+			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - http://hocwp.net' )
 		),
 		'ajaxOverlay' => $ajax_overlay,
 		'nonce'       => wp_create_nonce( HOCWP_Theme()->get_textdomain() )

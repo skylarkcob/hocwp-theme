@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-08-30 19:53+0700\n"
+"POT-Creation-Date: 2018-09-07 21:31+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -467,7 +467,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:285 hocwp/inc/functions-scripts.php:237
+#: hocwp/admin/class-hocwp-extensions-list-table.php:285 hocwp/inc/functions-scripts.php:238
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -1066,7 +1066,7 @@ msgstr ""
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:943 hocwp/inc/functions-scripts.php:238
+#: hocwp/inc/class-hocwp-theme-html-field.php:943 hocwp/inc/functions-scripts.php:239
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -1357,37 +1357,42 @@ msgstr ""
 msgid "Changes you made may not be saved."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:234
+#: hocwp/inc/functions-scripts.php:139
 #, php-format
-msgid "Remove %s"
+msgid "Theme created by %s"
 msgstr ""
 
 #: hocwp/inc/functions-scripts.php:235
 #, php-format
-msgid "Click the %s to edit or update"
+msgid "Remove %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:308
-msgctxt "quicktags description"
-msgid "Horizontal rule line"
+#: hocwp/inc/functions-scripts.php:236
+#, php-format
+msgid "Click the %s to edit or update"
 msgstr ""
 
 #: hocwp/inc/functions-scripts.php:309
 msgctxt "quicktags description"
-msgid "HTML Description List Element"
+msgid "Horizontal rule line"
 msgstr ""
 
 #: hocwp/inc/functions-scripts.php:310
 msgctxt "quicktags description"
-msgid "HTML Definition Term Element"
+msgid "HTML Description List Element"
 msgstr ""
 
 #: hocwp/inc/functions-scripts.php:311
 msgctxt "quicktags description"
-msgid "HTML Description Element"
+msgid "HTML Definition Term Element"
 msgstr ""
 
 #: hocwp/inc/functions-scripts.php:312
+msgctxt "quicktags description"
+msgid "HTML Description Element"
+msgstr ""
+
+#: hocwp/inc/functions-scripts.php:313
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""
