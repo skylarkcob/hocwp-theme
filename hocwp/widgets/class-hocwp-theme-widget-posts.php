@@ -45,7 +45,92 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				$this,
 				'hocwp_theme_search_meta_key_ajax_callback'
 			) );
+		} else {
+			add_filter( 'hocwp_theme_widget_posts_query_args', array( $this, 'query_args_filter' ), 10, 2 );
 		}
+	}
+
+	public function query_args_filter( $query_args, $instance ) {
+		if ( isset( $query_args['meta_key'] ) && 'views' == $query_args['meta_key'] && class_exists( 'WPP_Query' ) ) {
+			$ppp = isset( $query_args['posts_per_page'] ) ? $query_args['posts_per_page'] : HT_Util()->get_posts_per_page();
+
+			$post_type = isset( $query_args['post_type'] ) ? $query_args['post_type'] : 'post';
+
+			if ( is_array( $post_type ) ) {
+				$post_type = join( ',', $post_type );
+			}
+
+			$params = array(
+				'range'     => 'monthly',
+				'limit'     => $ppp,
+				'post_type' => $post_type
+			);
+
+			if ( isset( $query_args['date_interval'] ) && ! empty( $query_args['date_interval'] ) ) {
+				$params['range'] = $query_args['date_interval'];
+			}
+
+			if ( isset( $instance['term'] ) && HT()->array_has_value( $instance['term'] ) ) {
+				$terms = $instance['term'];
+				$first = array_shift( $terms );
+
+				$parts = explode( ',', $first );
+
+				if ( isset( $parts[0] ) && isset( $parts[1] ) ) {
+					$term = get_term( $parts[1], $parts[0] );
+
+					while ( ! ( $term instanceof WP_Term ) && HT()->array_has_value( $terms ) ) {
+						$first = array_shift( $terms );
+
+						$parts = explode( ',', $first );
+
+						if ( isset( $parts[0] ) && isset( $parts[1] ) ) {
+							$term = get_term( $parts[1], $parts[0] );
+						}
+					}
+
+					if ( $term instanceof WP_Term ) {
+						$term_id = '';
+
+						foreach ( $instance['term'] as $data ) {
+							if ( false !== strpos( $data, $term->taxonomy ) ) {
+								$parts = explode( ',', $data );
+
+								if ( isset( $parts[1] ) && HT()->is_positive_number( $parts[1] ) ) {
+									$term_id .= $parts[1] . ',';
+								}
+							}
+						}
+
+						$term_id = trim( $term_id );
+						$term_id = rtrim( $term_id, ',' );
+
+						if ( ! empty( $term_id ) ) {
+							$params['taxonomy'] = $term->taxonomy;
+							$params['term_id']  = $term_id;
+						}
+					}
+				}
+			}
+
+			$wq = new WPP_Query( $params );
+
+			$posts = $wq->get_posts();
+
+			if ( HT()->array_has_value( $posts ) ) {
+				$ids = array();
+
+				foreach ( $posts as $data ) {
+					$ids[] = $data->id;
+				}
+
+				unset( $query_args['meta_key'], $query_args['meta_value'] );
+
+				$query_args['post__in'] = $ids;
+			}
+		}
+
+		return $query_args;
 	}
 
 	private function get_post_type_from_instance( $instance ) {

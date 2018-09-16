@@ -70,15 +70,19 @@ class HOCWP_Theme_Extension {
 		if ( is_admin() ) {
 			if ( HT_Admin()->is_theme_option_page() ) {
 				add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'option_tabs' ) );
+
 				add_filter( 'hocwp_theme_settings_page_' . $this->option_name . '_settings_section', array(
 					$this,
 					'option_sections'
 				) );
+
 				add_filter( 'hocwp_theme_settings_page_' . $this->option_name . '_settings_field', array(
 					$this,
 					'option_fields'
 				) );
+
 				add_filter( 'hocwp_theme_sanitize_option_' . $this->option_name, array( $this, 'sanitize_options' ) );
+
 				add_action( 'hocwp_theme_admin_setting_page_' . $this->option_name . '_scripts', array(
 					$this,
 					'option_scripts'
@@ -206,7 +210,7 @@ class HOCWP_Theme_Extension_Controller {
 	}
 
 	public function get_data() {
-		return get_file_data( $this->headers );
+		return get_file_data( $this->headers, array( 'Name' => 'Name', 'Description' => 'Description' ) );
 	}
 
 	public function deprecated( $extension, $version, $replacement = null ) {

@@ -346,9 +346,23 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_separator', $separator, $context );
 	}
 
-	public static function breadcrumb( $args = array() ) {
+	public function is_yoast_breadcrumb() {
 		if ( function_exists( 'yoast_breadcrumb' ) ) {
-			yoast_breadcrumb();
+			$breadcrumbs_enabled = current_theme_supports( 'yoast-seo-breadcrumbs' );
+
+			if ( ! $breadcrumbs_enabled ) {
+				$breadcrumbs_enabled = WPSEO_Options::get( 'breadcrumbs-enable', false );
+			}
+
+			return ( bool ) $breadcrumbs_enabled;
+		}
+
+		return false;
+	}
+
+	public static function breadcrumb( $args = array() ) {
+		if ( HT_Frontend()->is_yoast_breadcrumb() ) {
+			yoast_breadcrumb( '<div class="breadcrumb hocwp-breadcrumb">', '</div>' );
 
 			return;
 		}

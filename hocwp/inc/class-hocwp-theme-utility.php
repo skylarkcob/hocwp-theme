@@ -367,6 +367,41 @@ class HOCWP_Theme_Utility {
 		return $path;
 	}
 
+	public function get_current_weekday( $format = null ) {
+		$weekday = current_time( 'l' );
+		$weekday = strtolower( $weekday );
+
+		switch ( $weekday ) {
+			case 'monday':
+				$weekday = __( 'Monday', 'hocwp-theme' );
+				break;
+			case 'tuesday':
+				$weekday = __( 'Tuesday', 'hocwp-theme' );
+				break;
+			case 'wednesday':
+				$weekday = __( 'Wednesday', 'hocwp-theme' );
+				break;
+			case 'thursday':
+				$weekday = __( 'Thursday', 'hocwp-theme' );
+				break;
+			case 'friday':
+				$weekday = __( 'Friday', 'hocwp-theme' );
+				break;
+			case 'saturday':
+				$weekday = __( 'Saturday', 'hocwp-theme' );
+				break;
+			default:
+				$weekday = __( 'Sunday', 'hocwp-theme' );
+				break;
+		}
+
+		if ( null != $format && ! empty( $format ) ) {
+			$weekday = sprintf( '%s, %s', $weekday, current_time( $format ) );
+		}
+
+		return $weekday;
+	}
+
 	public function date_intervals() {
 		$date_intervals = array(
 			'all'     => __( 'All date', 'hocwp-theme' ),
@@ -581,11 +616,17 @@ class HOCWP_Theme_Utility {
 			return false;
 		}
 
-		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
-			return false;
+		global $pagenow;
+
+		if ( 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
+			return true;
 		}
 
 		$obj = get_post( $post_id );
+
+		if ( $obj instanceof WP_Post && ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) ) {
+			return false;
+		}
 
 		if ( $obj instanceof WP_Post ) {
 			if ( 'trash' == $obj->post_status || ( isset( $_REQUEST['action'] ) && ( 'untrash' == $_REQUEST['action'] || 'trash' == $_REQUEST['action'] ) ) ) {
@@ -651,11 +692,13 @@ class HOCWP_Theme_Utility {
 		if ( ! ( $term instanceof WP_Term ) ) {
 			return '';
 		}
+
 		$a = new HOCWP_Theme_HTML_Tag( 'a' );
 		$a->add_attribute( 'href', esc_url( get_term_link( $term ) ) );
 		$a->set_text( $term->name );
 		$a->add_attribute( 'class', sanitize_html_class( $term->taxonomy ) );
 		$tax = get_taxonomy( $term->taxonomy );
+
 		if ( $tax->hierarchical ) {
 			$a->add_attribute( 'rel', 'category' );
 		} else {
@@ -670,6 +713,7 @@ class HOCWP_Theme_Utility {
 		$before = HT()->get_value_in_array( $args, 'before' );
 		$sep    = HT()->get_value_in_array( $args, 'separator', ', ' );
 		$after  = HT()->get_value_in_array( $args, 'after' );
+
 		if ( HT()->array_has_value( $terms ) ) {
 			echo $before;
 			$html = '';
@@ -873,6 +917,7 @@ class HOCWP_Theme_Utility {
 
 	public static function get_theme_option_term( $name, $taxonomy = 'category', $base = 'general', $slug = '' ) {
 		$term_id = self::get_theme_option( $name, '', $base );
+
 		if ( ! HT()->is_positive_number( $term_id ) && ! empty( $slug ) ) {
 			$term = get_term_by( 'slug', $slug, $taxonomy );
 
@@ -887,11 +932,12 @@ class HOCWP_Theme_Utility {
 
 		if ( ! HT()->is_positive_number( $id ) ) {
 			if ( ! empty( $slug ) ) {
-				$args  = array(
+				$args = array(
 					'post_type'   => $post_type,
 					'name'        => $slug,
 					'post_status' => 'publish'
 				);
+
 				$query = new WP_Query( $args );
 
 				if ( $query->have_posts() ) {
@@ -1087,11 +1133,13 @@ class HOCWP_Theme_Utility {
 		$span = new HOCWP_Theme_HTML_Tag( 'span' );
 		$span->add_attribute( 'data-text', $text );
 		$span->add_attribute( 'data-active-text', $active_text );
+
 		if ( 1 === $current || true === $current ) {
 			$span->set_text( $active_text );
 		} else {
 			$span->set_text( $text );
 		}
+
 		$span->add_attribute( 'data-current', HT()->bool_to_int( $current ) );
 		$span->add_attribute( 'data-post-id', get_the_ID() );
 		$span->output();
@@ -1099,6 +1147,7 @@ class HOCWP_Theme_Utility {
 
 	public function get_wpseo_post_title( $post_id ) {
 		$title = get_post_meta( $post_id, '_yoast_wpseo_title', true );
+
 		if ( empty( $title ) ) {
 			$title = get_the_title( $post_id );
 		}
@@ -1109,6 +1158,7 @@ class HOCWP_Theme_Utility {
 	public function the_title_link_html( $args = array() ) {
 		$title     = HT()->get_value_in_array( $args, 'title' );
 		$permalink = HT()->get_value_in_array( $args, 'permalink', get_permalink() );
+
 		if ( empty( $title ) ) {
 			the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ), '</a>' );
 		} else {
@@ -1123,9 +1173,11 @@ class HOCWP_Theme_Utility {
 
 	public function message_html( $message, $type = 'info' ) {
 		$p = new HOCWP_Theme_HTML_Tag( 'p' );
+
 		if ( ! empty( $type ) ) {
 			$p->add_attribute( 'class', 'text-left alert alert-' . $type );
 		}
+
 		$p->set_text( $message );
 
 		return $p->build();
@@ -1267,6 +1319,53 @@ class HOCWP_Theme_Utility {
 		}
 
 		return $res;
+	}
+
+	public function create_database_table( $table_name, $sql_column ) {
+		if ( false !== strpos( $sql_column, 'CREATE TABLE' ) || false !== strpos( $sql_column, 'create table' ) ) {
+			_doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );
+
+			return;
+		}
+
+		global $wpdb;
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
+			$charset_collate = '';
+
+			if ( ! empty( $wpdb->charset ) ) {
+				$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+			}
+
+			if ( ! empty( $wpdb->collate ) ) {
+				$charset_collate .= " COLLATE $wpdb->collate";
+			}
+
+			$sql = "CREATE TABLE ";
+			$sql .= "$table_name ( $sql_column ) $charset_collate;\n";
+
+			if ( ! function_exists( 'dbDelta' ) ) {
+				load_template( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			}
+
+			dbDelta( $sql );
+		}
+	}
+
+	public function is_database_table_exists( $table_name ) {
+		global $wpdb;
+
+		if ( ! HT()->string_contain( $table_name, $wpdb->prefix ) ) {
+			$table_name = $wpdb->prefix . $table_name;
+		}
+
+		$result = $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" );
+
+		if ( empty( $result ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function delete_transient( $transient_name = '' ) {

@@ -28,6 +28,20 @@ final class HOCWP_Theme_Sanitize {
 		return $file;
 	}
 
+	public static function post_format( $format ) {
+		if ( ! is_string( $format ) ) {
+			$format = '';
+		}
+
+		if ( ! empty( $format ) ) {
+			if ( false === strpos( $format, 'post-format-' ) ) {
+				$format = 'post-format-' . $format;
+			}
+		}
+
+		return $format;
+	}
+
 	public static function prefix( $string, $prefix, $sep = '-' ) {
 		$pre_len = mb_strlen( $prefix );
 		$sub     = mb_substr( $string, 0, $pre_len );

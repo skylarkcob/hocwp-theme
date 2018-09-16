@@ -27,10 +27,28 @@ if ( ! class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
 
 			parent::__construct( __FILE__ );
 
+			add_action( 'after_setup_theme', array( $this, 'after_setup_theme_action' ) );
+
 			if ( is_admin() ) {
 				add_action( 'load-post.php', array( $this, 'meta_boxes' ) );
 				add_action( 'load-post-new.php', array( $this, 'meta_boxes' ) );
+			} else {
+				add_filter( 'hocwp_theme_post_thumbnail_size_display', array(
+					$this,
+					'post_thumbnail_size_display_filter'
+				) );
 			}
+		}
+
+		public function is_thumbnail_size( $size ) {
+			return ( is_string( $size ) && ( 'thumbnail' == $size || 'post-thumbnail' == $size ) );
+		}
+
+		public function post_thumbnail_size_display_filter( $size ) {
+			return $size;
+		}
+
+		public function after_setup_theme_action() {
 		}
 
 		public function meta_boxes() {
@@ -78,6 +96,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 	$obj = get_post( $post_id );
 	$alt = $obj->post_title;
+
+	$size = apply_filters( 'hocwp_theme_post_thumbnail_size_display', $size, $post_id );
 
 	if ( empty( $size ) || 'post-thumbnail' == $size ) {
 		$size = 'thumbnail';
@@ -194,7 +214,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 		$regen = false;
 
-		if ( HT()->is_file( $file_path, 'readable' ) && ! file_exists( $new_path ) ) {
+		if ( HT()->is_file( $file_path ) && ! file_exists( $new_path ) ) {
 			$crop    = (bool) $crop;
 			$resized = image_make_intermediate_size( $file_path, $width, $height, $crop );
 
@@ -221,10 +241,13 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 				} else {
 					$src = str_replace( $file_name, $new_name, $url );
 				}
-			} else {
+			} elseif ( ! empty( $ext_url ) ) {
 				$src = $ext_url;
 			}
+		} elseif ( file_exists( $new_path ) ) {
+			$src = str_replace( $dirs['basedir'], $dirs['baseurl'], $new_path );
 		}
+
 
 		if ( HT()->string_contain( $src, 'thumbnail.php' ) && file_exists( $file_path ) ) {
 			$new_size = sprintf( '$1-%sx%s.%s', $width, $height, $ext );
@@ -272,43 +295,48 @@ add_filter( 'post_thumbnail_html', 'hocwp_theme_post_thumbnail_html_filter', 10,
  * Recheck post has thumbnail
  */
 function hocwp_theme_check_post_has_thumbnail( $check, $post_id, $meta_key ) {
-	if ( '_thumbnail_id' == $meta_key ) {
-		remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
-		$result = get_post_meta( $post_id, $meta_key, true );
-		add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
+	$obj = get_post( $post_id );
 
-		if ( empty( $result ) ) {
+	if ( '_thumbnail_id' == $meta_key && $obj instanceof WP_Post && 'revision' != $obj->post_type ) {
+		global $pagenow;
+
+		if ( 'link.php' != $pagenow ) {
 			remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
-			$result = get_post_meta( $post_id, '_thumbnail_url', true );
+			$result = get_post_meta( $post_id, $meta_key, true );
 			add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
 
 			if ( empty( $result ) ) {
-				$obj    = get_post( $post_id );
-				$images = HOCWP_Theme::get_all_image_from_string( $obj->post_content, 'src' );
+				remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
+				$result = get_post_meta( $post_id, '_thumbnail_url', true );
+				add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
 
-				if ( HOCWP_Theme::array_has_value( $images ) ) {
-					$src = '';
+				if ( empty( $result ) ) {
+					$images = HOCWP_Theme::get_all_image_from_string( $obj->post_content, 'src' );
 
-					foreach ( $images as $image ) {
-						$tmp = HOCWP_Theme::get_first_image_source( $image );
+					if ( HOCWP_Theme::array_has_value( $images ) ) {
+						$src = '';
 
-						if ( HT()->string_contain( $tmp, home_url() ) ) {
-							$src   = $image;
-							$check = - 1;
-							break;
+						foreach ( $images as $image ) {
+							$tmp = HOCWP_Theme::get_first_image_source( $image );
+
+							if ( HT()->string_contain( $tmp, home_url() ) ) {
+								$src   = $image;
+								$check = - 1;
+								break;
+							}
 						}
-					}
 
-					if ( empty( $src ) ) {
-						$src   = array_shift( $images );
-						$check = - 1;
-					}
+						if ( empty( $src ) ) {
+							$src   = array_shift( $images );
+							$check = - 1;
+						}
 
-					$src = HOCWP_Theme::get_first_image_source( $src );
-					update_post_meta( $post_id, '_thumbnail_url', $src );
+						$src = HOCWP_Theme::get_first_image_source( $src );
+						update_post_meta( $post_id, '_thumbnail_url', $src );
+					}
+				} else {
+					$check = - 1;
 				}
-			} else {
-				$check = - 1;
 			}
 		}
 	}

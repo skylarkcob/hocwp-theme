@@ -187,6 +187,9 @@ add_action( 'hocwp_theme_widget_title', 'hocwp_theme_widget_title', 10, 3 );
 
 function hocwp_theme_widget_before( $args, $instance, $widget ) {
 	$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '<div class="widget">';
+
+	$before_widget = apply_filters( 'hocwp_theme_widget_before_html', $before_widget, $args, $instance, $widget );
+
 	echo $before_widget;
 
 	$show_title = isset( $instance['show_title'] ) ? (bool) $instance['show_title'] : true;
@@ -197,6 +200,45 @@ function hocwp_theme_widget_before( $args, $instance, $widget ) {
 }
 
 add_action( 'hocwp_theme_widget_before', 'hocwp_theme_widget_before', 9, 3 );
+
+function hocwp_theme_widget_before_html_filter( $before_widget, $args, $instance, $widget ) {
+	if ( $widget instanceof WP_Widget && is_array( $args ) && isset( $args['before_widget'] ) && ! empty( $args['before_widget'] ) ) {
+		$pos = strpos( $before_widget, 'class=' );
+
+		if ( false !== $pos ) {
+			$class = substr( $before_widget, $pos );
+			$class = HT()->get_string_between( $class, '"', '"' );
+
+			if ( ! empty( $class ) ) {
+				$bk = $class;
+
+				foreach ( $instance as $key => $value ) {
+					if ( ! empty( $value ) ) {
+						if ( is_array( $value ) ) {
+							$value = json_encode( $value );
+						}
+
+						$value = sanitize_title( $value );
+
+						$value = sanitize_html_class( $value );
+
+						if ( ! empty( $value ) ) {
+							$value = $key . '_' . $value;
+
+							$class .= ' ' . $value;
+						}
+					}
+				}
+
+				$before_widget = str_replace( $bk, $class, $before_widget );
+			}
+		}
+	}
+
+	return $before_widget;
+}
+
+add_filter( 'hocwp_theme_widget_before_html', 'hocwp_theme_widget_before_html_filter', 10, 4 );
 
 function hocwp_theme_widget_after( $args, $instance, $widget ) {
 	$show_title = isset( $instance['show_title'] ) ? (bool) $instance['show_title'] : true;
@@ -386,6 +428,7 @@ add_action( 'hocwp_theme_template_single', 'hocwp_theme_template_single' );
 function hocwp_theme_content_area_before() {
 	?>
 	<div id="primary" class="content-area">
+		<?php do_action( 'hocwp_theme_site_main_before' ); ?>
 		<main id="main" class="site-main">
 			<?php
 			}
@@ -396,6 +439,7 @@ function hocwp_theme_content_area_before() {
 			?>
 		</main>
 		<!-- #main -->
+		<?php do_action( 'hocwp_theme_site_main_after' ); ?>
 	</div><!-- #primary -->
 	<?php
 }

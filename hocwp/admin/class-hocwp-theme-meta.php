@@ -13,6 +13,8 @@ abstract class HOCWP_Theme_Meta {
 	protected $get_value_callback;
 	protected $update_value_callback;
 
+	public $single_value = true;
+
 	public function __construct() {
 		$this->doing_it_wrong();
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 20 );
@@ -184,7 +186,7 @@ abstract class HOCWP_Theme_Meta {
 				}
 
 				$id    = array_shift( $tmp );
-				$meta  = call_user_func( $this->get_value_callback, $obj_id, $id, true );
+				$meta  = call_user_func( $this->get_value_callback, $obj_id, $id, $this->single_value );
 				$count = count( $tmp );
 				$k     = 0;
 
@@ -199,7 +201,7 @@ abstract class HOCWP_Theme_Meta {
 					$value = '';
 				}
 			} else {
-				$value = call_user_func( $this->get_value_callback, $obj_id, $id, true );
+				$value = call_user_func( $this->get_value_callback, $obj_id, $id, $this->single_value );
 			}
 
 			$type = $field['type'];
@@ -254,6 +256,16 @@ abstract class HOCWP_Theme_Meta {
 			_doing_it_wrong( __FUNCTION__, __( 'Please set update_value_callback.', 'hocwp-theme' ), '6.3.2' );
 
 			return;
+		}
+
+		global $pagenow;
+
+		if ( 'link.php' == $pagenow ) {
+			$obj = get_post( $obj_id );
+
+			if ( $obj instanceof WP_Post && 'inherit' == $obj->post_status && 'revision' == $obj->post_type ) {
+				wp_delete_post( $obj_id, true );
+			}
 		}
 
 		foreach ( (array) $this->fields as $field ) {

@@ -45,7 +45,7 @@ final class HOCWP_Theme {
 	}
 
 	public static function is_dir( $dir, $check = 'exists' ) {
-		return ( is_dir( $dir ) && ( ( 'exists' == $check && file_exists( $dir ) ) || ( 'readable' == $check && is_readable( $file ) ) ) ) ? true : false;
+		return ( is_dir( $dir ) && ( ( 'exists' == $check && file_exists( $dir ) ) || ( 'readable' == $check && is_readable( $dir ) ) ) ) ? true : false;
 	}
 
 	public static function wrap_text( $text, $before, $after, $echo = false ) {
@@ -466,28 +466,50 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
+	public function get_string_between( $string, $start, $end ) {
+		$string = ' ' . $string;
+
+		$ini = strpos( $string, $start );
+
+		if ( $ini == 0 ) {
+			return '';
+		}
+
+		$ini += strlen( $start );
+		$len = strpos( $string, $end, $ini ) - $ini;
+
+		return substr( $string, $ini, $len );
+	}
+
 	public function substr( $str, $len, $more = '...', $charset = 'UTF-8', $offset = 0 ) {
 		if ( 1 > $len ) {
 			return $str;
 		}
+
 		$more = esc_html( $more );
 		$str  = html_entity_decode( $str, ENT_QUOTES, $charset );
+
 		if ( function_exists( 'mb_strlen' ) ) {
 			$length = mb_strlen( $str, $charset );
 		} else {
 			$length = strlen( $str );
 		}
+
 		if ( $length > $len ) {
 			$arr = explode( ' ', $str );
+
 			if ( function_exists( 'mb_substr' ) ) {
 				$str = mb_substr( $str, $offset, $len, $charset );
 			} else {
 				$str = substr( $str, $offset, $len );
 			}
+
 			$arr_words = explode( ' ', $str );
 			$index     = count( $arr_words ) - 1;
 			$last      = $arr[ $index ];
+
 			unset( $arr );
+
 			if ( strcasecmp( $arr_words[ $index ], $last ) ) {
 				unset( $arr_words[ $index ] );
 			}
@@ -510,6 +532,7 @@ final class HOCWP_Theme {
 		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && self::is_IP( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			return $_SERVER['HTTP_CLIENT_IP'];
 		}
+
 		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && self::is_IP( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			return $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}
@@ -551,9 +574,11 @@ final class HOCWP_Theme {
 
 	public static function is_image( $url, $id = 0 ) {
 		$result = false;
+
 		if ( self::is_positive_number( $id ) ) {
 			$result = wp_attachment_is_image( $id );
 		}
+
 		if ( ! $result && ! empty( $url ) ) {
 			$result = self::is_image_url( $url );
 		}

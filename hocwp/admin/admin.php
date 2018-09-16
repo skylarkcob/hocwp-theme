@@ -19,12 +19,16 @@ function hocwp_theme_admin_notices_action() {
 
 add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
 
-if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {
+if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'term.php' == $pagenow || 'edit-tags.php' == $pagenow || 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php';
 }
 
 if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-post.php';
+}
+
+if ( 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
+	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-bookmark.php';
 }
 
 if ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {

@@ -38,6 +38,38 @@ final class HOCWP_Theme_Query {
 		return self::related_posts( $args );
 	}
 
+	public function by_post_format( $format, $args = array() ) {
+		$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+
+		if ( ! is_array( $format ) ) {
+			$format = array( $format );
+		}
+
+		$format = array_map( array( 'HOCWP_Theme_Sanitize', 'post_format' ), $format );
+		$format = array_filter( $format );
+
+		if ( HT()->array_has_value( $format ) ) {
+			if ( HT()->array_has_value( $tax_query ) ) {
+				$tax_query['relation'] = 'AND';
+			}
+
+			$formats = array(
+				'relation' => 'OR',
+				array(
+					'taxonomy' => 'post_format',
+					'field'    => 'slug',
+					'terms'    => $format
+				)
+			);
+
+			$tax_query[] = $formats;
+
+			$args['tax_query'] = $tax_query;
+		}
+
+		return new WP_Query( $args );
+	}
+
 	public static function related_posts( $args = array() ) {
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 
