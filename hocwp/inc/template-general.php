@@ -119,14 +119,14 @@ function hocwp_theme_template_search() {
 
 add_action( 'hocwp_theme_template_search', 'hocwp_theme_template_search' );
 
-function hocwp_theme_widget_title_filter( $title ) {
+function hocwp_theme_widget_title_filter( $title, $instance = array(), $id = '' ) {
 	if ( ! is_admin() && ! empty( $title ) ) {
 		$first = substr( $title, 0, 1 );
 
 		if ( '!' == $first ) {
 			$title = '';
 		} else {
-			if ( ! HT()->string_contain( $title, '</span>' ) ) {
+			if ( ! HT()->string_contain( $title, '</span>' ) && 'rss' != $id ) {
 				$title = '<span>' . $title . '</span>';
 			}
 		}
@@ -135,7 +135,7 @@ function hocwp_theme_widget_title_filter( $title ) {
 	return $title;
 }
 
-add_filter( 'widget_title', 'hocwp_theme_widget_title_filter' );
+add_filter( 'widget_title', 'hocwp_theme_widget_title_filter', 10, 3 );
 
 function hocwp_theme_widget_title( $args, $instance, $widget ) {
 	$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : '';
