@@ -124,7 +124,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					$ids[] = $data->id;
 				}
 
-				unset( $query_args['meta_key'], $query_args['meta_value'] );
+				unset( $query_args['meta_key'], $query_args['meta_value'], $query_args['date_query'] );
 
 				$query_args['post__in'] = $ids;
 			}
