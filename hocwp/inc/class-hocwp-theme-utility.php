@@ -1067,6 +1067,10 @@ class HOCWP_Theme_Utility {
 
 		$args = wp_parse_args( $args, $defaults );
 
+		if(!isset($args['rewrite']) || !is_array($args['rewrite'])) {
+			$args['rewrite'] = array();
+		}
+
 		$slug = isset( $args['rewrite']['slug'] ) ? $args['rewrite']['slug'] : '';
 
 		if ( isset( $args['public'] ) && $args['public'] ) {
