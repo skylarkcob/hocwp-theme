@@ -297,6 +297,11 @@ button.back-to-top {
     z-index: 499;
     display: none;
     border: 1px solid #ddd;
+    opacity: 0.7;
+}
+
+button.back-to-top:hover {
+    opacity: 1;
 }
 
 button.back-to-top:hover {
@@ -367,6 +372,7 @@ div.menu > ul li {
 .menu.hocwp-menu > li,
 div.menu > ul > li {
     display: inline-block;
+    vertical-align: middle;
 }
 
 .widget .menu li {

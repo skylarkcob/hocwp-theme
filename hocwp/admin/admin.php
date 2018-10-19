@@ -37,19 +37,23 @@ if ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php';
 
-if ( 'themes.php' == $pagenow && $plugin_page == $hocwp_theme->option->get_slug() ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-writing.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-reading.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-discussion.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-media.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-permalinks.php';
-	require HOCWP_THEME_CORE_PATH . '/ext/admin-setting-page-smtp.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';
-}
+add_action( 'after_setup_theme', function () {
+	global $pagenow, $hocwp_theme, $plugin_page;
+
+	if ( 'themes.php' == $pagenow && $plugin_page == $hocwp_theme->option->get_slug() ) {
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-writing.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-reading.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-discussion.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-media.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-permalinks.php';
+		require HOCWP_THEME_CORE_PATH . '/ext/admin-setting-page-smtp.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';
+	}
+}, 20 );
 
 if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow || HOCWP_THEME_DOING_AJAX ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/featured.php';
@@ -182,7 +186,9 @@ function hocwp_theme_create_setting_field( $id, $title, $callback = 'input', $ca
 		if ( empty( $callback ) ) {
 			$callback = 'input';
 		}
+
 		$callback = array( 'HOCWP_Theme_HTML_Field', $callback );
+
 		if ( ! is_callable( $callback ) ) {
 			$callback = array( 'HOCWP_Theme_HTML_Field', 'input' );
 		}

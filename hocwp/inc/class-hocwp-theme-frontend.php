@@ -593,6 +593,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$style .= 'padding:0;border:none;border-radius:0;';
 		}
 
+		$icon = hocwp_theme_get_option( 'back_top_icon_html', '', 'reading' );
+
+		if ( ! empty( $icon ) ) {
+			$text = $icon;
+		}
+
 		$bg_color = HT_Util()->get_theme_option( 'back_top_bg', '', 'reading' );
 
 		if ( ! empty( $bg_color ) ) {

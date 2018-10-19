@@ -128,7 +128,16 @@ function hocwp_theme_settings_page_reading_field() {
 		'style'            => HT_Util()->get_theme_option( 'back_top_style', '', 'reading' )
 	);
 
+	$icon = HT_Options()->get_tab( 'icon', '', 'reading' );
+
+	if ( ! HT()->is_positive_number( $icon ) ) {
+		unset( $args['style'] );
+	}
+
 	$field    = hocwp_theme_create_setting_field( 'back_top_icon', __( 'Icon', 'hocwp-theme' ), 'media_upload', $args, 'positive_number', 'reading', 'back_top_section' );
+	$fields[] = $field;
+
+	$field    = hocwp_theme_create_setting_field( 'back_top_icon_html', __( 'Icon HTML', 'hocwp-theme' ), 'input', $args, 'html', 'reading', 'back_top_section' );
 	$fields[] = $field;
 
 	$field    = hocwp_theme_create_setting_field( 'back_top_bg', __( 'Background Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading', 'back_top_section' );
