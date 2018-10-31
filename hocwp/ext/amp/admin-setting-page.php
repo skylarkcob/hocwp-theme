@@ -76,7 +76,11 @@ function hocwp_theme_settings_page_amp_field() {
 add_filter( 'hocwp_theme_settings_page_amp_settings_field', 'hocwp_theme_settings_page_amp_field' );
 
 function hocwp_theme_admin_setting_page_amp_scripts() {
-	HT_Util()->enqueue_code_editor();
+	if ( function_exists( 'HT_Enqueue' ) ) {
+		HT_Enqueue()->code_editor();
+	} else {
+		HT_Util()->enqueue_code_editor();
+	}
 }
 
 add_action( 'hocwp_theme_admin_setting_page_amp_scripts', 'hocwp_theme_admin_setting_page_amp_scripts' );

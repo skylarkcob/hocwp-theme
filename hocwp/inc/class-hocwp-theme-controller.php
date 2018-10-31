@@ -209,7 +209,7 @@ final class HOCWP_Theme_Controller {
 		$this->object->defaults['options']['media']['upload_per_day'] = 10;
 
 		/*
-		 * VIP
+		 * VIP Management
 		 */
 		$this->object->defaults['options']['vip']['post_price'] = 100;
 
@@ -351,6 +351,7 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/functions-deprecated.php';
 		require $this->core_path . '/inc/class-hocwp-theme.php';
 		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
+		require $this->core_path . '/inc/class-hocwp-theme-enqueue.php';
 		require $this->core_path . '/inc/class-hocwp-theme-utility.php';
 		require $this->core_path . '/inc/class-hocwp-theme-options.php';
 

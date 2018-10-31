@@ -47,6 +47,10 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	public function add_field( $field ) {
+		if ( $field instanceof HOCWP_Theme_Meta_Field ) {
+			$field = $field->generate();
+		}
+
 		$field = $this->sanitize_field( $field );
 
 		if ( ! is_array( $this->fields ) ) {
@@ -56,10 +60,13 @@ abstract class HOCWP_Theme_Meta {
 		$callback = $field['callback'];
 
 		if ( is_array( $callback ) ) {
-			if ( $callback === array( 'HOCWP_Theme_HTML_Field', 'media_upload' ) ) {
+			if ( array( 'HOCWP_Theme_HTML_Field', 'media_upload' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-media-upload' );
-			} elseif ( $callback === array( 'HOCWP_Theme_HTML_Field', 'google_maps' ) ) {
+			} elseif ( array( 'HOCWP_Theme_HTML_Field', 'google_maps' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-google-maps' );
+			} elseif ( array( 'HOCWP_Theme_HTML_Field', 'datetime_picker' ) === $callback ) {
+				$this->load_script( 'hocwp-theme-datepicker' );
+				$this->load_style( 'jquery-ui-style' );
 			}
 		}
 
@@ -67,6 +74,10 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	public function sanitize_field( $field ) {
+		if ( $field instanceof HOCWP_Theme_Meta_Field ) {
+			$field = $field->generate();
+		}
+
 		$defaults = array(
 			'callback'      => array( 'HOCWP_Theme_HTML_Field', 'input' ),
 			'type'          => 'string',
@@ -107,6 +118,7 @@ abstract class HOCWP_Theme_Meta {
 
 		$value = isset( $_POST[ $id ] ) ? $_POST[ $id ] : '';
 		$type  = $field['type'];
+
 		$value = HT_Sanitize()->data( $value, $type );
 
 		return $value;
@@ -212,6 +224,10 @@ abstract class HOCWP_Theme_Meta {
 				if ( empty( $format ) ) {
 					global $hocwp_theme;
 					$format = $hocwp_theme->defaults['date_format'];
+				}
+
+				if ( 'F j, Y' == $format ) {
+					$format = 'Y-m-d';
 				}
 
 				$field['callback_args']['data-date-format'] = HOCWP_Theme::javascript_datetime_format( $format );
@@ -322,14 +338,18 @@ abstract class HOCWP_Theme_Meta {
 			}
 
 			foreach ( $arr as $handle ) {
-				call_user_func( $callback, $handle );
+				if ( 'jquery-ui-style' == $handle ) {
+					HT_Enqueue()->jquery_ui_style();
+				} else {
+					call_user_func( $callback, $handle );
+				}
 			}
 		}
 	}
 
 	public function admin_scripts() {
 		if ( is_array( $this->scripts ) && in_array( 'hocwp-theme-media-upload', $this->scripts ) ) {
-			HT_Util()->enqueue_media();
+			HT_Enqueue()->media_upload();
 		}
 
 		$this->enqueue( $this->styles );

@@ -915,23 +915,21 @@ function hocwp_theme_widget_posts_loop_html() {
 	do_action( 'hocwp_theme_article_before', array( 'container' => $container_tag ) );
 
 	if ( ! empty( $width ) || ! empty( $height ) ) {
-		if ( has_post_thumbnail() ) {
-			$size = array(
-				$width,
-				$height,
-				'crop' => $crop_thumbnail
-			);
+		$size = array(
+			$width,
+			$height,
+			'crop' => $crop_thumbnail
+		);
 
-			if ( ! empty( $width ) ) {
-				$size['width'] = $width;
-			}
-
-			if ( ! empty( $height ) ) {
-				$size['height'] = $height;
-			}
-
-			hocwp_theme_post_thumbnail( $size, array( 'post_link' => true, 'class' => 'alignleft' ) );
+		if ( ! empty( $width ) ) {
+			$size['width'] = $width;
 		}
+
+		if ( ! empty( $height ) ) {
+			$size['height'] = $height;
+		}
+
+		hocwp_theme_post_thumbnail( $size, array( 'post_link' => true, 'class' => 'alignleft' ) );
 	}
 
 	$title_length = isset( $instance['title_length'] ) ? absint( $instance['title_length'] ) : '';
@@ -1029,8 +1027,13 @@ function hocwp_theme_loop( $query ) {
 		$count = 0;
 
 		$hocwp_theme->loop_data['count'] = $count;
+
+		$class = apply_filters( 'hocwp_theme_loop_container_class', $class, $query );
+
 		echo '<div class="' . $class . '">';
+
 		do_action( 'hocwp_theme_loop_before' );
+
 		$template_valid = true;
 
 		if ( ! empty( $template ) ) {
@@ -1043,12 +1046,18 @@ function hocwp_theme_loop( $query ) {
 
 		$list = isset( $hocwp_theme->loop_data['list'] ) ? $hocwp_theme->loop_data['list'] : false;
 
+		if ( empty( $template ) ) {
+			$template = 'post';
+		}
+
 		if ( $list ) {
 			echo '<ul>';
 		}
 
 		while ( $query->have_posts() ) {
 			$query->the_post();
+
+			do_action( 'hocwp_theme_in_loop_before' );
 
 			if ( $template_valid ) {
 				hocwp_theme_load_custom_loop( $template );
@@ -1062,6 +1071,8 @@ function hocwp_theme_loop( $query ) {
 				}
 			}
 
+			do_action( 'hocwp_theme_in_loop_after' );
+
 			$count ++;
 		}
 
@@ -1072,7 +1083,9 @@ function hocwp_theme_loop( $query ) {
 		}
 
 		do_action( 'hocwp_theme_loop_after' );
+
 		echo '</div>';
+
 		$pa = isset( $hocwp_theme->loop_data['pagination_args'] ) ? $hocwp_theme->loop_data['pagination_args'] : array();
 
 		if ( true === $pa || is_array( $pa ) || ( null !== $pa && $pa ) ) {
@@ -1090,6 +1103,7 @@ function hocwp_theme_loop( $query ) {
 			hocwp_theme_load_content_none();
 		}
 	}
+
 	hocwp_theme_reset_loopdata();
 }
 

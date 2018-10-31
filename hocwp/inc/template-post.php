@@ -158,6 +158,22 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 
 add_filter( 'post_thumbnail_html', 'hocwp_theme_post_thumbnail_html_auto_link', 10, 5 );
 
+function hocwp_theme_get_default_post_thumbnail( $size = 'thumbnail', $attr = '', $style = '' ) {
+	$thumbnail = HT_Options()->get_tab( 'default_thumbnail', '', 'writing' );
+	$class     = ( is_array( $attr ) && isset( $attr['class'] ) ) ? $attr['class'] : '';
+
+	$class .= ' default-thumbnail no-thumbnail wp-post-image';
+	$class = trim( $class );
+
+	if ( HT()->is_positive_number( $thumbnail ) ) {
+		$thumbnail = '<img class="' . $class . '" src="' . wp_get_attachment_image_url( $thumbnail, $size ) . '" alt="" style="' . $style . '">';
+	} else {
+		$thumbnail = '<span class="' . $class . '" style="' . $style . '" ></span>';
+	}
+
+	return apply_filters( 'hocwp_theme_default_post_thumbnail', $thumbnail, $size, $attr );
+}
+
 function hocwp_theme_post_thumbnail_default( $size, $attr ) {
 	if ( HT_Util()->is_amp() ) {
 		return;
@@ -169,9 +185,10 @@ function hocwp_theme_post_thumbnail_default( $size, $attr ) {
 
 	$width  = ( is_array( $size ) && isset( $size['width'] ) ) ? $size['width'] : get_option( 'thumbnail_size_w' );
 	$height = ( is_array( $size ) && isset( $size['height'] ) ) ? $size['height'] : get_option( 'thumbnail_size_h' );
-	$style  = sprintf( 'width:%spx;height:%spx', $width, $height );
 
-	$html = '<span class="no-thumbnail wp-post-image" style="' . $style . '" ></span>';
+	$style = sprintf( 'width:%spx;height:%spx', $width, $height );
+
+	$html = hocwp_theme_get_default_post_thumbnail( $size, $attr, $style );
 
 	if ( is_array( $attr ) && isset( $attr['post_link'] ) && (bool) $attr['post_link'] ) {
 		$before = sprintf( '<a class="img-hyperlink" href="%s" title="%s">', get_the_permalink(), get_the_title() );

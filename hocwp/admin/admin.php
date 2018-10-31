@@ -19,7 +19,10 @@ function hocwp_theme_admin_notices_action() {
 
 add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
 
+require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
+
 if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'term.php' == $pagenow || 'edit-tags.php' == $pagenow || 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
+	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php';
 }
 
@@ -35,6 +38,7 @@ if ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-term.php';
 }
 
+require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php';
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php';
 
 add_action( 'after_setup_theme', function () {
@@ -182,47 +186,9 @@ add_action( 'admin_notices', 'hocwp_theme_admin_notices_required_plugins' );
  * @return array
  */
 function hocwp_theme_create_setting_field( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string', $tab = 'general', $section = 'default' ) {
-	if ( ! is_callable( $callback ) ) {
-		if ( empty( $callback ) ) {
-			$callback = 'input';
-		}
+	$field = new HOCWP_Theme_Admin_Setting_Field( $id, $title, $callback, $callback_args, $data_type, $tab, $section );
 
-		$callback = array( 'HOCWP_Theme_HTML_Field', $callback );
-
-		if ( ! is_callable( $callback ) ) {
-			$callback = array( 'HOCWP_Theme_HTML_Field', 'input' );
-		}
-	}
-
-	if ( empty( $data_type ) ) {
-		$data_type = 'string';
-	}
-
-	$field = array(
-		'tab'     => $tab,
-		'section' => $section,
-		'id'      => $id,
-		'title'   => $title,
-		'type'    => $data_type,
-		'args'    => array(
-			'type'          => $data_type,
-			'callback'      => $callback,
-			'callback_args' => array(
-				'class' => 'widefat'
-			)
-		)
-	);
-
-	$callback_args = (array) $callback_args;
-
-	if ( isset( $callback_args['description'] ) ) {
-		$field['args']['description'] = $callback_args['description'];
-		unset( $callback_args['description'] );
-	}
-
-	$field['args']['callback_args'] = wp_parse_args( $callback_args, $field['args']['callback_args'] );
-
-	return $field;
+	return $field->generate();
 }
 
 /**
@@ -253,46 +219,9 @@ function hocwp_theme_create_setting_field_for_home( $id, $title, $callback = 'in
  * @return array
  */
 function hocwp_theme_create_meta_field( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string' ) {
-	if ( ! is_callable( $callback ) ) {
-		if ( empty( $callback ) ) {
-			$callback = 'input';
-		}
+	$field = new HOCWP_Theme_Meta_Field( $id, $title, $callback, $callback_args, $data_type );
 
-		$callback = array( 'HOCWP_Theme_HTML_Field', $callback );
-
-		if ( ! is_callable( $callback ) ) {
-			$callback = array( 'HOCWP_Theme_HTML_Field', 'input' );
-		}
-	}
-
-	if ( empty( $data_type ) ) {
-		$data_type = 'string';
-	}
-
-	$field = array(
-		'id'            => $id,
-		'title'         => $title,
-		'type'          => $data_type,
-		'callback'      => $callback,
-		'callback_args' => array(
-			'class' => 'widefat'
-		)
-	);
-
-	$callback_args = (array) $callback_args;
-
-	if ( isset( $callback_args['description'] ) ) {
-		$field['description'] = $callback_args['description'];
-		unset( $callback_args['description'] );
-	}
-
-	$field['callback_args'] = wp_parse_args( $callback_args, $field['callback_args'] );
-
-	if ( isset( $callback_args['name'] ) && ! empty( $callback_args['name'] ) ) {
-		$field['name'] = $callback_args['name'];
-	}
-
-	return $field;
+	return $field->generate();
 }
 
 function hocwp_theme_backup_wp_content_folders_theme( $folders ) {

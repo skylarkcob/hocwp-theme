@@ -270,18 +270,29 @@ p > ins > br {
     text-align: left;
 }
 
-.entry-content button,
-.entry-content input[type="button"],
-.entry-content input[type="reset"],
-.entry-content input[type="submit"]:not(.search-submit) {
+.entry-content p a.button,
+.entry-content p button,
+.entry-content p input[type="button"],
+.entry-content p input[type="reset"],
+.entry-content p input[type="submit"]:not(.search-submit) {
     padding: 10px 20px;
+}
+
+.entry-content a.button {
+    color: #fff;
+}
+
+.entry-content p button:not(.btn),
+.entry-content p input[type="button"],
+.entry-content p input[type="reset"],
+.entry-content p input[type="submit"]:not(.search-submit) {
     border-color: #d5d5d5;
 }
 
-.entry-content button:hover,
-.entry-content input[type="button"]:hover,
-.entry-content input[type="reset"]:hover,
-.entry-content input[type="submit"]:hover {
+.entry-content p button:not(.btn):hover,
+.entry-content p input[type="button"]:hover,
+.entry-content p input[type="reset"]:hover,
+.entry-content p input[type="submit"]:hover {
     background-color: #eee;
 }
 
@@ -466,4 +477,9 @@ div.menu li a {
     vertical-align: middle;
     margin: 0;
     padding: 10px;
+}
+
+button.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }

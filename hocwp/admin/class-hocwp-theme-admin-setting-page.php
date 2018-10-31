@@ -474,7 +474,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					switch ( $callback ) {
 						case 'sortable':
 						case 'sortable_term':
-							HT_Util()->enqueue_sortable();
+							HT_Enqueue()->sortable();
 							break;
 					}
 				}

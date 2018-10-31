@@ -10,7 +10,7 @@ if ( 'post-new.php' !== $pagenow && 'post.php' !== $pagenow && 'link.php' != $pa
 }
 
 if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
-	function hocwp_theme_meta_box_google_maps( $id = 'google_maps', $post_type = 'post' ) {
+	function hocwp_theme_meta_box_google_maps( $id = 'google_maps', $post_type = 'post', $args = array() ) {
 		$meta = new HOCWP_Theme_Meta_Post();
 
 		if ( is_array( $post_type ) ) {
@@ -22,7 +22,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		$meta->set_title( __( 'Maps', 'hocwp-theme' ) );
 		$meta->set_id( $id . '-box' );
 
-		$field = hocwp_theme_create_meta_field( $id, '', 'google_maps' );
+		$field = hocwp_theme_create_meta_field( $id, '', 'google_maps', $args );
 		$meta->add_field( $field );
 	}
 

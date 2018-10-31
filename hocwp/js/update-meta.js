@@ -1,3 +1,5 @@
+window.hocwpTheme = window.hocwpTheme || {};
+
 jQuery(document).ready(function ($) {
     var body = $("body");
 
@@ -16,7 +18,13 @@ jQuery(document).ready(function ($) {
             }
 
             element.on("click", function () {
-                var value_type = element.attr("data-value-type");
+                var value_type = element.attr("data-value-type"),
+                    requireLogin = parseInt(element.attr("data-require-login"));
+
+                if (1 == requireLogin && !body.hasClass("logged-in")) {
+                    window.location.href = hocwpTheme.loginUrl;
+                    return;
+                }
 
                 body.trigger("hocwpTheme:ajaxStart", [element]);
 
@@ -34,6 +42,7 @@ jQuery(document).ready(function ($) {
                         meta_value: meta_value,
                         object_id: object_id,
                         value_type: value_type,
+                        change_id: element.attr("data-object-id"),
                         nonce: hocwpTheme.nonce
                     },
                     success: function (response) {
@@ -52,6 +61,15 @@ jQuery(document).ready(function ($) {
                             if ("up_down" === value_type) {
                                 element.addClass("disabled");
                                 element.prop("disabled", true);
+                            }
+
+                            var doText = element.attr("data-text"),
+                                undoText = element.attr("data-undo-text");
+
+                            if ("undo" == response.data.job_action && $.trim(doText)) {
+                                element.html(doText);
+                            } else if ("do" == response.data.job_action && $.trim(undoText)) {
+                                element.html(undoText);
                             }
                         }
 

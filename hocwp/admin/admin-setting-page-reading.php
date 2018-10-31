@@ -152,8 +152,8 @@ function hocwp_theme_settings_page_reading_field() {
 add_filter( 'hocwp_theme_settings_page_reading_settings_field', 'hocwp_theme_settings_page_reading_field' );
 
 function hocwp_theme_admin_setting_page_reading_scripts() {
-	HT_Util()->enqueue_media();
-	HT_Util()->enqueue_color_picker();
+	HT_Enqueue()->media_upload();
+	HT_Enqueue()->color_picker();
 }
 
 add_action( 'hocwp_theme_admin_setting_page_reading_scripts', 'hocwp_theme_admin_setting_page_reading_scripts' );

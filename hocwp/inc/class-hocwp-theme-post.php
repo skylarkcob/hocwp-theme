@@ -41,4 +41,8 @@ class HOCWP_Theme_Post {
 	public function thumbnail( $size = 'thumbnail', $attr = '' ) {
 		hocwp_theme_post_thumbnail( $size, $attr );
 	}
+
+	public function the_date( $format = '' ) {
+		echo get_the_date( $format );
+	}
 }

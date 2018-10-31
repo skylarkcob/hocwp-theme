@@ -68,7 +68,7 @@ function hocwp_theme_enqueue_scripts_action() {
 	$load = apply_filters( 'hocwp_theme_load_default_style', true );
 
 	if ( $load ) {
-		wp_enqueue_style( 'hocwp-theme-default-fixed-style', HOCWP_THEME_CORE_URL . '/css/default-fixed' . HOCWP_THEME_CSS_SUFFIX );
+		wp_enqueue_style( 'hocwp-theme-default-fixed-style', HOCWP_THEME_CORE_URL . '/css/default-fixed' . HOCWP_THEME_CSS_SUFFIX, array( 'hocwp-theme-define-style' ) );
 	}
 
 	if ( is_singular() || is_single() || is_page() ) {
@@ -130,9 +130,16 @@ function hocwp_theme_localize_script_l10n() {
 	HOCWP_Theme_Utility::ajax_overlay();
 	$ajax_overlay = ob_get_clean();
 
+	$redirect = '';
+
+	if ( is_singular() ) {
+		$redirect = get_the_permalink();
+	}
+
 	$args = array(
 		'homeUrl'     => home_url( '/' ),
 		'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+		'loginUrl'    => wp_login_url( $redirect ),
 		'l10n'        => array(
 			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
 			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),
@@ -161,9 +168,9 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 	wp_register_script( 'hocwp-theme-admin', $src, array( 'jquery', 'hocwp-theme' ), false, true );
 
 	if ( 'widgets.php' == $pagenow ) {
-		HT_Util()->enqueue_chosen();
-		HT_Util()->enqueue_media();
-		HT_Util()->enqueue_sortable();
+		HT_Enqueue()->chosen();
+		HT_Enqueue()->media_upload();
+		HT_Enqueue()->sortable();
 
 		$src = HOCWP_THEME_CORE_URL . '/js/admin-widgets' . HOCWP_THEME_JS_SUFFIX;
 
@@ -243,19 +250,23 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 	return apply_filters( 'hocwp_theme_localize_script_l10n_media_upload', $l10n );
 }
 
-function hocwp_theme_load_google_maps_script() {
-	global $hocwp_theme;
-	$options = $hocwp_theme->options;
+function hocwp_theme_load_google_maps_script( $google_api_key = '' ) {
+	if ( empty( $google_api_key ) ) {
+		global $hocwp_theme;
+		$options = $hocwp_theme->options;
 
-	$google_api_key = isset( $options['social']['google_api_key'] ) ? $options['social']['google_api_key'] : '';
+		$google_api_key = isset( $options['social']['google_api_key'] ) ? $options['social']['google_api_key'] : '';
+	}
 
 	if ( ! empty( $google_api_key ) ) {
 		$src = 'https://maps.googleapis.com/maps/api/js';
 		$src = add_query_arg( 'key', $google_api_key, $src );
+
 		wp_register_script( 'google-maps', $src, array(), false, true );
+
 		$src = HOCWP_THEME_CORE_URL . '/js/google-maps' . HOCWP_THEME_JS_SUFFIX;
 
-		wp_register_script( 'hocwp-theme-google-maps', $src, array(
+		wp_enqueue_script( 'hocwp-theme-google-maps', $src, array(
 			'jquery',
 			'google-maps'
 		), false, true );
@@ -282,6 +293,7 @@ function hocwp_theme_frontend_and_backend_scripts() {
 	), false, true );
 
 	$l10n = hocwp_theme_localize_script_l10n_media_upload();
+
 	wp_localize_script( 'hocwp-theme-media-upload', 'hocwpThemeMediaUpload', $l10n );
 	wp_register_style( 'hocwp-theme-sortable-style', HOCWP_THEME_CORE_URL . '/css/sortable' . HOCWP_THEME_CSS_SUFFIX );
 
@@ -315,10 +327,12 @@ function hocwp_theme_frontend_and_backend_scripts() {
 	);
 
 	wp_localize_script( 'hocwp-theme-quicktags', 'hocwpThemeQuickTags', $args );
+
 	do_action( 'hocwp_theme_frontend_and_backend_enqueue_scripts' );
 }
 
 function hocwp_theme_register_global_scripts() {
+	wp_register_style( 'hocwp-theme-define-style', HOCWP_THEME_CORE_URL . '/css/define' . HOCWP_THEME_CSS_SUFFIX );
 	wp_register_script( 'hocwp-theme', HOCWP_THEME_CORE_URL . '/js/core' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
 	wp_localize_script( 'hocwp-theme', 'hocwpTheme', hocwp_theme_localize_script_l10n() );
 	wp_register_style( 'hocwp-theme-ajax-overlay-style', HOCWP_THEME_CORE_URL . '/css/ajax-overlay' . HOCWP_THEME_CSS_SUFFIX );

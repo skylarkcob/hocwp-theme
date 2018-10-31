@@ -412,7 +412,9 @@ final class HOCWP_Theme {
 		$string = str_replace( '/', '-', $string );
 		$string = trim( $string );
 
-		$result = date( $format, strtotime( $string ) );
+		$totime = strtotime( $string );
+
+		$result = date( $format, $totime );
 
 		return $result;
 	}

@@ -283,7 +283,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 			$style .= "height:{$height}px;";
 		}
 
-		$html = "<span class='no-thumbnail wp-post-image' style='$style'></span>";
+		$html = hocwp_theme_get_default_post_thumbnail( $sizes, $attr, $style );
 	}
 
 	return $html;

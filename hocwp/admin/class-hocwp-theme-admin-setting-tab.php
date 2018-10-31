@@ -8,6 +8,9 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public $sections = array();
 	public $fields = array();
 
+	public $styles = array();
+	public $scripts = array();
+
 	public function __construct( $name, $label, $icon = '', $args = array() ) {
 		if ( empty( $name ) ) {
 			_doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
@@ -41,9 +44,11 @@ class HOCWP_Theme_Admin_Setting_Tab {
 
 		$esc = isset( $args['enqueue_scripts_callback'] ) ? $args['enqueue_scripts_callback'] : '';
 
-		if ( is_callable( $esc ) ) {
-			add_action( 'hocwp_theme_admin_setting_page_' . $this->name . '_scripts', $esc );
+		if ( ! is_callable( $esc ) ) {
+			$esc = array( $this, 'enqueue_scripts' );
 		}
+
+		add_action( 'hocwp_theme_admin_setting_page_' . $this->name . '_scripts', $esc );
 
 		$cff = isset( $args['custom_fields_filter'] ) ? $args['custom_fields_filter'] : '';
 
@@ -52,6 +57,16 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		}
 
 		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_field', array( $this, 'fields_filter' ) );
+	}
+
+	public function enqueue_scripts() {
+		foreach ( $this->styles as $handle ) {
+			wp_enqueue_style( $handle );
+		}
+
+		foreach ( $this->scripts as $handle ) {
+			wp_enqueue_script( $handle );
+		}
 	}
 
 	public function setting_tabs_filter( $tabs ) {
@@ -89,13 +104,29 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		$this->fields[] = $data;
 	}
 
-	public function add_field( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string', $section = 'default' ) {
-		$this->fields[] = hocwp_theme_create_setting_field( $id, $title, $callback, $callback_args, $data_type, $this->name, $section );
+	public function add_field( $id, $title = '', $callback = 'input', $callback_args = array(), $data_type = 'string', $section = 'default' ) {
+		if ( $id instanceof HOCWP_Theme_Admin_Setting_Field ) {
+			$this->fields[] = $id->generate();
+		} else {
+			$this->fields[] = hocwp_theme_create_setting_field( $id, $title, $callback, $callback_args, $data_type, $this->name, $section );
+		}
 	}
 
 	public function fields_filter() {
 		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, HT_Options()->get( $this->name ) );
 
 		return $this->fields;
+	}
+
+	public function load_style( $handle ) {
+		if ( ! in_array( $handle, $this->styles ) ) {
+			$this->styles[] = $handle;
+		}
+	}
+
+	public function load_script( $handle ) {
+		if ( ! in_array( $handle, $this->scripts ) ) {
+			$this->scripts[] = $handle;
+		}
 	}
 }

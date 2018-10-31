@@ -155,6 +155,9 @@ final class HOCWP_Theme_HTML_Field {
 
 	public static function datetime_picker( $args = array() ) {
 		$args['data-datetime-picker'] = 1;
+
+		$args['autocomplete'] = 'off';
+
 		self::input( $args );
 	}
 
@@ -985,7 +988,8 @@ final class HOCWP_Theme_HTML_Field {
 			'name'         => '',
 			'value'        => ''
 		);
-		$args     = wp_parse_args( $args, $defaults );
+
+		$args = wp_parse_args( $args, $defaults );
 
 		$zoom = $args['zoom'];
 
@@ -996,12 +1000,15 @@ final class HOCWP_Theme_HTML_Field {
 
 		if ( ! empty( $value ) ) {
 			$value = json_decode( $value, true );
+
 			if ( isset( $value['lat'] ) && ! empty( $value['lat'] ) ) {
 				$latitude = $value['lat'];
 			}
+
 			if ( isset( $value['lng'] ) && ! empty( $value['lng'] ) ) {
 				$longitude = $value['lng'];
 			}
+
 			$zoom = absint( $zoom * 3 );
 		}
 
@@ -1027,11 +1034,47 @@ final class HOCWP_Theme_HTML_Field {
 				'name'  => $args['name'],
 				'value' => $args['value']
 			);
+
 			if ( isset( $args['required'] ) && $args['required'] ) {
 				$input_args['required'] = 'required';
 			}
+
 			self::input( $input_args );
 		}
+	}
+
+	public function update_meta( $args = array() ) {
+		$defaults = array(
+			'tag_name' => 'button',
+			'text'     => ''
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$defaults = array(
+			'data-meta-type'   => 'post',
+			'data-meta-value'  => '',
+			'data-ajax-meta'   => 1,
+			'data-ajax-button' => 1,
+			'data-meta-key'    => '',
+			'data-id'          => '',
+			'data-text'        => '',
+			'data-undo-text'   => '',
+			'data-object-id'   => ''
+		);
+
+		$attributes = isset( $args['attributes'] ) ? $args['attributes'] : array();
+
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array();
+		}
+
+		$args['attributes'] = wp_parse_args( $attributes, $defaults );
+
+		$html = new HOCWP_Theme_HTML_Tag( $args['tag_name'] );
+		$html->set_attributes( $args['attributes'] );
+		$html->set_text( $args['text'] );
+		$html->output();
 	}
 
 	public function widget_field( $widget, $name, $label, $value, $callback = 'input', $args = array() ) {

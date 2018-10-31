@@ -85,7 +85,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 add_filter( 'body_class', 'hocwp_theme_body_class_filter' );
 
 function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
-	if ( ! is_admin() || ( defined( 'HOCWP_THEME_LOAD_FRONTEND' ) && HOCWP_THEME_LOAD_FRONTEND ) ) {
+	if ( ! is_admin() || ( defined( 'HOCWP_THEME_LOAD_FRONTEND' ) && HOCWP_THEME_LOAD_FRONTEND ) || HOCWP_THEME_DOING_AJAX ) {
 		$post = get_post( get_the_ID() );
 
 		$post_type = get_post_type();

@@ -49,6 +49,8 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function set_id( $id ) {
+		$id = sanitize_title( $id );
+
 		$this->id = $id;
 	}
 

@@ -39,6 +39,18 @@ class HOCWP_Theme_Options {
 	public function get_tab( $key = null, $default = '', $tab = 'general' ) {
 		return HT_Util()->get_theme_option( $key, $default, $tab );
 	}
+
+	public function check_page_valid( $page ) {
+		if ( $page instanceof WP_Post ) {
+			$page_template = get_post_meta( $page->ID, '_wp_page_template', true );
+
+			if ( ! empty( $page->post_content ) || ( 'default' != $page_template && file_exists( get_template_directory() . '/' . $page_template ) ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
 
 function HT_Options() {

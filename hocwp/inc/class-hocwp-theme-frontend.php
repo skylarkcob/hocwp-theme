@@ -520,7 +520,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$show_faces = isset( $args['show_faces'] ) ? $args['show_faces'] : false;
 		$show_faces = HT()->bool_to_string( $show_faces );
 		$share      = isset( $args['share'] ) ? $args['share'] : true;
-		$share      = HT()->bool_to_string( $share );
+
+		$recommend = isset( $args['recommend'] ) ? $args['recommend'] : false;
+
+		if ( $recommend ) {
+			$share = false;
+		}
+
+		$share = HT()->bool_to_string( $share );
 
 		$before = HT()->get_value_in_array( $args, 'before' );
 
@@ -542,6 +549,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				<div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
 				     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
 				     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
+				<?php
+				if ( $recommend ) {
+					?>
+					<div data-share="true" data-show-faces="false" data-action="recommend" data-layout="button_count"
+					     data-href="<?php echo $url; ?>" class="fb-like fb_iframe_widget"></div>
+					<?php
+				}
+				?>
 			</div>
 		</div>
 		<script>
