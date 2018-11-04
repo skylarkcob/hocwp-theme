@@ -938,11 +938,12 @@ class HOCWP_Theme_Utility {
 
 	public static function get_theme_option( $name, $default = '', $base = 'general' ) {
 		global $hocwp_theme;
+
 		$options = $hocwp_theme->options;
 		$options = isset( $options[ $base ] ) ? $options[ $base ] : '';
 		$value   = isset( $options[ $name ] ) ? $options[ $name ] : '';
 
-		if ( empty( $value ) && gettype( $value ) != gettype( $default ) ) {
+		if ( empty( $value ) && gettype( $value ) != gettype( $default ) && ! isset( $options[ $name ] ) ) {
 			$value = $default;
 		}
 
@@ -1435,6 +1436,7 @@ class HOCWP_Theme_Utility {
 	public function get_theme_options( $tab ) {
 		global $hocwp_theme;
 		$options = isset( $hocwp_theme->options[ $tab ] ) ? $hocwp_theme->options[ $tab ] : '';
+
 		if ( ! is_array( $options ) ) {
 			$options = array();
 		}

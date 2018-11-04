@@ -1,3 +1,7 @@
+.hocwp-theme .clearfix {
+    display: block;
+}
+
 .hocwp-theme label + select + .chosen-container {
     margin-top: 4px;
 }
@@ -15,10 +19,6 @@
 .hocwp-theme fieldset legend {
     margin-top: -5px;
     padding: 0 5px;
-}
-
-.hocwp-theme .clearfix {
-
 }
 
 .hocwp-theme .clearfix:after,

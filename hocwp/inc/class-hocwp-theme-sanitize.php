@@ -227,6 +227,21 @@ final class HOCWP_Theme_Sanitize {
 		return $id;
 	}
 
+	public function tax_query( $tax_item, &$args ) {
+		if ( is_array( $args ) ) {
+			if ( ! isset( $args['tax_query']['relation'] ) ) {
+				$args['tax_query']['relation'] = 'OR';
+			}
+			if ( isset( $args['tax_query'] ) ) {
+				array_push( $args['tax_query'], $tax_item );
+			} else {
+				$args['tax_query'] = array( $tax_item );
+			}
+		}
+
+		return $args;
+	}
+
 	public function post_type_or_taxonomy_args( $args ) {
 		if ( ! is_array( $args ) ) {
 			$args = (array) $args;

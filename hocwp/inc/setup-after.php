@@ -6,6 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 function hocwp_theme_after_setup_theme() {
 	add_theme_support( 'custom-header' );
 	add_theme_support( 'custom-logo' );
+
+	/*
+	 * Back compat theme supports WooCommerce.
+	 */
+	if ( function_exists( 'wc' ) && class_exists( 'WooCommerce' ) ) {
+		add_theme_support( 'woocommerce' );
+	}
 }
 
 add_action( 'after_setup_theme', 'hocwp_theme_after_setup_theme' );

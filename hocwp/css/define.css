@@ -3502,6 +3502,18 @@
     max-width: 500px !important
 }
 
+.w-600 {
+    width: 600px !important
+}
+
+.minw-600 {
+    min-width: 600px !important
+}
+
+.maxw-600 {
+    max-width: 600px !important
+}
+
 .h-500 {
     height: 500px !important
 }

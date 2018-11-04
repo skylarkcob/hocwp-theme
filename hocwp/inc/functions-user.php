@@ -69,6 +69,7 @@ function hocwp_theme_user_contactmethods_filter( $methods ) {
 	$methods['donate']      = __( 'Donate URL', 'hocwp-theme' );
 	$methods['phone']       = __( 'Phone', 'hocwp-theme' );
 	$methods['identity']    = __( 'Identity', 'hocwp-theme' );
+	$methods['address']     = __( 'Address', 'hocwp-theme' );
 
 	return $methods;
 }

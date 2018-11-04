@@ -1,3 +1,7 @@
+.hocwp-theme .settings-box .clearfix {
+    display: block;
+}
+
 .hocwp-theme .settings-box,
 .hocwp-theme .settings-box #nav,
 .hocwp-theme .settings-box form {
