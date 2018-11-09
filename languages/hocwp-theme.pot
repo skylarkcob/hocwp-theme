@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2018-11-09 20:16+0700\n"
+"POT-Creation-Date: 2018-11-09 22:12+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -537,6 +537,14 @@ msgstr ""
 msgid "The tab name is not valid."
 msgstr ""
 
+#: hocwp/admin/class-hocwp-theme-admin.php:32
+msgid "Back to required plugins page"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-admin.php:34
+msgid "Back to theme plugins page"
+msgstr ""
+
 #: hocwp/admin/class-hocwp-theme-meta-bookmark.php:22 hocwp/admin/class-hocwp-theme-meta-post.php:21
 msgid "Extra Information"
 msgstr ""
@@ -553,21 +561,21 @@ msgstr ""
 msgid "You must call this class in callback of <strong>load-{$pagenow}</strong> action."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:28
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:52
 msgctxt "Plugin Installer"
 msgid "Recommended"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:29
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:53
 msgid "These suggestions are based on the plugins you and other users have installed."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:34
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:58
 msgctxt "Plugin Installer"
 msgid "Required"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:35
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:59
 msgid "You must install these required plugins for theme can run normally."
 msgstr ""
 

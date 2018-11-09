@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-11-09 20:16+0700\n"
-"PO-Revision-Date: 2018-11-09 20:20+0700\n"
+"POT-Creation-Date: 2018-11-09 22:12+0700\n"
+"PO-Revision-Date: 2018-11-09 22:13+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -589,6 +589,14 @@ msgstr ""
 msgid "The tab name is not valid."
 msgstr "Tên tab không đúng."
 
+#: hocwp/admin/class-hocwp-theme-admin.php:32
+msgid "Back to required plugins page"
+msgstr "Quay trở lại danh sách plugin bắt buộc"
+
+#: hocwp/admin/class-hocwp-theme-admin.php:34
+msgid "Back to theme plugins page"
+msgstr "Quay trở lại danh sách plugin của giao diện"
+
 #: hocwp/admin/class-hocwp-theme-meta-bookmark.php:22
 #: hocwp/admin/class-hocwp-theme-meta-post.php:21
 msgid "Extra Information"
@@ -610,24 +618,24 @@ msgstr ""
 "Bạn phải gọi class này trong callback của action <strong>load-{$pagenow}</"
 "strong>."
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:28
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:52
 msgctxt "Plugin Installer"
 msgid "Recommended"
 msgstr "Đề nghị"
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:29
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:53
 msgid ""
 "These suggestions are based on the plugins you and other users have "
 "installed."
 msgstr ""
 "Những đề nghị bên dưới dựa trên những plugin mà bạn và mọi người đã cài đặt."
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:34
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:58
 msgctxt "Plugin Installer"
 msgid "Required"
 msgstr "Bắt buộc"
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:35
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:59
 msgid "You must install these required plugins for theme can run normally."
 msgstr ""
 "Bạn phải cài đặt những plugin bắt buộc cho giao diện để có thể hoạt động "
