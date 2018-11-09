@@ -111,8 +111,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		 */
 		$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
 
-		foreach ( (array) $this->settings_field as $field ) {
+		foreach ( (array) $this->settings_field as $key => $field ) {
 			$field = $this->sanitize_field( $field );
+
+			$this->settings_field[ $key ] = $field;
 
 			if ( $this->tabs->tab_name != $field['tab'] ) {
 				continue;
@@ -165,6 +167,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	private function sanitize_field( $field ) {
+		if ( $field instanceof HOCWP_Theme_Admin_Setting_Field ) {
+			$field = $field->generate();
+		}
+
 		$field    = $this->sanitize_section_or_field( $field );
 		$field_id = isset( $field['args']['callback_args']['id'] ) ? $field['args']['callback_args']['id'] : $field['id'];
 
@@ -334,8 +340,9 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			}
 		}
 
-		$input   = apply_filters( 'hocwp_theme_sanitize_option', $input );
-		$input   = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tabs->tab_name, $input );
+		$input = apply_filters( 'hocwp_theme_sanitize_option', $input );
+		$input = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tabs->tab_name, $input );
+
 		$options = (array) get_option( 'hocwp_theme' );
 
 		if ( ! is_array( $input ) ) {

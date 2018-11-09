@@ -26,7 +26,8 @@ add_filter( 'get_avatar', 'hocwp_theme_change_default_avatar', 10, 6 );
 
 function hocwp_theme_comments_template( $args = array() ) {
 	global $hocwp_theme;
-	$options  = $hocwp_theme->options;
+	$options = $hocwp_theme->options;
+
 	$defaults = array(
 		'post_id'        => get_the_ID(),
 		'comment_system' => $options['discussion']['comment_system'],
@@ -49,14 +50,18 @@ function hocwp_theme_comments_template( $args = array() ) {
 			)
 		)
 	);
-	$args     = wp_parse_args( $args, $defaults );
-	$post_id  = $args['post_id'];
-	$obj      = get_post( $post_id );
+
+	$args    = wp_parse_args( $args, $defaults );
+	$post_id = $args['post_id'];
+	$obj     = get_post( $post_id );
+
 	if ( ! ( $obj instanceof WP_Post ) ) {
 		return;
 	}
+
 	if ( comments_open( $post_id ) || get_comments_number( $post_id ) ) {
 		$comment_system = $args['comment_system'];
+
 		switch ( $comment_system ) {
 			case 'tabber':
 				break;
@@ -67,6 +72,9 @@ function hocwp_theme_comments_template( $args = array() ) {
 			case 'google':
 				break;
 			case 'default_and_facebook':
+				break;
+			case 'disqus':
+				hocwp_theme_comments_template_disqus();
 				break;
 			default:
 				comments_template();
@@ -109,7 +117,7 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 	$loading_text = $args['loading_text'];
 	$div          = new HOCWP_Theme_HTML_Tag( 'div' );
 
-	$atts         = array(
+	$atts = array(
 		'class'            => 'fb-comments',
 		'data-colorscheme' => $colorscheme,
 		'data-href'        => $href,
@@ -120,14 +128,16 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 	);
 
 	$div->set_attributes( $atts );
-	$div->set_text( $loading_text );
+	$div->set_text( '<p class="text-center">' . $loading_text . '</p>' );
 	$div->output();
 }
 
 function hocwp_theme_comments_template_google() {
 	?>
 	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-	<div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+	<div id="google_comments">
+		<p class="text-center"><?php _e( 'Loading...', 'hocwp-theme' ); ?></p>
+	</div>
 	<script>
 		gapi.comments.render('google_comments', {
 			href: window.location,
@@ -139,19 +149,56 @@ function hocwp_theme_comments_template_google() {
 	<?php
 }
 
-function hocwp_theme_comments_template_disqus() {
+function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post_id = null ) {
+	if ( empty( $shortname ) ) {
+		$shortname = HT_Options()->get_tab( 'disqus_shortname', '', 'discussion' );
+	}
+
+	if ( empty( $shortname ) ) {
+		return;
+	}
+
+	if ( HT()->is_positive_number( $post_id ) ) {
+		$identifier = $post_id;
+	} else {
+		$identifier = get_the_ID();
+	}
+
+	if ( empty( $url ) ) {
+		if ( is_singular() ) {
+			$url = get_the_permalink();
+		} else {
+			$url = HT_Util()->get_current_url();
+		}
+	}
+
+	if ( ! is_singular() && ! HT()->is_positive_number( $post_id ) ) {
+		if ( is_home() ) {
+			$identifier = 'HOME';
+		} elseif ( is_archive() ) {
+			$identifier = 'ARCHIVE';
+		} else {
+			$identifier = '';
+		}
+	}
 	?>
-	<div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+	<div id="disqus_thread">
+		<p class="text-center"><?php _e( 'Loading...', 'hocwp-theme' ); ?></p>
+	</div>
 	<script>
+		var disqus_config = function () {
+			this.page.url = "<?php echo $url; ?>";
+			this.page.identifier = "<?php echo $identifier; ?>";
+		};
+
 		(function () {
-			var d = document, s = d.createElement('script'), ts = +new Date();
-			s.src = '//hocwp.disqus.com/embed.js';
-			s.setAttribute('data-timestamp', ts.toString());
+			var d = document, s = d.createElement("script"), ts = +new Date();
+			s.src = "//<?php echo $shortname; ?>.disqus.com/embed.js";
+			s.setAttribute("data-timestamp", ts.toString());
 			(d.head || d.body).appendChild(s);
 		})();
 	</script>
-	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
-			Disqus.</a></noscript>
+	<noscript><?php printf( __( 'Please enable JavaScript to view the <a href="%s">comments powered by Disqus</a>.', 'hocwp-theme' ), 'https://disqus.com/?ref_noscript' ); ?></noscript>
 	<?php
 }
 

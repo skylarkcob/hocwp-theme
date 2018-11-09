@@ -16,7 +16,7 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 
 		$widget_options = array(
 			'classname'   => 'hocwp-theme-widget-tabber hocwp-widget-tabber',
-			'description' => __( 'Display widget as tabber.', 'hocwp-theme' )
+			'description' => _x( 'Display widget as tabber.', 'widget description', 'hocwp-theme' )
 		);
 
 		$control_options = array(
@@ -122,7 +122,7 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title']   = sanitize_text_field( $new_instance['title'] );
+		$instance['title']   = isset( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
 		$instance['sidebar'] = HT_Sanitize()->data( $new_instance['sidebar'], 'string' );
 
 		return $instance;

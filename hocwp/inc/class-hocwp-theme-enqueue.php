@@ -72,6 +72,10 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_style( 'hocwp-theme-ajax-overlay-style' );
 		wp_enqueue_script( 'hocwp-theme-update-meta' );
 	}
+
+	public function dashicons() {
+		wp_enqueue_style( 'dashicons' );
+	}
 }
 
 function HT_Enqueue() {

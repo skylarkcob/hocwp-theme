@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class HOCWP_Theme_Admin_Setting_Field extends HOCWP_Theme_Admin_Field {
 	public $tab;
 	public $section;
+	public $value;
+	public $default;
 
 	public function __construct( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string', $tab = 'general', $section = 'default' ) {
 		parent::__construct( $id, $title, $callback, $callback_args, $data_type );
@@ -38,6 +40,14 @@ class HOCWP_Theme_Admin_Setting_Field extends HOCWP_Theme_Admin_Field {
 		}
 
 		$field['args']['callback_args'] = wp_parse_args( $this->callback_args, $field['args']['callback_args'] );
+
+		if ( ! empty( $this->default ) ) {
+			$field['args']['default'] = $this->default;
+		}
+
+		if ( ! empty( $this->value ) ) {
+			$field['args']['callback_args']['value'] = $this->value;
+		}
 
 		return $field;
 	}

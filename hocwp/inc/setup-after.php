@@ -203,6 +203,33 @@ add_filter( 'wp_calculate_image_srcset', 'hocwp_theme_wp_calculate_image_srcset'
 function hocwp_theme_check_environment() {
 	global $pagenow;
 
+	$invalid_exts = get_option( 'hocwp_theme_invalid_extensions' );
+
+	if ( HT()->array_has_value( $invalid_exts ) ) {
+		if ( is_admin() ) {
+			add_action( 'admin_notices', function () {
+				$invalid_exts = get_option( 'hocwp_theme_invalid_extensions' );
+
+				if ( HT()->array_has_value( $invalid_exts ) ) {
+					foreach ( $invalid_exts as $data ) {
+						?>
+						<div class="error notice is-dismissible">
+							<p>
+								<?php printf( __( '<strong>%s:</strong> This extension requires theme core version at least %s.', 'hocwp-theme' ), $data['name'], $data['requires_core'] ); ?>
+							</p>
+						</div>
+						<?php
+					}
+				}
+			} );
+		} else {
+			if ( 'wp-login.php' != $pagenow ) {
+				wp_die( __( '<strong>Error:</strong> One or more extensions are incompatible with the current theme core version.', 'hocwp-theme' ), __( 'Theme core version doesn\'t meet requirements', 'hocwp-theme' ) );
+				exit;
+			}
+		}
+	}
+
 	if ( ! is_admin() && 'wp-login.php' != $pagenow ) {
 		$plugins = HT_Requirement()->get_required_plugins();
 

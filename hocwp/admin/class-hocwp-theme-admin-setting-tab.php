@@ -95,6 +95,10 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	}
 
 	public function add_field_array( $data ) {
+		if ( $data instanceof HOCWP_Theme_Admin_Setting_Field ) {
+			$data = $data->generate();
+		}
+
 		$defaults = array(
 			'tab' => $this->name
 		);

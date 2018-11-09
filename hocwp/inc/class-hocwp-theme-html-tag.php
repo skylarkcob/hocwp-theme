@@ -140,28 +140,38 @@ final class HOCWP_Theme_HTML_Tag {
 
 	public function build() {
 		$wrap_tag = $this->get_wrap_tag();
+
 		if ( $this->get_only_text() ) {
 			return $this->get_text();
 		}
+
 		$tag_name = $this->get_name();
 		$result   = '<' . $tag_name;
+
 		if ( ! empty( $wrap_tag ) ) {
 			$result = '<' . $wrap_tag . '>' . $result;
 		}
+
 		$this->attributes = apply_filters( 'hocwp_theme_html_tag_attributes', $this->attributes, $this );
+
 		foreach ( (array) $this->attributes as $key => $value ) {
 			$result .= sprintf( ' %1$s="%2$s"', $key, trim( esc_attr( maybe_serialize( $value ) ) ) );
 		}
+
 		if ( in_array( $tag_name, $this->self_closers ) && in_array( $tag_name, $this->must_slash_closers ) ) {
 			$result .= '/';
 		}
+
 		$result .= '>';
+
 		if ( ! HOCWP_Theme::in_array( $tag_name, $this->self_closers ) || 'input' == $tag_name ) {
 			$result .= $this->text;
 		}
+
 		if ( $this->get_close() && ! HOCWP_Theme::in_array( $tag_name, $this->self_closers ) ) {
 			$result .= sprintf( '</%s>', $tag_name );
 		}
+
 		if ( ! empty( $wrap_tag ) ) {
 			$result .= '</' . $wrap_tag . '>';
 		}
@@ -176,9 +186,11 @@ final class HOCWP_Theme_HTML_Tag {
 		} else {
 			$html = $this->build();
 		}
+
 		if ( $this->get_break_line() ) {
 			$html .= PHP_EOL;
 		}
+
 		echo $html;
 	}
 }

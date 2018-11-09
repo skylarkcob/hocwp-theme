@@ -10,6 +10,30 @@ if ( ! class_exists( 'WP_Plugin_Install_List_Table' ) ) {
 class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table {
 	private $error;
 
+	public function __construct( $args = array() ) {
+		global $plugin_page;
+
+		parent::__construct( $args );
+
+		if ( 'hocwp_theme_plugins' == $plugin_page ) {
+			add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links_filter' ), 10, 2 );
+		}
+	}
+
+	public function plugin_install_action_links_filter( $action_links, $plugin ) {
+		if ( HT()->array_has_value( $action_links ) ) {
+			$links = isset( $action_links[0] ) ? $action_links[0] : '';
+
+			if ( false !== strpos( $links, 'update-now button' ) ) {
+				$links = str_replace( 'update-now button', 'button update-link', $links );
+
+				$action_links[0] = $links;
+			}
+		}
+
+		return $action_links;
+	}
+
 	public function prepare_items() {
 		load_template( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
@@ -148,7 +172,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 		global $tabs, $tab;
 
 		$display_tabs = array();
-		$url          = self_admin_url( 'themes.php?page=hocwp_theme_plugins' );
+
+		$url = self_admin_url( 'themes.php?page=hocwp_theme_plugins' );
 
 		foreach ( (array) $tabs as $action => $text ) {
 			$class = ( $action === $tab ) ? ' current' : '';

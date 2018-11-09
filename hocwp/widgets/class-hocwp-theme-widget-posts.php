@@ -31,7 +31,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 
 		$widget_options = array(
 			'classname'   => 'hocwp-theme-widget-posts hocwp-widget-post',
-			'description' => _x( 'Your site\'s most recent Posts and more.', 'widget hocwp post', 'hocwp-theme' )
+			'description' => _x( 'Your site\'s most recent Posts and more.', 'widget description', 'hocwp-theme' )
 		);
 
 		$control_options = array(
@@ -726,7 +726,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title']              = sanitize_text_field( $new_instance['title'] );
+		$instance['title']              = isset( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
 		$instance['post_type']          = isset( $new_instance['post_type'] ) ? $new_instance['post_type'] : $this->defaults['post_type'];
 		$instance['term']               = isset( $new_instance['term'] ) ? $new_instance['term'] : '';
 		$instance['thumbnail_size']     = isset( $new_instance['thumbnail_size'] ) ? $new_instance['thumbnail_size'] : $this->defaults['thumbnail_size'];

@@ -3583,3 +3583,23 @@
 .blue {
     color: #00f;
 }
+
+.row.medium {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.row.medium > *[class^="col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.row.small {
+    margin-right: -5px;
+    margin-left: -5px;
+}
+
+.row.small > *[class^="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
+}

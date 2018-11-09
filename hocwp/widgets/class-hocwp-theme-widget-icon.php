@@ -21,11 +21,12 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				'text'  => '<li class="ui-state-default ui-sortable-handle" data-value="text">' . __( 'Text', 'hocwp-theme' ) . '</li>'
 			)
 		);
+
 		$this->defaults = apply_filters( 'hocwp_theme_widget_icon_defaults', $this->defaults, $this );
 
 		$widget_options = array(
 			'classname'   => 'hocwp-theme-widget-icon hocwp-widget-icon',
-			'description' => __( 'Show icon with text.', 'hocwp-theme' )
+			'description' => _x( 'Show icon with text.', 'widget description', 'hocwp-theme' )
 		);
 
 		$control_options = array(
@@ -169,7 +170,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title']            = sanitize_text_field( $new_instance['title'] );
+		$instance['title']            = isset( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
 		$instance['icon_image']       = $new_instance['icon_image'];
 		$instance['icon_url']         = esc_url( $new_instance['icon_url'] );
 		$instance['icon_html']        = $new_instance['icon_html'];

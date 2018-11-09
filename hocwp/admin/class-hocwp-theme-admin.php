@@ -7,6 +7,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	public static $instance;
 
 	protected function __construct() {
+		add_filter( 'update_plugin_complete_actions', array( $this, 'update_plugin_complete_actions_filter' ), 10, 2 );
 	}
 
 	public static function get_instance() {
@@ -15,6 +16,26 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 		}
 
 		return self::$instance;
+	}
+
+	public function update_plugin_complete_actions_filter( $update_actions, $plugin ) {
+		if ( isset( $_REQUEST['action'] ) && 'upgrade-plugin' == $_REQUEST['action'] ) {
+			if ( ! is_array( $update_actions ) ) {
+				$update_actions = array();
+			}
+
+			$slug = dirname( $plugin );
+
+			$plugins = HT_Requirement()->get_required_plugins();
+
+			if ( HT()->array_has_value( $plugins ) && in_array( $slug, $plugins ) ) {
+				$update_actions['required_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '" target="_parent">' . __( 'Back to required plugins page', 'hocwp-theme' ) . '</a>';
+			} else {
+				$update_actions['theme_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins' ) . '" target="_parent">' . __( 'Back to theme plugins page', 'hocwp-theme' ) . '</a>';
+			}
+		}
+
+		return $update_actions;
 	}
 
 	public function is_admin_page( $pages, $admin_page = '' ) {

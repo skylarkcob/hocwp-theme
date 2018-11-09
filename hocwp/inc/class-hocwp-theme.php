@@ -50,6 +50,7 @@ final class HOCWP_Theme {
 
 	public static function wrap_text( $text, $before, $after, $echo = false ) {
 		$text = $before . $text . $after;
+
 		if ( $echo ) {
 			echo $text;
 		}
@@ -101,9 +102,11 @@ final class HOCWP_Theme {
 		if ( ! is_array( $haystack ) || is_array( $needle ) ) {
 			return false;
 		}
+
 		if ( in_array( $needle, $haystack ) ) {
 			return true;
 		}
+
 		foreach ( $haystack as $element ) {
 			if ( is_array( $element ) && self::in_array( $needle, $element ) ) {
 				return true;
@@ -188,26 +191,32 @@ final class HOCWP_Theme {
 		if ( ! is_array( $arr ) || is_object( $key ) || is_object( $arr ) || $this->is_string_empty( $key ) ) {
 			return $default;
 		}
+
 		$has_key = false;
 
 		$result = '';
+
 		if ( HT()->array_has_value( $arr ) ) {
 			if ( is_array( $key ) ) {
 				if ( count( $key ) == 1 ) {
 					$key = array_shift( $key );
+
 					if ( isset( $arr[ $key ] ) ) {
 						return $arr[ $key ];
 					}
 				} else {
 					$tmp = $arr;
+
 					if ( is_array( $tmp ) ) {
 						$has_value = false;
 						$level     = 0;
+
 						foreach ( $key as $index => $child_key ) {
 							if ( is_array( $child_key ) ) {
 								if ( count( $child_key ) == 1 ) {
 									$child_key = array_shift( $child_key );
 								}
+
 								$result = $this->get_value_in_array( $tmp, $child_key );
 							} else {
 								if ( isset( $tmp[ $child_key ] ) ) {
@@ -218,16 +227,20 @@ final class HOCWP_Theme {
 								}
 							}
 						}
+
 						if ( ! $has_value ) {
 							reset( $key );
 							$first_key = current( $key );
+
 							if ( HT()->array_has_value( $arr ) ) {
 								$tmp = $this->get_value_in_array( $arr, $first_key );
+
 								if ( HT()->array_has_value( $tmp ) ) {
 									$result = $this->get_value_in_array( $tmp, $key );
 								}
 							}
 						}
+
 						if ( $has_value && $this->is_string_empty( $result ) ) {
 							$result = $tmp;
 						}
@@ -251,6 +264,7 @@ final class HOCWP_Theme {
 				}
 			}
 		}
+
 		if ( ! $has_key ) {
 			$result = $default;
 		}
@@ -260,6 +274,7 @@ final class HOCWP_Theme {
 
 	public function get_method_value( $key, $method = 'post', $default = '' ) {
 		$method = strtoupper( $method );
+
 		switch ( $method ) {
 			case 'POST':
 				$result = $this->get_value_in_array( $_POST, $key, $default );
@@ -314,6 +329,7 @@ final class HOCWP_Theme {
 
 			return true;
 		}
+
 		if ( is_string( $value ) ) {
 			if ( 'false' == strtolower( $value ) ) {
 				return false;
@@ -328,6 +344,7 @@ final class HOCWP_Theme {
 	public static function random_color_hex() {
 		$count = 1;
 		$part  = '';
+
 		while ( $count <= 3 ) {
 			$part .= str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT );
 			$count ++;
@@ -365,12 +382,15 @@ final class HOCWP_Theme {
 	public static function attributes_to_string( $atts ) {
 		if ( is_array( $atts ) ) {
 			$temp = array();
+
 			foreach ( $atts as $key => $value ) {
 				$att    = $key . '="' . $value . '"';
 				$temp[] = $att;
 			}
+
 			$atts = implode( ' ', $temp );
 		}
+
 		if ( ! empty( $atts ) ) {
 			$atts = trim( $atts );
 		}
@@ -453,14 +473,17 @@ final class HOCWP_Theme {
 
 		$result   = '';
 		$escaping = false;
+
 		for ( $i = 0; $i < strlen( $php_format ); $i ++ ) {
 			$char = $php_format[ $i ];
+
 			if ( isset( $matched_symbols[ $char ] ) ) {
 				$result .= $matched_symbols[ $char ];
 			} else {
 				$result .= $char;
 			}
 		}
+
 		if ( $escaping ) {
 			$result = esc_attr( $result );
 		}
@@ -772,6 +795,28 @@ final class HOCWP_Theme {
 
 	public function int_to_bool_string( $value, $uppercase = false ) {
 		return $this->bool_to_string( $this->int_to_bool( $value ), $uppercase );
+	}
+
+	public function is_today( $date, $check = 'today' ) {
+		$now = new DateTime();
+
+		$date = new DateTime( $date );
+
+		$diff = $now->diff( $date );
+
+		if ( $diff instanceof DateInterval ) {
+			$days = $diff->days;
+
+			if ( 0 === $days && 'today' === $check ) {
+				return true;
+			} elseif ( 1 === $days && 'tomorrow' === $check ) {
+				return true;
+			} elseif ( - 1 === $days && 'yesterday' === $check ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 

@@ -7,18 +7,22 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 	public $defaults;
 
 	public function __construct() {
-		$this->defaults  = array(
+		$this->defaults = array(
 			'number'        => 5,
 			'date_interval' => 'all'
 		);
-		$this->defaults  = apply_filters( 'hocwp_theme_widget_top_commenters_defaults', $this->defaults, $this );
-		$widget_options  = array(
+
+		$this->defaults = apply_filters( 'hocwp_theme_widget_top_commenters_defaults', $this->defaults, $this );
+
+		$widget_options = array(
 			'classname'   => 'hocwp-theme-widget-top-commenters hocwp-widget-top-commenters',
-			'description' => _x( 'A list of top commenters.', 'widget hocwp term', 'hocwp-theme' )
+			'description' => _x( 'A list of top commenters.', 'widget description', 'hocwp-theme' )
 		);
+
 		$control_options = array(
 			'width' => 400
 		);
+
 		parent::__construct( 'hocwp_widget_top_commenters', 'HocWP Top Commenters', $widget_options, $control_options );
 		add_action( 'transition_comment_status', array( $this, 'transition_comment_status' ) );
 		add_action( 'wp_insert_comment', array( $this, 'insert_comment' ) );
@@ -43,13 +47,15 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 		if ( HT()->array_has_value( $commenters ) ) {
 			do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
 			?>
-            <ul>
+			<ul>
 				<?php
 				foreach ( $commenters as $commenter ) {
 					$email = $commenter->comment_author_email;
+
 					if ( ! is_email( $email ) ) {
 						continue;
 					}
+
 					$name   = $commenter->comment_author;
 					$avatar = get_avatar( $email, 48, '', $name );
 
@@ -66,13 +72,13 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 						$avatar = sprintf( '<a href="%s" title="%s" rel="nofollow" target="_blank">%s</a>', $url, $name, $avatar );
 					}
 					?>
-                    <li>
+					<li>
 						<?php echo $avatar; ?>
-                    </li>
+					</li>
 					<?php
 				}
 				?>
-            </ul>
+			</ul>
 			<?php
 			do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 		}
@@ -86,19 +92,22 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 		?>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of top commenters to show:', 'hocwp-theme' ); ?></label>
-            <input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
-                   name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
-                   value="<?php echo $number; ?>" size="3"/>
-        </p>
-        <p>
+		<p>
+			<label
+				for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of top commenters to show:', 'hocwp-theme' ); ?></label>
+			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
+			       name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
+			       value="<?php echo $number; ?>" size="3"/>
+		</p>
+		<p>
 			<?php
 			$args = array(
 				'for'  => $this->get_field_id( 'date_interval' ),
 				'text' => __( 'Date interval:', 'hocwp-theme' )
 			);
+
 			HT_HTML_Field()->label( $args );
+
 			$args = array(
 				'id'      => $this->get_field_id( 'date_interval' ),
 				'name'    => $this->get_field_name( 'date_interval' ),
@@ -106,9 +115,10 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 				'class'   => 'widefat',
 				'value'   => $date_interval
 			);
+
 			HT_HTML_Field()->select( $args );
 			?>
-        </p>
+		</p>
 		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
@@ -116,7 +126,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title']         = sanitize_text_field( $new_instance['title'] );
+		$instance['title']         = isset( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
 		$instance['number']        = isset( $new_instance['number'] ) ? absint( $new_instance['number'] ) : $this->defaults['number'];
 		$instance['date_interval'] = isset( $new_instance['date_interval'] ) ? $new_instance['date_interval'] : $this->defaults['date_interval'];
 

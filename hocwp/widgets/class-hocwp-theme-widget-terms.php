@@ -24,7 +24,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 
 		$widget_options = array(
 			'classname'   => 'hocwp-theme-widget-terms hocwp-widget-term',
-			'description' => _x( 'A list of terms.', 'widget hocwp term', 'hocwp-theme' )
+			'description' => _x( 'A list of terms.', 'widget description', 'hocwp-theme' )
 		);
 
 		$control_options = array(
@@ -269,7 +269,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title']            = sanitize_text_field( $new_instance['title'] );
+		$instance['title']            = isset( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
 		$instance['taxonomy']         = isset( $new_instance['taxonomy'] ) ? $new_instance['taxonomy'] : $this->defaults['taxonomy'];
 		$instance['number']           = isset( $new_instance['number'] ) ? absint( $new_instance['number'] ) : $this->defaults['number'];
 		$instance['related']          = isset( $new_instance['related'] ) ? (bool) $new_instance['related'] : $this->defaults['related'];

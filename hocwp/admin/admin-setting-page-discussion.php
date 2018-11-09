@@ -46,11 +46,18 @@ $tab->add_field_array( array(
 		'callback_args' => array(
 			'options' => array(
 				'default'  => _x( 'Default', 'comment system', 'hocwp-theme' ),
-				'facebook' => _x( 'Facebook', 'comment system', 'hocwp-theme' )
+				'facebook' => _x( 'Facebook', 'comment system', 'hocwp-theme' ),
+				'disqus'   => _x( 'Disqus', 'comment system', 'hocwp-theme' )
 			)
 		)
 	)
 ) );
+
+$comment_system = HT_Options()->get_tab( 'comment_system', '', 'discussion' );
+
+if ( 'disqus' == $comment_system ) {
+	$tab->add_field_array( new HOCWP_Theme_Admin_Setting_Field( 'disqus_shortname', __( 'Disqus Shortname', 'hocwp-theme' ), 'input', array( 'class' => 'regular-text' ), 'string', 'discussion' ) );
+}
 
 $args = array(
 	'type'  => 'checkbox',

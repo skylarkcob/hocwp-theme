@@ -138,9 +138,18 @@ final class HOCWP_Theme_HTML_Field {
 			$args['label'] = $args['text'];
 		}
 
-		self::field_label( $args, $input );
+		$right_label = isset( $args['right_label'] ) ? $args['right_label'] : '';
+
+		if ( 1 != $right_label && true != $right_label ) {
+			self::field_label( $args, $input );
+		}
+
 		$input->set_attributes( $args );
 		$input->output();
+
+		if ( 1 == $right_label || true == $right_label ) {
+			self::field_label( $args, $input );
+		}
 	}
 
 	public static function input_url( $args = array() ) {
@@ -1110,7 +1119,11 @@ final class HOCWP_Theme_HTML_Field {
 			$c_atts = trim( $c_atts );
 			printf( '<%s>', $c_atts );
 
-			HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
+			$right_label = isset( $args['right_label'] ) ? $args['right_label'] : '';
+
+			if ( 1 != $right_label && true != $right_label ) {
+				HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
+			}
 
 			if ( ! is_callable( $callback ) ) {
 				$callback = array( __CLASS__, $callback );
@@ -1121,6 +1134,10 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			call_user_func( $callback, $args );
+
+			if ( 1 == $right_label || true == $right_label ) {
+				HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
+			}
 
 			if ( 'p' != $container ) {
 				echo '</div>';

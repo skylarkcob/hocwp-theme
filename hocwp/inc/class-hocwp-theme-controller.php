@@ -234,9 +234,13 @@ final class HOCWP_Theme_Controller {
 		return HT_Util()->verify_nonce( $this->textdomain, $nonce_name );
 	}
 
+	public function get_date_format() {
+		return $this->object->defaults['date_format'];
+	}
+
 	public function the_date( $format = '', $post = null, $time = true ) {
 		if ( empty( $format ) ) {
-			$format = $this->object->defaults['date_format'];
+			$format = $this->get_date_format();
 
 			if ( $time ) {
 				$format .= ' ' . $this->object->defaults['time_format'];
@@ -271,13 +275,35 @@ final class HOCWP_Theme_Controller {
 
 			$exts = array_diff( $exts, $this->object->loaded_extensions );
 
+			$invalid_exts = array();
+
 			foreach ( $exts as $ext ) {
 				$ext_file = $path . $ext;
 
 				if ( file_exists( $ext_file ) ) {
+					$data = get_file_data( $ext_file, array( 'name' => 'Name', 'requires_core' => 'Requires core' ) );
+
+					$requires_core = isset( $data['requires_core'] ) ? $data['requires_core'] : '';
+
+					if ( ! empty( $requires_core ) && version_compare( HOCWP_THEME_CORE_VERSION, $requires_core, '<' ) ) {
+						$data['file'] = $ext_file;
+
+						$data['error_code'] = 'invalid_core';
+
+						$invalid_exts[] = $data;
+
+						continue;
+					}
+
 					load_template( $ext_file );
 					$this->object->loaded_extensions[] = $ext;
 				}
+			}
+
+			if ( HT()->array_has_value( $invalid_exts ) ) {
+				update_option( 'hocwp_theme_invalid_extensions', $invalid_exts );
+			} else {
+				delete_option( 'hocwp_theme_invalid_extensions' );
 			}
 
 			unset( $path, $ext, $ext_file );
