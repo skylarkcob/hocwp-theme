@@ -922,6 +922,10 @@ class HOCWP_Theme_Utility {
 	}
 
 	public static function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
+		if ( ! function_exists( 'hocwp_theme_wp_mail_content_type_filter' ) ) {
+			require_once HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
+		}
+
 		add_filter( 'wp_mail_content_type', 'hocwp_theme_wp_mail_content_type_filter', 99 );
 		$sent = wp_mail( $to, $subject, $message, $headers, $attachments );
 		remove_filter( 'wp_mail_content_type', 'hocwp_theme_wp_mail_content_type_filter', 99 );
@@ -1427,9 +1431,9 @@ class HOCWP_Theme_Utility {
 		$wpdb->query( $key_2 );
 	}
 
-	public function display_ads( $args ) {
+	public function display_ads( $args, $random = false ) {
 		if ( function_exists( 'hocwp_ext_ads_display' ) ) {
-			hocwp_ext_ads_display( $args );
+			hocwp_ext_ads_display( $args, $random );
 		}
 	}
 

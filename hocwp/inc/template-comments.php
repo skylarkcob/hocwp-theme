@@ -95,10 +95,12 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 		'loading_text' => __( 'Loading...', 'hocwp-theme' )
 	);
 
-	$args        = wp_parse_args( $args, $defaults );
-	$args        = apply_filters( 'hocwp_theme_facebook_comment_args', $args );
+	$args = wp_parse_args( $args, $defaults );
+	$args = apply_filters( 'hocwp_theme_facebook_comment_args', $args );
+
 	$colorscheme = $args['colorscheme'];
-	$href        = $args['href'];
+
+	$href = $args['href'];
 
 	if ( empty( $href ) ) {
 		if ( is_single() || is_page() || is_singular() ) {
@@ -110,12 +112,14 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 		$href = HOCWP_Theme_Utility::get_current_url();
 	}
 
-	$mobile       = $args['mobile'];
-	$num_posts    = $args['num_posts'];
-	$order_by     = $args['order_by'];
-	$width        = $args['width'];
+	$mobile    = $args['mobile'];
+	$num_posts = $args['num_posts'];
+	$order_by  = $args['order_by'];
+	$width     = $args['width'];
+
 	$loading_text = $args['loading_text'];
-	$div          = new HOCWP_Theme_HTML_Tag( 'div' );
+
+	$div = new HOCWP_Theme_HTML_Tag( 'div' );
 
 	$atts = array(
 		'class'            => 'fb-comments',
@@ -128,16 +132,14 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 	);
 
 	$div->set_attributes( $atts );
-	$div->set_text( '<p class="text-center">' . $loading_text . '</p>' );
+	$div->set_text( $loading_text );
 	$div->output();
 }
 
 function hocwp_theme_comments_template_google() {
 	?>
 	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-	<div id="google_comments">
-		<p class="text-center"><?php _e( 'Loading...', 'hocwp-theme' ); ?></p>
-	</div>
+	<div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
 	<script>
 		gapi.comments.render('google_comments', {
 			href: window.location,
@@ -182,9 +184,7 @@ function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post
 		}
 	}
 	?>
-	<div id="disqus_thread">
-		<p class="text-center"><?php _e( 'Loading...', 'hocwp-theme' ); ?></p>
-	</div>
+	<div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
 	<script>
 		var disqus_config = function () {
 			this.page.url = "<?php echo $url; ?>";

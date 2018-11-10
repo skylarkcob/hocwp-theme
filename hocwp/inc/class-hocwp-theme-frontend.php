@@ -544,7 +544,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$ajax_url = add_query_arg( $params, $ajax_url );
 		?>
-		<div class="fb-like-buttons like-share">
+		<div class="fb-like-buttons like-share clearfix">
 			<div class="item">
 				<div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
 				     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
@@ -558,6 +558,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 				?>
 			</div>
+			<?php do_action( 'hocwp_theme_facebook_share_button', $args ); ?>
 		</div>
 		<script>
 			function updateFacebookData(event) {

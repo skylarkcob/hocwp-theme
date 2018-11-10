@@ -24,20 +24,32 @@ final class HOCWP_Theme_Requirement {
 		self::$_instance = $this;
 	}
 
+	private function get_defined_value_array( $conts ) {
+		$results = array();
+
+		if ( ! empty( $conts ) ) {
+			if ( is_string( $conts ) ) {
+				$results = explode( ',', $conts );
+			} else {
+				$results = $conts;
+			}
+
+			$results = (array) $results;
+		}
+
+		$results = array_map( 'trim', $results );
+
+		return $results;
+	}
+
 	public function get_required_extensions() {
 		$extensions = array();
 
-		if ( defined( 'HOCWP_THEME_REQUIRED_EXTENSIONS' ) && ! empty( HOCWP_THEME_REQUIRED_EXTENSIONS ) ) {
+		$exts = defined( 'HOCWP_THEME_REQUIRED_EXTENSIONS' ) ? HOCWP_THEME_REQUIRED_EXTENSIONS : '';
 
-			if ( is_string( HOCWP_THEME_REQUIRED_EXTENSIONS ) ) {
-				$extensions = explode( ',', HOCWP_THEME_REQUIRED_EXTENSIONS );
-				$extensions = array_map( 'trim', $extensions );
-			} else {
-				$extensions = HOCWP_THEME_REQUIRED_EXTENSIONS;
-			}
+		$exts = $this->get_defined_value_array( $exts );
 
-			$extensions = (array) $extensions;
-		}
+		unset( $exts );
 
 		$extensions = apply_filters( 'hocwp_theme_required_extensions', $extensions );
 
@@ -53,17 +65,11 @@ final class HOCWP_Theme_Requirement {
 	public function get_recommended_extensions() {
 		$extensions = array();
 
-		if ( defined( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS' ) && ! empty( HOCWP_THEME_RECOMMENDED_EXTENSIONS ) ) {
+		$exts = defined( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS' ) ? HOCWP_THEME_RECOMMENDED_EXTENSIONS : '';
 
-			if ( is_string( HOCWP_THEME_RECOMMENDED_EXTENSIONS ) ) {
-				$extensions = explode( ',', HOCWP_THEME_RECOMMENDED_EXTENSIONS );
-				$extensions = array_map( 'trim', $extensions );
-			} else {
-				$extensions = HOCWP_THEME_RECOMMENDED_EXTENSIONS;
-			}
+		$exts = $this->get_defined_value_array( $exts );
 
-			$extensions = (array) $extensions;
-		}
+		unset( $exts );
 
 		$extensions = apply_filters( 'hocwp_theme_recommended_extensions', $extensions );
 
@@ -99,17 +105,11 @@ final class HOCWP_Theme_Requirement {
 	public static function get_required_plugins() {
 		$plugins = array();
 
-		if ( defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) && ! empty( HOCWP_THEME_REQUIRED_PLUGINS ) ) {
+		$rps = defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) ? HOCWP_THEME_REQUIRED_PLUGINS : '';
 
-			if ( is_string( HOCWP_THEME_REQUIRED_PLUGINS ) ) {
-				$plugins = explode( ',', HOCWP_THEME_REQUIRED_PLUGINS );
-				$plugins = array_map( 'trim', $plugins );
-			} else {
-				$plugins = HOCWP_THEME_REQUIRED_PLUGINS;
-			}
+		$rps = HT_Requirement()->get_defined_value_array( $rps );
 
-			$plugins = (array) $plugins;
-		}
+		unset( $rps );
 
 		$plugins = apply_filters( 'hocwp_theme_required_plugins', $plugins );
 		$plugins = array_filter( $plugins );
