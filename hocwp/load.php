@@ -19,12 +19,21 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 	if ( ! empty( $dirs ) && is_array( $dirs ) ) {
 		$msg   = sprintf( __( '<strong>Error:</strong> You are using PHP version %s, please upgrade PHP version to at least %s.', 'hocwp-theme' ), $php_version, $require_version );
 		$title = __( 'Invalid PHP Version', 'hocwp-theme' );
-		$args  = array(
+
+		$args = array(
 			'back_link' => admin_url( 'themes.php' )
 		);
 
+		$has = false;
+
 		foreach ( $dirs as $dir ) {
 			$folder = basename( $dir );
+
+			if ( $folder == get_option( 'stylesheet' ) ) {
+				continue;
+			}
+
+			$has = true;
 
 			$theme = wp_get_theme( $folder );
 			$uri   = $theme->get( 'ThemeURI' );
@@ -36,11 +45,13 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 			}
 		}
 
-		$dir    = array_shift( $dirs );
-		$folder = basename( $dir );
-		switch_theme( $folder );
-		wp_die( $msg, $title, $args );
-		exit;
+		if ( $has ) {
+			$dir    = array_shift( $dirs );
+			$folder = basename( $dir );
+			switch_theme( $folder );
+			wp_die( $msg, $title, $args );
+			exit;
+		}
 	}
 }
 

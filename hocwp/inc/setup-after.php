@@ -143,7 +143,7 @@ add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_filter
  */
 function hocwp_theme_update_option_url( $old_url, $new_url ) {
 	if ( 'localhost' != $new_url && ! HT()->is_IP( $new_url ) ) {
-		$option = get_option( 'hocwp_theme' );
+		$option = get_option( HOCWP_Theme()->get_prefix() );
 
 		if ( HT()->array_has_value( $option ) ) {
 			$option = json_encode( $option );
@@ -153,7 +153,7 @@ function hocwp_theme_update_option_url( $old_url, $new_url ) {
 				$option = json_decode( $option, true );
 
 				if ( HT()->array_has_value( $option ) ) {
-					update_option( 'hocwp_theme', $option );
+					update_option( HOCWP_Theme()->get_prefix(), $option );
 				}
 			}
 		}

@@ -26,10 +26,12 @@ function hocwp_theme_check_license() {
 			$blocks[] = $product;
 		}
 
-		$blocks                      = array_unique( $blocks );
-		$blocks                      = array_filter( $blocks );
+		$blocks = array_unique( $blocks );
+		$blocks = array_filter( $blocks );
+
 		$options['blocked_products'] = $blocks;
-		update_option( 'hocwp_theme', $options );
+
+		update_option( HOCWP_Theme()->get_prefix(), $options );
 	}
 
 	if ( HOCWP_Theme::array_has_value( $blocks ) ) {

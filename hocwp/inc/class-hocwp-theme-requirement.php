@@ -43,11 +43,9 @@ final class HOCWP_Theme_Requirement {
 	}
 
 	public function get_required_extensions() {
-		$extensions = array();
-
 		$exts = defined( 'HOCWP_THEME_REQUIRED_EXTENSIONS' ) ? HOCWP_THEME_REQUIRED_EXTENSIONS : '';
 
-		$exts = $this->get_defined_value_array( $exts );
+		$extensions = $this->get_defined_value_array( $exts );
 
 		unset( $exts );
 
@@ -63,11 +61,9 @@ final class HOCWP_Theme_Requirement {
 	}
 
 	public function get_recommended_extensions() {
-		$extensions = array();
-
 		$exts = defined( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS' ) ? HOCWP_THEME_RECOMMENDED_EXTENSIONS : '';
 
-		$exts = $this->get_defined_value_array( $exts );
+		$extensions = $this->get_defined_value_array( $exts );
 
 		unset( $exts );
 
@@ -103,11 +99,9 @@ final class HOCWP_Theme_Requirement {
 	}
 
 	public static function get_required_plugins() {
-		$plugins = array();
-
 		$rps = defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) ? HOCWP_THEME_REQUIRED_PLUGINS : '';
 
-		$rps = HT_Requirement()->get_defined_value_array( $rps );
+		$plugins = HT_Requirement()->get_defined_value_array( $rps );
 
 		unset( $rps );
 

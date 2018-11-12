@@ -14,7 +14,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		return self::$instance;
 	}
 
-	private $menu_slug = 'hocwp_theme';
+	private $menu_slug = '';
 
 	public $tabs;
 	public $tab;
@@ -28,6 +28,8 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	public $scripts;
 
 	public function __construct() {
+		$this->menu_slug = HOCWP_Theme()->get_prefix();
+
 		if ( self::$instance instanceof self ) {
 			return;
 		}
@@ -236,7 +238,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 				$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
 			} else {
-				$options = $GLOBALS['hocwp_theme']->defaults['options'];
+				$options = HOCWP_Theme()->object->options;
 
 				if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
@@ -322,7 +324,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$this->tab = $this->tabs->get_tab_name();
 		}
 
-		if ( ! empty( $this->tabs->tab_name ) && is_array( $input ) && isset( $input[ $this->tabs->tab_name ] ) ) {
+		if ( ! empty( $this->tabs->tab_name ) ) {
 			$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
 
 			if ( HT()->array_has_value( $this->settings_field ) ) {
@@ -343,7 +345,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$input = apply_filters( 'hocwp_theme_sanitize_option', $input );
 		$input = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tabs->tab_name, $input );
 
-		$options = (array) get_option( 'hocwp_theme' );
+		$options = (array) get_option( $this->menu_slug );
 
 		if ( ! is_array( $input ) ) {
 			$input = array();

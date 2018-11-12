@@ -84,7 +84,7 @@ final class HOCWP_Theme_Controller {
 		}
 
 		if ( ! isset( $this->object->options ) ) {
-			$this->object->options = (array) get_option( 'hocwp_theme' );
+			$this->object->options = (array) get_option( $this->get_prefix() );
 		}
 
 		$this->object->is_wc_activated = class_exists( 'WC_Product' );

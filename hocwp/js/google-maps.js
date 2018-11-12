@@ -16,10 +16,11 @@ jQuery(document).ready(function ($) {
                     scrollwheel: element.attr("data-scrollwheel")
                 },
                 map = new google.maps.Map(document.getElementById(mapID), options),
+                draggable = parseInt(element.attr("data-draggable")),
                 marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
-                    draggable: true,
+                    draggable: (1 === draggable),
                     title: element.attr("data-marker-title")
                 }),
                 point = marker.getPosition();

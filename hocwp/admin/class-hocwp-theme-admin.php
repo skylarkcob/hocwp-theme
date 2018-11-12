@@ -143,7 +143,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	}
 
 	public function is_theme_option_page() {
-		return $this->is_admin_page( 'themes.php', 'hocwp_theme' );
+		return $this->is_admin_page( 'themes.php', HOCWP_Theme()->get_prefix() );
 	}
 }
 
