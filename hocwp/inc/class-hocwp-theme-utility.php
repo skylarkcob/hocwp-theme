@@ -284,7 +284,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function is_object_valid( $object ) {
-		return ( is_object( $object ) && ! is_wp_error( $object ) ) ? true : false;
+		return ( is_object( $object ) && ! is_wp_error( $object ) );
 	}
 
 	public static function get_file_or_dir_url( $file_or_dir ) {
@@ -358,13 +358,19 @@ class HOCWP_Theme_Utility {
 	}
 
 	public static function get_contents( $url ) {
-		$filesystem = self::filesystem();
+		$result = '';
 
-		if ( $filesystem instanceof WP_Filesystem_Base ) {
-			return $filesystem->get_contents( $url );
+		if ( ! empty( $url ) ) {
+			$filesystem = self::filesystem();
+
+			if ( $filesystem instanceof WP_Filesystem_Direct ) {
+				$result = $filesystem->get_contents( $url );
+			} elseif ( $filesystem instanceof WP_Filesystem_Base ) {
+				$result = $filesystem->get_contents( $url );
+			}
 		}
 
-		return '';
+		return $result;
 	}
 
 	public static function read_all_text( $path ) {
@@ -1448,30 +1454,33 @@ class HOCWP_Theme_Utility {
 		return $options;
 	}
 
-	public function recaptcha() {
+	public function recaptcha( $version = 'v2' ) {
 		$options  = $this->get_theme_options( 'social' );
 		$site_key = isset( $options['recaptcha_site_key'] ) ? $options['recaptcha_site_key'] : '';
 
 		if ( empty( $site_key ) ) {
 			return;
 		}
-		?>
-		<script>
-			(function (d, s, id) {
-				var js, gjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {
-					return;
-				}
-				js = d.createElement(s);
-				js.id = id;
-				js.async = "async";
-				js.defer = "defer";
-				js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
-				gjs.parentNode.insertBefore(js, gjs);
-			}(document, 'script', 'recaptcha-jssdk'));
-		</script>
-		<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
-		<?php
+
+		if ( 'v2' == $version ) {
+			?>
+			<script>
+				(function (d, s, id) {
+					var js, gjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {
+						return;
+					}
+					js = d.createElement(s);
+					js.id = id;
+					js.async = "async";
+					js.defer = "defer";
+					js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
+					gjs.parentNode.insertBefore(js, gjs);
+				}(document, "script", "recaptcha-jssdk"));
+			</script>
+			<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
+			<?php
+		}
 	}
 
 	public function recaptcha_valid( $response = null ) {
@@ -1490,15 +1499,20 @@ class HOCWP_Theme_Utility {
 
 		$params = array(
 			'secret'   => $secret_key,
-			'response' => $response
+			'response' => $response,
+			'remoteip' => HT()->get_IP()
 		);
 
-		$url      = add_query_arg( $params, $url );
-		$response = HT_Util()->get_contents( $url );
+		$url = add_query_arg( $params, $url );
+
+		$response = wp_remote_post( $url );
+
+		$response = wp_remote_retrieve_body( $response );
+
 		$response = json_decode( $response );
 
 		if ( $this->is_object_valid( $response ) ) {
-			if ( $response->success ) {
+			if ( $response->success || 1 == $response->success ) {
 				return true;
 			}
 		}

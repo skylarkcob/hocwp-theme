@@ -119,6 +119,14 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public function fields_filter() {
 		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, HT_Options()->get( $this->name ) );
 
+		if ( is_array( $this->fields ) ) {
+			foreach ( $this->fields as $key => $field ) {
+				if ( $field instanceof HOCWP_Theme_Admin_Setting_Field ) {
+					$this->fields[ $key ] = $field->generate();
+				}
+			}
+		}
+
 		return $this->fields;
 	}
 

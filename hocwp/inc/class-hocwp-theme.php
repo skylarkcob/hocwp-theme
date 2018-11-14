@@ -313,6 +313,24 @@ final class HOCWP_Theme {
 		}
 	}
 
+	public function required_mark() {
+		return '<span class="required req red">*</span>';
+	}
+
+	public function checked_selected_helper( $helper, $current, $echo, $type ) {
+		if ( (string) $helper === (string) $current ) {
+			$result = " $type='$type'";
+		} else {
+			$result = '';
+		}
+
+		if ( $echo ) {
+			echo $result;
+		}
+
+		return $result;
+	}
+
 	public static function is_positive_number( $number ) {
 		return ( is_numeric( $number ) && $number > 0 );
 	}

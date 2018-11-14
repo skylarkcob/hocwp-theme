@@ -145,10 +145,12 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		$field = hocwp_theme_create_meta_field( 'sidebar_position', __( 'Sidebar Position', 'hocwp-theme' ), 'select', $args );
 		$meta->add_field( $field );
 
-		$args  = array(
-			'type' => 'checkbox'
+		$args = array(
+			'type' => 'checkbox',
+			'text' => __( 'Display content box as full width.', 'hocwp-theme' )
 		);
-		$field = hocwp_theme_create_meta_field( 'full_width', __( 'Display content box as full width.', 'hocwp-theme' ), 'input', $args );
+
+		$field = hocwp_theme_create_meta_field( 'full_width', '', 'input', $args );
 		$meta->add_field( $field );
 	}
 
