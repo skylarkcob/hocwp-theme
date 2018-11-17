@@ -9,7 +9,8 @@ jQuery(document).ready(function ($) {
                 meta_type = element.attr("data-meta-type"),
                 meta_key = element.attr("data-meta-key"),
                 meta_value = element.attr("data-meta-value"),
-                object_id = element.attr("data-id");
+                object_id = element.attr("data-id"),
+                change_value = element.attr("data-change-value");
 
             var settings = $.extend({}, $.fn.hocwpUpdateMeta.defaults, options);
 
@@ -43,18 +44,21 @@ jQuery(document).ready(function ($) {
                         object_id: object_id,
                         value_type: value_type,
                         change_id: element.attr("data-object-id"),
+                        change_value: change_value,
                         nonce: hocwpTheme.nonce
                     },
                     success: function (response) {
                         if (response.success) {
-                            meta_value = response.data.meta_value;
+                            if (response.data && response.data.meta_value) {
+                                meta_value = response.data.meta_value;
 
-                            element.attr("data-meta-value", meta_value);
+                                element.attr("data-meta-value", meta_value);
+                            }
 
                             var container = element.parent(),
                                 displayResult = container.find(element.attr("data-display-result"));
 
-                            if (displayResult.length && response.data.formatted_meta_value) {
+                            if (displayResult.length && response.data && response.data.formatted_meta_value) {
                                 displayResult.html(response.data.formatted_meta_value);
                             }
 
@@ -66,9 +70,9 @@ jQuery(document).ready(function ($) {
                             var doText = element.attr("data-text"),
                                 undoText = element.attr("data-undo-text");
 
-                            if ("undo" == response.data.job_action && $.trim(doText)) {
+                            if (response.data && response.data.job_action && "undo" == response.data.job_action && $.trim(doText)) {
                                 element.html(doText);
-                            } else if ("do" == response.data.job_action && $.trim(undoText)) {
+                            } else if (response.data && response.data.job_action && "do" == response.data.job_action && $.trim(undoText)) {
                                 element.html(undoText);
                             }
                         }

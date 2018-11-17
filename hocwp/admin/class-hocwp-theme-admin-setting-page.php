@@ -388,6 +388,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					<div class="settings-content">
 						<?php
 						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
+
 						$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
 
 						if ( $display ) {

@@ -88,6 +88,15 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 
 					$count = 0;
 
+					// Move tab Extensions to the last.
+					if ( isset( $this->tabs['extension'] ) ) {
+						$exts = $this->tabs['extension'];
+						unset( $this->tabs['extension'] );
+						$this->tabs['extension'] = $exts;
+
+						unset( $exts );
+					}
+
 					foreach ( $this->tabs as $key => $tab ) {
 						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {
 							$url   = add_query_arg( array( 'tab' => $key ), $current_url );

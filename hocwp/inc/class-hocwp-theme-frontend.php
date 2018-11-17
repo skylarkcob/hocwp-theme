@@ -198,6 +198,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					}
 
 					$url = get_pagenum_link( 1 );
+					$url = apply_filters( 'hocwp_theme_pagination_first_item_url', $url, $args );
 					echo '<li class="page-item"><a class="first page-numbers page-link" href="' . esc_url( $url ) . '">' . $first . '</a></li>';
 				}
 			}
@@ -509,17 +510,20 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 	public function facebook_share_button( $args = array() ) {
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
-		$url     = isset( $args['url'] ) ? $args['url'] : '';
+
+		$url = isset( $args['url'] ) ? $args['url'] : '';
 
 		if ( empty( $url ) ) {
 			$url = get_permalink( $post_id );
 		}
 
-		$layout     = isset( $args['layout'] ) ? $args['layout'] : 'button_count';
-		$action     = isset( $args['action'] ) ? $args['action'] : 'like';
+		$layout = isset( $args['layout'] ) ? $args['layout'] : 'button_count';
+		$action = isset( $args['action'] ) ? $args['action'] : 'like';
+
 		$show_faces = isset( $args['show_faces'] ) ? $args['show_faces'] : false;
 		$show_faces = HT()->bool_to_string( $show_faces );
-		$share      = isset( $args['share'] ) ? $args['share'] : true;
+
+		$share = isset( $args['share'] ) ? $args['share'] : true;
 
 		$recommend = isset( $args['recommend'] ) ? $args['recommend'] : false;
 

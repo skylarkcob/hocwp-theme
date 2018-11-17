@@ -694,7 +694,7 @@ function hocwp_theme_color_meta() {
 		$color = sanitize_hex_color( $color );
 
 		if ( ! empty( $color ) ) {
-			echo '<meta name="theme-color" content="' . $color . '">' . PHP_EOL;
+			echo '<meta name="theme-color" content="' . $color . '" />' . PHP_EOL;
 		}
 	}
 }
@@ -731,8 +731,11 @@ add_action( 'wp_head', 'hocwp_theme_wp_head_action' );
 
 function hocwp_theme_wp_footer_action() {
 	global $hocwp_theme;
+
 	$options = $hocwp_theme->options;
+
 	HT_Util()->load_facebook_javascript_sdk();
+
 	$agent = HT()->get_user_agent();
 
 	if ( empty( $agent ) || ! HT()->string_contain( $agent, 'Page Speed' ) || ! HT()->string_contain( $agent, 'Speed Insights' ) ) {
@@ -1254,38 +1257,36 @@ function hocwp_theme_pre_get_posts_action( $query ) {
 add_action( 'pre_get_posts', 'hocwp_theme_pre_get_posts_action' );
 
 function _hocwp_theme_facebook_javascript_sdk( $app_id, $version = '2.11', $language = 'vi_VN' ) {
+	_deprecated_function( __FUNCTION__, '6.5.8', 'HT_Util()->load_facebook_javascript_sdk' );
+
 	if ( ! empty( $app_id ) ) {
-		?>
-		<div id="fb-root"></div>
-		<script>(function (d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) return;
-				js = d.createElement(s);
-				js.id = id;
-				js.src = 'https://connect.facebook.net/<?php echo $language; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>';
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));</script>
-		<?php
+		$args = array(
+			'app_id'  => $app_id,
+			'version' => $version,
+			'locale'  => $language,
+			'load'    => true
+		);
+
+		HT_Util()->load_facebook_javascript_sdk( $args );
 	}
 }
 
 function hocwp_theme_facebook_javascript_sdk( $app_id = '' ) {
+	if ( empty( $app_id ) ) {
+		$sdk = hocwp_theme_get_option( 'facebook_sdk_javascript', '', 'social' );
+
+		if ( ! empty( $sdk ) ) {
+			echo $sdk;
+
+			return;
+		}
+
+		$app_id = hocwp_theme_get_option( 'facebook_app_id', '', 'social' );
+	}
+
 	if ( ! empty( $app_id ) ) {
-		_hocwp_theme_facebook_javascript_sdk( $app_id );
-
-		return;
+		HT_Util()->load_facebook_javascript_sdk( array( 'app_id' => $app_id ) );
 	}
-
-	$sdk = hocwp_theme_get_option( 'facebook_sdk_javascript', '', 'social' );
-
-	if ( ! empty( $sdk ) ) {
-		echo $sdk;
-
-		return;
-	}
-
-	$app_id = hocwp_theme_get_option( 'facebook_app_id', '', 'social' );
-	_hocwp_theme_facebook_javascript_sdk( $app_id );
 }
 
 add_action( 'hocwp_theme_facebook_javascript_sdk', 'hocwp_theme_facebook_javascript_sdk' );

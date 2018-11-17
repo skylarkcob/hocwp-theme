@@ -338,6 +338,10 @@ button[aria-expanded="false"] {
     display: none;
 }
 
+.fa.fab {
+    font-family: 'Font Awesome 5 Brands';
+}
+
 .hocwp-theme > .site, .container {
     max-width: 100%;
 }

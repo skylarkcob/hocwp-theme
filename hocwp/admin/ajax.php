@@ -66,9 +66,14 @@ class HOCWP_Theme_AJAX {
 	}
 
 	public function update_meta() {
+		// Type of meta table. Example: usermeta, postmeta, termmeta.
 		$meta_type = HT()->get_method_value( 'meta_type' );
+
+		// Object id for using in meta table. Example: post_id, term_id, user_id.
 		$object_id = HT()->get_method_value( 'object_id' );
-		$meta_key  = HT()->get_method_value( 'meta_key' );
+
+		// Meta key for using in meta table.
+		$meta_key = HT()->get_method_value( 'meta_key' );
 
 		if ( ! empty( $meta_type ) && HT()->is_positive_number( $object_id ) && ! empty( $meta_key ) ) {
 			$value_type = HT()->get_method_value( 'value_type' );
@@ -89,7 +94,12 @@ class HOCWP_Theme_AJAX {
 					$change = - 1;
 				}
 
-				$meta_value = HT()->get_method_value( 'meta_value', 'post', get_metadata( $meta_type, $object_id, $meta_key ) );
+				$meta_value = HT()->get_method_value( 'meta_value', 'post' );
+
+				if ( empty( $meta_value ) ) {
+					$meta_value = get_metadata( $meta_type, $object_id, $meta_key, true );
+				}
+
 				$meta_value = absint( $meta_value );
 
 				$meta_value += $change;
@@ -121,6 +131,41 @@ class HOCWP_Theme_AJAX {
 					);
 
 					wp_send_json_success( $data );
+				}
+			} elseif ( 'add_remove' == $value_type ) {
+				$meta_value = HT()->get_method_value( 'meta_value', 'post' );
+
+				if ( empty( $meta_value ) ) {
+					$meta_value = get_metadata( $meta_type, $object_id, $meta_key, true );
+				}
+
+				if ( ! is_array( $meta_value ) ) {
+					$meta_value = array();
+				}
+
+				$change_value = HT()->get_method_value( 'change_value' );
+
+				if ( empty( $change_value ) ) {
+					$change_value = HT()->get_method_value( 'change_id' );
+				}
+
+				if ( ! is_array( $change_value ) ) {
+					$data = array();
+
+					if ( in_array( $change_value, $meta_value ) ) {
+						unset( $meta_value[ array_search( $change_value, $meta_value ) ] );
+						$data['job_action'] = 'undo';
+					} else {
+						$meta_value[] = $change_value;
+
+						$data['job_action'] = 'do';
+					}
+
+					$updated = update_metadata( $meta_type, $object_id, $meta_key, $meta_value );
+
+					if ( $updated ) {
+						wp_send_json_success( $data );
+					}
 				}
 			}
 

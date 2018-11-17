@@ -40,11 +40,20 @@ class HOCWP_Theme_Options {
 		return HT_Util()->get_theme_option( $key, $default, $tab );
 	}
 
-	public function check_page_valid( $page ) {
+	public function check_page_valid( $page, $check_current_page = false ) {
 		if ( $page instanceof WP_Post ) {
 			$page_template = get_post_meta( $page->ID, '_wp_page_template', true );
 
 			if ( ! empty( $page->post_content ) || ( 'default' != $page_template && file_exists( get_template_directory() . '/' . $page_template ) ) ) {
+
+				if ( $check_current_page ) {
+					if ( is_page( $page->ID ) ) {
+						return true;
+					}
+
+					return false;
+				}
+
 				return true;
 			}
 		}

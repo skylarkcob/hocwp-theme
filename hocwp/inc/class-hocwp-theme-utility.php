@@ -1275,17 +1275,28 @@ class HOCWP_Theme_Utility {
 
 	public function load_google_javascript_sdk( $args = array() ) {
 		global $hocwp_theme;
+
 		$options = $hocwp_theme->options;
-		$load    = isset( $args['load'] ) ? (bool) $args['load'] : false;
-		$load    = apply_filters( 'hocwp_theme_load_google_sdk_javascript', $load );
+
+		$load = isset( $args['load'] ) ? (bool) $args['load'] : false;
+		$load = apply_filters( 'hocwp_theme_load_google_sdk_javascript', $load );
+
 		if ( ! $load ) {
 			return;
 		}
+
 		$callback = isset( $args['callback'] ) ? $args['callback'] : '';
+
 		if ( empty( $callback ) ) {
 			return;
 		}
-		$locale = get_user_locale();
+
+		$locale = isset( $args['locale'] ) ? $args['locale'] : '';
+
+		if ( empty( $locale ) ) {
+			$locale = get_user_locale();
+		}
+
 		if ( 'vi' == $locale ) {
 			$locale = 'vi_VN';
 		}
@@ -1304,26 +1315,41 @@ class HOCWP_Theme_Utility {
 				js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
 				js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
 				gjs.parentNode.insertBefore(js, gjs);
-			}(document, 'script', 'google-jssdk'));
+			}(document, "script", "google-jssdk"));
 		</script>
 		<?php
 	}
 
 	public function load_facebook_javascript_sdk( $args = array() ) {
 		$options = $this->get_theme_options( 'social' );
-		$load    = isset( $args['load'] ) ? (bool) $args['load'] : false;
-		$load    = apply_filters( 'hocwp_theme_load_facebook_sdk_javascript', $load );
+
+		$load = isset( $args['load'] ) ? (bool) $args['load'] : false;
+		$load = apply_filters( 'hocwp_theme_load_facebook_sdk_javascript', $load );
+
 		if ( $load ) {
 			$sdk = isset( $options['facebook_sdk_javascript'] ) ? $options['facebook_sdk_javascript'] : '';
+
 			if ( empty( $sdk ) ) {
-				$app_id = isset( $options['facebook_app_id'] ) ? $options['facebook_app_id'] : '';
+				$app_id = isset( $args['app_id'] ) ? $args['app_id'] : '';
+
+				if ( empty( $app_id ) ) {
+					$app_id = isset( $options['facebook_app_id'] ) ? $options['facebook_app_id'] : '';
+				}
+
 				if ( empty( $app_id ) ) {
 					return;
 				}
-				$locale = get_user_locale();
+
+				$locale = isset( $args['locale'] ) ? $args['locale'] : '';
+
+				if ( empty( $locale ) ) {
+					$locale = get_user_locale();
+				}
+
 				if ( 'vi' == $locale ) {
 					$locale = 'vi_VN';
 				}
+
 				$version = isset( $args['version'] ) ? $args['version'] : '2.11';
 				$version = trim( $version, 'v' );
 				?>
@@ -1333,9 +1359,9 @@ class HOCWP_Theme_Utility {
 						if (d.getElementById(id)) return;
 						js = d.createElement(s);
 						js.id = id;
-						js.src = 'https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>';
+						js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
 						fjs.parentNode.insertBefore(js, fjs);
-					}(document, 'script', 'facebook-jssdk'));</script>
+					}(document, "script", "facebook-jssdk"));</script>
 				<?php
 			} else {
 				echo $sdk;
