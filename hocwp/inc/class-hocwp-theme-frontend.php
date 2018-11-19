@@ -40,8 +40,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			'class'         => 'hocwp-pagination'
 		);
 
-		$args  = wp_parse_args( $args, $defaults );
-		$args  = apply_filters( 'hocwp_theme_pagination_args', $args );
+		$args = wp_parse_args( $args, $defaults );
+		$args = apply_filters( 'hocwp_theme_pagination_args', $args );
+
 		$query = $args['query'];
 
 		if ( ! ( $query instanceof WP_Query ) ) {
@@ -109,6 +110,15 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			if ( isset( $args['first'] ) && isset( $args['last'] ) ) {
 				$first_last = true;
 			}
+		}
+
+		$load_more = isset( $args['load_more'] ) ? $args['load_more'] : '';
+
+		if ( $load_more || ! empty( $load_more ) ) {
+			$dynamic_size = false;
+
+			$args['mid_size'] = $big;
+			$args['end_size'] = $big;
 		}
 
 		if ( $dynamic_size ) {
