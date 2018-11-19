@@ -183,7 +183,13 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$class .= ' pagination';
 			$class = trim( $class );
 
-			echo '<ul class="' . $class . '">';
+			$ajax    = isset( $args['ajax'] ) ? (bool) $args['ajax'] : false;
+			$list_id = isset( $args['list_id'] ) ? $args['list_id'] : '';
+
+			$root_url = get_pagenum_link( 1 );
+			$root_url = apply_filters( 'hocwp_theme_pagination_first_item_url', $root_url, $args );
+
+			echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( json_encode( $query->query ) ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">';
 
 			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
 				echo '<li class="label-item page-item"><span class="page-numbers label page-link">' . $args['label'] . '</span></li>';
@@ -197,8 +203,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						$first = __( 'First', 'hocwp-theme' );
 					}
 
-					$url = get_pagenum_link( 1 );
-					$url = apply_filters( 'hocwp_theme_pagination_first_item_url', $url, $args );
+					$url = $root_url;
 					echo '<li class="page-item"><a class="first page-numbers page-link" href="' . esc_url( $url ) . '">' . $first . '</a></li>';
 				}
 			}
@@ -271,22 +276,24 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				$title = sprintf( __( 'Author: %s', 'hocwp-theme' ), $title );
 			}
 		} elseif ( is_date() ) {
-			$year = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
-
 			if ( is_year() ) {
-				$title = $year;
-				$title = sprintf( _x( 'Year %s', 'yearly archives', 'hocwp-theme' ), $title );
-			} elseif ( is_month() ) {
-				$title = get_the_date( _x( 'F', 'monthly archives date format', 'hocwp-theme' ) );
-				$title = sprintf( _x( '%1$s %2$s', 'monthly archives', 'hocwp-theme' ), $title, $year );
-			} elseif ( is_day() ) {
-				$month = get_the_date( _x( 'F', 'daily archives date format', 'hocwp-theme' ) );
-				$day   = get_the_date( _x( 'j', 'daily archives date format', 'hocwp-theme' ) );
-				$title = sprintf( _x( '%1$s %2$s, %3$s', 'daily archives', 'hocwp-theme' ), $month, $day, $year );
-			}
+				$title = get_the_date( _x( 'Y', 'yearly archives date format', 'hocwp-theme' ) );
 
-			if ( $prefix ) {
-				$title = sprintf( __( 'Archives: %s', 'hocwp-theme' ), $title );
+				if ( $prefix ) {
+					$title = sprintf( _x( 'Year: %s', 'yearly archives', 'hocwp-theme' ), $title );
+				}
+			} elseif ( is_month() ) {
+				$title = get_the_date( _x( 'F Y', 'monthly archives date format', 'hocwp-theme' ) );
+
+				if ( $prefix ) {
+					$title = sprintf( _x( 'Month: %s', 'monthly archives', 'hocwp-theme' ), $title );
+				}
+			} elseif ( is_day() ) {
+				$title = get_the_date( _x( 'F j, Y', 'daily archives date format', 'hocwp-theme' ) );
+
+				if ( $prefix ) {
+					$title = sprintf( _x( 'Day: %s', 'daily archives', 'hocwp-theme' ), $title );
+				}
 			}
 		} elseif ( is_tax( 'post_format' ) ) {
 			if ( is_tax( 'post_format', 'post-format-aside' ) ) {

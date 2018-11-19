@@ -59,6 +59,11 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_script( 'hocwp-theme-ajax-button' );
 	}
 
+	public function ajax_pagination() {
+		$this->ajax_overlay();
+		wp_enqueue_script( 'hocwp-theme-pagination' );
+	}
+
 	public function code_editor() {
 		wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
 		wp_enqueue_script( 'hocwp-theme-code-editor' );

@@ -95,7 +95,8 @@ function hocwp_theme_enqueue_scripts_action() {
 
 	if ( isset( $wp_scripts->registered['hocwp-theme-navigation'] ) ) {
 		$wp_scripts->registered['hocwp-theme-navigation']->src = $src;
-		$mobile_loaded                                         = true;
+
+		$mobile_loaded = true;
 	}
 
 	wp_enqueue_script( 'hocwp-theme-navigation', $src, array(), false, true );
@@ -103,6 +104,8 @@ function hocwp_theme_enqueue_scripts_action() {
 	if ( ! $mobile_loaded ) {
 		wp_enqueue_script( 'hocwp-theme-mobile-menu', HOCWP_THEME_CORE_URL . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
 	}
+
+	wp_register_script( 'hocwp-theme-pagination', HOCWP_THEME_CORE_URL . '/js/pagination' . HOCWP_THEME_JS_SUFFIX, array( 'jquery' ), false, true );
 
 	wp_enqueue_script( 'hocwp-theme-custom', HOCWP_THEME_CUSTOM_URL . '/js/custom' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
 	$sticky = hocwp_theme_get_option( 'sticky_last_widget', '', 'reading' );
