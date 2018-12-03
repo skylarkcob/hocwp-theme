@@ -339,7 +339,7 @@ button[aria-expanded="false"] {
 }
 
 .fa.fab {
-    font-family: 'Font Awesome 5 Brands';
+    font-family: 'Font Awesome 5 Brands', 'FontAwesome';
 }
 
 .hocwp-theme > .site, .container {

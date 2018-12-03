@@ -1,4 +1,9 @@
 == Changelog ==
+= 6.6.0 =
+* Update mobile style.
+* Add combobox supports.
+* Add functions to query term and return json data.
+
 = 6.5.9 =
 * Update get the archive title.
 * Support AJAX pagination.

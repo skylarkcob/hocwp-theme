@@ -7,6 +7,47 @@ function hocwp_theme_setup_start_session() {
 	if ( ! session_id() ) {
 		session_start();
 	}
+
+	if ( isset( $_REQUEST['get_terms'] ) ) {
+		$taxonomy = $_REQUEST['get_terms'];
+		$output   = array();
+
+		if ( HT_Util()->verify_nonce( HOCWP_Theme()->get_textdomain() ) ) {
+			$q = isset( $_REQUEST['term'] ) ? $_REQUEST['term'] : '';
+
+			$args = array( 'hide_empty' => false );
+
+			if ( ! empty( $q ) ) {
+				$args['search'] = $q;
+			}
+
+			$terms = HT_Util()->get_terms( $taxonomy, $args );
+
+			if ( HT()->array_has_value( $terms ) ) {
+				$return = isset( $_REQUEST['return'] ) ? $_REQUEST['return'] : '';
+				$return = strtolower( $return );
+
+				foreach ( $terms as $key => $term ) {
+					if ( empty( $q ) || false !== strpos( $term->name, $q ) ) {
+						if ( 'name' == $return ) {
+							$output[ $key ]['value'] = $term->name;
+						} else {
+							$output[ $key ]['value'] = $term->term_id;
+						}
+
+						$output[ $key ]['name']    = $term->name;
+						$output[ $key ]['term_id'] = $term->term_id;
+						$output[ $key ]['count']   = $term->count;
+						$output[ $key ]['slug']    = $term->slug;
+					}
+				}
+			}
+		}
+
+		header( "Content-type: application/json; charset=utf-8" );
+		echo json_encode( $output );
+		exit;
+	}
 }
 
 add_action( 'init', 'hocwp_theme_setup_start_session' );

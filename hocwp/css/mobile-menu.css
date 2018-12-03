@@ -14,11 +14,13 @@
     z-index: 9999;
     overflow-x: hidden;
     overflow-y: auto;
+    margin-left: 0 !important;
 }
 
 .mobile-menu.position-right .menu {
     left: auto;
     right: -300px;
+    margin-right: 0 !important;
 }
 
 .mobile-menu > .menu-toggle {
@@ -107,10 +109,12 @@
     text-indent: inherit;
     background: none;
     width: auto;
-    height: auto;
+    height: auto !important;
     text-transform: uppercase;
     text-decoration: none;
     position: relative;
+    text-align: left !important;
+    line-height: 30px !important;
 }
 
 .mobile-menu > .menu li:last-child > a {

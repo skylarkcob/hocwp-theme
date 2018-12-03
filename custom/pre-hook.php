@@ -44,7 +44,7 @@ define( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS', '' );
  *
  * If you still want to continue working, just define this value to TRUE.
  */
-define( 'HOCWP_THEME_OVERTIME', false );
+define( 'HOCWP_THEME_OVERTIME', true );
 
 /**
  * Working time interval.
@@ -54,4 +54,4 @@ define( 'HOCWP_THEME_OVERTIME', false );
  * You should take a short break every 25 minutes. You can increase this number to work more longer. Define this
  * number to zero to skip this function.
  */
-define( 'HOCWP_THEME_BREAK_MINUTES', 25 );
+define( 'HOCWP_THEME_BREAK_MINUTES', 0 );

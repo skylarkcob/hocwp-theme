@@ -81,6 +81,19 @@ class HOCWP_Theme_Enqueue {
 	public function dashicons() {
 		wp_enqueue_style( 'dashicons' );
 	}
+
+	public function combobox() {
+		$this->jquery_ui_style();
+		wp_enqueue_script( 'jquery-ui-tooltip' );
+		wp_enqueue_script( 'jquery-ui-widget' );
+		wp_enqueue_script( 'jquery-ui-button' );
+		$this->autocomplete();
+		wp_enqueue_script( 'hocwp-theme-combobox' );
+	}
+
+	public function autocomplete() {
+		wp_enqueue_script( 'jquery-ui-autocomplete' );
+	}
 }
 
 function HT_Enqueue() {
