@@ -496,3 +496,7 @@ button.disabled {
     pointer-events: none;
     opacity: 0.5;
 }
+
+.entry-content .form-control {
+    box-sizing: border-box;
+}

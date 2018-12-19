@@ -93,7 +93,11 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 		return $result;
 	}
 
-	public function get_current_post_id() {
+	public function get_current_post_id( $post = null ) {
+		if ( $post instanceof WP_Post ) {
+			return $post->ID;
+		}
+
 		$post_id = isset( $_GET['post'] ) ? $_GET['post'] : '';
 
 		if ( isset( $_POST['post_ID'] ) ) {

@@ -276,15 +276,26 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		return $field;
 	}
 
+	/**
+	 * Default section callback for displaying description below section title.
+	 *
+	 * @param $args
+	 */
 	public function section_callback( $args ) {
 		$callback = isset( $args['callback'][0] ) ? $args['callback'][0] : '';
 
-		if ( $callback instanceof HOCWP_Theme_Admin_Setting_Page ) {
+		if ( $callback instanceof HOCWP_Theme_Admin_Setting_Page && isset( $args['id'] ) ) {
 			$secs = $callback->settings_section;
 			$id   = $args['id'];
 
 			if ( isset( $secs[ $id ]['description'] ) ) {
 				echo wpautop( $secs[ $id ]['description'] );
+			} else {
+				foreach ( $secs as $section ) {
+					if ( is_array( $section ) && isset( $section['id'] ) && $id == $section['id'] && isset( $section['description'] ) ) {
+						echo wpautop( $section['description'] );
+					}
+				}
 			}
 		}
 	}

@@ -281,7 +281,7 @@ function hocwp_theme_frontend_and_backend_scripts() {
 	global $hocwp_theme;
 	$options = $hocwp_theme->options;
 
-	hocwp_theme_load_google_maps_script();
+	//hocwp_theme_load_google_maps_script();
 
 	wp_register_style( 'chosen-style', HOCWP_THEME_CORE_URL . '/lib/chosen/chosen.min.css' );
 	wp_register_script( 'chosen', HOCWP_THEME_CORE_URL . '/lib/chosen/chosen.jquery.min.js', array( 'jquery' ), false, true );

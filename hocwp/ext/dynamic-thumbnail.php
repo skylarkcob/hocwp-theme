@@ -283,6 +283,10 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 			$style .= "height:{$height}px;";
 		}
 
+		if ( ! function_exists( 'hocwp_theme_get_default_post_thumbnail' ) ) {
+			require_once HOCWP_Theme()->core_path . '/inc/template-post.php';
+		}
+
 		$html = hocwp_theme_get_default_post_thumbnail( $sizes, $attr, $style );
 	}
 

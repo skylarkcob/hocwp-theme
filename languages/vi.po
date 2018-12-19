@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2018-12-03 20:43+0700\n"
-"PO-Revision-Date: 2018-12-03 20:43+0700\n"
+"POT-Creation-Date: 2018-12-19 14:22+0700\n"
+"PO-Revision-Date: 2018-12-19 14:22+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -541,27 +541,27 @@ msgstr "<strong>Thông báo:</strong> %s gói mở rộng được kích hoạt.
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr "<strong>Thông báo:</strong> %s gói mở rộng ngừng kích hoạt."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:361
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:371
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:372
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:382
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:361
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:372
 #: hocwp/inc/setup-after.php:32
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:377
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:388
 #, php-format
 msgid "%s options"
 msgstr "Cài đặt %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:379
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:390
 #, php-format
 msgid "Version %s"
 msgstr "Phiên bản %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:404
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:415
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If "
@@ -572,12 +572,12 @@ msgstr ""
 "Nếu bạn có bất kỳ câu hỏi nào bạn có thể <a target=\"_blank\" href=\"%s"
 "\">liệ hệ với chúng tôi</a> để biết thêm thông tin."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:407
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:418
 #, php-format
 msgid "Theme core version %s"
 msgstr "Phiên bản nhân giao diện %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:463
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:474
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."
@@ -951,7 +951,7 @@ msgid "Go back"
 msgstr "Quay lại"
 
 #: hocwp/inc/class-hocwp-theme-controller.php:39
-#: hocwp/inc/class-hocwp-theme-extension.php:188
+#: hocwp/inc/class-hocwp-theme-extension.php:194
 #: hocwp/inc/class-hocwp-theme-requirement.php:19
 #, php-format
 msgid "%s is a singleton class and you cannot create a second instance."
@@ -1005,13 +1005,13 @@ msgstr "Thanh bên trang 404"
 msgid "Display widgets on 404 page."
 msgstr "Hiển thị widget trên trang 404."
 
-#: hocwp/inc/class-hocwp-theme-extension.php:41
+#: hocwp/inc/class-hocwp-theme-extension.php:43
 msgid "Please declare extension with Name and Description in header."
 msgstr ""
 "Xin vui lòng khai báo gói mở rộng với đầy đủ tên và mô tả đặt tại ví trí "
 "trên cùng của tập tin."
 
-#: hocwp/inc/class-hocwp-theme-extension.php:239
+#: hocwp/inc/class-hocwp-theme-extension.php:245
 #, php-format
 msgid ""
 "Extension %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s "
@@ -1020,7 +1020,7 @@ msgstr ""
 "Gói mở rộng %1$s đã <strong>không còn được dùng nữa</strong> kể từ phiên bản "
 "%2$s! Sử dụng %3$s để thay thế."
 
-#: hocwp/inc/class-hocwp-theme-extension.php:242
+#: hocwp/inc/class-hocwp-theme-extension.php:248
 #, php-format
 msgid ""
 "Extension %1$s is <strong>deprecated</strong> since version %2$s with no "
@@ -1721,20 +1721,20 @@ msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1218
+#: hocwp/inc/template-general.php:1219
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1230
+#: hocwp/inc/template-general.php:1231
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1231
+#: hocwp/inc/template-general.php:1232
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1334
+#: hocwp/inc/template-general.php:1335
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"

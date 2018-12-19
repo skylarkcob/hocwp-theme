@@ -1097,6 +1097,7 @@ function hocwp_theme_loop( $query ) {
 			}
 
 			$pa['query'] = $query;
+
 			HT_Frontend()->pagination( $pa );
 		}
 	} elseif ( false !== $content_none ) {
