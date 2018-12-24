@@ -5,6 +5,7 @@ jQuery(document).ready(function ($) {
 
     (function () {
         var googleMaps = $(".hocwp-theme.google-maps-marker");
+
         googleMaps.each(function () {
             var element = $(this),
                 mapID = element.attr("id"),
@@ -69,6 +70,7 @@ jQuery(document).ready(function ($) {
             });
 
             var geoAddress = $("input[data-for-maps='" + mapID + "'], select[data-for-maps='" + mapID + "']");
+
             if (geoAddress.length) {
                 geoAddress.on("change", function () {
                     var address = $(this).val();

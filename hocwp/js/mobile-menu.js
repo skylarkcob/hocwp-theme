@@ -53,6 +53,7 @@
 
             if ("undefined" !== typeof menu) {
                 menu.className = menu.className.replace(mobileMenuClass, "");
+
                 if (-1 !== menu.getAttribute("id").indexOf(mobileMenuID)) {
                     menu.style.display = "none";
                 }
@@ -81,9 +82,11 @@
 
     if (window.innerWidth > mobileWidth) {
         button.style.display = "none";
+
         if (-1 !== menu.getAttribute("id").indexOf(mobileMenuID)) {
             menu.style.display = "none";
         }
+
         return;
     }
 

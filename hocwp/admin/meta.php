@@ -38,7 +38,8 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		$box_id = isset( $args['id'] ) ? $args['id'] : '';
 
 		if ( empty( $box_id ) ) {
-			$box_id = HT_Sanitize()->html_id( $box_title );
+			$box_id = sanitize_title( $box_title );
+			$box_id = HT_Sanitize()->html_id( $box_id );
 
 			if ( empty( $box_id ) ) {
 				return;
