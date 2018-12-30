@@ -94,6 +94,51 @@ class HOCWP_Theme_Enqueue {
 	public function autocomplete() {
 		wp_enqueue_script( 'jquery-ui-autocomplete' );
 	}
+
+	public function bootstrap( $args = array() ) {
+		$defaults = array(
+			'cdn'     => false,
+			'version' => '3.3.7',
+			'js'      => false,
+			'theme'   => false
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$base_url = HOCWP_Theme()->custom_url . '/lib/bootstrap/';
+		$base_dir = HOCWP_Theme()->custom_path . '/lib/bootstrap/' . $args['version'];
+
+		if ( $args['cdn'] ) {
+			$parts    = array( 'maxcdn', 'bootstrapcdn', 'com' );
+			$base_url = 'https://';
+			$base_url .= join( '.', $parts );
+			$base_url .= '/bootstrap/';
+
+			unset( $parts );
+		}
+
+		if ( ! $args['cdn'] && ! HT()->is_dir( $base_dir ) ) {
+			return;
+		}
+
+		$base_url .= $args['version'];
+		$base_url = trailingslashit( $base_url );
+
+		$handle = 'bootstrap-' . $args['version'];
+		$handle = sanitize_title( $handle );
+
+		wp_enqueue_style( $handle . '-style', $base_url . 'css/bootstrap.min.css' );
+
+		if ( $args['theme'] ) {
+			wp_enqueue_style( $handle . '-theme-style', $base_url . 'css/bootstrap-theme.min.css' );
+		}
+
+		if ( $args['js'] ) {
+			wp_enqueue_script( $handle, $base_url . 'js/bootstrap.min.js', array( 'jquery' ), false, true );
+		}
+
+		unset( $defaults, $base_url, $base_dir, $handle );
+	}
 }
 
 function HT_Enqueue() {

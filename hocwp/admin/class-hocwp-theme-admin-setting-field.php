@@ -14,6 +14,10 @@ class HOCWP_Theme_Admin_Setting_Field extends HOCWP_Theme_Admin_Field {
 
 		$this->tab     = $tab;
 		$this->section = $section;
+
+		if ( isset( $callback_args['default'] ) ) {
+			$this->default = $callback_args['default'];
+		}
 	}
 
 	public function generate() {

@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.6.3 =
+* Add color class for generate color or adjust color.
+
 = 6.6.0 =
 * Update mobile style.
 * Add combobox supports.

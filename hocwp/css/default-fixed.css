@@ -354,6 +354,7 @@ button[aria-expanded="false"] {
     display: none;
 }
 
+.page_item_has_children > .children,
 .sub-menu {
     position: absolute;
     min-width: 200px;
@@ -364,6 +365,7 @@ button[aria-expanded="false"] {
     margin: 0;
 }
 
+.page_item_has_children .children li a,
 .sub-menu li a {
     display: block;
     padding: 5px 10px;
@@ -373,10 +375,12 @@ button[aria-expanded="false"] {
     position: relative;
 }
 
+.page_item_has_children:hover > .children,
 .menu-item-has-children:hover > .sub-menu {
     display: block;
 }
 
+.page_item_has_children .children .children,
 .sub-menu .sub-menu {
     left: 100%;
     top: 0;

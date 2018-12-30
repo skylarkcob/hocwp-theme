@@ -34,7 +34,7 @@ final class HOCWP_Theme_HTML_Field {
 				$for = $args['id'];
 			}
 
-			$lb->add_attribute( 'for', $args['id'] );
+			$lb->add_attribute( 'for', $for );
 			$lb->set_text( $label );
 
 			if ( isset( $args['type'] ) && ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) ) {
@@ -381,7 +381,17 @@ final class HOCWP_Theme_HTML_Field {
 			$args['options'] = $options;
 
 			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
-				$args['option_all'] = __( '-- Choose term --', 'hocwp-theme' );
+				$option_all = __( '-- Choose term --', 'hocwp-theme' );
+
+				if ( is_string( $taxonomy ) ) {
+					$tax = get_taxonomy( $taxonomy );
+
+					if ( $tax instanceof WP_Taxonomy ) {
+						$option_all = sprintf( __( '-- Choose %s --', 'hocwp-theme' ), $tax->labels->singular_name );
+					}
+				}
+
+				$args['option_all'] = $option_all;
 			}
 		}
 

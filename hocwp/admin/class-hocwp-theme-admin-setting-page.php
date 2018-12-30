@@ -497,6 +497,12 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						case 'sortable_term':
 							HT_Enqueue()->sortable();
 							break;
+						case 'color_picker':
+							HT_Enqueue()->color_picker();
+							break;
+						case 'media_upload':
+							HT_Enqueue()->media_upload();
+							break;
 					}
 				}
 			}

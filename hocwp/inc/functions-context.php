@@ -159,7 +159,7 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 		$attributes = '';
 
 		foreach ( $atts as $att => $attribute ) {
-			$attributes .= sprintf( '%s="%s" ', $att, $attribute );
+			$attributes .= sprintf( '%s="%s" ', $att, esc_attr( $attribute ) );
 		}
 
 		unset( $atts );
