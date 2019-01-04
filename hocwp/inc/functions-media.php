@@ -128,9 +128,9 @@ class HOCWP_Theme_Media {
 		}
 
 		if ( ! function_exists( 'download_url' ) || ! function_exists( 'media_handle_sideload' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-			require_once( ABSPATH . 'wp-admin/includes/media.php' );
+			load_template( ABSPATH . 'wp-admin/includes/image.php' );
+			load_template( ABSPATH . 'wp-admin/includes/file.php' );
+			load_template( ABSPATH . 'wp-admin/includes/media.php' );
 		}
 
 		$file_array = array();

@@ -45,7 +45,7 @@ if ( ! class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
 		}
 
 		public function post_thumbnail_size_display_filter( $size ) {
-			$size = HT_Util()->get_image_size( $size );
+			//$size = HT_Util()->get_image_size( $size );
 
 			return $size;
 		}
@@ -94,6 +94,10 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 	if ( HT_Util()->is_amp() ) {
 		return $html;
+	}
+
+	if ( empty( $size ) || 'post-thumbnail' == $size ) {
+		$size = 'thumbnail';
 	}
 
 	$obj = get_post( $post_id );
@@ -367,26 +371,40 @@ function hocwp_theme_check_post_has_thumbnail( $check, $post_id, $meta_key ) {
 add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
 
 function hocwp_theme_post_thumbnail_size_filter( $size ) {
-	$size = HOCWP_Theme_Utility::get_image_size( $size );
+	$sizes = HOCWP_Theme_Utility::get_image_size( $size );
+
+	if ( ! empty( $sizes ) ) {
+		$size = $sizes;
+	}
 
 	return $size;
 }
 
-add_filter( 'post_thumbnail_size', 'hocwp_theme_post_thumbnail_size_filter' );
+add_filter( 'post_thumbnail_size', 'hocwp_theme_post_thumbnail_size_filter', 99 );
 
 function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment, $size ) {
 	if ( ! is_array( $attr ) ) {
 		$attr = array();
 	}
 
+	if ( empty( $size ) ) {
+		$size = HT_Util()->get_image_size( 'thumbnail' );
+	}
+
 	if ( is_array( $size ) ) {
 		unset( $size['width'], $size['height'] );
 		$replace = join( 'x', $size );
+		$replace = ltrim( $replace, 'x' );
 
 		$class = isset( $attr['class'] ) ? $attr['class'] : '';
-		$class = str_replace( $replace, '', $class );
-		$class = str_replace( 'x size', ' size', $class );
-		$class = rtrim( $class, 'x' );
+
+		if ( false !== strpos( $class, 'attachment- size-' ) ) {
+			$class = str_replace( 'attachment- size-', 'attachment-' . $replace . ' size-' . $replace, $class );
+		} else {
+			$class = str_replace( $replace, '', $class );
+			$class = str_replace( 'x size', ' size', $class );
+			$class = rtrim( $class, 'x' );
+		}
 
 		$sizes = HT_Util()->get_image_sizes();
 

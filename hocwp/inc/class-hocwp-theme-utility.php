@@ -566,7 +566,9 @@ class HOCWP_Theme_Utility {
 			}
 		}
 
-		return HT_Sanitize()->size( $size );
+		$size = HT_Sanitize()->size( $size );
+
+		return $size;
 	}
 
 	public static function get_image_width( $size ) {
