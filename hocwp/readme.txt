@@ -1,6 +1,9 @@
 == Changelog ==
 = 6.6.3 =
 * Add color class for generate color or adjust color.
+* Update Dynamic Thumnail extension.
+* Remove function is_image from HOCWP_Theme class.
+* Add HOCWP_Theme_Media class.
 
 = 6.6.0 =
 * Update mobile style.

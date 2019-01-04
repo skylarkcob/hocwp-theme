@@ -615,18 +615,12 @@ final class HOCWP_Theme {
 		return false;
 	}
 
-	public static function is_image( $url, $id = 0 ) {
-		$result = false;
-
-		if ( self::is_positive_number( $id ) ) {
-			$result = wp_attachment_is_image( $id );
+	public static function is_image( $deprecated, $deprecated1 = null ) {
+		if ( $deprecated || $deprecated1 ) {
+			HT()->debug( sprintf( 'Function %s is deprecated.', __CLASS__ . '::' . __FUNCTION__ ) );
 		}
 
-		if ( ! $result && ! empty( $url ) ) {
-			$result = self::is_image_url( $url );
-		}
-
-		return $result;
+		return false;
 	}
 
 	public static function get_first_image_source( $content ) {

@@ -45,6 +45,8 @@ if ( ! class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
 		}
 
 		public function post_thumbnail_size_display_filter( $size ) {
+			$size = HT_Util()->get_image_size( $size );
+
 			return $size;
 		}
 
@@ -97,19 +99,15 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 	$obj = get_post( $post_id );
 	$alt = $obj->post_title;
 
-	$size = apply_filters( 'hocwp_theme_post_thumbnail_size_display', $size, $post_id );
+	$sizes = apply_filters( 'hocwp_theme_post_thumbnail_size_display', $size, $post_id );
 
-	if ( empty( $size ) || 'post-thumbnail' == $size ) {
-		$size = 'thumbnail';
+	if ( empty( $sizes ) || 'post-thumbnail' == $sizes ) {
+		$sizes = 'thumbnail';
 	}
-
-	$sizes = $size;
 
 	if ( is_string( $sizes ) ) {
 		$sizes = HT_Util()->get_image_size( $sizes );
 	}
-
-	unset( $size );
 
 	$class = 'wp-post-image';
 	$attr  = HOCWP_Theme::attribute_to_array( $attr );
@@ -121,12 +119,29 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 
 	$lazyload = isset( $attr['lazyload'] ) ? $attr['lazyload'] : false;
 
-	$url     = get_post_meta( $post_id, '_thumbnail_url', true );
+	$url = get_post_meta( $post_id, '_thumbnail_url', true );
+
 	$ext_url = $url;
 
 	if ( ! HOCWP_Theme::is_image_url( $url ) ) {
 		$url = HOCWP_Theme::get_first_image_source( $obj->post_content );
 	}
+
+	remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
+
+	if ( ! has_post_thumbnail( $post_id ) && HT()->is_image_url( $url ) ) {
+		$id = HT_Media()->download_image( $url );
+
+		if ( HT()->is_positive_number( $id ) ) {
+			set_post_thumbnail( $post_id, $id );
+
+			$image = wp_get_attachment_image( $id, $size, false, $attr );
+
+			return $image;
+		}
+	}
+
+	add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
 
 	$src = $url;
 
@@ -155,7 +170,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 			}
 		}
 
-		$dirs      = wp_get_upload_dir();
+		$dirs = wp_get_upload_dir();
+
 		$file_name = basename( $url );
 
 		if ( isset( $sizes['crop'] ) ) {
@@ -357,3 +373,33 @@ function hocwp_theme_post_thumbnail_size_filter( $size ) {
 }
 
 add_filter( 'post_thumbnail_size', 'hocwp_theme_post_thumbnail_size_filter' );
+
+function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment, $size ) {
+	if ( ! is_array( $attr ) ) {
+		$attr = array();
+	}
+
+	if ( is_array( $size ) ) {
+		unset( $size['width'], $size['height'] );
+		$replace = join( 'x', $size );
+
+		$class = isset( $attr['class'] ) ? $attr['class'] : '';
+		$class = str_replace( $replace, '', $class );
+		$class = str_replace( 'x size', ' size', $class );
+		$class = rtrim( $class, 'x' );
+
+		$sizes = HT_Util()->get_image_sizes();
+
+		$name = HT_Media()->convert_image_size_to_name( $size, $sizes );
+
+		if ( ! empty( $name ) ) {
+			$class .= ' size-' . sanitize_html_class( $name );
+		}
+
+		$attr['class'] = $class;
+	}
+
+	return $attr;
+}
+
+add_filter( 'wp_get_attachment_image_attributes', 'hocwp_theme_get_attachment_image_attributes_filter', 10, 3 );
