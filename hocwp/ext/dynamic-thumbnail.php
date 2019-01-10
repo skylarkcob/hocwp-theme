@@ -391,10 +391,14 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 		$size = HT_Util()->get_image_size( 'thumbnail' );
 	}
 
-	if ( is_array( $size ) ) {
-		unset( $size['width'], $size['height'] );
-		$replace = join( 'x', $size );
-		$replace = ltrim( $replace, 'x' );
+	if ( ! empty( $size ) ) {
+		if ( is_array( $size ) ) {
+			unset( $size['width'], $size['height'] );
+			$replace = join( 'x', $size );
+			$replace = ltrim( $replace, 'x' );
+		} else {
+			$replace = $size;
+		}
 
 		$class = isset( $attr['class'] ) ? $attr['class'] : '';
 
