@@ -113,12 +113,16 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		$sizes = HT_Util()->get_image_size( $sizes );
 	}
 
-	$class = 'wp-post-image';
+	$class = '';
 	$attr  = HOCWP_Theme::attribute_to_array( $attr );
 
 	if ( isset( $attr['class'] ) ) {
 		$class .= ' ' . $attr['class'];
 		$class = trim( $class );
+	}
+
+	if ( false === strpos( $class, 'wp-post-image' ) ) {
+		$class .= ' wp-post-image';
 	}
 
 	$lazyload = isset( $attr['lazyload'] ) ? $attr['lazyload'] : false;
@@ -391,37 +395,44 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 		$size = HT_Util()->get_image_size( 'thumbnail' );
 	}
 
-	if ( ! empty( $size ) ) {
-		if ( is_array( $size ) ) {
-			unset( $size['width'], $size['height'] );
-			$replace = join( 'x', $size );
-			$replace = ltrim( $replace, 'x' );
-		} else {
-			$replace = $size;
-		}
+	$class = isset( $attr['class'] ) ? $attr['class'] : '';
+	$class = trim( $class );
 
-		$class = isset( $attr['class'] ) ? $attr['class'] : '';
-
-		if ( false !== strpos( $class, 'attachment- size-' ) ) {
-			$class = str_replace( 'attachment- size-', 'attachment-' . $replace . ' size-' . $replace, $class );
-		} else {
-			$class = str_replace( $replace, '', $class );
-			$class = str_replace( 'x size', ' size', $class );
-			$class = rtrim( $class, 'x' );
-		}
-
-		$sizes = HT_Util()->get_image_sizes();
-
-		$name = HT_Media()->convert_image_size_to_name( $size, $sizes );
-
-		if ( ! empty( $name ) ) {
-			$class .= ' size-' . sanitize_html_class( $name );
-		}
-
-		$attr['class'] = $class;
+	if ( is_array( $size ) ) {
+		unset( $size['width'], $size['height'] );
+		$replace = join( 'x', $size );
+		$replace = ltrim( $replace, 'x' );
+	} else {
+		$replace = $size;
 	}
+
+	if ( false !== strpos( $class, 'attachment- size-' ) ) {
+		$class = str_replace( 'attachment- size-', 'attachment-' . $replace . ' size-' . $replace, $class );
+	} elseif ( 'attachment- size-' == $class ) {
+		$class = 'attachment-' . $replace . ' size-' . $replace;
+	} elseif ( is_array( $size ) ) {
+		$class = str_replace( $replace, '', $class );
+		$class = str_replace( 'x size', ' size', $class );
+		$class = rtrim( $class, 'x' );
+	}
+
+	$sizes = HT_Util()->get_image_sizes();
+
+	$name = HT_Media()->convert_image_size_to_name( $size, $sizes );
+
+	if ( ! empty( $name ) ) {
+		$class .= ' size-' . sanitize_html_class( $name );
+	}
+
+	if ( false === strpos( $class, 'wp-post-image' ) ) {
+		$class .= ' wp-post-image';
+	}
+
+	$class = str_replace( 'x wp-post-image', ' wp-post-image', $class );
+
+	$attr['class'] = $class;
 
 	return $attr;
 }
 
-add_filter( 'wp_get_attachment_image_attributes', 'hocwp_theme_get_attachment_image_attributes_filter', 10, 3 );
+add_filter( 'wp_get_attachment_image_attributes', 'hocwp_theme_get_attachment_image_attributes_filter', 99, 3 );
