@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.6.4 =
+* Add more theme support features.
+
 = 6.6.3 =
 * Add color class for generate color or adjust color.
 * Update Dynamic Thumnail extension.

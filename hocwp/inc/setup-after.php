@@ -4,15 +4,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_after_setup_theme() {
-	add_theme_support( 'custom-header' );
-	add_theme_support( 'custom-logo' );
+	$supports = array(
+		'custom-header',
+		'custom-logo',
+		'starter-content',
+		'responsive-embeds',
+		'align-wide',
+		'dark-editor-style',
+		'disable-custom-colors',
+		'disable-custom-font-sizes',
+		'editor-color-pallete',
+		'editor-font-sizes',
+		'editor-styles',
+		'wp-block-styles'
+	);
 
 	/*
 	 * Back compat theme supports WooCommerce.
 	 */
 	if ( function_exists( 'wc' ) && class_exists( 'WooCommerce' ) ) {
-		add_theme_support( 'woocommerce' );
+		$supports[] = 'woocommerce';
 	}
+
+	$supports = apply_filters( 'hocwp_theme_supports', $supports );
+
+	foreach ( $supports as $support ) {
+		$args = apply_filters( 'hocwp_theme_support_' . $support . '_args', array() );
+		add_theme_support( $support, $args );
+	}
+
+	unset( $supports, $support, $args );
 }
 
 add_action( 'after_setup_theme', 'hocwp_theme_after_setup_theme' );
