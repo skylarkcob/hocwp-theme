@@ -40,6 +40,42 @@ final class HOCWP_Theme {
 		return $upload_mb;
 	}
 
+	/**
+	 * Notation to numbers.
+	 *
+	 * This function transforms the php.ini notation for numbers (like '2M') to an integer.
+	 *
+	 * @param  string $size Size value.
+	 *
+	 * @return int
+	 */
+	public function let_to_num( $size ) {
+		$size = str_replace( ' ', '', $size );
+		$size = trim( $size );
+
+		$l   = substr( $size, - 1 );
+		$ret = substr( $size, 0, - 1 );
+
+		$byte = 1024;
+
+		switch ( strtoupper( $l ) ) {
+			case 'P':
+				$ret *= $byte;
+			case 'T':
+				$ret *= $byte;
+			case 'G':
+				$ret *= $byte;
+			case 'M':
+				$ret *= $byte;
+			case 'K':
+				$ret *= $byte;
+		}
+
+		unset( $l, $byte );
+
+		return $ret;
+	}
+
 	public static function is_file( $file, $check = 'exists' ) {
 		return ( is_file( $file ) && ( ( 'exists' == $check && file_exists( $file ) ) || ( 'readable' == $check && is_readable( $file ) ) || ( ( 'writable' == $check || 'writeable' == $check ) && is_writable( $file ) ) || ( 'executable' == $check && is_executable( $file ) ) ) ) ? true : false;
 	}

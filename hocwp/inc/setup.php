@@ -164,6 +164,7 @@ function hocwp_theme_required_plugins( $plugins ) {
 	if ( defined( 'HOCWP_THEME_DEVELOPING' ) && HOCWP_THEME_DEVELOPING ) {
 		$plugins[] = 'sb-core';
 		$plugins[] = 'theme-check';
+		$plugins[] = 'query-monitor';
 	}
 
 	return $plugins;

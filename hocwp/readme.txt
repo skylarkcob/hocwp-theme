@@ -1,6 +1,8 @@
 == Changelog ==
 = 6.6.4 =
 * Add more theme support features.
+* Add custom-ajax.php file.
+* Add Query Monitor plugin for must have development tools.
 
 = 6.6.3 =
 * Add color class for generate color or adjust color.

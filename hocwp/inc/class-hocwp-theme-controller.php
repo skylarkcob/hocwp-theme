@@ -144,29 +144,7 @@ final class HOCWP_Theme_Controller {
 		$this->object->defaults['blacklist_keys'][] = 'penis';
 		$this->object->defaults['blacklist_keys'][] = 'tits';
 		$this->object->defaults['blacklist_keys'][] = 'viagra';
-
-		$this->object->defaults['blacklist_keys'][] = '37.58.100';
-		$this->object->defaults['blacklist_keys'][] = '1.52.133.67';
-		$this->object->defaults['blacklist_keys'][] = '5.144.176.59';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.36';
-		$this->object->defaults['blacklist_keys'][] = '46.161.41.199';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.32';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.42';
-		$this->object->defaults['blacklist_keys'][] = '178.74.109.248';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.66';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.30';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.33';
-		$this->object->defaults['blacklist_keys'][] = '46.161.41.199';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.61';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.46';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.62';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.38';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.40';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.37';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.35';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.71';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.43';
-		$this->object->defaults['blacklist_keys'][] = '46.151.52.68';
+		$this->object->defaults['blacklist_keys'][] = 'lesbian';
 
 		$this->object->defaults['date_format']     = get_option( 'date_format' );
 		$this->object->defaults['time_format']     = get_option( 'time_format' );
