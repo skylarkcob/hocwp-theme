@@ -332,6 +332,10 @@ function hocwp_theme_frontend_and_backend_scripts() {
 
 	wp_localize_script( 'hocwp-theme-quicktags', 'hocwpThemeQuickTags', $args );
 
+	if ( is_user_logged_in() && is_admin_bar_showing() ) {
+		wp_enqueue_style( 'hocwp-theme-user-logged-in-style', HOCWP_Theme()->core_url . '/css/user-logged-in' . HOCWP_THEME_CSS_SUFFIX );
+	}
+
 	do_action( 'hocwp_theme_frontend_and_backend_enqueue_scripts' );
 }
 
