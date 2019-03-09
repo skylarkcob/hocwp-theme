@@ -41,25 +41,32 @@ add_action( 'admin_menu', 'hocwp_theme_settings_page_extension_admin_menu' );
 
 function hocwp_theme_settings_page_extension_screen_options() {
 	global $hocwp_theme;
+
 	if ( ! isset( $hocwp_theme->extensions_list_table ) ) {
 		$hocwp_theme->extensions_list_table = new HOCWP_Extensions_List_Table();
 	}
+
 	$screen = get_current_screen();
+
 	if ( ! is_object( $screen ) || $screen->id != $hocwp_theme->option->hook_suffix ) {
 		return;
 	}
+
 	if ( 'extension' == $hocwp_theme->option->tab ) {
 		$args = array(
 			'label'   => __( 'Number of items per page:', 'hocwp-theme' ),
 			'default' => get_option( 'posts_per_page' ),
 			'option'  => $screen->id . '_per_page'
 		);
+
 		add_screen_option( 'per_page', $args );
+
 		$args = array(
 			'label'   => __( 'Columns', 'hocwp-theme' ),
 			'default' => $hocwp_theme->extensions_list_table->get_columns(),
 			'option'  => $screen->id . '_columns'
 		);
+
 		add_screen_option( 'columns', $args );
 	}
 }

@@ -15,6 +15,7 @@ function hocwp_theme_settings_page_general_tab( $tabs ) {
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_general_tab' );
 
 global $hocwp_theme;
+
 if ( 'general' != $hocwp_theme->option->tab ) {
 	return;
 }
@@ -31,6 +32,14 @@ function hocwp_theme_settings_page_general_section() {
 
 	$sections = apply_filters( 'hocwp_theme_setting_sections', $sections );
 
+	if ( HT()->array_has_value( $sections ) ) {
+		foreach ( $sections as $key => $data ) {
+			if ( ! isset( $data['tab'] ) ) {
+				$sections[ $key ]['tab'] = 'general';
+			}
+		}
+	}
+
 	return $sections;
 }
 
@@ -38,6 +47,7 @@ add_filter( 'hocwp_theme_settings_page_general_settings_section', 'hocwp_theme_s
 
 function hocwp_theme_settings_page_general_field( $fields ) {
 	global $hocwp_theme;
+
 	$options      = $hocwp_theme->options['general'];
 	$logo_display = $options['logo_display'];
 
@@ -167,6 +177,14 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 	$fields[] = $field_image;
 
 	$fields = apply_filters( 'hocwp_theme_setting_fields', $fields, $options );
+
+	if ( HT()->array_has_value( $fields ) ) {
+		foreach ( $fields as $key => $data ) {
+			if ( ! isset( $data['tab'] ) ) {
+				$fields[ $key ]['tab'] = 'general';
+			}
+		}
+	}
 
 	return $fields;
 }
