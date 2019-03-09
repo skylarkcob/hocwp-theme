@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2019-01-10 23:58+0700\n"
+"POT-Creation-Date: 2019-03-09 10:51+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -124,23 +124,23 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:67 hocwp/inc/setup-after.php:41
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:67 hocwp/inc/setup-after.php:62
 msgid "Extensions"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:53
+#: hocwp/admin/admin-setting-page-extension.php:57
 msgid "Number of items per page:"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:59
+#: hocwp/admin/admin-setting-page-extension.php:65
 msgid "Columns"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:87
+#: hocwp/admin/admin-setting-page-extension.php:94
 msgid "Filter extensions list"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:93
+#: hocwp/admin/admin-setting-page-extension.php:100
 msgid "Search"
 msgstr ""
 
@@ -148,51 +148,51 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:27
+#: hocwp/admin/admin-setting-page-general.php:28
 msgid "Site Identity"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:28
+#: hocwp/admin/admin-setting-page-general.php:29
 msgid "Provides logo and favicon so visitors can identify your site."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:54
+#: hocwp/admin/admin-setting-page-general.php:64
 msgid "Site Icon"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:57
+#: hocwp/admin/admin-setting-page-general.php:67
 msgid "The Site Icon is used as a browser and app icon for your site. Icons must be square, and at least <strong>32</strong> pixels wide and tall."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:68
+#: hocwp/admin/admin-setting-page-general.php:78
 msgid "Logo Display"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:75
+#: hocwp/admin/admin-setting-page-general.php:85
 msgid "Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:79 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
+#: hocwp/admin/admin-setting-page-general.php:89 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Text"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:83
+#: hocwp/admin/admin-setting-page-general.php:93
 msgid "Custom HTML"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:102
+#: hocwp/admin/admin-setting-page-general.php:112
 msgid "Logo Text"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:105
+#: hocwp/admin/admin-setting-page-general.php:115
 msgid "If empty, site name will be used. You can use <code>[DOMAIN]</code> for dynamic displaying."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:113
+#: hocwp/admin/admin-setting-page-general.php:123
 msgid "Logo HTML"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:134
+#: hocwp/admin/admin-setting-page-general.php:144
 msgid "Logo Image"
 msgstr ""
 
@@ -212,7 +212,7 @@ msgstr ""
 msgid "The maximum media files upload per day for each member."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-media.php:30
+#: hocwp/admin/admin-setting-page-media.php:31
 msgid "Upload Per Day"
 msgstr ""
 
@@ -314,27 +314,27 @@ msgstr ""
 msgid "Socials"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:33
+#: hocwp/admin/admin-setting-page-social.php:35
 msgid "Social Urls"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:34
+#: hocwp/admin/admin-setting-page-social.php:36
 msgid "Enter url to your social networking account."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:42
+#: hocwp/admin/admin-setting-page-social.php:44
 msgid "See what your Facebook friends liked, shared, or commented on across the Web."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:49
+#: hocwp/admin/admin-setting-page-social.php:51
 msgid "All information about Google account and Google console."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:63
+#: hocwp/admin/admin-setting-page-social.php:65
 msgid "List Socials"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:66
+#: hocwp/admin/admin-setting-page-social.php:68
 msgid "You can specify a list of the socials on your site if current theme supports. Each social separated by commas. E.g: facebook, google, youtube"
 msgstr ""
 
@@ -350,7 +350,7 @@ msgstr ""
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:73 hocwp/inc/setup-after.php:50
+#: hocwp/admin/admin.php:73 hocwp/inc/setup-after.php:71
 msgid "PHP Info"
 msgstr ""
 
@@ -503,7 +503,7 @@ msgstr ""
 msgid "Theme Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:372 hocwp/inc/setup-after.php:32
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:372 hocwp/inc/setup-after.php:53
 msgid "Settings"
 msgstr ""
 
@@ -1506,31 +1506,31 @@ msgstr ""
 msgid "If the link above not working, just copy the link below and paste it to browser address bar:"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:187
+#: hocwp/inc/setup-after.php:208
 msgid "Mobile"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:218
+#: hocwp/inc/setup-after.php:239
 #, php-format
 msgid "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:227
+#: hocwp/inc/setup-after.php:248
 msgid "<strong>Error:</strong> One or more extensions are incompatible with the current theme core version."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:227
+#: hocwp/inc/setup-after.php:248
 msgid "Theme core version doesn't meet requirements"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:292
+#: hocwp/inc/setup-after.php:313
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
 "working normally."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:293
+#: hocwp/inc/setup-after.php:314
 msgid "Missing Required Plugins"
 msgstr ""
 

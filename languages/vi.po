@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2019-01-10 23:58+0700\n"
-"PO-Revision-Date: 2019-01-10 23:58+0700\n"
+"POT-Creation-Date: 2019-03-09 10:51+0700\n"
+"PO-Revision-Date: 2019-03-09 10:51+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -134,23 +134,23 @@ msgid "Mail Message"
 msgstr "Nội dung thư"
 
 #: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:67
-#: hocwp/inc/setup-after.php:41
+#: hocwp/inc/setup-after.php:62
 msgid "Extensions"
 msgstr "Gói mở rộng"
 
-#: hocwp/admin/admin-setting-page-extension.php:53
+#: hocwp/admin/admin-setting-page-extension.php:57
 msgid "Number of items per page:"
 msgstr "Số lượng đối tượng hiển thị trên mỗi trang:"
 
-#: hocwp/admin/admin-setting-page-extension.php:59
+#: hocwp/admin/admin-setting-page-extension.php:65
 msgid "Columns"
 msgstr "Cột"
 
-#: hocwp/admin/admin-setting-page-extension.php:87
+#: hocwp/admin/admin-setting-page-extension.php:94
 msgid "Filter extensions list"
 msgstr "Lọc danh sách gói mở rộng"
 
-#: hocwp/admin/admin-setting-page-extension.php:93
+#: hocwp/admin/admin-setting-page-extension.php:100
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -158,20 +158,20 @@ msgstr "Tìm kiếm"
 msgid "General"
 msgstr "Chung"
 
-#: hocwp/admin/admin-setting-page-general.php:27
+#: hocwp/admin/admin-setting-page-general.php:28
 msgid "Site Identity"
 msgstr "Nhận diện trang"
 
-#: hocwp/admin/admin-setting-page-general.php:28
+#: hocwp/admin/admin-setting-page-general.php:29
 msgid "Provides logo and favicon so visitors can identify your site."
 msgstr ""
 "Cung cấp logo và favicon để khách truy cập có thể nhận diện trang của bạn."
 
-#: hocwp/admin/admin-setting-page-general.php:54
+#: hocwp/admin/admin-setting-page-general.php:64
 msgid "Site Icon"
 msgstr "Biểu tượng trang"
 
-#: hocwp/admin/admin-setting-page-general.php:57
+#: hocwp/admin/admin-setting-page-general.php:67
 msgid ""
 "The Site Icon is used as a browser and app icon for your site. Icons must be "
 "square, and at least <strong>32</strong> pixels wide and tall."
@@ -180,28 +180,28 @@ msgstr ""
 "tượng phải là hình vuông và có kích thước ít nhất <strong>32</strong> cho "
 "chiều rộng và chiều cao."
 
-#: hocwp/admin/admin-setting-page-general.php:68
+#: hocwp/admin/admin-setting-page-general.php:78
 msgid "Logo Display"
 msgstr "Kiểu hiển thị logo"
 
-#: hocwp/admin/admin-setting-page-general.php:75
+#: hocwp/admin/admin-setting-page-general.php:85
 msgid "Image"
 msgstr "Hình ảnh"
 
-#: hocwp/admin/admin-setting-page-general.php:79
+#: hocwp/admin/admin-setting-page-general.php:89
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Text"
 msgstr "Văn bản"
 
-#: hocwp/admin/admin-setting-page-general.php:83
+#: hocwp/admin/admin-setting-page-general.php:93
 msgid "Custom HTML"
 msgstr "Mã tùy chỉnh"
 
-#: hocwp/admin/admin-setting-page-general.php:102
+#: hocwp/admin/admin-setting-page-general.php:112
 msgid "Logo Text"
 msgstr "Văn bản"
 
-#: hocwp/admin/admin-setting-page-general.php:105
+#: hocwp/admin/admin-setting-page-general.php:115
 msgid ""
 "If empty, site name will be used. You can use <code>[DOMAIN]</code> for "
 "dynamic displaying."
@@ -209,11 +209,11 @@ msgstr ""
 "Nếu để trống, tên trang web sẽ được sử dụng. Bạn có thể sử dụng "
 "<code>[DOMAIN]</code> để hiển thị tự động."
 
-#: hocwp/admin/admin-setting-page-general.php:113
+#: hocwp/admin/admin-setting-page-general.php:123
 msgid "Logo HTML"
 msgstr "Mã HTML"
 
-#: hocwp/admin/admin-setting-page-general.php:134
+#: hocwp/admin/admin-setting-page-general.php:144
 msgid "Logo Image"
 msgstr "Hình ảnh"
 
@@ -235,7 +235,7 @@ msgid "The maximum media files upload per day for each member."
 msgstr ""
 "Số lượng tập tin được phép tải lên tối đa hàng ngày cho mỗi thành viên."
 
-#: hocwp/admin/admin-setting-page-media.php:30
+#: hocwp/admin/admin-setting-page-media.php:31
 msgid "Upload Per Day"
 msgstr "Tải lên mỗi ngày"
 
@@ -339,29 +339,29 @@ msgstr "Thuộc tính style"
 msgid "Socials"
 msgstr "Mạng xã hội"
 
-#: hocwp/admin/admin-setting-page-social.php:33
+#: hocwp/admin/admin-setting-page-social.php:35
 msgid "Social Urls"
 msgstr "Đường dẫn mạng xã hội"
 
-#: hocwp/admin/admin-setting-page-social.php:34
+#: hocwp/admin/admin-setting-page-social.php:36
 msgid "Enter url to your social networking account."
 msgstr "Nhập đường dẫn vào tài khoản mạng xã hội của bạn."
 
-#: hocwp/admin/admin-setting-page-social.php:42
+#: hocwp/admin/admin-setting-page-social.php:44
 msgid ""
 "See what your Facebook friends liked, shared, or commented on across the Web."
 msgstr ""
 "Xem những gì bạn bè Facebook của bạn thích, chia sẻ, hoặc bình luận trên Web."
 
-#: hocwp/admin/admin-setting-page-social.php:49
+#: hocwp/admin/admin-setting-page-social.php:51
 msgid "All information about Google account and Google console."
 msgstr "Tất cả thông tin về tài khoản Google và Google console."
 
-#: hocwp/admin/admin-setting-page-social.php:63
+#: hocwp/admin/admin-setting-page-social.php:65
 msgid "List Socials"
 msgstr "Dang sách mạng xã hội"
 
-#: hocwp/admin/admin-setting-page-social.php:66
+#: hocwp/admin/admin-setting-page-social.php:68
 msgid ""
 "You can specify a list of the socials on your site if current theme "
 "supports. Each social separated by commas. E.g: facebook, google, youtube"
@@ -382,7 +382,7 @@ msgstr "Ảnh mặc định"
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:73 hocwp/inc/setup-after.php:50
+#: hocwp/admin/admin.php:73 hocwp/inc/setup-after.php:71
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
@@ -547,7 +547,7 @@ msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:372
-#: hocwp/inc/setup-after.php:32
+#: hocwp/inc/setup-after.php:53
 msgid "Settings"
 msgstr "Cài đặt"
 
@@ -1631,18 +1631,18 @@ msgstr ""
 "Nếu đường link bên trên không hoạt động, bạn chỉ cần sao chép đường dẫn bên "
 "dưới và bỏ vào thanh địa chỉ của trình duyệt:"
 
-#: hocwp/inc/setup-after.php:187
+#: hocwp/inc/setup-after.php:208
 msgid "Mobile"
 msgstr "Điện thoại"
 
-#: hocwp/inc/setup-after.php:218
+#: hocwp/inc/setup-after.php:239
 #, php-format
 msgid ""
 "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 "<strong>%s:</strong> Gói mở rộng này cần phiên bản giao diện ít nhất từ %s."
 
-#: hocwp/inc/setup-after.php:227
+#: hocwp/inc/setup-after.php:248
 msgid ""
 "<strong>Error:</strong> One or more extensions are incompatible with the "
 "current theme core version."
@@ -1650,11 +1650,11 @@ msgstr ""
 "<strong>Lỗi:</strong> Một hoặc nhiều gói mở rộng không tương thích với phiên "
 "bản nhân giao diện hiện tại."
 
-#: hocwp/inc/setup-after.php:227
+#: hocwp/inc/setup-after.php:248
 msgid "Theme core version doesn't meet requirements"
 msgstr "Phiên bản nhân giao diện không đúng"
 
-#: hocwp/inc/setup-after.php:292
+#: hocwp/inc/setup-after.php:313
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are "
@@ -1665,7 +1665,7 @@ msgstr ""
 "quản trị trang web này, xin vui lòng cài đặt và kích hoạt plugin %s để giao "
 "diện được hoạt động bình thường."
 
-#: hocwp/inc/setup-after.php:293
+#: hocwp/inc/setup-after.php:314
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 
