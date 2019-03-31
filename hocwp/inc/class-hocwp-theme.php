@@ -7,6 +7,8 @@ final class HOCWP_Theme {
 	public $version = HOCWP_THEME_CORE_VERSION;
 	protected static $_instance = null;
 
+	public $safe_string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
@@ -92,6 +94,24 @@ final class HOCWP_Theme {
 		}
 
 		return $text;
+	}
+
+	public function random_string( $length = 10, $keyspace = '' ) {
+		if ( empty( $keyspace ) ) {
+			$keyspace = $this->safe_string;
+		}
+
+		$pieces = [ ];
+
+		$max = mb_strlen( $keyspace, '8bit' ) - 1;
+
+		for ( $i = 0; $i < $length; ++ $i ) {
+			$index = random_int( 0, $max );
+
+			$pieces [] = $keyspace[ $index ];
+		}
+
+		return implode( '', $pieces );
 	}
 
 	public function string_chunk( $string, $size, $delimiter = ' ' ) {
