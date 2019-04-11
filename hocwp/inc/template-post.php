@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_article_before( $args ) {
 	$container = isset( $args['container'] ) ? $args['container'] : 'article';
-	echo '<' . $container . ' class="' . join( ' ', get_post_class() ) . '">';
+	echo '<' . $container . ' class="' . join( ' ', get_post_class() ) . '" data-id="' . get_the_ID() . '">';
 }
 
 add_action( 'hocwp_theme_article_before', 'hocwp_theme_article_before' );

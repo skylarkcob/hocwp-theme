@@ -163,7 +163,9 @@ function hocwp_theme_localize_script_l10n() {
 }
 
 function hocwp_theme_admin_enqueue_scripts_action() {
-	global $pagenow;
+	global $pagenow, $post_type;
+
+	$post_type_object = get_post_type_object( $post_type );
 
 	$screen = get_current_screen();
 
@@ -235,6 +237,10 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		wp_add_inline_style( 'hocwp-theme-admin-style', $css );
 
 		unset( $bg, $border, $css );
+	}
+
+	if ( $post_type_object instanceof WP_Post_Type && ! $post_type_object->public ) {
+		wp_enqueue_script( 'hocwp-theme-admin' );
 	}
 
 	unset( $colors );

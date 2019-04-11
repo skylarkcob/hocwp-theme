@@ -205,6 +205,45 @@ class HOCWP_Theme_Extension_Controller {
 		if ( ! isset( $hocwp_theme->extensions ) ) {
 			$hocwp_theme->extensions = array();
 		}
+
+		if ( is_admin() ) {
+			add_action( 'deprecated_extension_run', array( $this, 'deprecated_extension_run_action' ), 10, 3 );
+		}
+	}
+
+	public function deprecated_extension_run_action( $extension, $replacement, $version ) {
+		$message = $this->get_deprecated_message( $extension, $version, $replacement );
+
+		$tr_name = 'deprecated_extension_notices';
+		$notices = get_transient( $tr_name );
+
+		if ( ! is_array( $tr_name ) ) {
+			$notices = array();
+		}
+
+		$notices[] = $message;
+
+		set_transient( $tr_name, $notices );
+
+		add_action( 'admin_notices', array( $this, 'admin_notices_action' ) );
+	}
+
+	public function admin_notices_action() {
+		$tr_name = 'deprecated_extension_notices';
+
+		if ( false !== ( $notices = get_transient( $tr_name ) ) ) {
+			if ( HT()->array_has_value( $notices ) ) {
+				foreach ( $notices as $notice ) {
+					?>
+					<div class="notice notice-warning is-dismissible">
+						<?php echo wpautop( $notice ); ?>
+					</div>
+					<?php
+				}
+			}
+
+			delete_transient( $tr_name );
+		}
 	}
 
 	public static function get_instance() {
@@ -217,6 +256,14 @@ class HOCWP_Theme_Extension_Controller {
 
 	public function get_data() {
 		return get_file_data( $this->headers, array( 'Name' => 'Name', 'Description' => 'Description' ) );
+	}
+
+	public function get_deprecated_message( $extension, $version, $replacement = null ) {
+		if ( ! is_null( $replacement ) ) {
+			return sprintf( __( 'Extension %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.', 'hocwp-theme' ), $extension, $version, $replacement );
+		}
+
+		return sprintf( __( 'Extension %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.', 'hocwp-theme' ), $extension, $version );
 	}
 
 	public function deprecated( $extension, $version, $replacement = null ) {
@@ -240,13 +287,7 @@ class HOCWP_Theme_Extension_Controller {
 		 * @param bool $trigger Whether to trigger the error for deprecated extensions. Default true.
 		 */
 		if ( WP_DEBUG && apply_filters( 'deprecated_extension_trigger_error', true ) ) {
-			if ( ! is_null( $replacement ) ) {
-				/* translators: 1: Extension name, 2: version number, 3: alternative extension name */
-				trigger_error( sprintf( __( 'Extension %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.', 'hocwp-theme' ), $extension, $version, $replacement ) );
-			} else {
-				/* translators: 1: Extension name, 2: version number */
-				trigger_error( sprintf( __( 'Extension %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.', 'hocwp-theme' ), $extension, $version ) );
-			}
+			trigger_error( $this->get_deprecated_message( $extension, $version, $replacement ) );
 		}
 	}
 

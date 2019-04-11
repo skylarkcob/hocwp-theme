@@ -866,7 +866,7 @@ function hocwp_theme_get_custom_logo_filter( $html ) {
 			}
 		} elseif ( 'custom' == $logo_display ) {
 			if ( isset( $options['general']['logo_html'] ) ) {
-				echo isset( $options['general']['logo_html'] );
+				echo $options['general']['logo_html'];
 			}
 		}
 	} else {
