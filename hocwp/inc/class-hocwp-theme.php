@@ -47,7 +47,7 @@ final class HOCWP_Theme {
 	 *
 	 * This function transforms the php.ini notation for numbers (like '2M') to an integer.
 	 *
-	 * @param  string $size Size value.
+	 * @param string $size Size value.
 	 *
 	 * @return int
 	 */
@@ -101,7 +101,7 @@ final class HOCWP_Theme {
 			$keyspace = $this->safe_string;
 		}
 
-		$pieces = [ ];
+		$pieces = [];
 
 		$max = mb_strlen( $keyspace, '8bit' ) - 1;
 
@@ -505,6 +505,10 @@ final class HOCWP_Theme {
 
 		$string = str_replace( '/', '-', $string );
 		$string = trim( $string );
+
+		if ( false !== strpos( $format, ' ' ) && false !== strpos( $format, 'i' ) && false == strpos( $string, ' ' ) ) {
+			$string .= ' 23:59:59';
+		}
 
 		$totime = strtotime( $string );
 

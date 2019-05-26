@@ -87,7 +87,7 @@ final class HOCWP_Theme_HTML_Field {
 					$lb    = new HOCWP_Theme_HTML_Tag( 'label' );
 					$input = new HOCWP_Theme_HTML_Tag( 'input' );
 					$id    = isset( $atts['id'] ) ? $atts['id'] : '';
-					$id .= '_' . $key;
+					$id    .= '_' . $key;
 
 					if ( empty( $label ) ) {
 						$label = $id;
@@ -226,35 +226,56 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	public static function option( $selected, $current, $args, $echo = false ) {
-		$opt = new HOCWP_Theme_HTML_Tag( 'option' );
-		if ( is_array( $args ) ) {
-			$text = isset( $args['text'] ) ? $args['text'] : $current;
-			$ov   = isset( $args['value'] ) ? $args['value'] : $current;
-			unset( $args['text'] );
-			$args['value'] = $ov;
-			$opt->set_attributes( $args );
-		} else {
-			if ( empty( $args ) ) {
-				$text = $current;
-			} else {
-				$text = $args;
+		if ( ( null == $current || empty( $current ) ) && ( null == $args || empty( $args ) ) ) {
+			if ( null == $current ) {
+				$current = '';
 			}
-			$opt->add_attribute( 'value', $current );
-		}
-		$opt->set_text( $text );
-		if ( is_array( $selected ) ) {
-			if ( in_array( $current, $selected ) ) {
-				$selected = $current;
-			} else {
+
+			if ( null == $selected ) {
 				$selected = '';
+			} else {
+				$selected = selected( $selected, $current, false );
 			}
-		}
-		$selected = selected( $selected, $current, false );
-		if ( ! empty( $selected ) ) {
-			$opt->add_attribute( $selected );
+
+			$opt = '<option value="' . $current . '"' . $selected . '></option>';
+		} else {
+			$opt = new HOCWP_Theme_HTML_Tag( 'option' );
+
+			if ( is_array( $args ) ) {
+				$text = isset( $args['text'] ) ? $args['text'] : $current;
+				$ov   = isset( $args['value'] ) ? $args['value'] : $current;
+				unset( $args['text'] );
+				$args['value'] = $ov;
+				$opt->set_attributes( $args );
+			} else {
+				if ( empty( $args ) ) {
+					$text = $current;
+				} else {
+					$text = $args;
+				}
+
+				$opt->add_attribute( 'value', $current );
+			}
+
+			$opt->set_text( $text );
+
+			if ( is_array( $selected ) ) {
+				if ( in_array( $current, $selected ) ) {
+					$selected = $current;
+				} else {
+					$selected = '';
+				}
+			}
+
+			$selected = selected( $selected, $current, false );
+
+			if ( ! empty( $selected ) ) {
+				$opt->add_attribute( $selected );
+			}
+
+			$opt = $opt->build();
 		}
 
-		$opt = $opt->build();
 		if ( $echo ) {
 			echo $opt;
 		}
@@ -277,12 +298,14 @@ final class HOCWP_Theme_HTML_Field {
 					$option_all = str_replace( '--', '', $option_all );
 					$option_all = trim( $option_all );
 					$lasts      = substr( $option_all, 0, - 3 );
+
 					if ( '...' != $lasts && '&hellip;' != $lasts ) {
 						$option_all .= '&hellip;';
 					}
+
 					$args['data-placeholder'] = $option_all;
 
-					$oh .= '<option value=""></option>';
+					$oh .= self::option( null, null, null );
 				} else {
 					$oh .= self::option( $value, '', $option_all );
 				}
@@ -577,7 +600,7 @@ final class HOCWP_Theme_HTML_Field {
 
 			if ( $connects || HT()->array_has_value( $connects ) ) {
 				$class .= ' connected-result ';
-				$ul = new HOCWP_Theme_HTML_Tag( 'ul' );
+				$ul    = new HOCWP_Theme_HTML_Tag( 'ul' );
 				$ul->add_attribute( 'data-list-type', $list_type );
 
 				if ( ! $has_sub ) {
@@ -721,7 +744,7 @@ final class HOCWP_Theme_HTML_Field {
 					$item .= $ul->build();
 				}
 
-				$item .= '</li> ';
+				$item    .= '</li>';
 				$lists[] = $item;
 			}
 
@@ -735,7 +758,7 @@ final class HOCWP_Theme_HTML_Field {
 					continue;
 				}
 
-				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '"> ' . $obj->name . ' (' . $tax->labels->singular_name . ')</li> ';
+				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '">' . $obj->name . ' (' . $tax->labels->singular_name . ')</li>';
 			}
 		}
 
@@ -855,7 +878,7 @@ final class HOCWP_Theme_HTML_Field {
 					$item .= $ul->build();
 				}
 
-				$item .= '</li> ';
+				$item    .= '</li>';
 				$lists[] = $item;
 			}
 
@@ -869,7 +892,7 @@ final class HOCWP_Theme_HTML_Field {
 					continue;
 				}
 
-				$lists[] = '<li class="ui-state-default" data-post-type="' . $obj->post_type . '" data-id="' . $obj->ID . '"> ' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li> ';
+				$lists[] = '<li class="ui-state-default" data-post-type="' . $obj->post_type . '" data-id="' . $obj->ID . '">' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li>';
 			}
 		}
 
@@ -878,11 +901,11 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	public static function size( $args = array() ) {
-		$name        = $args['name'];
-		$name_width  = $name . '[width]';
-		$name_height = $name . '[height]';
-		$class       = isset( $args['class'] ) ? $args['class'] : '';
-		$class .= ' small-text';
+		$name          = $args['name'];
+		$name_width    = $name . '[width]';
+		$name_height   = $name . '[height]';
+		$class         = isset( $args['class'] ) ? $args['class'] : '';
+		$class         .= ' small-text';
 		$args['class'] = trim( $class );
 		$args['type']  = 'number';
 		$args['min']   = 0;
@@ -930,45 +953,45 @@ final class HOCWP_Theme_HTML_Field {
 		if ( 'button' == $type ) {
 			$value = HT_Sanitize()->media_value( $value );
 			$class .= ' button';
-			$id   = isset( $value['id'] ) ? $value['id'] : '';
-			$text = __( 'Add media', 'hocwp-theme' );
-			$url  = isset( $value['url'] ) ? $value['url'] : '';
-			$rms  = 'display: none';
+			$id    = isset( $value['id'] ) ? $value['id'] : '';
+			$text  = __( 'Add media', 'hocwp-theme' );
+			$url   = isset( $value['url'] ) ? $value['url'] : '';
+			$rms   = 'display: none';
 
 			if ( ! empty( $url ) ) {
 				$rms = '';
 			}
 			?>
-			<div class="media-box">
-				<p class="hide-if-no-js">
-					<label>
-						<input class="regular-text media-url" id="<?php echo $args['id']; ?>_url"
-						       name="<?php echo $args['name']; ?>[url]"
-						       value="<?php echo $url; ?>"
-						       type="text">
-					</label>
-					<a href="javascript:" class="<?php echo $class; ?>"
-					   data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
-					   data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
+            <div class="media-box">
+                <p class="hide-if-no-js">
+                    <label>
+                        <input class="regular-text media-url" id="<?php echo $args['id']; ?>_url"
+                               name="<?php echo $args['name']; ?>[url]"
+                               value="<?php echo $url; ?>"
+                               type="text">
+                    </label>
+                    <a href="javascript:" class="<?php echo $class; ?>"
+                       data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
+                       data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
 						<?php echo $text ?>
-					</a>
-					<button type="button"
-					        class="remove-media-data button"
-					        style="<?php echo $rms; ?>"><?php _e( 'Remove media', 'hocwp-theme' ); ?></button>
-				</p>
-				<input id="<?php echo $args['id']; ?>_id" name="<?php echo $args['name']; ?>[id]"
-				       value="<?php echo $id; ?>"
-				       type="hidden" class="media-id">
-			</div>
+                    </a>
+                    <button type="button"
+                            class="remove-media-data button"
+                            style="<?php echo $rms; ?>"><?php _e( 'Remove media', 'hocwp-theme' ); ?></button>
+                </p>
+                <input id="<?php echo $args['id']; ?>_id" name="<?php echo $args['name']; ?>[id]"
+                       value="<?php echo $id; ?>"
+                       type="hidden" class="media-id">
+            </div>
 			<?php
 		} else {
 			$text = sprintf( __( 'Choose %s', 'hocwp-theme' ), $media_type );
 			?>
-			<div class="media-box">
-				<p class="hide-if-no-js">
-					<a href="javascript:" class="<?php echo $class; ?>"
-					   data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
-					   data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
+            <div class="media-box">
+                <p class="hide-if-no-js">
+                    <a href="javascript:" class="<?php echo $class; ?>"
+                       data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
+                       data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
 						<?php
 						if ( HOCWP_Theme::is_positive_number( $value ) ) {
 							$img = new HOCWP_Theme_HTML_Tag( 'img' );
@@ -978,8 +1001,8 @@ final class HOCWP_Theme_HTML_Field {
 							echo $text;
 						}
 						?>
-					</a>
-				</p>
+                    </a>
+                </p>
 				<?php
 				if ( HOCWP_Theme::is_positive_number( $value ) ) {
 					$l10n = hocwp_theme_localize_script_l10n_media_upload();
@@ -987,9 +1010,9 @@ final class HOCWP_Theme_HTML_Field {
 					printf( $l10n['removeImageButton'], $media_type );
 				}
 				?>
-				<input id="<?php echo $args['id']; ?>" name="<?php echo $args['name']; ?>" value="<?php echo $value; ?>"
-				       type="hidden">
-			</div>
+                <input id="<?php echo $args['id']; ?>" name="<?php echo $args['name']; ?>" value="<?php echo $value; ?>"
+                       type="hidden">
+            </div>
 			<?php
 		}
 	}
