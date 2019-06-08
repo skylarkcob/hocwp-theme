@@ -18,6 +18,12 @@ function hocwp_theme_article_after( $args ) {
 add_action( 'hocwp_theme_article_after', 'hocwp_theme_article_after' );
 
 function hocwp_theme_comments_open() {
+	global $post;
+
+	if ( ! ( $post instanceof WP_Post ) ) {
+		return false;
+	}
+
 	return ( ! post_password_required() && ( comments_open() || get_comments_number() ) );
 }
 

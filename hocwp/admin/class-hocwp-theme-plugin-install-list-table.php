@@ -46,7 +46,21 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 		$per_page = 12;
 
 		// These are the tabs which are shown on the page
-		$tabs = array();
+		$tabs = array(
+			'installed' => array(
+				'text'        => _x( 'Installed', 'Plugin Installer', 'hocwp-theme' ),
+				'description' => __( 'The list of plugins are being installing on your site.', 'hocwp-theme' )
+			)
+		);
+
+		$plugins = wp_get_active_and_valid_plugins();
+
+		if ( HT()->array_has_value( $plugins ) ) {
+			$tabs['activated'] = array(
+				'text'        => _x( 'Activated', 'Plugin Installer', 'hocwp-theme' ),
+				'description' => __( 'The list of plugins are being activated on your site.', 'hocwp-theme' )
+			);
+		}
 
 		$tabs['recommended'] = array(
 			'text'        => _x( 'Recommended', 'Plugin Installer', 'hocwp-theme' ),
@@ -65,19 +79,21 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 		/**
 		 * Filters the tabs shown on the Plugin Install screen.
 		 *
-		 * @since 2.7.0
-		 *
 		 * @param array $tabs The tabs shown on the Plugin Install screen. Defaults include 'featured', 'popular',
 		 *                    'recommended', 'favorites', and 'upload'.
+		 *
+		 * @since 2.7.0
+		 *
 		 */
 		$tabs = apply_filters( 'install_plugins_tabs', $tabs );
 
 		/**
 		 * Filters tabs not associated with a menu item on the Plugin Install screen.
 		 *
+		 * @param array $nonmenu_tabs The tabs that don't have a Menu item on the Plugin Install screen.
+		 *
 		 * @since 2.7.0
 		 *
-		 * @param array $nonmenu_tabs The tabs that don't have a Menu item on the Plugin Install screen.
 		 */
 		$nonmenu_tabs = apply_filters( 'install_plugins_nonmenu_tabs', $nonmenu_tabs );
 
@@ -102,6 +118,38 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 			$this->items = $lists;
 			$total_items = count( $lists );
+		} elseif ( 'installed' == $tab ) {
+			$plugins = $this->get_installed_plugin_slugs();
+			$lists   = array();
+
+			foreach ( $plugins as $name ) {
+				$api = HT_Util()->get_wp_plugin_info( $name );
+
+				if ( ! is_wp_error( $api ) ) {
+					$lists[] = $api;
+				}
+			}
+
+			$this->items = $lists;
+			$total_items = count( $lists );
+		} elseif ( 'activated' == $tab ) {
+			$plugins = wp_get_active_and_valid_plugins();
+
+			if ( HT()->array_has_value( $plugins ) ) {
+				$lists = array();
+
+				foreach ( $plugins as $name ) {
+					$name = basename( dirname( $name ) );
+					$api  = HT_Util()->get_wp_plugin_info( $name );
+
+					if ( ! is_wp_error( $api ) ) {
+						$lists[] = $api;
+					}
+				}
+
+				$this->items = $lists;
+				$total_items = count( $lists );
+			}
 		} else {
 			$args = array(
 				'page'              => $paged,
@@ -122,9 +170,10 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			 * The dynamic portion of the hook name, `$tab`, refers to the plugin install tabs.
 			 * Default tabs include 'featured', 'popular', 'recommended', 'favorites', and 'upload'.
 			 *
+			 * @param array|bool $args Plugin Install API arguments.
+			 *
 			 * @since 3.7.0
 			 *
-			 * @param array|bool $args Plugin Install API arguments.
 			 */
 			$args = apply_filters( "install_plugins_table_api_args_{$tab}", $args );
 
@@ -161,6 +210,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 		if ( $this->orderby ) {
 			uasort( $this->items, array( $this, 'order_callback' ) );
 		}
+
+		$total_items = absint( $total_items );
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items,
@@ -200,8 +251,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$this->screen->render_screen_reader_content( 'heading_views' );
 		?>
-		<div class="wp-filter">
-			<ul class="filter-links">
+        <div class="wp-filter">
+            <ul class="filter-links">
 				<?php
 				if ( ! empty( $views ) ) {
 					foreach ( $views as $class => $view ) {
@@ -211,8 +262,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 					echo implode( " </li>\n", $views ) . "</li>\n";
 				}
 				?>
-			</ul>
-		</div>
+            </ul>
+        </div>
 		<?php
 	}
 }

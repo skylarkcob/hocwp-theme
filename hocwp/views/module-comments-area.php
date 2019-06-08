@@ -3,6 +3,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+global $post;
+
+if ( ! ( $post instanceof WP_Post ) ) {
+	return;
+}
+
 if ( post_password_required() ) {
 	return;
 }
@@ -11,7 +17,7 @@ hocwp_theme_html_tag( 'div', 'comments_area', 'class="comments-area" id="comment
 
 if ( have_comments() ) {
 	?>
-	<h2 class="comments-title">
+    <h2 class="comments-title">
 		<?php
 		$comment_count = get_comments_number();
 		if ( 1 === $comment_count ) {
@@ -20,22 +26,22 @@ if ( have_comments() ) {
 			printf( __( '%1$s thoughts on &ldquo;%2$s&rdquo;', 'hocwp-theme' ), number_format_i18n( $comment_count ), '<span>' . get_the_title() . '</span>' );
 		}
 		?>
-	</h2>
+    </h2>
 	<?php the_comments_navigation(); ?>
-	<ol class="comment-list">
+    <ol class="comment-list">
 		<?php
 		wp_list_comments( array(
 			'style'      => 'ol',
 			'short_ping' => true
 		) );
 		?>
-	</ol>
+    </ol>
 	<?php
 	the_comments_navigation();
 
 	if ( ! comments_open() ) {
 		?>
-		<p class="no-comments"><?php _e( 'Comments are closed.', 'hocwp-theme' ); ?></p>
+        <p class="no-comments"><?php _e( 'Comments are closed.', 'hocwp-theme' ); ?></p>
 		<?php
 	}
 } else {

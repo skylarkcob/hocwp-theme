@@ -180,7 +180,11 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 
 	if ( HT()->array_has_value( $fields ) ) {
 		foreach ( $fields as $key => $data ) {
-			if ( ! isset( $data['tab'] ) ) {
+			if ( $data instanceof HOCWP_Theme_Admin_Setting_Field ) {
+				$data = $data->generate();
+			}
+
+			if ( is_array( $data ) && ! isset( $data['tab'] ) ) {
 				$fields[ $key ]['tab'] = 'general';
 			}
 		}

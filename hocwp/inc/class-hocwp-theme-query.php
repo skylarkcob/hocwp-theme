@@ -347,7 +347,29 @@ final class HOCWP_Theme_Query {
 			'meta_key'   => $meta_key,
 			'meta_value' => $meta_value
 		);
-		$args     = wp_parse_args( $args, $defaults );
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$meta_query = isset( $args['meta_query'] ) ? $args['meta_query'] : '';
+
+		if ( ! is_array( $meta_query ) ) {
+			$meta_query = array();
+		}
+
+		$meta_item = array(
+			'key'   => $meta_key,
+			'value' => $meta_value
+		);
+
+		if ( is_numeric( $meta_value ) ) {
+			$meta_item['type'] = 'NUMERIC';
+		}
+
+		$meta_query['relation'] = 'AND';
+
+		$meta_query[] = $meta_item;
+
+		$args['meta_query'] = $meta_query;
 
 		return new WP_Query( $args );
 	}
@@ -445,6 +467,7 @@ final class HOCWP_Theme_Query {
 
 	public function meta_keys( $search = '' ) {
 		global $wpdb;
+
 		$sql = "SELECT meta_key";
 		$sql .= " FROM $wpdb->postmeta";
 		$sql .= " WHERE meta_key like '%$search%'";
@@ -460,6 +483,7 @@ final class HOCWP_Theme_Query {
 			if ( ! isset( $args['tax_query']['relation'] ) ) {
 				$args['tax_query']['relation'] = 'OR';
 			}
+
 			if ( isset( $args['tax_query'] ) ) {
 				array_push( $args['tax_query'], $tax_item );
 			} else {

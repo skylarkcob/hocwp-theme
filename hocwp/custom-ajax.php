@@ -14,13 +14,17 @@ $_SERVER['PHP_SELF'] = '/wp-admin/';
 $path = dirname( __FILE__ );
 $path = substr( $path, 0, strpos( $path, 'wp-content' ) );
 
+if ( ! function_exists( 'load_template' ) ) {
+	require_once( ABSPATH . WPINC . '/template.php' );
+}
+
 /** Load WordPress Bootstrap */
-require_once( $path . 'wp-load.php' );
+load_template( $path . 'wp-load.php' );
 
 /** Allow for cross-domain requests (from the front end). */
 if ( ! function_exists( 'send_origin_headers' ) ) {
-	require_once ABSPATH . WPINC . '/link-template.php';
-	require_once ABSPATH . WPINC . '/http.php';
+	load_template( ABSPATH . WPINC . '/link-template.php' );
+	load_template( ABSPATH . WPINC . '/http.php' );
 }
 
 send_origin_headers();
@@ -31,10 +35,10 @@ if ( empty( $_REQUEST['action'] ) ) {
 }
 
 /** Load WordPress Administration APIs */
-require_once( ABSPATH . 'wp-admin/includes/admin.php' );
+load_template( ABSPATH . 'wp-admin/includes/admin.php' );
 
 /** Load Ajax Handlers for WordPress Core */
-require_once( ABSPATH . 'wp-admin/includes/ajax-actions.php' );
+load_template( ABSPATH . 'wp-admin/includes/ajax-actions.php' );
 
 @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
 @header( 'X-Robots-Tag: noindex' );

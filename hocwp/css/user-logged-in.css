@@ -1,4 +1,4 @@
-#wpadminbar .hocwp-theme.awaiting-mod {
+#wp-toolbar .hocwp-theme.awaiting-mod {
     display: inline-block;
     vertical-align: middle;
     margin: -4px 0 0 2px;
@@ -14,7 +14,7 @@
     z-index: 26;
 }
 
-#wpadminbar .hocwp-theme.awaiting-mod .pending-count {
+#wp-toolbar .hocwp-theme.awaiting-mod .pending-count {
     margin-top: -6px;
     display: inline-block;
 }

@@ -796,7 +796,9 @@ add_action( 'hocwp_theme_site_branding', 'hocwp_theme_site_branding_action' );
 
 function hocwp_theme_theme_mod_custom_logo_filter( $mod ) {
 	global $hocwp_theme;
-	$options      = $hocwp_theme->options;
+
+	$options = $hocwp_theme->options;
+
 	$logo_display = $options['general']['logo_display'];
 
 	if ( 'image' == $logo_display ) {
@@ -816,6 +818,7 @@ add_filter( 'theme_mod_custom_logo', 'hocwp_theme_theme_mod_custom_logo_filter' 
 
 function hocwp_theme_pre_option_site_icon_filter( $value ) {
 	global $hocwp_theme;
+
 	$options = $hocwp_theme->options;
 
 	if ( isset( $options['general']['site_icon'] ) && HOCWP_Theme::is_positive_number( $options['general']['site_icon'] ) ) {
@@ -834,8 +837,18 @@ add_filter( 'pre_option_site_icon', 'hocwp_theme_pre_option_site_icon_filter' );
 
 function hocwp_theme_get_custom_logo_filter( $html ) {
 	global $hocwp_theme;
-	$options      = $hocwp_theme->options;
+
+	$options = $hocwp_theme->options;
+
 	$logo_display = $options['general']['logo_display'];
+
+	if ( is_home() || is_front_page() ) {
+		$tag_name = 'h1';
+	} else {
+		$tag_name = 'p';
+	}
+
+	$tag_name = apply_filters( 'hocwp_theme_site_title_tag', $tag_name );
 
 	if ( 'image' != $logo_display ) {
 		if ( 'text' == $logo_display ) {
@@ -851,35 +864,42 @@ function hocwp_theme_get_custom_logo_filter( $html ) {
 			$text = strip_tags( $text );
 
 			if ( ! empty( $text ) ) {
-				if ( is_front_page() && is_home() ) : ?>
-					<h1 class="site-title">
-						<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"
-						   rel="home"><?php echo $text; ?></a>
-					</h1>
-				<?php else : ?>
-					<p class="site-title">
-						<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"
-						   rel="home"><?php echo $text; ?></a>
-					</p>
-					<?php
-				endif;
+				$tag = new HOCWP_Theme_HTML_Tag( $tag_name );
+				$tag->add_attribute( 'class', 'site-title' );
+
+				$link = new HOCWP_Theme_HTML_Tag( 'a' );
+				$link->add_attribute( 'class', 'navbar-brand' );
+				$link->add_attribute( 'href', esc_url( home_url( '/' ) ) );
+				$link->add_attribute( 'rel', 'home' );
+				$link->set_text( $text );
+
+				$tag->set_text( $link );
+
+				$html = $tag->build();
 			}
 		} elseif ( 'custom' == $logo_display ) {
 			if ( isset( $options['general']['logo_html'] ) ) {
-				echo $options['general']['logo_html'];
+				$html = $options['general']['logo_html'];
 			}
 		}
 	} else {
 		if ( empty( $html ) ) {
 			$html = get_bloginfo( 'name', 'display' );
-			$html = HT()->wrap_text( $html, '<a href="' . esc_url( home_url( '/' ) ) . '">', '</a>' );
+
+			$link = new HOCWP_Theme_HTML_Tag( 'a' );
+			$link->add_attribute( 'class', 'navbar-brand' );
+			$link->add_attribute( 'href', esc_url( home_url( '/' ) ) );
+			$link->add_attribute( 'rel', 'home' );
+			$link->set_text( $html );
+
+			$html = $link->build();
 		}
 
-		if ( is_home() ) {
-			$html = HT()->wrap_text( $html, '<h1 class="site-title">', '</h1>' );
-		} else {
-			$html = HT()->wrap_text( $html, '<p class="site-title">', '</p>' );
-		}
+		$tag = new HOCWP_Theme_HTML_Tag( $tag_name );
+		$tag->add_attribute( 'class', 'site-title' );
+		$tag->set_text( $html );
+
+		$html = $tag->build();
 	}
 
 	return $html;

@@ -169,6 +169,14 @@ class HOCWP_Theme_Utility {
 			'taxonomy'      => 'category'
 		);
 
+		unset( $args['echo'] );
+
+		$selected = HT()->get_value_in_array( $args, 'selected' );
+
+		if ( HT()->array_has_value( $selected ) ) {
+			unset( $args['selected'] );
+		}
+
 		$args   = wp_parse_args( $args, $defaults );
 		$select = wp_dropdown_categories( $args );
 
@@ -182,6 +190,26 @@ class HOCWP_Theme_Utility {
 
 			if ( ! $autocomplete ) {
 				$select = HT()->add_html_attribute( 'select', $select, 'autocomplete="off"' );
+			}
+		}
+
+		$attributes = HT()->get_value_in_array( $args, 'attributes' );
+
+		if ( ! empty( $attributes ) ) {
+			if ( ! is_string( $attributes ) ) {
+				$attributes = HT()->attribute_to_array( $attributes );
+			}
+
+			if ( HT()->array_has_value( $attributes ) ) {
+				foreach ( $attributes as $att => $value ) {
+					$select = HT()->add_html_attribute( 'select', $select, sprintf( '%s="%s"', $att, $value ) );
+				}
+			}
+		}
+
+		if ( HT()->array_has_value( $selected ) ) {
+			foreach ( $selected as $value ) {
+				$select = str_replace( 'value="' . $value . '"', 'value="' . $value . '" selected="selected"', $select );
 			}
 		}
 
@@ -307,9 +335,9 @@ class HOCWP_Theme_Utility {
 
 	public static function ajax_overlay() {
 		?>
-		<div class="hocwp-theme ajax-overlay">
-			<img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
-		</div>
+        <div class="hocwp-theme ajax-overlay">
+            <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
+        </div>
 		<?php
 	}
 
@@ -491,14 +519,14 @@ class HOCWP_Theme_Utility {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
-				<script>
-					jQuery(document).ready(function ($) {
-						setTimeout(function () {
-							var notices = $('.hocwp-theme.notice.auto-hide');
-							notices.fadeOut(1000);
-						}, <?php echo $hidden_interval; ?>);
-					});
-				</script>
+                <script>
+                    jQuery(document).ready(function ($) {
+                        setTimeout(function () {
+                            var notices = $('.hocwp-theme.notice.auto-hide');
+                            notices.fadeOut(1000);
+                        }, <?php echo $hidden_interval; ?>);
+                    });
+                </script>
 				<?php
 				$message .= ob_get_clean();
 			}
@@ -1303,22 +1331,22 @@ class HOCWP_Theme_Utility {
 			$locale = 'vi_VN';
 		}
 		?>
-		<script>
-			(function (d, s, id) {
-				var js, gjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {
-					return;
-				}
-				js = d.createElement(s);
-				js.id = id;
-				js.async = "async";
-				js.defer = "defer";
-				js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
-				js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
-				js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
-				gjs.parentNode.insertBefore(js, gjs);
-			}(document, "script", "google-jssdk"));
-		</script>
+        <script>
+            (function (d, s, id) {
+                var js, gjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.async = "async";
+                js.defer = "defer";
+                js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
+                js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
+                js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
+                gjs.parentNode.insertBefore(js, gjs);
+            }(document, "script", "google-jssdk"));
+        </script>
 		<?php
 	}
 
@@ -1355,15 +1383,15 @@ class HOCWP_Theme_Utility {
 				$version = isset( $args['version'] ) ? $args['version'] : '2.11';
 				$version = trim( $version, 'v' );
 				?>
-				<div id="fb-root"></div>
-				<script>(function (d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0];
-						if (d.getElementById(id)) return;
-						js = d.createElement(s);
-						js.id = id;
-						js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
-						fjs.parentNode.insertBefore(js, fjs);
-					}(document, "script", "facebook-jssdk"));</script>
+                <div id="fb-root"></div>
+                <script>(function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, "script", "facebook-jssdk"));</script>
 				<?php
 			} else {
 				echo $sdk;
@@ -1450,8 +1478,8 @@ class HOCWP_Theme_Utility {
 
 		$query_root = "DELETE FROM $wpdb->options";
 		$query_root .= " WHERE option_name like %s";
-		$key_1 = '_transient_';
-		$key_2 = '_transient_timeout_';
+		$key_1      = '_transient_';
+		$key_2      = '_transient_timeout_';
 		if ( ! empty( $transient_name ) ) {
 			$transient_name = '%' . $transient_name . '%';
 
@@ -1492,21 +1520,21 @@ class HOCWP_Theme_Utility {
 
 		if ( 'v2' == $version ) {
 			?>
-			<script>
-				(function (d, s, id) {
-					var js, gjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) {
-						return;
-					}
-					js = d.createElement(s);
-					js.id = id;
-					js.async = "async";
-					js.defer = "defer";
-					js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
-					gjs.parentNode.insertBefore(js, gjs);
-				}(document, "script", "recaptcha-jssdk"));
-			</script>
-			<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
+            <script>
+                (function (d, s, id) {
+                    var js, gjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.async = "async";
+                    js.defer = "defer";
+                    js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
+                    gjs.parentNode.insertBefore(js, gjs);
+                }(document, "script", "recaptcha-jssdk"));
+            </script>
+            <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
 			<?php
 		}
 	}

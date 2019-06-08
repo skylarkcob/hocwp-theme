@@ -7,6 +7,7 @@ function hocwp_theme_load_template( $_template_file, $include_once = false ) {
 	if ( ! HT()->string_contain( $_template_file, '.php' ) ) {
 		$_template_file .= '.php';
 	}
+
 	if ( HT()->is_file( $_template_file ) ) {
 		load_template( $_template_file, $include_once );
 	}
@@ -14,17 +15,21 @@ function hocwp_theme_load_template( $_template_file, $include_once = false ) {
 
 function hocwp_theme_load_views( $name ) {
 	$name = HOCWP_Theme_Sanitize::extension( $name, 'php' );
+
 	if ( ! HT()->is_file( $name ) ) {
 		$name = HOCWP_THEME_CORE_PATH . '/views/' . $name;
 	}
+
 	hocwp_theme_load_template( $name );
 }
 
 function hocwp_theme_load_custom_template( $name ) {
 	$name = HOCWP_Theme_Sanitize::extension( $name, 'php' );
+
 	if ( ! HT()->is_file( $name ) ) {
 		$name = HOCWP_THEME_CUSTOM_PATH . '/views/' . $name;
 	}
+
 	hocwp_theme_load_template( $name );
 }
 
