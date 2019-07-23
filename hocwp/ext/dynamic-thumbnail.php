@@ -387,6 +387,8 @@ function hocwp_theme_post_thumbnail_size_filter( $size ) {
 add_filter( 'post_thumbnail_size', 'hocwp_theme_post_thumbnail_size_filter', 99 );
 
 function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment, $size ) {
+	$post_id = get_the_ID();
+
 	if ( ! is_array( $attr ) ) {
 		$attr = array();
 	}
@@ -406,23 +408,41 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 		$replace = $size;
 	}
 
+	$classes = explode( ' ', $class );
+
+	foreach ( $classes as $key => $part ) {
+		$part = explode( 'xx', $part );
+
+		$classes[ $key ] = current( $part );
+	}
+
+	$class = join( ' ', $classes );
+
+	unset( $classes, $key, $part );
+
 	if ( false !== strpos( $class, 'attachment- size-' ) ) {
 		$class = str_replace( 'attachment- size-', 'attachment-' . $replace . ' size-' . $replace, $class );
 	} elseif ( 'attachment- size-' == $class ) {
 		$class = 'attachment-' . $replace . ' size-' . $replace;
 	} elseif ( is_array( $size ) ) {
-		$class = str_replace( $replace, '', $class );
+		$class = str_replace( 'x' . $replace, '', $class );
 		$class = str_replace( 'x size', ' size', $class );
 		$class = rtrim( $class, 'x' );
 	}
+
+	unset( $replace );
 
 	$sizes = HT_Util()->get_image_sizes();
 
 	$name = HT_Media()->convert_image_size_to_name( $size, $sizes );
 
+	unset( $sizes );
+
 	if ( ! empty( $name ) ) {
 		$class .= ' size-' . sanitize_html_class( $name );
 	}
+
+	unset( $name );
 
 	if ( false === strpos( $class, 'wp-post-image' ) ) {
 		$class .= ' wp-post-image';
@@ -430,7 +450,23 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 
 	$class = str_replace( 'x wp-post-image', ' wp-post-image', $class );
 
+	if ( $attachment instanceof WP_Post ) {
+		$class .= ' attachment-id-' . $attachment->ID;
+		$attr['data-media-id'] = $attachment->ID;
+	}
+
+	$object = get_post( $post_id );
+
+	if ( $object instanceof WP_Post ) {
+		$class .= ' post-type-' . $object->post_type;
+		$attr['data-post-id'] = $object->ID;
+	}
+
+	unset( $post_id, $object );
+
 	$attr['class'] = $class;
+
+	unset( $class );
 
 	return $attr;
 }

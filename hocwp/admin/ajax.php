@@ -39,7 +39,8 @@ class HOCWP_Theme_AJAX {
 	public function default_callback() {
 		$method = HT()->get_method_value( 'method', 'request', 'post' );
 		$nonce  = HT()->get_method_value( 'nonce', $method );
-		$data   = array(
+
+		$data = array(
 			'message' => __( 'AJAX nonce is invalid.', 'hocwp-theme' )
 		);
 

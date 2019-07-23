@@ -118,7 +118,26 @@ class HOCWP_Theme_Enqueue {
 		}
 
 		if ( ! $args['cdn'] && ! HT()->is_dir( $base_dir ) ) {
-			return;
+			// Auto check version
+			$tmp = dirname( $base_dir );
+			$tmp = trailingslashit( $tmp );
+			$tmp .= '*';
+			$dirs = glob( $tmp, GLOB_ONLYDIR );
+
+			if ( HT()->array_has_value( $dirs ) ) {
+				$tmp = current( $dirs );
+				$tmp = trailingslashit( $tmp );
+
+				if ( file_exists( $tmp . 'css/bootstrap.min.css' ) ) {
+					$args['version'] = basename( $tmp );
+
+					$base_dir = $tmp;
+				}
+			}
+
+			if ( ! HT()->is_dir( $base_dir ) ) {
+				return;
+			}
 		}
 
 		$base_url .= $args['version'];

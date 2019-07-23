@@ -21,4 +21,4 @@ function hocwp_theme_login_headertitle_filter( $title ) {
 	return $title;
 }
 
-add_filter( 'login_headertitle', 'hocwp_theme_login_headertitle_filter' );
+add_filter( 'login_headertext', 'hocwp_theme_login_headertitle_filter' );

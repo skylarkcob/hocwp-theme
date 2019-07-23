@@ -35,6 +35,10 @@ final class HOCWP_Theme_Query {
 	}
 
 	public static function related( $args = array(), $type = 'post' ) {
+		if ( ! isset( $args['post_type'] ) ) {
+			$args['post_type'] = $type;
+		}
+
 		return self::related_posts( $args );
 	}
 
