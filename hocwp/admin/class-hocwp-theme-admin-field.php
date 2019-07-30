@@ -18,6 +18,26 @@ abstract class HOCWP_Theme_Admin_Field {
 		$this->data_type     = $data_type;
 	}
 
+	public function set_id( $id ) {
+		$this->id = $id;
+	}
+
+	public function set_title( $title ) {
+		$this->title = $title;
+	}
+
+	public function set_callback( $callback ) {
+		$this->callback = $callback;
+	}
+
+	public function set_callback_args( $args ) {
+		$this->callback_args = $args;
+	}
+
+	public function set_data_type( $type ) {
+		$this->data_type = $type;
+	}
+
 	protected function sanitize() {
 		if ( ! is_callable( $this->callback ) ) {
 			if ( empty( $this->callback ) ) {

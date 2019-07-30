@@ -1,4 +1,11 @@
 == Changelog ==
+= 6.6.6 =
+* Add theme support wp_body_open action hook.
+* Update class admin setting field.
+* Add action hook for post meta fields.
+* Remove line height 30px mobile menu.
+* Update mobile menu allows custom toggle button.
+
 = 6.6.5 =
 * Fix custom HTML logo.
 * Show admin notice for deprecated extension.

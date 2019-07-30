@@ -153,6 +153,8 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 
 		$field = hocwp_theme_create_meta_field( 'full_width', '', 'input', $args );
 		$meta->add_field( $field );
+
+		do_action( 'hocwp_theme_meta_post_advanced_settings_fields', $meta );
 	}
 
 	add_action( 'load-post.php', 'hocwp_theme_meta_box_advanced_settings' );

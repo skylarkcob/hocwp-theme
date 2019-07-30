@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</head>
 <?php
 hocwp_theme_html_tag( 'body' );
+wp_body_open();
 hocwp_theme_html_tag( 'div', 'site_container' );
 ?>
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'hocwp-theme' ); ?></a>

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_media_file_exists( $id ) {
-	if ( HT()->is_file( get_attached_file( $id ) ) ) {
+	if ( HT()->is_positive_number( $id ) && HT()->is_file( get_attached_file( $id ) ) ) {
 		return true;
 	}
 

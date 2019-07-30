@@ -4,4 +4,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $hocwp_theme;
+
 $hocwp_theme = HOCWP_Theme()->object;

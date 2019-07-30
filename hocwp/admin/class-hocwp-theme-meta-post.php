@@ -54,6 +54,10 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		$this->id = $id;
 	}
 
+	public function get_id() {
+		return $this->id;
+	}
+
 	public function set_title( $title ) {
 		$this->title = $title;
 	}
@@ -159,6 +163,8 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 				$this->meta_row( $field, $id );
 			}
 		}
+
+		add_action( 'hocwp_theme_meta_post_fields', $this );
 
 		echo '</div>';
 	}

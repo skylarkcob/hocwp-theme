@@ -20,6 +20,22 @@ class HOCWP_Theme_Admin_Setting_Field extends HOCWP_Theme_Admin_Field {
 		}
 	}
 
+	public function set_tab( $tab ) {
+		$this->tab = $tab;
+	}
+
+	public function set_section( $section ) {
+		$this->section = $section;
+	}
+
+	public function set_default( $default ) {
+		$this->default = $default;
+	}
+
+	public function set_value( $value ) {
+		$this->value = $value;
+	}
+
 	public function generate() {
 		$this->sanitize();
 
