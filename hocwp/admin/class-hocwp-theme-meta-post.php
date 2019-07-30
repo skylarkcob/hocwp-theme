@@ -125,6 +125,10 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function callback( $post, $args ) {
+		if ( ! is_array( $args ) ) {
+			return;
+		}
+
 		echo '<div class="hocwp-theme">';
 		wp_nonce_field( $this->id, $this->id . '_nonce' );
 
@@ -138,6 +142,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 		if ( $this->form_table ) {
 			echo '<table class="form-table">';
+
 			foreach ( (array) $this->fields as $field ) {
 				$id    = $this->get_field_id( $field );
 				$field = $this->sanitize_value( $post->ID, $field );
@@ -155,6 +160,9 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 				</tr>
 				<?php
 			}
+
+			do_action( 'hocwp_theme_meta_post_fields', $this );
+
 			echo '</table>';
 		} else {
 			foreach ( (array) $this->fields as $field ) {
@@ -162,9 +170,9 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 				$field = $this->sanitize_value( $post->ID, $field );
 				$this->meta_row( $field, $id );
 			}
-		}
 
-		add_action( 'hocwp_theme_meta_post_fields', $this );
+			do_action( 'hocwp_theme_meta_post_fields', $this );
+		}
 
 		echo '</div>';
 	}
