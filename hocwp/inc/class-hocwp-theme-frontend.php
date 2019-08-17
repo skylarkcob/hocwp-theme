@@ -31,6 +31,47 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		return $atts;
 	}
 
+	public function wp_nav_menu_helper( $args = array() ) {
+		$container_class = isset( $args['container_class'] ) ? $args['container_class'] : '';
+
+		$position = isset( $args['position'] ) ? $args['position'] : 'left';
+
+		if ( 'left' !== $position ) {
+			$position = 'right';
+		}
+
+		$container_class .= ' position-' . $position;
+
+		$button = isset( $args['mobile_button'] ) ? $args['mobile_button'] : '';
+
+		$button_control = isset( $args['button_control'] ) ? $args['button_control'] : '';
+
+		if ( empty( $button ) ) {
+			$button = hocwp_theme_menu_button( $button_control );
+		}
+
+		$mobile_button_id = isset( $args['mobile_button_id'] ) ? $args['mobile_button_id'] : '';
+
+		if ( empty( $mobile_button_id ) ) {
+			if ( empty( $button_control ) ) {
+				$button_control = 'main-menu';
+			}
+
+			$mobile_button_id = 'toggle-' . $button_control;
+		}
+
+		$button .= '<ul id="%1$s" class="%2$s" data-button-control="' . esc_attr( $mobile_button_id ) . '">%3$s</ul>';
+
+		$defaults = array(
+			'container_class' => trim( $container_class ),
+			'items_wrap'      => $button
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		wp_nav_menu( $args );
+	}
+
 	public static function pagination( $args = array() ) {
 		if ( $args instanceof WP_Query ) {
 			$args = array( 'query' => $args );
