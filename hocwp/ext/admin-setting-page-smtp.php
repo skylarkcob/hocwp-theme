@@ -221,49 +221,80 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 	if ( isset( $_POST['submit'] ) ) {
 		if ( HT_Util()->verify_nonce( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ) ) {
 			$to_email = isset( $_POST['hocwp_theme_test_smtp_to'] ) ? $_POST['hocwp_theme_test_smtp_to'] : '';
+
 			if ( ! is_email( $to_email ) ) {
 				$to_email = get_option( 'admin_email' );
 			}
+
 			if ( is_email( $to_email ) ) {
 				global $phpmailer;
 				$tmp = $phpmailer;
+
+				$switched_locale = '';
+
+				if ( is_user_logged_in() ) {
+					$user = wp_get_current_user();
+
+					$switched_locale = switch_to_locale( get_user_locale( $user ) );
+				}
+
 				if ( ! is_object( $phpmailer ) || ! is_a( $phpmailer, 'PHPMailer' ) ) {
 					load_template( ABSPATH . WPINC . '/class-phpmailer.php' );
 					load_template( ABSPATH . WPINC . '/class-smtp.php' );
 					$phpmailer = new PHPMailer( true );
 				}
+
 				$subject = isset( $_POST['hocwp_theme_test_smtp_subject'] ) ? $_POST['hocwp_theme_test_smtp_subject'] : '';
+
 				if ( empty( $subject ) ) {
 					$subject = __( 'SMTP Email', 'hocwp-theme' ) . ': ' . sprintf( __( 'Test mail to %s', 'hocwp-theme' ), $to_email );
 				}
+
 				$message = isset( $_POST['hocwp_theme_test_smtp_message'] ) ? $_POST['hocwp_theme_test_smtp_message'] : '';
+
 				if ( empty( $message ) ) {
 					$message = __( 'Thank you for using HocWP, your SMTP mail settings work successfully.', 'hocwp-theme' );
 				}
+
+				$subject = sprintf( '[%s] ', wp_specialchars_decode( get_bloginfo( 'blogname' ) ) ) . $subject;
+
 				$phpmailer->SMTPDebug = true;
 				$phpmailer->isHTML( true );
+
 				ob_start();
-				$result       = wp_mail( $to_email, $subject, $message );
-				$sent         = $result;
-				$smtp_debug   = ob_get_clean();
+				$result     = HT_Util()->html_mail( $to_email, $subject, $message );
+				$sent       = $result;
+				$smtp_debug = ob_get_clean();
+
+				if ( $switched_locale ) {
+					restore_previous_locale();
+				}
+
 				$test_message = '<p><strong>' . __( 'Test Message Sent', 'hocwp-theme' ) . '</strong></p>';
+
 				ob_start();
 				var_dump( $result );
 				$result = ob_get_clean();
+
 				$test_message .= '<p>' . sprintf( __( 'The result was: %s', 'hocwp-theme' ), $result ) . '</p>';
 				$test_message .= '<p>' . __( 'The full debugging output is shown below:', 'hocwp-theme' ) . '</p>';
+
 				ob_start();
 				var_dump( $phpmailer );
 				$mailer_debug = ob_get_clean();
+
 				$test_message .= '<pre>' . $mailer_debug . '</pre>';
 				$test_message .= '<p>' . __( 'The SMTP debugging output is shown below:', 'hocwp-theme' ) . '</p>';
 				$test_message .= '<pre>' . $smtp_debug . '</pre>';
+
 				$args = array(
 					'message' => $test_message
 				);
+
 				if ( ! $sent ) {
 					$args['type'] = 'error';
 				}
+
 				HOCWP_Theme_Utility::admin_notice( $args );
 				$phpmailer = $tmp;
 			}

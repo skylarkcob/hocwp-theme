@@ -335,9 +335,9 @@ class HOCWP_Theme_Utility {
 
 	public static function ajax_overlay() {
 		?>
-        <div class="hocwp-theme ajax-overlay">
-            <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
-        </div>
+		<div class="hocwp-theme ajax-overlay">
+			<img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
+		</div>
 		<?php
 	}
 
@@ -519,14 +519,14 @@ class HOCWP_Theme_Utility {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
-                <script>
-                    jQuery(document).ready(function ($) {
-                        setTimeout(function () {
-                            var notices = $('.hocwp-theme.notice.auto-hide');
-                            notices.fadeOut(1000);
-                        }, <?php echo $hidden_interval; ?>);
-                    });
-                </script>
+				<script>
+					jQuery(document).ready(function ($) {
+						setTimeout(function () {
+							var notices = $('.hocwp-theme.notice.auto-hide');
+							notices.fadeOut(1000);
+						}, <?php echo $hidden_interval; ?>);
+					});
+				</script>
 				<?php
 				$message .= ob_get_clean();
 			}
@@ -623,17 +623,45 @@ class HOCWP_Theme_Utility {
 		return false;
 	}
 
+	public function get_user_activation_key( $key, $user ) {
+		global $wp_hasher, $wpdb;
+
+		$user = $this->return_user( $user );
+
+		if ( ! ( $user instanceof WP_User ) ) {
+			return false;
+		}
+
+		if ( empty( $wp_hasher ) ) {
+			require_once ABSPATH . WPINC . '/class-phpass.php';
+			$wp_hasher = new PasswordHash( 8, true );
+		}
+
+		$hashed = time() . ':' . $wp_hasher->HashPassword( $key );
+
+		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array(
+			'user_login' => $user->user_login,
+			'ID'         => $user->ID
+		) );
+
+		$_SESSION['user_activation_key'] = $hashed;
+
+		return $hashed;
+	}
+
 	public static function timestamp_to_string( $timestamp, $format = null, $timezone = null ) {
 		if ( ! is_int( $timestamp ) ) {
 			$timestamp = intval( $timestamp );
 		}
 
 		global $hocwp_theme;
+
 		$defaults = $hocwp_theme->defaults;
 
 		if ( null == $format ) {
-			$df     = ( isset( $defaults['date_format'] ) && ! empty( $defaults['date_format'] ) ) ? $defaults['date_format'] : 'Y-m-d';
-			$tf     = ( isset( $defaults['time_format'] ) && ! empty( $defaults['time_format'] ) ) ? $defaults['time_format'] : 'H:i:s';
+			$df = ( isset( $defaults['date_format'] ) && ! empty( $defaults['date_format'] ) ) ? $defaults['date_format'] : 'Y-m-d';
+			$tf = ( isset( $defaults['time_format'] ) && ! empty( $defaults['time_format'] ) ) ? $defaults['time_format'] : 'H:i:s';
+
 			$format = "$df $tf";
 		}
 
@@ -1331,22 +1359,22 @@ class HOCWP_Theme_Utility {
 			$locale = 'vi_VN';
 		}
 		?>
-        <script>
-            (function (d, s, id) {
-                var js, gjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement(s);
-                js.id = id;
-                js.async = "async";
-                js.defer = "defer";
-                js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
-                js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
-                js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
-                gjs.parentNode.insertBefore(js, gjs);
-            }(document, "script", "google-jssdk"));
-        </script>
+		<script>
+			(function (d, s, id) {
+				var js, gjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement(s);
+				js.id = id;
+				js.async = "async";
+				js.defer = "defer";
+				js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
+				js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
+				js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
+				gjs.parentNode.insertBefore(js, gjs);
+			}(document, "script", "google-jssdk"));
+		</script>
 		<?php
 	}
 
@@ -1383,15 +1411,15 @@ class HOCWP_Theme_Utility {
 				$version = isset( $args['version'] ) ? $args['version'] : '2.11';
 				$version = trim( $version, 'v' );
 				?>
-                <div id="fb-root"></div>
-                <script>(function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, "script", "facebook-jssdk"));</script>
+				<div id="fb-root"></div>
+				<script>(function (d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) return;
+						js = d.createElement(s);
+						js.id = id;
+						js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, "script", "facebook-jssdk"));</script>
 				<?php
 			} else {
 				echo $sdk;
@@ -1478,8 +1506,8 @@ class HOCWP_Theme_Utility {
 
 		$query_root = "DELETE FROM $wpdb->options";
 		$query_root .= " WHERE option_name like %s";
-		$key_1      = '_transient_';
-		$key_2      = '_transient_timeout_';
+		$key_1 = '_transient_';
+		$key_2 = '_transient_timeout_';
 		if ( ! empty( $transient_name ) ) {
 			$transient_name = '%' . $transient_name . '%';
 
@@ -1501,6 +1529,11 @@ class HOCWP_Theme_Utility {
 
 	public function get_theme_options( $tab ) {
 		global $hocwp_theme;
+
+		if ( ! is_array( $hocwp_theme->options ) ) {
+			$hocwp_theme->options = (array) get_option( HOCWP_Theme()->get_prefix() );
+		}
+
 		$options = isset( $hocwp_theme->options[ $tab ] ) ? $hocwp_theme->options[ $tab ] : '';
 
 		if ( ! is_array( $options ) ) {
@@ -1520,21 +1553,21 @@ class HOCWP_Theme_Utility {
 
 		if ( 'v2' == $version ) {
 			?>
-            <script>
-                (function (d, s, id) {
-                    var js, gjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) {
-                        return;
-                    }
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.async = "async";
-                    js.defer = "defer";
-                    js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
-                    gjs.parentNode.insertBefore(js, gjs);
-                }(document, "script", "recaptcha-jssdk"));
-            </script>
-            <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
+			<script>
+				(function (d, s, id) {
+					var js, gjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {
+						return;
+					}
+					js = d.createElement(s);
+					js.id = id;
+					js.async = "async";
+					js.defer = "defer";
+					js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
+					gjs.parentNode.insertBefore(js, gjs);
+				}(document, "script", "recaptcha-jssdk"));
+			</script>
+			<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
 			<?php
 		}
 	}

@@ -1,4 +1,14 @@
 == Changelog ==
+= 6.6.7 =
+* Move custom-ajax.php to Extension by HocWP Team plugin.
+* Add option for setting jpeg image quality.
+* Add floating post nav links.
+* Use switch_to_locale function to set user locale before sending email.
+* Add filter to update admin ajax url.
+* Add function to check post setting valid.
+* Add blog name to email subjects.
+* Track user last activity.
+
 = 6.6.6 =
 * Add theme support wp_body_open action hook.
 * Update class admin setting field.

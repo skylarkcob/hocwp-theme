@@ -40,22 +40,48 @@ class HOCWP_Theme_Options {
 		return HT_Util()->get_theme_option( $key, $default, $tab );
 	}
 
-	public function check_page_valid( $page, $check_current_page = false ) {
-		if ( $page instanceof WP_Post ) {
-			$page_template = get_post_meta( $page->ID, '_wp_page_template', true );
+	public function check_page_valid( $page, $check_current_page = false, $page_template = true ) {
+		if ( HT()->is_positive_number( $page ) ) {
+			$page = get_post( $page );
+		}
 
-			if ( ! empty( $page->post_content ) || ( 'default' != $page_template && file_exists( get_template_directory() . '/' . $page_template ) ) ) {
+		if ( ! $this->check_post_valid( $page, 'page' ) ) {
+			return false;
+		}
 
-				if ( $check_current_page ) {
-					if ( is_page( $page->ID ) ) {
-						return true;
-					}
+		if ( ! $page_template ) {
+			return true;
+		}
 
-					return false;
+		$page_template = get_post_meta( $page->ID, '_wp_page_template', true );
+
+		if ( ! empty( $page->post_content ) || ( 'default' != $page_template && file_exists( get_template_directory() . '/' . $page_template ) ) ) {
+
+			if ( $check_current_page ) {
+				if ( is_page( $page->ID ) ) {
+					return true;
 				}
 
-				return true;
+				return false;
 			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public function check_post_valid( $id_or_object, $post_type = null ) {
+		if ( HT()->is_positive_number( $id_or_object ) ) {
+			$id_or_object = get_post( $id_or_object );
+		}
+
+		if ( $id_or_object instanceof WP_Post ) {
+			if ( ! empty( $post_type ) && $post_type != $id_or_object->post_type ) {
+				return false;
+			}
+
+			return true;
 		}
 
 		return false;

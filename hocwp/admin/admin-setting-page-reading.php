@@ -75,6 +75,11 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'sticky_last_widget', __( 'Sticky Last Widget', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
 	$fields[] = $field;
 
+	$args['label'] = __( 'Show float post nav links on single page.', 'hocwp-theme' );
+
+	$field    = hocwp_theme_create_setting_field( 'float_post_nav', __( 'Float Post Nav', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
+
 	$args = array(
 		'class'   => 'regular-text',
 		'options' => array(

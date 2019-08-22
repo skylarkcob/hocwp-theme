@@ -251,17 +251,21 @@ add_action( 'admin_head', 'hocwp_theme_admin_head_action' );
 
 if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow ) {
 	function hocwp_theme_widget_form_before( $instance, $widget ) {
-		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		$box_class = $widget->id_base;
-		$box_class .= ' hocwp-theme';
-		echo '<div class="' . $box_class . '">';
-		?>
-		<p>
-			<label for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>
-			<input class="widefat" id="<?php echo $widget->get_field_id( 'title' ); ?>"
-			       name="<?php echo $widget->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
-		</p>
-		<?php
+		if ( $widget instanceof WP_Widget ) {
+			$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+			$box_class = $widget->id_base;
+			$box_class .= ' hocwp-theme';
+			echo '<div class="' . $box_class . '">';
+			?>
+			<p>
+				<label
+					for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>
+				<input class="widefat" id="<?php echo $widget->get_field_id( 'title' ); ?>"
+				       name="<?php echo $widget->get_field_name( 'title' ); ?>" type="text"
+				       value="<?php echo $title; ?>"/>
+			</p>
+			<?php
+		}
 	}
 
 	add_action( 'hocwp_theme_widget_form_before', 'hocwp_theme_widget_form_before', 10, 2 );

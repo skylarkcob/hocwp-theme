@@ -4,6 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_wp_login_action( $user_login, $user ) {
+	if ( ! ( $user instanceof WP_User ) ) {
+		$user = get_user_by( 'login', $user_login );
+	}
+
 	update_user_meta( $user->ID, 'last_login', time() );
 }
 
@@ -19,7 +23,8 @@ function hocwp_theme_track_user_last_activity() {
 add_action( 'init', 'hocwp_theme_track_user_last_activity' );
 
 function hocwp_theme_manage_manage_users_columns_filter( $columns ) {
-	$columns['last_login'] = __( 'Last login', 'hocwp-theme' );
+	$columns['last_login']    = __( 'Last login', 'hocwp-theme' );
+	$columns['last_activity'] = __( 'Last Activity', 'hocwp-theme' );
 
 	return $columns;
 }
@@ -27,7 +32,8 @@ function hocwp_theme_manage_manage_users_columns_filter( $columns ) {
 add_filter( 'manage_users_columns', 'hocwp_theme_manage_manage_users_columns_filter' );
 
 function hocwp_theme_manage_users_sortable_columns_filter( $columns ) {
-	$columns['last_login'] = 'last_login';
+	$columns['last_login']    = 'last_login';
+	$columns['last_activity'] = 'last_activity';
 
 	return $columns;
 }
@@ -36,11 +42,14 @@ add_filter( 'manage_users_sortable_columns', 'hocwp_theme_manage_users_sortable_
 
 function hocwp_theme_manage_users_custom_column_filter( $value, $column_name, $user_id ) {
 	switch ( $column_name ) {
+		case 'last_activity':
 		case 'last_login':
 			$value = get_user_meta( $user_id, $column_name, true );
+
 			if ( ! empty( $value ) ) {
 				$value = HOCWP_Theme_Utility::timestamp_to_string( $value );
 			}
+
 			break;
 	}
 
@@ -51,7 +60,8 @@ add_filter( 'manage_users_custom_column', 'hocwp_theme_manage_users_custom_colum
 
 function hocwp_theme_pre_get_users_action( WP_User_Query $query ) {
 	$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
-	if ( 'last_login' == $orderby ) {
+
+	if ( 'last_login' == $orderby || 'last_activity' == $orderby ) {
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'meta_key', $orderby );
 	}
@@ -119,3 +129,48 @@ function hocwp_theme_wp_mail_filter( $data ) {
 }
 
 add_filter( 'wp_mail', 'hocwp_theme_wp_mail_filter' );
+
+function hocwp_theme_verify_user_notification( $key, $user ) {
+	$user = HT_Util()->return_user( $user );
+
+	if ( $user instanceof WP_User ) {
+		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+
+		$switched_locale = switch_to_locale( get_user_locale( $user ) );
+
+		$url = home_url();
+
+		$params = array(
+			'action'  => 'verify_email',
+			'key'     => $key,
+			'user_id' => $user->ID
+		);
+
+		$url = add_query_arg( $params, $url );
+
+		$message = sprintf( __( 'Username: %s', 'hocwp-theme' ), $user->user_login ) . "\r\n\r\n";
+		$message .= __( 'To verify your email address, visit the following link:', 'hocwp-theme' ) . "\r\n\r\n";
+		$message .= sprintf( '<a href="%s">%s</a>', $url, $url ) . "\r\n\r\n";
+
+		$notification_email = array(
+			'to'      => $user->user_email,
+			'subject' => __( '[%s] Verify your email address', 'hocwp-theme' ),
+			'message' => $message,
+			'headers' => '',
+		);
+
+		$notification_email = apply_filters( 'hocwp_theme_verify_user_notification_email', $notification_email, $user, $blogname );
+
+		$notification_email['subject'] = wp_specialchars_decode( sprintf( $notification_email['subject'], $blogname ) );
+
+		$sent = HT_Util()->html_mail( $notification_email['to'], $notification_email['subject'], $notification_email['message'], $notification_email['headers'] );
+
+		if ( $switched_locale ) {
+			restore_previous_locale();
+		}
+
+		return $sent;
+	}
+
+	return false;
+}

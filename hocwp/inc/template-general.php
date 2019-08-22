@@ -786,6 +786,39 @@ function hocwp_theme_wp_footer_action() {
 	if ( 1 == $back_to_top ) {
 		HT_Frontend()->back_to_top_button();
 	}
+
+	if ( is_single() || is_page() || is_singular() ) {
+		$float_post_nav = HT_Options()->get_tab( 'float_post_nav', '', 'reading' );
+
+		if ( 1 == $float_post_nav ) {
+			$obj = HT_Query()->get_previous_post();
+			?>
+			<div class="float-post-nav">
+				<?php
+				if ( $obj instanceof WP_Post ) {
+					?>
+					<div class="prev">
+						<a href="<?php echo get_permalink( $obj ); ?>"
+						   title="<?php echo esc_attr( $obj->post_title ); ?>">&laquo;</a>
+					</div>
+					<?php
+				}
+
+				$obj = HT_Query()->get_previous_post( false );
+
+				if ( $obj instanceof WP_Post ) {
+					?>
+					<div class="next">
+						<a href="<?php echo get_permalink( $obj ); ?>"
+						   title="<?php echo esc_attr( $obj->post_title ); ?>">&raquo;</a>
+					</div>
+					<?php
+				}
+				?>
+			</div>
+			<?php
+		}
+	}
 }
 
 add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );

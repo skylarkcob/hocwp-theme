@@ -83,6 +83,7 @@ if ( ! is_admin() ) {
 
 function hocwp_theme_site_icon() {
 	global $hocwp_theme;
+
 	$options = $hocwp_theme->options;
 
 	if ( isset( $options['general']['site_icon'] ) && HOCWP_Theme::is_positive_number( $options['general']['site_icon'] ) ) {

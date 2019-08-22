@@ -7,12 +7,18 @@ jQuery(document).ready(function ($) {
 
     function hocwpThemeAppendAjaxOverlay() {
         if (null === ajaxOverlay) {
-            body.append(hocwpTheme.ajaxOverlay);
+            ajaxOverlay = body.find(".hocwp-theme.ajax-overlay");
+
+            if (!ajaxOverlay || !ajaxOverlay.length) {
+                body.append(hocwpTheme.ajaxOverlay);
+            }
         }
 
-        ajaxOverlay = body.find(".hocwp-theme.ajax-overlay");
+        if (!ajaxOverlay) {
+            ajaxOverlay = body.find(".hocwp-theme.ajax-overlay");
+        }
 
-        if (ajaxOverlay.length) {
+        if (ajaxOverlay && ajaxOverlay.length) {
             ajaxOverlay.show();
         }
     }
@@ -42,16 +48,21 @@ jQuery(document).ready(function ($) {
         });
 
         body.on("hocwpTheme:ajaxStart", function (e, button, response) {
-            if (!button.hasClass("disabled")) {
+            if (button && button.length && !button.hasClass("disabled")) {
                 button.addClass("disabled");
+                button.blur();
                 hocwpThemeAppendAjaxOverlay();
             }
 
             currentButton = button;
         });
 
-        body.on("hocwpTheme:ajaxComplete", function (e, button, response) {
-            button.removeClass("disabled");
+        body.on("hocwpTheme:ajaxComplete hocwpTheme:ajaxDone hocwpTheme:ajaxSuccess", function (e, button, response) {
+            if (button && button.length) {
+                button.removeClass("disabled");
+                button.blur();
+            }
+
             body.find(".hocwp-theme.ajax-overlay").fadeOut();
 
             currentButton = button;

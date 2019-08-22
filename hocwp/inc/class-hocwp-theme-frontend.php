@@ -616,7 +616,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		do_action( 'hocwp_theme_facebook_javascript_sdk' );
 
-		$ajax_url = admin_url( 'admin-ajax.php' );
+		$ajax_url = HOCWP_Theme()->get_ajax_url();
 
 		$params = array(
 			'action'  => 'hocwp_theme_update_facebook_data',

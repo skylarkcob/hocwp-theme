@@ -27,7 +27,7 @@
 html {
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust:     100%;
+    -ms-text-size-adjust: 100%;
 }
 
 body {
@@ -324,7 +324,8 @@ html {
 
 *,
 *:before,
-*:after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+*:after {
+    /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
     box-sizing: inherit;
 }
 
@@ -593,6 +594,7 @@ a:active {
     .menu-toggle {
         display: none;
     }
+
     .main-navigation ul {
         display: block;
     }
@@ -772,7 +774,8 @@ a:active {
 --------------------------------------------------------------*/
 /* Globally hidden elements when Infinite Scroll is supported and in use. */
 .infinite-scroll .posts-navigation, /* Older / Newer Posts Navigation (always hidden) */
-.infinite-scroll.neverending .site-footer { /* Theme Footer (when set to scrolling) */
+.infinite-scroll.neverending .site-footer {
+    /* Theme Footer (when set to scrolling) */
     display: none;
 }
 
@@ -870,4 +873,46 @@ object {
 
 .gallery-caption {
     display: block;
+}
+
+.float-post-nav > div {
+    position: fixed;
+    top: 50%;
+    z-index: 2147483637;
+    height: 70px;
+    touch-action: none;
+    opacity: .6;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    left: 0;
+    width: 35px;
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    transform: translate(0, -50%);
+}
+
+.float-post-nav > div:hover {
+    opacity: 1;
+}
+
+.float-post-nav > div a {
+    font-size: 30px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.float-post-nav > div.next {
+    right: 0;
+    left: auto;
 }

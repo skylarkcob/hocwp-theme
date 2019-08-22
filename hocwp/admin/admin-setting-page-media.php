@@ -31,6 +31,14 @@ function hocwp_theme_settings_page_media_field() {
 	$field    = hocwp_theme_create_setting_field( 'upload_per_day', __( 'Upload Per Day', 'hocwp-theme' ), 'input', $args, 'positive_integer', 'media' );
 	$fields[] = $field;
 
+	$args['min'] = 0;
+	$args['max'] = 100;
+
+	$args['description'] = __( 'The right JPEG quality will ensure your images look great, your pages load fast and even help you rank well in search engines.', 'hocwp-theme' );
+
+	$field    = hocwp_theme_create_setting_field( 'jpeg_quality', __( 'JPEG Quality', 'hocwp-theme' ), 'input', $args, 'positive_integer', 'media' );
+	$fields[] = $field;
+
 	return $fields;
 }
 

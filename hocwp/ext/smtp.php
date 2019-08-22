@@ -25,6 +25,7 @@ if ( ! $load ) {
 
 function hocwp_theme_wp_mail_from_name_filter( $name ) {
 	global $hocwp_theme;
+
 	if ( isset( $hocwp_theme->options['smtp']['from_name'] ) && ! empty( $hocwp_theme->options['smtp']['from_name'] ) ) {
 		$name = $hocwp_theme->options['smtp']['from_name'];
 	}
@@ -36,6 +37,7 @@ add_filter( 'wp_mail_from_name', 'hocwp_theme_wp_mail_from_name_filter' );
 
 function hocwp_theme_wp_mail_from_filter( $email ) {
 	global $hocwp_theme;
+
 	if ( isset( $hocwp_theme->options['smtp']['from_email'] ) && is_email( $hocwp_theme->options['smtp']['from_email'] ) ) {
 		$email = sanitize_email( $hocwp_theme->options['smtp']['from_email'] );
 	}
@@ -49,23 +51,32 @@ function hocwp_theme_phpmailer_init_action( $phpmailer ) {
 	if ( ! ( $phpmailer instanceof PHPMailer ) ) {
 		return;
 	}
+
 	global $hocwp_theme;
-	$data              = $hocwp_theme->options['smtp'];
+
+	$data = $hocwp_theme->options['smtp'];
+
 	$phpmailer->Mailer = 'smtp';
+
 	if ( isset( $data['return_path'] ) && (bool) $data['return_path'] ) {
 		$phpmailer->Sender = $phpmailer->From;
 	}
-	$encryption             = isset( $data['encryption'] ) ? $data['encryption'] : 'ssl';
-	$host                   = isset( $data['host'] ) ? $data['host'] : '';
-	$port                   = isset( $data['port'] ) ? $data['port'] : 25;
-	$username               = isset( $data['username'] ) ? $data['username'] : '';
-	$password               = isset( $data['password'] ) ? $data['password'] : '';
-	$phpmailer->SMTPSecure  = ( $encryption == 'none' ) ? '' : $encryption;
-	$phpmailer->Host        = $host;
-	$phpmailer->Port        = $port;
-	$phpmailer->SMTPAuth    = true;
-	$phpmailer->Username    = $username;
-	$phpmailer->Password    = $password;
+
+	$encryption = isset( $data['encryption'] ) ? $data['encryption'] : 'ssl';
+	$host       = isset( $data['host'] ) ? $data['host'] : '';
+	$port       = isset( $data['port'] ) ? $data['port'] : 25;
+	$username   = isset( $data['username'] ) ? $data['username'] : '';
+	$password   = isset( $data['password'] ) ? $data['password'] : '';
+
+	$phpmailer->SMTPSecure = ( $encryption == 'none' ) ? '' : $encryption;
+
+	$phpmailer->Host = $host;
+	$phpmailer->Port = $port;
+
+	$phpmailer->SMTPAuth = true;
+	$phpmailer->Username = $username;
+	$phpmailer->Password = $password;
+
 	$phpmailer->SMTPOptions = array(
 		'ssl' => array(
 			'verify_peer'       => false,

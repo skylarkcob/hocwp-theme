@@ -346,6 +346,16 @@ final class HOCWP_Theme_Query {
 		return $query->get_terms();
 	}
 
+	public function get_previous_post( $previous = true ) {
+		if ( $previous && is_attachment() ) {
+			$post = get_post( get_post()->post_parent );
+		} else {
+			$post = get_adjacent_post( false, '', $previous );
+		}
+
+		return $post;
+	}
+
 	public static function posts_by_meta( $meta_key, $meta_value, $args = array() ) {
 		$defaults = array(
 			'meta_key'   => $meta_key,

@@ -141,7 +141,7 @@ function hocwp_theme_localize_script_l10n() {
 
 	$args = array(
 		'homeUrl'      => home_url( '/' ),
-		'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+		'ajaxUrl'      => HOCWP_Theme()->get_ajax_url(),
 		'ajaxCallback' => 'hocwp_theme_ajax',
 		'loginUrl'     => wp_login_url( $redirect ),
 		'l10n'         => array(

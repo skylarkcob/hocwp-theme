@@ -333,6 +333,10 @@ final class HOCWP_Theme_Controller {
 		unset( $widgets, $path, $class );
 	}
 
+	public function get_ajax_url() {
+		return apply_filters( 'hocwp_theme_ajax_url', admin_url( 'admin-ajax.php' ) );
+	}
+
 	/**
 	 * Theme load
 	 */

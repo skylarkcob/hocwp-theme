@@ -53,7 +53,22 @@ class HOCWP_Theme_Media {
 		if ( self::$instance instanceof self ) {
 			return;
 		}
+
+		add_filter( 'jpeg_quality', array( $this, 'jpeg_quality_filter' ) );
 	}
+
+	public function jpeg_quality_filter( $quality ) {
+		$number = HT_Options()->get_tab( 'jpeg_quality', '', 'media' );
+
+		if ( HT()->is_positive_number( $number ) && $number != $quality ) {
+			$number  = min( $number, 100 );
+			$number  = max( 1, $number );
+			$quality = $number;
+		}
+
+		return $quality;
+	}
+
 
 	public function exists( $id ) {
 		return hocwp_theme_media_file_exists( $id );

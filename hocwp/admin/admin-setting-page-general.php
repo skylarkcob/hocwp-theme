@@ -48,7 +48,8 @@ add_filter( 'hocwp_theme_settings_page_general_settings_section', 'hocwp_theme_s
 function hocwp_theme_settings_page_general_field( $fields ) {
 	global $hocwp_theme;
 
-	$options      = $hocwp_theme->options['general'];
+	$options = $hocwp_theme->options['general'];
+
 	$logo_display = $options['logo_display'];
 
 	$value = isset( $options['site_icon'] ) ? $options['site_icon'] : '';

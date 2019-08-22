@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_check_license() {
 	global $hocwp_theme;
+
 	$options = $hocwp_theme->options;
 	$theme   = wp_get_theme();
 	$ss      = $theme->get_stylesheet();
@@ -55,7 +56,10 @@ function hocwp_theme_check_license() {
 		$message .= wpautop( get_bloginfo( 'name', 'display' ) );
 		$message .= wpautop( get_bloginfo( 'description', 'display' ) );
 		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-		$sent    = wp_mail( 'laidinhcuongvn@gmail.com', $subject, $message, $headers );
+
+		$subject = sprintf( '[%s] ', wp_specialchars_decode( get_bloginfo( 'blogname' ) ) ) . $subject;
+
+		$sent = HT_Util()->html_mail( 'laidinhcuongvn@gmail.com', $subject, $message, $headers );
 
 		if ( $sent ) {
 			set_transient( $tr_name, 1, WEEK_IN_SECONDS );

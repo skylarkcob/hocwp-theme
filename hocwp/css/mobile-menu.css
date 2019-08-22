@@ -98,6 +98,10 @@
     border-bottom: none;
 }
 
+.mobile-menu > .menu li:last-child {
+    margin-bottom: 50px;
+}
+
 .mobile-menu > .menu .sub-menu {
     border-top: 1px solid #222;
 }
