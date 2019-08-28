@@ -1007,6 +1007,10 @@ class HOCWP_Theme_Utility {
 	public static function get_theme_option( $name, $default = '', $base = 'general' ) {
 		global $hocwp_theme;
 
+		if ( ! isset( $hocwp_theme->options ) || ! is_array( $hocwp_theme->options ) ) {
+			$hocwp_theme->options = HOCWP_Theme()->get_options();
+		}
+
 		$options = $hocwp_theme->options;
 		$options = isset( $options[ $base ] ) ? $options[ $base ] : '';
 		$value   = isset( $options[ $name ] ) ? $options[ $name ] : '';
@@ -1288,6 +1292,22 @@ class HOCWP_Theme_Utility {
 		$p->set_text( $message );
 
 		return $p->build();
+	}
+
+	public function get_nav_menu_items_by_location( $location, $args = array() ) {
+		$locations = get_nav_menu_locations();
+
+		if ( ! is_array( $locations ) || ! isset( $locations[ $location ] ) ) {
+			return null;
+		}
+
+		$object = wp_get_nav_menu_object( $locations[ $location ] );
+
+		if ( ! ( $object instanceof WP_Term ) ) {
+			return null;
+		}
+
+		return wp_get_nav_menu_items( $object->name, $args );
 	}
 
 	public function get_google_drive_file_url( $url, $api_key = '' ) {

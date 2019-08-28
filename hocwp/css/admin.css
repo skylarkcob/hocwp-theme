@@ -43,3 +43,7 @@
 .hocwp-theme .wp-picker-holder {
     position: absolute;
 }
+
+.widget textarea[data-code-editor="1"] + .CodeMirror-wrap {
+    border: 1px solid #eee;
+}

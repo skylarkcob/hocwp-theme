@@ -1,4 +1,11 @@
 == Changelog ==
+= 6.6.8 =
+* Add widget Insert Code.
+* Update code mirror editor for widget.
+* Add function to set and reset loop data.
+* Allow wp_enqueue_code_editor uses custom args.
+* Bug fixes.
+
 = 6.6.7 =
 * Move custom-ajax.php to Extension by HocWP Team plugin.
 * Add option for setting jpeg image quality.

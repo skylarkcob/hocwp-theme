@@ -33,6 +33,9 @@ jQuery(document).ready(function ($) {
             } else {
                 widget.find("select[data-chosen='1']").hocwpSelectChosen();
                 widget.find("[data-sortable='1']").hocwpSortable();
+
+                widget.find("textarea[data-code-editor='1']").parent().children(".CodeMirror").remove();
+                widget.find("textarea[data-code-editor='1']").hocwpCodeEditor();
             }
         });
 
@@ -63,6 +66,9 @@ jQuery(document).ready(function ($) {
 
                     container.find("select[data-chosen='1']").hocwpSelectChosen();
                     container.find("[data-sortable='1']").hocwpSortable();
+
+                    container.find("textarea[data-code-editor='1']").parent().children(".CodeMirror").remove();
+                    container.find("textarea[data-code-editor='1']").hocwpCodeEditor();
                 }
             }
         });

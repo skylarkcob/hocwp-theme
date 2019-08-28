@@ -196,6 +196,12 @@ final class HOCWP_Theme_Controller {
 		$hocwp_theme = $this->object;
 	}
 
+	public function get_options() {
+		$this->object->options = (array) get_option( $this->get_prefix() );
+
+		return $this->object->options;
+	}
+
 	public function get_textdomain() {
 		return $this->textdomain;
 	}
@@ -448,6 +454,26 @@ final class HOCWP_Theme_Controller {
 		}
 
 		do_action( 'hocwp_theme_loaded' );
+	}
+
+	public function reset_loop_data( $reset_tmp = false ) {
+		$GLOBALS['hocwp_theme']->loop_data = array();
+
+		if ( $reset_tmp ) {
+			$GLOBALS['hocwp_theme']->temp_data = array();
+		}
+	}
+
+	public function set_loop_data( $data = array() ) {
+		$GLOBALS['hocwp_theme']->loop_data = $data;
+	}
+
+	public function add_loop_data( $key, $value ) {
+		$GLOBALS['hocwp_theme']->loop_data[ $key ] = $value;
+	}
+
+	public function get_loop_data( $key ) {
+		return HT()->get_value_in_array( $GLOBALS['hocwp_theme']->loop_data, $key );
 	}
 }
 

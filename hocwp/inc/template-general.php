@@ -748,6 +748,10 @@ add_action( 'wp_head', 'hocwp_theme_wp_head_action' );
 function hocwp_theme_wp_footer_action() {
 	global $hocwp_theme;
 
+	if ( ! isset( $hocwp_theme->options ) || ! is_array( $hocwp_theme->options ) ) {
+		$hocwp_theme->options = HOCWP_Theme()->get_options();
+	}
+
 	$options = $hocwp_theme->options;
 
 	HT_Util()->load_facebook_javascript_sdk();

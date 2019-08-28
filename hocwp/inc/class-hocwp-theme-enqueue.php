@@ -64,8 +64,10 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_script( 'hocwp-theme-pagination' );
 	}
 
-	public function code_editor() {
-		wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
+	public function code_editor( $args = array() ) {
+		$defaults = array( 'type' => 'text/html' );
+		$args     = wp_parse_args( $args, $defaults );
+		wp_enqueue_code_editor( $args );
 		wp_enqueue_script( 'hocwp-theme-code-editor' );
 	}
 
