@@ -1009,8 +1009,10 @@ function hocwp_theme_widget_posts_loop_html() {
 	}
 
 	$title_length = isset( $instance['title_length'] ) ? absint( $instance['title_length'] ) : '';
-	$title        = get_the_title();
-	$before       = '<a class="post-link" href="' . get_the_permalink() . '" title="' . $title . '">';
+
+	$title = get_the_title();
+
+	$before = '<a class="post-link" href="' . get_the_permalink() . '" title="' . $title . '">';
 
 	if ( is_numeric( $title_length ) ) {
 		$title = HT()->substr( $title, $title_length );

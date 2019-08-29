@@ -5,6 +5,7 @@
 * Add function to set and reset loop data.
 * Allow wp_enqueue_code_editor uses custom args.
 * Bug fixes.
+* Fix ajax overlay button.
 
 = 6.6.7 =
 * Move custom-ajax.php to Extension by HocWP Team plugin.

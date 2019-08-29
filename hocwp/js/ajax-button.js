@@ -8,10 +8,11 @@ jQuery(document).ready(function ($) {
     function hocwpThemeAppendAjaxOverlay() {
         if (null === ajaxOverlay) {
             ajaxOverlay = body.find(".hocwp-theme.ajax-overlay");
+        }
 
-            if (!ajaxOverlay || !ajaxOverlay.length) {
-                body.append(hocwpTheme.ajaxOverlay);
-            }
+        if (!ajaxOverlay || !ajaxOverlay.length) {
+            body.append(hocwpTheme.ajaxOverlay);
+            ajaxOverlay = body.find(".hocwp-theme.ajax-overlay");
         }
 
         if (!ajaxOverlay) {

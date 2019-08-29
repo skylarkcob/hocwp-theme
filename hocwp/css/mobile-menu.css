@@ -41,6 +41,8 @@
 
 .mobile-menu > .menu-toggle .svg-icon {
     fill: #fff;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .mobile-menu > .menu-toggle[aria-expanded="true"] {
