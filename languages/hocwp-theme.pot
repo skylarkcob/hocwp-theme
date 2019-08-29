@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2019-08-28 18:39+0700\n"
+"POT-Creation-Date: 2019-08-30 06:39+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1637,20 +1637,20 @@ msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/inc/template-general.php:1292
+#: hocwp/inc/template-general.php:1294
 #, php-format
 msgid "Share on %s"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1304
+#: hocwp/inc/template-general.php:1306
 msgid "Submit URL"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1305
+#: hocwp/inc/template-general.php:1307
 msgid "Submit URL to Google Search Console"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1408
+#: hocwp/inc/template-general.php:1410
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
