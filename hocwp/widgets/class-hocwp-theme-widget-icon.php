@@ -15,12 +15,12 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			'hover_icon_html'  => '',
 			'text'             => '',
 			'sortable'         => '',
+			'background_image' => '',
 			'sortables'        => array(
 				'icon'  => '<li class="ui-state-default ui-sortable-handle" data-value="icon">' . __( 'Icon', 'hocwp-theme' ) . '</li>',
 				'title' => '<li class="ui-state-default ui-sortable-handle" data-value="title">' . __( 'Title', 'hocwp-theme' ) . '</li>',
 				'text'  => '<li class="ui-state-default ui-sortable-handle" data-value="text">' . __( 'Text', 'hocwp-theme' ) . '</li>'
-			),
-			'background'       => ''
+			)
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_icon_defaults', $this->defaults, $this );
@@ -43,7 +43,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 	public function before_widget_filter( $before_widget, $args, $instance, $widget ) {
 		if ( $widget instanceof HOCWP_Theme_Widget_Icon ) {
-			$background = isset( $instance['background'] ) ? $instance['background'] : '';
+			$background = isset( $instance['background_image'] ) ? $instance['background_image'] : '';
 
 			if ( HT()->is_positive_number( $background ) && hocwp_theme_media_file_exists( $background ) ) {
 				$style = 'background-image: url("' . wp_get_attachment_image_url( $background, 'full' ) . '");';
@@ -176,9 +176,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 		HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon HTML:', 'hocwp-theme' ), $value );
 
-		$name  = 'background';
+		$name  = 'background_image';
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Background:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
+		HT_HTML_Field()->widget_field( $this, $name, __( 'Background Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
 
 		$name  = 'text';
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
@@ -203,7 +203,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$instance['icon_image']       = $new_instance['icon_image'];
 		$instance['icon_url']         = esc_url( $new_instance['icon_url'] );
 		$instance['icon_html']        = $new_instance['icon_html'];
-		$instance['background']       = $new_instance['background'];
+		$instance['background_image'] = $new_instance['background_image'];
 		$instance['text']             = $new_instance['text'];
 		$instance['sortable']         = $new_instance['sortable'];
 		$instance['hover_icon_image'] = $new_instance['hover_icon_image'];
