@@ -50,9 +50,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				$style = esc_attr( $style );
 
 				if ( false === strpos( $before_widget, 'style="' ) ) {
-					$before_widget = str_replace( 'class="', 'style="' . $style . '" class="', $before_widget );
+					$before_widget = preg_replace( '/class="/', 'style="' . $style . '" class="', $before_widget, 1 );
 				} else {
-					$before_widget = str_replace( 'style="', 'style="' . $style, $before_widget );
+					$before_widget = preg_replace( '/style="/', 'style="' . $style, $before_widget, 1 );
 				}
 			}
 		}
