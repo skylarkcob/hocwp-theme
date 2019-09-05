@@ -19,7 +19,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				'icon'  => '<li class="ui-state-default ui-sortable-handle" data-value="icon">' . __( 'Icon', 'hocwp-theme' ) . '</li>',
 				'title' => '<li class="ui-state-default ui-sortable-handle" data-value="title">' . __( 'Title', 'hocwp-theme' ) . '</li>',
 				'text'  => '<li class="ui-state-default ui-sortable-handle" data-value="text">' . __( 'Text', 'hocwp-theme' ) . '</li>'
-			)
+			),
+			'background'       => ''
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_icon_defaults', $this->defaults, $this );
@@ -34,6 +35,29 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		);
 
 		parent::__construct( 'hocwp_widget_icon', 'HocWP Icon', $widget_options, $control_options );
+
+		if ( ! is_admin() ) {
+			add_filter( 'hocwp_theme_widget_before_html', array( $this, 'before_widget_filter' ), 10, 4 );
+		}
+	}
+
+	public function before_widget_filter( $before_widget, $args, $instance, $widget ) {
+		if ( $widget instanceof HOCWP_Theme_Widget_Icon ) {
+			$background = isset( $instance['background'] ) ? $instance['background'] : '';
+
+			if ( HT()->is_positive_number( $background ) && hocwp_theme_media_file_exists( $background ) ) {
+				$style = 'background-image: url("' . wp_get_attachment_image_url( $background, 'full' ) . '");';
+				$style = esc_attr( $style );
+
+				if ( false === strpos( $before_widget, 'style="' ) ) {
+					$before_widget = str_replace( 'class="', 'style="' . $style . '" class="', $before_widget );
+				} else {
+					$before_widget = str_replace( 'style="', 'style="' . $style, $before_widget );
+				}
+			}
+		}
+
+		return $before_widget;
 	}
 
 	public function widget( $args, $instance ) {
@@ -47,6 +71,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$instance['show_title'] = false;
 
 		do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+
 		$html = apply_filters( 'hocwp_theme_widget_icon_html', '', $instance, $args, $this );
 
 		if ( ! empty( $html ) ) {
@@ -151,6 +176,10 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 		HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon HTML:', 'hocwp-theme' ), $value );
 
+		$name  = 'background';
+		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+		HT_HTML_Field()->widget_field( $this, $name, __( 'Background:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
+
 		$name  = 'text';
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 		HT_HTML_Field()->widget_field( $this, $name, __( 'Text:', 'hocwp-theme' ), $value, 'textarea', array( 'rows' => 3 ) );
@@ -174,6 +203,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$instance['icon_image']       = $new_instance['icon_image'];
 		$instance['icon_url']         = esc_url( $new_instance['icon_url'] );
 		$instance['icon_html']        = $new_instance['icon_html'];
+		$instance['background']       = $new_instance['background'];
 		$instance['text']             = $new_instance['text'];
 		$instance['sortable']         = $new_instance['sortable'];
 		$instance['hover_icon_image'] = $new_instance['hover_icon_image'];

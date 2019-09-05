@@ -339,7 +339,7 @@ button[aria-expanded="false"] {
 }
 
 .fa.fab {
-    font-family: 'Font Awesome 5 Brands', 'FontAwesome';
+    font-family: 'Font Awesome 5 Brands', 'FontAwesome', sans-serif;
 }
 
 .hocwp-theme > .site, .container {
@@ -451,6 +451,11 @@ div.menu li a {
 
 .widget_media_image {
     text-align: center;
+}
+
+.hocwp-widget-icon {
+    background: no-repeat center;
+    background-size: cover;
 }
 
 .sidebar-position-left .content-area + .sidebar,

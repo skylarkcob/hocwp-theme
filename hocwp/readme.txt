@@ -6,6 +6,7 @@
 * Allow wp_enqueue_code_editor uses custom args.
 * Bug fixes.
 * Fix ajax overlay button.
+* Add background image for widget Icon.
 
 = 6.6.7 =
 * Move custom-ajax.php to Extension by HocWP Team plugin.
