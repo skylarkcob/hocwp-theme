@@ -178,7 +178,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function save_post_action( $post_id ) {
-		if ( ! HOCWP_Theme_Utility::can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
+		if ( ! HT_Util()->can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
 			return;
 		}
 

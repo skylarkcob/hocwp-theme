@@ -21,7 +21,7 @@ add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
 
-if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'term.php' == $pagenow || 'edit-tags.php' == $pagenow || 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
+if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'term.php' == $pagenow || 'edit-tags.php' == $pagenow || 'link.php' == $pagenow || 'link-add.php' == $pagenow || 'nav-menus.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php';
 }
@@ -36,6 +36,10 @@ if ( 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
 
 if ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-term.php';
+}
+
+if ( 'nav-menus.php' == $pagenow ) {
+	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-menu.php';
 }
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php';

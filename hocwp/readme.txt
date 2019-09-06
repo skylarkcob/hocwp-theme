@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.6.9 =
+* Add meta menu class.
+
 = 6.6.8 =
 * Add widget Insert Code.
 * Update code mirror editor for widget.

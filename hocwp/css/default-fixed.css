@@ -92,6 +92,10 @@ p > ins > br {
     display: none;
 }
 
+.hocwp-ads ins {
+    max-width: 100%;
+}
+
 .search-form {
     width: 100%;
 }

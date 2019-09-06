@@ -70,6 +70,8 @@ abstract class HOCWP_Theme_Meta {
 			}
 		}
 
+		$field = apply_filters( 'hocwp_theme_meta_field', $field, $this );
+
 		$this->fields[] = $field;
 	}
 
@@ -124,6 +126,15 @@ abstract class HOCWP_Theme_Meta {
 		return $value;
 	}
 
+	public function get_base_name( $name ) {
+		if ( HT()->string_contain( $name, '[' ) && HT()->string_contain( $name, ']' ) ) {
+			$tmp  = explode( '[', $name );
+			$name = array_shift( $tmp );
+		}
+
+		return $name;
+	}
+
 	public function get_name( $field, $base = false ) {
 		$id   = $field['id'];
 		$name = isset( $field['name'] ) ? $field['name'] : '';
@@ -135,10 +146,7 @@ abstract class HOCWP_Theme_Meta {
 		HT()->transmit( $id, $name );
 
 		if ( $base ) {
-			if ( HT()->string_contain( $name, '[' ) && HT()->string_contain( $name, ']' ) ) {
-				$tmp  = explode( '[', $name );
-				$name = array_shift( $tmp );
-			}
+			$name = $this->get_base_name( $name );
 		}
 
 		unset( $id, $tmp );
@@ -188,19 +196,23 @@ abstract class HOCWP_Theme_Meta {
 				return $field;
 			}
 
-			$id = $this->get_name( $field );
+			if ( isset( $field['meta_key'] ) && ! empty( $field['meta_key'] ) ) {
+				$meta_key = $field['meta_key'];
+			} else {
+				$meta_key = $this->get_name( $field );
+			}
 
-			if ( HT()->string_contain( $id, '[' ) && HT()->string_contain( $id, ']' ) ) {
-				$tmp = explode( '[', $id );
+			if ( HT()->string_contain( $meta_key, '[' ) && HT()->string_contain( $meta_key, ']' ) ) {
+				$tmp = explode( '[', $meta_key );
 
 				foreach ( $tmp as $key => $a ) {
 					$tmp[ $key ] = trim( $a, '[]' );
 				}
 
-				$id    = array_shift( $tmp );
-				$meta  = call_user_func( $this->get_value_callback, $obj_id, $id, $this->single_value );
-				$count = count( $tmp );
-				$k     = 0;
+				$meta_key = array_shift( $tmp );
+				$meta     = call_user_func( $this->get_value_callback, $obj_id, $meta_key, $this->single_value );
+				$count    = count( $tmp );
+				$k        = 0;
 
 				while ( $k < $count && isset( $meta[ $tmp[ $k ] ] ) ) {
 					$meta = $meta[ $tmp[ $k ] ];
@@ -213,7 +225,7 @@ abstract class HOCWP_Theme_Meta {
 					$value = '';
 				}
 			} else {
-				$value = call_user_func( $this->get_value_callback, $obj_id, $id, $this->single_value );
+				$value = call_user_func( $this->get_value_callback, $obj_id, $meta_key, $this->single_value );
 			}
 
 			$type = $field['type'];

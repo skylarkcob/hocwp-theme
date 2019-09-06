@@ -101,14 +101,14 @@ final class HOCWP_Theme {
 			$keyspace = $this->safe_string;
 		}
 
-		$pieces = [];
+		$pieces = [ ];
 
 		$max = mb_strlen( $keyspace, '8bit' ) - 1;
 
 		for ( $i = 0; $i < $length; ++ $i ) {
 			$index = random_int( 0, $max );
 
-			$pieces [] = $keyspace[ $index ];
+			$pieces[] = $keyspace[ $index ];
 		}
 
 		return implode( '', $pieces );
@@ -349,10 +349,10 @@ final class HOCWP_Theme {
 		$merged = $array1;
 
 		foreach ( $array2 as $key => &$value ) {
-			if ( is_array( $value ) && isset ( $merged [ $key ] ) && is_array( $merged [ $key ] ) ) {
-				$merged [ $key ] = self::array_merge_recursive( $merged [ $key ], $value );
+			if ( is_array( $value ) && isset ( $merged[ $key ] ) && is_array( $merged[ $key ] ) ) {
+				$merged[ $key ] = self::array_merge_recursive( $merged[ $key ], $value );
 			} else {
-				$merged [ $key ] = $value;
+				$merged[ $key ] = $value;
 			}
 		}
 

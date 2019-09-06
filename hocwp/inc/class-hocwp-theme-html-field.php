@@ -511,12 +511,17 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	public static function sortable( $args = array() ) {
-		$lists    = isset( $args['lists'] ) ? $args['lists'] : '';
-		$lists    = (array) $lists;
-		$lists    = array_filter( $lists );
+		$lists = isset( $args['lists'] ) ? $args['lists'] : '';
+		$lists = (array) $lists;
+		$lists = array_filter( $lists );
+
 		$connects = isset( $args['connects'] ) ? $args['connects'] : true;
 
 		$value = isset( $args['value'] ) ? $args['value'] : '';
+
+		if ( '[]' == $value ) {
+			$value = '';
+		}
 
 		if ( empty( $lists ) ) {
 			$options = isset( $args['options'] ) ? $args['options'] : '';
@@ -532,7 +537,7 @@ final class HOCWP_Theme_HTML_Field {
 					$items = json_decode( $value, true );
 
 					foreach ( $items as $item ) {
-						$lists[] = $options[ $item ];
+						$lists[ $item ] = $options[ $item ];
 					}
 				}
 			}
@@ -580,18 +585,69 @@ final class HOCWP_Theme_HTML_Field {
 
 			$li_html = '';
 
-			foreach ( $lists as $list ) {
-				if ( empty( $list ) ) {
-					continue;
+			if ( empty( $value ) ) {
+				foreach ( $lists as $key => $list ) {
+					if ( empty( $list ) ) {
+						continue;
+					}
+
+					if ( ! HT()->string_contain( $list, '</li>' ) ) {
+						$li = new HOCWP_Theme_HTML_Tag( 'li' );
+						$li->add_attribute( 'class', 'ui-state-default' );
+						$li->set_text( $list );
+						$li->add_attribute( 'data-value', $key );
+						$li_html .= $li->build();
+					} else {
+						$li_html .= $list;
+					}
+				}
+			} else {
+				$tmp = $value;
+
+				if ( ! is_array( $tmp ) ) {
+					$tmp = json_decode( $tmp, true );
 				}
 
-				if ( ! HT()->string_contain( $list, '</li>' ) ) {
-					$li = new HOCWP_Theme_HTML_Tag( 'li' );
-					$li->add_attribute( 'class', 'ui-state-default' );
-					$li->set_text( $list );
-					$li_html .= $li->build();
-				} else {
-					$li_html .= $list;
+				foreach ( (array) $tmp as $key ) {
+					$list = isset( $lists[ $key ] ) ? $lists[ $key ] : '';
+
+					if ( empty( $list ) ) {
+						continue;
+					}
+
+					if ( ! HT()->string_contain( $list, '</li>' ) ) {
+						$li = new HOCWP_Theme_HTML_Tag( 'li' );
+						$li->add_attribute( 'class', 'ui-state-default' );
+						$li->set_text( $list );
+						$li->add_attribute( 'data-value', $key );
+						$li_html .= $li->build();
+					} else {
+						$li_html .= $list;
+					}
+
+					unset( $lists[ $key ] );
+				}
+
+				if ( HT()->array_has_value( $lists ) ) {
+					foreach ( $lists as $key => $list ) {
+						if ( empty( $list ) ) {
+							continue;
+						}
+
+						if ( ! HT()->string_contain( $list, '</li>' ) ) {
+							$li = new HOCWP_Theme_HTML_Tag( 'li' );
+							$li->add_attribute( 'class', 'ui-state-default' );
+							$li->set_text( $list );
+							$li->add_attribute( 'data-value', $key );
+							$li_html .= $li->build();
+						} else {
+							$li_html .= $list;
+						}
+
+						$tmp[] = $key;
+					}
+
+					$args['value'] = json_encode( $tmp );
 				}
 			}
 
@@ -617,7 +673,7 @@ final class HOCWP_Theme_HTML_Field {
 				$li_html = '';
 
 				if ( HT()->array_has_value( $connects ) ) {
-					foreach ( (array) $connects as $list ) {
+					foreach ( (array) $connects as $key => $list ) {
 						if ( empty( $list ) ) {
 							continue;
 						}
@@ -626,6 +682,7 @@ final class HOCWP_Theme_HTML_Field {
 							$li = new HOCWP_Theme_HTML_Tag( 'li' );
 							$li->add_attribute( 'class', 'ui-state-default' );
 							$li->set_text( $list );
+							$li->add_attribute( 'data-value', $key );
 							$li_html .= $li->build();
 						} else {
 							$li_html .= $list;
@@ -932,7 +989,7 @@ final class HOCWP_Theme_HTML_Field {
 			$type = 'button';
 		}
 
-		if ( HOCWP_Theme::is_positive_number( $value ) || ( 'file' == $media_type && isset( $value['url'] ) ) && ! empty( $value['url'] ) ) {
+		if ( HT()->is_positive_number( $value ) || ( 'file' == $media_type && isset( $value['url'] ) ) && ! empty( $value['url'] ) ) {
 			$class .= ' has-media';
 		}
 
@@ -940,7 +997,7 @@ final class HOCWP_Theme_HTML_Field {
 
 		$background_color = isset( $args['background_color'] ) ? $args['background_color'] : '';
 
-		if ( ! empty( $background_color ) && HOCWP_Theme::is_positive_number( $value ) ) {
+		if ( ! empty( $background_color ) && HT()->is_positive_number( $value ) ) {
 			$style .= 'background-color:' . $background_color . ';';
 		}
 
@@ -993,7 +1050,7 @@ final class HOCWP_Theme_HTML_Field {
 					   data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
 					   data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
 						<?php
-						if ( HOCWP_Theme::is_positive_number( $value ) ) {
+						if ( HT()->is_positive_number( $value ) ) {
 							$img = new HOCWP_Theme_HTML_Tag( 'img' );
 							$img->add_attribute( 'src', wp_get_attachment_url( $value ) );
 							$img->output();
@@ -1004,7 +1061,7 @@ final class HOCWP_Theme_HTML_Field {
 					</a>
 				</p>
 				<?php
-				if ( HOCWP_Theme::is_positive_number( $value ) ) {
+				if ( HT()->is_positive_number( $value ) ) {
 					$l10n = hocwp_theme_localize_script_l10n_media_upload();
 					printf( $l10n['updateImageDescription'], $media_type );
 					printf( $l10n['removeImageButton'], $media_type );
