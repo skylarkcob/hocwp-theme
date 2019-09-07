@@ -143,9 +143,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				if ( 'icon' == $sortable ) {
 					echo $icon_html;
 				} elseif ( 'title' == $sortable && ! empty( $title ) ) {
+					// Remove all tags just keep title tag.
 					$widget_title = $before_title . $title . $after_title;
 					$widget_title = strip_tags( $widget_title, '<h3><span>' );
-					HT()->debug($widget_title);
 					echo $widget_title;
 				} elseif ( 'text' == $sortable ) {
 					echo $text;
