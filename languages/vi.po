@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2019-09-06 21:12+0700\n"
-"PO-Revision-Date: 2019-09-06 21:12+0700\n"
+"POT-Creation-Date: 2019-09-07 20:43+0700\n"
+"PO-Revision-Date: 2019-09-07 20:43+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -1766,47 +1766,47 @@ msgstr ""
 "Máy không được phép thêm bình luận. Nếu bạn không phải là máy, xin vui lòng "
 "cho phép javascript trên trình duyệt."
 
-#: hocwp/inc/template-general.php:263
+#: hocwp/inc/template-general.php:290
 msgid "Please call function get_sidebar instead!"
 msgstr "Xin vui lòng gọi hàm get_sidebar để thay thế!"
 
-#: hocwp/inc/template-general.php:509
+#: hocwp/inc/template-general.php:543
 #, php-format
 msgid "Search Results: %s"
 msgstr "Kết quả tìm kiếm: %s"
 
-#: hocwp/inc/template-general.php:523
+#: hocwp/inc/template-general.php:557
 msgid "Next Posts"
 msgstr "Bài Tiếp"
 
-#: hocwp/inc/template-general.php:526
+#: hocwp/inc/template-general.php:560
 msgid "Previous Posts"
 msgstr "Bài Trước"
 
-#: hocwp/inc/template-general.php:614
+#: hocwp/inc/template-general.php:648
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: hocwp/inc/template-general.php:685
+#: hocwp/inc/template-general.php:719
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1294
+#: hocwp/inc/template-general.php:1335
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1306
+#: hocwp/inc/template-general.php:1347
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1307
+#: hocwp/inc/template-general.php:1348
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1410
+#: hocwp/inc/template-general.php:1451
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
@@ -1912,35 +1912,35 @@ msgctxt "widget description"
 msgid "Show icon with text."
 msgstr "Hiển thị biểu tượng và văn bản."
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:161
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:168
 msgid "Icon URL:"
 msgstr "Đường dẫn trỏ đến của biểu tượng:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:165
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:172
 msgid "Icon Image:"
 msgstr "Biểu tượng bằng hình:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:169
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:176
 msgid "Icon HTML:"
 msgstr "Dùng HTML làm biểu tượng:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:173
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:180
 msgid "Hover Icon Image:"
 msgstr "Biểu tượng khi di chuyển chuột qua bằng hình:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:177
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:184
 msgid "Hover Icon HTML:"
 msgstr "Biểu tượng khi di chuyển chuột qua bằng HTML:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:181
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:188
 msgid "Background Image:"
 msgstr "Hình nền:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:185
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:192
 msgid "Text:"
 msgstr "Văn bản:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:194
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:201
 msgid "Sortable:"
 msgstr "Sắp xếp:"
 

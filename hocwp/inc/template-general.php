@@ -996,7 +996,12 @@ add_filter( 'get_custom_logo', 'hocwp_theme_get_custom_logo_filter' );
 
 function hocwp_theme_widget_posts_loop_html() {
 	global $hocwp_theme;
+
 	$widget = isset( $hocwp_theme->loop_data['widget'] ) ? $hocwp_theme->loop_data['widget'] : '';
+
+	if ( ! ( $widget instanceof HOCWP_Theme_Widget_Posts ) ) {
+		return;
+	}
 
 	$instance = isset( $hocwp_theme->loop_data['widget_instance'] ) ? $hocwp_theme->loop_data['widget_instance'] : '';
 
@@ -1264,20 +1269,20 @@ function hocwp_theme_socials( $args = array() ) {
 		'title'   => ''
 	);
 
-	$args = wp_parse_args( $args, $defaults );
-	$url  = $args['url'];
+	$args    = wp_parse_args( $args, $defaults );
+	$url     = $args['url'];
+	$post_id = $args['post_id'];
 
 	if ( empty( $url ) ) {
-		$post_id = $args['post_id'];
-
 		if ( HOCWP_Theme::is_positive_number( $post_id ) ) {
 			$url = get_permalink( $post_id );
 		} else {
-			$url = hocwp_get_current_url();
+			$url = HT_Util()->get_current_url( true );
 		}
 	}
 
 	$title = $args['title'];
+
 	if ( empty( $title ) ) {
 		$title = get_the_title( $post_id );
 	}
@@ -1293,6 +1298,8 @@ function hocwp_theme_socials( $args = array() ) {
 	<div class="social share-tools">
 		<?php
 		$link = '<a href="%s" rel="nofollow" target="%s" class="%s" title="%s" data-new-tab="1">%s</a>';
+
+		$target = '_blank';
 
 		foreach ( $socials as $social => $data ) {
 			$base  = $data['base'];
