@@ -118,6 +118,9 @@ function hocwp_theme_template_search() {
 
 add_action( 'hocwp_theme_template_search', 'hocwp_theme_template_search' );
 
+/*
+ * Filter widget title.
+ */
 function hocwp_theme_widget_title_filter( $title, $instance = array(), $id = '' ) {
 	if ( ! is_admin() && ! empty( $title ) && null !== $instance ) {
 		$first = substr( $title, 0, 1 );
@@ -136,6 +139,9 @@ function hocwp_theme_widget_title_filter( $title, $instance = array(), $id = '' 
 
 add_filter( 'widget_title', 'hocwp_theme_widget_title_filter', 10, 3 );
 
+/*
+ * Display widget title.
+ */
 function hocwp_theme_widget_title( $args, $instance, $widget ) {
 	$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : '';
 	$title = apply_filters( 'widget_title', $title, $instance, $widget->id_base );
@@ -176,30 +182,44 @@ function hocwp_theme_widget_title( $args, $instance, $widget ) {
 	if ( $title ) {
 		$before_title = isset( $args['before_title'] ) ? $args['before_title'] : '<h3 class="widget-title">';
 		$after_title  = isset( $args['after_title'] ) ? $args['after_title'] : '</h3>';
-		echo $before_title . $title . $after_title;
+		echo $before_title . $title . $after_title . PHP_EOL;
 	} else {
-		echo '<div class="widget-content">';
+		echo '<div class="widget-content">' . PHP_EOL;
 	}
 }
 
 add_action( 'hocwp_theme_widget_title', 'hocwp_theme_widget_title', 10, 3 );
 
+/*
+ * Display widget before HTML code.
+ */
 function hocwp_theme_widget_before( $args, $instance, $widget ) {
-	$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '<div class="widget">';
+	$before_widget = isset( $args['before_widget'] ) ? $args['before_widget'] : '<div class="widget">' . PHP_EOL;
 
 	$before_widget = apply_filters( 'hocwp_theme_widget_before_html', $before_widget, $args, $instance, $widget );
 
-	echo $before_widget;
+	echo $before_widget . PHP_EOL;
 
 	$show_title = isset( $instance['show_title'] ) ? (bool) $instance['show_title'] : true;
+	$title      = '';
 
 	if ( $show_title ) {
+		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : '';
+		$title = apply_filters( 'widget_title', $title, $instance, $widget->id_base );
+	}
+
+	if ( ! $show_title || ! $title ) {
+		echo '<div class="widget-content">' . PHP_EOL;
+	} elseif ( $show_title ) {
 		do_action( 'hocwp_theme_widget_title', $args, $instance, $widget );
 	}
 }
 
 add_action( 'hocwp_theme_widget_before', 'hocwp_theme_widget_before', 9, 3 );
 
+/*
+ * Update widget html class.
+ */
 function hocwp_theme_widget_before_html_filter( $before_widget, $args, $instance, $widget ) {
 	if ( $widget instanceof WP_Widget && is_array( $args ) && isset( $args['before_widget'] ) && ! empty( $args['before_widget'] ) ) {
 		$pos = strpos( $before_widget, 'class=' );
@@ -239,25 +259,32 @@ function hocwp_theme_widget_before_html_filter( $before_widget, $args, $instance
 
 add_filter( 'hocwp_theme_widget_before_html', 'hocwp_theme_widget_before_html_filter', 10, 4 );
 
+/*
+ * Display widget after HTML code.
+ */
 function hocwp_theme_widget_after( $args, $instance, $widget ) {
 	$show_title = isset( $instance['show_title'] ) ? (bool) $instance['show_title'] : true;
+	$title      = '';
 
 	if ( $show_title ) {
 		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : '';
 		$title = apply_filters( 'widget_title', $title, $instance, $widget->id_base );
+	}
 
-		if ( ! $title ) {
-			echo '</div>';
-		}
+	if ( ! $title || ! $show_title ) {
+		echo '</div>' . PHP_EOL;
 	}
 
 	$after_widget = isset( $args['after_widget'] ) ? $args['after_widget'] : '</div>';
 
-	echo $after_widget;
+	echo $after_widget . PHP_EOL;
 }
 
 add_action( 'hocwp_theme_widget_after', 'hocwp_theme_widget_after', 99, 3 );
 
+/*
+ * Get default core sidebar.
+ */
 function hocwp_theme_module_sidebar() {
 	if ( ! did_action( 'hocwp_theme_module_sidebar' ) ) {
 		_doing_it_wrong( __FUNCTION__, __( 'Please call function get_sidebar instead!', 'hocwp-theme' ), '5.2.2' );
@@ -268,6 +295,9 @@ function hocwp_theme_module_sidebar() {
 
 add_action( 'hocwp_theme_module_sidebar', 'hocwp_theme_module_sidebar' );
 
+/*
+ * Change sidebar for each page.
+ */
 function hocwp_theme_sidebar_filter( $sidebar ) {
 	$dynamic_sidebar = '';
 
@@ -317,6 +347,9 @@ function hocwp_theme_sidebar_filter( $sidebar ) {
 
 add_filter( 'hocwp_theme_sidebar', 'hocwp_theme_sidebar_filter' );
 
+/*
+ * Filter dynamic sidebar params.
+ */
 function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 	$wrap = apply_filters( 'hocwp_theme_wrap_widget', true, $params );
 
@@ -348,7 +381,8 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 		}
 
 		if ( $wrap ) {
-			$before_widget .= '<div class="widget-inner">';
+			$before_widget .= PHP_EOL;
+			$before_widget .= '<div class="widget-inner">' . PHP_EOL;
 		}
 
 		$params[0]['before_widget'] = $before_widget;
@@ -369,7 +403,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 		}
 
 		if ( $wrap ) {
-			$before_title = '</div>' . $before_title;
+			$before_title = '</div>' . PHP_EOL . $before_title;
 		}
 
 		$params[0]['before_title'] = $before_title;
@@ -384,7 +418,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 		}
 
 		if ( $wrap ) {
-			$after_title .= '<div class="widget-content">';
+			$after_title .= PHP_EOL . '<div class="widget-content">' . PHP_EOL;
 		}
 
 		$params[0]['after_title'] = $after_title;
@@ -400,7 +434,7 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 		}
 
 		if ( $wrap ) {
-			$after_widget = '</div>' . $after_widget;
+			$after_widget = '</div>' . PHP_EOL . $after_widget;
 		}
 
 		$params[0]['after_widget'] = $after_widget;

@@ -67,6 +67,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 		$title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : '';
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+		$title = ltrim( $title, '!' );
 
 		$instance['show_title'] = false;
 
@@ -88,8 +89,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				$title = sprintf( '<a href="%s">%s</a>', esc_attr( $icon_url ), $title );
 			}
 
-			$name = 'icon_image';
-
+			$name       = 'icon_image';
 			$icon_image = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 
 			$name      = 'icon_html';
@@ -98,11 +98,15 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 			if ( empty( $icon_html ) && HT()->is_positive_number( $icon_image ) ) {
 				$icon      = wp_get_attachment_url( $icon_image );
-				$icon_html = sprintf( '<img class="icon" src="%s" alt="%s">', $icon, $instance['title'] );
+				$icon_html = sprintf( '<img class="icon" src="%s" alt="%s">', $icon, ltrim( $instance['title'], '!' ) );
 			}
 
 			if ( ! empty( $icon_html ) && ! empty( $icon_url ) ) {
 				$icon_html = sprintf( '<a href="%s">%s</a>', esc_attr( $icon_url ), $icon_html );
+			}
+
+			if ( ! empty( $icon_html ) ) {
+				$icon_html = '<div class="icon-wrapper">' . $icon_html . '</div>';
 			}
 
 			$name = 'hover_icon_image';
@@ -139,7 +143,10 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				if ( 'icon' == $sortable ) {
 					echo $icon_html;
 				} elseif ( 'title' == $sortable && ! empty( $title ) ) {
-					echo $before_title . $title . $after_title;
+					$widget_title = $before_title . $title . $after_title;
+					$widget_title = strip_tags( $widget_title, '<h3><span>' );
+					HT()->debug($widget_title);
+					echo $widget_title;
 				} elseif ( 'text' == $sortable ) {
 					echo $text;
 				}
