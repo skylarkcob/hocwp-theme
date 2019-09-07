@@ -16,6 +16,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			'text'             => '',
 			'sortable'         => '',
 			'background_image' => '',
+			'html_class'       => '',
 			'sortables'        => array(
 				'icon'  => '<li class="ui-state-default ui-sortable-handle" data-value="icon">' . __( 'Icon', 'hocwp-theme' ) . '</li>',
 				'title' => '<li class="ui-state-default ui-sortable-handle" data-value="title">' . __( 'Title', 'hocwp-theme' ) . '</li>',
@@ -41,6 +42,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		}
 	}
 
+	/*
+	 * Add widget background.
+	 */
 	public function before_widget_filter( $before_widget, $args, $instance, $widget ) {
 		if ( $widget instanceof HOCWP_Theme_Widget_Icon ) {
 			$background = isset( $instance['background_image'] ) ? $instance['background_image'] : '';
@@ -55,11 +59,22 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 					$before_widget = preg_replace( '/style="/', 'style="' . $style, $before_widget, 1 );
 				}
 			}
+
+			$html_class = isset( $instance['html_class'] ) ? $instance['html_class'] : '';
+
+			if ( ! empty( $html_class ) ) {
+				$html_class = trim( $html_class );
+				$html_class .= ' ';
+				$before_widget = preg_replace( '/class="/', 'class="' . $html_class, $before_widget, 1 );
+			}
 		}
 
 		return $before_widget;
 	}
 
+	/*
+	 * Display widget on frontend.
+	 */
 	public function widget( $args, $instance ) {
 		$instance = wp_parse_args( $instance, $this->defaults );
 
@@ -158,6 +173,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 	}
 
+	/*
+	 * Display widget on backend.
+	 */
 	public function form( $instance ) {
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 
@@ -191,6 +209,10 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 		HT_HTML_Field()->widget_field( $this, $name, __( 'Text:', 'hocwp-theme' ), $value, 'textarea', array( 'rows' => 3 ) );
 
+		$name  = 'html_class';
+		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+		HT_HTML_Field()->widget_field( $this, $name, __( 'HTML Class Attribute:', 'hocwp-theme' ), $value );
+
 		$options = $instance['sortables'];
 
 		$name  = 'sortable';
@@ -215,6 +237,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$instance['sortable']         = $new_instance['sortable'];
 		$instance['hover_icon_image'] = $new_instance['hover_icon_image'];
 		$instance['hover_icon_html']  = $new_instance['hover_icon_html'];
+		$instance['html_class']       = sanitize_text_field( remove_accents( $new_instance['html_class'] ) );
 
 		return $instance;
 	}

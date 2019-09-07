@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2019-09-07 20:43+0700\n"
+"POT-Creation-Date: 2019-09-07 21:26+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -172,7 +172,7 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:90 hocwp/admin/class-hocwp-theme-meta-menu.php:167 hocwp/widgets/class-hocwp-theme-widget-icon.php:22
+#: hocwp/admin/admin-setting-page-general.php:90 hocwp/admin/class-hocwp-theme-meta-menu.php:167 hocwp/widgets/class-hocwp-theme-widget-icon.php:23
 msgid "Text"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:142 hocwp/widgets/class-hocwp-theme-widget-icon.php:20
+#: hocwp/admin/admin-setting-page-reading.php:142 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr ""
 
@@ -1747,44 +1747,48 @@ msgstr ""
 msgid "Hide commenter avatar?"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:22
 msgid "Title"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:30
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:31
 msgctxt "widget description"
 msgid "Show icon with text."
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:168
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:186
 msgid "Icon URL:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:172
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:190
 msgid "Icon Image:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:176
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:194
 msgid "Icon HTML:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:180
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:198
 msgid "Hover Icon Image:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:184
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:202
 msgid "Hover Icon HTML:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:188
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:206
 msgid "Background Image:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:192
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:210
 msgid "Text:"
 msgstr ""
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:201
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:214
+msgid "HTML Class Attribute:"
+msgstr ""
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:223
 msgid "Sortable:"
 msgstr ""
 
