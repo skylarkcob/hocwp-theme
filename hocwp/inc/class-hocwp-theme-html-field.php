@@ -474,12 +474,15 @@ final class HOCWP_Theme_HTML_Field {
 
 			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
 				$default_text = __( '-- Choose post --', 'hocwp-theme' );
+
 				if ( ! is_array( $post_type ) ) {
 					$type = get_post_type_object( $post_type );
+
 					if ( $type instanceof WP_Post_Type ) {
 						$default_text = sprintf( __( '-- Choose %s --', 'hocwp-theme' ), $type->labels->singular_name );
 					}
 				}
+
 				$args['option_all'] = $default_text;
 			}
 
