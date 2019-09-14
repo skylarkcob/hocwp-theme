@@ -364,7 +364,7 @@ final class HOCWP_Theme_HTML_Field {
 					$name = isset( $sidebar['name'] ) ? $sidebar['name'] : '';
 
 					if ( ! empty( $name ) ) {
-						$name = sprintf( '%s (%s)', $sidebar_id, $name );
+						$name = sprintf( '%s (%s)', $name, $sidebar_id );
 					}
 
 					if ( empty( $name ) ) {
