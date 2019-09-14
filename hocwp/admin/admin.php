@@ -14,7 +14,20 @@ if ( empty( $post_type ) ) {
 }
 
 function hocwp_theme_admin_notices_action() {
+	if ( ! HOCWP_THEME_DEVELOPING ) {
+		$email = get_bloginfo( 'admin_email' );
 
+		if ( is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
+			$link = '<a href="' . admin_url( 'options-general.php' ) . '">' . _x( 'general settings page', 'setting page', 'hocwp-theme' ) . '</a>';
+
+			$args = array(
+				'type'    => 'error',
+				'message' => sprintf( __( 'You must change administrator\'s email address for site working, please go to %s and update it.', 'hocwp-theme' ), $link )
+			);
+
+			HOCWP_Theme_Utility::admin_notice( $args );
+		}
+	}
 }
 
 add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );

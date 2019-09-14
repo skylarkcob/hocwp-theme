@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2019-09-10 20:37+0700\n"
-"PO-Revision-Date: 2019-09-10 20:37+0700\n"
+"POT-Creation-Date: 2019-09-14 19:23+0700\n"
+"PO-Revision-Date: 2019-09-14 19:24+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -133,7 +133,7 @@ msgstr "Tiêu đề thư"
 msgid "Mail Message"
 msgstr "Nội dung thư"
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:71
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:84
 #: hocwp/inc/setup-after.php:62
 msgid "Extensions"
 msgstr "Gói mở rộng"
@@ -401,20 +401,34 @@ msgstr "Viết"
 msgid "Default Thumbnail"
 msgstr "Ảnh mặc định"
 
-#: hocwp/admin/admin.php:74 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:21
+msgctxt "setting page"
+msgid "general settings page"
+msgstr "trang cài đặt chung"
+
+#: hocwp/admin/admin.php:25
+#, php-format
+msgid ""
+"You must change administrator's email address for site working, please go to "
+"%s and update it."
+msgstr ""
+"Bạn phải thay đổi địa chỉ email của người quản trị để trang web được hoạt "
+"động, vui lòng đến %s và cập nhật nó."
+
+#: hocwp/admin/admin.php:87 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:77 hocwp/inc/setup-after.php:71
+#: hocwp/admin/admin.php:90 hocwp/inc/setup-after.php:71
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:144 hocwp/admin/admin.php:155
+#: hocwp/admin/admin.php:157 hocwp/admin/admin.php:168
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:148
+#: hocwp/admin/admin.php:161
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -423,7 +437,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:159
+#: hocwp/admin/admin.php:172
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -432,12 +446,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:166
+#: hocwp/admin/admin.php:179
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:170
+#: hocwp/admin/admin.php:183
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -445,11 +459,11 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:266
+#: hocwp/admin/admin.php:279
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:308 hocwp/inc/template-post.php:288
+#: hocwp/admin/admin.php:321 hocwp/inc/template-post.php:288
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
@@ -1238,43 +1252,48 @@ msgstr "Chuyên mục được dùng nhiều"
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:407
+#: hocwp/inc/class-hocwp-theme-html-field.php:357
+#: hocwp/widgets/class-hocwp-theme-widget-tabber.php:102
+msgid "-- Choose sidebar --"
+msgstr "-- Chọn sidebar --"
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:446
 msgid "-- Choose term --"
 msgstr "-- Chọn chuyên mục --"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:413
-#: hocwp/inc/class-hocwp-theme-html-field.php:480
+#: hocwp/inc/class-hocwp-theme-html-field.php:452
+#: hocwp/inc/class-hocwp-theme-html-field.php:521
 #, php-format
 msgid "-- Choose %s --"
 msgstr "-- Chọn %s --"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:440
+#: hocwp/inc/class-hocwp-theme-html-field.php:479
 msgid "-- Choose page --"
 msgstr "-- Chọn trang --"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:476
+#: hocwp/inc/class-hocwp-theme-html-field.php:515
 msgid "-- Choose post --"
 msgstr "-- Chọn bài viết --"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:559
+#: hocwp/inc/class-hocwp-theme-html-field.php:601
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1014
+#: hocwp/inc/class-hocwp-theme-html-field.php:1056
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1037
+#: hocwp/inc/class-hocwp-theme-html-field.php:1079
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1045
+#: hocwp/inc/class-hocwp-theme-html-field.php:1087
 #: hocwp/inc/functions-scripts.php:262
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1083
+#: hocwp/inc/class-hocwp-theme-html-field.php:1125
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -2140,10 +2159,6 @@ msgstr "Xin vui lòng kéo và thả widget vào sidebar %s."
 #: hocwp/widgets/class-hocwp-theme-widget-tabber.php:77
 msgid "Tabber widget is not properly configured."
 msgstr "Widget Tabber được cấu hình chưa đúng."
-
-#: hocwp/widgets/class-hocwp-theme-widget-tabber.php:102
-msgid "-- Choose sidebar --"
-msgstr "-- Chọn sidebar --"
 
 #: hocwp/widgets/class-hocwp-theme-widget-tabber.php:114
 msgid "Please do not select Sidebar that contains this widget."

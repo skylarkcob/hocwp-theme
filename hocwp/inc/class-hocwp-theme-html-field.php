@@ -349,6 +349,45 @@ final class HOCWP_Theme_HTML_Field {
 		self::select_term( $args );
 	}
 
+	public static function select_sidebar( $args = array() ) {
+		$options = isset( $args['options'] ) ? $args['options'] : '';
+
+		if ( empty( $options ) ) {
+			$options = array(
+				'' => __( '-- Choose sidebar --', 'hocwp-theme' )
+			);
+
+			global $wp_registered_sidebars;
+
+			foreach ( $wp_registered_sidebars as $sidebar_id => $sidebar ) {
+				if ( is_array( $sidebar ) ) {
+					$name = isset( $sidebar['name'] ) ? $sidebar['name'] : '';
+					$desc = isset( $sidebar['description'] ) ? $sidebar['description'] : '';
+
+					if ( empty( $name ) ) {
+						$name = $desc;
+					}
+
+					if ( empty( $name ) ) {
+						$name = $sidebar_id;
+					}
+
+					if ( ! empty( $desc ) ) {
+						$name = sprintf( '%s - %s', $name, $desc );
+					}
+
+					$name = trim( $name );
+
+					$options[ $sidebar_id ] = $name;
+				}
+			}
+
+			$args['options'] = $options;
+		}
+
+		self::select( $args );
+	}
+
 	public static function select_term( $args = array() ) {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
 

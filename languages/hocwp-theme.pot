@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2019-09-10 20:37+0700\n"
+"POT-Creation-Date: 2019-09-14 19:23+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -124,7 +124,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:71 hocwp/inc/setup-after.php:62
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:84 hocwp/inc/setup-after.php:62
 msgid "Extensions"
 msgstr ""
 
@@ -362,44 +362,54 @@ msgstr ""
 msgid "Default Thumbnail"
 msgstr ""
 
-#: hocwp/admin/admin.php:74 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:21
+msgctxt "setting page"
+msgid "general settings page"
+msgstr ""
+
+#: hocwp/admin/admin.php:25
+#, php-format
+msgid "You must change administrator's email address for site working, please go to %s and update it."
+msgstr ""
+
+#: hocwp/admin/admin.php:87 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:77 hocwp/inc/setup-after.php:71
+#: hocwp/admin/admin.php:90 hocwp/inc/setup-after.php:71
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:144 hocwp/admin/admin.php:155
+#: hocwp/admin/admin.php:157 hocwp/admin/admin.php:168
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:148
+#: hocwp/admin/admin.php:161
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:159
+#: hocwp/admin/admin.php:172
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:166
+#: hocwp/admin/admin.php:179
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:170
+#: hocwp/admin/admin.php:183
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:266
+#: hocwp/admin/admin.php:279
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:308 hocwp/inc/template-post.php:288
+#: hocwp/admin/admin.php:321 hocwp/inc/template-post.php:288
 msgid "Related posts"
 msgstr ""
 
@@ -1119,41 +1129,45 @@ msgstr ""
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:407
+#: hocwp/inc/class-hocwp-theme-html-field.php:357 hocwp/widgets/class-hocwp-theme-widget-tabber.php:102
+msgid "-- Choose sidebar --"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:446
 msgid "-- Choose term --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:413 hocwp/inc/class-hocwp-theme-html-field.php:480
+#: hocwp/inc/class-hocwp-theme-html-field.php:452 hocwp/inc/class-hocwp-theme-html-field.php:521
 #, php-format
 msgid "-- Choose %s --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:440
+#: hocwp/inc/class-hocwp-theme-html-field.php:479
 msgid "-- Choose page --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:476
+#: hocwp/inc/class-hocwp-theme-html-field.php:515
 msgid "-- Choose post --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:559
+#: hocwp/inc/class-hocwp-theme-html-field.php:601
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1014
+#: hocwp/inc/class-hocwp-theme-html-field.php:1056
 msgid "Add media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1037
+#: hocwp/inc/class-hocwp-theme-html-field.php:1079
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1045 hocwp/inc/functions-scripts.php:262
+#: hocwp/inc/class-hocwp-theme-html-field.php:1087 hocwp/inc/functions-scripts.php:262
 #, php-format
 msgid "Choose %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1083
+#: hocwp/inc/class-hocwp-theme-html-field.php:1125
 msgid "Drag to find address!"
 msgstr ""
 
@@ -1975,10 +1989,6 @@ msgstr ""
 
 #: hocwp/widgets/class-hocwp-theme-widget-tabber.php:77
 msgid "Tabber widget is not properly configured."
-msgstr ""
-
-#: hocwp/widgets/class-hocwp-theme-widget-tabber.php:102
-msgid "-- Choose sidebar --"
 msgstr ""
 
 #: hocwp/widgets/class-hocwp-theme-widget-tabber.php:114
