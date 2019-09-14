@@ -362,18 +362,13 @@ final class HOCWP_Theme_HTML_Field {
 			foreach ( $wp_registered_sidebars as $sidebar_id => $sidebar ) {
 				if ( is_array( $sidebar ) ) {
 					$name = isset( $sidebar['name'] ) ? $sidebar['name'] : '';
-					$desc = isset( $sidebar['description'] ) ? $sidebar['description'] : '';
 
-					if ( empty( $name ) ) {
-						$name = $desc;
+					if ( ! empty( $name ) ) {
+						$name = sprintf( '%s (%s)', $sidebar_id, $name );
 					}
 
 					if ( empty( $name ) ) {
 						$name = $sidebar_id;
-					}
-
-					if ( ! empty( $desc ) ) {
-						$name = sprintf( '%s - %s', $name, $desc );
 					}
 
 					$name = trim( $name );
