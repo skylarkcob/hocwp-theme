@@ -1,6 +1,7 @@
 == Changelog ==
 = 6.6.9 =
 * Add meta menu class.
+* Support meta field quick edit.
 
 = 6.6.8 =
 * Add widget Insert Code.

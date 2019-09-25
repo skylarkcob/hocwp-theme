@@ -35,3 +35,25 @@ class HOCWP_Theme_Meta_Field extends HOCWP_Theme_Admin_Field {
 		return $field;
 	}
 }
+
+class HOCWP_Theme_Meta_Quick_Edit_Field extends HOCWP_Theme_Meta_Field {
+	public $show_admin_column;
+	public $show_in_quick_edit;
+
+	public function __construct( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string' ) {
+		parent::__construct( $id, $title, $callback, $callback_args, $data_type );
+	}
+
+	public function generate() {
+		$field = parent::generate();
+
+		if ( $this->show_in_quick_edit && ! $this->show_admin_column ) {
+			$this->show_admin_column = true;
+		}
+
+		$field['show_admin_column']  = $this->show_admin_column;
+		$field['show_in_quick_edit'] = $this->show_in_quick_edit;
+
+		return $field;
+	}
+}

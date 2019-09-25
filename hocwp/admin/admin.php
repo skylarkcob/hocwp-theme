@@ -34,24 +34,29 @@ add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
 
-if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'term.php' == $pagenow || 'edit-tags.php' == $pagenow || 'link.php' == $pagenow || 'link-add.php' == $pagenow || 'nav-menus.php' == $pagenow ) {
+$post_meta = ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'edit.php' == $pagenow );
+$term_meta = ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow );
+$link_meta = ( 'link.php' == $pagenow || 'link-add.php' == $pagenow );
+$menu_meta = ( 'nav-menus.php' == $pagenow );
+
+if ( $post_meta || $term_meta || $link_meta || $menu_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php';
 }
 
-if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
+if ( $post_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-post.php';
 }
 
-if ( 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
+if ( $link_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-bookmark.php';
 }
 
-if ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow ) {
+if ( $term_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-term.php';
 }
 
-if ( 'nav-menus.php' == $pagenow ) {
+if ( $menu_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-menu.php';
 }
 
@@ -76,7 +81,7 @@ add_action( 'after_setup_theme', function () {
 	}
 }, 20 );
 
-if ( 'edit.php' == $pagenow || 'post.php' == $pagenow || 'post-new.php' == $pagenow || HOCWP_THEME_DOING_AJAX ) {
+if ( $post_meta || HOCWP_THEME_DOING_AJAX ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/featured.php';
 }
 

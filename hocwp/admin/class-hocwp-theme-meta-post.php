@@ -15,7 +15,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	public function __construct() {
 		global $pagenow;
 
-		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
+		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'edit.php' == $pagenow ) {
 			parent::__construct();
 			$this->set_id( 'extra-information' );
 			$this->set_title( __( 'Extra Information', 'hocwp-theme' ) );
@@ -27,6 +27,56 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_action' ) );
 			add_action( 'save_post', array( $this, 'save_post_action' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 20 );
+		}
+
+		if ( 'edit.php' == $pagenow ) {
+			add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+
+			add_filter( 'manage_posts_columns', array( $this, 'posts_columns_filter' ) );
+			add_filter( 'manage_pages_columns', array( $this, 'posts_columns_filter' ) );
+		}
+	}
+
+	public function posts_columns_filter( $columns ) {
+		global $post_type;
+
+		if ( in_array( $post_type, $this->post_types ) ) {
+			foreach ( $this->fields as $field ) {
+				$sac = isset( $field['show_admin_column'] ) ? $field['show_admin_column'] : '';
+
+				if ( $sac ) {
+					$columns[ $field['id'] ] = $field['title'];
+				}
+			}
+		}
+
+		return $columns;
+	}
+
+	public function quick_edit_custom_box( $column_name, $post_type ) {
+		if ( in_array( $post_type, $this->post_types ) ) {
+			$html = '<div class="clear"></div>';
+
+			foreach ( $this->fields as $field ) {
+				if ( $column_name == $field['id'] ) {
+					$siqe = isset( $field['show_in_quick_edit'] ) ? $field['show_in_quick_edit'] : '';
+
+					if ( $siqe ) {
+						ob_start();
+						echo '<fieldset class="inline-edit-col-center" style="margin-bottom: 10px;">' . PHP_EOL;
+						echo '<div class="inline-edit-col">' . PHP_EOL;
+						$this->meta_row_html( $field, $field['id'] );
+						echo '</div>' . PHP_EOL;
+						echo '</fieldset>' . PHP_EOL;
+						$html .= ob_get_clean();
+					}
+				}
+			}
+
+			if ( ! empty( $html ) ) {
+				$html = '<div class="clearfix"></div>' . $html;
+				echo $html;
+			}
 		}
 	}
 
@@ -78,47 +128,56 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		}
 	}
 
-	private function meta_row( $field, $id ) {
+	private function meta_row_html( $field, $id = '' ) {
+		if ( empty( $id ) ) {
+			$id = isset( $field['id'] ) ? $field['id'] : '';
+		}
+
+		$html = isset( $field['callback_args']['html'] ) ? $field['callback_args']['html'] : '';
+
+		unset( $field['callback_args']['html'] );
+
+		if ( isset( $field['callback_args']['message'] ) ) {
+			$message = $field['callback_args']['message'];
+
+			if ( ! $this->form_table ) {
+				$message = wpautop( $message );
+			}
+
+			echo $message;
+		} else {
+			if ( ! empty( $id ) ) {
+				if ( ! $this->form_table && isset( $field['title'] ) && ! empty( $field['title'] ) ) {
+					HT_HTML_Field()->label( array( 'text' => $field['title'], 'for' => $id ) );
+					unset( $field['title'] );
+					unset( $field['label'] );
+					unset( $field['callback_args']['label'] );
+				}
+
+				call_user_func( $field['callback'], $field['callback_args'] );
+				$desc = isset( $field['description'] ) ? $field['description'] : '';
+
+				if ( ! empty( $desc ) ) {
+					$p = new HOCWP_Theme_HTML_Tag( 'p' );
+					$p->add_attribute( 'class', 'description' );
+					$p->set_text( $desc );
+					$p->output();
+				}
+			}
+		}
+
+		echo $html;
+		do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
+	}
+
+	private function meta_row( $field, $id = '' ) {
+		if ( empty( $id ) ) {
+			$id = isset( $field['id'] ) ? $field['id'] : '';
+		}
 		?>
 		<div class="meta-row">
 			<fieldset>
-				<?php
-				$html = isset( $field['callback_args']['html'] ) ? $field['callback_args']['html'] : '';
-
-				unset( $field['callback_args']['html'] );
-
-				if ( isset( $field['callback_args']['message'] ) ) {
-					$message = $field['callback_args']['message'];
-
-					if ( ! $this->form_table ) {
-						$message = wpautop( $message );
-					}
-
-					echo $message;
-				} else {
-					if ( ! empty( $id ) ) {
-						if ( ! $this->form_table && isset( $field['title'] ) && ! empty( $field['title'] ) ) {
-							HT_HTML_Field()->label( array( 'text' => $field['title'], 'for' => $id ) );
-							unset( $field['title'] );
-							unset( $field['label'] );
-							unset( $field['callback_args']['label'] );
-						}
-
-						call_user_func( $field['callback'], $field['callback_args'] );
-						$desc = isset( $field['description'] ) ? $field['description'] : '';
-
-						if ( ! empty( $desc ) ) {
-							$p = new HOCWP_Theme_HTML_Tag( 'p' );
-							$p->add_attribute( 'class', 'description' );
-							$p->set_text( $desc );
-							$p->output();
-						}
-					}
-				}
-
-				echo $html;
-				do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
-				?>
+				<?php $this->meta_row_html( $field, $id ); ?>
 			</fieldset>
 		</div>
 		<?php

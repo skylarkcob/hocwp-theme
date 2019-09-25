@@ -192,7 +192,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		wp_enqueue_script( 'hocwp-theme-admin' );
 	}
 
-	if ( 'widgets.php' == $pagenow || 'appearance_page_hocwp_theme' == $screen->id ) {
+	if ( 'widgets.php' == $pagenow || 'appearance_page_hocwp_theme' == $screen->id || 'link.php' == $pagenow || 'link-add.php' == $pagenow ) {
 		wp_enqueue_style( 'hocwp-theme-admin-style' );
 	}
 

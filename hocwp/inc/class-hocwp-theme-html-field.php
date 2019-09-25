@@ -646,6 +646,10 @@ final class HOCWP_Theme_HTML_Field {
 				}
 
 				foreach ( (array) $tmp as $key ) {
+					if ( is_array( $key ) || is_object( $key ) ) {
+						continue;
+					}
+
 					$list = isset( $lists[ $key ] ) ? $lists[ $key ] : '';
 
 					if ( empty( $list ) ) {
@@ -764,6 +768,10 @@ final class HOCWP_Theme_HTML_Field {
 			$connects = array();
 
 			foreach ( $values as $std ) {
+				if ( ! is_object( $std ) ) {
+					continue;
+				}
+
 				$obj = get_term_by( 'id', $std->id, $std->taxonomy );
 
 				if ( $obj instanceof WP_Term ) {
