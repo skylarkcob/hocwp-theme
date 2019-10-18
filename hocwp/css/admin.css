@@ -88,3 +88,7 @@
 .link-add-php #poststuff .stuffbox .inside {
     padding: 8px 10px;
 }
+
+#megamenu-grid .mega-col .mega-col-widgets .widget .widget-title-action {
+    margin-top: 1px;
+}

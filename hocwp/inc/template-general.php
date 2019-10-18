@@ -65,8 +65,16 @@ function hocwp_theme_template_archive() {
 	if ( is_post_type_archive() ) {
 		global $post_type;
 
-		if ( ! empty( $post_type ) ) {
-			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $post_type . '.php';
+		$type = $post_type;
+
+		if ( is_array( $type ) ) {
+			$type = array_filter( $type );
+			$type = array_unique( $type );
+			$type = current( $type );
+		}
+
+		if ( ! empty( $type ) ) {
+			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $type . '.php';
 
 			if ( file_exists( $file ) ) {
 				load_template( $file );
@@ -74,7 +82,7 @@ function hocwp_theme_template_archive() {
 				return;
 			}
 
-			$tmp  = str_replace( '_', '-', $post_type );
+			$tmp  = str_replace( '_', '-', $type );
 			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $tmp . '.php';
 
 			if ( file_exists( $file ) ) {
@@ -718,6 +726,8 @@ function hocwp_theme_human_time_diff_filter( $since, $diff ) {
 
 		$since = sprintf( _n( '%s sec', '%s secs', $secs, 'hocwp-theme' ), $secs );
 	}
+
+	$since = apply_filters( 'hocwp_theme_human_time_diff', $since, $diff );
 
 	return $since;
 }

@@ -38,6 +38,60 @@ function hocwp_theme_attachment_path_to_postid( $path ) {
 
 add_filter( 'wp_calculate_image_srcset', '__return_false' );
 
+// Allow upload WEBP image mime type
+function hocwp_theme_upload_mimes_filter( $mimes ) {
+	$mimes['webp'] = 'image/webp';
+
+	return $mimes;
+}
+
+add_filter( 'upload_mimes', 'hocwp_theme_upload_mimes_filter' );
+
+// Update WEBP image file type
+function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file, $filename ) {
+	if ( is_file( $file ) && false !== strpos( $filename, '.webp' ) ) {
+		$types['ext']  = 'webp';
+		$types['type'] = 'image/webp';
+	}
+
+	return $types;
+}
+
+add_filter( 'wp_check_filetype_and_ext', 'hocwp_theme_wp_check_filetype_and_ext_filter', 10, 3 );
+
+// Mark WEBP image as real image
+function hocwp_theme_file_is_displayable_image_filter( $result, $path ) {
+	if ( HT()->is_file( $path ) ) {
+		$info = pathinfo( $path );
+
+		if ( isset( $info['extension'] ) && 'webp' == $info['extension'] ) {
+			$result = true;
+		}
+	}
+
+	return $result;
+}
+
+add_filter( 'file_is_displayable_image', 'hocwp_theme_file_is_displayable_image_filter', 10, 2 );
+
+// Re-update WEBP image metadata
+function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
+	$path = get_attached_file( $media_id );
+
+	if ( HT()->is_file( $path ) ) {
+		$info = pathinfo( $path );
+
+		if ( isset( $info['extension'] ) && 'webp' == $info['extension'] ) {
+			$data = wp_generate_attachment_metadata( $media_id, $path );
+			wp_update_attachment_metadata( $media_id, $data );
+		}
+	}
+
+	return $data;
+}
+
+add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_wp_get_attachment_metadata_filter', 10, 2 );
+
 class HOCWP_Theme_Media {
 	protected static $instance;
 
