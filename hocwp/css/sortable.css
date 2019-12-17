@@ -75,3 +75,22 @@
     background-color: #fcf8e3;
     border-color: #ffee92;
 }
+
+.hocwp-theme ul.sortable.display-row {
+    width: 100%;
+}
+
+.hocwp-theme ul.sortable.display-row + p.description + ul,
+.hocwp-theme ul.sortable.display-row + ul {
+    margin-top: 15px;
+}
+
+.hocwp-theme ul.sortable.display-row > li {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+.hocwp-theme ul.sortable.display-row > li.ui-state-highlight {
+    min-width: 100px;
+}

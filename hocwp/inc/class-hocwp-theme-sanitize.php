@@ -71,7 +71,7 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function media_url( $url, $media_id ) {
-		if ( HOCWP_Theme::is_positive_number( $media_id ) && hocwp_theme_media_file_exists( $media_id ) ) {
+		if ( HOCWP_Theme::is_positive_number( $media_id ) && HT_Media()->exists( $media_id ) ) {
 			if ( wp_attachment_is_image( $media_id ) ) {
 				$details = wp_get_attachment_image_src( $media_id, 'full' );
 				$url     = isset( $details[0] ) ? $details[0] : '';
@@ -108,7 +108,10 @@ final class HOCWP_Theme_Sanitize {
 		if ( HOCWP_Theme::is_positive_number( $id ) ) {
 			$url  = self::media_url( $url, $id );
 			$icon = wp_mime_type_icon( $id );
-			$size = filesize( get_attached_file( $id ) );
+
+			if ( HT_Media()->exists( $id ) ) {
+				$size = filesize( get_attached_file( $id ) );
+			}
 		}
 
 		$result = array(

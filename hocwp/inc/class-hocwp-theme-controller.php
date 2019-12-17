@@ -380,7 +380,10 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme-color.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-tag.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-field.php';
+		require $this->core_path . '/inc/class-hocwp-theme-metas.php';
+		require $this->core_path . '/inc/abstract-class-hocwp-theme-object.php';
 		require $this->core_path . '/inc/class-hocwp-theme-post.php';
+		require $this->core_path . '/inc/class-hocwp-theme-term.php';
 		require $this->core_path . '/inc/class-hocwp-theme-query.php';
 		require $this->core_path . '/inc/template-tags.php';
 		require $this->core_path . '/inc/functions-scripts.php';
@@ -443,6 +446,7 @@ final class HOCWP_Theme_Controller {
 		HOCWP_Theme::require_if_exists( $this->custom_path . '/extensions.php' );
 
 		if ( is_admin() ) {
+			require $this->core_path . '/admin/load-custom-meta.php';
 			HOCWP_Theme::require_if_exists( $this->custom_path . '/meta.php' );
 
 			if ( $this->doing_ajax ) {

@@ -5,3 +5,9 @@
 .postbox-container .meta-row:not(:last-child) {
     margin-bottom: 15px;
 }
+
+.postbox-container .meta-row input.tiny-text + p.description,
+.postbox-container .meta-row input.small-text + p.description,
+.postbox-container .meta-row input.medium-text + p.description {
+    display: inline-block;
+}

@@ -99,7 +99,7 @@ add_filter( 'manage_page_posts_columns', 'hocwp_theme_manage_posts_columns_filte
 function hocwp_theme_manage_sortable_columns_filter( $columns ) {
 	global $post_type;
 
-	if ( in_array( $post_type, HT_Util()->post_types_support_featured() ) ) {
+	if ( in_array( $post_type, HT_Util()->post_types_support_featured_sortable() ) ) {
 		if ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) {
 			$columns['featured'] = 'featured';
 		}
@@ -108,19 +108,27 @@ function hocwp_theme_manage_sortable_columns_filter( $columns ) {
 	return $columns;
 }
 
-function hocwp_theme_init_edit_sortable_columns() {
-	$types = hocwp_theme_get_custom_post_types();
-	add_filter( 'manage_edit-post_sortable_columns', 'hocwp_theme_manage_sortable_columns_filter', 10 );
-	add_filter( 'manage_edit-page_sortable_columns', 'hocwp_theme_manage_sortable_columns_filter', 10 );
-	$post_types = HT_Util()->post_types_support_featured();
-	$types      = array_diff( $types, $post_types );
+function hocwp_theme_init_edit_columns() {
+	foreach ( HT_Util()->post_types_support_featured() as $post_type ) {
+		$action   = 'manage_' . $post_type . '_posts_custom_column';
+		$function = 'hocwp_theme_manage_posts_custom_column_action';
 
-	foreach ( $types as $post_type ) {
-		add_filter( 'manage_edit-' . $post_type . '_sortable_columns', 'hocwp_theme_manage_sortable_columns_filter', 10 );
+		if ( ! has_action( $action, $function ) ) {
+			add_action( $action, $function, 10, 2 );
+		}
+	}
+
+	foreach ( HT_Util()->post_types_support_featured_sortable() as $post_type ) {
+		$filter   = 'manage_edit-' . $post_type . '_sortable_columns';
+		$function = 'hocwp_theme_manage_sortable_columns_filter';
+
+		if ( ! has_filter( $filter, $function ) ) {
+			add_filter( $filter, $function, 10 );
+		}
 	}
 }
 
-add_action( 'init', 'hocwp_theme_init_edit_sortable_columns' );
+add_action( 'init', 'hocwp_theme_init_edit_columns' );
 
 function hocwp_theme_manage_posts_custom_column_action( $column_name, $post_id ) {
 	$obj       = get_post( $post_id );
@@ -137,14 +145,15 @@ function hocwp_theme_manage_posts_custom_column_action( $column_name, $post_id )
 					$class .= ' active';
 				}
 
+				if ( in_array( $post_type, HT_Util()->post_types_support_featured_sortable() ) ) {
+					$class .= ' sortable-active';
+				}
+
 				echo '<span class="' . $class . '" data-featured="' . $value . '" data-id="' . $post_id . '" data-ajax-button="1"></span>';
 			}
 		}
 	}
 }
-
-add_action( 'manage_posts_custom_column', 'hocwp_theme_manage_posts_custom_column_action', 10, 2 );
-add_action( 'manage_page_posts_custom_column', 'hocwp_theme_manage_posts_custom_column_action', 10, 2 );
 
 function hocwp_theme_hocwp_theme_featured_post_ajax_callback() {
 	$result = array(

@@ -76,3 +76,15 @@ td.column-featured {
 .hocwp-theme-boolean-meta.active {
     background-color: #8cc83c;
 }
+
+.edit-php td.column-featured {
+    text-align: center;
+}
+
+.edit-php td.column-featured > span.dashicons {
+    margin-right: 5px;
+}
+
+.edit-php td.column-featured > span.dashicons.sortable-active {
+    margin-right: 20px;
+}

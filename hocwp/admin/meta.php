@@ -6,7 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $pagenow;
 
 if ( 'post-new.php' !== $pagenow && 'post.php' !== $pagenow && 'link.php' != $pagenow && 'link-add.php' != $pagenow ) {
-	return;
+	if ( 'edit-tags.php' != $pagenow && 'term.php' != $pagenow ) {
+		return;
+	}
 }
 
 if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {

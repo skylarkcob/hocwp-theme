@@ -115,6 +115,28 @@ class HOCWP_Theme_Utility {
 		return $current->ID;
 	}
 
+	public function return_term( $term_or_id = null, $taxonomy = '', $output = OBJECT ) {
+		$output = strtoupper( $output );
+
+		if ( $term_or_id instanceof WP_Term ) {
+			$current = $term_or_id;
+		} elseif ( HT()->is_positive_number( $term_or_id ) ) {
+			$current = get_term( $term_or_id, $taxonomy );
+		} else {
+			$current = get_queried_object();
+		}
+
+		if ( ! ( $current instanceof WP_Term ) ) {
+			return new WP_Error();
+		}
+
+		if ( OBJECT == $output ) {
+			return $current;
+		}
+
+		return $current->term_id;
+	}
+
 	public function return_user( $id_email_login = null, $output = OBJECT ) {
 		$output = strtoupper( $output );
 
@@ -1004,6 +1026,12 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'post_types_support_featured', $post_types );
 	}
 
+	public function post_types_support_featured_sortable() {
+		$post_types = HT_Util()->post_types_support_featured();
+
+		return apply_filters( 'post_types_support_featured_sortable', $post_types );
+	}
+
 	public static function get_theme_option( $name, $default = '', $base = 'general' ) {
 		global $hocwp_theme;
 
@@ -1539,6 +1567,10 @@ class HOCWP_Theme_Utility {
 
 		$wpdb->query( $key_1 );
 		$wpdb->query( $key_2 );
+	}
+
+	public function clear_div( $class = 'clearfix' ) {
+		printf( '<div class="clear %s"></div>', esc_attr( $class ) );
 	}
 
 	public function display_ads( $args, $random = false ) {

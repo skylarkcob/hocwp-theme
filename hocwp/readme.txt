@@ -1,4 +1,14 @@
 == Changelog ==
+= 6.7.0 =
+* Update admin setting field.
+* Add functions for default meta configurations.
+* Add class Abstract_HOCWP_Theme_Object.
+* Update pagination load more AJAX.
+* Add HTML field images box.
+* Add class HOCWP_Theme_Metas.
+* Update theme custom class.
+* Update some admin css.
+
 = 6.6.9 =
 * Add meta menu class.
 * Support meta field quick edit.

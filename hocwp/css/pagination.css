@@ -40,6 +40,7 @@
     text-decoration: none;
 }
 
+.hocwp-pagination + a.load-more-button,
 .hocwp-pagination li a:hover,
 .hocwp-pagination li .page-numbers.current {
     background: #93cede;
@@ -49,10 +50,19 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#93cede', endColorstr='#49a5bf', GradientType=0);
 }
 
+.hocwp-pagination + a.load-more-button,
 .hocwp-pagination li a:hover,
 .hocwp-pagination li .page-numbers.current {
     color: #fff;
     border-color: #309dcf;
     text-decoration: none;
     box-shadow: none;
+}
+
+.hocwp-pagination + a.load-more-button {
+    padding: 5px 10px;
+}
+
+.hocwp-pagination[data-load-more="1"] {
+    display: none;
 }

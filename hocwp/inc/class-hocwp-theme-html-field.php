@@ -157,6 +157,11 @@ final class HOCWP_Theme_HTML_Field {
 		self::input( $args );
 	}
 
+	public static function input_number( $args = array() ) {
+		$args['type'] = 'number';
+		self::input( $args );
+	}
+
 	public static function input_email( $args = array() ) {
 		$args['type'] = 'email';
 		self::input( $args );
@@ -215,6 +220,13 @@ final class HOCWP_Theme_HTML_Field {
 		unset( $label );
 
 		wp_editor( $args['value'], $args['id'], $args );
+	}
+
+	public static function description( $args = array() ) {
+		if ( isset( $args['description'] ) && ! empty( $args['description'] ) ) {
+			$tag = isset( $args['description_tag'] ) ? $args['description_tag'] : 'p';
+			printf( '<%s class="description">%s</%s>', $tag, $args['description'], $tag );
+		}
 	}
 
 	public static function label( $args = array() ) {
@@ -547,6 +559,70 @@ final class HOCWP_Theme_HTML_Field {
 		}
 	}
 
+	public static function icon_remove( $title = '' ) {
+		if ( empty( $title ) ) {
+			$title = __( 'Remove', 'hocwp-theme' );
+		}
+
+		ob_start();
+		?>
+		<span class="dashicons dashicons-no-alt" title="<?php echo esc_attr( $title ); ?>"></span>
+		<?php
+		return ob_get_clean();
+	}
+
+	public static function images( $args = array() ) {
+		$name  = isset( $args['name'] ) ? $args['name'] : '';
+		$value = isset( $args['value'] ) ? $args['value'] : '';
+		$id    = isset( $args['id'] ) ? $args['id'] : '';
+
+		$images = $value;
+
+		if ( is_array( $value ) ) {
+			$value = json_encode( $value );
+		}
+
+		$column = isset( $args['column'] ) ? $args['column'] : '';
+		?>
+		<div id="<?php echo esc_attr( $id ); ?>" class="images-box wp-media-buttons"
+		     data-column="<?php echo esc_attr( $column ); ?>">
+			<button type="button" class="button insert-medias insert-images add_media"><span
+					class="wp-media-buttons-icon"></span> <?php _e( 'Add images', 'hocwp-theme' ); ?></button>
+			<?php
+			if ( ! empty( $images ) ) {
+				?>
+				<button type="button" class="button remove-medias remove-images add_media"><span
+						class="wp-media-buttons-icon"></span> <?php _e( 'Remove all images', 'hocwp-theme' ); ?>
+				</button>
+				<?php
+			}
+			?>
+			<ul class="list-images clearfix" data-list-type="image" data-sortable="1">
+				<?php
+				if ( ! empty( $images ) ) {
+					$images = json_decode( $images );
+
+					if ( HT()->array_has_value( $images ) ) {
+						foreach ( $images as $id ) {
+							?>
+							<li class="ui-state-default" data-id="<?php echo esc_attr( $id ); ?>">
+								<?php
+								echo wp_get_attachment_image( $id, 'full' );
+								echo self::icon_remove();
+								?>
+							</li>
+							<?php
+						}
+					}
+				}
+				?>
+			</ul>
+			<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>">
+			<?php self::description( $args ); ?>
+		</div>
+		<?php
+	}
+
 	public static function sortable( $args = array() ) {
 		$lists = isset( $args['lists'] ) ? $args['lists'] : '';
 		$lists = (array) $lists;
@@ -600,7 +676,8 @@ final class HOCWP_Theme_HTML_Field {
 
 			$ul = new HOCWP_Theme_HTML_Tag( 'ul' );
 			$ul->add_attribute( 'data-list-type', $list_type );
-			$class = 'sortable hocwp-theme-sortable';
+			$class = isset( $args['class'] ) ? $args['class'] : '';
+			$class .= ' sortable hocwp-theme-sortable';
 
 			$has_sub = isset( $args['has_sub'] ) ? $args['has_sub'] : false;
 
@@ -613,6 +690,8 @@ final class HOCWP_Theme_HTML_Field {
 					$class .= ' ' . $id;
 				}
 			}
+
+			$class = trim( $class );
 
 			$ul->add_attribute( 'class', $class );
 
@@ -1255,6 +1334,14 @@ final class HOCWP_Theme_HTML_Field {
 			printf( '<%s>', $c_atts );
 
 			$right_label = isset( $args['right_label'] ) ? $args['right_label'] : '';
+
+			if ( ! $right_label ) {
+				$type = isset( $args['type'] ) ? $args['type'] : '';
+
+				if ( 'radio' == $type || 'checkbox' == $type ) {
+					$right_label = true;
+				}
+			}
 
 			if ( 1 != $right_label && true != $right_label ) {
 				HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );

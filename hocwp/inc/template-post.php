@@ -106,13 +106,13 @@ function hocwp_theme_the_title() {
 
 	if ( $list || ( isset( $hocwp_theme->loop_data['only_link'] ) && $hocwp_theme->loop_data['only_link'] ) ) {
 		if ( $list ) {
-			the_title( '<li><a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a></li>' );
+			the_title( '<li><a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a></li>' );
 		} else {
-			the_title( '<a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a>' );
+			the_title( '<a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a>' );
 		}
 	} else {
 		if ( $in_loop && ! $is_single ) {
-			the_title( '<h2 class="entry-title post-title"><a href="' . get_the_permalink() . '" title="' . get_the_title() . '">', '</a></h2>' );
+			the_title( '<h2 class="entry-title post-title"><a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a></h2>' );
 		} else {
 			the_title( '<h1 class="entry-title post-title">', '</h1>' );
 		}

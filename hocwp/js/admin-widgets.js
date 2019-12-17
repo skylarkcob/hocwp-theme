@@ -74,4 +74,24 @@ jQuery(document).ready(function ($) {
         });
 
     })();
+
+    (function () {
+        body.on("click", ".widget .hocwp-theme .nav-tab", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                widget = element.closest(".widget"),
+                tabWrapper = element.parent(),
+                href = element.attr("href"),
+                pane = widget.find(href);
+
+            if (!element.hasClass("nav-tab-active")) {
+                pane.parent().children(".tab-pane").removeClass("active");
+                pane.addClass("active");
+                tabWrapper.children(".nav-tab").removeClass("active nav-tab-active");
+                element.addClass("active nav-tab-active");
+            }
+        });
+    })();
 });

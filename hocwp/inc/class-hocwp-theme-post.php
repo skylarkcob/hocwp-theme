@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class HOCWP_Theme_Post {
+class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 	public $post;
 
 	public function __construct( $post = null ) {
@@ -13,25 +13,81 @@ class HOCWP_Theme_Post {
 			$post = HT_Util()->return_post( $post );
 		}
 
-		if ( $post instanceof WP_Post ) {
-			$this->post = $post;
-		}
+		$this->set( $post );
 	}
 
+	/*
+	 * Get list array meta keys.
+	 *
+	 * @return array The meta keys array.
+	 */
+	public function get_meta_keys() {
+		$this->meta_keys = apply_filters( 'hocwp_theme_post_meta_keys', $this->meta_keys, $this );
+
+		return $this->meta_keys;
+	}
+
+	/**
+	 * Get post ID.
+	 *
+	 * @return int Post ID.
+	 */
 	public function get_id() {
 		return $this->post->ID;
 	}
 
+	/**
+	 * Get post object.
+	 *
+	 * @return WP_Post Post object.
+	 */
 	public function get() {
 		return $this->post;
 	}
 
+	/**
+	 * Set post object.
+	 *
+	 * @param WP_Post $post The post object.
+	 */
 	public function set( $post ) {
-		$this->post = $post;
+		if ( $post instanceof WP_Post ) {
+			$this->post = $post;
+
+			// Set meta keys as post object properties.
+			if ( HT()->array_has_value( $this->get_meta_keys() ) ) {
+				foreach ( $this->get_meta_keys() as $key ) {
+					$this->post->{$key} = $this->get_meta( $key );
+				}
+			}
+		}
 	}
 
+	/**
+	 * Check if is a post.
+	 *
+	 * @return bool True if is post else false.
+	 */
+	public function is( $post_type = null ) {
+		$result = ( $this->get() instanceof WP_Post );
+
+		if ( $result && ! empty( $post_type ) ) {
+			$result = ( $post_type = $this->get()->post_type );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get post meta value.
+	 *
+	 * @param string $key The meta key.
+	 * @param bool|true $single Return single item or array items.
+	 *
+	 * @return mixed The meta value.
+	 */
 	public function get_meta( $key, $single = true ) {
-		return get_post_meta( $this->post->ID, $key, $single );
+		return get_post_meta( $this->get_id(), $key, $single );
 	}
 
 	public function get_terms( $taxonomy = 'post_tag', $args = array() ) {
@@ -67,6 +123,19 @@ class HOCWP_Theme_Post {
 
 	public function the_date( $format = '' ) {
 		echo get_the_date( $format );
+	}
+
+	public function human_time_diff( $ago = false ) {
+		if ( $this->post instanceof WP_Post ) {
+			$timestamp = strtotime( $this->post->post_date );
+			$diff      = human_time_diff( $timestamp );
+
+			if ( $ago ) {
+				$diff = sprintf( '%s ago', 'hocwp-theme' );
+			}
+
+			echo $diff;
+		}
 	}
 
 	public function get_the_excerpt( $length = null, $more = null ) {

@@ -63,11 +63,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$button .= '<ul id="%1$s" class="%2$s" data-button-control="' . esc_attr( $mobile_button_id ) . '">%3$s</ul>';
 
 		$defaults = array(
-			'container_class' => trim( $container_class ),
-			'items_wrap'      => $button
+			'items_wrap' => $button
 		);
 
 		$args = wp_parse_args( $args, $defaults );
+
+		$args['container_class'] = trim( $container_class );
 
 		wp_nav_menu( $args );
 	}
@@ -131,6 +132,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$args = wp_parse_args( $args, $pla );
 		$next = isset( $args['next'] ) ? $args['next'] : '';
 
+		$load_more = isset( $args['load_more'] ) ? $args['load_more'] : '';
+
+		if ( $load_more ) {
+			$next = true;
+		}
+
 		if ( empty( $next ) ) {
 			$next = isset( $args['next_text'] ) ? $args['next_text'] : '';
 		}
@@ -166,8 +173,6 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				$first_last = true;
 			}
 		}
-
-		$load_more = isset( $args['load_more'] ) ? $args['load_more'] : '';
 
 		if ( $load_more || ! empty( $load_more ) ) {
 			$dynamic_size = false;
@@ -248,13 +253,22 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$class .= ' pagination';
 			$class = trim( $class );
 
-			$ajax    = isset( $args['ajax'] ) ? (bool) $args['ajax'] : false;
+			$ajax = isset( $args['ajax'] ) ? (bool) $args['ajax'] : false;
+
 			$list_id = isset( $args['list_id'] ) ? $args['list_id'] : '';
+
+			if ( $load_more ) {
+				$ajax = true;
+
+				if ( empty( $list_id ) ) {
+					$list_id = 'prev';
+				}
+			}
 
 			$root_url = get_pagenum_link( 1 );
 			$root_url = apply_filters( 'hocwp_theme_pagination_first_item_url', $root_url, $args );
 
-			echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( json_encode( $query->query ) ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">';
+			echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( json_encode( $query->query ) ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-load-more="' . HT()->bool_to_int( $load_more ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">';
 
 			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
 				echo '<li class="label-item page-item"><span class="page-numbers label page-link">' . $args['label'] . '</span></li>';

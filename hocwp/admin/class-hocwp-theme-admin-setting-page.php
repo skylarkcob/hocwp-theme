@@ -233,7 +233,6 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		if ( ! isset( $field['args']['callback_args']['value'] ) ) {
 			$options = $GLOBALS['hocwp_theme']->options;
-			$name    = $this->get_field_name( $field );
 
 			if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 				$value = $options[ $this->tabs->tab_name ][ $field['id'] ];

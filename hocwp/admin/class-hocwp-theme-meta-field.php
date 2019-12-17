@@ -3,8 +3,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! class_exists( 'HOCWP_Theme_Admin_Field' ) ) {
+	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
+}
+
 class HOCWP_Theme_Meta_Field extends HOCWP_Theme_Admin_Field {
 	public function __construct( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string' ) {
+		if ( 'input_number' == $callback && ! isset( $callback_args['class'] ) ) {
+			$callback_args['class'] = 'medium-text';
+		}
+
 		parent::__construct( $id, $title, $callback, $callback_args, $data_type );
 	}
 

@@ -22,6 +22,26 @@ abstract class HOCWP_Theme_Admin_Field {
 		$this->id = $id;
 	}
 
+	public function get_id() {
+		return $this->id;
+	}
+
+	public function get_data_type() {
+		return $this->data_type;
+	}
+
+	public function get_title() {
+		return $this->title;
+	}
+
+	public function get_callback() {
+		return $this->callback;
+	}
+
+	public function get_callback_args() {
+		return $this->callback_args;
+	}
+
 	public function set_title( $title ) {
 		$this->title = $title;
 	}

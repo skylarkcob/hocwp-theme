@@ -49,7 +49,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		if ( $widget instanceof HOCWP_Theme_Widget_Icon ) {
 			$background = isset( $instance['background_image'] ) ? $instance['background_image'] : '';
 
-			if ( HT()->is_positive_number( $background ) && hocwp_theme_media_file_exists( $background ) ) {
+			if ( HT()->is_positive_number( $background ) && HT_Media()->exists( $background ) ) {
 				$style = 'background-image: url("' . wp_get_attachment_image_url( $background, 'full' ) . '");';
 				$style = esc_attr( $style );
 
@@ -100,8 +100,12 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				$icon_url = sprintf( 'mailto:%s?subject=%s', $icon_url, $title );
 			}
 
+			$plain_title = esc_attr( wp_strip_all_tags( $title, true ) );
+
 			if ( ! empty( $title ) && ! empty( $icon_url ) ) {
-				$title = sprintf( '<a href="%s">%s</a>', esc_attr( $icon_url ), $title );
+				$title = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $icon_url ), $plain_title, $title );
+			} else {
+				$title = str_replace( '<span>', '<span title="' . $plain_title . '">', $title );
 			}
 
 			$name       = 'icon_image';
@@ -160,7 +164,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				} elseif ( 'title' == $sortable && ! empty( $title ) ) {
 					// Remove all tags just keep title tag.
 					$widget_title = $before_title . $title . $after_title;
-					$widget_title = strip_tags( $widget_title, '<h3><span>' );
+					$widget_title = strip_tags( $widget_title, '<h3><span><a>' );
 					echo $widget_title;
 				} elseif ( 'text' == $sortable ) {
 					echo $text;

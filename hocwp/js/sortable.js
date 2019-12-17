@@ -19,13 +19,17 @@ jQuery(document).ready(function ($) {
                             container = that.parent(),
                             sortableResult = container.find(".connected-result"),
                             uiStateHighlight = that.find(".ui-state-highlight");
+
                         if (sortableResult.length) {
                             //sortableResult.css({height: "auto"});
                         }
+
                         uiStateHighlight.css({height: ui.item.height()});
+
                         if (that.hasClass("display-inline")) {
                             uiStateHighlight.css({width: ui.item.width()});
                         }
+
                         body.trigger("hocwpTheme:sortableSort", [ui, that]);
                     },
                     stop: function (event, ui) {
@@ -62,10 +66,13 @@ jQuery(document).ready(function ($) {
                                             id: element.attr("data-id"),
                                             taxonomy: element.attr("data-taxonomy")
                                         };
+
                                     value.push(item);
                                 });
+
                                 value = JSON.stringify(value);
                                 input.val(value);
+
                                 break;
                             case "post":
                                 sortableResult.find("li").each(function () {
@@ -74,21 +81,41 @@ jQuery(document).ready(function ($) {
                                             id: element.attr("data-id"),
                                             post_type: element.attr("data-post-type")
                                         };
+
                                     value.push(item);
                                 });
+
                                 value = JSON.stringify(value);
                                 input.val(value);
+
                                 break;
                             case "custom":
                                 sortableResult.find("li").each(function () {
                                     var element = $(this),
                                         dataValue = element.attr("data-value");
+
                                     if ($.trim(dataValue)) {
                                         value.push(dataValue);
                                     }
                                 });
+
                                 value = JSON.stringify(value);
                                 input.val(value);
+
+                                break;
+                            case "image":
+                                sortableResult.find("li").each(function () {
+                                    var element = $(this),
+                                        dataValue = element.attr("data-id");
+
+                                    if ($.trim(dataValue)) {
+                                        value.push(dataValue);
+                                    }
+                                });
+
+                                value = JSON.stringify(value);
+                                input.val(value);
+
                                 break;
                         }
 
@@ -123,8 +150,10 @@ jQuery(document).ready(function ($) {
                         if (connectList && $.trim(connectList)) {
                             if (!receiver.hasClass(connectList) && !receiver.hasClass("connected-result")) {
                                 var thisParent = container.find("." + connectList).not(".connected-result");
+
                                 if (thisParent.length && !thisParent.hasClass("connected-result")) {
                                     var tmp = item.detach();
+
                                     //thisParent.css({height: "auto", minHeight: "50px"});
                                     thisParent.append(tmp);
                                 }

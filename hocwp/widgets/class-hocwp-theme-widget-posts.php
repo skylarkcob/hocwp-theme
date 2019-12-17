@@ -24,7 +24,8 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			'term_as_title'      => false,
 			'title_term_link'    => false,
 			'date_interval'      => 'all',
-			'group_category'     => false
+			'group_category'     => false,
+			'show_category'      => false
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_posts_defaults', $this->defaults, $this );
@@ -113,7 +114,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				}
 			}
 
-			$wq = new WPP_Query( $params );
+			$wq = new WordPressPopularPosts\Query( $params );
 
 			$posts = $wq->get_posts();
 
@@ -494,231 +495,265 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$title_length   = isset( $instance['title_length'] ) ? absint( $instance['title_length'] ) : $this->defaults['title_length'];
 		$show_excerpt   = isset( $instance['show_excerpt'] ) ? (bool) $instance['show_excerpt'] : $this->defaults['show_excerpt'];
 		$excerpt_length = isset( $instance['excerpt_length'] ) ? absint( $instance['excerpt_length'] ) : $this->defaults['excerpt_length'];
+		$show_category  = isset( $instance['show_category'] ) ? (bool) $instance['show_category'] : $this->defaults['show_category'];
 
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 		?>
-		<div style="margin: 1em 0">
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'post_type' ),
-				'text' => __( 'Post type:', 'hocwp-theme' )
-			);
+		<nav class="nav-tab-wrapper wp-clearfix">
+			<a href="#widgetPostGeneral" class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
+			<a href="#widgetPostAdvanced" class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
+			<a href="#widgetPostSortable" class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
+		</nav>
+		<div class="tab-content">
+			<div id="widgetPostGeneral" class="tab-pane active">
+				<div style="margin: 1em 0">
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'post_type' ),
+						'text' => __( 'Post type:', 'hocwp-theme' )
+					);
 
-			HT_HTML_Field()->label( $args );
+					HT_HTML_Field()->label( $args );
 
-			$args = array(
-				'id'       => $this->get_field_id( 'post_type' ),
-				'name'     => $this->get_field_name( 'post_type' ),
-				'options'  => $post_types,
-				'class'    => 'widefat',
-				'multiple' => 'multiple',
-				'value'    => $post_type
-			);
+					$args = array(
+						'id'       => $this->get_field_id( 'post_type' ),
+						'name'     => $this->get_field_name( 'post_type' ),
+						'options'  => $post_types,
+						'class'    => 'widefat',
+						'multiple' => 'multiple',
+						'value'    => $post_type
+					);
 
-			HT_HTML_Field()->chosen( $args );
-			?>
+					HT_HTML_Field()->chosen( $args );
+					?>
+				</div>
+				<p>
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'thumbnail_size' ),
+						'text' => __( 'Thumbnail size:', 'hocwp-theme' )
+					);
+
+					HT_HTML_Field()->label( $args );
+
+					$args = array(
+						'id'    => $this->get_field_id( 'thumbnail_size' ),
+						'name'  => $this->get_field_name( 'thumbnail_size' ),
+						'value' => $thumbnail_size
+					);
+
+					HT_HTML_Field()->size( $args );
+					?>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $crop_thumbnail ); ?>
+					       id="<?php echo $this->get_field_id( 'crop_thumbnail' ); ?>"
+					       name="<?php echo $this->get_field_name( 'crop_thumbnail' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'crop_thumbnail' ); ?>"><?php _e( 'Crop thumbnail to exact dimensions?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'hocwp-theme' ); ?></label>
+					<input class="small-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
+					       name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
+					       value="<?php echo $number; ?>" size="3"/>
+				</p>
+
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'title_length' ); ?>"><?php _e( 'Post title length:', 'hocwp-theme' ); ?></label>
+					<input class="small-text" id="<?php echo $this->get_field_id( 'title_length' ); ?>"
+					       name="<?php echo $this->get_field_name( 'title_length' ); ?>" type="number" step="1" min="1"
+					       value="<?php echo $title_length; ?>" size="3"/>
+				</p>
+			</div>
+			<div id="widgetPostAdvanced" class="tab-pane">
+				<div style="margin: 1em 0">
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'term' ),
+						'text' => __( 'Term:', 'hocwp-theme' )
+					);
+
+					HT_HTML_Field()->label( $args );
+
+					$args = array(
+						'id'       => $this->get_field_id( 'term' ),
+						'name'     => $this->get_field_name( 'term' ),
+						'taxonomy' => $taxonomies,
+						'class'    => 'widefat',
+						'multiple' => 'multiple',
+						'value'    => $term,
+						'callback' => 'select_term'
+					);
+
+					HT_HTML_Field()->chosen( $args );
+					?>
+				</div>
+				<div style="margin: 1em 0">
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'orderby' ),
+						'text' => __( 'Order by:', 'hocwp-theme' )
+					);
+
+					HT_HTML_Field()->label( $args );
+
+					$args = array(
+						'id'       => $this->get_field_id( 'orderby' ),
+						'name'     => $this->get_field_name( 'orderby' ),
+						'options'  => $orderbys,
+						'class'    => 'widefat',
+						'multiple' => 'multiple',
+						'value'    => $orderby
+					);
+
+					HT_HTML_Field()->chosen( $args );
+					?>
+				</div>
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'meta_key' ); ?>"><?php _e( 'Meta key:', 'hocwp-theme' ); ?></label>
+					<input class="widefat autocomplete" id="<?php echo $this->get_field_id( 'meta_key' ); ?>"
+					       name="<?php echo $this->get_field_name( 'meta_key' ); ?>" data-autocomplete="1" type="text"
+					       value="<?php echo $meta_key; ?>" data-action="hocwp_theme_search_meta_key"/>
+				</p>
+
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'meta_value' ); ?>"><?php _e( 'Meta value:', 'hocwp-theme' ); ?></label>
+					<input class="widefat" id="<?php echo $this->get_field_id( 'meta_value' ); ?>"
+					       name="<?php echo $this->get_field_name( 'meta_value' ); ?>" type="text"
+					       value="<?php echo $meta_value; ?>"/>
+				</p>
+
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( 'Post excerpt length:', 'hocwp-theme' ); ?></label>
+					<input class="medium-text" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"
+					       name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" type="number" step="1"
+					       min="1"
+					       value="<?php echo $excerpt_length; ?>" size="4"/>
+				</p>
+
+				<fieldset>
+					<legend><?php _e( 'Entry meta:', 'hocwp-theme' ); ?></legend>
+					<p>
+						<input class="checkbox" type="checkbox"<?php checked( $show_date ); ?>
+						       id="<?php echo $this->get_field_id( 'show_date' ); ?>"
+						       name="<?php echo $this->get_field_name( 'show_date' ); ?>"/>
+						<label
+							for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'hocwp-theme' ); ?></label>
+					</p>
+
+					<p>
+						<input class="checkbox" type="checkbox"<?php checked( $show_author ); ?>
+						       id="<?php echo $this->get_field_id( 'show_author' ); ?>"
+						       name="<?php echo $this->get_field_name( 'show_author' ); ?>"/>
+						<label
+							for="<?php echo $this->get_field_id( 'show_author' ); ?>"><?php _e( 'Display post author?', 'hocwp-theme' ); ?></label>
+					</p>
+
+					<p>
+						<input class="checkbox" type="checkbox"<?php checked( $show_comment_count ); ?>
+						       id="<?php echo $this->get_field_id( 'show_comment_count' ); ?>"
+						       name="<?php echo $this->get_field_name( 'show_comment_count' ); ?>"/>
+						<label
+							for="<?php echo $this->get_field_id( 'show_comment_count' ); ?>"><?php _e( 'Display post comment count?', 'hocwp-theme' ); ?></label>
+					</p>
+
+					<p>
+						<input class="checkbox" type="checkbox"<?php checked( $show_excerpt ); ?>
+						       id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"
+						       name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>"/>
+						<label
+							for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Display post excerpt?', 'hocwp-theme' ); ?></label>
+					</p>
+
+					<p>
+						<input class="checkbox" type="checkbox"<?php checked( $show_category ); ?>
+						       id="<?php echo $this->get_field_id( 'show_category' ); ?>"
+						       name="<?php echo $this->get_field_name( 'show_category' ); ?>"/>
+						<label
+							for="<?php echo $this->get_field_id( 'show_category' ); ?>"><?php _e( 'Display post category?', 'hocwp-theme' ); ?></label>
+					</p>
+				</fieldset>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $related ); ?>
+					       id="<?php echo $this->get_field_id( 'related' ); ?>"
+					       name="<?php echo $this->get_field_name( 'related' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'related' ); ?>"><?php _e( 'Display related posts?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'date_interval' ),
+						'text' => __( 'Date interval:', 'hocwp-theme' )
+					);
+					HT_HTML_Field()->label( $args );
+					$args = array(
+						'id'      => $this->get_field_id( 'date_interval' ),
+						'name'    => $this->get_field_name( 'date_interval' ),
+						'options' => $date_intervals,
+						'class'   => 'widefat',
+						'value'   => $date_interval
+					);
+					HT_HTML_Field()->select( $args );
+					?>
+				</p>
+
+				<p>
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'order' ),
+						'text' => __( 'Order:', 'hocwp-theme' )
+					);
+					HT_HTML_Field()->label( $args );
+					$args = array(
+						'id'      => $this->get_field_id( 'order' ),
+						'name'    => $this->get_field_name( 'order' ),
+						'options' => $orders,
+						'class'   => 'widefat',
+						'value'   => $order
+					);
+					HT_HTML_Field()->select( $args );
+					?>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $term_as_title ); ?>
+					       id="<?php echo $this->get_field_id( 'term_as_title' ); ?>"
+					       name="<?php echo $this->get_field_name( 'term_as_title' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'term_as_title' ); ?>"><?php _e( 'Display term as widget title?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $title_term_link ); ?>
+					       id="<?php echo $this->get_field_id( 'title_term_link' ); ?>"
+					       name="<?php echo $this->get_field_name( 'title_term_link' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'title_term_link' ); ?>"><?php _e( 'Use term link for widget title?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $group_category ); ?>
+					       id="<?php echo $this->get_field_id( 'group_category' ); ?>"
+					       name="<?php echo $this->get_field_name( 'group_category' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'group_category' ); ?>"><?php _e( 'Group posts by each category?', 'hocwp-theme' ); ?></label>
+				</p>
+			</div>
+			<div id="widgetPostSortable" class="tab-pane">
+
+			</div>
 		</div>
-		<div style="margin: 1em 0">
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'term' ),
-				'text' => __( 'Term:', 'hocwp-theme' )
-			);
-
-			HT_HTML_Field()->label( $args );
-
-			$args = array(
-				'id'       => $this->get_field_id( 'term' ),
-				'name'     => $this->get_field_name( 'term' ),
-				'taxonomy' => $taxonomies,
-				'class'    => 'widefat',
-				'multiple' => 'multiple',
-				'value'    => $term,
-				'callback' => 'select_term'
-			);
-
-			HT_HTML_Field()->chosen( $args );
-			?>
-		</div>
-		<p>
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'thumbnail_size' ),
-				'text' => __( 'Thumbnail size:', 'hocwp-theme' )
-			);
-
-			HT_HTML_Field()->label( $args );
-
-			$args = array(
-				'id'    => $this->get_field_id( 'thumbnail_size' ),
-				'name'  => $this->get_field_name( 'thumbnail_size' ),
-				'value' => $thumbnail_size
-			);
-
-			HT_HTML_Field()->size( $args );
-			?>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $crop_thumbnail ); ?>
-			       id="<?php echo $this->get_field_id( 'crop_thumbnail' ); ?>"
-			       name="<?php echo $this->get_field_name( 'crop_thumbnail' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'crop_thumbnail' ); ?>"><?php _e( 'Crop thumbnail to exact dimensions?', 'hocwp-theme' ); ?></label>
-		</p>
-		<div style="margin: 1em 0">
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'orderby' ),
-				'text' => __( 'Order by:', 'hocwp-theme' )
-			);
-
-			HT_HTML_Field()->label( $args );
-
-			$args = array(
-				'id'       => $this->get_field_id( 'orderby' ),
-				'name'     => $this->get_field_name( 'orderby' ),
-				'options'  => $orderbys,
-				'class'    => 'widefat',
-				'multiple' => 'multiple',
-				'value'    => $orderby
-			);
-
-			HT_HTML_Field()->chosen( $args );
-			?>
-		</div>
-		<p>
-			<label
-				for="<?php echo $this->get_field_id( 'meta_key' ); ?>"><?php _e( 'Meta key:', 'hocwp-theme' ); ?></label>
-			<input class="widefat autocomplete" id="<?php echo $this->get_field_id( 'meta_key' ); ?>"
-			       name="<?php echo $this->get_field_name( 'meta_key' ); ?>" data-autocomplete="1" type="text"
-			       value="<?php echo $meta_key; ?>" data-action="hocwp_theme_search_meta_key"/>
-		</p>
-		<p>
-			<label
-				for="<?php echo $this->get_field_id( 'meta_value' ); ?>"><?php _e( 'Meta value:', 'hocwp-theme' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'meta_value' ); ?>"
-			       name="<?php echo $this->get_field_name( 'meta_value' ); ?>" type="text"
-			       value="<?php echo $meta_value; ?>"/>
-		</p>
-		<p>
-			<label
-				for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'hocwp-theme' ); ?></label>
-			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
-			       name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
-			       value="<?php echo $number; ?>" size="3"/>
-		</p>
-		<p>
-			<label
-				for="<?php echo $this->get_field_id( 'title_length' ); ?>"><?php _e( 'Post title length:', 'hocwp-theme' ); ?></label>
-			<input class="tiny-text" id="<?php echo $this->get_field_id( 'title_length' ); ?>"
-			       name="<?php echo $this->get_field_name( 'title_length' ); ?>" type="number" step="1" min="1"
-			       value="<?php echo $title_length; ?>" size="3"/>
-		</p>
-		<p>
-			<label
-				for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( 'Post excerpt length:', 'hocwp-theme' ); ?></label>
-			<input class="medium-text" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"
-			       name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" type="number" step="1" min="1"
-			       value="<?php echo $excerpt_length; ?>" size="4"/>
-		</p>
-
-		<fieldset>
-			<legend><?php _e( 'Entry meta:', 'hocwp-theme' ); ?></legend>
-			<p>
-				<input class="checkbox" type="checkbox"<?php checked( $show_date ); ?>
-				       id="<?php echo $this->get_field_id( 'show_date' ); ?>"
-				       name="<?php echo $this->get_field_name( 'show_date' ); ?>"/>
-				<label
-					for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'hocwp-theme' ); ?></label>
-			</p>
-
-			<p>
-				<input class="checkbox" type="checkbox"<?php checked( $show_author ); ?>
-				       id="<?php echo $this->get_field_id( 'show_author' ); ?>"
-				       name="<?php echo $this->get_field_name( 'show_author' ); ?>"/>
-				<label
-					for="<?php echo $this->get_field_id( 'show_author' ); ?>"><?php _e( 'Display post author?', 'hocwp-theme' ); ?></label>
-			</p>
-
-			<p>
-				<input class="checkbox" type="checkbox"<?php checked( $show_comment_count ); ?>
-				       id="<?php echo $this->get_field_id( 'show_comment_count' ); ?>"
-				       name="<?php echo $this->get_field_name( 'show_comment_count' ); ?>"/>
-				<label
-					for="<?php echo $this->get_field_id( 'show_comment_count' ); ?>"><?php _e( 'Display post comment count?', 'hocwp-theme' ); ?></label>
-			</p>
-
-			<p>
-				<input class="checkbox" type="checkbox"<?php checked( $show_excerpt ); ?>
-				       id="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"
-				       name="<?php echo $this->get_field_name( 'show_excerpt' ); ?>"/>
-				<label
-					for="<?php echo $this->get_field_id( 'show_excerpt' ); ?>"><?php _e( 'Display post excerpt?', 'hocwp-theme' ); ?></label>
-			</p>
-		</fieldset>
-
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $related ); ?>
-			       id="<?php echo $this->get_field_id( 'related' ); ?>"
-			       name="<?php echo $this->get_field_name( 'related' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'related' ); ?>"><?php _e( 'Display related posts?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'date_interval' ),
-				'text' => __( 'Date interval:', 'hocwp-theme' )
-			);
-			HT_HTML_Field()->label( $args );
-			$args = array(
-				'id'      => $this->get_field_id( 'date_interval' ),
-				'name'    => $this->get_field_name( 'date_interval' ),
-				'options' => $date_intervals,
-				'class'   => 'widefat',
-				'value'   => $date_interval
-			);
-			HT_HTML_Field()->select( $args );
-			?>
-		</p>
-		<p>
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'order' ),
-				'text' => __( 'Order:', 'hocwp-theme' )
-			);
-			HT_HTML_Field()->label( $args );
-			$args = array(
-				'id'      => $this->get_field_id( 'order' ),
-				'name'    => $this->get_field_name( 'order' ),
-				'options' => $orders,
-				'class'   => 'widefat',
-				'value'   => $order
-			);
-			HT_HTML_Field()->select( $args );
-			?>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $term_as_title ); ?>
-			       id="<?php echo $this->get_field_id( 'term_as_title' ); ?>"
-			       name="<?php echo $this->get_field_name( 'term_as_title' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'term_as_title' ); ?>"><?php _e( 'Display term as widget title?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $title_term_link ); ?>
-			       id="<?php echo $this->get_field_id( 'title_term_link' ); ?>"
-			       name="<?php echo $this->get_field_name( 'title_term_link' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'title_term_link' ); ?>"><?php _e( 'Use term link for widget title?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $group_category ); ?>
-			       id="<?php echo $this->get_field_id( 'group_category' ); ?>"
-			       name="<?php echo $this->get_field_name( 'group_category' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'group_category' ); ?>"><?php _e( 'Group posts by each category?', 'hocwp-theme' ); ?></label>
-		</p>
 		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
@@ -747,6 +782,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$instance['show_comment_count'] = isset( $new_instance['show_comment_count'] ) ? (bool) $new_instance['show_comment_count'] : $this->defaults['show_comment_count'];
 		$instance['excerpt_length']     = isset( $new_instance['excerpt_length'] ) ? $new_instance['excerpt_length'] : $this->defaults['excerpt_length'];
 		$instance['group_category']     = isset( $new_instance['group_category'] ) ? (bool) $new_instance['group_category'] : $this->defaults['group_category'];
+		$instance['show_category']      = isset( $new_instance['show_category'] ) ? (bool) $new_instance['show_category'] : $this->defaults['show_category'];
 
 		return $instance;
 	}

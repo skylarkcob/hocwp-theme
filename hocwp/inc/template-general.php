@@ -368,7 +368,11 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 
 		$wrap = ( $wrap && ! HT()->string_contain( $id, 'sidebar' ) ) ? true : false;
 
-		$section = ( ! isset( $params[0]['id'] ) || false === strpos( $params[0]['id'], 'footer' ) );
+		if ( isset( $args['convert_section'] ) ) {
+			$section = (bool) $args['convert_section'];
+		} else {
+			$section = ( ! isset( $params[0]['id'] ) || false === strpos( $params[0]['id'], 'footer' ) );
+		}
 
 		if ( $section ) {
 			if ( isset( $args['before_widget'] ) && '<li id="%1$s" class="widget %2$s">' !== $args['before_widget'] ) {
@@ -1061,7 +1065,7 @@ function hocwp_theme_widget_posts_loop_html() {
 
 	$title = get_the_title();
 
-	$before = '<a class="post-link" href="' . get_the_permalink() . '" title="' . $title . '">';
+	$before = '<a class="post-link" href="' . get_the_permalink() . '" title="' . esc_attr( $title ) . '">';
 
 	if ( is_numeric( $title_length ) ) {
 		$title = HT()->substr( $title, $title_length );

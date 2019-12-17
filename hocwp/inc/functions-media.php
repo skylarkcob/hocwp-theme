@@ -3,6 +3,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+/**
+ * Check media file exists by ID.
+ *
+ * @param int $id Media file ID.
+ *
+ * @return bool
+ */
 function hocwp_theme_media_file_exists( $id ) {
 	if ( HT()->is_positive_number( $id ) && HT()->is_file( get_attached_file( $id ) ) ) {
 		return true;
@@ -138,6 +145,10 @@ class HOCWP_Theme_Media {
 
 	public function path_to_id( $path ) {
 		return hocwp_theme_attachment_path_to_postid( $path );
+	}
+
+	public function url_to_id( $url ) {
+		return attachment_url_to_postid( $url );
 	}
 
 	public function convert_image_size_to_name( $size, &$sizes = array() ) {

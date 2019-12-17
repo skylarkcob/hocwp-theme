@@ -95,7 +95,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 		<p>
 			<label
 				for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of top commenters to show:', 'hocwp-theme' ); ?></label>
-			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
+			<input class="small-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
 			       name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
 			       value="<?php echo $number; ?>" size="3"/>
 		</p>

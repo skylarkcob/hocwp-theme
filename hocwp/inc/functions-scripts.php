@@ -140,18 +140,20 @@ function hocwp_theme_localize_script_l10n() {
 	}
 
 	$args = array(
-		'homeUrl'      => home_url( '/' ),
-		'ajaxUrl'      => HOCWP_Theme()->get_ajax_url(),
-		'ajaxCallback' => 'hocwp_theme_ajax',
-		'loginUrl'     => wp_login_url( $redirect ),
-		'l10n'         => array(
+		'homeUrl'        => home_url( '/' ),
+		'ajaxUrl'        => HOCWP_Theme()->get_ajax_url(),
+		'ajaxCallback'   => 'hocwp_theme_ajax',
+		'loginUrl'       => wp_login_url( $redirect ),
+		'l10n'           => array(
 			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
 			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),
 			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - http://hocwp.net' )
 		),
-		'ajaxOverlay'  => $ajax_overlay,
-		'nonce'        => wp_create_nonce( HOCWP_Theme()->get_textdomain() ),
-		'loadingGif'   => admin_url( 'images/loading.gif' )
+		'ajaxOverlay'    => $ajax_overlay,
+		'nonce'          => wp_create_nonce( HOCWP_Theme()->get_textdomain() ),
+		'loadingGif'     => admin_url( 'images/loading.gif' ),
+		'loadMoreButton' => hocwp_theme_load_more_button(),
+		'iconRemove'     => HT_HTML_Field()->icon_remove()
 	);
 
 	if ( is_admin() ) {
@@ -161,6 +163,16 @@ function hocwp_theme_localize_script_l10n() {
 	$args = apply_filters( 'hocwp_theme_localize_script_l10n', $args );
 
 	return $args;
+}
+
+function hocwp_theme_load_more_button() {
+	ob_start();
+	?>
+	<a class="load-more-button btn" href="#"><?php _e( 'Load more', 'hocwp-theme' ); ?></a>
+	<?php
+	$html = ob_get_clean();
+
+	return apply_filters( 'hocwp_theme_load_more_button_html', $html );
 }
 
 function hocwp_theme_admin_enqueue_scripts_action() {
@@ -264,8 +276,9 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 		'removeImageButton'      => '<p class="hide-if-no-js remove"><a href="javascript:" class="remove-media">' . __( 'Remove %s', 'hocwp-theme' ) . '</a></p>',
 		'updateImageDescription' => '<p class="hide-if-no-js howto">' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',
 		'l10n'                   => array(
-			'title'      => __( 'Select %s', 'hocwp-theme' ),
-			'buttonText' => __( 'Choose %s', 'hocwp-theme' )
+			'title'       => __( 'Select %s', 'hocwp-theme' ),
+			'buttonText'  => __( 'Choose %s', 'hocwp-theme' ),
+			'changeTitle' => __( 'Change %s', 'hocwp-theme' )
 		)
 	);
 

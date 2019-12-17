@@ -3,6 +3,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+define( 'HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS', array(
+	'com.vn',
+	'org.vn',
+	'edu.vn',
+	'net.vn',
+	'biz.vn',
+	'name.vn',
+	'pro.vn',
+	'ac.vn',
+	'info.vn',
+	'health.vn',
+	'int.vn',
+	'gov.vn',
+	'co.uk',
+	'de.com'
+) );
+
 final class HOCWP_Theme {
 	public $version = HOCWP_THEME_CORE_VERSION;
 	protected static $_instance = null;
@@ -813,10 +830,21 @@ final class HOCWP_Theme {
 		$result = isset( $parse['host'] ) ? $parse['host'] : '';
 
 		if ( $root && ! self::is_IP( $result ) ) {
-			$tmp = explode( '.', $result );
+			$tmp   = explode( '.', $result );
+			$count = count( $tmp );
 
-			while ( count( $tmp ) > 2 ) {
+			while ( $count > 2 ) {
+				if ( 3 == $count ) {
+					$parts = array_slice( $tmp, - 2, 2 );
+					$join  = join( '.', $parts );
+
+					if ( in_array( $join, HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS ) ) {
+						break;
+					}
+				}
+
 				array_shift( $tmp );
+				$count = count( $tmp );
 			}
 
 			$result = implode( '.', $tmp );

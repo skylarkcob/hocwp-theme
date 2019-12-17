@@ -150,6 +150,16 @@ function hocwp_theme_html_tag_close( $tag ) {
 	printf( "</%s>\n", $tag );
 }
 
+/**
+ * Get HTML tag attributes string.
+ *
+ * @param string $tag The HTML tag name.
+ * @param string $context The HTML tag description.
+ * @param string $attr Additional attributes.
+ * @param bool|true $echo Echo attributes.
+ *
+ * @return string
+ */
 function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo = true ) {
 	$attributes = apply_filters( 'hocwp_theme_html_tag_with_context_attributes', array(), $tag, $context );
 
@@ -160,6 +170,18 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 
 		foreach ( $atts as $att => $attribute ) {
 			$attributes .= sprintf( '%s="%s" ', $att, esc_attr( $attribute ) );
+		}
+
+		unset( $atts );
+	}
+
+	if ( is_array( $attr ) ) {
+		$atts = $attr;
+
+		$attr = '';
+
+		foreach ( $atts as $att => $attribute ) {
+			$attr .= sprintf( '%s="%s" ', $att, esc_attr( $attribute ) );
 		}
 
 		unset( $atts );

@@ -56,7 +56,6 @@ class HOCWP_Theme_Admin_Setting_Field extends HOCWP_Theme_Admin_Field {
 
 		if ( isset( $this->callback_args['description'] ) ) {
 			$field['args']['description'] = $this->callback_args['description'];
-			unset( $this->callback_args['description'] );
 		}
 
 		$field['args']['callback_args'] = wp_parse_args( $this->callback_args, $field['args']['callback_args'] );
