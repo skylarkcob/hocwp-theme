@@ -32,7 +32,7 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 	}
 
 	public function add_taxonomy( $taxonomy ) {
-		if ( taxonomy_exists( $taxonomy ) ) {
+		if ( taxonomy_exists( $taxonomy ) || ( class_exists( 'WooCommerce' ) && false !== strpos( $taxonomy, 'pa_' ) ) ) {
 			if ( ! is_array( $this->taxonomies ) ) {
 				$this->taxonomies = array();
 			}

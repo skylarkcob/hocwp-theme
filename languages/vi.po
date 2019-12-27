@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2019-12-17 19:32+0700\n"
-"PO-Revision-Date: 2019-12-17 19:33+0700\n"
+"POT-Creation-Date: 2019-12-27 11:51+0700\n"
+"PO-Revision-Date: 2019-12-27 11:53+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -155,7 +155,8 @@ msgid "Search"
 msgstr "Tìm kiếm"
 
 #: hocwp/admin/admin-setting-page-general.php:8
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:503
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:190
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:508
 msgid "General"
 msgstr "Chung"
 
@@ -220,7 +221,8 @@ msgid "Logo Image"
 msgstr "Hình ảnh"
 
 #: hocwp/admin/admin-setting-page-home.php:6
-#: hocwp/inc/class-hocwp-theme-frontend.php:467
+#: hocwp/inc/class-hocwp-theme-frontend.php:511
+#: hocwp/inc/class-hocwp-theme-frontend.php:513
 msgid "Home"
 msgstr "Trang chủ"
 
@@ -252,6 +254,19 @@ msgstr ""
 #: hocwp/admin/admin-setting-page-media.php:39
 msgid "JPEG Quality"
 msgstr "Chất lượng ảnh JPEG"
+
+#: hocwp/admin/admin-setting-page-media.php:47
+msgid ""
+"If the original image width or height is above the threshold, it will be "
+"scaled down. The threshold is used as max width and max height."
+msgstr ""
+"Nếu kích thước chiều cao và chiều rộng của hình ảnh lớn hơn kích thước tối "
+"đa, nó sẽ tự động kéo xuống. Kích thước tối đa áp dụng chung cho cả chiều "
+"rộng và chiều cao."
+
+#: hocwp/admin/admin-setting-page-media.php:49
+msgid "Big Image Size Threshold"
+msgstr "Kích thước ảnh tối đa"
 
 #: hocwp/admin/admin-setting-page-permalinks.php:8
 msgid "Permalinks"
@@ -600,7 +615,7 @@ msgstr "Cài đặt %s"
 msgid "Version %s"
 msgstr "Phiên bản %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:414
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:423
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If "
@@ -611,12 +626,12 @@ msgstr ""
 "Nếu bạn có bất kỳ câu hỏi nào bạn có thể <a target=\"_blank\" href=\"%s"
 "\">liệ hệ với chúng tôi</a> để biết thêm thông tin."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:417
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:426
 #, php-format
 msgid "Theme core version %s"
 msgstr "Phiên bản nhân giao diện %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:473
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:489
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."
@@ -645,15 +660,15 @@ msgstr "Thông tin mở rộng"
 msgid "Display:"
 msgstr "Hiển thị:"
 
-#: hocwp/admin/class-hocwp-theme-meta.php:168
+#: hocwp/admin/class-hocwp-theme-meta.php:179
 msgid "Please set get_value_callback."
 msgstr "Xin vui lòng cung cấp get_value_callback."
 
-#: hocwp/admin/class-hocwp-theme-meta.php:284
+#: hocwp/admin/class-hocwp-theme-meta.php:295
 msgid "Please set update_value_callback."
 msgstr "Xin vui lòng cung cấp update_value_callback."
 
-#: hocwp/admin/class-hocwp-theme-meta.php:373
+#: hocwp/admin/class-hocwp-theme-meta.php:391
 msgid ""
 "You must call this class in callback of <strong>load-{$pagenow}</strong> "
 "action."
@@ -1090,153 +1105,157 @@ msgstr ""
 "Gói mở rộng %1$s đã <strong>không còn được dùng nữa</strong> kể từ phiên bản "
 "%2$s và không có lựa chọn thay thế nào."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:282
+#: hocwp/inc/class-hocwp-theme-frontend.php:293
+msgid "Page navigation"
+msgstr "Điều hướng trang"
+
+#: hocwp/inc/class-hocwp-theme-frontend.php:307
 msgid "First"
 msgstr "Đầu"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:299
+#: hocwp/inc/class-hocwp-theme-frontend.php:334
 msgid "Last"
 msgstr "Cuối"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:311
+#: hocwp/inc/class-hocwp-theme-frontend.php:346
 msgid "Page [CURRENT]/[TOTAL]"
 msgstr "Trang [CURRENT]/[TOTAL]"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:343
+#: hocwp/inc/class-hocwp-theme-frontend.php:382
 #, php-format
 msgid "Category: %s"
 msgstr "Chuyên mục: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:349
+#: hocwp/inc/class-hocwp-theme-frontend.php:388
 #, php-format
 msgid "Tag: %s"
 msgstr "Thẻ: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:355
+#: hocwp/inc/class-hocwp-theme-frontend.php:394
 #, php-format
 msgid "Author: %s"
 msgstr "Tác giả: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:359
+#: hocwp/inc/class-hocwp-theme-frontend.php:398
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr "Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:362
+#: hocwp/inc/class-hocwp-theme-frontend.php:401
 #, php-format
 msgctxt "yearly archives"
 msgid "Year: %s"
 msgstr "Năm: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:365
+#: hocwp/inc/class-hocwp-theme-frontend.php:404
 msgctxt "monthly archives date format"
 msgid "F Y"
 msgstr "F Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:368
+#: hocwp/inc/class-hocwp-theme-frontend.php:407
 #, php-format
 msgctxt "monthly archives"
 msgid "Month: %s"
 msgstr "Tháng: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:371
+#: hocwp/inc/class-hocwp-theme-frontend.php:410
 msgctxt "daily archives date format"
 msgid "F j, Y"
 msgstr "F j, Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:374
+#: hocwp/inc/class-hocwp-theme-frontend.php:413
 #, php-format
 msgctxt "daily archives"
 msgid "Day: %s"
 msgstr "Ngày: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:379
+#: hocwp/inc/class-hocwp-theme-frontend.php:418
 msgctxt "post format archive title"
 msgid "Asides"
 msgstr "Bên lề"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:381
+#: hocwp/inc/class-hocwp-theme-frontend.php:420
 msgctxt "post format archive title"
 msgid "Galleries"
 msgstr "Bộ sưu tập"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:383
+#: hocwp/inc/class-hocwp-theme-frontend.php:422
 msgctxt "post format archive title"
 msgid "Images"
 msgstr "Hình ảnh"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:385
+#: hocwp/inc/class-hocwp-theme-frontend.php:424
 msgctxt "post format archive title"
 msgid "Videos"
 msgstr "Video"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:387
+#: hocwp/inc/class-hocwp-theme-frontend.php:426
 msgctxt "post format archive title"
 msgid "Quotes"
 msgstr "Trích dẫn"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:389
+#: hocwp/inc/class-hocwp-theme-frontend.php:428
 msgctxt "post format archive title"
 msgid "Links"
 msgstr "Liên kết"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:391
+#: hocwp/inc/class-hocwp-theme-frontend.php:430
 msgctxt "post format archive title"
 msgid "Statuses"
 msgstr "Trạng thái"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:393
+#: hocwp/inc/class-hocwp-theme-frontend.php:432
 msgctxt "post format archive title"
 msgid "Audio"
 msgstr "Âm thanh"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:395
+#: hocwp/inc/class-hocwp-theme-frontend.php:434
 msgctxt "post format archive title"
 msgid "Chats"
 msgstr "Trò chuyện"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:399
+#: hocwp/inc/class-hocwp-theme-frontend.php:438
 #, php-format
 msgctxt "post format archives"
 msgid "Post Format: %s"
 msgstr "Định dạng bài viết: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:405
+#: hocwp/inc/class-hocwp-theme-frontend.php:444
 #, php-format
 msgid "Archives: %s"
 msgstr "Lưu trữ: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:419
+#: hocwp/inc/class-hocwp-theme-frontend.php:458
 #, php-format
 msgid "Search results for: %s"
 msgstr "Kết quả tìm kiếm: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:423
+#: hocwp/inc/class-hocwp-theme-frontend.php:462
 msgid "Recent posts"
 msgstr "Bài viết gần đây"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:425
+#: hocwp/inc/class-hocwp-theme-frontend.php:464
 msgid "Archives"
 msgstr "Lưu trữ"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:562
+#: hocwp/inc/class-hocwp-theme-frontend.php:610
 msgid "Page not found"
 msgstr "Trang không được tìm thấy"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:696
+#: hocwp/inc/class-hocwp-theme-frontend.php:766
 msgctxt "back to top"
 msgid "Top"
 msgstr "Lên trên"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:729
+#: hocwp/inc/class-hocwp-theme-frontend.php:799
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:790
+#: hocwp/inc/class-hocwp-theme-frontend.php:860
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:795
+#: hocwp/inc/class-hocwp-theme-frontend.php:865
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -1244,11 +1263,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:804
+#: hocwp/inc/class-hocwp-theme-frontend.php:874
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:822
+#: hocwp/inc/class-hocwp-theme-frontend.php:892
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
@@ -1292,21 +1311,25 @@ msgstr "Xóa tất cả ảnh"
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1138
+#: hocwp/inc/class-hocwp-theme-html-field.php:1128
+msgid "Image Link:"
+msgstr "Đường dẫn hình ảnh:"
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:1187
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1161
+#: hocwp/inc/class-hocwp-theme-html-field.php:1210
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1169
+#: hocwp/inc/class-hocwp-theme-html-field.php:1218
 #: hocwp/inc/functions-scripts.php:280
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1207
+#: hocwp/inc/class-hocwp-theme-html-field.php:1256
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -1611,6 +1634,10 @@ msgstr ""
 "Tham số <strong>$sql_column</strong> chỉ chứa truy vấn MySQL bên trong ngoặc "
 "đơn (), chứ không phải chứa câu truy vấn MySQL đầy đủ."
 
+#: hocwp/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php:205
+msgid "Add a menu"
+msgstr "Thêm trình đơn"
+
 #: hocwp/inc/functions-license.php:40
 msgid "Your theme is blocked."
 msgstr "Giao diện của bạn đã bị khóa."
@@ -1807,47 +1834,47 @@ msgstr ""
 "Máy không được phép thêm bình luận. Nếu bạn không phải là máy, xin vui lòng "
 "cho phép javascript trên trình duyệt."
 
-#: hocwp/inc/template-general.php:298
+#: hocwp/inc/template-general.php:345
 msgid "Please call function get_sidebar instead!"
 msgstr "Xin vui lòng gọi hàm get_sidebar để thay thế!"
 
-#: hocwp/inc/template-general.php:555
+#: hocwp/inc/template-general.php:602
 #, php-format
 msgid "Search Results: %s"
 msgstr "Kết quả tìm kiếm: %s"
 
-#: hocwp/inc/template-general.php:569
+#: hocwp/inc/template-general.php:616
 msgid "Next Posts"
 msgstr "Bài Tiếp"
 
-#: hocwp/inc/template-general.php:572
+#: hocwp/inc/template-general.php:619
 msgid "Previous Posts"
 msgstr "Bài Trước"
 
-#: hocwp/inc/template-general.php:660
+#: hocwp/inc/template-general.php:707
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: hocwp/inc/template-general.php:731
+#: hocwp/inc/template-general.php:778
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1349
+#: hocwp/inc/template-general.php:1396
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1361
+#: hocwp/inc/template-general.php:1408
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1362
+#: hocwp/inc/template-general.php:1409
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1465
+#: hocwp/inc/template-general.php:1518
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
@@ -1953,39 +1980,49 @@ msgctxt "widget description"
 msgid "Show icon with text."
 msgstr "Hiển thị biểu tượng và văn bản."
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:190
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:192
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:510
+msgid "Advanced"
+msgstr "Nâng cao"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:194
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:512
+msgid "Sortable"
+msgstr "Sắp xếp"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:201
 msgid "Icon URL:"
 msgstr "Đường dẫn trỏ đến của biểu tượng:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:194
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:205
 msgid "Icon Image:"
 msgstr "Biểu tượng bằng hình:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:198
-msgid "Icon HTML:"
-msgstr "Dùng HTML làm biểu tượng:"
-
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:202
-msgid "Hover Icon Image:"
-msgstr "Biểu tượng khi di chuyển chuột qua bằng hình:"
-
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:206
-msgid "Hover Icon HTML:"
-msgstr "Biểu tượng khi di chuyển chuột qua bằng HTML:"
-
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:210
-msgid "Background Image:"
-msgstr "Hình nền:"
-
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:214
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:209
 msgid "Text:"
 msgstr "Văn bản:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:218
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:216
+msgid "Icon HTML:"
+msgstr "Dùng HTML làm biểu tượng:"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:220
+msgid "Hover Icon Image:"
+msgstr "Biểu tượng khi di chuyển chuột qua bằng hình:"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:224
+msgid "Hover Icon HTML:"
+msgstr "Biểu tượng khi di chuyển chuột qua bằng HTML:"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:228
+msgid "Background Image:"
+msgstr "Hình nền:"
+
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:232
 msgid "HTML Class Attribute:"
 msgstr "Thuộc tính HTML class:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:227
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:244
 msgid "Sortable:"
 msgstr "Sắp xếp:"
 
@@ -2008,175 +2045,167 @@ msgctxt "widget description"
 msgid "Your site's most recent Posts and more."
 msgstr "Hiển thị danh sách bài viết mới."
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:458
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:462
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:136
 msgid "No order"
 msgstr "Không sắp xếp"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:459
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:463
 msgid "Post id"
 msgstr "ID bài viết"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:460
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:464
 msgid "Author"
 msgstr "Tác giả"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:461
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:465
 msgid "Post title"
 msgstr "Tiêu đề bài viết"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:462
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:466
 msgid "Post name"
 msgstr "Tên bài viết"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:463
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:467
 msgid "Post type"
 msgstr "Loại bài viết"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:464
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:468
 msgid "Post date"
 msgstr "Ngày đăng bài"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:465
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:469
 msgid "Last modified date"
 msgstr "Ngày cập nhật cuối"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:466
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:470
 msgid "Post parent id"
 msgstr "ID bài viết cha"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:467
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:471
 msgid "Random post"
 msgstr "Bài viết ngẫu nhiên"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:468
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:472
 msgid "Number of comments"
 msgstr "Số lượt bình luận"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:469
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:473
 msgid "Search term"
 msgstr "Tìm kiếm chuyên mục"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:470
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:474
 msgid "Menu order"
 msgstr "Thứ tự menu"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:471
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:475
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:134
 msgid "Meta value"
 msgstr "Giá trị meta"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:472
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:476
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:135
 msgid "Numeric meta value"
 msgstr "Giá trị meta số"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:486
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:490
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:142
 msgid "DESC"
 msgstr "Giảm dần"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:487
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:491
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:143
 msgid "ASC"
 msgstr "Tăng dần"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:504
-msgid "Advanced"
-msgstr "Nâng cao"
-
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:505
-msgid "Sortable"
-msgstr "Sắp xếp"
-
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:513
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:520
 msgid "Post type:"
 msgstr "Loại bài viết:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:534
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:541
 msgid "Thumbnail size:"
 msgstr "Kích thước ảnh đại diện:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:554
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:561
 msgid "Crop thumbnail to exact dimensions?"
 msgstr "Cắt ảnh đại diện theo tỷ lệ chính xác?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:559
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:566
 msgid "Number of posts to show:"
 msgstr "Số lượng bài viết hiển thị:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:567
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:574
 msgid "Post title length:"
 msgstr "Độ dài tiêu đề bài viết:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:578
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:585
 msgid "Term:"
 msgstr "Chuyên mục:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:600
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:607
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:194
 msgid "Order by:"
 msgstr "Sắp xếp theo:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:619
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:626
 msgid "Meta key:"
 msgstr "Tên meta:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:627
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:634
 msgid "Meta value:"
 msgstr "Giá trị meta:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:635
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:642
 msgid "Post excerpt length:"
 msgstr "Độ dài mô tả:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:643
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:650
 msgid "Entry meta:"
 msgstr "Meta bài viết:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:649
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:656
 msgid "Display post date?"
 msgstr "Hiển thị ngày dăng?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:657
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:664
 msgid "Display post author?"
 msgstr "Hiển thị tác giả?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:665
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:672
 msgid "Display post comment count?"
 msgstr "Hiện thị số bình luận?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:673
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:680
 msgid "Display post excerpt?"
 msgstr "Hiện thị mô tả ngắn?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:681
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:688
 msgid "Display post category?"
 msgstr "Hiển thị chuyên mục bài viết?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:690
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:697
 msgid "Display related posts?"
 msgstr "Hiển thị bài viết liên quan?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:697
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:704
 #: hocwp/widgets/class-hocwp-theme-widget-top-commenters.php:106
 msgid "Date interval:"
 msgstr "Khoảng thời gian:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:715
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:722
 #: hocwp/widgets/class-hocwp-theme-widget-terms.php:214
 msgid "Order:"
 msgstr "Sắp xếp:"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:734
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:741
 msgid "Display term as widget title?"
 msgstr "Hiển thị chuyên mục làm tiêu đề?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:742
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:749
 msgid "Use term link for widget title?"
 msgstr "Sử dụng đường dẫn chuyên mục cho tiêu đề?"
 
-#: hocwp/widgets/class-hocwp-theme-widget-posts.php:750
+#: hocwp/widgets/class-hocwp-theme-widget-posts.php:757
 msgid "Group posts by each category?"
 msgstr "Nhóm bài viết theo từng chuyên mục?"
 

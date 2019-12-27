@@ -55,8 +55,8 @@ function hocwp_theme_upload_mimes_filter( $mimes ) {
 add_filter( 'upload_mimes', 'hocwp_theme_upload_mimes_filter' );
 
 // Update WEBP image file type
-function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file, $filename ) {
-	if ( is_file( $file ) && false !== strpos( $filename, '.webp' ) ) {
+function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file ) {
+	if ( HT_Media()->is_webp_image( $file ) ) {
 		$types['ext']  = 'webp';
 		$types['type'] = 'image/webp';
 	}
@@ -64,16 +64,12 @@ function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file, $filename 
 	return $types;
 }
 
-add_filter( 'wp_check_filetype_and_ext', 'hocwp_theme_wp_check_filetype_and_ext_filter', 10, 3 );
+add_filter( 'wp_check_filetype_and_ext', 'hocwp_theme_wp_check_filetype_and_ext_filter', 10, 2 );
 
 // Mark WEBP image as real image
 function hocwp_theme_file_is_displayable_image_filter( $result, $path ) {
-	if ( HT()->is_file( $path ) ) {
-		$info = pathinfo( $path );
-
-		if ( isset( $info['extension'] ) && 'webp' == $info['extension'] ) {
-			$result = true;
-		}
+	if ( ! $result && HT_Media()->is_webp_image( $path ) ) {
+		$result = true;
 	}
 
 	return $result;
@@ -85,13 +81,13 @@ add_filter( 'file_is_displayable_image', 'hocwp_theme_file_is_displayable_image_
 function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 	$path = get_attached_file( $media_id );
 
-	if ( HT()->is_file( $path ) ) {
-		$info = pathinfo( $path );
-
-		if ( isset( $info['extension'] ) && 'webp' == $info['extension'] ) {
-			$data = wp_generate_attachment_metadata( $media_id, $path );
-			wp_update_attachment_metadata( $media_id, $data );
+	if ( HT_Media()->is_webp_image( $path ) ) {
+		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/image.php';
 		}
+
+		$data = wp_generate_attachment_metadata( $media_id, $path );
+		wp_update_attachment_metadata( $media_id, $data );
 	}
 
 	return $data;
@@ -116,6 +112,31 @@ class HOCWP_Theme_Media {
 		}
 
 		add_filter( 'jpeg_quality', array( $this, 'jpeg_quality_filter' ) );
+		add_filter( 'big_image_size_threshold', array( $this, 'big_image_size_threshold_filter' ) );
+	}
+
+	public function big_image_size_threshold_filter( $threshold ) {
+		$size = HT_Options()->get_tab( 'big_image_size_threshold', 2560, 'media' );
+
+		if ( HT()->is_positive_number( $size ) && $size != $threshold ) {
+			$threshold = $size;
+		}
+
+		unset( $size );
+
+		return $threshold;
+	}
+
+	public function is_webp_image( $file ) {
+		if ( is_file( $file ) ) {
+			$mime = wp_get_image_mime( $file );
+
+			if ( 'image/webp' == $mime ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public function jpeg_quality_filter( $quality ) {

@@ -38,6 +38,7 @@
 .hocwp-theme ul.sortable.connected-result {
     background-color: #fbf9ef;
     border-color: #fcefa1;
+    clear: none;
 }
 
 .hocwp-theme ul.sortable.connected-result + input + .description,

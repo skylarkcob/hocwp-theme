@@ -121,35 +121,7 @@ class HOCWP_Theme_Enqueue {
 
 		$css_file = 'css/bootstrap.min.css';
 
-		if ( ! $args['cdn'] && ! HT()->is_dir( $base_dir ) ) {
-			// Auto check version
-			$tmp = dirname( $base_dir );
-			$tmp = trailingslashit( $tmp );
-			$tmp .= '*';
-			$dirs = glob( $tmp, GLOB_ONLYDIR );
-
-			if ( HT()->array_has_value( $dirs ) ) {
-				$tmp = current( $dirs );
-				$tmp = trailingslashit( $tmp );
-
-				if ( file_exists( $tmp . $css_file ) ) {
-					$args['version'] = basename( $tmp );
-
-					$base_dir = $tmp;
-				}
-			}
-
-			if ( ! HT()->is_dir( $base_dir ) ) {
-				$base_dir = dirname( $base_dir );
-				$base_dir = trailingslashit( $base_dir );
-
-				if ( ! HT()->is_dir( $base_dir ) || ! HT()->is_file( $base_dir . $css_file ) ) {
-					return;
-				}
-
-				$args['version'] = '';
-			}
-		}
+		$this->auto_check_lib_version( $args, $base_dir, $css_file );
 
 		$base_dir = trailingslashit( $base_dir );
 
@@ -172,7 +144,107 @@ class HOCWP_Theme_Enqueue {
 			wp_enqueue_script( $handle, $base_url . 'js/bootstrap.min.js', array( 'jquery' ), false, true );
 		}
 
-		unset( $defaults, $base_url, $base_dir, $handle );
+		unset( $defaults, $base_url, $base_dir, $handle, $css_file );
+	}
+
+	private function auto_check_lib_version( &$args, &$base_dir, $abs_file ) {
+		if ( ! $args['cdn'] && ! HT()->is_dir( $base_dir ) ) {
+			// Auto check version
+			$tmp = dirname( $base_dir );
+			$tmp = trailingslashit( $tmp );
+			$tmp .= '*';
+			$dirs = glob( $tmp, GLOB_ONLYDIR );
+
+			if ( HT()->array_has_value( $dirs ) ) {
+				$tmp = current( $dirs );
+				$tmp = trailingslashit( $tmp );
+
+				if ( file_exists( $tmp . $abs_file ) ) {
+					$args['version'] = basename( $tmp );
+
+					$base_dir = $tmp;
+				}
+			}
+
+			if ( ! HT()->is_dir( $base_dir ) ) {
+				$base_dir = dirname( $base_dir );
+				$base_dir = trailingslashit( $base_dir );
+
+				if ( ! HT()->is_dir( $base_dir ) || ! HT()->is_file( $base_dir . $abs_file ) ) {
+					return;
+				}
+
+				$args['version'] = '';
+			}
+
+			unset( $tmp, $dirs );
+		}
+	}
+
+	public function fontawesome( $args = array() ) {
+		$defaults = array(
+			'cdn'     => false,
+			'version' => '5.11.2',
+			'kit'     => false
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$kit = $args['kit'];
+
+		if ( ! empty( $kit ) ) {
+			if ( false === strpos( $kit, 'http' ) ) {
+				$kit = 'https://kit.fontawesome.com/' . $kit . '.js';
+			}
+
+			$handle = 'fontawesome-' . $args['version'];
+			$handle = sanitize_title( $handle );
+
+			wp_enqueue_script( $handle, $kit, array(), false, true );
+
+			unset( $handle, $kit );
+
+			return;
+		} else {
+			$base_url = HOCWP_Theme()->custom_url . '/lib/fontawesome/';
+			$base_dir = HOCWP_Theme()->custom_path . '/lib/fontawesome/' . $args['version'];
+
+			if ( $args['cdn'] ) {
+				$parts    = array( 'cdnjs', 'cloudflare', 'com' );
+				$base_url = 'https://';
+				$base_url .= join( '.', $parts );
+				$base_url .= '/ajax/libs/font-awesome/';
+
+				unset( $parts );
+			}
+
+			if ( version_compare( $args['version'], '4.7.0', '>' ) ) {
+				$css_file = 'css/all.min.css';
+			} else {
+				$css_file = 'css/font-awesome.min.css';
+			}
+
+			$this->auto_check_lib_version( $args, $base_dir, $css_file );
+
+			$base_dir = trailingslashit( $base_dir );
+
+			if ( ! empty( $args['version'] ) ) {
+				$base_url .= $args['version'];
+			}
+
+			$base_url = trailingslashit( $base_url );
+
+			$css_url = $base_url . $css_file;
+
+			unset( $base_url, $base_dir, $css_file );
+		}
+
+		$handle = 'fontawesome-' . $args['version'];
+		$handle = sanitize_title( $handle );
+
+		wp_enqueue_style( $handle . '-style', $css_url );
+
+		unset( $defaults, $handle, $css_url, $kit );
 	}
 }
 

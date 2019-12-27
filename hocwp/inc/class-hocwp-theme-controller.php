@@ -414,6 +414,7 @@ final class HOCWP_Theme_Controller {
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/admin.php';
 		} else {
+			require $this->core_path . '/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php';
 			require $this->core_path . '/inc/functions-context.php';
 		}
 

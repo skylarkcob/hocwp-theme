@@ -1,4 +1,19 @@
 == Changelog ==
+= 6.7.1 =
+* Add big image size threshold filter.
+* Fix duplicate submit button ids.
+* Load default styles and scripts for meta or setting fields.
+* Update some admin styles.
+* Add walker class for menus work with bootstrap.
+* Update enqueue class.
+* Allow bootstrap menu, bootstrap breadcrumb and bootstrap pagination.
+* Add image link HTML field.
+* Allow filter hocwp_theme options.
+* Add function to get HTML attribute from string tag.
+* Update .webp image functions.
+* Update load default templates.
+* Update widget icon and widget post tabber.
+
 = 6.7.0 =
 * Update admin setting field.
 * Add functions for default meta configurations.

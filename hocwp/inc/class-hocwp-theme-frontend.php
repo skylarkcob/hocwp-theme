@@ -8,7 +8,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 	protected function __construct() {
 		if ( ! is_admin() ) {
-			add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes_filter' ), 10, 4 );
+			add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes_filter' ), 99, 4 );
 		}
 	}
 
@@ -29,6 +29,25 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 
 		return $atts;
+	}
+
+	public function bootstrap_nav_menu( $args = array() ) {
+		$args['fallback_cb'] = 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap::fallback';
+		$args['walker']      = new HOCWP_Theme_Walker_Nav_Menu_Bootstrap();
+
+		$container_class = isset( $args['container_class'] ) ? $args['container_class'] : '';
+
+		$container_class .= ' collapse navbar-collapse';
+
+		$args['container_class'] = trim( $container_class );
+
+		$menu_class = isset( $args['menu_class'] ) ? $args['menu_class'] : '';
+
+		$menu_class .= ' navbar-nav mr-auto';
+
+		$args['menu_class'] = trim( $menu_class );
+
+		wp_nav_menu( $args );
 	}
 
 	public function wp_nav_menu_helper( $args = array() ) {
@@ -248,6 +267,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$items = paginate_links( $args );
 
 		if ( HOCWP_Theme::array_has_value( $items ) ) {
+			$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
+
 			$class = $args['class'];
 			$class = sanitize_html_class( $class );
 			$class .= ' pagination';
@@ -268,7 +289,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$root_url = get_pagenum_link( 1 );
 			$root_url = apply_filters( 'hocwp_theme_pagination_first_item_url', $root_url, $args );
 
-			echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( json_encode( $query->query ) ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-load-more="' . HT()->bool_to_int( $load_more ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">';
+			if ( $bootstrap ) {
+				echo '<nav aria-label="' . esc_attr__( 'Page navigation', 'hocwp-theme' ) . '" class="mt-5">' . PHP_EOL;
+			}
+
+			echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( json_encode( $query->query ) ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-load-more="' . HT()->bool_to_int( $load_more ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">' . PHP_EOL;
 
 			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
 				echo '<li class="label-item page-item"><span class="page-numbers label page-link">' . $args['label'] . '</span></li>';
@@ -288,7 +313,17 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			foreach ( $items as $item ) {
-				echo '<li class="page-item">' . $item . '</li>';
+				$class = 'page-item';
+
+				if ( $bootstrap ) {
+					$item = str_replace( 'page-numbers', 'page-numbers page-link', $item ) . PHP_EOL;
+
+					if ( false !== strpos( $item, 'current' ) ) {
+						$class .= ' active';
+					}
+				}
+
+				echo '<li class="' . esc_attr( $class ) . '">' . $item . '</li>';
 			}
 
 			if ( $first_last ) {
@@ -329,7 +364,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				<?php
 			}
 
-			echo '</ul>';
+			echo '</ul>' . PHP_EOL;
+
+			if ( $bootstrap ) {
+				echo '</nav>' . PHP_EOL;
+			}
 		}
 	}
 
@@ -453,7 +492,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public static function breadcrumb( $args = array() ) {
-		if ( HT_Frontend()->is_yoast_breadcrumb() ) {
+		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
+
+		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() ) {
 			yoast_breadcrumb( '<div class="breadcrumb hocwp-breadcrumb">', '</div>' );
 
 			return;
@@ -463,10 +504,17 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			return;
 		}
 
-		$separator   = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
-		$home_item   = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
-		$items       = array();
-		$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
+		$separator = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
+
+		if ( $bootstrap ) {
+			$link_schema = '<a href="%s">%s</a>';
+			$home_item   = sprintf( $link_schema, esc_url( home_url() ), __( 'Home', 'hocwp-theme' ) );
+		} else {
+			$home_item   = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
+			$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
+		}
+
+		$items = array();
 
 		if ( is_single() ) {
 			$obj  = get_post( get_the_ID() );
@@ -569,34 +617,56 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		unset( $last_item );
 
 		$count = count( $items );
-		$nav   = new HOCWP_Theme_HTML_Tag( 'nav' );
-		$nav->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
-		$nav->add_attribute( 'itemtype', '' );
-		$nav->add_attribute( 'itemtype', 'https://schema.org/BreadcrumbList' );
 
-		$span = new HOCWP_Theme_HTML_Tag( 'span' );
-		$span->add_attribute( 'xmlns:v', 'http://rdf.data-vocabulary.org/#' );
-		ob_start();
-		?>
-		<span typeof="v:Breadcrumb">
-			<?php echo $home_item . '&nbsp;' . $separator; ?>
-			<span rel="v:child" typeof="v:Breadcrumb">
-				<?php
-				foreach ( $items as $index => $item ) {
-					echo $item;
-					if ( $index < ( $count - 1 ) ) {
-						echo '&nbsp;' . $separator . '&nbsp;';
+		if ( $bootstrap ) {
+			$ol = new HOCWP_Theme_HTML_Tag( 'ol' );
+			$ol->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
+
+			$html = '<li class="breadcrumb-item">' . $home_item . '</li>' . PHP_EOL;
+
+			foreach ( $items as $item ) {
+				$html .= '<li class="breadcrumb-item">' . $item . '</li>' . PHP_EOL;
+			}
+
+			$ol->set_text( $html );
+			$ol->output();
+
+			unset( $ol, $html );
+		} else {
+			$nav = new HOCWP_Theme_HTML_Tag( 'nav' );
+			$nav->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
+			$nav->add_attribute( 'itemtype', '' );
+			$nav->add_attribute( 'itemtype', 'https://schema.org/BreadcrumbList' );
+
+			$span = new HOCWP_Theme_HTML_Tag( 'span' );
+			$span->add_attribute( 'xmlns:v', 'http://rdf.data-vocabulary.org/#' );
+
+			ob_start();
+			?>
+			<span typeof="v:Breadcrumb">
+				<?php echo $home_item . '&nbsp;' . $separator; ?>
+				<span rel="v:child" typeof="v:Breadcrumb">
+					<?php
+					foreach ( $items as $index => $item ) {
+						echo $item;
+
+						if ( $index < ( $count - 1 ) ) {
+							echo '&nbsp;' . $separator . '&nbsp;';
+						}
 					}
-				}
-				?>
+					?>
+				</span>
 			</span>
-		</span>
-		<?php
-		$span->set_text( ob_get_clean() );
-		$nav->set_text( $span );
-		$nav->output();
+			<?php
+			$span->set_text( ob_get_clean() );
 
-		unset( $nav, $span, $home_item, $items, $index, $item, $count, $separator );
+			$nav->set_text( $span );
+			$nav->output();
+
+			unset( $nav, $span, $index, $item );
+		}
+
+		unset( $home_item, $items, $count, $separator );
 	}
 
 	public function facebook_share_button( $args = array() ) {

@@ -389,7 +389,16 @@ final class HOCWP_Theme_Admin_Setting_Page {
 							<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
 						</div>
 						<div class="save-changes">
-							<?php $this->submit_button( array( 'attributes' => array( 'form' => 'hocwpOptions' ) ) ); ?>
+							<?php
+							$this->submit_button(
+								array(
+									'attributes' => array(
+										'form' => 'hocwpOptions',
+										'id'   => 'settingSubmitTop'
+									)
+								)
+							);
+							?>
 						</div>
 					</div>
 				</div>
@@ -461,7 +470,14 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			do_settings_sections( $this->menu_slug );
 			do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name );
 
-			$this->submit_button();
+			$this->submit_button(
+				array(
+					'attributes' => array(
+						'form' => 'hocwpOptions',
+						'id'   => 'settingSubmitBottom'
+					)
+				)
+			);
 			?>
 		</form>
 		<?php
@@ -499,8 +515,13 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						case 'color_picker':
 							HT_Enqueue()->color_picker();
 							break;
+						case 'image_link':
 						case 'media_upload':
 							HT_Enqueue()->media_upload();
+							break;
+						case 'images':
+							HT_Enqueue()->media_upload();
+							HT_Enqueue()->sortable();
 							break;
 					}
 				}

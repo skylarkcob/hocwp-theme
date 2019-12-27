@@ -39,6 +39,16 @@ function hocwp_theme_settings_page_media_field() {
 	$field    = hocwp_theme_create_setting_field( 'jpeg_quality', __( 'JPEG Quality', 'hocwp-theme' ), 'input', $args, 'positive_integer', 'media' );
 	$fields[] = $field;
 
+	$args['min']     = 0;
+	$args['max']     = 99999;
+	$args['default'] = 2560;
+	$args['class']   = 'medium-text';
+
+	$args['description'] = __( 'If the original image width or height is above the threshold, it will be scaled down. The threshold is used as max width and max height.', 'hocwp-theme' );
+
+	$field    = hocwp_theme_create_setting_field( 'big_image_size_threshold', __( 'Big Image Size Threshold', 'hocwp-theme' ), 'input', $args, 'positive_integer', 'media' );
+	$fields[] = $field;
+
 	return $fields;
 }
 

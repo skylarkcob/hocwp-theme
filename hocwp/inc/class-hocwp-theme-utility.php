@@ -1047,7 +1047,7 @@ class HOCWP_Theme_Utility {
 			$value = $default;
 		}
 
-		return $value;
+		return apply_filters( 'hocwp_theme_option', $value, $name, $default, $base );
 	}
 
 	public static function get_theme_option_term( $name, $taxonomy = 'category', $base = 'general', $slug = '' ) {

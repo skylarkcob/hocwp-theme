@@ -184,48 +184,68 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 
 		$instance = wp_parse_args( $instance, $this->defaults );
+		?>
+		<nav class="nav-tab-wrapper wp-clearfix">
+			<a href="#widgetIconGeneral<?php echo $this->number; ?>"
+			   class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
+			<a href="#widgetIconAdvanced<?php echo $this->number; ?>"
+			   class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
+			<a href="#widgetIconSortable<?php echo $this->number; ?>"
+			   class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
+		</nav>
+		<div class="tab-content">
+			<div id="widgetIconGeneral<?php echo $this->number; ?>" class="tab-pane active">
+				<?php
+				$name  = 'icon_url';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Icon URL:', 'hocwp-theme' ), $value, 'input', array( 'type' => 'url' ) );
 
-		$name  = 'icon_url';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Icon URL:', 'hocwp-theme' ), $value, 'input', array( 'type' => 'url' ) );
+				$name  = 'icon_image';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Icon Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
 
-		$name  = 'icon_image';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Icon Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
+				$name  = 'text';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Text:', 'hocwp-theme' ), $value, 'textarea', array( 'rows' => 3 ) );
+				?>
+			</div>
+			<div id="widgetIconAdvanced<?php echo $this->number; ?>" class="tab-pane">
+				<?php
+				$name  = 'icon_html';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Icon HTML:', 'hocwp-theme' ), $value );
 
-		$name  = 'icon_html';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Icon HTML:', 'hocwp-theme' ), $value );
+				$name  = 'hover_icon_image';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
 
-		$name  = 'hover_icon_image';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
+				$name  = 'hover_icon_html';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon HTML:', 'hocwp-theme' ), $value );
 
-		$name  = 'hover_icon_html';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Hover Icon HTML:', 'hocwp-theme' ), $value );
+				$name  = 'background_image';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Background Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
 
-		$name  = 'background_image';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Background Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
+				$name  = 'html_class';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'HTML Class Attribute:', 'hocwp-theme' ), $value );
+				?>
+			</div>
+			<div id="widgetIconSortable<?php echo $this->number; ?>" class="tab-pane">
+				<?php
+				$options = $instance['sortables'];
 
-		$name  = 'text';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Text:', 'hocwp-theme' ), $value, 'textarea', array( 'rows' => 3 ) );
+				$name  = 'sortable';
+				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 
-		$name  = 'html_class';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-		HT_HTML_Field()->widget_field( $this, $name, __( 'HTML Class Attribute:', 'hocwp-theme' ), $value );
+				$args = array( 'options' => $options, 'list_type' => 'custom', 'connects' => false );
 
-		$options = $instance['sortables'];
-
-		$name  = 'sortable';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
-
-		$args = array( 'options' => $options, 'list_type' => 'custom', 'connects' => false );
-
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Sortable:', 'hocwp-theme' ), $value, 'sortable', $args );
-
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Sortable:', 'hocwp-theme' ), $value, 'sortable', $args );
+				?>
+			</div>
+		</div>
+		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
 

@@ -112,6 +112,34 @@ function hocwp_theme_template_archive() {
 
 				return;
 			}
+
+			$tax = get_taxonomy( $object->taxonomy );
+
+			if ( $tax instanceof WP_Taxonomy ) {
+				$object_type = $tax->object_type;
+
+				if ( HT()->array_has_value( $object_type ) ) {
+					foreach ( $object_type as $type ) {
+						$tmp  = $type;
+						$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $tmp . '.php';
+
+						if ( file_exists( $file ) ) {
+							load_template( $file );
+
+							return;
+						}
+
+						$tmp  = str_replace( '_', '-', $tmp );
+						$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-archive-' . $tmp . '.php';
+
+						if ( file_exists( $file ) ) {
+							load_template( $file );
+
+							return;
+						}
+					}
+				}
+			}
 		}
 
 	}
@@ -119,6 +147,25 @@ function hocwp_theme_template_archive() {
 }
 
 add_action( 'hocwp_theme_template_archive', 'hocwp_theme_template_archive' );
+
+/**
+ * Filter template path for using default template in theme.
+ *
+ * @param string $template The path of template file.
+ *
+ * @return string The filtered template file path.
+ */
+function hocwp_theme_template_include_filter( $template ) {
+	if ( is_archive() && 'archive.php' != basename( $template ) ) {
+		$template = HOCWP_Theme()->theme_path . '/archive.php';
+	} elseif ( ! is_page() && is_single() && 'single.php' != basename( $template ) ) {
+		$template = HOCWP_Theme()->theme_path . '/single.php';
+	}
+
+	return $template;
+}
+
+add_filter( 'template_include', 'hocwp_theme_template_include_filter', 9999 );
 
 function hocwp_theme_template_search() {
 	hocwp_theme_load_custom_template( 'template-search' );
@@ -1434,6 +1481,12 @@ function hocwp_theme_reset_loopdata() {
 
 function hocwp_theme_script_loader_tag_filter( $tag ) {
 	$tag = str_replace( "type='text/javascript'", '', $tag );
+
+	if ( HT()->string_contain( $tag, 'kit' ) && HT()->string_contain( $tag, 'fontawesome' ) ) {
+		$tag = HT()->add_html_attribute( 'script', $tag, 'crossorigin="anonymous"' );
+	}
+
+	$tag = str_replace( '  ', ' ', $tag );
 
 	return $tag;
 }

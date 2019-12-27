@@ -60,11 +60,21 @@ abstract class HOCWP_Theme_Meta {
 		$callback = $field['callback'];
 
 		if ( is_array( $callback ) ) {
-			if ( array( 'HOCWP_Theme_HTML_Field', 'media_upload' ) === $callback ) {
+			$class = 'HOCWP_Theme_HTML_Field';
+
+			if ( $callback === array( $class, 'media_upload' )
+			     || $callback === array( $class, 'image_link' )
+			     || $callback === array( $class, 'images' )
+			) {
 				$this->load_script( 'hocwp-theme-media-upload' );
-			} elseif ( array( 'HOCWP_Theme_HTML_Field', 'google_maps' ) === $callback ) {
+				$this->load_style( 'hocwp-theme-admin-style' );
+
+				if ( $callback === array( $class, 'images' ) ) {
+					$this->load_script( 'sortable-images-box' );
+				}
+			} elseif ( array( $class, 'google_maps' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-google-maps' );
-			} elseif ( array( 'HOCWP_Theme_HTML_Field', 'datetime_picker' ) === $callback ) {
+			} elseif ( array( $class, 'datetime_picker' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-datepicker' );
 				$this->load_style( 'jquery-ui-style' );
 			}
@@ -360,8 +370,15 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	public function admin_scripts() {
-		if ( is_array( $this->scripts ) && in_array( 'hocwp-theme-media-upload', $this->scripts ) ) {
-			HT_Enqueue()->media_upload();
+		if ( is_array( $this->scripts ) ) {
+			if ( in_array( 'hocwp-theme-media-upload', $this->scripts ) ) {
+				HT_Enqueue()->media_upload();
+			}
+
+			if ( in_array( 'sortable-images-box', $this->scripts ) ) {
+				wp_enqueue_editor();
+				HT_Enqueue()->sortable();
+			}
 		}
 
 		$this->enqueue( $this->styles );

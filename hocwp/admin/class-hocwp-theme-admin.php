@@ -66,6 +66,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 
 	public function get_current_post_type() {
 		global $post_type, $typenow;
+
 		$result = $post_type;
 
 		if ( empty( $result ) ) {

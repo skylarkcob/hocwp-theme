@@ -114,9 +114,13 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				}
 			}
 
-			$wq = new WordPressPopularPosts\Query( $params );
+			$posts = array();
 
-			$posts = $wq->get_posts();
+			if ( class_exists( 'WordPressPopularPosts\Query' ) ) {
+				$wq = new WordPressPopularPosts\Query( $params );
+
+				$posts = $wq->get_posts();
+			}
 
 			if ( HT()->array_has_value( $posts ) ) {
 				$ids = array();
@@ -500,12 +504,15 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 		?>
 		<nav class="nav-tab-wrapper wp-clearfix">
-			<a href="#widgetPostGeneral" class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
-			<a href="#widgetPostAdvanced" class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
-			<a href="#widgetPostSortable" class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
+			<a href="#widgetPostGeneral<?php echo $this->number; ?>"
+			   class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
+			<a href="#widgetPostAdvanced<?php echo $this->number; ?>"
+			   class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
+			<a href="#widgetPostSortable<?php echo $this->number; ?>"
+			   class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
 		</nav>
 		<div class="tab-content">
-			<div id="widgetPostGeneral" class="tab-pane active">
+			<div id="widgetPostGeneral<?php echo $this->number; ?>" class="tab-pane active">
 				<div style="margin: 1em 0">
 					<?php
 					$args = array(
@@ -570,7 +577,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					       value="<?php echo $title_length; ?>" size="3"/>
 				</p>
 			</div>
-			<div id="widgetPostAdvanced" class="tab-pane">
+			<div id="widgetPostAdvanced<?php echo $this->number; ?>" class="tab-pane">
 				<div style="margin: 1em 0">
 					<?php
 					$args = array(
@@ -750,7 +757,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						for="<?php echo $this->get_field_id( 'group_category' ); ?>"><?php _e( 'Group posts by each category?', 'hocwp-theme' ); ?></label>
 				</p>
 			</div>
-			<div id="widgetPostSortable" class="tab-pane">
+			<div id="widgetPostSortable<?php echo $this->number; ?>" class="tab-pane">
 
 			</div>
 		</div>

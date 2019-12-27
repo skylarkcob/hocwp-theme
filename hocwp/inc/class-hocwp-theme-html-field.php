@@ -1103,6 +1103,55 @@ final class HOCWP_Theme_HTML_Field {
 		self::input( $args );
 	}
 
+	public static function image_link( $args = array() ) {
+		$base_value = isset( $args['value'] ) ? $args['value'] : '';
+		$base_id    = isset( $args['id'] ) ? $args['id'] : '';
+		$base_name  = isset( $args['name'] ) ? $args['name'] : '';
+
+		$id = $base_id;
+
+		if ( ! empty( $id ) ) {
+			$id .= '_link';
+		}
+
+		$name = $base_name;
+
+		if ( ! empty( $name ) ) {
+			$name .= '[link]';
+		}
+
+		$args = array(
+			'id'    => $id,
+			'name'  => $name,
+			'value' => isset( $base_value['link'] ) ? $base_value['link'] : '',
+			'class' => 'widefat',
+			'label' => __( 'Image Link:', 'hocwp-theme' )
+		);
+
+		self::input_url( $args );
+
+		$id = $base_id;
+
+		if ( ! empty( $id ) ) {
+			$id .= '_image';
+		}
+
+
+		$name = $base_name;
+
+		if ( ! empty( $name ) ) {
+			$name .= '[image]';
+		}
+
+		$args = array(
+			'id'    => $id,
+			'name'  => $name,
+			'value' => isset( $base_value['image'] ) ? $base_value['image'] : ''
+		);
+
+		self::media_upload( $args );
+	}
+
 	public static function media_upload( $args = array() ) {
 		$type       = isset( $args['type'] ) ? $args['type'] : '';
 		$value      = isset( $args['value'] ) ? $args['value'] : '';

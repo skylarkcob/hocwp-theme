@@ -464,10 +464,30 @@ final class HOCWP_Theme {
 		return $tag;
 	}
 
+	/**
+	 * Add custom attributes for HTML tag.
+	 *
+	 * @param string $tag HTML tag name.
+	 * @param string $html HTML code.
+	 * @param mixed|string|array $attr New attributes to be added.
+	 *
+	 * @return string The new HTML code with custom attributes.
+	 */
 	public static function add_html_attribute( $tag, $html, $attr ) {
+		if ( is_array( $attr ) ) {
+			$attr = self::attributes_to_string( $attr );
+		}
+
 		$html = preg_replace( '^' . preg_quote( '<' . $tag . ' ' ) . '^', '<' . $tag . ' ' . $attr . ' ', $html );
 
 		return $html;
+	}
+
+	public static function get_attribute_from_html_tag( $string, $attr_name, $tag_name ) {
+		preg_match_all( '/(<' . $tag_name . '.*?' . $attr_name . '=\"|\')(.*?)\"|\'.*?>/im', $string, $matches );
+		$matches = array_pop( $matches );
+
+		return array_pop( $matches );
 	}
 
 	public static function attributes_to_string( $atts ) {
@@ -849,6 +869,11 @@ final class HOCWP_Theme {
 
 			$result = implode( '.', $tmp );
 		}
+
+		$result = str_replace( 'www.', '', $result );
+		$result = str_replace( 'https://', '', $result );
+		$result = str_replace( 'http://', '', $result );
+		$result = ltrim( $result, '//' );
 
 		return $result;
 	}
