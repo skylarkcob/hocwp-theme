@@ -143,6 +143,7 @@ function hocwp_theme_template_archive() {
 		}
 
 	}
+
 	hocwp_theme_load_custom_template( 'template-archive' );
 }
 
@@ -156,10 +157,31 @@ add_action( 'hocwp_theme_template_archive', 'hocwp_theme_template_archive' );
  * @return string The filtered template file path.
  */
 function hocwp_theme_template_include_filter( $template ) {
-	if ( is_archive() && 'archive.php' != basename( $template ) ) {
-		$template = HOCWP_Theme()->theme_path . '/archive.php';
-	} elseif ( ! is_page() && is_single() && 'single.php' != basename( $template ) ) {
-		$template = HOCWP_Theme()->theme_path . '/single.php';
+	// Filter use templates in plugin.
+	$plugin_template = apply_filters( 'hocwp_theme_use_plugin_templates', true );
+
+	// If use templates in plugin, check dir contains plugins directory.
+	if ( $plugin_template ) {
+		if ( false === strpos( $template, 'plugins' ) ) {
+			$plugin_template = false;
+		}
+	}
+
+	// If not use plugin templates or template dir not contain plugins directory just use default theme template.
+	if ( ! $plugin_template ) {
+		$dir = get_template_directory();
+		$dir = trailingslashit( $dir );
+
+		$is_wc = ( false !== strpos( $template, $dir . 'woocommerce' ) );
+
+		// Check back for WooCommerce and other plugin templates.
+		if ( ! $is_wc || ! file_exists( $template ) ) {
+			if ( is_archive() && 'archive.php' != basename( $template ) ) {
+				$template = HOCWP_Theme()->theme_path . '/archive.php';
+			} elseif ( ! is_page() && is_single() && 'single.php' != basename( $template ) ) {
+				$template = HOCWP_Theme()->theme_path . '/single.php';
+			}
+		}
 	}
 
 	return $template;
