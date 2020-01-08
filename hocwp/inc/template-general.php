@@ -765,7 +765,8 @@ function hocwp_theme_mobile_menu( $args ) {
 		'container_id'    => 'mobile-navigation',
 		'menu_id'         => 'mobile-menu',
 		'container_class' => $container_class,
-		'button_control'  => 'mobile-menu'
+		'button_control'  => 'mobile-menu',
+		'fallback_cb'     => false
 	);
 
 	$args = wp_parse_args( $args, $defaults );

@@ -377,7 +377,7 @@ final class HOCWP_Theme_Controller {
 
 		require $this->core_path . '/inc/class-hocwp-theme-requirement.php';
 		require $this->core_path . '/inc/class-hocwp-theme-svg-icon.php';
-		require $this->core_path . '/inc/class-hocwp-theme-color.php';
+		//require $this->core_path . '/inc/class-hocwp-theme-color.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-tag.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-field.php';
 		require $this->core_path . '/inc/class-hocwp-theme-metas.php';

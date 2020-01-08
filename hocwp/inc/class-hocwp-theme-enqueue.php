@@ -97,6 +97,57 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_script( 'jquery-ui-autocomplete' );
 	}
 
+	public function popper( $args = array() ) {
+		$defaults = array(
+			'cdn'     => false,
+			'version' => '1.16.0',
+			'utils'   => false
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$base_url = HOCWP_Theme()->custom_url . '/lib/popper.js/';
+		$base_dir = HOCWP_Theme()->custom_path . '/lib/popper.js/' . $args['version'];
+
+		if ( $args['cdn'] ) {
+			$parts    = array( 'cdnjs', 'cloudflare', 'com' );
+			$base_url = 'https://';
+			$base_url .= join( '.', $parts );
+			$base_url .= '/ajax/libs/popper.js/';
+
+			unset( $parts );
+		}
+
+		$file = '/popper.min.js';
+
+		$this->auto_check_lib_version( $args, $base_dir, $file );
+
+		$base_dir = trailingslashit( $base_dir );
+
+		if ( ! empty( $args['version'] ) ) {
+			$base_url .= $args['version'];
+		}
+
+		$base_url = trailingslashit( $base_url );
+
+		$base_dir .= 'umd/';
+		$base_url .= 'umd/';
+
+		if ( $args['utils'] ) {
+			$handle = 'popper-utils-' . $args['version'];
+			$handle = sanitize_title( $handle );
+
+			wp_enqueue_script( $handle, $base_url . 'popper-utils.min.js', array( 'jquery' ), false, true );
+		}
+
+		$handle = 'popper-' . $args['version'];
+		$handle = sanitize_title( $handle );
+
+		wp_enqueue_script( $handle, $base_url . 'popper.min.js', array( 'jquery' ), false, true );
+
+		unset( $defaults, $base_url, $base_dir, $handle, $file );
+	}
+
 	public function bootstrap( $args = array() ) {
 		$defaults = array(
 			'cdn'     => false,
@@ -141,6 +192,8 @@ class HOCWP_Theme_Enqueue {
 		}
 
 		if ( $args['js'] && HT()->is_file( $base_dir . 'js/bootstrap.min.js' ) ) {
+			$popper = isset( $args['popper'] ) ? $args['popper'] : array();
+			$this->popper( $popper );
 			wp_enqueue_script( $handle, $base_url . 'js/bootstrap.min.js', array( 'jquery' ), false, true );
 		}
 
