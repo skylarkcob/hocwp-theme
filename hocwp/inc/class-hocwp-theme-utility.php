@@ -457,8 +457,13 @@ class HOCWP_Theme_Utility {
 		return $path;
 	}
 
-	public function get_current_weekday( $format = null ) {
-		$weekday = current_time( 'l' );
+	public function get_current_weekday( $format = null, $timestamp = '' ) {
+		if ( ! empty( $timestamp ) && HT()->is_positive_number( $timestamp ) ) {
+			$weekday = date( 'l', $timestamp );
+		} else {
+			$weekday = current_time( 'l' );
+		}
+
 		$weekday = strtolower( $weekday );
 
 		switch ( $weekday ) {

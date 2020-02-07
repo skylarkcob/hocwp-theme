@@ -1,4 +1,12 @@
 == Changelog ==
+= 6.7.3 =
+* Move theme languages to custom folder.
+* Remove data-vocabulary.org schema.
+* Add password for lock and unlock license.
+
+= 6.7.2 =
+* Check password before block theme or plugin.
+
 = 6.7.1 =
 * Add big image size threshold filter.
 * Fix duplicate submit button ids.

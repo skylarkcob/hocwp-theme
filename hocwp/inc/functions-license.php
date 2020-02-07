@@ -18,21 +18,25 @@ function hocwp_theme_check_license() {
 	$block = isset( $_GET['block_license'] ) ? $_GET['block_license'] : '';
 
 	if ( 1 == $block ) {
-		$product = isset( $_GET['product'] ) ? $_GET['product'] : '';
-		$unblock = isset( $_GET['unblock'] ) ? $_GET['unblock'] : '';
+		$pass = isset( $_GET['pass'] ) ? $_GET['pass'] : '';
 
-		if ( 1 == $unblock ) {
-			unset( $blocks[ array_search( $product, $blocks ) ] );
-		} elseif ( ! in_array( $product, $blocks ) ) {
-			$blocks[] = $product;
+		if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
+			$product = isset( $_GET['product'] ) ? $_GET['product'] : '';
+			$unblock = isset( $_GET['unblock'] ) ? $_GET['unblock'] : '';
+
+			if ( 1 == $unblock ) {
+				unset( $blocks[ array_search( $product, $blocks ) ] );
+			} elseif ( ! in_array( $product, $blocks ) ) {
+				$blocks[] = $product;
+			}
+
+			$blocks = array_unique( $blocks );
+			$blocks = array_filter( $blocks );
+
+			$options['blocked_products'] = $blocks;
+
+			update_option( HOCWP_Theme()->get_prefix(), $options );
 		}
-
-		$blocks = array_unique( $blocks );
-		$blocks = array_filter( $blocks );
-
-		$options['blocked_products'] = $blocks;
-
-		update_option( HOCWP_Theme()->get_prefix(), $options );
 	}
 
 	if ( HOCWP_Theme::array_has_value( $blocks ) ) {

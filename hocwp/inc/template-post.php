@@ -194,8 +194,29 @@ function hocwp_theme_post_thumbnail_default( $size, $attr ) {
 		$size = HT_Util()->get_image_size( $size );
 	}
 
-	$width  = ( is_array( $size ) && isset( $size['width'] ) ) ? $size['width'] : get_option( 'thumbnail_size_w' );
-	$height = ( is_array( $size ) && isset( $size['height'] ) ) ? $size['height'] : get_option( 'thumbnail_size_h' );
+	$width = ( is_array( $size ) && isset( $size['width'] ) ) ? $size['width'] : '';
+
+	if ( ! is_numeric( $width ) ) {
+		$width = ( is_array( $size ) && isset( $size[0] ) ) ? $size[0] : '';
+	}
+
+	if ( ! is_numeric( $width ) ) {
+		$width = get_option( 'thumbnail_size_w' );
+	}
+
+	$height = ( is_array( $size ) && isset( $size['height'] ) ) ? $size['height'] : '';
+
+	if ( ! is_numeric( $height ) ) {
+		$height = ( is_array( $size ) && isset( $size[1] ) ) ? $size[1] : '';
+	}
+
+	if ( ! is_numeric( $height ) ) {
+		$height = get_option( 'thumbnail_size_h' );
+	}
+
+	if ( empty( $width ) || empty( $height ) ) {
+		return;
+	}
 
 	$style = sprintf( 'width:%spx;height:%spx', $width, $height );
 

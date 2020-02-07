@@ -639,7 +639,6 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$nav->add_attribute( 'itemtype', 'https://schema.org/BreadcrumbList' );
 
 			$span = new HOCWP_Theme_HTML_Tag( 'span' );
-			$span->add_attribute( 'xmlns:v', 'http://rdf.data-vocabulary.org/#' );
 
 			ob_start();
 			?>
