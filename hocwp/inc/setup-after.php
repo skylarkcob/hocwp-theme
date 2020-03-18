@@ -308,6 +308,16 @@ function hocwp_theme_check_environment() {
 				}
 
 				if ( $die ) {
+					$redirect_to = isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '';
+
+					if ( ! empty( $redirect_to ) ) {
+						$die = false;
+					}
+
+					unset( $redirect_to );
+				}
+
+				if ( $die ) {
 					do_action( 'hocwp_theme_missing_required_plugins', $plugin, $info, $plugins );
 
 					$plugin  = '<a href="' . esc_url( $url ) . '">' . $name . '</a>';
