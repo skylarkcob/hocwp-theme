@@ -27,7 +27,7 @@ class HOCWP_Theme_Health_Check_Email extends HOCWP_Theme_Health_Check {
 
 		$this->label          = esc_html__( 'You should change the default admin email address', 'hocwp-theme' );
 		$this->status         = self::STATUS_RECOMMENDED;
-		$this->badge['color'] = 'red';
+		$this->badge['color'] = 'orange';
 
 		$this->description = esc_html__( 'You still have the default WordPress admin email address. You must provide a valid email address for receiving notifications from your site.', 'hocwp-theme' );
 

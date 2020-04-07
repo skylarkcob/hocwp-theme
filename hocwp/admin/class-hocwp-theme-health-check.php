@@ -169,7 +169,7 @@ abstract class HOCWP_Theme_Health_Check {
 		}
 
 		if ( empty( $this->badge['color'] ) ) {
-			$this->badge['color'] = 'green';
+			$this->badge['color'] = 'blue';
 		}
 
 		return $this->badge;
