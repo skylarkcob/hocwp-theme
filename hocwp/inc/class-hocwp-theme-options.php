@@ -17,8 +17,25 @@ class HOCWP_Theme_Options {
 		}
 	}
 
+	public function update( $key, $value, $tab = null, $options = null ) {
+		if ( ! HT()->array_has_value( $options ) ) {
+			$options = $this->get();
+		}
+
+		if ( null == $tab ) {
+			$options[ $key ] = $value;
+		} else {
+			$options[ $tab ][ $key ] = $value;
+		}
+
+		$option = HOCWP_Theme()->get_prefix();
+
+		return update_option( $option, $options );
+	}
+
 	public function get( $key = null, $defaults = '' ) {
 		global $hocwp_theme;
+
 		$options = $hocwp_theme->options;
 
 		if ( null !== $key ) {

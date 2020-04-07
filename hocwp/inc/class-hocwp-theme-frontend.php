@@ -643,13 +643,19 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			ob_start();
 			?>
 			<span typeof="v:Breadcrumb">
-				<?php echo $home_item . '&nbsp;' . $separator; ?>
+				<?php
+				if ( empty( $separator ) ) {
+					echo $home_item;
+				} else {
+					echo $home_item . '&nbsp;' . $separator;
+				}
+				?>
 				<span rel="v:child" typeof="v:Breadcrumb">
 					<?php
 					foreach ( $items as $index => $item ) {
 						echo $item;
 
-						if ( $index < ( $count - 1 ) ) {
+						if ( $index < ( $count - 1 ) && empty( $separator ) ) {
 							echo '&nbsp;' . $separator . '&nbsp;';
 						}
 					}
@@ -845,7 +851,6 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					<h2 class="page-title"><?php echo get_the_title( $page ); ?></h2>
 				</header>
 				<!-- .page-header -->
-
 				<div class="page-content entry-content">
 					<?php
 					$content = apply_filters( 'the_content', $page->post_content );
@@ -859,16 +864,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h2>
 				</header>
 				<!-- .page-header -->
-
 				<div class="page-content entry-content">
 					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
-
 					<?php
 					get_search_form();
-
 					the_widget( 'WP_Widget_Recent_Posts' );
 					?>
-
 					<div class="widget widget_categories">
 						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
 						<ul>
@@ -884,16 +885,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						</ul>
 					</div>
 					<!-- .widget -->
-
 					<?php
-
 					/* translators: %1$s: smiley */
 					$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'hocwp-theme' ), convert_smilies( ':)' ) ) . '</p>';
 					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$archive_content" );
-
 					the_widget( 'WP_Widget_Tag_Cloud' );
 					?>
-
 				</div>
 				<!-- .page-content -->
 				<?php

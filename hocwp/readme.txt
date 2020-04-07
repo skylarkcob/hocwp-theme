@@ -1,4 +1,11 @@
 == Changelog ==
+= 6.7.4 =
+* Add update option function.
+* Update query related posts.
+* Add option for user update blog page.
+* Update breadcrumb can add empty separator.
+* Add title field for user profile.
+
 = 6.7.3 =
 * Move theme languages to custom folder.
 * Remove data-vocabulary.org schema.

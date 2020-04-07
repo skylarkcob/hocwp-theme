@@ -72,6 +72,7 @@ if ( is_admin() ) {
 }
 
 function hocwp_theme_user_contactmethods_filter( $methods ) {
+	$methods['title']       = __( 'Title', 'hocwp-theme' );
 	$methods['facebook']    = __( 'Facebook URL', 'hocwp-theme' );
 	$methods['youtube']     = __( 'YouTube URL', 'hocwp-theme' );
 	$methods['google_plus'] = __( 'Google Plus URL', 'hocwp-theme' );

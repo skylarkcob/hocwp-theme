@@ -86,6 +86,12 @@ final class HOCWP_Theme_Query {
 			'related_posts' => true
 		);
 
+		$post_parent = $obj->post_parent;
+
+		if ( HT()->is_positive_number( $post_parent ) ) {
+			$defaults['post_parent'] = $post_parent;
+		}
+
 		$args = wp_parse_args( $args, $defaults );
 
 		$query = new WP_Query();
