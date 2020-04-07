@@ -62,6 +62,7 @@ if ( $menu_meta ) {
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php';
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php';
+require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check.php';
 
 add_action( 'after_setup_theme', function () {
 	global $pagenow, $hocwp_theme, $plugin_page;

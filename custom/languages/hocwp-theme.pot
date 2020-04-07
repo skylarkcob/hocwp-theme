@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2020-02-22 17:21+0700\n"
+"POT-Creation-Date: 2020-04-07 09:53+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,7 +13,7 @@ msgstr ""
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: ../..\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: functions.php:97 hocwp/admin/meta.php:137
+#: functions.php:110 hocwp/admin/meta.php:137
 msgid "Sidebar"
 msgstr ""
 
-#: functions.php:99 hocwp/inc/class-hocwp-theme-utility.php:1268
+#: functions.php:112 hocwp/inc/class-hocwp-theme-utility.php:1268
 msgid "Add widgets here."
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:89 hocwp/inc/setup-after.php:62
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:90 hocwp/inc/setup-after.php:62
 msgid "Extensions"
 msgstr ""
 
@@ -255,84 +255,88 @@ msgid "Theme Color"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:51
+msgid "Blog Page"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-reading.php:54
 msgid "Not Found Page"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:58
+#: hocwp/admin/admin-setting-page-reading.php:61
 msgid "Excerpt More"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:66
+#: hocwp/admin/admin-setting-page-reading.php:69
 msgid "Excerpt Length"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:72
+#: hocwp/admin/admin-setting-page-reading.php:75
 msgid "Make last widget on sidebar sticky."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:75
+#: hocwp/admin/admin-setting-page-reading.php:78
 msgid "Sticky Last Widget"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:78
+#: hocwp/admin/admin-setting-page-reading.php:81
 msgid "Show float post nav links on single page."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:80
+#: hocwp/admin/admin-setting-page-reading.php:83
 msgid "Float Post Nav"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:86 hocwp/admin/meta.php:142
+#: hocwp/admin/admin-setting-page-reading.php:89 hocwp/admin/meta.php:142
 msgid "Default"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:87 hocwp/admin/meta.php:143
+#: hocwp/admin/admin-setting-page-reading.php:90 hocwp/admin/meta.php:143
 msgctxt "sidebar position"
 msgid "Right"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:88 hocwp/admin/meta.php:144
+#: hocwp/admin/admin-setting-page-reading.php:91 hocwp/admin/meta.php:144
 msgctxt "sidebar position"
 msgid "Left"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:92 hocwp/admin/meta.php:148
+#: hocwp/admin/admin-setting-page-reading.php:95 hocwp/admin/meta.php:148
 msgid "Sidebar Position"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:97
+#: hocwp/admin/admin-setting-page-reading.php:100
 msgid "Add random end point to url for displaying random post?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:100
+#: hocwp/admin/admin-setting-page-reading.php:103
 msgid "Random"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:108
+#: hocwp/admin/admin-setting-page-reading.php:111
 msgid "Products Per Page"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:123
+#: hocwp/admin/admin-setting-page-reading.php:126
 msgid "Displays the back to top button when user scrolls down the bottom of site."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:126
+#: hocwp/admin/admin-setting-page-reading.php:129
 msgid "Active"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:142 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
+#: hocwp/admin/admin-setting-page-reading.php:145 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:145
+#: hocwp/admin/admin-setting-page-reading.php:148
 msgid "Icon HTML"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:148
+#: hocwp/admin/admin-setting-page-reading.php:151
 msgid "Background Color"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:151
+#: hocwp/admin/admin-setting-page-reading.php:154
 msgid "Style Attribute"
 msgstr ""
 
@@ -382,44 +386,44 @@ msgstr ""
 msgid "You must change administrator's email address for site working, please go to %s and update it."
 msgstr ""
 
-#: hocwp/admin/admin.php:92 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:93 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:95 hocwp/inc/setup-after.php:71
+#: hocwp/admin/admin.php:96 hocwp/inc/setup-after.php:71
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:162 hocwp/admin/admin.php:173
+#: hocwp/admin/admin.php:163 hocwp/admin/admin.php:174
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:166
+#: hocwp/admin/admin.php:167
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:177
+#: hocwp/admin/admin.php:178
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:184
+#: hocwp/admin/admin.php:185
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:188
+#: hocwp/admin/admin.php:189
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:284
+#: hocwp/admin/admin.php:285
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:326 hocwp/inc/template-post.php:309
+#: hocwp/admin/admin.php:327 hocwp/inc/template-post.php:309
 msgid "Related posts"
 msgstr ""
 
@@ -580,6 +584,36 @@ msgstr ""
 
 #: hocwp/admin/class-hocwp-theme-admin.php:34
 msgid "Back to theme plugins page"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:20
+msgid "You changed the default admin email address or in debug mode"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:23
+msgid "You are using a custom email address or a difference email address with default theme email address or your site is in debug mode."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:28
+msgid "You should change the default admin email address"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:32
+msgid "You still have the default WordPress admin email address. You must provide a valid email address for receiving notifications from your site."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:35
+#, php-format
+msgid "%1$sYou can change the admin email address in the site general setting page.%2$s"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check.php:168
+msgid "Theme"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check.php:201
+#, php-format
+msgid "%1$sThis was reported by %2$s.%3$s"
 msgstr ""
 
 #: hocwp/admin/class-hocwp-theme-meta-bookmark.php:22 hocwp/admin/class-hocwp-theme-meta-post.php:21
@@ -1117,28 +1151,28 @@ msgstr ""
 msgid "Page not found"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:765
+#: hocwp/inc/class-hocwp-theme-frontend.php:771
 msgctxt "back to top"
 msgid "Top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:798
+#: hocwp/inc/class-hocwp-theme-frontend.php:804
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:859
+#: hocwp/inc/class-hocwp-theme-frontend.php:864
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:864
+#: hocwp/inc/class-hocwp-theme-frontend.php:868
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:873
+#: hocwp/inc/class-hocwp-theme-frontend.php:874
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:891
+#: hocwp/inc/class-hocwp-theme-frontend.php:890
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
@@ -1576,52 +1610,56 @@ msgstr ""
 msgid "Last Activity"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:75
-msgid "Facebook URL"
+#: hocwp/inc/functions-user.php:75 hocwp/widgets/class-hocwp-theme-widget-icon.php:22
+msgid "Title"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:76
-msgid "YouTube URL"
+msgid "Facebook URL"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:77
-msgid "Google Plus URL"
+msgid "YouTube URL"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:78
-msgid "Twitter URL"
+msgid "Google Plus URL"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:79
-msgid "Donate URL"
+msgid "Twitter URL"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:80
-msgid "Phone"
+msgid "Donate URL"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:81
-msgid "Identity"
+msgid "Phone"
 msgstr ""
 
 #: hocwp/inc/functions-user.php:82
+msgid "Identity"
+msgstr ""
+
+#: hocwp/inc/functions-user.php:83
 msgid "Address"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:110
+#: hocwp/inc/functions-user.php:111
 msgid "If the link above not working, just copy the link below and paste it to browser address bar:"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:151
+#: hocwp/inc/functions-user.php:152
 #, php-format
 msgid "Username: %s"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:152
+#: hocwp/inc/functions-user.php:153
 msgid "To verify your email address, visit the following link:"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:157
+#: hocwp/inc/functions-user.php:158
 #, php-format
 msgid "[%s] Verify your email address"
 msgstr ""
@@ -1643,14 +1681,14 @@ msgstr ""
 msgid "Theme core version doesn't meet requirements"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:314
+#: hocwp/inc/setup-after.php:324
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
 "working normally."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:315
+#: hocwp/inc/setup-after.php:325
 msgid "Missing Required Plugins"
 msgstr ""
 
@@ -1733,7 +1771,7 @@ msgctxt "post date"
 msgid "Posted on %s"
 msgstr ""
 
-#: hocwp/inc/template-post.php:351 inc/template-tags.php:39
+#: hocwp/inc/template-post.php:351 inc/template-tags.php:39 inc/template-tags.php:55
 #, php-format
 msgctxt "post author"
 msgid "by %s"
@@ -1802,10 +1840,6 @@ msgstr ""
 
 #: hocwp/widgets/class-hocwp-theme-widget-disqus-recent-comment.php:98
 msgid "Hide commenter avatar?"
-msgstr ""
-
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:22
-msgid "Title"
 msgstr ""
 
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:31
@@ -2116,31 +2150,31 @@ msgstr ""
 msgid "Number of top commenters to show:"
 msgstr ""
 
-#: inc/template-tags.php:56
+#: inc/template-tags.php:72
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:59
+#: inc/template-tags.php:75
 #, php-format
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:63
+#: inc/template-tags.php:79
 msgctxt "list item separator"
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:66
+#: inc/template-tags.php:82
 #, php-format
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:76
+#: inc/template-tags.php:92
 #, php-format
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:93 template-parts/content-page.php:39
+#: inc/template-tags.php:109 template-parts/content-page.php:39
 #, php-format
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr ""

@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-02-22 17:22+0700\n"
-"PO-Revision-Date: 2020-02-22 17:22+0700\n"
+"POT-Creation-Date: 2020-04-07 09:53+0700\n"
+"PO-Revision-Date: 2020-04-07 09:57+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Primary"
 msgstr "Chính"
 
-#: functions.php:97 hocwp/admin/meta.php:137
+#: functions.php:110 hocwp/admin/meta.php:137
 msgid "Sidebar"
 msgstr "Thanh bên"
 
-#: functions.php:99 hocwp/inc/class-hocwp-theme-utility.php:1268
+#: functions.php:112 hocwp/inc/class-hocwp-theme-utility.php:1268
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
@@ -134,7 +134,7 @@ msgstr "Tiêu đề thư"
 msgid "Mail Message"
 msgstr "Nội dung thư"
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:89
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:90
 #: hocwp/inc/setup-after.php:62
 msgid "Extensions"
 msgstr "Gói mở rộng"
@@ -290,88 +290,92 @@ msgid "Theme Color"
 msgstr "Màu sắc trình duyệt"
 
 #: hocwp/admin/admin-setting-page-reading.php:51
+msgid "Blog Page"
+msgstr "Trang blog"
+
+#: hocwp/admin/admin-setting-page-reading.php:54
 msgid "Not Found Page"
 msgstr "Trang 404"
 
-#: hocwp/admin/admin-setting-page-reading.php:58
+#: hocwp/admin/admin-setting-page-reading.php:61
 msgid "Excerpt More"
 msgstr "Ký tự xem thêm"
 
-#: hocwp/admin/admin-setting-page-reading.php:66
+#: hocwp/admin/admin-setting-page-reading.php:69
 msgid "Excerpt Length"
 msgstr "Độ dài mô tả"
 
-#: hocwp/admin/admin-setting-page-reading.php:72
+#: hocwp/admin/admin-setting-page-reading.php:75
 msgid "Make last widget on sidebar sticky."
 msgstr "Hiển thị widget cuối cùng trên sidebar theo dạng sticky."
 
-#: hocwp/admin/admin-setting-page-reading.php:75
+#: hocwp/admin/admin-setting-page-reading.php:78
 msgid "Sticky Last Widget"
 msgstr "Sticky widget cuối"
 
-#: hocwp/admin/admin-setting-page-reading.php:78
+#: hocwp/admin/admin-setting-page-reading.php:81
 msgid "Show float post nav links on single page."
 msgstr ""
 "Hiển thị nút điều hướng bài viết trước và sau bài viết hiện tại ở 2 bên màn "
 "hình."
 
-#: hocwp/admin/admin-setting-page-reading.php:80
+#: hocwp/admin/admin-setting-page-reading.php:83
 msgid "Float Post Nav"
 msgstr "Điều hướng bài viết 2 bên"
 
-#: hocwp/admin/admin-setting-page-reading.php:86 hocwp/admin/meta.php:142
+#: hocwp/admin/admin-setting-page-reading.php:89 hocwp/admin/meta.php:142
 msgid "Default"
 msgstr "Mặc định"
 
-#: hocwp/admin/admin-setting-page-reading.php:87 hocwp/admin/meta.php:143
+#: hocwp/admin/admin-setting-page-reading.php:90 hocwp/admin/meta.php:143
 msgctxt "sidebar position"
 msgid "Right"
 msgstr "Bên phải"
 
-#: hocwp/admin/admin-setting-page-reading.php:88 hocwp/admin/meta.php:144
+#: hocwp/admin/admin-setting-page-reading.php:91 hocwp/admin/meta.php:144
 msgctxt "sidebar position"
 msgid "Left"
 msgstr "Bên trái"
 
-#: hocwp/admin/admin-setting-page-reading.php:92 hocwp/admin/meta.php:148
+#: hocwp/admin/admin-setting-page-reading.php:95 hocwp/admin/meta.php:148
 msgid "Sidebar Position"
 msgstr "Vị trí sidebar"
 
-#: hocwp/admin/admin-setting-page-reading.php:97
+#: hocwp/admin/admin-setting-page-reading.php:100
 msgid "Add random end point to url for displaying random post?"
 msgstr "Thêm random vào cuối đường dẫn để hiển thị bài viết ngẫu nhiên?"
 
-#: hocwp/admin/admin-setting-page-reading.php:100
+#: hocwp/admin/admin-setting-page-reading.php:103
 msgid "Random"
 msgstr "Ngẫu nhiên"
 
-#: hocwp/admin/admin-setting-page-reading.php:108
+#: hocwp/admin/admin-setting-page-reading.php:111
 msgid "Products Per Page"
 msgstr "Sản phẩm mỗi trang"
 
-#: hocwp/admin/admin-setting-page-reading.php:123
+#: hocwp/admin/admin-setting-page-reading.php:126
 msgid ""
 "Displays the back to top button when user scrolls down the bottom of site."
 msgstr "Hiển thị nút trở về đầu trang khi người dùng cuộn xuống dưới trang."
 
-#: hocwp/admin/admin-setting-page-reading.php:126
+#: hocwp/admin/admin-setting-page-reading.php:129
 msgid "Active"
 msgstr "Kích hoạt"
 
-#: hocwp/admin/admin-setting-page-reading.php:142
+#: hocwp/admin/admin-setting-page-reading.php:145
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr "Biểu tượng"
 
-#: hocwp/admin/admin-setting-page-reading.php:145
+#: hocwp/admin/admin-setting-page-reading.php:148
 msgid "Icon HTML"
 msgstr "Biểu tượng HTML"
 
-#: hocwp/admin/admin-setting-page-reading.php:148
+#: hocwp/admin/admin-setting-page-reading.php:151
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: hocwp/admin/admin-setting-page-reading.php:151
+#: hocwp/admin/admin-setting-page-reading.php:154
 msgid "Style Attribute"
 msgstr "Thuộc tính style"
 
@@ -432,20 +436,20 @@ msgstr ""
 "Bạn phải thay đổi địa chỉ email của người quản trị để trang web được hoạt "
 "động, vui lòng đến %s và cập nhật nó."
 
-#: hocwp/admin/admin.php:92 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:93 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:95 hocwp/inc/setup-after.php:71
+#: hocwp/admin/admin.php:96 hocwp/inc/setup-after.php:71
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:162 hocwp/admin/admin.php:173
+#: hocwp/admin/admin.php:163 hocwp/admin/admin.php:174
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:166
+#: hocwp/admin/admin.php:167
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -454,7 +458,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:177
+#: hocwp/admin/admin.php:178
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -463,12 +467,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:184
+#: hocwp/admin/admin.php:185
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:188
+#: hocwp/admin/admin.php:189
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -476,11 +480,11 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:284
+#: hocwp/admin/admin.php:285
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:326 hocwp/inc/template-post.php:309
+#: hocwp/admin/admin.php:327 hocwp/inc/template-post.php:309
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
@@ -651,6 +655,50 @@ msgstr "Quay trở lại danh sách plugin bắt buộc"
 #: hocwp/admin/class-hocwp-theme-admin.php:34
 msgid "Back to theme plugins page"
 msgstr "Quay trở lại danh sách plugin của giao diện"
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:20
+msgid "You changed the default admin email address or in debug mode"
+msgstr ""
+"Bạn đã thay đổi địa chỉ email quản trị mặc định hoặc đang trong chế độ gỡ lỗi"
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:23
+msgid ""
+"You are using a custom email address or a difference email address with "
+"default theme email address or your site is in debug mode."
+msgstr ""
+"Bạn đang sử dụng một địa chỉ email tùy chỉnh hoặc khác với địa chỉ email mặc "
+"định của giao diện hoặc trang web của bạn đang trong chế độ gỡ lỗi."
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:28
+msgid "You should change the default admin email address"
+msgstr "Bạn nên thay đổi địa chỉ email của người quản trị"
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:32
+msgid ""
+"You still have the default WordPress admin email address. You must provide a "
+"valid email address for receiving notifications from your site."
+msgstr ""
+"Bạn vẫn đang sử dụng địa chỉ email mặc định của WordPress. Bạn có thể cung "
+"cấp một địa chỉ email đang còn hoạt động để nhận thông báo từ trang web của "
+"bạn."
+
+#: hocwp/admin/class-hocwp-theme-health-check-email.php:35
+#, php-format
+msgid ""
+"%1$sYou can change the admin email address in the site general setting page."
+"%2$s"
+msgstr ""
+"%1$sBanj có thể thay đổi địa chỉ email của người quản trị tại trang cài đặt "
+"chung.%2$s"
+
+#: hocwp/admin/class-hocwp-theme-health-check.php:168
+msgid "Theme"
+msgstr "Giao diện"
+
+#: hocwp/admin/class-hocwp-theme-health-check.php:201
+#, php-format
+msgid "%1$sThis was reported by %2$s.%3$s"
+msgstr "%1$sĐã được báo cáo bởi %2$s.%3$s"
 
 #: hocwp/admin/class-hocwp-theme-meta-bookmark.php:22
 #: hocwp/admin/class-hocwp-theme-meta-post.php:21
@@ -1243,20 +1291,20 @@ msgstr "Lưu trữ"
 msgid "Page not found"
 msgstr "Trang không được tìm thấy"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:765
+#: hocwp/inc/class-hocwp-theme-frontend.php:771
 msgctxt "back to top"
 msgid "Top"
 msgstr "Lên trên"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:798
+#: hocwp/inc/class-hocwp-theme-frontend.php:804
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:859
+#: hocwp/inc/class-hocwp-theme-frontend.php:864
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:864
+#: hocwp/inc/class-hocwp-theme-frontend.php:868
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -1264,11 +1312,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:873
+#: hocwp/inc/class-hocwp-theme-frontend.php:874
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:891
+#: hocwp/inc/class-hocwp-theme-frontend.php:890
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
@@ -1717,38 +1765,43 @@ msgid "Last Activity"
 msgstr "Hoạt động lần cuối"
 
 #: hocwp/inc/functions-user.php:75
+#: hocwp/widgets/class-hocwp-theme-widget-icon.php:22
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: hocwp/inc/functions-user.php:76
 msgid "Facebook URL"
 msgstr "Đường dẫn Facebook"
 
-#: hocwp/inc/functions-user.php:76
+#: hocwp/inc/functions-user.php:77
 msgid "YouTube URL"
 msgstr "Đường dẫn YouTube"
 
-#: hocwp/inc/functions-user.php:77
+#: hocwp/inc/functions-user.php:78
 msgid "Google Plus URL"
 msgstr "Đường dẫn Google Plus"
 
-#: hocwp/inc/functions-user.php:78
+#: hocwp/inc/functions-user.php:79
 msgid "Twitter URL"
 msgstr "Đường dẫn Twitter"
 
-#: hocwp/inc/functions-user.php:79
+#: hocwp/inc/functions-user.php:80
 msgid "Donate URL"
 msgstr "Đường dẫn ủng hộ"
 
-#: hocwp/inc/functions-user.php:80
+#: hocwp/inc/functions-user.php:81
 msgid "Phone"
 msgstr "Số điện thoại"
 
-#: hocwp/inc/functions-user.php:81
+#: hocwp/inc/functions-user.php:82
 msgid "Identity"
 msgstr "CMND"
 
-#: hocwp/inc/functions-user.php:82
+#: hocwp/inc/functions-user.php:83
 msgid "Address"
 msgstr "Địa chỉ"
 
-#: hocwp/inc/functions-user.php:110
+#: hocwp/inc/functions-user.php:111
 msgid ""
 "If the link above not working, just copy the link below and paste it to "
 "browser address bar:"
@@ -1756,17 +1809,17 @@ msgstr ""
 "Nếu đường link bên trên không hoạt động, bạn chỉ cần sao chép đường dẫn bên "
 "dưới và bỏ vào thanh địa chỉ của trình duyệt:"
 
-#: hocwp/inc/functions-user.php:151
+#: hocwp/inc/functions-user.php:152
 #, php-format
 msgid "Username: %s"
 msgstr "Tài khoản: %s"
 
-#: hocwp/inc/functions-user.php:152
+#: hocwp/inc/functions-user.php:153
 msgid "To verify your email address, visit the following link:"
 msgstr ""
 "Để xác thực địa chỉ email của bạn, hãy truy cập vào đường link bên dưới:"
 
-#: hocwp/inc/functions-user.php:157
+#: hocwp/inc/functions-user.php:158
 #, php-format
 msgid "[%s] Verify your email address"
 msgstr "[%s] Xác thực địa chỉ email của bạn"
@@ -1794,7 +1847,7 @@ msgstr ""
 msgid "Theme core version doesn't meet requirements"
 msgstr "Phiên bản nhân giao diện không đúng"
 
-#: hocwp/inc/setup-after.php:314
+#: hocwp/inc/setup-after.php:324
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are "
@@ -1805,7 +1858,7 @@ msgstr ""
 "quản trị trang web này, xin vui lòng cài đặt và kích hoạt plugin %s để giao "
 "diện được hoạt động bình thường."
 
-#: hocwp/inc/setup-after.php:315
+#: hocwp/inc/setup-after.php:325
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 
@@ -1898,6 +1951,7 @@ msgid "Posted on %s"
 msgstr "Đăng ngày %s"
 
 #: hocwp/inc/template-post.php:351 inc/template-tags.php:39
+#: inc/template-tags.php:55
 #, php-format
 msgctxt "post author"
 msgid "by %s"
@@ -1971,10 +2025,6 @@ msgstr "Ẩn các bình luận từ người quản trị?"
 #: hocwp/widgets/class-hocwp-theme-widget-disqus-recent-comment.php:98
 msgid "Hide commenter avatar?"
 msgstr "Ẩn ảnh của người bình luận?"
-
-#: hocwp/widgets/class-hocwp-theme-widget-icon.php:22
-msgid "Title"
-msgstr "Tiêu đề"
 
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:31
 msgctxt "widget description"
@@ -2294,31 +2344,31 @@ msgstr "Danh sách người bình luận nhiều nhất."
 msgid "Number of top commenters to show:"
 msgstr "Số lượng người bình luận cần hiển thị:"
 
-#: inc/template-tags.php:56
+#: inc/template-tags.php:72
 msgid ", "
 msgstr ", "
 
-#: inc/template-tags.php:59
+#: inc/template-tags.php:75
 #, php-format
 msgid "Posted in %1$s"
 msgstr "Được đăng trong %1$s"
 
-#: inc/template-tags.php:63
+#: inc/template-tags.php:79
 msgctxt "list item separator"
 msgid ", "
 msgstr ", "
 
-#: inc/template-tags.php:66
+#: inc/template-tags.php:82
 #, php-format
 msgid "Tagged %1$s"
 msgstr "Được gắn thẻ %1$s"
 
-#: inc/template-tags.php:76
+#: inc/template-tags.php:92
 #, php-format
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr "Để lại bình luận<span class=\"screen-reader-text\"> cho %s</span>"
 
-#: inc/template-tags.php:93 template-parts/content-page.php:39
+#: inc/template-tags.php:109 template-parts/content-page.php:39
 #, php-format
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr "Chỉnh sửa <span class=\"screen-reader-text\">%s</span>"

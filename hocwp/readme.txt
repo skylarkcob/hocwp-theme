@@ -5,6 +5,7 @@
 * Add option for user update blog page.
 * Update breadcrumb can add empty separator.
 * Add title field for user profile.
+* Add site health check class.
 
 = 6.7.3 =
 * Move theme languages to custom folder.
