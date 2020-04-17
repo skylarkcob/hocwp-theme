@@ -74,8 +74,10 @@ jQuery(document).ready(function ($) {
 
                                 if (response.data && response.data.job_action && "undo" == response.data.job_action && $.trim(doText)) {
                                     element.html(doText);
+                                    element.attr("data-done", 0);
                                 } else if (response.data && response.data.job_action && "do" == response.data.job_action && $.trim(undoText)) {
                                     element.html(undoText);
+                                    element.attr("data-done", 1);
                                 }
                             }
 

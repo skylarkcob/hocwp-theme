@@ -118,7 +118,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 	}
 
 	public function thumbnail( $size = 'thumbnail', $attr = '' ) {
-		hocwp_theme_post_thumbnail( $size, $attr );
+		hocwp_theme_post_thumbnail_html( $size, $attr );
 	}
 
 	public function the_date( $format = '' ) {

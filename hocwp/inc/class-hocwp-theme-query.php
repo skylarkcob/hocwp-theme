@@ -504,6 +504,10 @@ final class HOCWP_Theme_Query {
 
 	public function add_tax_query_item( $tax_item, &$args ) {
 		if ( is_array( $args ) ) {
+			if ( ! isset( $args['tax_query'] ) || ! is_array( $args['tax_query'] ) ) {
+				$args['tax_query'] = array();
+			}
+
 			if ( ! isset( $args['tax_query']['relation'] ) ) {
 				$args['tax_query']['relation'] = 'OR';
 			}

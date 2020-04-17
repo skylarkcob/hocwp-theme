@@ -27,8 +27,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$this->defaults = apply_filters( 'hocwp_theme_widget_icon_defaults', $this->defaults, $this );
 
 		$widget_options = array(
-			'classname'   => 'hocwp-theme-widget-icon hocwp-widget-icon',
-			'description' => _x( 'Show icon with text.', 'widget description', 'hocwp-theme' )
+			'classname'                   => 'hocwp-theme-widget-icon hocwp-widget-icon',
+			'description'                 => _x( 'Show icon with text.', 'widget description', 'hocwp-theme' ),
+			'customize_selective_refresh' => true
 		);
 
 		$control_options = array(

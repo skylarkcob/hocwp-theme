@@ -931,7 +931,12 @@ final class HOCWP_Theme_HTML_Field {
 
 			$args['connect_sub'] = trim( $connect_sub );
 		} else {
-			$tax   = get_taxonomy( $taxonomy );
+			$tax = get_taxonomy( $taxonomy );
+
+			if ( ! $tax instanceof WP_Taxonomy ) {
+				return;
+			}
+
 			$terms = HT_Util()->get_terms( $taxonomy, $term_args );
 
 			foreach ( $terms as $obj ) {

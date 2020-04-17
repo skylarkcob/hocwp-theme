@@ -155,3 +155,5 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 function HT_Admin() {
 	return HOCWP_Theme_Admin::get_instance();
 }
+
+HT_Admin();

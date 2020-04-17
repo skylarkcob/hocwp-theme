@@ -15,8 +15,9 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 		$this->defaults = apply_filters( 'hocwp_theme_widget_tabber_defaults', $this->defaults, $this );
 
 		$widget_options = array(
-			'classname'   => 'hocwp-theme-widget-tabber hocwp-widget-tabber',
-			'description' => _x( 'Display widget as tabber.', 'widget description', 'hocwp-theme' )
+			'classname'                   => 'hocwp-theme-widget-tabber hocwp-widget-tabber',
+			'description'                 => _x( 'Display widget as tabber.', 'widget description', 'hocwp-theme' ),
+			'customize_selective_refresh' => true
 		);
 
 		$control_options = array(

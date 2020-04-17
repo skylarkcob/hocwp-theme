@@ -768,6 +768,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function back_to_top_button() {
+		if ( ! function_exists( 'hocwp_theme_get_option' ) ) {
+			return;
+		}
+
 		$text = _x( 'Top', 'back to top', 'hocwp-theme' );
 		$icon = hocwp_theme_get_option( 'back_top_icon', '', 'reading' );
 

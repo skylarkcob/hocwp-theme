@@ -29,8 +29,10 @@ function hocwp_theme_after_setup_theme() {
 	$supports = apply_filters( 'hocwp_theme_supports', $supports );
 
 	foreach ( $supports as $support ) {
-		$args = apply_filters( 'hocwp_theme_support_' . $support . '_args', array() );
-		add_theme_support( $support, $args );
+		if ( ! current_theme_supports( $support ) ) {
+			$args = apply_filters( 'hocwp_theme_support_' . $support . '_args', array() );
+			add_theme_support( $support, $args );
+		}
 	}
 
 	unset( $supports, $support, $args );
@@ -341,5 +343,15 @@ function hocwp_theme_add_url_endpoint() {
 }
 
 add_action( 'init', 'hocwp_theme_add_url_endpoint' );
+
+function hocwp_theme_customize_preview_init_action() {
+	wp_enqueue_script( 'hocwp-theme-customizer-init', HOCWP_Theme()->core_url . '/js/customizer.js', array(
+		'jquery',
+		'customize-preview',
+		'jquery-masonry'
+	), false, true );
+}
+
+add_action( 'customize_preview_init', 'hocwp_theme_customize_preview_init_action' );
 
 do_action( 'hocwp_theme_setup_after' );

@@ -108,10 +108,13 @@ function hocwp_theme_enqueue_scripts_action() {
 	wp_register_script( 'hocwp-theme-pagination', HOCWP_THEME_CORE_URL . '/js/pagination' . HOCWP_THEME_JS_SUFFIX, array( 'jquery' ), false, true );
 
 	wp_enqueue_script( 'hocwp-theme-custom', HOCWP_THEME_CUSTOM_URL . '/js/custom' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
-	$sticky = hocwp_theme_get_option( 'sticky_last_widget', '', 'reading' );
 
-	if ( 1 == $sticky ) {
-		wp_enqueue_script( 'hocwp-theme-sticky-widget', HOCWP_THEME_CORE_URL . '/js/sticky-widget' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
+	if ( function_exists( 'hocwp_theme_get_option' ) ) {
+		$sticky = hocwp_theme_get_option( 'sticky_last_widget', '', 'reading' );
+
+		if ( 1 == $sticky ) {
+			wp_enqueue_script( 'hocwp-theme-sticky-widget', HOCWP_THEME_CORE_URL . '/js/sticky-widget' . HOCWP_THEME_JS_SUFFIX, array(), false, true );
+		}
 	}
 
 	$src = HOCWP_THEME_CORE_URL . '/js/detect-client-info' . HOCWP_THEME_JS_SUFFIX;

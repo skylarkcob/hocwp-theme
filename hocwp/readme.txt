@@ -1,4 +1,19 @@
 == Changelog ==
+= 6.7.5 =
+* Fix redirect after activate or deactivate extension.
+* Add some defined css.
+* Check function hocwp_theme_get_option exists before using.
+* Fix select terms HTML field when empty taxonomy.
+* Change function hocwp_theme_post_thumbnail to hocwp_theme_post_thumbnail_html.
+* Update add_tax_query_item function.
+* Add more post type and taxonomy labels.
+* Deprecated action hook hocwp_theme_the_post_thumbnail.
+* Add default Javascript function hocwpThemeFilterList for filter UL HTML List.
+* Update jQuery date picker.
+* Add data-done attribute for meta AJAX.
+* Update HocWP Terms widget for showing filter box search.
+* Update newest Underscores theme.
+
 = 6.7.4 =
 * Add update option function.
 * Update query related posts.

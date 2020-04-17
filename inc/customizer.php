@@ -1,8 +1,4 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
 /**
  * HocWP Theme Theme Customizer
  *
@@ -20,18 +16,22 @@ function hocwp_theme_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 
 	if ( isset( $wp_customize->selective_refresh ) ) {
-		$wp_customize->selective_refresh->add_partial( 'blogname', array(
-			'selector'        => '.site-title a',
-			'render_callback' => 'hocwp_theme_customize_partial_blogname',
-		) );
-
-		$wp_customize->selective_refresh->add_partial( 'blogdescription', array(
-			'selector'        => '.site-description',
-			'render_callback' => 'hocwp_theme_customize_partial_blogdescription',
-		) );
+		$wp_customize->selective_refresh->add_partial(
+			'blogname',
+			array(
+				'selector'        => '.site-title a',
+				'render_callback' => 'hocwp_theme_customize_partial_blogname',
+			)
+		);
+		$wp_customize->selective_refresh->add_partial(
+			'blogdescription',
+			array(
+				'selector'        => '.site-description',
+				'render_callback' => 'hocwp_theme_customize_partial_blogdescription',
+			)
+		);
 	}
 }
-
 add_action( 'customize_register', 'hocwp_theme_customize_register' );
 
 /**
@@ -56,7 +56,6 @@ function hocwp_theme_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function hocwp_theme_customize_preview_js() {
-	wp_enqueue_script( 'hocwp_theme_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
+	wp_enqueue_script( 'hocwp-theme-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
-
 add_action( 'customize_preview_init', 'hocwp_theme_customize_preview_js' );

@@ -121,7 +121,7 @@ function hocwp_theme_the_title() {
 
 add_action( 'hocwp_theme_the_title', 'hocwp_theme_the_title' );
 
-function hocwp_theme_post_thumbnail( $size = 'thumbnail', $attr = '' ) {
+function hocwp_theme_post_thumbnail_html( $size = 'thumbnail', $attr = '' ) {
 	if ( empty( $size ) || null == $size ) {
 		$size = 'thumbnail';
 	}
@@ -136,8 +136,6 @@ function hocwp_theme_post_thumbnail( $size = 'thumbnail', $attr = '' ) {
 }
 
 function hocwp_theme_the_post_thumbnail( $args ) {
-	_deprecated_function( __FUNCTION__, '6.1.9', 'hocwp_theme_post_thumbnail' );
-
 	if ( ! isset( $args ) || ! $args ) {
 		$args = 'post-thumbnail';
 	}
@@ -149,10 +147,14 @@ function hocwp_theme_the_post_thumbnail( $args ) {
 		unset( $args['attributes'] );
 	}
 
-	hocwp_theme_post_thumbnail( $args, $attributes );
+	hocwp_theme_post_thumbnail_html( $args, $attributes );
 }
 
-add_action( 'hocwp_theme_the_post_thumbnail', 'hocwp_theme_the_post_thumbnail' );
+function hocwp_theme_the_post_thumbnail_action( $args ) {
+	_deprecated_function( __FUNCTION__, '6.1.9', 'hocwp_theme_post_thumbnail_html' );
+
+	hocwp_theme_the_post_thumbnail( $args );
+}
 
 function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
 	if ( empty( $html ) ) {

@@ -23,8 +23,9 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 		$this->defaults = apply_filters( 'hocwp_theme_widget_terms_defaults', $this->defaults, $this );
 
 		$widget_options = array(
-			'classname'   => 'hocwp-theme-widget-terms hocwp-widget-term',
-			'description' => _x( 'A list of terms.', 'widget description', 'hocwp-theme' )
+			'classname'                   => 'hocwp-theme-widget-terms hocwp-widget-term',
+			'description'                 => _x( 'A list of terms.', 'widget description', 'hocwp-theme' ),
+			'customize_selective_refresh' => true
 		);
 
 		$control_options = array(

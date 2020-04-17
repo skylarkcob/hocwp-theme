@@ -29,3 +29,11 @@ if ( ! function_exists( 'wp_body_open' ) ) {
 		do_action( 'wp_body_open' );
 	}
 }
+
+function hocwp_theme_show_hook_deprecation_warnings() {
+	if ( has_action( 'hocwp_theme_the_post_thumbnail' ) ) {
+		_deprecated_hook( 'hocwp_theme_the_post_thumbnail', '6.7.4', null, __( 'Use default the_post_thumbnail function instead.', 'hocwp-theme' ) );
+	}
+}
+
+add_action( 'init', 'hocwp_theme_show_hook_deprecation_warnings' );

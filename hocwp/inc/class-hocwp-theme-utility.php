@@ -869,6 +869,10 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_youtube_video_info( $url, $api_key = '' ) {
+		if ( ! function_exists( 'hocwp_theme_get_option' ) ) {
+			return null;
+		}
+
 		if ( empty( $api_key ) ) {
 			$api_key = hocwp_theme_get_option( 'google_api_key', '', 'social' );
 		}
@@ -1097,31 +1101,36 @@ class HOCWP_Theme_Utility {
 
 	private function post_type_labels( $name, $singular_name, $menu_name ) {
 		$labels = array(
-			'name'                  => $name,
-			'singular_name'         => $singular_name,
-			'menu_name'             => $menu_name,
-			'add_new'               => _x( 'Add New', 'custom post type', 'hocwp-theme' ),
-			'add_new_item'          => sprintf( _x( 'Add New %s', 'cutom-post-type', 'hocwp-theme' ), $singular_name ),
-			'edit_item'             => sprintf( _x( 'Edit %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'new_item'              => sprintf( _x( 'New %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'view_item'             => sprintf( _x( 'View %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'view_items'            => sprintf( _x( 'View %s', 'custom post type', 'hocwp-theme' ), $name ),
-			'search_items'          => sprintf( _x( 'Search %s', 'custom post type', 'hocwp-theme' ), $name ),
-			'not_found'             => sprintf( _x( 'No %s found.', 'custom post type', 'hocwp-theme' ), $name ),
-			'not_found_in_trash'    => sprintf( _x( 'No %s found in Trash.', 'custom post type', 'hocwp-theme' ), $name ),
-			'parent_item_colon'     => sprintf( _x( 'Parent %s:', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'all_items'             => sprintf( _x( 'All %s', 'custom post type', 'hocwp-theme' ), $name ),
-			'archives'              => sprintf( _x( '%s Archives', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'attributes'            => sprintf( _x( '%s Attributes', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'insert_into_item'      => sprintf( _x( 'Insert into %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'uploaded_to_this_item' => sprintf( _x( 'Uploaded to this %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
-			'featured_image'        => _x( 'Featured Image', 'custom post type', 'hocwp-theme' ),
-			'set_featured_image'    => _x( 'Set featured image', 'custom post type', 'hocwp-theme' ),
-			'remove_featured_image' => _x( 'Remove featured image', 'custom post type', 'hocwp-theme' ),
-			'use_featured_image'    => _x( 'Use as featured image', 'custom post type', 'hocwp-theme' ),
-			'filter_items_list'     => sprintf( _x( 'Filter %s list', 'custom post type', 'hocwp-theme' ), $name ),
-			'items_list_navigation' => sprintf( _x( '%s list navigation', 'custom post type', 'hocwp-theme' ), $name ),
-			'items_list'            => sprintf( _x( '%s list', 'custom post type', 'hocwp-theme' ), $name )
+			'name'                     => $name,
+			'singular_name'            => $singular_name,
+			'menu_name'                => $menu_name,
+			'add_new'                  => _x( 'Add New', 'custom post type', 'hocwp-theme' ),
+			'add_new_item'             => sprintf( _x( 'Add New %s', 'cutom-post-type', 'hocwp-theme' ), $singular_name ),
+			'edit_item'                => sprintf( _x( 'Edit %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'new_item'                 => sprintf( _x( 'New %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'view_item'                => sprintf( _x( 'View %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'view_items'               => sprintf( _x( 'View %s', 'custom post type', 'hocwp-theme' ), $name ),
+			'search_items'             => sprintf( _x( 'Search %s', 'custom post type', 'hocwp-theme' ), $name ),
+			'not_found'                => sprintf( _x( 'No %s found.', 'custom post type', 'hocwp-theme' ), $name ),
+			'not_found_in_trash'       => sprintf( _x( 'No %s found in Trash.', 'custom post type', 'hocwp-theme' ), $name ),
+			'parent_item_colon'        => sprintf( _x( 'Parent %s:', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'all_items'                => sprintf( _x( 'All %s', 'custom post type', 'hocwp-theme' ), $name ),
+			'archives'                 => sprintf( _x( '%s Archives', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'attributes'               => sprintf( _x( '%s Attributes', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'insert_into_item'         => sprintf( _x( 'Insert into %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'uploaded_to_this_item'    => sprintf( _x( 'Uploaded to this %s', 'custom post type', 'hocwp-theme' ), $singular_name ),
+			'featured_image'           => _x( 'Featured Image', 'custom post type', 'hocwp-theme' ),
+			'set_featured_image'       => _x( 'Set featured image', 'custom post type', 'hocwp-theme' ),
+			'remove_featured_image'    => _x( 'Remove featured image', 'custom post type', 'hocwp-theme' ),
+			'use_featured_image'       => _x( 'Use as featured image', 'custom post type', 'hocwp-theme' ),
+			'filter_items_list'        => sprintf( _x( 'Filter %s list', 'custom post type', 'hocwp-theme' ), $name ),
+			'items_list_navigation'    => sprintf( _x( '%s list navigation', 'custom post type', 'hocwp-theme' ), $name ),
+			'items_list'               => sprintf( _x( '%s list', 'custom post type', 'hocwp-theme' ), $name ),
+			'item_published'           => sprintf( _x( '%s published.', 'custom post type', 'hocwp-theme' ), $name ),
+			'item_published_privately' => sprintf( _x( '%s published privately.', 'custom post type', 'hocwp-theme' ), $name ),
+			'item_reverted_to_draft'   => sprintf( _x( '%s reverted to draft.', 'custom post type', 'hocwp-theme' ), $name ),
+			'item_scheduled'           => sprintf( _x( '%s scheduled.', 'custom post type', 'hocwp-theme' ), $name ),
+			'item_updated'             => sprintf( _x( '%s updated.', 'custom post type', 'hocwp-theme' ), $name ),
 		);
 
 		return $labels;
@@ -1157,8 +1166,9 @@ class HOCWP_Theme_Utility {
 	}
 
 	private function post_type_or_taxonomy_defaults( $args, $post_type = true ) {
-		$args          = HT_Sanitize()->post_type_or_taxonomy_args( $args );
-		$name          = $args['name'];
+		$args = HT_Sanitize()->post_type_or_taxonomy_args( $args );
+		$name = $args['name'];
+
 		$singular_name = $args['singular_name'];
 		$menu_name     = $args['menu_name'];
 

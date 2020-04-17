@@ -367,7 +367,9 @@ function hocwp_theme_module_sidebar() {
 		_doing_it_wrong( __FUNCTION__, __( 'Please call function get_sidebar instead!', 'hocwp-theme' ), '5.2.2' );
 	}
 
-	hocwp_theme_load_views( 'module-sidebar' );
+	if ( function_exists( 'hocwp_theme_load_views' ) ) {
+		hocwp_theme_load_views( 'module-sidebar' );
+	}
 }
 
 add_action( 'hocwp_theme_module_sidebar', 'hocwp_theme_module_sidebar' );

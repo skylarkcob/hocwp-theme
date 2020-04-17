@@ -4,7 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_module_comments_area() {
-	hocwp_theme_load_views( 'module-comments-area' );
+	if ( function_exists( 'hocwp_theme_load_views' ) ) {
+		hocwp_theme_load_views( 'module-comments-area' );
+	}
 }
 
 add_action( 'hocwp_theme_module_comments_area', 'hocwp_theme_module_comments_area' );

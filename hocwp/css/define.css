@@ -3611,3 +3611,13 @@
 .tt-u {
     text-transform: uppercase;
 }
+
+.tt-c,
+.capitalize {
+    text-transform: capitalize;
+}
+
+.loading-ajax,
+.loading-ajax * {
+    cursor: progress;
+}

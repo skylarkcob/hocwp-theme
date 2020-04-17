@@ -19,8 +19,9 @@ class HOCWP_Theme_Widget_Disqus_Recent_Comment extends WP_Widget {
 		$this->defaults = apply_filters( 'hocwp_theme_widget_disqus_recent_comment_defaults', $this->defaults, $this );
 
 		$widget_options = array(
-			'classname'   => 'hocwp-theme-widget-disqus-recent-comment hocwp-widget-disqus-recent-comment',
-			'description' => _x( 'A list of recent comments on Disqus system.', 'widget description', 'hocwp-theme' )
+			'classname'                   => 'hocwp-theme-widget-disqus-recent-comment hocwp-widget-disqus-recent-comment',
+			'description'                 => _x( 'A list of recent comments on Disqus system.', 'widget description', 'hocwp-theme' ),
+			'customize_selective_refresh' => true
 		);
 
 		$control_options = array(

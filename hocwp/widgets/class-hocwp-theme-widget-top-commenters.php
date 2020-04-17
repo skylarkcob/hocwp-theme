@@ -15,8 +15,9 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 		$this->defaults = apply_filters( 'hocwp_theme_widget_top_commenters_defaults', $this->defaults, $this );
 
 		$widget_options = array(
-			'classname'   => 'hocwp-theme-widget-top-commenters hocwp-widget-top-commenters',
-			'description' => _x( 'A list of top commenters.', 'widget description', 'hocwp-theme' )
+			'classname'                   => 'hocwp-theme-widget-top-commenters hocwp-widget-top-commenters',
+			'description'                 => _x( 'A list of top commenters.', 'widget description', 'hocwp-theme' ),
+			'customize_selective_refresh' => true
 		);
 
 		$control_options = array(

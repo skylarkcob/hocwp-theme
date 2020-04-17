@@ -15,8 +15,9 @@ class HOCWP_Theme_Widget_Insert_Code extends WP_Widget {
 		$this->defaults = apply_filters( 'hocwp_theme_widget_insert_code_defaults', $this->defaults, $this );
 
 		$widget_options = array(
-			'classname'   => 'hocwp-theme-widget-insert-code hocwp-widget-insert-code',
-			'description' => _x( 'Insert code into sidebar by interval time.', 'widget description', 'hocwp-theme' )
+			'classname'                   => 'hocwp-theme-widget-insert-code hocwp-widget-insert-code',
+			'description'                 => _x( 'Insert code into sidebar by interval time.', 'widget description', 'hocwp-theme' ),
+			'customize_selective_refresh' => true
 		);
 
 		$control_options = array(
