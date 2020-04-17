@@ -13,6 +13,8 @@
 * Add data-done attribute for meta AJAX.
 * Update HocWP Terms widget for showing filter box search.
 * Update newest Underscores theme.
+* Add admin tabs for widget HocWP Terms.
+* Allow choose static not found page.
 
 = 6.7.4 =
 * Add update option function.

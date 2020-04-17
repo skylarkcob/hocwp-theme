@@ -1634,6 +1634,20 @@ function hocwp_theme_print_url_params_as_hidden( $excludes ) {
 add_action( 'hocwp_theme_print_url_params_as_hidden', 'hocwp_theme_print_url_params_as_hidden' );
 
 function hocwp_theme_fix_not_found_paged() {
+	if ( is_page() ) {
+		// Load blog page when page chosen in reading settings.
+		$blog = HT_Options()->get_tab( 'blog_page', 'reading' );
+
+		if ( ! empty( $blog ) && is_page( $blog ) && ! is_page_template( 'custom/page-templates/blog.php' ) ) {
+			$path = HOCWP_Theme()->custom_path . '/page-templates/blog.php';
+
+			if ( file_exists( $path ) ) {
+				require_once $path;
+				exit;
+			}
+		}
+	}
+
 	global $wp_query;
 
 	if ( ! $wp_query->have_posts() ) {

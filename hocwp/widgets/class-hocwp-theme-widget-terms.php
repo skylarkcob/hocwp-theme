@@ -15,9 +15,11 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			'orderby'          => 'name',
 			'order'            => 'ASC',
 			'show_count'       => false,
+			'search_filter'    => false,
 			'taxonomy'         => 'category',
 			'current_as_title' => false,
-			'hierarchical'     => false
+			'hierarchical'     => false,
+			'link_text_format' => ''
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_terms_defaults', $this->defaults, $this );
@@ -97,23 +99,61 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 			}
 
 			do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+
+			$search_filter = isset( $instance['search_filter'] ) ? $instance['search_filter'] : $this->defaults['search_filter'];
 			?>
-			<ul>
+			<div class="terms-box filter-box">
 				<?php
-				if ( $hierarchical ) {
-					wp_list_categories( $query_args );
-				} else {
-					foreach ( $terms as $term ) {
-						?>
-						<li>
-							<a class="<?php echo $term->taxonomy; ?>"
-							   href="<?php echo get_term_link( $term ); ?>"><?php echo $term->name; ?></a>
-						</li>
-						<?php
+				if ( $search_filter ) {
+					if ( is_array( $taxonomy ) && 1 == count( $taxonomy ) ) {
+						$taxonomy = current( $taxonomy );
 					}
+
+					$tax = get_taxonomy( $taxonomy );
+
+					if ( $tax instanceof WP_Taxonomy ) {
+						$placeholder = sprintf( __( 'Search %s', 'hocwp-theme' ), $tax->labels->singular_name );
+					} else {
+						if ( $hierarchical ) {
+							$placeholder = __( 'Search category', 'hocwp-theme' );
+						} else {
+							$placeholder = __( 'Search tag', 'hocwp-theme' );
+						}
+					}
+					?>
+					<div class="input-search-cat">
+						<input type="text" placeholder="<?php echo esc_attr( $placeholder ); ?>" value=""
+						       class="form-control filter-input" onkeyup="hocwpThemeFilterList(this)">
+					</div>
+					<?php
 				}
 				?>
-			</ul>
+				<ul class="filter-list">
+					<?php
+					$link_text_format = isset( $instance['link_text_format'] ) ? $instance['link_text_format'] : $this->defaults['link_text_format'];
+
+					if ( empty( $link_text_format ) ) {
+						$link_text_format = '%term_name%';
+					}
+
+					if ( $hierarchical ) {
+						wp_list_categories( $query_args );
+					} else {
+						foreach ( $terms as $term ) {
+							if ( $term instanceof WP_Term ) {
+								?>
+								<li data-slug="<?php echo esc_attr( $term->slug ); ?>">
+									<a class="<?php echo $term->taxonomy; ?>"
+									   href="<?php echo get_term_link( $term ); ?>"
+									   title="<?php echo esc_attr( $term->name ); ?>"><?php echo str_replace( '%term_name%', $term->name, $link_text_format ); ?></a>
+								</li>
+								<?php
+							}
+						}
+					}
+					?>
+				</ul>
+			</div>
 			<?php
 			do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 		}
@@ -151,118 +191,159 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 		$current_as_title = isset( $instance['current_as_title'] ) ? (bool) $instance['current_as_title'] : $this->defaults['current_as_title'];
 		$hierarchical     = isset( $instance['hierarchical'] ) ? (bool) $instance['hierarchical'] : $this->defaults['hierarchical'];
 
+		$link_text_format = isset( $instance['link_text_format'] ) ? $instance['link_text_format'] : $this->defaults['link_text_format'];
+		$search_filter    = isset( $instance['search_filter'] ) ? $instance['search_filter'] : $this->defaults['search_filter'];
+
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
 		?>
-		<div style="margin: 1em 0">
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'taxonomy' ),
-				'text' => 'Taxonomy:'
-			);
+		<nav class="nav-tab-wrapper wp-clearfix">
+			<a href="#widgetTermGeneral<?php echo $this->number; ?>"
+			   class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
+			<a href="#widgetTermAdvanced<?php echo $this->number; ?>"
+			   class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
+			<a href="#widgetTermSortable<?php echo $this->number; ?>"
+			   class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
+		</nav>
+		<div class="tab-content">
+			<div id="widgetTermGeneral<?php echo $this->number; ?>" class="tab-pane active">
+				<div style="margin: 1em 0">
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'taxonomy' ),
+						'text' => 'Taxonomy:'
+					);
 
-			HT_HTML_Field()->label( $args );
+					HT_HTML_Field()->label( $args );
 
-			$args = array(
-				'id'       => $this->get_field_id( 'taxonomy' ),
-				'name'     => $this->get_field_name( 'taxonomy' ),
-				'options'  => $taxonomies,
-				'class'    => 'widefat',
-				'multiple' => 'multiple',
-				'value'    => $taxonomy
-			);
+					$args = array(
+						'id'       => $this->get_field_id( 'taxonomy' ),
+						'name'     => $this->get_field_name( 'taxonomy' ),
+						'options'  => $taxonomies,
+						'class'    => 'widefat',
+						'multiple' => 'multiple',
+						'value'    => $taxonomy
+					);
 
-			HT_HTML_Field()->chosen( $args );
-			?>
+					HT_HTML_Field()->chosen( $args );
+					?>
+				</div>
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of terms to show:', 'hocwp-theme' ); ?></label>
+					<input class="small-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
+					       name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
+					       value="<?php echo $number; ?>" size="3"/>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $hide_empty ); ?>
+					       id="<?php echo $this->get_field_id( 'hide_empty' ); ?>"
+					       name="<?php echo $this->get_field_name( 'hide_empty' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'hide_empty' ); ?>"><?php _e( 'Hide terms not assigned to any posts?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'orderby' ),
+						'text' => __( 'Order by:', 'hocwp-theme' )
+					);
+
+					HT_HTML_Field()->label( $args );
+
+					$args = array(
+						'id'      => $this->get_field_id( 'orderby' ),
+						'name'    => $this->get_field_name( 'orderby' ),
+						'options' => $orderbys,
+						'class'   => 'widefat',
+						'value'   => $orderby
+					);
+
+					HT_HTML_Field()->select( $args );
+					?>
+				</p>
+
+				<p>
+					<?php
+					$args = array(
+						'for'  => $this->get_field_id( 'order' ),
+						'text' => __( 'Order:', 'hocwp-theme' )
+					);
+
+					HT_HTML_Field()->label( $args );
+
+					$args = array(
+						'id'      => $this->get_field_id( 'order' ),
+						'name'    => $this->get_field_name( 'order' ),
+						'options' => $orders,
+						'class'   => 'widefat',
+						'value'   => $order
+					);
+
+					HT_HTML_Field()->select( $args );
+					?>
+				</p>
+			</div>
+			<div id="widgetTermAdvanced<?php echo $this->number; ?>" class="tab-pane">
+				<p>
+					<label
+						for="<?php echo $this->get_field_id( 'link_text_format' ); ?>"><?php _e( 'Link text format:', 'hocwp-theme' ); ?></label>
+					<input class="widefat" id="<?php echo $this->get_field_id( 'link_text_format' ); ?>"
+					       name="<?php echo $this->get_field_name( 'link_text_format' ); ?>" type="text"
+					       value="<?php echo $link_text_format; ?>">
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $related ); ?>
+					       id="<?php echo $this->get_field_id( 'related' ); ?>"
+					       name="<?php echo $this->get_field_name( 'related' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'related' ); ?>"><?php _e( 'Display related terms?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $child_of ); ?>
+					       id="<?php echo $this->get_field_id( 'child_of' ); ?>"
+					       name="<?php echo $this->get_field_name( 'child_of' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'child_of' ); ?>"><?php _e( 'Get childs of current term?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $show_count ); ?>
+					       id="<?php echo $this->get_field_id( 'show_count' ); ?>"
+					       name="<?php echo $this->get_field_name( 'show_count' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'show_count' ); ?>"><?php _e( 'Display post count?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $current_as_title ); ?>
+					       id="<?php echo $this->get_field_id( 'current_as_title' ); ?>"
+					       name="<?php echo $this->get_field_name( 'current_as_title' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'current_as_title' ); ?>"><?php _e( 'Display current term name as widget title?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $hierarchical ); ?>
+					       id="<?php echo $this->get_field_id( 'hierarchical' ); ?>"
+					       name="<?php echo $this->get_field_name( 'hierarchical' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'hierarchical' ); ?>"><?php _e( 'Whether to include terms that have non-empty descendants?', 'hocwp-theme' ); ?></label>
+				</p>
+
+				<p>
+					<input class="checkbox" type="checkbox"<?php checked( $search_filter ); ?>
+					       id="<?php echo $this->get_field_id( 'search_filter' ); ?>"
+					       name="<?php echo $this->get_field_name( 'search_filter' ); ?>"/>
+					<label
+						for="<?php echo $this->get_field_id( 'search_filter' ); ?>"><?php _e( 'Display search box for filter terms?', 'hocwp-theme' ); ?></label>
+				</p>
+			</div>
+			<div id="widgetTermSortable<?php echo $this->number; ?>" class="tab-pane"></div>
 		</div>
-		<p>
-			<label
-				for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of terms to show:', 'hocwp-theme' ); ?></label>
-			<input class="small-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
-			       name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
-			       value="<?php echo $number; ?>" size="3"/>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $related ); ?>
-			       id="<?php echo $this->get_field_id( 'related' ); ?>"
-			       name="<?php echo $this->get_field_name( 'related' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'related' ); ?>"><?php _e( 'Display related terms?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'orderby' ),
-				'text' => __( 'Order by:', 'hocwp-theme' )
-			);
-
-			HT_HTML_Field()->label( $args );
-
-			$args = array(
-				'id'      => $this->get_field_id( 'orderby' ),
-				'name'    => $this->get_field_name( 'orderby' ),
-				'options' => $orderbys,
-				'class'   => 'widefat',
-				'value'   => $orderby
-			);
-
-			HT_HTML_Field()->select( $args );
-			?>
-		</p>
-		<p>
-			<?php
-			$args = array(
-				'for'  => $this->get_field_id( 'order' ),
-				'text' => __( 'Order:', 'hocwp-theme' )
-			);
-
-			HT_HTML_Field()->label( $args );
-
-			$args = array(
-				'id'      => $this->get_field_id( 'order' ),
-				'name'    => $this->get_field_name( 'order' ),
-				'options' => $orders,
-				'class'   => 'widefat',
-				'value'   => $order
-			);
-
-			HT_HTML_Field()->select( $args );
-			?>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $hide_empty ); ?>
-			       id="<?php echo $this->get_field_id( 'hide_empty' ); ?>"
-			       name="<?php echo $this->get_field_name( 'hide_empty' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'hide_empty' ); ?>"><?php _e( 'Hide terms not assigned to any posts?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $child_of ); ?>
-			       id="<?php echo $this->get_field_id( 'child_of' ); ?>"
-			       name="<?php echo $this->get_field_name( 'child_of' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'child_of' ); ?>"><?php _e( 'Get childs of current term?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $show_count ); ?>
-			       id="<?php echo $this->get_field_id( 'show_count' ); ?>"
-			       name="<?php echo $this->get_field_name( 'show_count' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'show_count' ); ?>"><?php _e( 'Display post count?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $current_as_title ); ?>
-			       id="<?php echo $this->get_field_id( 'current_as_title' ); ?>"
-			       name="<?php echo $this->get_field_name( 'current_as_title' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'current_as_title' ); ?>"><?php _e( 'Display current term name as widget title?', 'hocwp-theme' ); ?></label>
-		</p>
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $hierarchical ); ?>
-			       id="<?php echo $this->get_field_id( 'hierarchical' ); ?>"
-			       name="<?php echo $this->get_field_name( 'hierarchical' ); ?>"/>
-			<label
-				for="<?php echo $this->get_field_id( 'hierarchical' ); ?>"><?php _e( 'Whether to include terms that have non-empty descendants?', 'hocwp-theme' ); ?></label>
-		</p>
 		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
@@ -281,6 +362,8 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 		$instance['show_count']       = isset( $new_instance['show_count'] ) ? (bool) $new_instance['show_count'] : $this->defaults['show_count'];
 		$instance['current_as_title'] = isset( $new_instance['current_as_title'] ) ? (bool) $new_instance['current_as_title'] : $this->defaults['current_as_title'];
 		$instance['hierarchical']     = isset( $new_instance['hierarchical'] ) ? (bool) $new_instance['hierarchical'] : false;
+		$instance['link_text_format'] = isset( $new_instance['link_text_format'] ) ? $new_instance['link_text_format'] : $this->defaults['link_text_format'];
+		$instance['search_filter']    = isset( $new_instance['search_filter'] ) ? (bool) $new_instance['search_filter'] : $this->defaults['search_filter'];
 
 		return $instance;
 	}
