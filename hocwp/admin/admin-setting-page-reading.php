@@ -51,7 +51,7 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'blog_page', __( 'Blog Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
 	$fields[] = $field;
 
-	$field    = hocwp_theme_create_setting_field( '404', __( 'Not Found Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
+	$field    = hocwp_theme_create_setting_field( 'page_404', __( 'Not Found Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
 	$fields[] = $field;
 
 	$args = array(

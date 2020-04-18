@@ -201,14 +201,25 @@ function hocwp_theme_register_widgets() {
 
 	unset( $widgets, $widget );
 
+	$defaults = array(
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => "</div>\n",
+		'before_title'  => '<h3 class="widgettitle widget-title">',
+		'after_title'   => "</h3>\n"
+	);
+
 	foreach ( $hocwp_theme->default_sidebars as $sidebar ) {
-		register_sidebar( $sidebar );
+		if ( is_array( $sidebar ) && isset( $sidebar['id'] ) && ! empty( $sidebar['id'] ) ) {
+			$sidebar = wp_parse_args( $sidebar, $defaults );
+			$sidebar = array_filter( $sidebar );
+			register_sidebar( $sidebar );
+		}
 	}
 
-	unset( $sidebar );
+	unset( $sidebar, $defaults );
 
 	register_nav_menus( array(
-		'mobile' => esc_html__( 'Mobile', 'hocwp-theme' ),
+		'mobile' => esc_html__( 'Mobile', 'hocwp-theme' )
 	) );
 }
 

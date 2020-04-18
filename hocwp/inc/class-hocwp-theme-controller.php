@@ -126,7 +126,7 @@ final class HOCWP_Theme_Controller {
 				'description' => __( 'Display widgets on page.', 'hocwp-theme' )
 			),
 			array(
-				'id'          => '404',
+				'id'          => 'page_404',
 				'name'        => __( 'Not Found Sidebar', 'hocwp-theme' ),
 				'description' => __( 'Display widgets on 404 page.', 'hocwp-theme' )
 			)

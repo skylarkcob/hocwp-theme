@@ -415,8 +415,8 @@ function hocwp_theme_sidebar_filter( $sidebar ) {
 		$sidebar = 'single';
 	} elseif ( is_page() && is_active_sidebar( 'page' ) ) {
 		$sidebar = 'page';
-	} elseif ( is_404() && is_active_sidebar( '404' ) ) {
-		$sidebar = '404';
+	} elseif ( is_404() && is_active_sidebar( 'page_404' ) ) {
+		$sidebar = 'page_404';
 	}
 
 	unset( $dynamic_sidebar );
@@ -951,7 +951,7 @@ function hocwp_theme_site_branding_action() {
 	?>
 	<div class="site-branding site-logo">
 		<?php
-		the_custom_logo();
+		HT_Frontend()->site_logo();
 		do_action( 'hocwp_theme_site_branding_middle' );
 		$description = get_bloginfo( 'description', 'display' );
 
