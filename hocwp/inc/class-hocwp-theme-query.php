@@ -192,7 +192,7 @@ final class HOCWP_Theme_Query {
 			foreach ( $taxs as $key => $tax ) {
 				$taxonomy = get_taxonomy( $tax );
 
-				if ( $taxonomy instanceof WP_Taxonomy ) {
+				if ( $taxonomy instanceof WP_Taxonomy && is_string( $tax ) ) {
 					if ( ! $taxonomy->hierarchical ) {
 						$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
@@ -245,7 +245,7 @@ final class HOCWP_Theme_Query {
 				foreach ( $taxs as $tax ) {
 					$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
-					if ( HOCWP_Theme::array_has_value( $ids ) ) {
+					if ( HOCWP_Theme::array_has_value( $ids ) && is_string( $tax ) ) {
 						$tax_item['taxonomy'] = $tax;
 
 						$tax_item['terms'] = $ids;
