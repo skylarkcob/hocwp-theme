@@ -126,6 +126,12 @@
     content: "\f158";
 }
 
+.wp-core-ui .customize-control-content .button-group.button-small .button,
+.wp-core-ui .customize-control-content .button.button-small {
+    height: 30px;
+    margin-left: 5px;
+}
+
 .hocwp-theme .images-box .list-images {
     border: 1px dashed #ccc;
     margin-top: 10px;

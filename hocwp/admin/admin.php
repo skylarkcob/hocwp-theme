@@ -272,7 +272,7 @@ function hocwp_theme_admin_head_action() {
 
 add_action( 'admin_head', 'hocwp_theme_admin_head_action' );
 
-if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow ) {
+if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow || 'customize.php' == $pagenow ) {
 	function hocwp_theme_widget_form_before( $instance, $widget ) {
 		if ( $widget instanceof WP_Widget ) {
 			$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';

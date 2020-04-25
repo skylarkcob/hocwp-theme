@@ -1688,6 +1688,22 @@ class HOCWP_Theme_Utility {
 		return $color;
 	}
 
+	public function toggle_duration() {
+		$duration = apply_filters( 'hocwp_theme_toggle_duration', 250 );
+
+		return $duration;
+	}
+
+	public function unique_id( $prefix = '' ) {
+		static $id_counter = 0;
+
+		if ( function_exists( 'wp_unique_id' ) ) {
+			return wp_unique_id( $prefix );
+		}
+
+		return $prefix . (string) ++ $id_counter;
+	}
+
 	public function is_plugin_active( $plugin ) {
 		if ( false !== strpos( $plugin, '.php' ) ) {
 			return is_plugin_active( $plugin );

@@ -4,8 +4,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_body_class_filter( $classes ) {
+	global $post;
+	$post_type = isset( $post ) ? $post->post_type : false;
+
+	// Check whether we're singular.
+	if ( is_singular() ) {
+		$classes[] = 'singular';
+	}
+
+	// Check whether the current page should have an overlay header.
+	if ( is_page_template( array( 'custom/page-templates/template-cover.php' ) ) ) {
+		$classes[] = 'overlay-header';
+	}
+
+	// Check whether the current page has full-width content.
+	if ( is_page_template( array( 'custom/page-templates/template-full-width.php' ) ) || is_page_template( array( 'custom/page-templates/full-width.php' ) ) ) {
+		$classes[] = 'has-full-width-content';
+		$classes[] = 'full-width';
+	}
+
+	// Check for post thumbnail.
+	if ( is_singular() && has_post_thumbnail() ) {
+		$classes[] = 'has-post-thumbnail';
+	} elseif ( is_singular() ) {
+		$classes[] = 'missing-post-thumbnail';
+	}
+
+	// Check whether we're in the customizer preview.
+	if ( is_customize_preview() ) {
+		$classes[] = 'customizer-preview';
+	}
+
+	// Check if posts have single pagination.
+	if ( is_single() && ( get_next_post() || get_previous_post() ) ) {
+		$classes[] = 'has-single-pagination';
+	} else {
+		$classes[] = 'has-no-pagination';
+	}
+
+	// Check if we're showing comments.
+	if ( $post && ( ( 'post' === $post_type || comments_open() || get_comments_number() ) && ! post_password_required() ) ) {
+		$classes[] = 'showing-comments';
+	} else {
+		$classes[] = 'not-showing-comments';
+	}
+
+	// Check if avatars are visible.
+	$classes[] = get_option( 'show_avatars' ) ? 'show-avatars' : 'hide-avatars';
+
+	// Slim page template class names (class = name - file suffix).
+	if ( is_page_template() ) {
+		$classes[] = basename( get_page_template_slug(), '.php' );
+	}
+
 	$classes[] = 'hocwp-theme';
-	$classes[] = sanitize_html_class( 'hocwp-theme-core-version-' . HOCWP_THEME_CORE_VERSION );
 
 	$theme = wp_get_theme();
 
@@ -17,7 +69,8 @@ function hocwp_theme_body_class_filter( $classes ) {
 		}
 	}
 
-	$classes[] = sanitize_file_name( 'theme-version-' . $theme->get( 'Version' ) );
+	$classes[] = sanitize_file_name( 'theme-version-' . str_replace( '.', '-', $theme->get( 'Version' ) ) );
+	$classes[] = sanitize_file_name( 'theme-core-version-' . str_replace( '.', '-', HOCWP_THEME_CORE_VERSION ) );
 
 	unset( $theme );
 
@@ -63,6 +116,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 		if ( 1 == $tmp ) {
 			$classes[] = 'full-width';
+			$classes[] = 'has-full-width-content';
 		}
 
 		unset( $tmp );
@@ -78,6 +132,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
+	$classes = array_map( 'sanitize_html_class', $classes );
 
 	return $classes;
 }

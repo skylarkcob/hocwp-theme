@@ -34,7 +34,7 @@ class HOCWP_Theme_Widget_Insert_Code extends WP_Widget {
 	public function admin_enqueue_scripts_action() {
 		global $pagenow;
 
-		if ( 'widgets.php' == $pagenow ) {
+		if ( 'widgets.php' == $pagenow || 'customize.php' == $pagenow ) {
 			HT_Enqueue()->code_editor( array(
 				'codemirror' => array(
 					'indentUnit' => 2,

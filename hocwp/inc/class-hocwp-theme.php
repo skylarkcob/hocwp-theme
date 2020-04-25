@@ -458,6 +458,22 @@ final class HOCWP_Theme {
 		return '';
 	}
 
+	public function generate_css( $selector, $style, $value, $prefix = '', $suffix = '', $echo = true ) {
+		$return = '';
+
+		if ( ! $value || ! $selector ) {
+			return $return;
+		}
+
+		$return = sprintf( '%s { %s: %s; }', $selector, $style, $prefix . $value . $suffix );
+
+		if ( $echo ) {
+			echo $return;
+		}
+
+		return $return;
+	}
+
 	public static function change_html_attribute( $tag, $attr, $value ) {
 		$tag = preg_replace( '/' . $attr . '="(.*?)"/i', $attr . '="' . $value . '"', $tag );
 

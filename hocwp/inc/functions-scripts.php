@@ -189,7 +189,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 	$src = HOCWP_THEME_CORE_URL . '/js/admin' . HOCWP_THEME_JS_SUFFIX;
 	wp_register_script( 'hocwp-theme-admin', $src, array( 'jquery', 'hocwp-theme' ), false, true );
 
-	if ( 'widgets.php' == $pagenow ) {
+	if ( 'widgets.php' == $pagenow || 'customize.php' == $pagenow ) {
 		HT_Enqueue()->chosen();
 		HT_Enqueue()->media_upload();
 		HT_Enqueue()->sortable();
@@ -207,7 +207,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		wp_enqueue_script( 'hocwp-theme-admin' );
 	}
 
-	$load = ( 'widgets.php' == $pagenow || 'appearance_page_hocwp_theme' == $screen->id || 'link.php' == $pagenow || 'link-add.php' == $pagenow );
+	$load = ( 'widgets.php' == $pagenow || 'customize.php' == $pagenow || 'appearance_page_hocwp_theme' == $screen->id || 'link.php' == $pagenow || 'link-add.php' == $pagenow );
 
 	if ( ! $load ) {
 		$load = ( class_exists( 'Mega_Menu' ) && 'nav-menus.php' == $pagenow );
@@ -405,4 +405,25 @@ if ( is_admin() ) {
 	add_action( 'wp_enqueue_scripts', 'hocwp_theme_enqueue_scripts_action', 11 );
 }
 
+if ( is_customize_preview() ) {
+	add_action( 'customize_controls_enqueue_scripts', 'hocwp_theme_register_global_scripts', 10 );
+	add_action( 'customize_controls_enqueue_scripts', 'hocwp_theme_frontend_and_backend_scripts', 10 );
+}
+
 add_action( 'login_enqueue_scripts', 'hocwp_theme_register_global_scripts', 10 );
+
+function hocwp_theme_script_loader_tag_async_filter( $tag, $handle ) {
+	if ( ! is_customize_preview() ) {
+		foreach ( array( 'async', 'defer' ) as $attr ) {
+			if ( ! wp_scripts()->get_data( $handle, $attr ) ) {
+				continue;
+			}
+
+			if ( ! preg_match( ":\s$attr(=|>|\s):", $tag ) ) {
+				$tag = preg_replace( ':(?=></script>):', " $attr", $tag, 1 );
+			}
+		}
+	}
+
+	return $tag;
+}

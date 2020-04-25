@@ -48,7 +48,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$wrap = $args['condition'] ? 'home_wrap' : 'single_wrap';
 
-		$html = sprintf( $args[ $wrap ], $classname, $contents );
+		if ( false === strpos( $logo, '<img' ) && ( false === strpos( $contents, '<h1' ) || false === strpos( $wrap, '<h1' ) ) ) {
+			$html = sprintf( $args[ $wrap ], $classname, $contents );
+		} else {
+			$html = $logo;
+		}
 
 		$html = apply_filters( 'hocwp_theme_site_logo', $html, $args, $classname, $contents );
 
@@ -339,7 +343,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			if ( $first_last ) {
-				$first = isset( $args['first'] ) ? $args['first'] : isset( $args['first_text'] ) ? $args['first_text'] : '';
+				$first = isset( $args['first'] ) ? $args['first'] : '';
+
+				if ( empty( $first ) ) {
+					$first = isset( $args['first_text'] ) ? $args['first_text'] : '';
+				}
 
 				if ( ! empty( $first ) && 2 < $current ) {
 					if ( true === $first ) {
@@ -366,7 +374,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			if ( $first_last ) {
-				$last = isset( $args['last'] ) ? $args['last'] : isset( $args['last_text'] ) ? $args['last_text'] : '';
+				$last = isset( $args['last'] ) ? $args['last'] : '';
+
+				if ( empty( $last ) ) {
+					$last = isset( $args['last_text'] ) ? $args['last_text'] : '';
+				}
 
 				if ( ! empty( $last ) && $current < ( $total - 1 ) ) {
 					if ( true === $last ) {
@@ -503,7 +515,49 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$title = __( 'Archives', 'hocwp-theme' );
 		}
 
-		return apply_filters( 'hocwp_theme_get_the_archive_title', $title, $prefix );
+		$title = apply_filters( 'hocwp_theme_get_the_archive_title', $title, $prefix );
+
+		if ( $prefix ) {
+			$title = $this->get_accent_archive_title( $title );
+		}
+
+		return $title;
+	}
+
+	public function get_default_colors() {
+		$colors = array(
+			'text'      => '',
+			'accent'    => '',
+			'secondary' => '',
+			'borders'   => '',
+		);
+
+		$defaults = array(
+			'content'       => $colors,
+			'header-footer' => $colors
+		);
+
+		if ( defined( 'HOCWP_THEME_DEFAULT_COLORS' ) && HT()->array_has_value( HOCWP_THEME_DEFAULT_COLORS ) ) {
+			$defaults = wp_parse_args( HOCWP_THEME_DEFAULT_COLORS, $defaults );
+		}
+
+		return apply_filters( 'hocwp_theme_default_colors', $defaults );
+	}
+
+	public function get_accent_archive_title( $title ) {
+		$regex = apply_filters(
+			'hocwp_theme_get_the_archive_title_regex',
+			array(
+				'pattern'     => '/(\A[^\:]+\:)/',
+				'replacement' => '<span class="color-accent">$1</span>'
+			)
+		);
+
+		if ( empty( $regex ) ) {
+			return $title;
+		}
+
+		return preg_replace( $regex['pattern'], $regex['replacement'], $title );
 	}
 
 	public function get_separator( $context = 'title' ) {

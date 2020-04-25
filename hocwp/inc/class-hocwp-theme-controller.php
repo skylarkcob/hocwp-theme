@@ -371,7 +371,10 @@ final class HOCWP_Theme_Controller {
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/class-hocwp-theme-admin.php';
-		} else {
+		}
+
+		// Load front-end class on frontend and customize preview pages.
+		if(!is_admin() || is_customize_preview()) {
 			require $this->core_path . '/inc/class-hocwp-theme-frontend.php';
 		}
 
@@ -418,12 +421,18 @@ final class HOCWP_Theme_Controller {
 			require $this->core_path . '/inc/functions-context.php';
 		}
 
+		require $this->core_path . '/inc/class-hocwp-theme-walker-page.php';
+
+		if ( is_customize_preview() ) {
+			require $this->core_path . '/inc/class-hocwp-theme-customize.php';
+		}
+
 		/**
 		 * Setup After.
 		 */
 		require $this->core_path . '/inc/setup-after.php';
 
-		if ( ! is_admin() ) {
+		if ( ! is_admin() || is_customize_preview() ) {
 			require $this->core_path . '/inc/template.php';
 			require $this->core_path . '/inc/template-general.php';
 			require $this->core_path . '/inc/template-comments.php';
@@ -432,7 +441,9 @@ final class HOCWP_Theme_Controller {
 			if ( 'wp-login.php' == $pagenow ) {
 				require $this->core_path . '/inc/template-user.php';
 			}
-		} else {
+		}
+
+		if ( is_admin() || is_customize_preview() ) {
 			require $this->core_path . '/admin/meta.php';
 		}
 
@@ -457,6 +468,8 @@ final class HOCWP_Theme_Controller {
 			HOCWP_Theme::require_if_exists( $this->custom_path . '/front-end.php' );
 			HOCWP_Theme::require_if_exists( $this->custom_path . '/template.php' );
 		}
+
+		require_once $this->core_path . '/inc/customizer.php';
 
 		do_action( 'hocwp_theme_loaded' );
 	}

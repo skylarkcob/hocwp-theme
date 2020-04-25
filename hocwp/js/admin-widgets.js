@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
     })();
 
     (function () {
-        body.on("click", ".widget .hocwp-theme .nav-tab", function (e) {
+        body.on("click", ".widget .hocwp-theme .nav-tab, .widget-inside .form .hocwp-theme .nav-tab", function (e) {
             e.preventDefault();
 
             var that = this,

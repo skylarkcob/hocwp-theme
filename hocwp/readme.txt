@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.7.6 =
+* Theme now supports some customizer functions.
+
 = 6.7.5 =
 * Fix redirect after activate or deactivate extension.
 * Add some defined css.

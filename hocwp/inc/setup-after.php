@@ -5,9 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_after_setup_theme() {
 	$supports = array(
-		'custom-header',
 		'custom-logo',
-		'starter-content',
 		'responsive-embeds',
 		'align-wide',
 		'dark-editor-style',
@@ -26,14 +24,31 @@ function hocwp_theme_after_setup_theme() {
 		$supports[] = 'woocommerce';
 	}
 
+	$custom = defined( 'HOCWP_THEME_SUPPORTS' ) ? HOCWP_THEME_SUPPORTS : '';
+
+	if ( HT()->array_has_value( $custom ) ) {
+		$supports = wp_parse_args( $custom, $supports );
+	}
+
 	$supports = apply_filters( 'hocwp_theme_supports', $supports );
 
-	foreach ( $supports as $support ) {
+	foreach ( $supports as $support => $args ) {
+		if ( is_string( $args ) ) {
+			$support = $args;
+		}
+
 		if ( ! current_theme_supports( $support ) ) {
-			$args = apply_filters( 'hocwp_theme_support_' . $support . '_args', array() );
+			if ( ! is_array( $args ) ) {
+				$args = array();
+			}
+
+			$args = apply_filters( 'hocwp_theme_support_' . $support . '_args', $args );
+
 			add_theme_support( $support, $args );
 		}
 	}
+
+	add_filter( 'script_loader_tag', 'hocwp_theme_script_loader_tag_async_filter', 10, 2 );
 
 	unset( $supports, $support, $args );
 }
@@ -354,15 +369,5 @@ function hocwp_theme_add_url_endpoint() {
 }
 
 add_action( 'init', 'hocwp_theme_add_url_endpoint' );
-
-function hocwp_theme_customize_preview_init_action() {
-	wp_enqueue_script( 'hocwp-theme-customizer-init', HOCWP_Theme()->core_url . '/js/customizer.js', array(
-		'jquery',
-		'customize-preview',
-		'jquery-masonry'
-	), false, true );
-}
-
-add_action( 'customize_preview_init', 'hocwp_theme_customize_preview_init_action' );
 
 do_action( 'hocwp_theme_setup_after' );
