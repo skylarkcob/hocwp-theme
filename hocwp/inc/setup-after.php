@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_after_setup_theme() {
 	$supports = array(
-		'custom-logo',
 		'responsive-embeds',
 		'align-wide',
 		'dark-editor-style',

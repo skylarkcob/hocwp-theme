@@ -75,39 +75,12 @@ if ( ! function_exists( 'hocwp_theme_setup' ) ) :
 				'gallery',
 				'caption',
 				'style',
-				'script',
-			)
-		);
-
-		// Set up the WordPress core custom background feature.
-		add_theme_support(
-			'custom-background',
-			apply_filters(
-				'hocwp_theme_custom_background_args',
-				array(
-					'default-color' => 'ffffff',
-					'default-image' => '',
-				)
+				'script'
 			)
 		);
 
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
-
-		/**
-		 * Add support for core custom logo.
-		 *
-		 * @link https://codex.wordpress.org/Theme_Logo
-		 */
-		add_theme_support(
-			'custom-logo',
-			array(
-				'height'      => 250,
-				'width'       => 250,
-				'flex-width'  => true,
-				'flex-height' => true,
-			)
-		);
 	}
 endif;
 add_action( 'after_setup_theme', 'hocwp_theme_setup' );
@@ -142,7 +115,7 @@ function hocwp_theme_widgets_init() {
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
+			'after_title'   => '</h2>'
 		)
 	);
 }
@@ -168,11 +141,6 @@ function hocwp_theme_scripts() {
 add_action( 'wp_enqueue_scripts', 'hocwp_theme_scripts' );
 
 /**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
-
-/**
  * Custom template tags for this theme.
  */
 require get_template_directory() . '/inc/template-tags.php';
@@ -181,11 +149,6 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
 
 /**
  * Load Jetpack compatibility file.
