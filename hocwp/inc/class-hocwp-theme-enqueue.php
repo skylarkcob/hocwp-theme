@@ -234,6 +234,16 @@ class HOCWP_Theme_Enqueue {
 		}
 	}
 
+	public function font_icons() {
+		$base = '/lib/font-icons/css/hocwp-icons.css';
+
+		$path = HOCWP_Theme()->custom_path . $base;
+
+		if ( file_exists( $path ) ) {
+			wp_enqueue_style( 'hocwp-font-icons-style', HOCWP_Theme()->custom_url . $base );
+		}
+	}
+
 	public function fontawesome( $args = array() ) {
 		$defaults = array(
 			'cdn'     => false,

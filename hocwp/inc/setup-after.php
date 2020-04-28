@@ -50,6 +50,14 @@ function hocwp_theme_after_setup_theme() {
 	add_filter( 'script_loader_tag', 'hocwp_theme_script_loader_tag_async_filter', 10, 2 );
 
 	unset( $supports, $support, $args );
+
+	remove_filter( 'pre_term_description', 'wp_filter_kses' );
+
+	if ( ! current_user_can( 'unfiltered_html' ) ) {
+		add_filter( 'pre_term_description', 'wp_filter_post_kses' );
+	}
+
+	remove_filter( 'term_description', 'wp_kses_data' );
 }
 
 add_action( 'after_setup_theme', 'hocwp_theme_after_setup_theme' );

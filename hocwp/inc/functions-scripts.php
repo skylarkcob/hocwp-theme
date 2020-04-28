@@ -203,6 +203,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		), false, true );
 	} elseif ( HT_Admin()->is_theme_option_page() ) {
 		$src = HOCWP_THEME_CORE_URL . '/css/admin-theme-options' . HOCWP_THEME_CSS_SUFFIX;
+		wp_enqueue_editor();
 		wp_enqueue_style( 'hocwp-theme-options-style', $src );
 		wp_enqueue_script( 'hocwp-theme-admin' );
 	}
@@ -264,6 +265,10 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		wp_add_inline_style( 'hocwp-theme-admin-style', $css );
 
 		unset( $bg, $border, $css );
+	}
+
+	if ( 'term.php' == $pagenow ) {
+		HT_Enqueue()->code_editor();
 	}
 
 	if ( $post_type_object instanceof WP_Post_Type && ! $post_type_object->public ) {

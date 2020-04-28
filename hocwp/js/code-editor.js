@@ -92,5 +92,12 @@ jQuery(document).ready(function ($) {
 
     (function () {
         $("textarea[data-code-editor='1']").hocwpCodeEditor();
+
+        var termDesc = $(".term-php .form-table").find("textarea#description");
+
+        if (termDesc && termDesc.length) {
+            termDesc.attr("rows", 20);
+            termDesc.hocwpCodeEditor();
+        }
     })();
 });
