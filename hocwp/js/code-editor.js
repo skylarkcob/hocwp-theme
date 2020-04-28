@@ -1,6 +1,8 @@
 window.wp = window.wp || {};
 
 jQuery(document).ready(function ($) {
+    var body = $("body");
+
     $.fn.hocwpCodeEditor = function (options) {
         if (wp.codeEditor) {
             var settings = $.extend(wp.codeEditor.defaultSettings, $.fn.hocwpCodeEditor.defaults, options);
@@ -93,11 +95,13 @@ jQuery(document).ready(function ($) {
     (function () {
         $("textarea[data-code-editor='1']").hocwpCodeEditor();
 
-        var termDesc = $(".term-php .form-table").find("textarea#description");
+        if (body.hasClass("term-desc-html")) {
+            var termDesc = $(".term-php .form-table").find("textarea#description");
 
-        if (termDesc && termDesc.length) {
-            termDesc.attr("rows", 20);
-            termDesc.hocwpCodeEditor();
+            if (termDesc && termDesc.length) {
+                termDesc.attr("rows", 20);
+                termDesc.hocwpCodeEditor();
+            }
         }
     })();
 });

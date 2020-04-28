@@ -176,6 +176,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$field    = $this->sanitize_section_or_field( $field );
 		$field_id = isset( $field['args']['callback_args']['id'] ) ? $field['args']['callback_args']['id'] : $field['id'];
 
+		if ( is_array( $field_id ) ) {
+			$field_id = isset( $field_id['id'] ) ? $field_id['id'] : '';
+		}
+
 		if ( ! empty( $field_id ) ) {
 			$field_id = $this->tabs->tab_name . '_' . $field_id;
 		}

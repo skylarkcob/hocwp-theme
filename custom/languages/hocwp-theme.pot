@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2020-04-25 09:20+0700\n"
+"POT-Creation-Date: 2020-04-28 10:09+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: functions.php:139 hocwp/admin/meta.php:137
+#: functions.php:112 hocwp/admin/meta.php:137
 msgid "Sidebar"
 msgstr ""
 
-#: functions.php:141 hocwp/inc/class-hocwp-theme-utility.php:1278
+#: functions.php:114 hocwp/inc/class-hocwp-theme-utility.php:1278
 msgid "Add widgets here."
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:90 hocwp/inc/setup-after.php:79
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:90 hocwp/inc/setup-after.php:90
 msgid "Extensions"
 msgstr ""
 
@@ -376,6 +376,14 @@ msgstr ""
 msgid "Default Thumbnail"
 msgstr ""
 
+#: hocwp/admin/admin-setting-page-writing.php:21
+msgid "Allow using custom HTML in term description."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-writing.php:24
+msgid "Term HTML Description"
+msgstr ""
+
 #: hocwp/admin/admin.php:21
 msgctxt "setting page"
 msgid "general settings page"
@@ -390,7 +398,7 @@ msgstr ""
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:96 hocwp/inc/setup-after.php:88
+#: hocwp/admin/admin.php:96 hocwp/inc/setup-after.php:99
 msgid "PHP Info"
 msgstr ""
 
@@ -525,7 +533,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:287 hocwp/inc/functions-scripts.php:282
+#: hocwp/admin/class-hocwp-extensions-list-table.php:287 hocwp/inc/functions-scripts.php:287
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -540,37 +548,37 @@ msgstr ""
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:371 hocwp/admin/class-hocwp-theme-admin-setting-page.php:381
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:375 hocwp/admin/class-hocwp-theme-admin-setting-page.php:385
 msgid "Theme Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:371 hocwp/inc/setup-after.php:70
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:375 hocwp/inc/setup-after.php:81
 msgid "Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:387
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:391
 #, php-format
 msgid "%s options"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:389
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:393
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:423
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:427
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If you have any questions please feel free to <a target=\"_blank\" href="
 "\"%s\">contact us</a> for more information."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:426
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:430
 #, php-format
 msgid "Theme core version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:489
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:493
 msgid "<strong>Notice:</strong> All settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
 msgstr ""
 
@@ -1252,7 +1260,7 @@ msgstr ""
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1223 hocwp/inc/functions-scripts.php:283
+#: hocwp/inc/class-hocwp-theme-html-field.php:1223 hocwp/inc/functions-scripts.php:288
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -1631,42 +1639,42 @@ msgstr ""
 msgid "Load more"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:279
+#: hocwp/inc/functions-scripts.php:284
 #, php-format
 msgid "Remove %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:280
+#: hocwp/inc/functions-scripts.php:285
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:284
+#: hocwp/inc/functions-scripts.php:289
 #, php-format
 msgid "Change %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:359
+#: hocwp/inc/functions-scripts.php:364
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:360
+#: hocwp/inc/functions-scripts.php:365
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:361
+#: hocwp/inc/functions-scripts.php:366
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:362
+#: hocwp/inc/functions-scripts.php:367
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:363
+#: hocwp/inc/functions-scripts.php:368
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""
@@ -1733,31 +1741,31 @@ msgstr ""
 msgid "[%s] Verify your email address"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:237
+#: hocwp/inc/setup-after.php:248
 msgid "Mobile"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:268
+#: hocwp/inc/setup-after.php:279
 #, php-format
 msgid "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:277
+#: hocwp/inc/setup-after.php:288
 msgid "<strong>Error:</strong> One or more extensions are incompatible with the current theme core version."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:277
+#: hocwp/inc/setup-after.php:288
 msgid "Theme core version doesn't meet requirements"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:352
+#: hocwp/inc/setup-after.php:363
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
 "working normally."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:353
+#: hocwp/inc/setup-after.php:364
 msgid "Missing Required Plugins"
 msgstr ""
 

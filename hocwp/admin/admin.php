@@ -342,6 +342,18 @@ function hocwp_theme_mce_buttons_filter( $mce_buttons, $editor_id ) {
 
 add_filter( 'mce_buttons', 'hocwp_theme_mce_buttons_filter', 10, 2 );
 
+function hocwp_theme_admin_body_class_filter( $class ) {
+	$term_html_description = HT_Options()->get_tab( 'term_html_description', '', 'writing' );
+
+	if ( $term_html_description ) {
+		$class .= ' term-desc-html';
+	}
+
+	return $class;
+}
+
+add_filter( 'admin_body_class', 'hocwp_theme_admin_body_class_filter' );
+
 if ( 'admin-ajax.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';
 }

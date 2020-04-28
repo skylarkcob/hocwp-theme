@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-04-25 09:20+0700\n"
-"PO-Revision-Date: 2020-04-25 09:21+0700\n"
+"POT-Creation-Date: 2020-04-28 10:09+0700\n"
+"PO-Revision-Date: 2020-04-28 10:10+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Primary"
 msgstr "Chính"
 
-#: functions.php:139 hocwp/admin/meta.php:137
+#: functions.php:112 hocwp/admin/meta.php:137
 msgid "Sidebar"
 msgstr "Thanh bên"
 
-#: functions.php:141 hocwp/inc/class-hocwp-theme-utility.php:1278
+#: functions.php:114 hocwp/inc/class-hocwp-theme-utility.php:1278
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
@@ -135,7 +135,7 @@ msgid "Mail Message"
 msgstr "Nội dung thư"
 
 #: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:90
-#: hocwp/inc/setup-after.php:79
+#: hocwp/inc/setup-after.php:90
 msgid "Extensions"
 msgstr "Gói mở rộng"
 
@@ -424,6 +424,15 @@ msgstr "Viết"
 msgid "Default Thumbnail"
 msgstr "Ảnh mặc định"
 
+#: hocwp/admin/admin-setting-page-writing.php:21
+msgid "Allow using custom HTML in term description."
+msgstr ""
+"Cho phép sử dụng mã HTML tùy chỉnh trong phần mô tả của chuyên mục hoặc thẻ."
+
+#: hocwp/admin/admin-setting-page-writing.php:24
+msgid "Term HTML Description"
+msgstr "Mô tả chuyên mục HTML"
+
 #: hocwp/admin/admin.php:21
 msgctxt "setting page"
 msgid "general settings page"
@@ -442,7 +451,7 @@ msgstr ""
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:96 hocwp/inc/setup-after.php:88
+#: hocwp/admin/admin.php:96 hocwp/inc/setup-after.php:99
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
@@ -587,7 +596,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:287
-#: hocwp/inc/functions-scripts.php:282
+#: hocwp/inc/functions-scripts.php:287
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -602,27 +611,27 @@ msgstr "<strong>Thông báo:</strong> %s gói mở rộng được kích hoạt.
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr "<strong>Thông báo:</strong> %s gói mở rộng ngừng kích hoạt."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:371
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:381
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:375
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:385
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:371
-#: hocwp/inc/setup-after.php:70
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:375
+#: hocwp/inc/setup-after.php:81
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:387
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:391
 #, php-format
 msgid "%s options"
 msgstr "Cài đặt %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:389
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:393
 #, php-format
 msgid "Version %s"
 msgstr "Phiên bản %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:423
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:427
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If "
@@ -633,12 +642,12 @@ msgstr ""
 "Nếu bạn có bất kỳ câu hỏi nào bạn có thể <a target=\"_blank\" href=\"%s"
 "\">liệ hệ với chúng tôi</a> để biết thêm thông tin."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:426
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:430
 #, php-format
 msgid "Theme core version %s"
 msgstr "Phiên bản nhân giao diện %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:489
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:493
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."
@@ -1401,7 +1410,7 @@ msgid "Remove media"
 msgstr "Xóa tập tin"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:1223
-#: hocwp/inc/functions-scripts.php:283
+#: hocwp/inc/functions-scripts.php:288
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
@@ -1787,42 +1796,42 @@ msgstr "Giao diện được tạo bởi %s"
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:279
+#: hocwp/inc/functions-scripts.php:284
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:280
+#: hocwp/inc/functions-scripts.php:285
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:284
+#: hocwp/inc/functions-scripts.php:289
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:359
+#: hocwp/inc/functions-scripts.php:364
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:360
+#: hocwp/inc/functions-scripts.php:365
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:361
+#: hocwp/inc/functions-scripts.php:366
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:362
+#: hocwp/inc/functions-scripts.php:367
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:363
+#: hocwp/inc/functions-scripts.php:368
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."
@@ -1895,18 +1904,18 @@ msgstr ""
 msgid "[%s] Verify your email address"
 msgstr "[%s] Xác thực địa chỉ email của bạn"
 
-#: hocwp/inc/setup-after.php:237
+#: hocwp/inc/setup-after.php:248
 msgid "Mobile"
 msgstr "Điện thoại"
 
-#: hocwp/inc/setup-after.php:268
+#: hocwp/inc/setup-after.php:279
 #, php-format
 msgid ""
 "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 "<strong>%s:</strong> Gói mở rộng này cần phiên bản giao diện ít nhất từ %s."
 
-#: hocwp/inc/setup-after.php:277
+#: hocwp/inc/setup-after.php:288
 msgid ""
 "<strong>Error:</strong> One or more extensions are incompatible with the "
 "current theme core version."
@@ -1914,11 +1923,11 @@ msgstr ""
 "<strong>Lỗi:</strong> Một hoặc nhiều gói mở rộng không tương thích với phiên "
 "bản nhân giao diện hiện tại."
 
-#: hocwp/inc/setup-after.php:277
+#: hocwp/inc/setup-after.php:288
 msgid "Theme core version doesn't meet requirements"
 msgstr "Phiên bản nhân giao diện không đúng"
 
-#: hocwp/inc/setup-after.php:352
+#: hocwp/inc/setup-after.php:363
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are "
@@ -1929,7 +1938,7 @@ msgstr ""
 "quản trị trang web này, xin vui lòng cài đặt và kích hoạt plugin %s để giao "
 "diện được hoạt động bình thường."
 
-#: hocwp/inc/setup-after.php:353
+#: hocwp/inc/setup-after.php:364
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 

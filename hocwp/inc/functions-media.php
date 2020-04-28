@@ -90,6 +90,19 @@ function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 		wp_update_attachment_metadata( $media_id, $data );
 	}
 
+	$sizes = isset( $data['sizes'] ) ? $data['sizes'] : '';
+
+	if ( HT()->array_has_value( $sizes ) ) {
+		foreach ( (array) $sizes as $key => $tmp ) {
+			if ( empty( $tmp ) ) {
+				unset( $sizes[ $key ] );
+				unset( $data['sizes'][ $key ] );
+			}
+		}
+	}
+
+	unset( $sizes );
+
 	return $data;
 }
 

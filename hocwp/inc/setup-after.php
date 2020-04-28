@@ -51,13 +51,17 @@ function hocwp_theme_after_setup_theme() {
 
 	unset( $supports, $support, $args );
 
-	remove_filter( 'pre_term_description', 'wp_filter_kses' );
+	$term_html_description = HT_Options()->get_tab( 'term_html_description', '', 'writing' );
 
-	if ( ! current_user_can( 'unfiltered_html' ) ) {
-		add_filter( 'pre_term_description', 'wp_filter_post_kses' );
+	if ( 1 == $term_html_description ) {
+		remove_filter( 'pre_term_description', 'wp_filter_kses' );
+
+		if ( ! current_user_can( 'unfiltered_html' ) ) {
+			add_filter( 'pre_term_description', 'wp_filter_post_kses' );
+		}
+
+		remove_filter( 'term_description', 'wp_kses_data' );
 	}
-
-	remove_filter( 'term_description', 'wp_kses_data' );
 }
 
 add_action( 'after_setup_theme', 'hocwp_theme_after_setup_theme' );
