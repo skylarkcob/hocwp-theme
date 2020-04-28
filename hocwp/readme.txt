@@ -1,6 +1,8 @@
 == Changelog ==
 = 6.7.6 =
 * Theme now supports some customizer functions.
+* Unset image sizes with empty data.
+* Allow add custom HTML to term description field.
 
 = 6.7.5 =
 * Fix redirect after activate or deactivate extension.
