@@ -24,6 +24,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$logo       = get_custom_logo();
 		$site_title = get_bloginfo( 'name' );
 
+		/** @noinspection HtmlUnknownTarget */
 		$defaults = array(
 			'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',
 			'logo_class'  => 'site-logo',
@@ -423,10 +424,35 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 	}
 
-	public function get_archive_title( $prefix = true ) {
+	public function get_archive_title( $args = array() ) {
+		global $wp_query;
+
 		$title = '';
 
-		if ( is_category() ) {
+		if ( ! HT()->array_has_value( $args ) ) {
+			$args = array(
+				'prefix' => $args
+			);
+		}
+
+		$defaults = array(
+			'prefix'        => true,
+			'search_format' => ''
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$prefix = $args['prefix'];
+
+		if ( ! empty( $args['search_format'] ) && is_search() ) {
+			$search_format = $args['search_format'];
+
+			$title = str_replace(
+				array( '%found_posts%', '%search_query%' ),
+				array( $wp_query->found_posts, get_search_query() ),
+				$search_format
+			);
+		} elseif ( is_category() ) {
 			$title = single_cat_title( '', false );
 
 			if ( $prefix && ! empty( $title ) ) {
@@ -564,6 +590,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$separator = '-';
 
 		if ( class_exists( 'WPSEO_Utils' ) ) {
+			/** @noinspection PhpUndefinedClassInspection */
 			$separator = WPSEO_Utils::get_title_separator();
 		}
 
@@ -575,6 +602,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$breadcrumbs_enabled = current_theme_supports( 'yoast-seo-breadcrumbs' );
 
 			if ( ! $breadcrumbs_enabled ) {
+				/** @noinspection PhpUndefinedClassInspection */
 				$breadcrumbs_enabled = WPSEO_Options::get( 'breadcrumbs-enable', false );
 			}
 
@@ -588,6 +616,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
 
 		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() ) {
+			/** @noinspection PhpUndefinedFunctionInspection */
 			yoast_breadcrumb( '<div class="breadcrumb hocwp-breadcrumb">', '</div>' );
 
 			return;
@@ -600,10 +629,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$separator = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
 
 		if ( $bootstrap ) {
+			/** @noinspection HtmlUnknownTarget */
 			$link_schema = '<a href="%s">%s</a>';
 			$home_item   = sprintf( $link_schema, esc_url( home_url() ), __( 'Home', 'hocwp-theme' ) );
 		} else {
-			$home_item   = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
+			$home_item = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
+			/** @noinspection HtmlUnknownTarget */
 			$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
 		}
 
@@ -851,8 +882,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$class   = isset( $args['class'] ) ? $args['class'] : 'addthis_native_toolbox';
 		$class   = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class );
 		$class .= ' addthis-tools';
-		$url   = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
-		$title = isset( $args['title'] ) ? $args['title'] : get_the_title();
+		$url = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
 		?>
 		<!-- Go to www.addthis.com/dashboard to customize your tools -->
 		<div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
@@ -871,6 +901,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$style = '';
 
 		if ( HT()->is_positive_number( $icon ) ) {
+			/** @noinspection HtmlUnknownTarget */
 			$text = sprintf( '<img src="%s" alt="">', wp_get_attachment_url( $icon ) );
 
 			$style .= 'padding:0;border:none;border-radius:0;';
@@ -900,6 +931,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		        onclick="scrollToTop(1000);"
 		        title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
 		        style="<?php echo $style; ?>"><?php echo $text; ?></button>
+		<!--suppress JSUnresolvedVariable -->
 		<script>
 			window.onscroll = function () {
 				scrollFunction()

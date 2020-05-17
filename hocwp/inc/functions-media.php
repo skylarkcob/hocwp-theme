@@ -49,6 +49,14 @@ add_filter( 'wp_calculate_image_srcset', '__return_false' );
 function hocwp_theme_upload_mimes_filter( $mimes ) {
 	$mimes['webp'] = 'image/webp';
 
+	if ( defined( 'HOCWP_THEME_ALLOW_MIME_TYPES' ) && HT()->array_has_value( HOCWP_THEME_ALLOW_MIME_TYPES ) ) {
+		foreach ( HOCWP_THEME_ALLOW_MIME_TYPES as $mime => $type ) {
+			if ( ! isset( $mimes[ $mime ] ) ) {
+				$mimes[ $mime ] = $type;
+			}
+		}
+	}
+
 	return $mimes;
 }
 

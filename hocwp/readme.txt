@@ -3,6 +3,14 @@
 * Theme now supports some customizer functions.
 * Unset image sizes with empty data.
 * Allow add custom HTML to term description field.
+* Add cookie popup alert.
+* Update extension list table.
+* Change block editor max width.
+* Update get archive title function.
+* Update related query.
+* Update body class filter.
+* Using HOCWP_THEME_ALLOW_MIME_TYPES constant to define custom mime types.
+* Update theme supports color.
 
 = 6.7.5 =
 * Fix redirect after activate or deactivate extension.

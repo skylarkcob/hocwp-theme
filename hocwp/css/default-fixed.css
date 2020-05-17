@@ -513,3 +513,52 @@ button.disabled {
 .entry-content .form-control {
     box-sizing: border-box;
 }
+
+#sc-gdpr-box {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999999;
+    background: rgba(255, 0, 0, 0.85);
+}
+
+#sc-gdpr-box .centerd {
+    padding: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    font-size: 13px;
+}
+
+#sc-gdpr-box .centerd a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#sc-gdpr-box .centerd p:last-of-type,
+#sc-gdpr-box .centerd p:last-child {
+    margin-bottom: 0;
+}
+
+#sc-gdpr-close {
+    position: absolute;
+    right: 20px;
+    left: auto;
+    top: 50%;
+    z-index: 499;
+    font-size: 16px;
+    line-height: 1;
+    transform: translate(0, -50%);
+}
+
+#sc-gdpr-accept {
+    border-radius: 15px;
+    margin-left: 5px;
+    line-height: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+}

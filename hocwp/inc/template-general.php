@@ -147,7 +147,7 @@ function hocwp_theme_template_archive() {
 	hocwp_theme_load_custom_template( 'template-archive' );
 }
 
-add_action( 'hocwp_theme_template_archive', 'hocwp_theme_template_archive' );
+add_action( 'hocwp_theme_template_archive', 'hocwp_theme_template_archive', 99 );
 
 /**
  * Filter template path for using default template in theme.
@@ -943,6 +943,29 @@ function hocwp_theme_wp_footer_action() {
 			<?php
 		}
 	}
+
+	$cookie_alert = HT_Options()->get_tab( 'cookie_alert', '', 'reading' );
+
+	if ( 1 == $cookie_alert ) {
+		$page = get_post( get_option( 'page_for_privacy_policy' ) );
+
+		$text = __( 'This website uses cookies to ensure you get the best experience on our website. By continuing to browse on this website, you accept the use of cookies for the above purposes.', 'hocwp-theme' );
+
+		if ( $page instanceof WP_Post && 'publish' == $page->post_status ) {
+			$text = sprintf( __( 'We use cookies to give you the best possible website experience. <span>By using %s, you agree to our <a href="%s">%s</a></span>.', 'hocwp-theme' ), get_bloginfo( 'name' ), get_permalink( $page ), $page->post_title );
+		}
+
+		$text .= '&nbsp;';
+		$text .= '<button id="sc-gdpr-accept">' . __( 'Accept', 'hocwp-theme' ) . '</button>';
+		?>
+		<div id="sc-gdpr-box" style="display: none;">
+			<div class="centerd">
+				<?php echo wpautop( $text ); ?>
+				<button id="sc-gdpr-close">&times;</button>
+			</div>
+		</div>
+		<?php
+	}
 }
 
 add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );
@@ -1641,6 +1664,24 @@ function hocwp_theme_print_url_params_as_hidden( $excludes ) {
 add_action( 'hocwp_theme_print_url_params_as_hidden', 'hocwp_theme_print_url_params_as_hidden' );
 
 function hocwp_theme_fix_not_found_paged() {
+	if ( defined( 'HOCWP_THEME_USE_DEFAULT_TEMPLATE' ) && HOCWP_THEME_USE_DEFAULT_TEMPLATE ) {
+		$post_types = get_post_types( array( '_builtin' => false, 'public' => true ), 'objects' );
+
+		if ( HT()->array_has_value( $post_types ) ) {
+			foreach ( $post_types as $post_type ) {
+				if ( $post_type instanceof WP_Post_Type ) {
+					if ( is_post_type_archive( $post_type->name ) || ( HT()->array_has_value( $post_type->taxonomies ) && is_tax( $post_type->taxonomies ) ) ) {
+						include get_template_directory() . '/archive.php';
+						exit;
+					} elseif ( is_singular( $post_type->name ) ) {
+						include get_template_directory() . '/single.php';
+						exit;
+					}
+				}
+			}
+		}
+	}
+
 	if ( is_page() ) {
 		// Load blog page when page chosen in reading settings.
 		$blog = HT_Options()->get_tab( 'blog_page', 'reading' );

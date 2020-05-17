@@ -3,6 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'HT_Frontend' ) ) {
+	require_once HOCWP_Theme()->core_path . '/inc/class-hocwp-theme-frontend.php';
+}
+
 add_action( 'customize_register', array( 'HOCWP_Theme_Customize', 'register' ) );
 
 /**

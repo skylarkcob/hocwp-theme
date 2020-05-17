@@ -102,6 +102,7 @@ abstract class HOCWP_Theme_Meta {
 		$type  = $field['type'];
 
 		switch ( $type ) {
+			case 'ID':
 			case 'positive_number':
 			case 'positive_integer':
 				$field['callback_args']['min'] = 1;

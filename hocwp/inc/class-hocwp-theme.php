@@ -167,8 +167,8 @@ final class HOCWP_Theme {
 		return $matches[0];
 	}
 
-	public static function array_has_value( $arr ) {
-		return ( is_array( $arr ) && count( $arr ) > 0 );
+	public static function array_has_value( $arr, $count = 1 ) {
+		return ( is_array( $arr ) && count( $arr ) > ( $count - 1 ) );
 	}
 
 	public static function in_array( $needle, $haystack ) {
@@ -744,6 +744,20 @@ final class HOCWP_Theme {
 		unset( $doc, $xpath );
 
 		return $src;
+	}
+
+	public function get_first_paragraph( $string, $strip_tags = true ) {
+		$string = substr( $string, strpos( $string, '<p' ), strpos( $string, '</p>' ) + 4 );
+
+		if ( $strip_tags ) {
+			if ( ! is_string( $strip_tags ) ) {
+				$strip_tags = null;
+			}
+
+			$string = strip_tags( $string, $strip_tags );
+		}
+
+		return $string;
 	}
 
 	public function has_image( $string ) {

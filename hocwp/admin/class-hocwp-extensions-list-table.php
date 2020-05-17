@@ -45,7 +45,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	}
 
 	public function prepare_items() {
-		global $hocwp_theme, $status, $totals, $page, $orderby, $order, $s;
+		global $status, $totals, $page, $orderby, $order, $s;
 
 		$status = isset( $_GET['extension_status'] ) ? $_GET['extension_status'] : 'all';
 
@@ -91,6 +91,10 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			$status = 'search';
 
 			$extensions[ $status ] = array_filter( $extensions['all'], array( $this, '_search_callback' ) );
+		} elseif ( isset( $_REQUEST['s'] ) ) {
+			$status = 'search';
+
+			$extensions[ $status ] = $extensions['all'];
 		}
 
 		$totals = array();
@@ -229,15 +233,18 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 				case 'recommended':
 					$text = _n( 'Recommended <span class="count">(%s)</span>', 'Recommended <span class="count">(%s)</span>', $count, 'hocwp-theme' );
 					break;
+				case 'search':
+					$text = _n( 'Search <span class="count">(%s)</span>', 'Search <span class="count">(%s)</span>', $count, 'hocwp-theme' );
+					break;
+				default:
+					$text = _nx( 'All <span class="count">(%s)</span>', 'All <span class="count">(%s)</span>', $count, 'hocwp theme extensions', 'hocwp-theme' );
 			}
 
-			if ( 'search' !== $type ) {
-				$status_links[ $type ] = sprintf( "<a href='%s' %s>%s</a>",
-					add_query_arg( 'extension_status', $type, 'themes.php?page=hocwp_theme&tab=extension' ),
-					( $type === $status ) ? ' class="current"' : '',
-					sprintf( $text, number_format_i18n( $count ) )
-				);
-			}
+			$status_links[ $type ] = sprintf( '<a href="%s" %s>%s</a>',
+				add_query_arg( 'extension_status', $type, 'themes.php?page=hocwp_theme&tab=extension' ),
+				( $type === $status ) ? ' class="current"' : '',
+				sprintf( $text, number_format_i18n( $count ) )
+			);
 		}
 
 		return $status_links;
@@ -259,10 +266,9 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	}
 
 	public function single_row( $item ) {
-		global $status, $page, $s, $totals;
+		global $status, $page, $s;
 		list( $extension_file, $extension_data ) = array( $item['dir'], $item );
 		$context = $status;
-		$screen  = $this->screen;
 
 		$actions = array(
 			'deactivate' => '',
@@ -298,6 +304,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 		foreach ( $columns as $column_name => $column_display_name ) {
 			$extra_classes = '';
+
 			if ( in_array( $column_name, $hidden ) ) {
 				$extra_classes = ' hidden';
 			}
@@ -359,8 +366,8 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	public function process_bulk_action() {
 		$action = $this->current_action();
 
-		$extension = isset( $_GET['extension'] ) ? $_GET['extension'] : '';
-		$extension = str_replace( '\\\\', '\\', $extension );
+		//$extension = isset( $_GET['extension'] ) ? $_GET['extension'] : '';
+		//$extension = str_replace( '\\\\', '\\', $extension );
 
 		if ( isset( $_REQUEST['_wpnonce'] ) ) {
 			$nonce = $_REQUEST['_wpnonce'];
@@ -412,9 +419,15 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			set_transient( 'hocwp_theme_extension_message', $message );
 			set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
 			$extension_status = isset( $_GET['extension_status'] ) ? $_GET['extension_status'] : '';
+
+			$href = admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=' . $extension_status );
+
+			if ( isset( $_REQUEST['s'] ) ) {
+				$href = add_query_arg( 's', $_REQUEST['s'], $href );
+			}
 			?>
 			<script type="text/javascript">
-				window.location.href = '<?php echo admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=' . $extension_status ); ?>';
+				window.location.href = '<?php echo $href; ?>';
 			</script>
 			<?php
 		}

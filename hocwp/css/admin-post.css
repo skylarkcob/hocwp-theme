@@ -11,3 +11,13 @@
 .postbox-container .meta-row input.medium-text + p.description {
     display: inline-block;
 }
+
+.inside .hocwp-theme {
+    box-sizing: border-box;
+}
+
+@media only screen and (min-width: 1360px) {
+    .wp-block {
+        max-width: 90%;
+    }
+}

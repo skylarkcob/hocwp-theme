@@ -259,7 +259,7 @@ final class HOCWP_Theme_Query {
 				if ( HT()->array_has_value( $new ) ) {
 					$new['relation'] = 'or';
 
-					$tax_query[] = $new;
+					$tax_query = $new;
 				}
 
 				if ( ! isset( $tax_query['relation'] ) ) {
@@ -502,22 +502,34 @@ final class HOCWP_Theme_Query {
 		return $keys;
 	}
 
-	public function add_tax_query_item( $tax_item, &$args ) {
+	private function add_meta_or_tax_query_item( $item, &$args, $key = 'meta_query' ) {
 		if ( is_array( $args ) ) {
-			if ( ! isset( $args['tax_query'] ) || ! is_array( $args['tax_query'] ) ) {
-				$args['tax_query'] = array();
+			if ( ! isset( $args[ $key ] ) || ! is_array( $args[ $key ] ) ) {
+				$args[ $key ] = array();
 			}
 
-			if ( ! isset( $args['tax_query']['relation'] ) ) {
-				$args['tax_query']['relation'] = 'OR';
+			if ( ! isset( $args[ $key ]['relation'] ) ) {
+				$args[ $key ]['relation'] = 'OR';
 			}
 
-			if ( isset( $args['tax_query'] ) ) {
-				array_push( $args['tax_query'], $tax_item );
+			if ( isset( $args[ $key ] ) ) {
+				array_push( $args[ $key ], $item );
 			} else {
-				$args['tax_query'] = array( $tax_item );
+				$args[ $key ] = array( $item );
 			}
 		}
+
+		return $args;
+	}
+
+	public function add_tax_query_item( $tax_item, &$args ) {
+		$this->add_meta_or_tax_query_item( $tax_item, $args, 'tax_query' );
+
+		return $args;
+	}
+
+	public function add_meta_query_item( $item, &$args ) {
+		$this->add_meta_or_tax_query_item( $item, $args );
 
 		return $args;
 	}

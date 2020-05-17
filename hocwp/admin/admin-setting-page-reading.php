@@ -48,6 +48,15 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'theme_color', __( 'Theme Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading' );
 	$fields[] = $field;
 
+	$args = array(
+		'class' => 'medium-text',
+		'type'  => 'checkbox',
+		'label' => __( 'Show popup to notify visitor website is using cookie.', 'hocwp-theme' )
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'cookie_alert', __( 'Cookie Alert', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
+
 	$field    = hocwp_theme_create_setting_field( 'blog_page', __( 'Blog Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
 	$fields[] = $field;
 

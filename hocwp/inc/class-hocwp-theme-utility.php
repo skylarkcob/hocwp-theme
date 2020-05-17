@@ -306,15 +306,18 @@ class HOCWP_Theme_Utility {
 					continue;
 				}
 
+				/** @noinspection PhpUndefinedMethodInspection */
 				$description = $item->get_description();
 				$thumbnail   = HT()->get_first_image_source( $description );
 				$description = wp_strip_all_tags( $description );
-				$content     = $item->get_content();
+				/** @noinspection PhpUndefinedMethodInspection */
+				$content = $item->get_content();
 
 				if ( empty( $thumbnail ) ) {
 					$thumbnail = HT()->get_first_image_source( $content );
 				}
 
+				/** @noinspection PhpUndefinedMethodInspection */
 				$value = array(
 					'permalink'   => $item->get_permalink(),
 					'title'       => $item->get_title(),
@@ -865,6 +868,14 @@ class HOCWP_Theme_Utility {
 			$id = $params['v'];
 		}
 
+		if ( empty( $id ) && false !== strpos( $url, '/embed/' ) ) {
+			$params = explode( '/embed/', $url );
+
+			if ( 2 == count( $params ) ) {
+				$id = $params[1];
+			}
+		}
+
 		return $id;
 	}
 
@@ -903,6 +914,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_title_separator() {
+		/** @noinspection PhpUndefinedClassInspection */
 		return apply_filters( 'hocwp_theme_title_separator', ( class_exists( 'WPSEO_Utils' ) ) ? WPSEO_Utils::get_title_separator() : '&raquo;' );
 	}
 
@@ -1018,6 +1030,7 @@ class HOCWP_Theme_Utility {
 
 	public static function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
 		if ( ! function_exists( 'hocwp_theme_wp_mail_content_type_filter' ) ) {
+			/** @noinspection PhpIncludeInspection */
 			require_once HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
 		}
 
@@ -1071,6 +1084,20 @@ class HOCWP_Theme_Utility {
 		return get_term( $term_id, $taxonomy );
 	}
 
+	public function get_meta_option( $object_id, $option_name, $option_tab, $meta_callback, $default = '' ) {
+		$value = call_user_func( $meta_callback, $object_id, $option_name, true );
+
+		if ( '' == $value || is_wp_error( $value ) || null == $value ) {
+			$value = HT_Options()->get_tab( $option_name, $default, $option_tab );
+		}
+
+		if ( '' == $value || is_wp_error( $value ) || null == $value ) {
+			$value = $default;
+		}
+
+		return $value;
+	}
+
 	public static function get_theme_option_post( $name, $post_type = 'any', $base = 'general', $slug = '' ) {
 		$id = self::get_theme_option( $name, '', $base );
 
@@ -1100,6 +1127,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	private function post_type_labels( $name, $singular_name, $menu_name ) {
+		/** @noinspection SqlNoDataSourceInspection */
 		$labels = array(
 			'name'                     => $name,
 			'singular_name'            => $singular_name,
@@ -1314,8 +1342,10 @@ class HOCWP_Theme_Utility {
 		$permalink = HT()->get_value_in_array( $args, 'permalink', get_permalink() );
 
 		if ( empty( $title ) ) {
+			/** @noinspection HtmlUnknownTarget */
 			the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ), '</a>' );
 		} else {
+			/** @noinspection HtmlUnknownTarget */
 			$title = sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ) . $title . '</a>';
 			echo $title;
 		}
@@ -1395,10 +1425,6 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function load_google_javascript_sdk( $args = array() ) {
-		global $hocwp_theme;
-
-		$options = $hocwp_theme->options;
-
 		$load = isset( $args['load'] ) ? (bool) $args['load'] : false;
 		$load = apply_filters( 'hocwp_theme_load_google_sdk_javascript', $load );
 
@@ -1537,6 +1563,7 @@ class HOCWP_Theme_Utility {
 				$charset_collate .= " COLLATE $wpdb->collate";
 			}
 
+			/** @noinspection SqlNoDataSourceInspection */
 			$sql = "CREATE TABLE ";
 			$sql .= "$table_name ( $sql_column ) $charset_collate;\n";
 
@@ -1567,6 +1594,7 @@ class HOCWP_Theme_Utility {
 	public function delete_transient( $transient_name = '' ) {
 		global $wpdb;
 
+		/** @noinspection SqlNoDataSourceInspection */
 		$query_root = "DELETE FROM $wpdb->options";
 		$query_root .= " WHERE option_name like %s";
 		$key_1 = '_transient_';

@@ -2,6 +2,10 @@
     display: block;
 }
 
+.inside .hocwp-theme {
+    box-sizing: border-box;
+}
+
 .hocwp-theme .settings-box td label {
     font-style: italic;
 }
@@ -42,6 +46,14 @@
     content: "";
     display: table;
     clear: both;
+}
+
+#activity-widget #the-comment-list li:not(.comment) .dashboard-comment-wrap {
+    padding-left: 63px;
+}
+
+#activity-widget #the-comment-list li:not(.comment) .dashboard-comment-wrap p.comment-author {
+    margin-top: 0;
 }
 
 .widget .hocwp-theme label + .clearfix {

@@ -151,6 +151,7 @@ final class HOCWP_Theme_Sanitize {
 				case 'boolean':
 					$value = ( 1 == $value ) ? 1 : 0;
 					break;
+				case 'ID':
 				case 'positive_integer':
 					$value = absint( $value );
 					if ( ! HOCWP_Theme::is_positive_number( $value ) ) {

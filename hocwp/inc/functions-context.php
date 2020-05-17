@@ -55,6 +55,26 @@ function hocwp_theme_body_class_filter( $classes ) {
 	// Slim page template class names (class = name - file suffix).
 	if ( is_page_template() ) {
 		$classes[] = basename( get_page_template_slug(), '.php' );
+		$tmp       = get_post_meta( get_the_ID(), '_wp_page_template', true );
+
+		if ( $tmp ) {
+			$tmp = trailingslashit( get_template_directory() ) . $tmp;
+
+			if ( file_exists( $tmp ) ) {
+				$tmp = get_file_data( $tmp, array( 'name' => 'Template Name' ) );
+
+				if ( isset( $tmp['name'] ) && ! empty( $tmp['name'] ) ) {
+					$tmp = sanitize_title( $tmp['name'] );
+					$tmp = strtolower( $tmp );
+
+					if ( ! empty( $tmp ) ) {
+						$classes[] = 'page-' . $tmp;
+					}
+				}
+			}
+		}
+
+		unset( $tmp );
 	}
 
 	$classes[] = 'hocwp-theme';

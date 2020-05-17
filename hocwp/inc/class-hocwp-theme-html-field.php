@@ -200,6 +200,16 @@ final class HOCWP_Theme_HTML_Field {
 		$textarea->output();
 	}
 
+	public static function code_editor( $args = array() ) {
+		$defaults = array(
+			'data-code-editor' => 1
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		self::textarea( $args );
+	}
+
 	public static function editor( $args = array() ) {
 		if ( ! isset( $args['name'] ) && isset( $args['id'] ) ) {
 			$args['name'] = $args['id'];

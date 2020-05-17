@@ -4,17 +4,84 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_after_setup_theme() {
+	// Block Editor Palette.
+	$editor_color_palette = array(
+		array(
+			'name'  => __( 'Accent Color', 'hocwp-theme' ),
+			'slug'  => 'accent',
+			'color' => hocwp_theme_get_color_for_area( 'content', 'accent' ),
+		),
+		array(
+			'name'  => __( 'Primary', 'hocwp-theme' ),
+			'slug'  => 'primary',
+			'color' => hocwp_theme_get_color_for_area( 'content', 'text' ),
+		),
+		array(
+			'name'  => __( 'Secondary', 'hocwp-theme' ),
+			'slug'  => 'secondary',
+			'color' => hocwp_theme_get_color_for_area( 'content', 'secondary' ),
+		),
+		array(
+			'name'  => __( 'Subtle Background', 'hocwp-theme' ),
+			'slug'  => 'subtle-background',
+			'color' => hocwp_theme_get_color_for_area( 'content', 'borders' ),
+		),
+	);
+
+	// Add the background option.
+	$background_color = get_theme_mod( 'background_color' );
+
+	if ( ! $background_color ) {
+		$background_color_arr = get_theme_support( 'custom-background' );
+		$background_color     = $background_color_arr[0]['default-color'];
+	}
+
+	$editor_color_palette[] = array(
+		'name'  => __( 'Background Color', 'hocwp-theme' ),
+		'slug'  => 'background',
+		'color' => '#' . $background_color,
+	);
+
 	$supports = array(
 		'responsive-embeds',
 		'align-wide',
 		'dark-editor-style',
-		'disable-custom-colors',
-		'disable-custom-font-sizes',
+		'custom-colors',
+		'custom-font-sizes',
 		'editor-color-pallete',
-		'editor-font-sizes',
+		'editor-font-sizes' => array(
+			array(
+				'name'      => _x( 'Small', 'Name of the small font size in the block editor', 'hocwp-theme' ),
+				'shortName' => _x( 'S', 'Short name of the small font size in the block editor.', 'hocwp-theme' ),
+				'size'      => 18,
+				'slug'      => 'small'
+			),
+			array(
+				'name'      => _x( 'Regular', 'Name of the regular font size in the block editor', 'hocwp-theme' ),
+				'shortName' => _x( 'M', 'Short name of the regular font size in the block editor.', 'hocwp-theme' ),
+				'size'      => 21,
+				'slug'      => 'normal'
+			),
+			array(
+				'name'      => _x( 'Large', 'Name of the large font size in the block editor', 'hocwp-theme' ),
+				'shortName' => _x( 'L', 'Short name of the large font size in the block editor.', 'hocwp-theme' ),
+				'size'      => 26.25,
+				'slug'      => 'large'
+			),
+			array(
+				'name'      => _x( 'Larger', 'Name of the larger font size in the block editor', 'hocwp-theme' ),
+				'shortName' => _x( 'XL', 'Short name of the larger font size in the block editor.', 'hocwp-theme' ),
+				'size'      => 32,
+				'slug'      => 'larger'
+			),
+		),
 		'editor-styles',
 		'wp-block-styles'
 	);
+
+	if ( $editor_color_palette ) {
+		//$supports['editor-color-palette'] = $editor_color_palette;
+	}
 
 	/*
 	 * Back compat theme supports WooCommerce.

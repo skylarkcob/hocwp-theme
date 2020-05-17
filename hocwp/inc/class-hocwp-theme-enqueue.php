@@ -193,7 +193,11 @@ class HOCWP_Theme_Enqueue {
 
 		if ( $args['js'] && HT()->is_file( $base_dir . 'js/bootstrap.min.js' ) ) {
 			$popper = isset( $args['popper'] ) ? $args['popper'] : array();
-			$this->popper( $popper );
+
+			if ( HT()->array_has_value( $popper ) ) {
+				$this->popper( $popper );
+			}
+
 			wp_enqueue_script( $handle, $base_url . 'js/bootstrap.min.js', array( 'jquery' ), false, true );
 		}
 
