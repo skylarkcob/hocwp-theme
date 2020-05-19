@@ -1126,7 +1126,15 @@ class HOCWP_Theme_Utility {
 		return HT_Util()->get_theme_option_post( $option_name, 'page', $tab, $slug );
 	}
 
-	private function post_type_labels( $name, $singular_name, $menu_name ) {
+	public function post_type_labels( $name, $singular_name = '', $menu_name = '' ) {
+		if ( empty( $singular_name ) ) {
+			$singular_name = $name;
+		}
+
+		if ( empty( $menu_name ) ) {
+			$menu_name = $name;
+		}
+
 		/** @noinspection SqlNoDataSourceInspection */
 		$labels = array(
 			'name'                     => $name,
@@ -1164,7 +1172,15 @@ class HOCWP_Theme_Utility {
 		return $labels;
 	}
 
-	public function taxonomy_labels( $name, $singular_name, $menu_name ) {
+	public function taxonomy_labels( $name, $singular_name = '', $menu_name = '' ) {
+		if ( empty( $singular_name ) ) {
+			$singular_name = $name;
+		}
+
+		if ( empty( $menu_name ) ) {
+			$menu_name = $name;
+		}
+
 		$labels = array(
 			'name'                       => $name,
 			'singular_name'              => $singular_name,

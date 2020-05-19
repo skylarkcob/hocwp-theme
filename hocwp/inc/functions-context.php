@@ -294,11 +294,6 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 			$atts['class'] = join( ' ', get_body_class() );
 
-			if ( HOCWP_THEME_STRUCTURED_DATA ) {
-				$atts['itemscope'] = 'itemscope';
-				$atts['itemtype']  = 'http://schema.org/WebSite';
-			}
-
 			break;
 		case 'footer':
 			switch ( $context ) {
