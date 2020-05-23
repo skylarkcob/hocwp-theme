@@ -38,5 +38,11 @@ if ( ! defined( 'HOCWP_THEME_SUPPORT_MICROFORMATS' ) ) {
  * the ingredients, the cooking time and temperature, the calories, and so on.
  */
 if ( ! defined( 'HOCWP_THEME_STRUCTURED_DATA' ) ) {
-	define( 'HOCWP_THEME_STRUCTURED_DATA', true );
+	define( 'HOCWP_THEME_STRUCTURED_DATA', false );
+}
+
+if ( ! function_exists( 'hocwp_theme_post_thumbnail' ) ) {
+	function hocwp_theme_post_thumbnail( $size = 'thumbnail', $attr = '' ) {
+		hocwp_theme_post_thumbnail_html( $size, $attr );
+	}
 }

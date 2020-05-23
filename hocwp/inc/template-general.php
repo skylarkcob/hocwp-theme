@@ -1160,7 +1160,7 @@ function hocwp_theme_widget_posts_loop_html() {
 			$size['height'] = $height;
 		}
 
-		hocwp_theme_post_thumbnail( $size, array( 'post_link' => true, 'class' => 'alignleft' ) );
+		hocwp_theme_post_thumbnail_html( $size, array( 'post_link' => true, 'class' => 'alignleft' ) );
 	}
 
 	$title_length = isset( $instance['title_length'] ) ? absint( $instance['title_length'] ) : '';
