@@ -779,7 +779,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					foreach ( $items as $index => $item ) {
 						echo $item;
 
-						if ( $index < ( $count - 1 ) && empty( $separator ) ) {
+						if ( $index < ( $count - 1 ) && ! empty( $separator ) ) {
 							echo '&nbsp;' . $separator . '&nbsp;';
 						}
 					}

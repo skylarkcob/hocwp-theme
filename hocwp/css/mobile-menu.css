@@ -174,7 +174,8 @@
     top: 50%;
     border-width: 6px 0 6px 6px;
     border-color: transparent transparent transparent #fff;
-    margin-top: -8px;
+    transform: translate(0, -50%);
+    z-index: 499;
 }
 
 .mobile-menu .menu-item-has-children > a[aria-expanded="true"] span.arrow {
