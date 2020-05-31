@@ -354,6 +354,39 @@ function hocwp_theme_admin_body_class_filter( $class ) {
 
 add_filter( 'admin_body_class', 'hocwp_theme_admin_body_class_filter' );
 
+function hocwp_theme_admin_footer_action() {
+	?>
+	<script>
+		jQuery(document).ready(function ($) {
+			// Backup current theme and database.
+			(function () {
+				$(document).keydown(function (e) {
+					if (e.ctrlKey && e.keyCode == 66) {
+						setTimeout(function () {
+							$.ajax({
+								type: "GET",
+								dataType: "json",
+								url: hocwpTheme.ajaxUrl,
+								data: {
+									action: "backup_this_theme"
+								},
+								success: function (response) {
+									if (response.success) {
+										console.log(response.data.message);
+									}
+								}
+							});
+						}, 1000);
+					}
+				})
+			})();
+		});
+	</script>
+	<?php
+}
+
+add_action( 'admin_footer', 'hocwp_theme_admin_footer_action' );
+
 if ( 'admin-ajax.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';
 }

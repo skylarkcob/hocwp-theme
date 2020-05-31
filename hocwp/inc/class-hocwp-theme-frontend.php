@@ -24,6 +24,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$logo       = get_custom_logo();
 		$site_title = get_bloginfo( 'name' );
 
+		if ( ! display_header_text() ) {
+			$site_title = '';
+		}
+
 		/** @noinspection HtmlUnknownTarget */
 		$defaults = array(
 			'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',

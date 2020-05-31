@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2020-05-17 20:37+0700\n"
+"POT-Creation-Date: 2020-05-31 09:29+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,7 +13,7 @@ msgstr ""
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: ../..\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Sidebar"
 msgstr ""
 
-#: functions.php:114 hocwp/inc/class-hocwp-theme-utility.php:1306
+#: functions.php:114 hocwp/inc/class-hocwp-theme-utility.php:1322
 msgid "Add widgets here."
 msgstr ""
 
@@ -198,7 +198,7 @@ msgstr ""
 msgid "Logo Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-home.php:6 hocwp/inc/class-hocwp-theme-frontend.php:634 hocwp/inc/class-hocwp-theme-frontend.php:636
+#: hocwp/admin/admin-setting-page-home.php:6 hocwp/inc/class-hocwp-theme-frontend.php:638 hocwp/inc/class-hocwp-theme-frontend.php:640
 msgid "Home"
 msgstr ""
 
@@ -453,6 +453,14 @@ msgstr ""
 
 #: hocwp/admin/ajax.php:63
 msgid "Invalid AJAX callback."
+msgstr ""
+
+#: hocwp/admin/ajax.php:353
+msgid "Backup failed."
+msgstr ""
+
+#: hocwp/admin/ajax.php:360
+msgid "Backup done!"
 msgstr ""
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:21
@@ -1063,165 +1071,165 @@ msgstr ""
 msgid "Extension %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:337
+#: hocwp/inc/class-hocwp-theme-frontend.php:341
 msgid "Page navigation"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:355
+#: hocwp/inc/class-hocwp-theme-frontend.php:359
 msgid "First"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:386
+#: hocwp/inc/class-hocwp-theme-frontend.php:390
 msgid "Last"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:398
+#: hocwp/inc/class-hocwp-theme-frontend.php:402
 msgid "Page [CURRENT]/[TOTAL]"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:459
+#: hocwp/inc/class-hocwp-theme-frontend.php:463
 #, php-format
 msgid "Category: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:465
+#: hocwp/inc/class-hocwp-theme-frontend.php:469
 #, php-format
 msgid "Tag: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:471
+#: hocwp/inc/class-hocwp-theme-frontend.php:475
 #, php-format
 msgid "Author: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:475
+#: hocwp/inc/class-hocwp-theme-frontend.php:479
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:478
+#: hocwp/inc/class-hocwp-theme-frontend.php:482
 #, php-format
 msgctxt "yearly archives"
 msgid "Year: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:481
+#: hocwp/inc/class-hocwp-theme-frontend.php:485
 msgctxt "monthly archives date format"
 msgid "F Y"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:484
+#: hocwp/inc/class-hocwp-theme-frontend.php:488
 #, php-format
 msgctxt "monthly archives"
 msgid "Month: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:487
+#: hocwp/inc/class-hocwp-theme-frontend.php:491
 msgctxt "daily archives date format"
 msgid "F j, Y"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:490
+#: hocwp/inc/class-hocwp-theme-frontend.php:494
 #, php-format
 msgctxt "daily archives"
 msgid "Day: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:495
+#: hocwp/inc/class-hocwp-theme-frontend.php:499
 msgctxt "post format archive title"
 msgid "Asides"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:497
+#: hocwp/inc/class-hocwp-theme-frontend.php:501
 msgctxt "post format archive title"
 msgid "Galleries"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:499
+#: hocwp/inc/class-hocwp-theme-frontend.php:503
 msgctxt "post format archive title"
 msgid "Images"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:501
+#: hocwp/inc/class-hocwp-theme-frontend.php:505
 msgctxt "post format archive title"
 msgid "Videos"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:503
+#: hocwp/inc/class-hocwp-theme-frontend.php:507
 msgctxt "post format archive title"
 msgid "Quotes"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:505
+#: hocwp/inc/class-hocwp-theme-frontend.php:509
 msgctxt "post format archive title"
 msgid "Links"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:507
+#: hocwp/inc/class-hocwp-theme-frontend.php:511
 msgctxt "post format archive title"
 msgid "Statuses"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:509
+#: hocwp/inc/class-hocwp-theme-frontend.php:513
 msgctxt "post format archive title"
 msgid "Audio"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:511
+#: hocwp/inc/class-hocwp-theme-frontend.php:515
 msgctxt "post format archive title"
 msgid "Chats"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:515
+#: hocwp/inc/class-hocwp-theme-frontend.php:519
 #, php-format
 msgctxt "post format archives"
 msgid "Post Format: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:521
+#: hocwp/inc/class-hocwp-theme-frontend.php:525
 #, php-format
 msgid "Archives: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:535
+#: hocwp/inc/class-hocwp-theme-frontend.php:539
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:539
+#: hocwp/inc/class-hocwp-theme-frontend.php:543
 msgid "Recent posts"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:541
+#: hocwp/inc/class-hocwp-theme-frontend.php:545
 msgid "Archives"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:734
+#: hocwp/inc/class-hocwp-theme-frontend.php:738
 msgid "Page not found"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:898
+#: hocwp/inc/class-hocwp-theme-frontend.php:902
 msgctxt "back to top"
 msgid "Top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:932
+#: hocwp/inc/class-hocwp-theme-frontend.php:936
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:993
+#: hocwp/inc/class-hocwp-theme-frontend.php:997
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:997
+#: hocwp/inc/class-hocwp-theme-frontend.php:1001
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1003
+#: hocwp/inc/class-hocwp-theme-frontend.php:1007
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1019
+#: hocwp/inc/class-hocwp-theme-frontend.php:1023
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
@@ -1340,271 +1348,271 @@ msgstr ""
 msgid "Yearly"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1135
+#: hocwp/inc/class-hocwp-theme-utility.php:1143
 msgctxt "custom post type"
 msgid "Add New"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1136
+#: hocwp/inc/class-hocwp-theme-utility.php:1144
 #, php-format
 msgctxt "cutom-post-type"
 msgid "Add New %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1137
-#, php-format
-msgctxt "custom post type"
-msgid "Edit %s"
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1138
-#, php-format
-msgctxt "custom post type"
-msgid "New %s"
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1139 hocwp/inc/class-hocwp-theme-utility.php:1140
-#, php-format
-msgctxt "custom post type"
-msgid "View %s"
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1141
-#, php-format
-msgctxt "custom post type"
-msgid "Search %s"
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1142
-#, php-format
-msgctxt "custom post type"
-msgid "No %s found."
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1143
-#, php-format
-msgctxt "custom post type"
-msgid "No %s found in Trash."
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1144
-#, php-format
-msgctxt "custom post type"
-msgid "Parent %s:"
-msgstr ""
-
 #: hocwp/inc/class-hocwp-theme-utility.php:1145
 #, php-format
 msgctxt "custom post type"
-msgid "All %s"
+msgid "Edit %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1146
 #, php-format
 msgctxt "custom post type"
-msgid "%s Archives"
+msgid "New %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1147
+#: hocwp/inc/class-hocwp-theme-utility.php:1147 hocwp/inc/class-hocwp-theme-utility.php:1148
 #, php-format
 msgctxt "custom post type"
-msgid "%s Attributes"
-msgstr ""
-
-#: hocwp/inc/class-hocwp-theme-utility.php:1148
-#, php-format
-msgctxt "custom post type"
-msgid "Insert into %s"
+msgid "View %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1149
 #, php-format
 msgctxt "custom post type"
-msgid "Uploaded to this %s"
+msgid "Search %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1150
+#, php-format
 msgctxt "custom post type"
-msgid "Featured Image"
+msgid "No %s found."
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1151
+#, php-format
 msgctxt "custom post type"
-msgid "Set featured image"
+msgid "No %s found in Trash."
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1152
+#, php-format
 msgctxt "custom post type"
-msgid "Remove featured image"
+msgid "Parent %s:"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1153
+#, php-format
 msgctxt "custom post type"
-msgid "Use as featured image"
+msgid "All %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1154
 #, php-format
 msgctxt "custom post type"
-msgid "Filter %s list"
+msgid "%s Archives"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1155
 #, php-format
 msgctxt "custom post type"
-msgid "%s list navigation"
+msgid "%s Attributes"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1156
 #, php-format
 msgctxt "custom post type"
-msgid "%s list"
+msgid "Insert into %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1157
 #, php-format
 msgctxt "custom post type"
-msgid "%s published."
+msgid "Uploaded to this %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-utility.php:1158
+msgctxt "custom post type"
+msgid "Featured Image"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1159
+msgctxt "custom post type"
+msgid "Set featured image"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1160
+msgctxt "custom post type"
+msgid "Remove featured image"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1161
+msgctxt "custom post type"
+msgid "Use as featured image"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1162
+#, php-format
+msgctxt "custom post type"
+msgid "Filter %s list"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1163
+#, php-format
+msgctxt "custom post type"
+msgid "%s list navigation"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1164
+#, php-format
+msgctxt "custom post type"
+msgid "%s list"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1165
+#, php-format
+msgctxt "custom post type"
+msgid "%s published."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-utility.php:1166
 #, php-format
 msgctxt "custom post type"
 msgid "%s published privately."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1159
+#: hocwp/inc/class-hocwp-theme-utility.php:1167
 #, php-format
 msgctxt "custom post type"
 msgid "%s reverted to draft."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1160
+#: hocwp/inc/class-hocwp-theme-utility.php:1168
 #, php-format
 msgctxt "custom post type"
 msgid "%s scheduled."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1161
+#: hocwp/inc/class-hocwp-theme-utility.php:1169
 #, php-format
 msgctxt "custom post type"
 msgid "%s updated."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1172
+#: hocwp/inc/class-hocwp-theme-utility.php:1188
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Search %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1173
+#: hocwp/inc/class-hocwp-theme-utility.php:1189
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Popular %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1174
+#: hocwp/inc/class-hocwp-theme-utility.php:1190
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "All %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1175
+#: hocwp/inc/class-hocwp-theme-utility.php:1191
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1176
+#: hocwp/inc/class-hocwp-theme-utility.php:1192
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1177
+#: hocwp/inc/class-hocwp-theme-utility.php:1193
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Edit %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1178
+#: hocwp/inc/class-hocwp-theme-utility.php:1194
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "View %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1179
+#: hocwp/inc/class-hocwp-theme-utility.php:1195
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Update %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1180
+#: hocwp/inc/class-hocwp-theme-utility.php:1196
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add New %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1181
+#: hocwp/inc/class-hocwp-theme-utility.php:1197
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "New %s Name"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1182
+#: hocwp/inc/class-hocwp-theme-utility.php:1198
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Separate %s with commas"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1183
+#: hocwp/inc/class-hocwp-theme-utility.php:1199
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add or remove %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1184
+#: hocwp/inc/class-hocwp-theme-utility.php:1200
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Choose from the most used %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1185
+#: hocwp/inc/class-hocwp-theme-utility.php:1201
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1186
+#: hocwp/inc/class-hocwp-theme-utility.php:1202
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1187
+#: hocwp/inc/class-hocwp-theme-utility.php:1203
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list navigation"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1188
+#: hocwp/inc/class-hocwp-theme-utility.php:1204
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1189
+#: hocwp/inc/class-hocwp-theme-utility.php:1205
 msgctxt "custom taxonomy term"
 msgid "Most Used"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1190
+#: hocwp/inc/class-hocwp-theme-utility.php:1206
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1548
+#: hocwp/inc/class-hocwp-theme-utility.php:1564
 msgid "The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn't full MySQL query."
 msgstr ""
 

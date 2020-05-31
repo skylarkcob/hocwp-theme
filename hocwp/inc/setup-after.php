@@ -33,13 +33,13 @@ function hocwp_theme_after_setup_theme() {
 
 	if ( ! $background_color ) {
 		$background_color_arr = get_theme_support( 'custom-background' );
-		$background_color     = $background_color_arr[0]['default-color'];
+		$background_color     = isset( $background_color_arr[0]['default-color'] ) ? $background_color_arr[0]['default-color'] : '';
 	}
 
 	$editor_color_palette[] = array(
 		'name'  => __( 'Background Color', 'hocwp-theme' ),
 		'slug'  => 'background',
-		'color' => '#' . $background_color,
+		'color' => ( ! empty( $background_color ) ) ? '#' . $background_color : '',
 	);
 
 	$supports = array(

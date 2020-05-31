@@ -977,7 +977,7 @@ function hocwp_theme_site_branding_action() {
 		HT_Frontend()->site_logo();
 		do_action( 'hocwp_theme_site_branding_middle' );
 
-		if ( get_theme_mod( 'display_header_text' ) ) {
+		if ( display_header_text() ) {
 			$description = get_bloginfo( 'description', 'display' );
 
 			if ( $description || is_customize_preview() ) {

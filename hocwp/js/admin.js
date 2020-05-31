@@ -15,7 +15,7 @@ jQuery(document).ready(function ($) {
             unSave = true;
         });
 
-        formOptions.on("submit", function() {
+        formOptions.on("submit", function () {
             unSave = false;
         });
 
