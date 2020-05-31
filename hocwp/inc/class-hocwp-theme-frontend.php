@@ -637,9 +637,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$link_schema = '<a href="%s">%s</a>';
 			$home_item   = sprintf( $link_schema, esc_url( home_url() ), __( 'Home', 'hocwp-theme' ) );
 		} else {
-			$home_item = '<a href="' . home_url( '/' ) . '" rel="v:url" property="v:title" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
+			$home_item = '<a href="' . home_url( '/' ) . '" class="breadcrumb-item breadcrumb-first trail-item trail-begin breadcrumb_first">' . __( 'Home', 'hocwp-theme' ) . '</a>';
 			/** @noinspection HtmlUnknownTarget */
-			$link_schema = '<a href="%s" rel="v:url" property="v:title" class="breadcrumb-item trail-item">%s</a>';
+			$link_schema = '<a href="%s" class="breadcrumb-item trail-item">%s</a>';
 		}
 
 		$items = array();
@@ -763,14 +763,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		} else {
 			$nav = new HOCWP_Theme_HTML_Tag( 'nav' );
 			$nav->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
-			$nav->add_attribute( 'itemtype', '' );
-			$nav->add_attribute( 'itemtype', 'https://schema.org/BreadcrumbList' );
 
 			$span = new HOCWP_Theme_HTML_Tag( 'span' );
 
 			ob_start();
 			?>
-			<span typeof="v:Breadcrumb">
+			<span>
 				<?php
 				if ( empty( $separator ) ) {
 					echo $home_item;
@@ -778,7 +776,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					echo $home_item . '&nbsp;' . $separator;
 				}
 				?>
-				<span rel="v:child" typeof="v:Breadcrumb">
+				<span>
 					<?php
 					foreach ( $items as $index => $item ) {
 						echo $item;
