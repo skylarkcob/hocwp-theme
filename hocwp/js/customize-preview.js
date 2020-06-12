@@ -1,4 +1,4 @@
-window.hocwpThemeBgColors = window.hocwpThemeBgColors || {};
+window.hocwpThemeCustomizer = window.hocwpThemeCustomizer || {};
 
 ( function ($, api, _) {
     // Add listener for the accent color.
@@ -7,7 +7,7 @@ window.hocwpThemeBgColors = window.hocwpThemeBgColors || {};
             // Generate the styles.
             // Add a small delay to be sure the accessible colors were generated.
             setTimeout(function () {
-                Object.keys(hocwpThemeBgColors).forEach(function (context) {
+                Object.keys(hocwpThemeCustomizer.colors).forEach(function (context) {
                     if ("custom-color" != context) {
                         hocwpThemeGenerateColorA11yPreviewStyles(context, null);
                     }
@@ -19,9 +19,9 @@ window.hocwpThemeBgColors = window.hocwpThemeBgColors || {};
     // Add listeners for background-color settings.
     var colors;
 
-    Object.keys(hocwpThemeBgColors).forEach(function (context) {
+    Object.keys(hocwpThemeCustomizer.colors).forEach(function (context) {
         if ("custom-color" != context) {
-            var setting = hocwpThemeBgColors[context].setting;
+            var setting = hocwpThemeCustomizer.colors[context].setting;
 
             if (setting) {
                 wp.customize(setting, function (value) {
@@ -35,7 +35,7 @@ window.hocwpThemeBgColors = window.hocwpThemeBgColors || {};
                 });
             }
         } else {
-            colors = hocwpThemeBgColors[context];
+            colors = hocwpThemeCustomizer.colors[context];
 
             Object.keys(colors).forEach(function (context) {
                 var setting = colors[context].setting;
@@ -81,8 +81,8 @@ window.hocwpThemeBgColors = window.hocwpThemeBgColors || {};
 
             if (!_.isUndefined(a11yColors[context])) {
                 // Check if we have elements defined.
-                if (hocwpThemePreviewEls[context]) {
-                    _.each(hocwpThemePreviewEls[context], function (items, setting) {
+                if (hocwpThemeCustomizer.elements[context]) {
+                    _.each(hocwpThemeCustomizer.elements[context], function (items, setting) {
                         _.each(items, function (elements, property) {
                             if (!_.isUndefined(a11yColors[context][setting])) {
                                 styles += elements.join(",") + "{" + property + ":" + a11yColors[context][setting] + ";}";
@@ -90,6 +90,10 @@ window.hocwpThemeBgColors = window.hocwpThemeBgColors || {};
                         });
                     });
                 }
+            }
+
+            if (hocwpThemeCustomizer.inline_css) {
+                styles += hocwpThemeCustomizer.inline_css;
             }
 
             // Add styles.

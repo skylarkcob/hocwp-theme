@@ -74,6 +74,13 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			);
 		}
 
+		if ( HOCWP_Theme::array_has_value( HT_Requirement()->get_recommended_plugins() ) ) {
+			$tabs['should_use'] = array(
+				'text'        => _x( 'Should Use', 'Plugin Installer', 'hocwp-theme' ),
+				'description' => __( 'You should install these recommended plugins for theme can work perfectly.', 'hocwp-theme' )
+			);
+		}
+
 		$nonmenu_tabs = array( 'plugin-information' ); // Valid actions to perform which do not have a Menu item.
 
 		/**
@@ -106,6 +113,20 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		if ( 'required' == $tab ) {
 			$plugins = HOCWP_Theme_Requirement::get_required_plugins();
+			$lists   = array();
+
+			foreach ( $plugins as $name ) {
+				$api = HT_Util()->get_wp_plugin_info( $name );
+
+				if ( ! is_wp_error( $api ) ) {
+					$lists[] = $api;
+				}
+			}
+
+			$this->items = $lists;
+			$total_items = count( $lists );
+		} elseif ( 'should_use' == $tab ) {
+			$plugins = HT_Requirement()->get_recommended_plugins();
 			$lists   = array();
 
 			foreach ( $plugins as $name ) {
@@ -251,8 +272,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$this->screen->render_screen_reader_content( 'heading_views' );
 		?>
-        <div class="wp-filter">
-            <ul class="filter-links">
+		<div class="wp-filter">
+			<ul class="filter-links">
 				<?php
 				if ( ! empty( $views ) ) {
 					foreach ( $views as $class => $view ) {
@@ -262,8 +283,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 					echo implode( " </li>\n", $views ) . "</li>\n";
 				}
 				?>
-            </ul>
-        </div>
+			</ul>
+		</div>
 		<?php
 	}
 }

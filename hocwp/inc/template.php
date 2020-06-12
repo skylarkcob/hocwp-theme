@@ -54,3 +54,7 @@ function hocwp_theme_load_content_none() {
 function hocwp_theme_load_content_404() {
 	get_template_part( 'hocwp/views/content', '404' );
 }
+
+function hocwp_theme_get_inline_css() {
+	return apply_filters( 'hocwp_theme_inline_css', '' );
+}

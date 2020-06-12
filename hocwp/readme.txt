@@ -1,4 +1,22 @@
 == Changelog ==
+= 6.7.7 =
+* Add social icon settings.
+* Update extensions list table.
+* Add HTML field sortable_category function.
+* Add constant HOCWP_THEME_RECOMMENDED_PLUGINS.
+* Update dynamic thumbnail extension.
+* Add function remove loop data.
+* Update Enqueue class.
+* Remove duplicate fb-root div.
+* Add get_views function for post object.
+* Add query most views.
+* Update customizer.
+* Check mobile menu first on mobile device for main menu.
+* Add args for the_title action.
+* Allow user filter inline css for customize and front-end.
+* Fix attribute widget icon.
+* Fix global $posts variable.
+
 = 6.7.6 =
 * Theme now supports some customizer functions.
 * Unset image sizes with empty data.

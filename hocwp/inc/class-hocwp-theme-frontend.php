@@ -829,7 +829,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		echo $before;
 
-		do_action( 'hocwp_theme_facebook_javascript_sdk' );
+		//do_action( 'hocwp_theme_facebook_javascript_sdk' );
 
 		$ajax_url = HOCWP_Theme()->get_ajax_url();
 

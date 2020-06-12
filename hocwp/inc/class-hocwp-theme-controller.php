@@ -374,7 +374,7 @@ final class HOCWP_Theme_Controller {
 		}
 
 		// Load front-end class on frontend and customize preview pages.
-		if(!is_admin() || is_customize_preview()) {
+		if ( ! is_admin() || is_customize_preview() ) {
 			require $this->core_path . '/inc/class-hocwp-theme-frontend.php';
 		}
 
@@ -395,6 +395,7 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/functions-preprocess.php';
 		require $this->core_path . '/inc/functions-extensions.php';
 		require $this->core_path . '/inc/class-hocwp-theme-extension.php';
+
 		require $this->core_path . '/inc/setup.php';
 
 		$this->defaults();
@@ -488,6 +489,10 @@ final class HOCWP_Theme_Controller {
 
 	public function add_loop_data( $key, $value ) {
 		$GLOBALS['hocwp_theme']->loop_data[ $key ] = $value;
+	}
+
+	public function remove_loop_data( $key ) {
+		unset( $GLOBALS['hocwp_theme']->loop_data[ $key ] );
 	}
 
 	public function get_loop_data( $key ) {

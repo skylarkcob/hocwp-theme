@@ -91,7 +91,7 @@ function hocwp_theme_excerpt_length_filter( $length ) {
 
 add_filter( 'excerpt_length', 'hocwp_theme_excerpt_length_filter' );
 
-function hocwp_theme_the_title() {
+function hocwp_theme_the_title( $args = array() ) {
 	global $hocwp_theme;
 	$in_loop = true;
 	$query   = isset( $hocwp_theme->loop_data['query'] ) ? $hocwp_theme->loop_data['query'] : null;
@@ -104,6 +104,10 @@ function hocwp_theme_the_title() {
 
 	$list = isset( $hocwp_theme->loop_data['list'] ) ? $hocwp_theme->loop_data['list'] : false;
 
+	$args = apply_filters( 'hocwp_theme_the_title_args', $args, $hocwp_theme->loop_data );
+
+	$container_tag = isset( $args['container_tag'] ) ? $args['container_tag'] : '';
+
 	if ( $list || ( isset( $hocwp_theme->loop_data['only_link'] ) && $hocwp_theme->loop_data['only_link'] ) ) {
 		if ( $list ) {
 			the_title( '<li><a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a></li>' );
@@ -112,9 +116,17 @@ function hocwp_theme_the_title() {
 		}
 	} else {
 		if ( $in_loop && ! $is_single ) {
-			the_title( '<h2 class="entry-title post-title"><a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a></h2>' );
+			if ( empty( $container_tag ) ) {
+				$container_tag = 'h2';
+			}
+
+			the_title( '<' . $container_tag . ' class="entry-title post-title"><a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a></' . $container_tag . '>' );
 		} else {
-			the_title( '<h1 class="entry-title post-title">', '</h1>' );
+			if ( empty( $container_tag ) ) {
+				$container_tag = 'h1';
+			}
+
+			the_title( '<' . $container_tag . ' class="entry-title post-title">', '</' . $container_tag . '>' );
 		}
 	}
 }
@@ -430,8 +442,17 @@ function hocwp_theme_image_downsize_filter( $downsize, $id, $size ) {
 	} else if ( is_array( $size ) ) {
 		$crop = isset( $size['crop'] ) ? (bool) $size['crop'] : ( array_key_exists( 2, $size ) ? $size[2] : true );
 
-		$new_width  = isset( $size['width'] ) ? $size['width'] : $size[0];
-		$new_height = isset( $size['height'] ) ? $size['height'] : ( isset( $size[1] ) ? $size[1] : $new_width );
+		$new_width = isset( $size['width'] ) ? $size['width'] : '';
+
+		if ( empty( $new_width ) ) {
+			$new_width = isset( $size[0] ) ? $size[0] : '';
+		}
+
+		$new_height = isset( $size['height'] ) ? $size['height'] : '';
+
+		if ( empty( $new_height ) ) {
+			$new_height = ( isset( $size[1] ) ? $size[1] : $new_width );
+		}
 
 		if ( ! $crop ) {
 			if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) ) {

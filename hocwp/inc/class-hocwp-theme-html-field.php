@@ -519,10 +519,12 @@ final class HOCWP_Theme_HTML_Field {
 				if ( isset( $args['value'] ) ) {
 					$value = $args['value'];
 					$obj   = get_post( $value );
+
 					if ( $obj instanceof WP_Post ) {
 						array_unshift( $query->posts, $obj );
 					}
 				}
+
 				foreach ( $query->posts as $obj ) {
 					$options[ $obj->ID ] = $obj->post_title;
 				}
@@ -831,6 +833,16 @@ final class HOCWP_Theme_HTML_Field {
 		}
 	}
 
+	public static function sortable_category( $args = array() ) {
+		$defaults = array(
+			'taxonomy' => 'category'
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		self::sortable_term( $args );
+	}
+
 	public static function sortable_term( $args = array() ) {
 		$id = $args['id'];
 		$id = sanitize_html_class( $id );
@@ -1035,9 +1047,9 @@ final class HOCWP_Theme_HTML_Field {
 				$item = '<li class="ui-state-default has-child">';
 				$item .= '<a href="javascript:">' . $type->label . '</a>';
 
-				$posts = get_posts( $post_args );
+				$list_posts = get_posts( $post_args );
 
-				if ( HT()->array_has_value( $posts ) ) {
+				if ( HT()->array_has_value( $list_posts ) ) {
 					$args['has_sub'] = true;
 
 					$connects = isset( $args['connects'] ) ? $args['connects'] : true;
@@ -1061,7 +1073,7 @@ final class HOCWP_Theme_HTML_Field {
 
 					$tmp = '';
 
-					foreach ( $posts as $obj ) {
+					foreach ( $list_posts as $obj ) {
 						if ( array_key_exists( $obj->ID, $results ) ) {
 							continue;
 						}
@@ -1081,9 +1093,9 @@ final class HOCWP_Theme_HTML_Field {
 			$args['connect_sub'] = trim( $connect_sub );
 		} else {
 			$type  = get_post_type_object( $post_type );
-			$posts = get_posts( $post_args );
+			$list_posts = get_posts( $post_args );
 
-			foreach ( $posts as $obj ) {
+			foreach ( $list_posts as $obj ) {
 				if ( array_key_exists( $obj->ID, $results ) ) {
 					continue;
 				}

@@ -1010,7 +1010,6 @@ class HOCWP_Theme_Utility {
 			$query = new WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
-
 				foreach ( $query->posts as $post_id ) {
 					$meta          = wp_get_attachment_metadata( $post_id );
 					$original_file = basename( $meta['file'] );
@@ -1056,6 +1055,10 @@ class HOCWP_Theme_Utility {
 
 	public static function get_theme_option( $name, $default = '', $base = 'general' ) {
 		global $hocwp_theme;
+
+		if ( ! is_object( $hocwp_theme ) ) {
+			$hocwp_theme = new stdClass();
+		}
 
 		if ( ! isset( $hocwp_theme->options ) || ! is_array( $hocwp_theme->options ) ) {
 			$hocwp_theme->options = HOCWP_Theme()->get_options();
@@ -1615,12 +1618,14 @@ class HOCWP_Theme_Utility {
 		$query_root .= " WHERE option_name like %s";
 		$key_1 = '_transient_';
 		$key_2 = '_transient_timeout_';
+
 		if ( ! empty( $transient_name ) ) {
 			$transient_name = '%' . $transient_name . '%';
 
 			$key_1 .= $transient_name;
 			$key_2 .= $transient_name;
 		}
+
 		$key_1 = $wpdb->prepare( $query_root, $key_1 );
 		$key_2 = $wpdb->prepare( $query_root, $key_2 );
 

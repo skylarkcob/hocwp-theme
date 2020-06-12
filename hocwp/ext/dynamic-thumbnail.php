@@ -430,6 +430,13 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 		$class = rtrim( $class, 'x' );
 	}
 
+	// Find and remove duplicate size in class name.
+	if ( HT()->array_has_value( $size ) ) {
+		$find = join( 'x', $size );
+		$find .= 'x';
+		$class = str_replace( $find, '', $class );
+	}
+
 	unset( $replace );
 
 	$sizes = HT_Util()->get_image_sizes();

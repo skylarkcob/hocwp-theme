@@ -512,6 +512,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					$callback = isset( $field['args']['callback'][1] ) ? $field['args']['callback'][1] : '';
 
 					switch ( $callback ) {
+						case 'sortable_category':
 						case 'sortable':
 						case 'sortable_term':
 							HT_Enqueue()->sortable();

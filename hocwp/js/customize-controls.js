@@ -1,9 +1,11 @@
-/* global hocwpThemeBgColors, hocwpThemeColor, jQuery, wp, _ */
+/* global hocwpThemeCustomizer, hocwpThemeColor, jQuery, wp, _ */
 /**
  * Customizer enhancements for a better user experience.
  *
  * Contains extra logic for our Customizer controls & settings.
  */
+
+window.hocwpThemeCustomizer = window.hocwpThemeCustomizer || {};
 
 ( function () {
     // Wait until the customizer has finished loading.
@@ -12,13 +14,13 @@
         wp.customize("accent_hue", function (value) {
             value.bind(function (to) {
                 // Update the value for our accessible colors for all areas.
-                Object.keys(hocwpThemeBgColors).forEach(function (context) {
+                Object.keys(hocwpThemeCustomizer.colors).forEach(function (context) {
                     var backgroundColorValue;
 
-                    if (hocwpThemeBgColors[context].color) {
-                        backgroundColorValue = hocwpThemeBgColors[context].color;
+                    if (hocwpThemeCustomizer.colors[context].color) {
+                        backgroundColorValue = hocwpThemeCustomizer.colors[context].color;
                     } else {
-                        var setting = wp.customize(hocwpThemeBgColors[context].setting);
+                        var setting = wp.customize(hocwpThemeCustomizer.colors[context].setting);
 
                         if (setting) {
                             backgroundColorValue = setting.get();
@@ -35,9 +37,9 @@
         // Add a listener for background-color changes.
         var colors;
 
-        Object.keys(hocwpThemeBgColors).forEach(function (context) {
+        Object.keys(hocwpThemeCustomizer.colors).forEach(function (context) {
             if ("custom-color" != context) {
-                var setting = hocwpThemeBgColors[context].setting;
+                var setting = hocwpThemeCustomizer.colors[context].setting;
 
                 if (setting) {
                     wp.customize(setting, function (value) {
@@ -48,7 +50,7 @@
                     });
                 }
             } else {
-                colors = hocwpThemeBgColors[context];
+                colors = hocwpThemeCustomizer.colors[context];
 
                 Object.keys(colors).forEach(function (context) {
                     var setting = colors[context].setting;

@@ -115,18 +115,18 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				}
 			}
 
-			$posts = array();
+			$list_posts = array();
 
 			if ( class_exists( 'WordPressPopularPosts\Query' ) ) {
 				$wq = new WordPressPopularPosts\Query( $params );
 
-				$posts = $wq->get_posts();
+				$list_posts = $wq->get_posts();
 			}
 
-			if ( HT()->array_has_value( $posts ) ) {
+			if ( HT()->array_has_value( $list_posts ) ) {
 				$ids = array();
 
-				foreach ( $posts as $data ) {
+				foreach ( $list_posts as $data ) {
 					$ids[] = $data->id;
 				}
 

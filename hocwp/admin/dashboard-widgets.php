@@ -125,6 +125,7 @@ function hocwp_theme_dashboard_widget_recent_draft_callback( $tmp, $args ) {
 			</li>
 			<?php
 		}
+
 		wp_reset_postdata();
 		?>
 	</ul>

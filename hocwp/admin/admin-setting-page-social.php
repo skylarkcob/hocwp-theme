@@ -133,12 +133,13 @@ function hocwp_theme_settings_page_social_field() {
 		foreach ( $socials as $social ) {
 			$key = sanitize_title( $social );
 			$key = str_replace( '-', '_', $key );
-			$key .= '_url';
+
+			$url = $key . '_url';
 
 			$fields[] = array(
 				'tab'     => 'social',
 				'section' => 'social_url',
-				'id'      => $key,
+				'id'      => $url,
 				'title'   => ucwords( $social ),
 				'args'    => array(
 					'label_for'     => true,
@@ -146,6 +147,23 @@ function hocwp_theme_settings_page_social_field() {
 					'callback_args' => array(
 						'class' => 'regular-text',
 						'type'  => 'url'
+					)
+				)
+			);
+
+			$icon = $key . '_icon';
+
+			$fields[] = array(
+				'tab'     => 'social',
+				'section' => 'social_url',
+				'id'      => $icon,
+				'title'   => sprintf( __( '%s Icon', 'hocwp-theme' ), ucwords( $social ) ),
+				'args'    => array(
+					'label_for'     => true,
+					'type'          => 'text',
+					'callback_args' => array(
+						'class' => 'regular-text',
+						'type'  => 'text'
 					)
 				)
 			);

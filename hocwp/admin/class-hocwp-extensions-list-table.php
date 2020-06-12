@@ -29,7 +29,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			$status = $_REQUEST['extension_status'];
 		}
 
-		if ( isset( $_REQUEST['s'] ) ) {
+		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$_SERVER['REQUEST_URI'] = add_query_arg( 's', wp_unslash( $_REQUEST['s'] ) );
 		}
 
@@ -91,10 +91,14 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			$status = 'search';
 
 			$extensions[ $status ] = array_filter( $extensions['all'], array( $this, '_search_callback' ) );
-		} elseif ( isset( $_REQUEST['s'] ) ) {
+		} elseif ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$status = 'search';
 
 			$extensions[ $status ] = $extensions['all'];
+		}
+
+		if ( 'search' == $status && empty( $s ) ) {
+			$status = 'all';
 		}
 
 		$totals = array();
@@ -129,7 +133,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 		$start = ( $page - 1 ) * $extensions_per_page;
 
 		if ( $total_this_page > $extensions_per_page ) {
-			$this->items = array_slice( $this->items, $start, $extensions_per_page );
+			$this->items = array_slice( $this->items, absint( $start ), $extensions_per_page );
 		}
 
 		$this->set_pagination_args( array(
@@ -179,7 +183,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	public function no_items() {
 		global $hocwp_theme;
 
-		if ( ! empty( $_REQUEST['s'] ) ) {
+		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$s = esc_html( wp_unslash( $_REQUEST['s'] ) );
 			printf( __( 'No extensions found for &#8220;%s&#8221;.', 'hocwp-theme' ), $s );
 		} elseif ( ! empty( $hocwp_theme->extensions['all'] ) ) {
@@ -422,7 +426,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 			$href = admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=' . $extension_status );
 
-			if ( isset( $_REQUEST['s'] ) ) {
+			if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 				$href = add_query_arg( 's', $_REQUEST['s'], $href );
 			}
 			?>

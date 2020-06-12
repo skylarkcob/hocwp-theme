@@ -757,6 +757,18 @@ function hocwp_theme_main_menu( $args ) {
 
 add_action( 'hocwp_theme_main_menu', 'hocwp_theme_main_menu' );
 
+function hocwp_theme_main_menu_args_filter( $args ) {
+	$theme_location = isset( $args['theme_location'] ) ? $args['theme_location'] : '';
+
+	if ( 'mobile' != $theme_location && wp_is_mobile() && has_nav_menu( 'mobile' ) ) {
+		$args['theme_location'] = 'mobile';
+	}
+
+	return $args;
+}
+
+add_filter( 'hocwp_theme_main_menu_args', 'hocwp_theme_main_menu_args_filter' );
+
 function hocwp_theme_mobile_menu( $args ) {
 	$args = (array) $args;
 

@@ -98,6 +98,20 @@ final class HOCWP_Theme_Requirement {
 		return true;
 	}
 
+	public static function get_recommended_plugins() {
+		$rps = defined( 'HOCWP_THEME_RECOMMENDED_PLUGINS' ) ? HOCWP_THEME_RECOMMENDED_PLUGINS : '';
+
+		$plugins = HT_Requirement()->get_defined_value_array( $rps );
+
+		unset( $rps );
+
+		$plugins = apply_filters( 'hocwp_theme_recommended_plugins', $plugins );
+		$plugins = array_filter( $plugins );
+		$plugins = array_unique( $plugins );
+
+		return $plugins;
+	}
+
 	public static function get_required_plugins() {
 		$rps = defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) ? HOCWP_THEME_REQUIRED_PLUGINS : '';
 
@@ -185,6 +199,16 @@ final class HOCWP_Theme_Requirement {
 		}
 
 		return true;
+	}
+
+	public function load_ajax_loop_functions() {
+		if ( ! function_exists( 'hocwp_theme_load_custom_loop' ) ) {
+			require_once HOCWP_Theme()->core_path . '/inc/functions-context.php';
+			require_once HOCWP_Theme()->core_path . '/inc/functions-media.php';
+			require_once HOCWP_Theme()->core_path . '/inc/template.php';
+			require_once HOCWP_Theme()->core_path . '/inc/template-general.php';
+			require_once HOCWP_Theme()->core_path . '/inc/template-post.php';
+		}
 	}
 }
 

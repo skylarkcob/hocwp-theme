@@ -343,9 +343,11 @@ final class HOCWP_Theme_Query {
 		$defaults = array(
 			'hide_empty' => false
 		);
+
 		if ( ! is_array( $args ) && is_string( $args ) ) {
 			$args = array( 'taxonomy' => $args );
 		}
+
 		$args  = wp_parse_args( $args, $defaults );
 		$query = new WP_Term_Query( $args );
 
@@ -364,6 +366,28 @@ final class HOCWP_Theme_Query {
 
 	public function featured_posts( $args = array() ) {
 		return HT_Query()->posts_by_meta( 'featured', 1, $args );
+	}
+
+	public function most_views( $args = array() ) {
+		$defaults = array(
+			'orderby'  => 'meta_value_num',
+			'meta_key' => 'views'
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		if ( function_exists( 'pvc_get_most_viewed_posts' ) ) {
+			unset( $args['meta_key'] );
+
+			$args['suppress_filters'] = false;
+
+			$args['orderby'] = 'post_views';
+			$args['order']   = 'DESC';
+		}
+
+		$query = new WP_Query( $args );
+
+		return $query;
 	}
 
 	public static function posts_by_meta( $meta_key, $meta_value, $args = array() ) {

@@ -6,6 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class HOCWP_Theme_Enqueue {
 	protected static $instance;
 
+	public $custom_lib_dir;
+	public $custom_lib_url;
+
 	public static function get_instance() {
 		if ( ! self::$instance instanceof self ) {
 			self::$instance = new self();
@@ -18,6 +21,14 @@ class HOCWP_Theme_Enqueue {
 		if ( self::$instance instanceof self ) {
 			return;
 		}
+
+		$this->custom_lib_dir = HOCWP_Theme()->custom_path;
+		$this->custom_lib_dir = trailingslashit( $this->custom_lib_dir );
+		$this->custom_lib_dir .= 'lib/';
+
+		$this->custom_lib_url = HOCWP_Theme()->custom_url;
+		$this->custom_lib_url = trailingslashit( $this->custom_lib_url );
+		$this->custom_lib_url .= 'lib/';
 	}
 
 	public function media_upload() {
@@ -31,8 +42,8 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_script( 'hocwp-theme-sortable' );
 	}
 
-	public function jquery_ui_style() {
-		wp_enqueue_style( 'jquery-ui-style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' );
+	public function jquery_ui_style( $version = '1.12.1' ) {
+		wp_enqueue_style( 'jquery-ui-style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/' . $version . '/jquery-ui.min.css' );
 	}
 
 	public function datepicker() {
@@ -106,8 +117,8 @@ class HOCWP_Theme_Enqueue {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$base_url = HOCWP_Theme()->custom_url . '/lib/popper.js/';
-		$base_dir = HOCWP_Theme()->custom_path . '/lib/popper.js/' . $args['version'];
+		$base_url = $this->custom_lib_url . 'popper.js/';
+		$base_dir = $this->custom_lib_dir . 'popper.js/' . $args['version'];
 
 		if ( $args['cdn'] ) {
 			$parts    = array( 'cdnjs', 'cloudflare', 'com' );
@@ -118,7 +129,7 @@ class HOCWP_Theme_Enqueue {
 			unset( $parts );
 		}
 
-		$file = '/popper.min.js';
+		$file = 'popper.min.js';
 
 		$this->auto_check_lib_version( $args, $base_dir, $file );
 
@@ -158,8 +169,8 @@ class HOCWP_Theme_Enqueue {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$base_url = HOCWP_Theme()->custom_url . '/lib/bootstrap/';
-		$base_dir = HOCWP_Theme()->custom_path . '/lib/bootstrap/' . $args['version'];
+		$base_url = $this->custom_lib_url . 'bootstrap/';
+		$base_dir = $this->custom_lib_dir . 'bootstrap/' . $args['version'];
 
 		if ( $args['cdn'] ) {
 			$parts    = array( 'maxcdn', 'bootstrapcdn', 'com' );
@@ -239,16 +250,49 @@ class HOCWP_Theme_Enqueue {
 	}
 
 	public function font_icons() {
-		$base = '/lib/font-icons/css/hocwp-icons.css';
+		$base = 'font-icons/css/hocwp-icons.css';
 
-		$path = HOCWP_Theme()->custom_path . $base;
+		$path = $this->custom_lib_dir . $base;
 
 		if ( file_exists( $path ) ) {
-			wp_enqueue_style( 'hocwp-font-icons-style', HOCWP_Theme()->custom_url . $base );
+			wp_enqueue_style( 'hocwp-font-icons-style', $this->custom_lib_url . $base );
 		}
 	}
 
+	public function font_awesome( $args = array() ) {
+		$this->fontawesome( $args );
+	}
+
 	public function fontawesome( $args = array() ) {
+		$folder_name = 'fontawesome';
+
+		$dir_lib = $this->custom_lib_dir;
+		$url_lib = $this->custom_lib_url;
+
+		if ( ! is_dir( $dir_lib . $folder_name . '/' ) ) {
+			$folder_name = 'font-awesome';
+		}
+
+		if ( ! is_dir( $dir_lib . $folder_name . '/' ) ) {
+			return;
+		}
+
+		$dir_lib .= $folder_name;
+		$dir_lib = trailingslashit( $dir_lib );
+
+		$url_lib .= $folder_name;
+		$url_lib = trailingslashit( $url_lib );
+
+		if ( null === $args ) {
+			$base_dir = $dir_lib . 'css/font-awesome.min.css';
+
+			if ( file_exists( $base_dir ) ) {
+				wp_enqueue_style( $folder_name, $url_lib . 'css/font-awesome.min.css' );
+			}
+
+			return;
+		}
+
 		$defaults = array(
 			'cdn'     => false,
 			'version' => '5.11.2',
@@ -264,7 +308,7 @@ class HOCWP_Theme_Enqueue {
 				$kit = 'https://kit.fontawesome.com/' . $kit . '.js';
 			}
 
-			$handle = 'fontawesome-' . $args['version'];
+			$handle = $folder_name . '-' . $args['version'];
 			$handle = sanitize_title( $handle );
 
 			wp_enqueue_script( $handle, $kit, array(), false, true );
@@ -273,8 +317,8 @@ class HOCWP_Theme_Enqueue {
 
 			return;
 		} else {
-			$base_url = HOCWP_Theme()->custom_url . '/lib/fontawesome/';
-			$base_dir = HOCWP_Theme()->custom_path . '/lib/fontawesome/' . $args['version'];
+			$base_url = $url_lib;
+			$base_dir = $dir_lib . $args['version'];
 
 			if ( $args['cdn'] ) {
 				$parts    = array( 'cdnjs', 'cloudflare', 'com' );
@@ -306,7 +350,7 @@ class HOCWP_Theme_Enqueue {
 			unset( $base_url, $base_dir, $css_file );
 		}
 
-		$handle = 'fontawesome-' . $args['version'];
+		$handle = $folder_name . $args['version'];
 		$handle = sanitize_title( $handle );
 
 		wp_enqueue_style( $handle . '-style', $css_url );

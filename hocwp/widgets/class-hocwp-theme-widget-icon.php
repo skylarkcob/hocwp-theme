@@ -157,7 +157,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			$before_title = isset( $args['before_title'] ) ? $args['before_title'] : '<h3 class="widget-title">';
 			$after_title  = isset( $args['after_title'] ) ? $args['after_title'] : '</h3>';
 
-			echo '<div class="icon-box" data-icon="' . esc_attr( $icon ) . '" data-hover-icon=' . esc_attr( $hover_icon ) . '>';
+			echo '<div class="icon-box" data-icon="' . esc_attr( $icon ) . '" data-hover-icon="' . esc_attr( $hover_icon ) . '">';
 
 			foreach ( $sortables as $sortable ) {
 				if ( 'icon' == $sortable ) {

@@ -4,29 +4,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_after_setup_theme() {
-	// Block Editor Palette.
-	$editor_color_palette = array(
-		array(
-			'name'  => __( 'Accent Color', 'hocwp-theme' ),
-			'slug'  => 'accent',
-			'color' => hocwp_theme_get_color_for_area( 'content', 'accent' ),
-		),
-		array(
-			'name'  => __( 'Primary', 'hocwp-theme' ),
-			'slug'  => 'primary',
-			'color' => hocwp_theme_get_color_for_area( 'content', 'text' ),
-		),
-		array(
-			'name'  => __( 'Secondary', 'hocwp-theme' ),
-			'slug'  => 'secondary',
-			'color' => hocwp_theme_get_color_for_area( 'content', 'secondary' ),
-		),
-		array(
-			'name'  => __( 'Subtle Background', 'hocwp-theme' ),
-			'slug'  => 'subtle-background',
-			'color' => hocwp_theme_get_color_for_area( 'content', 'borders' ),
-		),
-	);
+	$editor_color_palette = array();
+
+	if ( function_exists( 'hocwp_theme_get_color_for_area' ) ) {
+		// Block Editor Palette.
+		$editor_color_palette = array(
+			array(
+				'name'  => __( 'Accent Color', 'hocwp-theme' ),
+				'slug'  => 'accent',
+				'color' => hocwp_theme_get_color_for_area( 'content', 'accent' ),
+			),
+			array(
+				'name'  => __( 'Primary', 'hocwp-theme' ),
+				'slug'  => 'primary',
+				'color' => hocwp_theme_get_color_for_area( 'content', 'text' ),
+			),
+			array(
+				'name'  => __( 'Secondary', 'hocwp-theme' ),
+				'slug'  => 'secondary',
+				'color' => hocwp_theme_get_color_for_area( 'content', 'secondary' ),
+			),
+			array(
+				'name'  => __( 'Subtle Background', 'hocwp-theme' ),
+				'slug'  => 'subtle-background',
+				'color' => hocwp_theme_get_color_for_area( 'content', 'borders' ),
+			),
+		);
+	}
 
 	// Add the background option.
 	$background_color = get_theme_mod( 'background_color' );

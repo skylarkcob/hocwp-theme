@@ -181,6 +181,16 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 		return $excerpt;
 	}
 
+	public function get_views() {
+		if ( function_exists( 'pvc_get_post_views' ) ) {
+			$views = pvc_get_post_views( $this->get_id() );
+		} else {
+			$views = get_post_meta( $this->get_id(), 'views', true );
+		}
+
+		return absint( $views );
+	}
+
 	public function the_excerpt( $length = null, $more = null ) {
 		echo apply_filters( 'the_excerpt', $this->get_the_excerpt( $length, $more ) );
 	}
