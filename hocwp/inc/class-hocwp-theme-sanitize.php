@@ -18,9 +18,18 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function extension( $file, $extension ) {
+		if ( HT()->array_has_value( $file ) ) {
+			foreach ( $file as $key => $single_file ) {
+				$file[ $key ] = self::extension( $single_file, $extension );
+			}
+
+			return $file;
+		}
+
 		$extension = trim( $extension, '' );
 		$extension = trim( $extension, '.' );
 		$parts     = pathinfo( $file );
+
 		if ( ! isset( $parts['extension'] ) || $extension != $parts['extension'] ) {
 			$file .= '.' . $extension;
 		}
@@ -43,8 +52,17 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function prefix( $string, $prefix, $sep = '-' ) {
+		if ( HT()->array_has_value( $string ) ) {
+			foreach ( $string as $key => $single_string ) {
+				$string[ $key ] = self::prefix( $single_string, $prefix, $sep );
+			}
+
+			return $string;
+		}
+
 		$pre_len = mb_strlen( $prefix );
 		$sub     = mb_substr( $string, 0, $pre_len );
+
 		if ( $prefix != $sub ) {
 			$string = $prefix . $sep . $string;
 		}
@@ -56,6 +74,7 @@ final class HOCWP_Theme_Sanitize {
 		if ( ! is_array( $classes ) ) {
 			$classes = explode( ' ', $classes );
 		}
+
 		if ( ! empty( $add ) ) {
 			if ( is_array( $add ) ) {
 				$classes = wp_parse_args( $classes, $add );
@@ -63,6 +82,7 @@ final class HOCWP_Theme_Sanitize {
 				$classes[] = $add;
 			}
 		}
+
 		$classes = array_unique( $classes );
 		$classes = array_filter( $classes );
 		$classes = array_map( 'sanitize_html_class', $classes );
@@ -131,6 +151,7 @@ final class HOCWP_Theme_Sanitize {
 		if ( null == $data ) {
 			$data = $_POST;
 		}
+
 		$value = ( is_array( $data ) && isset( $data[ $key ] ) ) ? $data[ $key ] : '';
 
 		return HT_Sanitize()->data( $value, $type );
@@ -154,9 +175,11 @@ final class HOCWP_Theme_Sanitize {
 				case 'ID':
 				case 'positive_integer':
 					$value = absint( $value );
+
 					if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
 						$value = '';
 					}
+
 					break;
 				case 'integer':
 					$value = intval( $value );
@@ -236,6 +259,7 @@ final class HOCWP_Theme_Sanitize {
 			if ( ! isset( $args['tax_query']['relation'] ) ) {
 				$args['tax_query']['relation'] = 'OR';
 			}
+
 			if ( isset( $args['tax_query'] ) ) {
 				array_push( $args['tax_query'], $tax_item );
 			} else {

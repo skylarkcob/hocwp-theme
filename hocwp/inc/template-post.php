@@ -82,7 +82,11 @@ function hocwp_theme_excerpt_length_filter( $length ) {
 
 	$options = isset( $hocwp_theme->options['reading'] ) ? $hocwp_theme->options['reading'] : '';
 
-	if ( is_array( $options ) && isset( $options['excerpt_length'] ) && ! empty( $options['excerpt_length'] ) ) {
+	if ( wp_is_mobile() ) {
+		if ( is_array( $options ) && isset( $options['excerpt_length_mobile'] ) && ! empty( $options['excerpt_length_mobile'] ) ) {
+			$length = $options['excerpt_length_mobile'];
+		}
+	} elseif ( is_array( $options ) && isset( $options['excerpt_length'] ) && ! empty( $options['excerpt_length'] ) ) {
 		$length = $options['excerpt_length'];
 	}
 

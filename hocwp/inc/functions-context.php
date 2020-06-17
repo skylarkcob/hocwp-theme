@@ -276,6 +276,10 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 }
 
 function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
+	if ( 'amp' == $context ) {
+		return $atts;
+	}
+
 	$tag = strtolower( $tag );
 
 	$atts = (array) $atts;

@@ -18,7 +18,9 @@ function hocwp_ext_amp_post_template_data_filter( $data ) {
 		}
 
 		foreach ( $fonts as $key => $url ) {
-			$data['font_urls'][ $key ] = $url;
+			if ( ! empty( $url ) ) {
+				$data['font_urls'][ $key ] = $url;
+			}
 		}
 	}
 
@@ -32,3 +34,30 @@ function hocwp_ext_amp_post_template_css_action() {
 }
 
 add_action( 'amp_post_template_css', 'hocwp_ext_amp_post_template_css_action' );
+
+function hocwp_ext_amp_custom_wp_head() {
+	$fonts = hocwp_ext_amp_fonts();
+
+	if ( HT()->array_has_value( $fonts ) ) {
+		foreach ( $fonts as $key => $url ) {
+			if ( ! empty( $url ) ) {
+				echo '<link rel="stylesheet" href="' . esc_attr( $url ) . '">';
+			}
+		}
+	}
+}
+
+add_action( 'hocwp_theme_wp_head_amp', 'hocwp_ext_amp_custom_wp_head' );
+
+function hocwp_ext_amp_wp_action() {
+	global $wp_query;
+
+	if ( isset( $_GET['amp'] ) || isset( $wp_query->query['amp'] ) ) {
+		if ( ! HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+			wp_redirect( HT_Util()->get_current_url() );
+			exit;
+		}
+	}
+}
+
+add_action( 'wp', 'hocwp_ext_amp_wp_action' );

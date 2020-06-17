@@ -2,6 +2,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+
+if ( HT_Frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
+	hocwp_theme_load_views( 'module-header-amp' );
+
+	return;
+}
 ?>
 	<!DOCTYPE html>
 	<?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>

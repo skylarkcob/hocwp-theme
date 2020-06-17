@@ -78,7 +78,12 @@ class HOCWP_Theme_Enqueue {
 	public function code_editor( $args = array() ) {
 		$defaults = array( 'type' => 'text/html' );
 		$args     = wp_parse_args( $args, $defaults );
-		wp_enqueue_code_editor( $args );
+
+		// Check function exists for WordPress version older than 4.9.0
+		if ( function_exists( 'wp_enqueue_code_editor' ) ) {
+			wp_enqueue_code_editor( $args );
+		}
+
 		wp_enqueue_script( 'hocwp-theme-code-editor' );
 	}
 

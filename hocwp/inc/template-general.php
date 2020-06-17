@@ -9,13 +9,31 @@ function hocwp_theme_module_site_header() {
 
 add_action( 'hocwp_theme_module_site_header', 'hocwp_theme_module_site_header' );
 
+function hocwp_theme_module_site_header_amp() {
+	hocwp_theme_load_custom_module( 'module-site-header-amp' );
+}
+
+add_action( 'hocwp_theme_module_site_header_amp', 'hocwp_theme_module_site_header_amp' );
+
 function hocwp_theme_module_site_footer() {
 	hocwp_theme_load_custom_module( 'module-site-footer' );
 }
 
 add_action( 'hocwp_theme_module_site_footer', 'hocwp_theme_module_site_footer' );
 
+function hocwp_theme_module_site_footer_amp() {
+	hocwp_theme_load_custom_module( 'module-site-footer-amp' );
+}
+
+add_action( 'hocwp_theme_module_site_footer_amp', 'hocwp_theme_module_site_footer_amp' );
+
 function hocwp_theme_template_index() {
+	if ( HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+		hocwp_theme_load_custom_template( 'template-amp' );
+
+		return;
+	}
+
 	if ( is_home() && is_front_page() ) {
 		hocwp_theme_load_custom_template( 'template-index' );
 	} else {
@@ -38,6 +56,12 @@ function hocwp_theme_template_index() {
 add_action( 'hocwp_theme_template_index', 'hocwp_theme_template_index' );
 
 function hocwp_theme_template_page() {
+	if ( HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+		hocwp_theme_load_custom_template( 'template-single-amp' );
+
+		return;
+	}
+
 	$path = '';
 
 	if ( is_front_page() ) {
@@ -55,6 +79,41 @@ function hocwp_theme_template_page() {
 
 add_action( 'hocwp_theme_template_page', 'hocwp_theme_template_page' );
 
+function hocwp_theme_template_single() {
+	if ( HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+		hocwp_theme_load_custom_template( 'template-single-amp' );
+
+		return;
+	}
+
+	if ( ! is_page() && is_singular() ) {
+		$tmp = get_post_type( get_the_ID() );
+
+		if ( 'post' != $tmp ) {
+			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-single-' . $tmp . '.php';
+
+			if ( file_exists( $file ) ) {
+				load_template( $file );
+
+				return;
+			}
+
+			$tmp  = str_replace( '_', '-', $tmp );
+			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-single-' . $tmp . '.php';
+
+			if ( file_exists( $file ) ) {
+				load_template( $file );
+
+				return;
+			}
+		}
+	}
+
+	hocwp_theme_load_custom_template( 'template-single' );
+}
+
+add_action( 'hocwp_theme_template_single', 'hocwp_theme_template_single' );
+
 function hocwp_theme_template_404() {
 	hocwp_theme_load_custom_template( 'template-404' );
 }
@@ -62,6 +121,12 @@ function hocwp_theme_template_404() {
 add_action( 'hocwp_theme_template_404', 'hocwp_theme_template_404' );
 
 function hocwp_theme_template_archive() {
+	if ( HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+		hocwp_theme_load_custom_template( 'template-amp' );
+
+		return;
+	}
+
 	if ( is_post_type_archive() ) {
 		global $post_type;
 
@@ -190,6 +255,12 @@ function hocwp_theme_template_include_filter( $template ) {
 add_filter( 'template_include', 'hocwp_theme_template_include_filter', 9999 );
 
 function hocwp_theme_template_search() {
+	if ( HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+		hocwp_theme_load_custom_template( 'template-amp' );
+
+		return;
+	}
+
 	hocwp_theme_load_custom_template( 'template-search' );
 }
 
@@ -527,35 +598,6 @@ function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 }
 
 add_filter( 'dynamic_sidebar_params', 'hocwp_theme_dynamic_sidebar_params_filter' );
-
-function hocwp_theme_template_single() {
-	if ( ! is_page() && is_singular() ) {
-		$tmp = get_post_type( get_the_ID() );
-
-		if ( 'post' != $tmp ) {
-			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-single-' . $tmp . '.php';
-
-			if ( file_exists( $file ) ) {
-				load_template( $file );
-
-				return;
-			}
-
-			$tmp  = str_replace( '_', '-', $tmp );
-			$file = HOCWP_THEME_CUSTOM_PATH . '/views/template-single-' . $tmp . '.php';
-
-			if ( file_exists( $file ) ) {
-				load_template( $file );
-
-				return;
-			}
-		}
-	}
-
-	hocwp_theme_load_custom_template( 'template-single' );
-}
-
-add_action( 'hocwp_theme_template_single', 'hocwp_theme_template_single' );
 
 function hocwp_theme_content_area_before() {
 	?>

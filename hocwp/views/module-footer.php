@@ -3,6 +3,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( HT_Frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
+	hocwp_theme_load_views( 'module-footer-amp' );
+
+	return;
+}
+
 do_action( 'hocwp_theme_site_content_bottom' );
 hocwp_theme_html_tag_close( 'div' );
 do_action( 'hocwp_theme_site_footer_before' );

@@ -223,6 +223,19 @@ function hocwp_theme_settings_page_social_field() {
 	);
 
 	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'google',
+		'id'      => 'search_engine_id',
+		'title'   => 'Search engine ID',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
 		'tab'   => 'social',
 		'id'    => 'addthis_id',
 		'title' => 'AddThis ID',

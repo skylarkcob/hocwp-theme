@@ -17,7 +17,92 @@ class HOCWP_Theme_Utility {
 	protected function __construct() {
 	}
 
-	public function is_amp() {
+	public function is_amp( $mode = '' ) {
+		global $wp_query;
+
+		if ( isset( $wp_query->query['menu-amp'] ) ) {
+			return true;
+		}
+
+		if ( ! empty( $mode ) ) {
+			$options = get_option( 'amp-options' );
+
+			if ( ! is_array( $options ) || ! isset( $options['theme_support'] ) ) {
+				return false;
+			}
+
+			if ( is_array( $mode ) && ! in_array( $options['theme_support'], $mode ) ) {
+				return false;
+			}
+
+			if ( ! is_array( $mode ) && $options['theme_support'] != $mode ) {
+				return false;
+			}
+
+			$supported_templates = isset( $options['supported_templates'] ) ? $options['supported_templates'] : '';
+
+			if ( empty( $supported_templates ) || ! is_array( $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_home() && ! in_array( 'is_home', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( ( is_singular() || is_page() || is_single() ) && ! in_array( 'is_singular', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_author() && ! in_array( 'is_author', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_date() && ! in_array( 'is_date', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_category() && ! in_array( 'is_category', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_tag() && ! in_array( 'is_tag', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_search() && ! in_array( 'is_search', $supported_templates ) ) {
+				return false;
+			}
+
+			if ( is_404() && ! in_array( 'is_404', $supported_templates ) ) {
+				return false;
+			}
+
+			$args = array(
+				'public'   => true,
+				'_builtin' => false
+			);
+
+			$post_types = get_post_types( $args );
+
+			if ( HT()->array_has_value( $post_types ) ) {
+				foreach ( $post_types as $post_type ) {
+					if ( is_string( $post_type ) && is_post_type_archive( $post_type ) && ! in_array( 'is_post_type_archive[' . $post_type . ']', $supported_templates ) ) {
+						return false;
+					}
+				}
+			}
+
+			$taxs = get_taxonomies( $args );
+
+			if ( HT()->array_has_value( $taxs ) ) {
+				foreach ( $taxs as $tax ) {
+					if ( is_string( $tax ) && is_tax( $tax ) && ! in_array( 'is_tax[' . $tax . ']', $supported_templates ) ) {
+						return false;
+					}
+				}
+			}
+		}
+
 		if ( isset( $_GET['amp'] ) ) {
 			return true;
 		}

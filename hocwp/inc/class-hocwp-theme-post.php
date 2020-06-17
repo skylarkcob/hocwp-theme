@@ -78,6 +78,12 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 		return $result;
 	}
 
+	public function amp_enabled() {
+		$status = $this->get_meta( 'amp_status' );
+
+		return ( 'disabled' != $status || 1 == $status );
+	}
+
 	/**
 	 * Get post meta value.
 	 *
@@ -140,7 +146,9 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 
 	public function get_the_excerpt( $length = null, $more = null ) {
 		if ( ! is_numeric( $length ) ) {
-			$length = HT_Options()->get_tab( 'excerpt_length', '', 'reading' );
+			$key = ( wp_is_mobile() ) ? 'excerpt_length_mobile' : 'excerpt_length';
+
+			$length = HT_Options()->get_tab( $key, '', 'reading' );
 
 			if ( ! is_numeric( $length ) ) {
 				$length = 55;

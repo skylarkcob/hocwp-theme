@@ -27,6 +27,9 @@ function hocwp_theme_settings_page_amp_field() {
 
 	$options = HT_Util()->get_theme_options( 'amp' );
 
+	$field    = hocwp_theme_create_setting_field( 'menu_button_label', __( 'Menu Button Label', 'hocwp-theme' ), 'input', array(), 'string', 'amp' );
+	$fields[] = $field;
+
 	$args = array(
 		'class' => 'medium-text',
 		'type'  => 'checkbox',
@@ -68,6 +71,9 @@ function hocwp_theme_settings_page_amp_field() {
 	);
 
 	$field    = hocwp_theme_create_setting_field( 'custom_css', __( 'Custom CSS', 'hocwp-theme' ), 'textarea', $args, 'text', 'amp' );
+	$fields[] = $field;
+
+	$field    = hocwp_theme_create_setting_field( 'amp_footer', __( 'Site Footer', 'hocwp-theme' ), 'editor', array(), 'html', 'amp' );
 	$fields[] = $field;
 
 	return $fields;

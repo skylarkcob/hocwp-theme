@@ -35,6 +35,18 @@ function hocwp_ext_amp_fonts() {
 	return $result;
 }
 
+function hocwp_ext_amp_after_setup_theme_action() {
+	register_nav_menu( 'amp', __( 'AMP menu', 'hocwp-theme' ) );
+}
+
+add_action( 'after_setup_theme', 'hocwp_ext_amp_after_setup_theme_action' );
+
+function hocwp_ext_amp_init_action() {
+	add_rewrite_endpoint( 'menu-amp', EP_ROOT );
+}
+
+add_action( 'init', 'hocwp_ext_amp_init_action', 0 );
+
 if ( ! is_admin() ) {
 	load_template( HOCWP_EXT_AMP_PATH . '/front-end.php' );
 } else {
