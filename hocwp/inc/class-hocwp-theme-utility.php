@@ -39,65 +39,69 @@ class HOCWP_Theme_Utility {
 				return false;
 			}
 
-			$supported_templates = isset( $options['supported_templates'] ) ? $options['supported_templates'] : '';
+			$all_templates_supported = isset( $options['all_templates_supported'] ) ? $options['all_templates_supported'] : '';
 
-			if ( empty( $supported_templates ) || ! is_array( $supported_templates ) ) {
-				return false;
-			}
+			if ( ! $all_templates_supported ) {
+				$supported_templates = isset( $options['supported_templates'] ) ? $options['supported_templates'] : '';
 
-			if ( is_home() && ! in_array( 'is_home', $supported_templates ) ) {
-				return false;
-			}
+				if ( empty( $supported_templates ) || ! is_array( $supported_templates ) ) {
+					return false;
+				}
 
-			if ( ( is_singular() || is_page() || is_single() ) && ! in_array( 'is_singular', $supported_templates ) ) {
-				return false;
-			}
+				if ( is_home() && ! in_array( 'is_home', $supported_templates ) ) {
+					return false;
+				}
 
-			if ( is_author() && ! in_array( 'is_author', $supported_templates ) ) {
-				return false;
-			}
+				if ( ( is_singular() || is_page() || is_single() ) && ! in_array( 'is_singular', $supported_templates ) ) {
+					return false;
+				}
 
-			if ( is_date() && ! in_array( 'is_date', $supported_templates ) ) {
-				return false;
-			}
+				if ( is_author() && ! in_array( 'is_author', $supported_templates ) ) {
+					return false;
+				}
 
-			if ( is_category() && ! in_array( 'is_category', $supported_templates ) ) {
-				return false;
-			}
+				if ( is_date() && ! in_array( 'is_date', $supported_templates ) ) {
+					return false;
+				}
 
-			if ( is_tag() && ! in_array( 'is_tag', $supported_templates ) ) {
-				return false;
-			}
+				if ( is_category() && ! in_array( 'is_category', $supported_templates ) ) {
+					return false;
+				}
 
-			if ( is_search() && ! in_array( 'is_search', $supported_templates ) ) {
-				return false;
-			}
+				if ( is_tag() && ! in_array( 'is_tag', $supported_templates ) ) {
+					return false;
+				}
 
-			if ( is_404() && ! in_array( 'is_404', $supported_templates ) ) {
-				return false;
-			}
+				if ( is_search() && ! in_array( 'is_search', $supported_templates ) ) {
+					return false;
+				}
 
-			$args = array(
-				'public'   => true,
-				'_builtin' => false
-			);
+				if ( is_404() && ! in_array( 'is_404', $supported_templates ) ) {
+					return false;
+				}
 
-			$post_types = get_post_types( $args );
+				$args = array(
+					'public'   => true,
+					'_builtin' => false
+				);
 
-			if ( HT()->array_has_value( $post_types ) ) {
-				foreach ( $post_types as $post_type ) {
-					if ( is_string( $post_type ) && is_post_type_archive( $post_type ) && ! in_array( 'is_post_type_archive[' . $post_type . ']', $supported_templates ) ) {
-						return false;
+				$post_types = get_post_types( $args );
+
+				if ( HT()->array_has_value( $post_types ) ) {
+					foreach ( $post_types as $post_type ) {
+						if ( is_string( $post_type ) && is_post_type_archive( $post_type ) && ! in_array( 'is_post_type_archive[' . $post_type . ']', $supported_templates ) ) {
+							return false;
+						}
 					}
 				}
-			}
 
-			$taxs = get_taxonomies( $args );
+				$taxs = get_taxonomies( $args );
 
-			if ( HT()->array_has_value( $taxs ) ) {
-				foreach ( $taxs as $tax ) {
-					if ( is_string( $tax ) && is_tax( $tax ) && ! in_array( 'is_tax[' . $tax . ']', $supported_templates ) ) {
-						return false;
+				if ( HT()->array_has_value( $taxs ) ) {
+					foreach ( $taxs as $tax ) {
+						if ( is_string( $tax ) && is_tax( $tax ) && ! in_array( 'is_tax[' . $tax . ']', $supported_templates ) ) {
+							return false;
+						}
 					}
 				}
 			}

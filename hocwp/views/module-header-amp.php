@@ -38,6 +38,8 @@ if ( is_singular() || is_single() || is_page() ) {
 			$css = HT_Util()->read_all_text( $file );
 		}
 
+		$css .= hocwp_theme_get_customizer_css();
+
 		$css .= HT_Options()->get_tab( 'custom_css', '', 'amp' );
 
 		$css = apply_filters( 'hocwp_theme_amp_custom_style', $css );
