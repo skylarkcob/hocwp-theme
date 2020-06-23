@@ -436,7 +436,7 @@ class HOCWP_Theme_Utility {
 			$dir = ABSPATH;
 			$dir = wp_normalize_path( $dir );
 			$dir = untrailingslashit( $dir );
-			$url = untrailingslashit( get_site_url() );
+			$url = untrailingslashit( home_url() );
 			$url = str_replace( '/', '\\', $url );
 			$url = str_replace( $dir, $url, $file_or_dir );
 			$url = str_replace( '\\', '/', $url );
@@ -965,6 +965,26 @@ class HOCWP_Theme_Utility {
 			}
 		}
 
+		if ( empty( $id ) && false !== strpos( $url, 'youtu.be/' ) ) {
+			$params = explode( 'youtu.be/', $url );
+
+			if ( 2 == count( $params ) ) {
+				$id = $params[1];
+			}
+		}
+
+		if ( false !== strpos( $id, '/?' ) ) {
+			$params = explode( '/?', $id );
+			$id     = current( $params );
+		}
+
+		if ( false !== strpos( $id, '?' ) ) {
+			$params = explode( '?', $id );
+			$id     = current( $params );
+		}
+
+		unset( $parse, $params );
+
 		return $id;
 	}
 
@@ -990,6 +1010,34 @@ class HOCWP_Theme_Utility {
 		$data = HT_Util()->get_contents( $api_url );
 
 		return json_decode( $data );
+	}
+
+	public static function get_user_role_names( $user ) {
+		$user = HT_Util()->return_user( $user );
+
+		if ( $user instanceof WP_User ) {
+			$roles = $user->roles;
+
+			if ( HT()->array_has_value( $roles ) ) {
+				if ( ! function_exists( 'get_editable_roles' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/user.php';
+				}
+
+				$all_roles = get_editable_roles();
+
+				if ( is_array( $all_roles ) ) {
+					foreach ( $roles as $key => $role ) {
+						if ( isset( $all_roles[ $role ] ) && isset( $all_roles[ $role ]['name'] ) ) {
+							$roles[ $key ] = translate_user_role( $all_roles[ $role ]['name'] );
+						}
+					}
+				}
+			}
+
+			return $roles;
+		}
+
+		return null;
 	}
 
 	public static function get_paged() {
@@ -2079,6 +2127,10 @@ class HOCWP_Theme_Utility {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Admin()->' . __FUNCTION__ . '()' );
 
 		return HT_Admin()->get_current_new_post();
+	}
+
+	public function shortcut_icon_tag() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.7.7' );
 	}
 }
 

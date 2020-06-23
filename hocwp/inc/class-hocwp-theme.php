@@ -825,6 +825,24 @@ final class HOCWP_Theme {
 		return ( false !== $pos );
 	}
 
+	public function is_google_pagespeed() {
+		$result = false;
+
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			if ( stripos( $_SERVER['HTTP_USER_AGENT'], 'Speed Insights' ) !== false ) {
+				$result = true;
+			} elseif ( stripos( $_SERVER['HTTP_USER_AGENT'], 'Page Speed' ) !== false ) {
+				$result = true;
+			} elseif ( stripos( $_SERVER['HTTP_USER_AGENT'], 'Chrome-Lighthouse' ) !== false ) {
+				$result = true;
+			} elseif ( stripos( $_SERVER['HTTP_USER_AGENT'], 'Pagespeed' ) !== false ) {
+				$result = true;
+			}
+		}
+
+		return $result;
+	}
+
 	public function is_valid_domain( $url ) {
 		$validation = false;
 

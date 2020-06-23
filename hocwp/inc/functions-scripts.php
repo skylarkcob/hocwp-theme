@@ -3,13 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$using = apply_filters( 'hocwp_theme_using_emoji', false );
-
-if ( ! $using ) {
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-}
-
 function hocwp_theme_style_loader_src_filter( $src, $handle ) {
 	if ( ! is_admin() ) {
 		$load = apply_filters( 'hocwp_theme_load_default_style', true );

@@ -42,10 +42,6 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_script( 'hocwp-theme-sortable' );
 	}
 
-	public function jquery_ui_style( $version = '1.12.1' ) {
-		wp_enqueue_style( 'jquery-ui-style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/' . $version . '/jquery-ui.min.css' );
-	}
-
 	public function datepicker() {
 		$this->jquery_ui_style();
 		wp_enqueue_script( 'hocwp-theme-datepicker' );
@@ -299,9 +295,7 @@ class HOCWP_Theme_Enqueue {
 		}
 
 		$defaults = array(
-			'cdn'     => false,
-			'version' => '5.11.2',
-			'kit'     => false
+			'version' => '5.11.2'
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -309,51 +303,35 @@ class HOCWP_Theme_Enqueue {
 		$kit = $args['kit'];
 
 		if ( ! empty( $kit ) ) {
-			if ( false === strpos( $kit, 'http' ) ) {
-				$kit = 'https://kit.fontawesome.com/' . $kit . '.js';
-			}
-
-			$handle = $folder_name . '-' . $args['version'];
-			$handle = sanitize_title( $handle );
-
-			wp_enqueue_script( $handle, $kit, array(), false, true );
-
-			unset( $handle, $kit );
-
-			return;
-		} else {
-			$base_url = $url_lib;
-			$base_dir = $dir_lib . $args['version'];
-
-			if ( $args['cdn'] ) {
-				$parts    = array( 'cdnjs', 'cloudflare', 'com' );
-				$base_url = 'https://';
-				$base_url .= join( '.', $parts );
-				$base_url .= '/ajax/libs/font-awesome/';
-
-				unset( $parts );
-			}
-
-			if ( version_compare( $args['version'], '4.7.0', '>' ) ) {
-				$css_file = 'css/all.min.css';
-			} else {
-				$css_file = 'css/font-awesome.min.css';
-			}
-
-			$this->auto_check_lib_version( $args, $base_dir, $css_file );
-
-			$base_dir = trailingslashit( $base_dir );
-
-			if ( ! empty( $args['version'] ) ) {
-				$base_url .= $args['version'];
-			}
-
-			$base_url = trailingslashit( $base_url );
-
-			$css_url = $base_url . $css_file;
-
-			unset( $base_url, $base_dir, $css_file );
+			_deprecated_argument( __FUNCTION__, '6.7.7', sprintf( __( 'Stop using %s param from %s for loading resource from CDN.', 'hocwp-theme' ), 'kit', '$args' ) );
 		}
+
+		$base_url = $url_lib;
+		$base_dir = $dir_lib . $args['version'];
+
+		if ( $args['cdn'] ) {
+			_deprecated_argument( __FUNCTION__, '6.7.7', sprintf( __( 'Stop using %s param from %s for loading resource from CDN.', 'hocwp-theme' ), 'cdn', '$args' ) );
+		}
+
+		if ( version_compare( $args['version'], '4.7.0', '>' ) ) {
+			$css_file = 'css/all.min.css';
+		} else {
+			$css_file = 'css/font-awesome.min.css';
+		}
+
+		$this->auto_check_lib_version( $args, $base_dir, $css_file );
+
+		$base_dir = trailingslashit( $base_dir );
+
+		if ( ! empty( $args['version'] ) ) {
+			$base_url .= $args['version'];
+		}
+
+		$base_url = trailingslashit( $base_url );
+
+		$css_url = $base_url . $css_file;
+
+		unset( $base_url, $base_dir, $css_file );
 
 		$handle = $folder_name . $args['version'];
 		$handle = sanitize_title( $handle );
@@ -361,6 +339,10 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_style( $handle . '-style', $css_url );
 
 		unset( $defaults, $handle, $css_url, $kit );
+	}
+
+	public function jquery_ui_style( $deprecated = '' ) {
+		_deprecated_function( __FUNCTION__, '6.7.7' );
 	}
 }
 

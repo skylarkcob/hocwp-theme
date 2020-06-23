@@ -16,6 +16,9 @@
 * Allow user filter inline css for customize and front-end.
 * Fix attribute widget icon.
 * Fix global $posts variable.
+* Large update prepare for WordPress version 5.5.
+* Require at least PHP version 7.2.
+* Require WordPress version 5.5 or later.
 
 = 6.7.6 =
 * Theme now supports some customizer functions.

@@ -71,22 +71,6 @@ if ( is_admin() ) {
 	add_action( 'pre_get_users', 'hocwp_theme_pre_get_users_action' );
 }
 
-function hocwp_theme_user_contactmethods_filter( $methods ) {
-	$methods['title']       = __( 'Title', 'hocwp-theme' );
-	$methods['facebook']    = __( 'Facebook URL', 'hocwp-theme' );
-	$methods['youtube']     = __( 'YouTube URL', 'hocwp-theme' );
-	$methods['google_plus'] = __( 'Google Plus URL', 'hocwp-theme' );
-	$methods['twitter']     = __( 'Twitter URL', 'hocwp-theme' );
-	$methods['donate']      = __( 'Donate URL', 'hocwp-theme' );
-	$methods['phone']       = __( 'Phone', 'hocwp-theme' );
-	$methods['identity']    = __( 'Identity', 'hocwp-theme' );
-	$methods['address']     = __( 'Address', 'hocwp-theme' );
-
-	return $methods;
-}
-
-add_filter( 'user_contactmethods', 'hocwp_theme_user_contactmethods_filter' );
-
 function hocwp_theme_wp_new_user_notification_email_filter( $data, $user, $blog_name ) {
 	if ( $user instanceof WP_User ) {
 		$message = isset( $data['message'] ) ? $data['message'] : '';

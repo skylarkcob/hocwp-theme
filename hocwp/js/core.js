@@ -56,7 +56,11 @@ hocwpTheme.addParam = function (key, value, url) {
     }
 };
 
-log("%c" + hocwpTheme.l10n.themeCreatedBy, "font-size:16px;color:red;font-family:tahoma;padding:10px 0");
+setTimeout(function () {
+    if (hocwpTheme && hocwpTheme.l10n && hocwpTheme.l10n.themeCreatedBy) {
+        log("%c" + hocwpTheme.l10n.themeCreatedBy, "font-size:16px;color:red;font-family:tahoma;padding:10px 0");
+    }
+}, 5000);
 
 function hocwpThemeFilterList(input) {
     var filter, ul, li, a, i, txtValue;
@@ -94,6 +98,10 @@ hocwpTheme.isEmail = function (email) {
     }
 
     return (false);
+};
+
+hocwpTheme.isGooglePagespeed = function () {
+    return (navigator.userAgent.indexOf("Speed Insights") !== -1 || navigator.userAgent.indexOf("Chrome-Lighthouse") !== -1 || navigator.userAgent.indexOf("Page Speed") !== -1 || navigator.userAgent.indexOf("Pagespeed") !== -1);
 };
 
 (function () {

@@ -130,7 +130,7 @@ function hocwp_theme_check_domain_change() {
 
 	$old_url = get_option( 'hocwp_theme_siteurl' );
 	$old_url = untrailingslashit( $old_url );
-	$new_url = site_url();
+	$new_url = home_url();
 	$new_url = untrailingslashit( $new_url );
 
 	if ( $old_url != $new_url ) {

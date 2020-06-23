@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+apply_filters_deprecated( 'hocwp_theme_using_emoji', array( false ), '6.7.7' );
+
 function hocwp_theme_attribute( $deprecated ) {
 	_deprecated_function( __FUNCTION__, '6.2.3', 'hocwp_theme_html_tag_attribute' );
 }
@@ -37,3 +39,27 @@ function hocwp_theme_show_hook_deprecation_warnings() {
 }
 
 add_action( 'init', 'hocwp_theme_show_hook_deprecation_warnings' );
+
+function hocwp_theme_wp_dashboard_setup() {
+	_deprecated_function( __FUNCTION__, '6.7.7' );
+}
+
+function hocwp_theme_wp_dashboard_setup_action() {
+	_deprecated_function( __FUNCTION__, '6.7.7' );
+}
+
+function hocwp_theme_user_contactmethods_filter( $deprecated = '' ) {
+	_deprecated_function( __FUNCTION__, '6.7.7' );
+}
+
+function hocwp_theme_site_icon() {
+	_deprecated_function( __FUNCTION__, '6.7.7' );
+}
+
+function hocwp_theme_admin_head_action() {
+	_deprecated_function( __FUNCTION__, '6.7.7' );
+}
+
+function hocwp_theme_ext_amp_wp_head_amp_action() {
+	_deprecated_function( __FUNCTION__, '6.7.7' );
+}

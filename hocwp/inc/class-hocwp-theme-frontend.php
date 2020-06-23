@@ -95,7 +95,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$args['menu_class'] = trim( $menu_class );
 
-		wp_nav_menu( $args );
+		wp_nav_menu( wp_parse_args( array( 'theme_location' => '', $args ) ) );
 	}
 
 	public function wp_nav_menu_helper( $args = array() ) {

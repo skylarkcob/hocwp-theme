@@ -35,12 +35,10 @@ global $wp_query;
 						require_once HOCWP_Theme()->core_path . '/inc/class-hocwp-theme-walker-nav-menu-amp.php';
 					}
 
-					$args = array(
+					wp_nav_menu( array(
 						'theme_location' => 'amp',
 						'walker'         => new HOCWP_Theme_Walker_Nav_Menu_AMP()
-					);
-
-					wp_nav_menu( $args );
+					) );
 					?>
 				</div>
 			</div>

@@ -180,25 +180,6 @@ if ( ! is_admin() ) {
 	add_action( 'admin_bar_menu', 'hocwp_theme_admin_bar_menu_action' );
 }
 
-function hocwp_theme_site_icon() {
-	global $hocwp_theme;
-
-	$options = $hocwp_theme->options;
-
-	if ( isset( $options['general']['site_icon'] ) && HOCWP_Theme::is_positive_number( $options['general']['site_icon'] ) ) {
-		$ico  = $options['general']['site_icon'];
-		$mime = get_post_mime_type( $ico );
-
-		if ( 'image/jpeg' != $mime && 'image/png' != $mime ) {
-			echo '<link rel="icon" type="' . $mime . '" href="' . wp_get_attachment_url( $ico ) . '">';
-		}
-	}
-}
-
-add_action( 'wp_head', 'hocwp_theme_site_icon', 99 );
-add_action( 'admin_head', 'hocwp_theme_site_icon', 99 );
-add_action( 'login_head', 'hocwp_theme_site_icon', 99 );
-
 function hocwp_theme_page_templates( $post_templates ) {
 	$dir = HOCWP_THEME_CUSTOM_PATH . '/page-templates';
 

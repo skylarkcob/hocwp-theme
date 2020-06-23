@@ -258,20 +258,6 @@ function hocwp_theme_backup_wp_content_folders_theme( $folders ) {
 
 add_filter( 'hocwp_theme_backup_wp_content_folders', 'hocwp_theme_backup_wp_content_folders_theme' );
 
-function hocwp_theme_admin_head_action() {
-	$icon = HT_Util()->get_theme_option( 'site_icon' );
-
-	if ( HT()->is_positive_number( $icon ) ) {
-		$icon = HT_Sanitize()->media_value( $icon );
-
-		if ( ! empty( $icon['url'] ) ) {
-			echo '<link rel="shortcut icon" type="' . $icon['mime_type'] . '" href="' . $icon['url'] . '"/>';
-		}
-	}
-}
-
-add_action( 'admin_head', 'hocwp_theme_admin_head_action' );
-
 if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow || 'customize.php' == $pagenow ) {
 	function hocwp_theme_widget_form_before( $instance, $widget ) {
 		if ( $widget instanceof WP_Widget ) {

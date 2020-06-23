@@ -60,8 +60,6 @@ function hocwp_theme_upload_mimes_filter( $mimes ) {
 	return $mimes;
 }
 
-add_filter( 'upload_mimes', 'hocwp_theme_upload_mimes_filter' );
-
 // Update WEBP image file type
 function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file ) {
 	if ( HT_Media()->is_webp_image( $file ) ) {
