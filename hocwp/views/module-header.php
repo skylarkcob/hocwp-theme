@@ -7,8 +7,8 @@ if ( HT_Frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
 	hocwp_theme_load_views( 'module-header-amp' );
 
 	return;
-}
-?>
+} else {
+	?>
 	<!DOCTYPE html>
 	<?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>
 	<head>
@@ -23,16 +23,21 @@ if ( HT_Frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
 		wp_head();
 		?>
 	</head>
-<?php
+	<?php
+}
+
 hocwp_theme_html_tag( 'body' );
 wp_body_open();
-hocwp_theme_html_tag( 'div', 'site_container' );
-?>
+
+if ( ! defined( 'HOCWP_THEME_BLANK_STYLE' ) || ! HOCWP_THEME_BLANK_STYLE ) {
+	hocwp_theme_html_tag( 'div', 'site_container' );
+	?>
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'hocwp-theme' ); ?></a>
 	<header id="masthead" class="site-header">
 		<?php do_action( 'hocwp_theme_module_site_header' ); ?>
 	</header>
-<?php
-do_action( 'hocwp_theme_site_header_after' );
-hocwp_theme_html_tag( 'div', 'site_content' );
-do_action( 'hocwp_theme_site_content_top' );
+	<?php
+	do_action( 'hocwp_theme_site_header_after' );
+	hocwp_theme_html_tag( 'div', 'site_content' );
+	do_action( 'hocwp_theme_site_content_top' );
+}
