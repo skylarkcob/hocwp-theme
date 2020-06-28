@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Data type: boolean
  */
-define( 'HOCWP_THEME_BLANK_STYLE', true );
+define( 'HOCWP_THEME_BLANK_STYLE', false );
 
 /**
  * Define theme support microformats or not.
