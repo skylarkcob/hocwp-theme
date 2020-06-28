@@ -419,6 +419,10 @@ function hocwp_theme_check_environment() {
 			}
 		}
 	}
+
+	if ( defined( 'HOCWP_THEME_BLANK_STYLE' ) && HOCWP_THEME_BLANK_STYLE ) {
+		remove_action( 'wp_enqueue_scripts', 'hocwp_theme_scripts' );
+	}
 }
 
 add_action( 'init', 'hocwp_theme_check_environment' );

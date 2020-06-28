@@ -290,7 +290,9 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 			$screen_width = isset( $client_info['screen_width'] ) ? $client_info['screen_width'] : 'unknown';
 
-			$atts['data-screen-width'] = $screen_width;
+			if ( HT()->is_positive_number( $screen_width ) ) {
+				$atts['data-screen-width'] = $screen_width;
+			}
 
 			break;
 		case 'body':

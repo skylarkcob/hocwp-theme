@@ -4,6 +4,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Define theme load default styles and scripts or not.
+ *
+ * Data type: boolean
+ */
+define( 'HOCWP_THEME_BLANK_STYLE', true );
+
+/**
  * Define theme support microformats or not.
  *
  * Data type: boolean
