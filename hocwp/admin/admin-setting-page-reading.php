@@ -63,6 +63,40 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'page_404', __( 'Not Found Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
 	$fields[] = $field;
 
+	$lists = get_post_types( array( 'public' => true ) );
+
+	$args = array(
+		'options'  => $lists,
+		'multiple' => 'multiple'
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'post_types', __( 'Query Post Types', 'hocwp-theme' ), 'chosen', $args, 'array', 'reading' );
+	$fields[] = $field;
+
+	$lists = array(
+		'none'          => _x( 'No order', 'orderby', 'hocwp-theme' ),
+		'ID'            => _x( 'Post ID', 'orderby', 'hocwp-theme' ),
+		'author'        => _x( 'Post author', 'orderby', 'hocwp-theme' ),
+		'title'         => _x( 'Post title', 'orderby', 'hocwp-theme' ),
+		'name'          => _x( 'Post name', 'orderby', 'hocwp-theme' ),
+		'type'          => _x( 'Post type', 'orderby', 'hocwp-theme' ),
+		'date'          => _x( 'Post date', 'orderby', 'hocwp-theme' ),
+		'modified'      => _x( 'Last modified date', 'orderby', 'hocwp-theme' ),
+		'parent'        => _x( 'Post parent', 'orderby', 'hocwp-theme' ),
+		'rand'          => _x( 'Random', 'orderby', 'hocwp-theme' ),
+		'comment_count' => _x( 'Number of comments', 'orderby', 'hocwp-theme' ),
+		'relevance'     => _x( 'Search terms', 'orderby', 'hocwp-theme' ),
+		'menu_order'    => _x( 'Post order', 'orderby', 'hocwp-theme' )
+	);
+
+	$args = array(
+		'options'  => $lists,
+		'multiple' => 'multiple'
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'orderby', __( 'Query Orderby', 'hocwp-theme' ), 'chosen', $args, 'array', 'reading' );
+	$fields[] = $field;
+
 	$args = array(
 		'class' => 'medium-text'
 	);

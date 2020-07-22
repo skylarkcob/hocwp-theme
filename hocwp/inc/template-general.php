@@ -1018,12 +1018,14 @@ function hocwp_theme_wp_footer_action() {
 		}
 
 		$text .= '&nbsp;';
-		$text .= '<button id="sc-gdpr-accept">' . __( 'Accept', 'hocwp-theme' ) . '</button>';
+		$text .= '<button id="sc-gdpr-accept" class="btn btn-success">' . __( 'Accept', 'hocwp-theme' ) . '</button>';
 		?>
-		<div id="sc-gdpr-box" style="display: none;">
+		<div id="sc-gdpr-box" class="fixed-bottom alert alert-warning mb-0 text-dark rounded-0 alert-dismissible fade show" role="alert" style="display: none;">
 			<div class="centerd">
 				<?php echo wpautop( $text ); ?>
-				<button id="sc-gdpr-close">&times;</button>
+				<button id="sc-gdpr-close" type="button" class="close" data-dismiss="alert"
+				        aria-label="<?php esc_attr_e( 'Close', 'hocwp-theme' ); ?>"><span
+						aria-hidden="true">&times;</span></button>
 			</div>
 		</div>
 		<?php

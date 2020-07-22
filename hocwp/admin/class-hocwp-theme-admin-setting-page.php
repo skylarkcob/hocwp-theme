@@ -528,6 +528,12 @@ final class HOCWP_Theme_Admin_Setting_Page {
 							HT_Enqueue()->media_upload();
 							HT_Enqueue()->sortable();
 							break;
+						case 'code_editor':
+							HT_Enqueue()->code_editor();
+							break;
+						case 'chosen':
+							HT_Enqueue()->chosen();
+							break;
 					}
 				}
 			}

@@ -18,6 +18,8 @@ if ( ! defined( 'HOCWP_THEME_BLANK_STYLE' ) || ! HOCWP_THEME_BLANK_STYLE ) {
 	hocwp_theme_html_tag_close( 'footer' );
 	do_action( 'hocwp_theme_site_footer_after' );
 	hocwp_theme_html_tag_close( 'div' );
+} else {
+	do_action( 'hocwp_theme_module_site_footer' );
 }
 
 wp_footer();

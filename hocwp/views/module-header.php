@@ -40,4 +40,6 @@ if ( ! defined( 'HOCWP_THEME_BLANK_STYLE' ) || ! HOCWP_THEME_BLANK_STYLE ) {
 	do_action( 'hocwp_theme_site_header_after' );
 	hocwp_theme_html_tag( 'div', 'site_content' );
 	do_action( 'hocwp_theme_site_content_top' );
+} else {
+	do_action( 'hocwp_theme_module_site_header' );
 }

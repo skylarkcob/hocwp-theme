@@ -94,199 +94,211 @@ final class HOCWP_Theme_Query {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$query = new WP_Query();
+		$tr_name = 'query_related_posts_' . md5( maybe_serialize( $args ) );
 
-		$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : '';
-		unset( $args['taxonomy'] );
+		if ( false === ( $query = get_transient( $tr_name ) ) ) {
+			$query = new WP_Query();
 
-		if ( ! empty( $taxonomy ) ) {
-			if ( ! is_array( $taxonomy ) ) {
-				$taxonomy = array( $taxonomy );
-			}
+			$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : '';
+			unset( $args['taxonomy'] );
 
-			$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : '';
-
-			if ( ! is_array( $tax_query ) ) {
-				$tax_query = array();
-			}
-
-			foreach ( $taxonomy as $tax ) {
-				$term_ids = wp_get_object_terms( get_the_ID(), $tax, array( 'fields' => 'ids' ) );
-
-				if ( HT()->array_has_value( $term_ids ) ) {
-					$tax_query[] = array(
-						'taxonomy' => $tax,
-						'field'    => 'term_id',
-						'terms'    => $term_ids
-					);
+			if ( ! empty( $taxonomy ) ) {
+				if ( ! is_array( $taxonomy ) ) {
+					$taxonomy = array( $taxonomy );
 				}
+
+				$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : '';
+
+				if ( ! is_array( $tax_query ) ) {
+					$tax_query = array();
+				}
+
+				foreach ( $taxonomy as $tax ) {
+					$term_ids = wp_get_object_terms( get_the_ID(), $tax, array( 'fields' => 'ids' ) );
+
+					if ( HT()->array_has_value( $term_ids ) ) {
+						$tax_query[] = array(
+							'taxonomy' => $tax,
+							'field'    => 'term_id',
+							'terms'    => $term_ids
+						);
+					}
+				}
+
+				if ( ! isset( $tax_query['relation'] ) ) {
+					$tax_query['relation'] = 'OR';
+				}
+
+				$args['tax_query'] = $tax_query;
+
+				$query = new WP_Query( $args );
 			}
 
-			if ( ! isset( $tax_query['relation'] ) ) {
-				$tax_query['relation'] = 'OR';
+			if ( $query->have_posts() ) {
+				set_transient( $tr_name, $query, HOUR_IN_SECONDS );
+
+				return $query;
 			}
 
-			$args['tax_query'] = $tax_query;
+			$by_term = false;
 
-			$query = new WP_Query( $args );
-		}
-
-		if ( $query->have_posts() ) {
-			return $query;
-		}
-
-		$by_term = false;
-
-		if ( isset( $args['cat'] ) && is_numeric( $args['cat'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['category_name'] ) && ! empty( $args['category_name'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['category__and'] ) && HT()->array_has_value( $args['category__and'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['category__in'] ) && HT()->array_has_value( $args['category__in'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tag_id'] ) && is_numeric( $args['tag_id'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tag'] ) && ! empty( $args['tag'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tag__and'] ) && HT()->array_has_value( $args['tag__and'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tag__in'] ) && HT()->array_has_value( $args['tag__in'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tag_slug__and'] ) && HT()->array_has_value( $args['tag_slug__and'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tag_slug__in'] ) && HT()->array_has_value( $args['tag_slug__in'] ) ) {
-			$by_term = true;
-		} elseif ( isset( $args['tax_query'] ) && HT()->array_has_value( $args['tax_query'] ) ) {
-			$by_term = true;
-		}
-
-		if ( $by_term ) {
-			$query = new WP_Query( $args );
-		}
-
-		if ( $query->have_posts() ) {
-			return $query;
-		}
-
-		$term_relation = array();
-
-		$taxs = get_object_taxonomies( $obj );
-
-		if ( HOCWP_Theme::array_has_value( $taxs ) ) {
-			$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
-
-			if ( ! is_array( $tax_query ) ) {
-				$tax_query = array();
+			if ( isset( $args['cat'] ) && is_numeric( $args['cat'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['category_name'] ) && ! empty( $args['category_name'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['category__and'] ) && HT()->array_has_value( $args['category__and'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['category__in'] ) && HT()->array_has_value( $args['category__in'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tag_id'] ) && is_numeric( $args['tag_id'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tag'] ) && ! empty( $args['tag'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tag__and'] ) && HT()->array_has_value( $args['tag__and'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tag__in'] ) && HT()->array_has_value( $args['tag__in'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tag_slug__and'] ) && HT()->array_has_value( $args['tag_slug__and'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tag_slug__in'] ) && HT()->array_has_value( $args['tag_slug__in'] ) ) {
+				$by_term = true;
+			} elseif ( isset( $args['tax_query'] ) && HT()->array_has_value( $args['tax_query'] ) ) {
+				$by_term = true;
 			}
 
-			$new = array();
+			if ( $by_term ) {
+				$query = new WP_Query( $args );
+			}
 
-			$has_tag = false;
+			if ( $query->have_posts() ) {
+				set_transient( $tr_name, $query, HOUR_IN_SECONDS );
 
-			$tax_item = array(
-				'field'    => 'term_id',
-				'operator' => 'IN'
-			);
+				return $query;
+			}
 
-			foreach ( $taxs as $key => $tax ) {
-				$taxonomy = get_taxonomy( $tax );
+			$term_relation = array();
 
-				if ( $taxonomy instanceof WP_Taxonomy && is_string( $tax ) ) {
-					if ( ! $taxonomy->hierarchical ) {
+			$taxs = get_object_taxonomies( $obj );
+
+			if ( HOCWP_Theme::array_has_value( $taxs ) ) {
+				$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+
+				if ( ! is_array( $tax_query ) ) {
+					$tax_query = array();
+				}
+
+				$new = array();
+
+				$has_tag = false;
+
+				$tax_item = array(
+					'field'    => 'term_id',
+					'operator' => 'IN'
+				);
+
+				foreach ( $taxs as $key => $tax ) {
+					$taxonomy = get_taxonomy( $tax );
+
+					if ( $taxonomy instanceof WP_Taxonomy && is_string( $tax ) ) {
+						if ( ! $taxonomy->hierarchical ) {
+							$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
+
+							if ( HOCWP_Theme::array_has_value( $ids ) ) {
+								$tax_item['taxonomy'] = $tax;
+
+								$tax_item['terms'] = $ids;
+
+								$new[] = $tax_item;
+
+								$has_tag = true;
+
+								$term_relation[ $tax ] = $ids;
+							}
+
+							unset( $taxs[ $key ] );
+						}
+					} else {
+						unset( $taxs[ $key ] );
+					}
+				}
+
+				if ( $has_tag ) {
+					$new['relation'] = 'or';
+
+					$tax_query[] = $new;
+				}
+
+				if ( $has_tag ) {
+					$args['tax_query'] = $tax_query;
+
+					$query = new WP_Query( $args );
+				}
+
+				$missing = false;
+
+				if ( $query->have_posts() ) {
+					$ppp = $query->get( 'posts_per_page' );
+
+					if ( ! is_numeric( $ppp ) ) {
+						$ppp = HT_Util()->get_posts_per_page();
+					}
+
+					if ( $query->found_posts < ( $ppp / 2 ) ) {
+						$missing = true;
+					}
+				}
+
+				if ( ! $query->have_posts() || $missing ) {
+					foreach ( $taxs as $tax ) {
 						$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
-						if ( HOCWP_Theme::array_has_value( $ids ) ) {
+						if ( HOCWP_Theme::array_has_value( $ids ) && is_string( $tax ) ) {
 							$tax_item['taxonomy'] = $tax;
 
 							$tax_item['terms'] = $ids;
 
 							$new[] = $tax_item;
 
-							$has_tag = true;
-
 							$term_relation[ $tax ] = $ids;
 						}
-
-						unset( $taxs[ $key ] );
 					}
-				} else {
-					unset( $taxs[ $key ] );
+
+					if ( HT()->array_has_value( $new ) ) {
+						$new['relation'] = 'or';
+
+						$tax_query = $new;
+					}
+
+					if ( ! isset( $tax_query['relation'] ) ) {
+						$tax_query['relation'] = 'or';
+					}
+
+					$args['tax_query'] = $tax_query;
+
+					$query = new WP_Query( $args );
+				}
+			} else {
+				$args['s'] = $obj->post_title;
+				$query     = new WP_Query( $args );
+
+				if ( ! $query->have_posts() ) {
+					$parts = explode( ' ', $obj->post_title );
+
+					while ( ! $query->have_posts() && count( $parts ) > 0 ) {
+						$key       = array_shift( $parts );
+						$args['s'] = $key;
+						$query     = new WP_Query( $args );
+					}
 				}
 			}
 
-			if ( $has_tag ) {
-				$new['relation'] = 'or';
-
-				$tax_query[] = $new;
+			if ( ! isset( $query->query_vars['term_relation'] ) ) {
+				$query->query_vars['term_relation'] = $term_relation;
 			}
-
-			if ( $has_tag ) {
-				$args['tax_query'] = $tax_query;
-
-				$query = new WP_Query( $args );
-			}
-
-			$missing = false;
 
 			if ( $query->have_posts() ) {
-				$ppp = $query->get( 'posts_per_page' );
-
-				if ( ! is_numeric( $ppp ) ) {
-					$ppp = HT_Util()->get_posts_per_page();
-				}
-
-				if ( $query->found_posts < ( $ppp / 2 ) ) {
-					$missing = true;
-				}
+				set_transient( $tr_name, $query, HOUR_IN_SECONDS );
 			}
-
-			if ( ! $query->have_posts() || $missing ) {
-				foreach ( $taxs as $tax ) {
-					$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
-
-					if ( HOCWP_Theme::array_has_value( $ids ) && is_string( $tax ) ) {
-						$tax_item['taxonomy'] = $tax;
-
-						$tax_item['terms'] = $ids;
-
-						$new[] = $tax_item;
-
-						$term_relation[ $tax ] = $ids;
-					}
-				}
-
-				if ( HT()->array_has_value( $new ) ) {
-					$new['relation'] = 'or';
-
-					$tax_query = $new;
-				}
-
-				if ( ! isset( $tax_query['relation'] ) ) {
-					$tax_query['relation'] = 'or';
-				}
-
-				$args['tax_query'] = $tax_query;
-
-				$query = new WP_Query( $args );
-			}
-		} else {
-			$args['s'] = $obj->post_title;
-			$query     = new WP_Query( $args );
-
-			if ( ! $query->have_posts() ) {
-				$parts = explode( ' ', $obj->post_title );
-
-				while ( ! $query->have_posts() && count( $parts ) > 0 ) {
-					$key       = array_shift( $parts );
-					$args['s'] = $key;
-					$query     = new WP_Query( $args );
-				}
-			}
-		}
-
-		if ( ! isset( $query->query_vars['term_relation'] ) ) {
-			$query->query_vars['term_relation'] = $term_relation;
 		}
 
 		return $query;

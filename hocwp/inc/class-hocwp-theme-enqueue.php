@@ -111,23 +111,24 @@ class HOCWP_Theme_Enqueue {
 
 	public function popper( $args = array() ) {
 		$defaults = array(
-			'cdn'     => false,
+			'cdn'     => null,
 			'version' => '1.16.0',
 			'utils'   => false
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$base_url = $this->custom_lib_url . 'popper.js/';
-		$base_dir = $this->custom_lib_dir . 'popper.js/' . $args['version'];
+		$folder_name = 'popper.js';
+
+		if ( ! HT()->is_dir( $this->custom_lib_dir . $folder_name ) ) {
+			$folder_name = 'popper';
+		}
+
+		$base_url = $this->custom_lib_url . $folder_name . '/';
+		$base_dir = $this->custom_lib_dir . $folder_name . '/' . $args['version'];
 
 		if ( $args['cdn'] ) {
-			$parts    = array( 'cdnjs', 'cloudflare', 'com' );
-			$base_url = 'https://';
-			$base_url .= join( '.', $parts );
-			$base_url .= '/ajax/libs/popper.js/';
-
-			unset( $parts );
+			_deprecated_argument( __FUNCTION__, '6.7.7', sprintf( __( 'Stop using %s param from %s for loading resource from CDN.', 'hocwp-theme' ), 'cdn', '$args' ) );
 		}
 
 		$file = 'popper.min.js';
@@ -162,7 +163,7 @@ class HOCWP_Theme_Enqueue {
 
 	public function bootstrap( $args = array() ) {
 		$defaults = array(
-			'cdn'     => false,
+			'cdn'     => null,
 			'version' => '3.3.7',
 			'js'      => false,
 			'theme'   => false
@@ -174,12 +175,7 @@ class HOCWP_Theme_Enqueue {
 		$base_dir = $this->custom_lib_dir . 'bootstrap/' . $args['version'];
 
 		if ( $args['cdn'] ) {
-			$parts    = array( 'maxcdn', 'bootstrapcdn', 'com' );
-			$base_url = 'https://';
-			$base_url .= join( '.', $parts );
-			$base_url .= '/bootstrap/';
-
-			unset( $parts );
+			_deprecated_argument( __FUNCTION__, '6.7.7', sprintf( __( 'Stop using %s param from %s for loading resource from CDN.', 'hocwp-theme' ), 'cdn', '$args' ) );
 		}
 
 		$css_file = 'css/bootstrap.min.css';
@@ -217,7 +213,7 @@ class HOCWP_Theme_Enqueue {
 	}
 
 	private function auto_check_lib_version( &$args, &$base_dir, $abs_file ) {
-		if ( ! $args['cdn'] && ! HT()->is_dir( $base_dir ) ) {
+		if ( ( ! isset( $args['cdn'] ) || ! $args['cdn'] ) && ! HT()->is_dir( $base_dir ) ) {
 			// Auto check version
 			$tmp = dirname( $base_dir );
 			$tmp = trailingslashit( $tmp );
@@ -295,7 +291,9 @@ class HOCWP_Theme_Enqueue {
 		}
 
 		$defaults = array(
-			'version' => '5.11.2'
+			'version' => '5.11.2',
+			'kit'     => null,
+			'cdn'     => null
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -341,8 +339,12 @@ class HOCWP_Theme_Enqueue {
 		unset( $defaults, $handle, $css_url, $kit );
 	}
 
-	public function jquery_ui_style( $deprecated = '' ) {
-		_deprecated_function( __FUNCTION__, '6.7.7' );
+	public function jquery_ui_style( $deprecated = null ) {
+		if ( ! empty( $deprecated ) ) {
+			_deprecated_argument( __FUNCTION__, '6.7.7' );
+		}
+
+		wp_enqueue_style( 'jquery-ui-style', HOCWP_Theme()->core_url . '/css/jquery-ui' . HOCWP_THEME_CSS_SUFFIX );
 	}
 }
 
