@@ -338,7 +338,7 @@ function hocwp_theme_add_menu_meta_columns() {
 		$list_socials = array_filter( $list_socials );
 
 		if ( HT()->array_has_value( $list_socials ) ) {
-			//add_meta_box( 'hocwp-theme-socials', __( 'List Socials', 'hocwp-theme' ), 'hocwp_theme_admin_menu_list_socials_meta_box', 'nav-menus', 'side', 'low', array( 'list_socials' => $list_socials ) );
+			add_meta_box( 'hocwp-theme-socials', __( 'List Socials', 'hocwp-theme' ), 'hocwp_theme_admin_menu_list_socials_meta_box', 'nav-menus', 'side', 'low', array( 'list_socials' => $list_socials ) );
 		}
 	}
 }
@@ -355,108 +355,22 @@ function hocwp_theme_admin_menu_list_socials_meta_box( $object, $box ) {
 		if ( HT()->array_has_value( $list_socials ) ) {
 			global $nav_menu_selected_id;
 
-			$taxonomy_name = 'list-socials';
+			$base_name = 'list-socials';
 
-			// Paginate browsing for large numbers of objects.
-			$per_page = 50;
-			$pagenum  = isset( $_REQUEST[ $taxonomy_name . '-tab' ] ) && isset( $_REQUEST['paged'] ) ? absint( $_REQUEST['paged'] ) : 1;
-			$offset   = 0 < $pagenum ? $per_page * ( $pagenum - 1 ) : 0;
-
-			$terms = array_slice( $list_socials, $offset, $per_page );
-
-			if ( ! $terms || is_wp_error( $terms ) ) {
+			if ( ! $list_socials || is_wp_error( $list_socials ) ) {
 				echo '<p>' . __( 'No items.', 'hocwp-theme' ) . '</p>';
 
 				return;
 			}
 
-			$num_pages = ceil( count( $list_socials ) / $per_page );
-
-			$page_links = paginate_links(
-				array(
-					'base'               => add_query_arg(
-						array(
-							$taxonomy_name . '-tab' => 'all',
-							'paged'                 => '%#%',
-							'item-type'             => 'taxonomy',
-							'item-object'           => $taxonomy_name
-						)
-					),
-					'format'             => '',
-					'prev_text'          => '<span aria-label="' . esc_attr__( 'Previous page', 'hocwp-theme' ) . '">' . __( '&laquo;', 'hocwp-theme' ) . '</span>',
-					'next_text'          => '<span aria-label="' . esc_attr__( 'Next page', 'hocwp-theme' ) . '">' . __( '&raquo;', 'hocwp-theme' ) . '</span>',
-					'before_page_number' => '<span class="screen-reader-text">' . __( 'Page', 'hocwp-theme' ) . '</span> ',
-					'total'              => $num_pages,
-					'current'            => $pagenum
-				)
-			);
-
 			$walker = new Walker_Nav_Menu_Checklist();
-
-			$current_tab = 'most-used';
-
-			if ( isset( $_REQUEST[ $taxonomy_name . '-tab' ] ) && in_array( $_REQUEST[ $taxonomy_name . '-tab' ], array(
-					'all',
-					'most-used',
-					'search'
-				) )
-			) {
-				$current_tab = $_REQUEST[ $taxonomy_name . '-tab' ];
-			}
-
-			if ( ! empty( $_REQUEST[ 'quick-search-taxonomy-' . $taxonomy_name ] ) ) {
-				$current_tab = 'search';
-			}
-
-			$removed_args = array(
-				'action',
-				'customlink-tab',
-				'edit-menu-item',
-				'menu-item',
-				'page-tab',
-				'_wpnonce',
-			);
-
-			$most_used_url = '';
-			$view_all_url  = '';
-			$search_url    = '';
-
-			if ( $nav_menu_selected_id ) {
-				$most_used_url = esc_url( add_query_arg( $taxonomy_name . '-tab', 'most-used', remove_query_arg( $removed_args ) ) );
-				$view_all_url  = esc_url( add_query_arg( $taxonomy_name . '-tab', 'all', remove_query_arg( $removed_args ) ) );
-				$search_url    = esc_url( add_query_arg( $taxonomy_name . '-tab', 'search', remove_query_arg( $removed_args ) ) );
-			}
 			?>
-			<div id="taxonomy-<?php echo $taxonomy_name; ?>" class="taxonomydiv">
-				<ul id="taxonomy-<?php echo $taxonomy_name; ?>-tabs" class="taxonomy-tabs add-menu-item-tabs">
-					<li <?php echo( 'most-used' == $current_tab ? ' class="tabs"' : '' ); ?>>
-						<a class="nav-tab-link" data-type="tabs-panel-<?php echo esc_attr( $taxonomy_name ); ?>-pop"
-						   href="<?php echo $most_used_url; ?>#tabs-panel-<?php echo $taxonomy_name; ?>-pop">
-							<?php esc_html_e( 'Most Used', 'hocwp-theme' ); ?>
-						</a>
-					</li>
-					<li <?php echo( 'all' == $current_tab ? ' class="tabs"' : '' ); ?>>
-						<a class="nav-tab-link" data-type="tabs-panel-<?php echo esc_attr( $taxonomy_name ); ?>-all"
-						   href="<?php echo $view_all_url; ?>#tabs-panel-<?php echo $taxonomy_name; ?>-all">
-							<?php _e( 'View All', 'hocwp-theme' ); ?>
-						</a>
-					</li>
-					<li <?php echo( 'search' == $current_tab ? ' class="tabs"' : '' ); ?>>
-						<a class="nav-tab-link"
-						   data-type="tabs-panel-search-taxonomy-<?php echo esc_attr( $taxonomy_name ); ?>"
-						   href="<?php echo $search_url; ?>#tabs-panel-search-taxonomy-<?php echo $taxonomy_name; ?>">
-							<?php _e( 'Search', 'hocwp-theme' ); ?>
-						</a>
-					</li>
-				</ul>
-				<!-- .taxonomy-tabs -->
-
-				<div id="tabs-panel-<?php echo $taxonomy_name; ?>-pop"
-				     class="tabs-panel <?php echo( 'most-used' == $current_tab ? 'tabs-panel-active' : 'tabs-panel-inactive' ); ?>"
-				     role="region" aria-label="<?php esc_attr_e( 'Most Used', 'hocwp-theme' ); ?>" tabindex="0">
-					<ul id="<?php echo $taxonomy_name; ?>checklist-pop" class="categorychecklist form-no-clear">
+			<div id="box-<?php echo $base_name; ?>" class="custom-box hocwp-theme-meta-box taxonomydiv">
+				<div id="tabs-panel-<?php echo $base_name; ?>-pop" class="tabs-panel tabs-panel-active" tabindex="0">
+					<ul id="<?php echo $base_name; ?>-checklist-pop"
+					    class="item-check-list hocwp-theme-custom-list categorychecklist form-no-clear">
 						<?php
-						$popular_terms = array();
+						$items = array();
 
 						foreach ( (array) $list_socials as $social ) {
 							$item = array(
@@ -467,31 +381,30 @@ function hocwp_theme_admin_menu_list_socials_meta_box( $object, $box ) {
 								'menu_item_type' => 'custom'
 							);
 
-							$popular_terms[] = json_decode( json_encode( $item ) );
+							$items[] = json_decode( json_encode( $item ) );
 						}
 
 						$args['walker'] = $walker;
-						echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $popular_terms ), 0, (object) $args );
+						echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $items ), 0, (object) $args );
 						?>
 					</ul>
 				</div>
 				<!-- /.tabs-panel -->
 
-				<p class="button-controls wp-clearfix"
-				   data-items-type="taxonomy-<?php echo esc_attr( $taxonomy_name ); ?>">
-			<span class="list-controls hide-if-no-js">
-				<input type="checkbox"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
-				       id="<?php echo esc_attr( $taxonomy_name . '-tab' ); ?>" class="select-all"/>
-				<label for="<?php echo esc_attr( $taxonomy_name . '-tab' ); ?>"><?php _e( 'Select All', 'hocwp-theme' ); ?></label>
-			</span>
-
-			<span class="add-to-menu">
-				<input type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
-				       class="button submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'hocwp-theme' ); ?>"
-				       name="add-taxonomy-menu-item"
-				       id="<?php echo esc_attr( 'submit-taxonomy-' . $taxonomy_name ); ?>"/>
-				<span class="spinner"></span>
-			</span>
+				<p class="button-controls wp-clearfix" data-items-type="custom">
+					<span class="list-controls hide-if-no-js">
+						<input type="checkbox"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
+						       id="<?php echo esc_attr( $base_name . '-tab' ); ?>" class="select-all"/>
+						<label
+							for="<?php echo esc_attr( $base_name . '-tab' ); ?>"><?php _e( 'Select All', 'hocwp-theme' ); ?></label>
+					</span>
+					<span class="add-to-menu">
+						<button type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
+						        class="button disabled right"
+						        name="add-custom-menu-item"
+						        id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
+						<span class="spinner"></span>
+					</span>
 				</p>
 
 			</div>
@@ -502,35 +415,24 @@ function hocwp_theme_admin_menu_list_socials_meta_box( $object, $box ) {
 
 function hocwp_theme_wp_setup_nav_menu_item_admin_column_filter( $menu_item ) {
 	if ( is_object( $menu_item ) && isset( $menu_item->type ) && 'list-socials' == $menu_item->type ) {
-		if ( HOCWP_DOING_AJAX ) {
-			$menu_item = array(
-				'menu-item-type'  => 'custom',
-				'menu-item-url'   => $menu_item->url,
-				'menu-item-title' => $menu_item->name
-			);
-
-			return json_decode( json_encode( $menu_item ) );
-		}
+		$menu_item->type       = 'custom';
+		$menu_item->title      = $menu_item->name;
+		$menu_item->attr_title = ( isset( $menu_item->icon ) && ! empty( $menu_item->icon ) ) ? $menu_item->icon : $menu_item->name;
 
 		$menu_item->ID               = 0;
 		$menu_item->db_id            = 0;
 		$menu_item->menu_item_parent = 0;
 		$menu_item->object_id        = 0;
 		$menu_item->post_parent      = 0;
-		$menu_item->type             = 'custom';
-
-		$menu_item->object     = '';
-		$menu_item->type_label = '';
-
-		$menu_item->title       = $menu_item->name;
-		$menu_item->target      = '';
-		$menu_item->attr_title  = '';
-		$menu_item->description = '';
-		$menu_item->classes     = array();
-		$menu_item->xfn         = '';
+		$menu_item->object           = '';
+		$menu_item->type_label       = '';
+		$menu_item->target           = '';
+		$menu_item->description      = '';
+		$menu_item->classes          = array();
+		$menu_item->xfn              = '';
 	}
 
 	return $menu_item;
 }
 
-//add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_admin_column_filter' );
+add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_admin_column_filter' );

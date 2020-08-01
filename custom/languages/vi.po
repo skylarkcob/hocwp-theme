@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-08-01 08:06+0700\n"
-"PO-Revision-Date: 2020-08-01 08:06+0700\n"
+"POT-Creation-Date: 2020-08-01 20:40+0700\n"
+"PO-Revision-Date: 2020-08-01 20:40+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -26,7 +26,6 @@ msgstr "Trình đơn"
 
 #: custom/views/template-amp.php:26
 #: hocwp/admin/admin-setting-page-extension.php:100
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:448
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -515,6 +514,7 @@ msgid "All information about Google account and Google console."
 msgstr "Tất cả thông tin về tài khoản Google và Google console."
 
 #: hocwp/admin/admin-setting-page-social.php:65
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:341
 msgid "List Socials"
 msgstr "Danh sách mạng xã hội"
 
@@ -851,44 +851,15 @@ msgstr "Thông tin mở rộng"
 msgid "Display:"
 msgstr "Hiển thị:"
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:368
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:361
 msgid "No items."
 msgstr "Không có mục nào."
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:386
-msgid "Previous page"
-msgstr "Trang trước"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:386
-msgid "&laquo;"
-msgstr "&laquo;"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:387
-msgid "Next page"
-msgstr "Trang tiếp"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:387
-msgid "&raquo;"
-msgstr "&raquo;"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:388
-msgid "Page"
-msgstr "Trang"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:435
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:456
-msgid "Most Used"
-msgstr "Được dùng nhiều"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:441
-msgid "View All"
-msgstr "Xem tất cả"
-
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:485
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:399
 msgid "Select All"
 msgstr "Chọn tất cả"
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:490
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:405
 msgid "Add to Menu"
 msgstr "Thêm vào trình đơn"
 
@@ -2758,6 +2729,27 @@ msgstr ""
 #, php-format
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
+
+#~ msgid "Previous page"
+#~ msgstr "Trang trước"
+
+#~ msgid "&laquo;"
+#~ msgstr "&laquo;"
+
+#~ msgid "Next page"
+#~ msgstr "Trang tiếp"
+
+#~ msgid "&raquo;"
+#~ msgstr "&raquo;"
+
+#~ msgid "Page"
+#~ msgstr "Trang"
+
+#~ msgid "Most Used"
+#~ msgstr "Được dùng nhiều"
+
+#~ msgid "View All"
+#~ msgstr "Xem tất cả"
 
 #~ msgid "News From HocWP Team"
 #~ msgstr "Tin tức từ HocWP Team"
