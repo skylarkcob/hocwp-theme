@@ -1775,6 +1775,10 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function display_ads( $args, $random = false ) {
+		if ( HT()->is_google_pagespeed() ) {
+			return;
+		}
+
 		if ( function_exists( 'hocwp_ext_ads_display' ) ) {
 			hocwp_ext_ads_display( $args, $random );
 		}

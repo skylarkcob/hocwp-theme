@@ -208,6 +208,7 @@ function hocwp_theme_add_captcha_to_comment_form( $submit_field ) {
 	if ( ! is_user_logged_in() ) {
 		$options = HT_Util()->get_theme_options( 'discussion' );
 		$captcha = isset( $options['captcha'] ) ? $options['captcha'] : '';
+
 		if ( 1 == $captcha ) {
 			ob_start();
 			HT_Util()->recaptcha();
@@ -225,9 +226,11 @@ function hocwp_theme_preprocess_comment_check_captcha( $commentdata ) {
 	if ( ! is_user_logged_in() ) {
 		$options = HT_Util()->get_theme_options( 'discussion' );
 		$captcha = isset( $options['captcha'] ) ? $options['captcha'] : '';
+
 		if ( 1 == $captcha ) {
 			if ( isset( $_POST['g-recaptcha-response'] ) ) {
 				$response = HT_Util()->recaptcha_valid();
+
 				if ( ! $response ) {
 					wp_die( __( 'Bots are not allowed to submit comments.', 'hocwp-theme' ) );
 					exit;

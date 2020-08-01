@@ -617,6 +617,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public static function breadcrumb( $args = array() ) {
+		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
+
 		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
 
 		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() ) {

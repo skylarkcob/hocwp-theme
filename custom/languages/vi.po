@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-07-22 19:17+0700\n"
-"PO-Revision-Date: 2020-07-22 19:18+0700\n"
+"POT-Creation-Date: 2020-08-01 08:06+0700\n"
+"PO-Revision-Date: 2020-08-01 08:06+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -26,6 +26,7 @@ msgstr "Trình đơn"
 
 #: custom/views/template-amp.php:26
 #: hocwp/admin/admin-setting-page-extension.php:100
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:448
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -246,8 +247,8 @@ msgid "Logo Image"
 msgstr "Hình ảnh"
 
 #: hocwp/admin/admin-setting-page-home.php:6
-#: hocwp/inc/class-hocwp-theme-frontend.php:638
 #: hocwp/inc/class-hocwp-theme-frontend.php:640
+#: hocwp/inc/class-hocwp-theme-frontend.php:642
 msgid "Home"
 msgstr "Trang chủ"
 
@@ -849,6 +850,47 @@ msgstr "Thông tin mở rộng"
 #: hocwp/admin/class-hocwp-theme-meta-menu.php:154
 msgid "Display:"
 msgstr "Hiển thị:"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:368
+msgid "No items."
+msgstr "Không có mục nào."
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:386
+msgid "Previous page"
+msgstr "Trang trước"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:386
+msgid "&laquo;"
+msgstr "&laquo;"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:387
+msgid "Next page"
+msgstr "Trang tiếp"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:387
+msgid "&raquo;"
+msgstr "&raquo;"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:388
+msgid "Page"
+msgstr "Trang"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:435
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:456
+msgid "Most Used"
+msgstr "Được dùng nhiều"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:441
+msgid "View All"
+msgstr "Xem tất cả"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:485
+msgid "Select All"
+msgstr "Chọn tất cả"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:490
+msgid "Add to Menu"
+msgstr "Thêm vào trình đơn"
 
 #: hocwp/admin/class-hocwp-theme-meta.php:179
 msgid "Please set get_value_callback."
@@ -1477,24 +1519,24 @@ msgstr "Bài viết gần đây"
 msgid "Archives"
 msgstr "Lưu trữ"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:738
+#: hocwp/inc/class-hocwp-theme-frontend.php:740
 msgid "Page not found"
 msgstr "Trang không được tìm thấy"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:900
+#: hocwp/inc/class-hocwp-theme-frontend.php:902
 msgctxt "back to top"
 msgid "Top"
 msgstr "Lên trên"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:934
+#: hocwp/inc/class-hocwp-theme-frontend.php:936
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:995
+#: hocwp/inc/class-hocwp-theme-frontend.php:997
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:999
+#: hocwp/inc/class-hocwp-theme-frontend.php:1001
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -1502,11 +1544,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1008
+#: hocwp/inc/class-hocwp-theme-frontend.php:1010
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1024
+#: hocwp/inc/class-hocwp-theme-frontend.php:1026
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
@@ -2125,11 +2167,11 @@ msgstr ""
 "Xin vui lòng kích hoạt Javascript để có thể xem <a href=\"%s\">các bình luận "
 "từ Disqus</a>."
 
-#: hocwp/inc/template-comments.php:232
+#: hocwp/inc/template-comments.php:235
 msgid "Bots are not allowed to submit comments."
 msgstr "Máy không được phép thêm bình luận."
 
-#: hocwp/inc/template-comments.php:236
+#: hocwp/inc/template-comments.php:239
 msgid ""
 "Bots are not allowed to submit comments. If you are not a bot then please "
 "enable JavaScript in browser."
@@ -2154,17 +2196,17 @@ msgstr "Bài Tiếp"
 msgid "Previous Posts"
 msgstr "Bài Trước"
 
-#: hocwp/inc/template-general.php:781
+#: hocwp/inc/template-general.php:782
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: hocwp/inc/template-general.php:865
+#: hocwp/inc/template-general.php:870
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1014
+#: hocwp/inc/template-general.php:1019
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website. By continuing to browse on this website, you accept the use of "
@@ -2174,7 +2216,7 @@ msgstr ""
 "truy cập trang web. Bằng cách tiếp tục truy cập trang web này, bạn chấp nhận "
 "cách sử dụng cookie cho các mục đích trên."
 
-#: hocwp/inc/template-general.php:1017
+#: hocwp/inc/template-general.php:1022
 #, php-format
 msgid ""
 "We use cookies to give you the best possible website experience. <span>By "
@@ -2184,28 +2226,28 @@ msgstr ""
 "cập trang web. <span>Bằng cách sử dụng %s, bạn đồng ý với <a href=\"%s\">%s</"
 "a> của chúng tôi</span>."
 
-#: hocwp/inc/template-general.php:1021
+#: hocwp/inc/template-general.php:1026
 msgid "Accept"
 msgstr "Chấp nhận"
 
-#: hocwp/inc/template-general.php:1027
+#: hocwp/inc/template-general.php:1034
 msgid "Close"
-msgstr ""
+msgstr "Đóng"
 
-#: hocwp/inc/template-general.php:1515
+#: hocwp/inc/template-general.php:1522
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1527
+#: hocwp/inc/template-general.php:1534
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1528
+#: hocwp/inc/template-general.php:1535
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1635
+#: hocwp/inc/template-general.php:1642
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
@@ -2938,12 +2980,6 @@ msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
 
 #~ msgid "Light off"
 #~ msgstr "Tắt đèn"
-
-#~ msgid "Previous Episode"
-#~ msgstr "Tập trước"
-
-#~ msgid "Next Episode"
-#~ msgstr "Tập tiếp"
 
 #~ msgid "Information"
 #~ msgstr "Thông tin"

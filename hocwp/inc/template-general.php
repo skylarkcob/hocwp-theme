@@ -772,6 +772,7 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 
 	ob_start();
 	?>
+	<div class="menu-overlay-bg"></div>
 	<button id="<?php echo esc_attr( $id ); ?>" class="menu-toggle" aria-controls="<?php echo $control; ?>"
 	        aria-expanded="false">
 		<?php
@@ -823,6 +824,10 @@ function hocwp_theme_mobile_menu( $args ) {
 	$args = (array) $args;
 
 	$container_class = 'mobile-menu';
+
+	$displaying = isset( $args['displaying'] ) ? $args['displaying'] : 'default';
+
+	$container_class .= ' displaying-' . sanitize_html_class( $displaying );
 
 	$defaults = array(
 		'theme_location'  => 'mobile',
@@ -1020,7 +1025,9 @@ function hocwp_theme_wp_footer_action() {
 		$text .= '&nbsp;';
 		$text .= '<button id="sc-gdpr-accept" class="btn btn-success">' . __( 'Accept', 'hocwp-theme' ) . '</button>';
 		?>
-		<div id="sc-gdpr-box" class="fixed-bottom alert alert-warning mb-0 text-dark rounded-0 alert-dismissible fade show" role="alert" style="display: none;">
+		<div id="sc-gdpr-box"
+		     class="fixed-bottom alert alert-warning mb-0 text-dark rounded-0 alert-dismissible fade show" role="alert"
+		     style="display: none;">
 			<div class="centerd">
 				<?php echo wpautop( $text ); ?>
 				<button id="sc-gdpr-close" type="button" class="close" data-dismiss="alert"

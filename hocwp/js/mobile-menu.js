@@ -104,6 +104,15 @@
         }
     });
 
+    // Detect if user click outside the menu and menu control button.
+    window.addEventListener("click", function (e) {
+        if (!menu.contains(e.target) && !button.contains(e.target)) {
+            if (-1 !== container.className.indexOf("toggled")) {
+                button.click();
+            }
+        }
+    });
+
     if (-1 === container.className.indexOf(mobileMenuID)) {
         container.className += mobileMenuClass;
     }

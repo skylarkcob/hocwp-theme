@@ -838,6 +838,10 @@ final class HOCWP_Theme {
 			} elseif ( stripos( $_SERVER['HTTP_USER_AGENT'], 'Pagespeed' ) !== false ) {
 				$result = true;
 			}
+
+			if ( ! $result ) {
+				$result = ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Lighthouse' ) ) ? true : false;
+			}
 		}
 
 		return $result;
