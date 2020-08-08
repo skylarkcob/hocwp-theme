@@ -21,24 +21,32 @@ final class HOCWP_Theme_Minify {
 		$elements   = (array) $elements;
 		$properties = (array) $properties;
 		$before     = '';
+
 		foreach ( $elements as $element ) {
 			if ( empty( $element ) ) {
 				continue;
 			}
+
 			$first_char = substr( $element, 0, 1 );
+
 			if ( '.' !== $first_char && ! HT()->string_contain( $element, '.' ) ) {
 				$element = '.' . $element;
 			}
+
 			$before .= $element . ',';
 		}
+
 		$before = trim( $before, ',' );
 		$after  = '';
+
 		foreach ( $properties as $key => $property ) {
 			if ( empty( $key ) ) {
 				continue;
 			}
+
 			$after .= $key . ':' . $property . ';';
 		}
+
 		$after = trim( $after, ';' );
 
 		return $before . '{' . $after . '}';
@@ -84,6 +92,7 @@ final class HOCWP_Theme_Minify {
 				$filesystem  = HOCWP_Theme_Utility::filesystem();
 				$css_content = $filesystem->get_contents( $css_content );
 			}
+
 			$buffer = $css_content;
 			$buffer = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer );
 			$buffer = str_replace( ': ', ':', $buffer );
@@ -119,7 +128,7 @@ final class HOCWP_Theme_Minify {
 				'cookies'     => array()
 			);
 
-			$resp   = wp_remote_post( $url, $params );
+			$resp = wp_remote_post( $url, $params );
 
 			if ( ! is_wp_error( $resp ) ) {
 				$content = wp_remote_retrieve_body( $resp );
@@ -159,7 +168,6 @@ final class HOCWP_Theme_Minify {
 
 			$name .= '.' . $info['extension'];
 			$min_file = $dir . '/' . $name;
-			$minified = '';
 
 			if ( 'js' == $info['extension'] ) {
 				$minified = self::js( $file );

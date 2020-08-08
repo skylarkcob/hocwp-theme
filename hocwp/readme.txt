@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.7.8 =
+* Stop using .min for css and js files.
+
 = 6.7.7 =
 * Add social icon settings.
 * Update extensions list table.

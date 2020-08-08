@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.7.7' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.7.8' );
 
 /**
  * Theme developing mode.
@@ -36,12 +36,12 @@ define( 'HOCWP_THEME_CORE_URL', untrailingslashit( HOCWP_THEME_URL . '/hocwp' ) 
 /**
  * CSS suffix.
  */
-define( 'HOCWP_THEME_CSS_SUFFIX', ( HOCWP_THEME_DEVELOPING ) ? '.css' : '.min.css' );
+define( 'HOCWP_THEME_CSS_SUFFIX', '.css' );
 
 /**
  * Javascript suffix.
  */
-define( 'HOCWP_THEME_JS_SUFFIX', ( HOCWP_THEME_DEVELOPING ) ? '.js' : '.min.js' );
+define( 'HOCWP_THEME_JS_SUFFIX', '.js' );
 
 /**
  * Theme custom path.
