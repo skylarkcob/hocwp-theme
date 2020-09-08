@@ -253,6 +253,17 @@ class HOCWP_Theme_Media {
 			load_template( ABSPATH . 'wp-admin/includes/media.php' );
 		}
 
+		$info = pathinfo( $url );
+
+		$source_name = isset( $info['filename'] ) ? $info['filename'] : '';
+
+		$prefix = 'downloaded-';
+
+		if ( ! empty( $source_name ) ) {
+			$prefix .= $source_name;
+			$prefix .= '-';
+		}
+
 		$file_array = array();
 
 		$file_array['tmp_name'] = download_url( $url );
@@ -269,7 +280,7 @@ class HOCWP_Theme_Media {
 			if ( ! empty( $matches ) ) {
 				$file_array['name'] = basename( $matches[0] );
 			} else {
-				$file_array['name'] = uniqid( 'downloaded-' ) . '.jpeg';
+				$file_array['name'] = uniqid( $prefix ) . '.jpeg';
 			}
 		}
 

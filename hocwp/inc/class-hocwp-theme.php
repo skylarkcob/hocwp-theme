@@ -741,6 +741,11 @@ final class HOCWP_Theme {
 		@$doc->loadHTML( $content );
 		$xpath = new DOMXPath( $doc );
 		$src   = $xpath->evaluate( 'string(//img/@src)' );
+
+		if ( empty( $src ) ) {
+			$src = $xpath->evaluate( 'string(//img/@data-src)' );
+		}
+
 		unset( $doc, $xpath );
 
 		return $src;
