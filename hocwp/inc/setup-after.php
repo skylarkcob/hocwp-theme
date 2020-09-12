@@ -437,4 +437,10 @@ function hocwp_theme_add_url_endpoint() {
 
 add_action( 'init', 'hocwp_theme_add_url_endpoint' );
 
+$disable_lazy_loading = HT_Options()->get_tab( 'disable_lazy_loading', '', 'reading' );
+
+if ( $disable_lazy_loading ) {
+	add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+}
+
 do_action( 'hocwp_theme_setup_after' );

@@ -4,6 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_style_loader_src_filter( $src, $handle ) {
+	if ( defined( 'HOCWP_THEME_BLANK_STYLE' ) && HOCWP_THEME_BLANK_STYLE ) {
+		return $src;
+	}
+
 	if ( ! is_admin() ) {
 		$load = apply_filters( 'hocwp_theme_load_default_style', true );
 

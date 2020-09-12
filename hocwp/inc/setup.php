@@ -147,14 +147,14 @@ add_action( 'init', 'hocwp_theme_check_domain_change' );
 function hocwp_theme_update_comment_blacklist_keys() {
 	$blacklist_keys = $GLOBALS['hocwp_theme']->defaults['blacklist_keys'];
 
-	$keys = get_option( 'blacklist_keys' );
+	$keys = get_option( 'disallowed_keys' );
 	$keys = explode( ' ', $keys );
 
 	$blacklist_keys = array_merge( $keys, $blacklist_keys );
 	$blacklist_keys = array_filter( $blacklist_keys );
 	$blacklist_keys = array_unique( $blacklist_keys );
 	$blacklist_keys = array_map( 'trim', $blacklist_keys );
-	update_option( 'blacklist_keys', implode( "\n", $blacklist_keys ) );
+	update_option( 'disallowed_keys', implode( "\n", $blacklist_keys ) );
 }
 
 add_action( 'hocwp_theme_activation', 'hocwp_theme_update_comment_blacklist_keys' );

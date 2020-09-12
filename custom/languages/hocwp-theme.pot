@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2020-08-08 20:58+0700\n"
+"POT-Creation-Date: 2020-09-12 20:51+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,7 +13,7 @@ msgstr ""
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: ../..\n"
@@ -272,178 +272,186 @@ msgstr ""
 msgid "Back To Top Button"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:48
+#: hocwp/admin/admin-setting-page-reading.php:50
 msgid "Theme Color"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:54
+#: hocwp/admin/admin-setting-page-reading.php:56
 msgid "Show popup to notify visitor website is using cookie."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:57
+#: hocwp/admin/admin-setting-page-reading.php:59
 msgid "Cookie Alert"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:60
+#: hocwp/admin/admin-setting-page-reading.php:62
 msgid "Blog Page"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:63
+#: hocwp/admin/admin-setting-page-reading.php:65
 msgid "Not Found Page"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:73
+#: hocwp/admin/admin-setting-page-reading.php:75
 msgid "Query Post Types"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-reading.php:77
-msgctxt "orderby"
-msgid "No order"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-reading.php:78
-msgctxt "orderby"
-msgid "Post ID"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:79
 msgctxt "orderby"
-msgid "Post author"
+msgid "No order"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:80
 msgctxt "orderby"
-msgid "Post title"
+msgid "Post ID"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:81
 msgctxt "orderby"
-msgid "Post name"
+msgid "Post author"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:82
 msgctxt "orderby"
-msgid "Post type"
+msgid "Post title"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:83
 msgctxt "orderby"
-msgid "Post date"
+msgid "Post name"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:84
 msgctxt "orderby"
-msgid "Last modified date"
+msgid "Post type"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:85
 msgctxt "orderby"
-msgid "Post parent"
+msgid "Post date"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:86
 msgctxt "orderby"
-msgid "Random"
+msgid "Last modified date"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:87
 msgctxt "orderby"
-msgid "Number of comments"
+msgid "Post parent"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:88
 msgctxt "orderby"
-msgid "Search terms"
+msgid "Random"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:89
 msgctxt "orderby"
+msgid "Number of comments"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-reading.php:90
+msgctxt "orderby"
+msgid "Search terms"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-reading.php:91
+msgctxt "orderby"
 msgid "Post order"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:97
+#: hocwp/admin/admin-setting-page-reading.php:99
 msgid "Query Orderby"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:104
+#: hocwp/admin/admin-setting-page-reading.php:106
 msgid "Excerpt More"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:112
+#: hocwp/admin/admin-setting-page-reading.php:114
 msgid "Excerpt Length"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:115
+#: hocwp/admin/admin-setting-page-reading.php:117
 msgid "Excerpt Length Mobile"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:121
+#: hocwp/admin/admin-setting-page-reading.php:123
 msgid "Make last widget on sidebar sticky."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:124
+#: hocwp/admin/admin-setting-page-reading.php:126
 msgid "Sticky Last Widget"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:127
+#: hocwp/admin/admin-setting-page-reading.php:129
 msgid "Show float post nav links on single page."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:129
+#: hocwp/admin/admin-setting-page-reading.php:131
 msgid "Float Post Nav"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:135 hocwp/admin/meta.php:142 hocwp/inc/class-hocwp-theme-customize.php:70
+#: hocwp/admin/admin-setting-page-reading.php:137 hocwp/admin/meta.php:142 hocwp/inc/class-hocwp-theme-customize.php:70
 msgid "Default"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:136 hocwp/admin/meta.php:143
+#: hocwp/admin/admin-setting-page-reading.php:138 hocwp/admin/meta.php:143
 msgctxt "sidebar position"
 msgid "Right"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:137 hocwp/admin/meta.php:144
+#: hocwp/admin/admin-setting-page-reading.php:139 hocwp/admin/meta.php:144
 msgctxt "sidebar position"
 msgid "Left"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:141 hocwp/admin/meta.php:148
+#: hocwp/admin/admin-setting-page-reading.php:143 hocwp/admin/meta.php:148
 msgid "Sidebar Position"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:146
+#: hocwp/admin/admin-setting-page-reading.php:148
 msgid "Add random end point to url for displaying random post?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:149
+#: hocwp/admin/admin-setting-page-reading.php:151
 msgid "Random"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:157
+msgid "Since WordPress version 5.5, all images will be used lazy loading, check here if you want to disable this function?"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-reading.php:160
+msgid "Disable Lazy Loading"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-reading.php:169
 msgid "Products Per Page"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:172
+#: hocwp/admin/admin-setting-page-reading.php:184
 msgid "Displays the back to top button when user scrolls down the bottom of site."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:175
+#: hocwp/admin/admin-setting-page-reading.php:187
 msgid "Active"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:191 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
+#: hocwp/admin/admin-setting-page-reading.php:203 hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:194
+#: hocwp/admin/admin-setting-page-reading.php:206
 msgid "Icon HTML"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:197 hocwp/inc/setup-after.php:44
+#: hocwp/admin/admin-setting-page-reading.php:209 hocwp/inc/setup-after.php:44
 msgid "Background Color"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:200
+#: hocwp/admin/admin-setting-page-reading.php:212
 msgid "Style Attribute"
 msgstr ""
 
@@ -660,7 +668,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:286
+#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:290
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -1074,11 +1082,19 @@ msgstr ""
 msgid "If the link above does not work, you can also copy and paste into the address bar of the browser to access."
 msgstr ""
 
-#: hocwp/ext/dynamic-thumbnail.php:67
+#: hocwp/ext/dynamic-thumbnail.php:86
+msgid "Enable function to find thumbnail from post content automatically."
+msgstr ""
+
+#: hocwp/ext/dynamic-thumbnail.php:89
+msgid "Auto Thumbnail"
+msgstr ""
+
+#: hocwp/ext/dynamic-thumbnail.php:120
 msgid "Dynamic Thumbnail"
 msgstr ""
 
-#: hocwp/ext/dynamic-thumbnail.php:70
+#: hocwp/ext/dynamic-thumbnail.php:123
 msgid "Thumbnail Url:"
 msgstr ""
 
@@ -1418,7 +1434,7 @@ msgstr ""
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1245 hocwp/inc/functions-scripts.php:287
+#: hocwp/inc/class-hocwp-theme-html-field.php:1245 hocwp/inc/functions-scripts.php:291
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -1780,59 +1796,59 @@ msgstr ""
 msgid "Notify license"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:150
+#: hocwp/inc/functions-scripts.php:154
 msgid "Are you sure you want to delete?"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:151
+#: hocwp/inc/functions-scripts.php:155
 msgid "Changes you made may not be saved."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:152
+#: hocwp/inc/functions-scripts.php:156
 #, php-format
 msgid "Theme created by %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:173
+#: hocwp/inc/functions-scripts.php:177
 msgid "Load more"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:283
+#: hocwp/inc/functions-scripts.php:287
 #, php-format
 msgid "Remove %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:284
+#: hocwp/inc/functions-scripts.php:288
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:288
+#: hocwp/inc/functions-scripts.php:292
 #, php-format
 msgid "Change %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:363
+#: hocwp/inc/functions-scripts.php:367
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:364
+#: hocwp/inc/functions-scripts.php:368
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:365
+#: hocwp/inc/functions-scripts.php:369
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:366
+#: hocwp/inc/functions-scripts.php:370
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:367
+#: hocwp/inc/functions-scripts.php:371
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""

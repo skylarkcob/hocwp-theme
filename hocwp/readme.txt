@@ -1,6 +1,11 @@
 == Changelog ==
 = 6.7.8 =
 * Stop using .min for css and js files.
+* Add menus_init function for custom.
+* Add option for disable image lazy loading in WordPress 5.5.
+* Add option auto thumbnail.
+* Add walker nav menu only link.
+* Add param check exist for download_image function.
 
 = 6.7.7 =
 * Add social icon settings.

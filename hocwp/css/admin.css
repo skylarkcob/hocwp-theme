@@ -130,6 +130,12 @@
     margin-top: 1px;
 }
 
+.widget-content .hocwp-theme fieldset {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px 15px;
+}
+
 .hocwp-theme .wp-media-buttons.images-box {
     width: 100%;
 }

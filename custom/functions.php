@@ -103,6 +103,13 @@ class HOCWP_Theme_Custom {
 	}
 
 	/*
+	 * Default widgets init action for register nav menu. Do not remove it.
+	 */
+	public function menus_init() {
+
+	}
+
+	/*
 	 * Default post and term meta configuration. Do not remove it.
 	 */
 	public function meta_config() {
@@ -199,6 +206,7 @@ class HOCWP_Theme_Custom {
 		}
 
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+		$this->menus_init();
 
 		$this->load_custom_hook();
 	}

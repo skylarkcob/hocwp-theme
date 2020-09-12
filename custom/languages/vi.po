@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-08-08 20:58+0700\n"
-"PO-Revision-Date: 2020-08-08 20:58+0700\n"
+"POT-Creation-Date: 2020-09-12 20:51+0700\n"
+"PO-Revision-Date: 2020-09-12 20:53+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
@@ -309,185 +309,197 @@ msgstr "Cài đặt cửa hàng"
 msgid "Back To Top Button"
 msgstr "Nút trở về đầu trang"
 
-#: hocwp/admin/admin-setting-page-reading.php:48
+#: hocwp/admin/admin-setting-page-reading.php:50
 msgid "Theme Color"
 msgstr "Màu sắc trình duyệt"
 
-#: hocwp/admin/admin-setting-page-reading.php:54
+#: hocwp/admin/admin-setting-page-reading.php:56
 msgid "Show popup to notify visitor website is using cookie."
 msgstr ""
 "Hiển thị popup để thông báo khách truy cập rằng trang web đang sử dụng "
 "cookie."
 
-#: hocwp/admin/admin-setting-page-reading.php:57
+#: hocwp/admin/admin-setting-page-reading.php:59
 msgid "Cookie Alert"
 msgstr "Cảnh báo cookie"
 
-#: hocwp/admin/admin-setting-page-reading.php:60
+#: hocwp/admin/admin-setting-page-reading.php:62
 msgid "Blog Page"
 msgstr "Trang blog"
 
-#: hocwp/admin/admin-setting-page-reading.php:63
+#: hocwp/admin/admin-setting-page-reading.php:65
 msgid "Not Found Page"
 msgstr "Trang 404"
 
-#: hocwp/admin/admin-setting-page-reading.php:73
+#: hocwp/admin/admin-setting-page-reading.php:75
 msgid "Query Post Types"
 msgstr "Loại bài viết truy vấn"
 
-#: hocwp/admin/admin-setting-page-reading.php:77
+#: hocwp/admin/admin-setting-page-reading.php:79
 msgctxt "orderby"
 msgid "No order"
 msgstr "Không sắp xếp"
 
-#: hocwp/admin/admin-setting-page-reading.php:78
+#: hocwp/admin/admin-setting-page-reading.php:80
 msgctxt "orderby"
 msgid "Post ID"
 msgstr "ID bài viết"
 
-#: hocwp/admin/admin-setting-page-reading.php:79
+#: hocwp/admin/admin-setting-page-reading.php:81
 msgctxt "orderby"
 msgid "Post author"
 msgstr "Tác giả"
 
-#: hocwp/admin/admin-setting-page-reading.php:80
+#: hocwp/admin/admin-setting-page-reading.php:82
 msgctxt "orderby"
 msgid "Post title"
 msgstr "Tiêu đề bài viết"
 
-#: hocwp/admin/admin-setting-page-reading.php:81
+#: hocwp/admin/admin-setting-page-reading.php:83
 msgctxt "orderby"
 msgid "Post name"
 msgstr "Tên bài viết"
 
-#: hocwp/admin/admin-setting-page-reading.php:82
+#: hocwp/admin/admin-setting-page-reading.php:84
 msgctxt "orderby"
 msgid "Post type"
 msgstr "Loại bài viết"
 
-#: hocwp/admin/admin-setting-page-reading.php:83
+#: hocwp/admin/admin-setting-page-reading.php:85
 msgctxt "orderby"
 msgid "Post date"
 msgstr "Ngày đăng bài"
 
-#: hocwp/admin/admin-setting-page-reading.php:84
+#: hocwp/admin/admin-setting-page-reading.php:86
 msgctxt "orderby"
 msgid "Last modified date"
 msgstr "Ngày cập nhật cuối"
 
-#: hocwp/admin/admin-setting-page-reading.php:85
+#: hocwp/admin/admin-setting-page-reading.php:87
 msgctxt "orderby"
 msgid "Post parent"
 msgstr "Bài viết cha"
 
-#: hocwp/admin/admin-setting-page-reading.php:86
+#: hocwp/admin/admin-setting-page-reading.php:88
 msgctxt "orderby"
 msgid "Random"
 msgstr "Ngẫu nhiên"
 
-#: hocwp/admin/admin-setting-page-reading.php:87
+#: hocwp/admin/admin-setting-page-reading.php:89
 msgctxt "orderby"
 msgid "Number of comments"
 msgstr "Số lượt bình luận"
 
-#: hocwp/admin/admin-setting-page-reading.php:88
+#: hocwp/admin/admin-setting-page-reading.php:90
 msgctxt "orderby"
 msgid "Search terms"
 msgstr "Cụm từ tìm kiếm"
 
-#: hocwp/admin/admin-setting-page-reading.php:89
+#: hocwp/admin/admin-setting-page-reading.php:91
 msgctxt "orderby"
 msgid "Post order"
 msgstr "Thứ tự bài viết"
 
-#: hocwp/admin/admin-setting-page-reading.php:97
+#: hocwp/admin/admin-setting-page-reading.php:99
 msgid "Query Orderby"
 msgstr "Sắp xếp truy vấn"
 
-#: hocwp/admin/admin-setting-page-reading.php:104
+#: hocwp/admin/admin-setting-page-reading.php:106
 msgid "Excerpt More"
 msgstr "Ký tự xem thêm"
 
-#: hocwp/admin/admin-setting-page-reading.php:112
+#: hocwp/admin/admin-setting-page-reading.php:114
 msgid "Excerpt Length"
 msgstr "Độ dài mô tả"
 
-#: hocwp/admin/admin-setting-page-reading.php:115
+#: hocwp/admin/admin-setting-page-reading.php:117
 msgid "Excerpt Length Mobile"
 msgstr "Độ dài mô tả di động"
 
-#: hocwp/admin/admin-setting-page-reading.php:121
+#: hocwp/admin/admin-setting-page-reading.php:123
 msgid "Make last widget on sidebar sticky."
 msgstr "Hiển thị widget cuối cùng trên sidebar theo dạng sticky."
 
-#: hocwp/admin/admin-setting-page-reading.php:124
+#: hocwp/admin/admin-setting-page-reading.php:126
 msgid "Sticky Last Widget"
 msgstr "Sticky widget cuối"
 
-#: hocwp/admin/admin-setting-page-reading.php:127
+#: hocwp/admin/admin-setting-page-reading.php:129
 msgid "Show float post nav links on single page."
 msgstr ""
 "Hiển thị nút điều hướng bài viết trước và sau bài viết hiện tại ở 2 bên màn "
 "hình."
 
-#: hocwp/admin/admin-setting-page-reading.php:129
+#: hocwp/admin/admin-setting-page-reading.php:131
 msgid "Float Post Nav"
 msgstr "Điều hướng bài viết 2 bên"
 
-#: hocwp/admin/admin-setting-page-reading.php:135 hocwp/admin/meta.php:142
+#: hocwp/admin/admin-setting-page-reading.php:137 hocwp/admin/meta.php:142
 #: hocwp/inc/class-hocwp-theme-customize.php:70
 msgid "Default"
 msgstr "Mặc định"
 
-#: hocwp/admin/admin-setting-page-reading.php:136 hocwp/admin/meta.php:143
+#: hocwp/admin/admin-setting-page-reading.php:138 hocwp/admin/meta.php:143
 msgctxt "sidebar position"
 msgid "Right"
 msgstr "Bên phải"
 
-#: hocwp/admin/admin-setting-page-reading.php:137 hocwp/admin/meta.php:144
+#: hocwp/admin/admin-setting-page-reading.php:139 hocwp/admin/meta.php:144
 msgctxt "sidebar position"
 msgid "Left"
 msgstr "Bên trái"
 
-#: hocwp/admin/admin-setting-page-reading.php:141 hocwp/admin/meta.php:148
+#: hocwp/admin/admin-setting-page-reading.php:143 hocwp/admin/meta.php:148
 msgid "Sidebar Position"
 msgstr "Vị trí sidebar"
 
-#: hocwp/admin/admin-setting-page-reading.php:146
+#: hocwp/admin/admin-setting-page-reading.php:148
 msgid "Add random end point to url for displaying random post?"
 msgstr "Thêm random vào cuối đường dẫn để hiển thị bài viết ngẫu nhiên?"
 
-#: hocwp/admin/admin-setting-page-reading.php:149
+#: hocwp/admin/admin-setting-page-reading.php:151
 msgid "Random"
 msgstr "Ngẫu nhiên"
 
 #: hocwp/admin/admin-setting-page-reading.php:157
+msgid ""
+"Since WordPress version 5.5, all images will be used lazy loading, check "
+"here if you want to disable this function?"
+msgstr ""
+"Kể từ phiên bản WordPress 5.5, tất cả hình ảnh sẽ được tải bằng lazy "
+"loading, nhấn chọn vào đây nếu bạn muốn vô hiệu hóa chức năng này?"
+
+#: hocwp/admin/admin-setting-page-reading.php:160
+msgid "Disable Lazy Loading"
+msgstr "Vô hiệu hóa lazy loading"
+
+#: hocwp/admin/admin-setting-page-reading.php:169
 msgid "Products Per Page"
 msgstr "Sản phẩm mỗi trang"
 
-#: hocwp/admin/admin-setting-page-reading.php:172
+#: hocwp/admin/admin-setting-page-reading.php:184
 msgid ""
 "Displays the back to top button when user scrolls down the bottom of site."
 msgstr "Hiển thị nút trở về đầu trang khi người dùng cuộn xuống dưới trang."
 
-#: hocwp/admin/admin-setting-page-reading.php:175
+#: hocwp/admin/admin-setting-page-reading.php:187
 msgid "Active"
 msgstr "Kích hoạt"
 
-#: hocwp/admin/admin-setting-page-reading.php:191
+#: hocwp/admin/admin-setting-page-reading.php:203
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr "Biểu tượng"
 
-#: hocwp/admin/admin-setting-page-reading.php:194
+#: hocwp/admin/admin-setting-page-reading.php:206
 msgid "Icon HTML"
 msgstr "Biểu tượng HTML"
 
-#: hocwp/admin/admin-setting-page-reading.php:197 hocwp/inc/setup-after.php:44
+#: hocwp/admin/admin-setting-page-reading.php:209 hocwp/inc/setup-after.php:44
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: hocwp/admin/admin-setting-page-reading.php:200
+#: hocwp/admin/admin-setting-page-reading.php:212
 msgid "Style Attribute"
 msgstr "Thuộc tính style"
 
@@ -727,7 +739,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:297
-#: hocwp/inc/functions-scripts.php:286
+#: hocwp/inc/functions-scripts.php:290
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -1208,11 +1220,21 @@ msgstr ""
 "Nếu đường link bên trên không hoạt động, bạn cũng có thể sao chép và bỏ vào "
 "thanh địa chỉ của trình duyệt để truy cập."
 
-#: hocwp/ext/dynamic-thumbnail.php:67
+#: hocwp/ext/dynamic-thumbnail.php:86
+msgid "Enable function to find thumbnail from post content automatically."
+msgstr ""
+"Bật chức năng tự động tìm hình ảnh thu nhỏ trong nội dung bài viết một cách "
+"tự động."
+
+#: hocwp/ext/dynamic-thumbnail.php:89
+msgid "Auto Thumbnail"
+msgstr "Ảnh thu nhỏ tự động"
+
+#: hocwp/ext/dynamic-thumbnail.php:120
 msgid "Dynamic Thumbnail"
 msgstr "Ảnh đại diện tự động"
 
-#: hocwp/ext/dynamic-thumbnail.php:70
+#: hocwp/ext/dynamic-thumbnail.php:123
 msgid "Thumbnail Url:"
 msgstr "Đường dẫn ảnh đại diện:"
 
@@ -1576,7 +1598,7 @@ msgid "Remove media"
 msgstr "Xóa tập tin"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:1245
-#: hocwp/inc/functions-scripts.php:287
+#: hocwp/inc/functions-scripts.php:291
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
@@ -1946,59 +1968,59 @@ msgstr "Bản quyền trái phép"
 msgid "Notify license"
 msgstr "Thông báo bản quyền"
 
-#: hocwp/inc/functions-scripts.php:150
+#: hocwp/inc/functions-scripts.php:154
 msgid "Are you sure you want to delete?"
 msgstr "Bạn có chắc là muốn xóa hay không?"
 
-#: hocwp/inc/functions-scripts.php:151
+#: hocwp/inc/functions-scripts.php:155
 msgid "Changes you made may not be saved."
 msgstr "Những thay đổi của bạn có thể chưa được lưu."
 
-#: hocwp/inc/functions-scripts.php:152
+#: hocwp/inc/functions-scripts.php:156
 #, php-format
 msgid "Theme created by %s"
 msgstr "Giao diện được tạo bởi %s"
 
-#: hocwp/inc/functions-scripts.php:173
+#: hocwp/inc/functions-scripts.php:177
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:283
+#: hocwp/inc/functions-scripts.php:287
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:284
+#: hocwp/inc/functions-scripts.php:288
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:288
+#: hocwp/inc/functions-scripts.php:292
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:363
+#: hocwp/inc/functions-scripts.php:367
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:364
+#: hocwp/inc/functions-scripts.php:368
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:365
+#: hocwp/inc/functions-scripts.php:369
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:366
+#: hocwp/inc/functions-scripts.php:370
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:367
+#: hocwp/inc/functions-scripts.php:371
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."

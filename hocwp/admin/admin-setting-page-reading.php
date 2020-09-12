@@ -43,6 +43,8 @@ function hocwp_theme_settings_page_reading_section() {
 add_filter( 'hocwp_theme_settings_page_reading_settings_section', 'hocwp_theme_settings_page_reading_section' );
 
 function hocwp_theme_settings_page_reading_field() {
+	global $wp_version;
+
 	$fields = array();
 
 	$field    = hocwp_theme_create_setting_field( 'theme_color', __( 'Theme Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading' );
@@ -148,6 +150,16 @@ function hocwp_theme_settings_page_reading_field() {
 
 	$field    = hocwp_theme_create_setting_field( 'random', __( 'Random', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
 	$fields[] = $field;
+
+	if ( version_compare( $wp_version, '5.5', '>=' ) ) {
+		$args = array(
+			'type'  => 'checkbox',
+			'label' => __( 'Since WordPress version 5.5, all images will be used lazy loading, check here if you want to disable this function?', 'hocwp-theme' )
+		);
+
+		$field    = hocwp_theme_create_setting_field( 'disable_lazy_loading', __( 'Disable Lazy Loading', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+		$fields[] = $field;
+	}
 
 	if ( hocwp_theme_is_shop_site() ) {
 		$fields[] = array(

@@ -32,12 +32,65 @@ if ( ! class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
 			if ( is_admin() ) {
 				add_action( 'load-post.php', array( $this, 'meta_boxes' ) );
 				add_action( 'load-post-new.php', array( $this, 'meta_boxes' ) );
+
+				add_filter( 'hocwp_theme_setting_page_writing_fields', array(
+					$this,
+					'page_setting_writing_fields'
+				) );
+
+				add_action( 'save_post', array( $this, 'save_post_action' ), 999999 );
 			} else {
 				add_filter( 'hocwp_theme_post_thumbnail_size_display', array(
 					$this,
 					'post_thumbnail_size_display_filter'
 				) );
 			}
+		}
+
+		public function auto_set_featured_image( $post_id ) {
+			$obj = get_post( $post_id );
+
+			if ( ! empty( $obj->post_content ) ) {
+				$url = HT()->get_first_image_source( $obj->post_content );
+
+				if ( ! empty( $url ) ) {
+					$id = HT_Media()->url_to_id( $url );
+
+					if ( ! HT_Media()->exists( $id ) ) {
+						$id = HT_Media()->download_image( $url, null, true );
+					}
+
+					if ( HT_Media()->exists( $id ) ) {
+						set_post_thumbnail( $post_id, $id );
+					}
+				}
+			}
+		}
+
+		public function save_post_action( $post_id ) {
+			if ( wp_is_post_revision( $post_id ) ) {
+				return;
+			}
+
+			$auto_thumbnail = HT_Options()->get_tab( 'auto_thumbnail', '', 'writing' );
+
+			if ( $auto_thumbnail ) {
+				$this->auto_set_featured_image( $post_id );
+			}
+		}
+
+		public function page_setting_writing_fields( $fields ) {
+			$args = array(
+				'class' => 'medium-text',
+				'type'  => 'checkbox',
+				'label' => __( 'Enable function to find thumbnail from post content automatically.', 'hocwp-theme' )
+			);
+
+			$field = hocwp_theme_create_setting_field( 'auto_thumbnail', __( 'Auto Thumbnail', 'hocwp-theme' ), '', $args, 'boolean', 'writing' );
+
+			$fields['auto_thumbnail'] = $field;
+
+			return $fields;
 		}
 
 		public function is_thumbnail_size( $size ) {

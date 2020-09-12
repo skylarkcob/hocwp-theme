@@ -242,9 +242,36 @@ class HOCWP_Theme_Media {
 		return $name;
 	}
 
-	public function download_image( $url, $name = null ) {
+	public function download_image( $url, $name = null, $check_exist = false ) {
 		if ( ! $url || empty ( $url ) ) {
 			return false;
+		}
+
+		if ( $check_exist ) {
+			$args = array(
+				'post_type'      => 'attachment',
+				'post_status'    => 'inherit',
+				'meta_query'     => array(
+					array(
+						'key'   => 'source_url',
+						'value' => $url
+					)
+				),
+				'fields'         => 'ids',
+				'posts_per_page' => 1,
+				'order'          => 'asc'
+			);
+
+			$query = new WP_Query( $args );
+
+			if ( $query->have_posts() ) {
+				$ids = $query->get_posts();
+				$id  = array_shift( $ids );
+
+				if ( HT_Media()->exists( $id ) ) {
+					return $id;
+				}
+			}
 		}
 
 		if ( ! function_exists( 'download_url' ) || ! function_exists( 'media_handle_sideload' ) ) {
@@ -293,6 +320,8 @@ class HOCWP_Theme_Media {
 		}
 
 		unset( $file_array );
+
+		update_post_meta( $id, 'source_url', $url );
 
 		return $id;
 	}
