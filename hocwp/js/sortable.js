@@ -191,5 +191,6 @@ jQuery(document).ready(function ($) {
 
     (function () {
         $("[data-sortable='1']").hocwpSortable();
+        $(".allow-add-data ul").sortable();
     })();
 });

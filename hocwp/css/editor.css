@@ -1,3 +1,10 @@
 body {
     background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body > ul,
+body > ol {
+    margin-left: 0;
+    padding-left: 0;
 }

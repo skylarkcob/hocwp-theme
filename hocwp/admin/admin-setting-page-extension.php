@@ -30,7 +30,7 @@ function hocwp_theme_settings_page_extension_field() {
 	return $fields;
 }
 
-add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_settings_page_extension_field' );
+//add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_settings_page_extension_field' );
 
 function hocwp_theme_settings_page_extension_admin_menu() {
 	global $hocwp_theme;

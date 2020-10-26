@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
         element.hide();
     });
 
-    // Add multiple image to list images.
+    // Add multiple images to list images.
     body.on("click", ".hocwp-theme .insert-images", function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -64,7 +64,13 @@ jQuery(document).ready(function ($) {
         frame.on("select", function () {
             var items = frame.state().get("selection"),
                 input = container.find("input"),
-                value = $.parseJSON(input.val());
+                oldValues = input.val(),
+                value = "";
+
+            // Check if field has images
+            if (oldValues) {
+                value = $.parseJSON(oldValues);
+            }
 
             if (!value) {
                 value = [];

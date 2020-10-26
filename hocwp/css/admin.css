@@ -241,6 +241,11 @@
     height: 80px;
 }
 
+.hocwp-theme .images-box.auto-height .list-images li img {
+    max-height: none !important;
+    height: auto !important;
+}
+
 .hocwp-theme .images-box .list-images li:hover img {
     opacity: 1;
 }

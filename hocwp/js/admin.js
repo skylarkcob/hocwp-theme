@@ -69,4 +69,41 @@ jQuery(document).ready(function ($) {
             }
         }
     })();
+
+    (function () {
+        body.on("click", "button.add-data-html", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that),
+                box = element.closest(".allow-add-data"),
+                list = box.find("ul"),
+                base = list.find(".base-data"),
+                clone = base.clone(),
+                count = parseInt(list.children().length);
+
+            clone.removeClass("base-data");
+
+            clone.find("input").each(function () {
+                console.log($(this).attr("id"));
+                $(this).attr("id", $(this).attr("id") + count);
+            });
+
+            clone = clone.prop("outerHTML").replace(/%count%/g, count.toString());
+
+            list.append(clone.toString());
+            list.children().not(".base-data").show();
+        });
+
+        body.on("click", ".allow-add-data li .remove", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that);
+
+            if (confirm(hocwpTheme.l10n.confirmDeleteMessage)) {
+                element.closest("li").remove();
+            }
+        });
+    })();
 });

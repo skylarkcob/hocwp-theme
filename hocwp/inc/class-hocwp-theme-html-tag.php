@@ -83,9 +83,11 @@ final class HOCWP_Theme_HTML_Tag {
 		if ( $text instanceof HOCWP_Theme_HTML_Tag ) {
 			$text = $text->build();
 		}
+
 		if ( 'input' == $this->get_name() ) {
 			$this->add_attribute( 'value', $text );
 		}
+
 		$this->text = $text;
 	}
 

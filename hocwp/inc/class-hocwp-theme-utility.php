@@ -449,9 +449,9 @@ class HOCWP_Theme_Utility {
 
 	public static function ajax_overlay() {
 		?>
-		<div class="hocwp-theme ajax-overlay">
-			<img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
-		</div>
+        <div class="hocwp-theme ajax-overlay">
+            <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
+        </div>
 		<?php
 	}
 
@@ -638,14 +638,14 @@ class HOCWP_Theme_Utility {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
-				<script>
-					jQuery(document).ready(function ($) {
-						setTimeout(function () {
-							var notices = $('.hocwp-theme.notice.auto-hide');
-							notices.fadeOut(1000);
-						}, <?php echo $hidden_interval; ?>);
-					});
-				</script>
+                <script>
+                    jQuery(document).ready(function ($) {
+                        setTimeout(function () {
+                            var notices = $('.hocwp-theme.notice.auto-hide');
+                            notices.fadeOut(1000);
+                        }, <?php echo $hidden_interval; ?>);
+                    });
+                </script>
 				<?php
 				$message .= ob_get_clean();
 			}
@@ -1203,7 +1203,25 @@ class HOCWP_Theme_Utility {
 
 		$options = $hocwp_theme->options;
 		$options = isset( $options[ $base ] ) ? $options[ $base ] : '';
-		$value   = isset( $options[ $name ] ) ? $options[ $name ] : '';
+
+		$value = false;
+
+		if ( function_exists( 'HOCWP_EXT_Language' ) && function_exists( 'pll_current_language' ) ) {
+			$lang = pll_current_language();
+
+			if ( ! empty( $lang ) ) {
+				$dl = pll_default_language();
+
+				if ( $lang != $dl ) {
+					$ln    = $name . '_' . $lang;
+					$value = isset( $options[ $ln ] ) ? $options[ $ln ] : '';
+				}
+			}
+		}
+
+		if ( empty( $value ) ) {
+			$value = isset( $options[ $name ] ) ? $options[ $name ] : '';
+		}
 
 		if ( empty( $value ) && gettype( $value ) != gettype( $default ) && ! isset( $options[ $name ] ) ) {
 			$value = $default;
@@ -1604,22 +1622,22 @@ class HOCWP_Theme_Utility {
 			$locale = 'vi_VN';
 		}
 		?>
-		<script>
-			(function (d, s, id) {
-				var js, gjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {
-					return;
-				}
-				js = d.createElement(s);
-				js.id = id;
-				js.async = "async";
-				js.defer = "defer";
-				js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
-				js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
-				js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
-				gjs.parentNode.insertBefore(js, gjs);
-			}(document, "script", "google-jssdk"));
-		</script>
+        <script>
+            (function (d, s, id) {
+                var js, gjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.async = "async";
+                js.defer = "defer";
+                js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
+                js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
+                js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
+                gjs.parentNode.insertBefore(js, gjs);
+            }(document, "script", "google-jssdk"));
+        </script>
 		<?php
 	}
 
@@ -1656,15 +1674,15 @@ class HOCWP_Theme_Utility {
 				$version = isset( $args['version'] ) ? $args['version'] : '2.11';
 				$version = trim( $version, 'v' );
 				?>
-				<div id="fb-root"></div>
-				<script>(function (d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0];
-						if (d.getElementById(id)) return;
-						js = d.createElement(s);
-						js.id = id;
-						js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
-						fjs.parentNode.insertBefore(js, fjs);
-					}(document, "script", "facebook-jssdk"));</script>
+                <div id="fb-root"></div>
+                <script>(function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, "script", "facebook-jssdk"));</script>
 				<?php
 			} else {
 				echo $sdk;
@@ -1753,8 +1771,8 @@ class HOCWP_Theme_Utility {
 		/** @noinspection SqlNoDataSourceInspection */
 		$query_root = "DELETE FROM $wpdb->options";
 		$query_root .= " WHERE option_name like %s";
-		$key_1 = '_transient_';
-		$key_2 = '_transient_timeout_';
+		$key_1      = '_transient_';
+		$key_2      = '_transient_timeout_';
 
 		if ( ! empty( $transient_name ) ) {
 			$transient_name = '%' . $transient_name . '%';
@@ -1810,21 +1828,21 @@ class HOCWP_Theme_Utility {
 
 		if ( 'v2' == $version ) {
 			?>
-			<script>
-				(function (d, s, id) {
-					var js, gjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) {
-						return;
-					}
-					js = d.createElement(s);
-					js.id = id;
-					js.async = "async";
-					js.defer = "defer";
-					js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
-					gjs.parentNode.insertBefore(js, gjs);
-				}(document, "script", "recaptcha-jssdk"));
-			</script>
-			<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
+            <script>
+                (function (d, s, id) {
+                    var js, gjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.async = "async";
+                    js.defer = "defer";
+                    js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
+                    gjs.parentNode.insertBefore(js, gjs);
+                }(document, "script", "recaptcha-jssdk"));
+            </script>
+            <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
 			<?php
 		}
 	}

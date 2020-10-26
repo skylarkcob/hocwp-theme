@@ -137,7 +137,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 			$diff      = human_time_diff( $timestamp );
 
 			if ( $ago ) {
-				$diff = sprintf( '%s ago', 'hocwp-theme' );
+				$diff = sprintf( __( '%s ago', 'hocwp-theme' ), $diff );
 			}
 
 			echo $diff;

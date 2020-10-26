@@ -49,6 +49,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		if ( 'options.php' == $pagenow || $this->menu_slug == $plugin_page ) {
 			add_action( 'admin_init', array( $this, 'settings_init' ) );
 		}
+
 		if ( $this->menu_slug == $plugin_page ) {
 			$this->tab = $this->tabs->tab_name;
 			add_action( 'admin_notices', array( $this, 'saved_notices' ) );
@@ -80,7 +81,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		if ( ! empty( $this->tabs->tab_name ) ) {
 			$option_group .= '_' . $this->tabs->tab_name;
-			$option_name .= '[' . $this->tabs->tab_name . ']';
+			$option_name  .= '[' . $this->tabs->tab_name . ']';
 		}
 
 		return array( 'option_group' => $option_group, 'option_name' => $option_name );
@@ -112,6 +113,27 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		 * Add Settings Field
 		 */
 		$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
+
+		if ( function_exists( 'HOCWP_EXT_Language' ) && 'language' != $this->tabs->tab_name ) {
+			$multiple_option = HOCWP_EXT_Language()->get_option( 'multiple_option' );
+
+			if ( $multiple_option && function_exists( 'pll_languages_list' ) ) {
+				$langs   = pll_languages_list();
+				$default = pll_default_language();
+				unset( $langs[ array_search( $default, $langs ) ] );
+
+				if ( HT()->array_has_value( $langs ) ) {
+					$lists = array();
+
+					foreach ( (array) $this->settings_field as $field ) {
+						$lists[] = $field;
+						HOCWP_EXT_Language()->generate_setting_with_language( $field, $lists );
+					}
+
+					$this->settings_field = $lists;
+				}
+			}
+		}
 
 		foreach ( (array) $this->settings_field as $key => $field ) {
 			$field = $this->sanitize_field( $field );
@@ -381,18 +403,18 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	public function html() {
 		$theme = wp_get_theme();
 		?>
-		<div class="wrap hocwp-theme">
-			<h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
-			<hr class="wp-header-end" style="clear: both;">
-			<div class="settings-box clearfix module">
-				<div class="header module-header">
-					<div class="inner clearfix">
-						<div class="theme-info">
-							<h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
+        <div class="wrap hocwp-theme">
+            <h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
+            <hr class="wp-header-end" style="clear: both;">
+            <div class="settings-box clearfix module">
+                <div class="header module-header">
+                    <div class="inner clearfix">
+                        <div class="theme-info">
+                            <h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
 
-							<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
-						</div>
-						<div class="save-changes">
+                            <p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
+                        </div>
+                        <div class="save-changes">
 							<?php
 							$this->submit_button(
 								array(
@@ -403,12 +425,12 @@ final class HOCWP_Theme_Admin_Setting_Page {
 								)
 							);
 							?>
-						</div>
-					</div>
-				</div>
-				<div class="module-body clearfix">
+                        </div>
+                    </div>
+                </div>
+                <div class="module-body clearfix">
 					<?php $this->tabs->html() ?>
-					<div class="settings-content">
+                    <div class="settings-content">
 						<?php
 						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
 
@@ -420,18 +442,18 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
 						?>
-					</div>
-				</div>
-				<div class="module-footer clearfix">
-					<div class="author-info">
-						<p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
-					</div>
-					<div class="core-version">
-						<p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
-					</div>
-				</div>
-			</div>
-		</div>
+                    </div>
+                </div>
+                <div class="module-footer clearfix">
+                    <div class="author-info">
+                        <p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
+                    </div>
+                    <div class="core-version">
+                        <p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<?php
 	}
 
@@ -453,9 +475,9 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	private function form_table() {
 		?>
-		<form id="hocwpOptions" method="post" action="options.php" autocomplete="off">
-			<input type="hidden" name="tab"
-			       value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
+        <form id="hocwpOptions" method="post" action="options.php" autocomplete="off">
+            <input type="hidden" name="tab"
+                   value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
 			<?php
 			$data = $this->get_option_group_and_name();
 			settings_fields( $this->menu_slug );
@@ -463,11 +485,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 			if ( isset( $wp_settings_fields[ $this->menu_slug ]['default'] ) ) {
 				?>
-				<table class="form-table">
-					<tbody>
+                <table class="form-table">
+                    <tbody>
 					<?php do_settings_fields( $this->menu_slug, 'default' ); ?>
-					</tbody>
-				</table>
+                    </tbody>
+                </table>
 				<?php
 			}
 
@@ -483,7 +505,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				)
 			);
 			?>
-		</form>
+        </form>
 		<?php
 	}
 

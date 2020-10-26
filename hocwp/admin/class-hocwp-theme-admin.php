@@ -150,6 +150,10 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	public function is_theme_option_page() {
 		return $this->is_admin_page( 'themes.php', HOCWP_Theme()->get_prefix() );
 	}
+
+	public function add_setting_with_language( $field, &$fields ) {
+		HOCWP_EXT_Language()->generate_setting_with_language( $field, $fields );
+	}
 }
 
 function HT_Admin() {
