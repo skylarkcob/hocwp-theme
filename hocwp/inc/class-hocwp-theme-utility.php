@@ -1051,8 +1051,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_title_separator() {
-		/** @noinspection PhpUndefinedClassInspection */
-		return apply_filters( 'hocwp_theme_title_separator', ( class_exists( 'WPSEO_Utils' ) ) ? WPSEO_Utils::get_title_separator() : '&raquo;' );
+		return apply_filters( 'hocwp_theme_title_separator', ( class_exists( 'WPSEO_Options' ) ) ? WPSEO_Options::get( 'separator' ) : '&raquo;' );
 	}
 
 	public static function get_posts_per_page( $home = false ) {

@@ -641,16 +641,15 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public function get_separator( $context = 'title' ) {
 		$separator = '-';
 
-		if ( class_exists( 'WPSEO_Utils' ) ) {
-			/** @noinspection PhpUndefinedClassInspection */
-			$separator = WPSEO_Utils::get_title_separator();
+		if ( class_exists( 'WPSEO_Options' ) ) {
+			$separator = WPSEO_Options::get( 'separator' );
 		}
 
 		return apply_filters( 'hocwp_theme_separator', $separator, $context );
 	}
 
 	public function is_yoast_breadcrumb() {
-		if ( function_exists( 'yoast_breadcrumb' ) ) {
+		if ( function_exists( 'yoast_breadcrumb' ) && class_exists('WPSEO_Options')) {
 			$breadcrumbs_enabled = current_theme_supports( 'yoast-seo-breadcrumbs' );
 
 			if ( ! $breadcrumbs_enabled ) {

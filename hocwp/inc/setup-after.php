@@ -326,11 +326,11 @@ function hocwp_theme_check_environment() {
 				if ( HT()->array_has_value( $invalid_exts ) ) {
 					foreach ( $invalid_exts as $data ) {
 						?>
-						<div class="error notice is-dismissible">
-							<p>
+                        <div class="error notice is-dismissible">
+                            <p>
 								<?php printf( __( '<strong>%s:</strong> This extension requires theme core version at least %s.', 'hocwp-theme' ), $data['name'], $data['requires_core'] ); ?>
-							</p>
-						</div>
+                            </p>
+                        </div>
 						<?php
 					}
 				}
@@ -411,8 +411,17 @@ function hocwp_theme_check_environment() {
 				if ( $die ) {
 					do_action( 'hocwp_theme_missing_required_plugins', $plugin, $info, $plugins );
 
-					$plugin  = '<a href="' . esc_url( $url ) . '">' . $name . '</a>';
-					$message = sprintf( __( 'Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme working normally.', 'hocwp-theme' ), $plugin );
+					if ( current_user_can( 'manage_options' ) ) {
+						$plugin  = '<a href="' . esc_url( $url ) . '">' . $name . '</a>';
+						$message = sprintf( __( 'Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme working normally.', 'hocwp-theme' ), $plugin );
+					} else {
+						if ( is_user_logged_in() ) {
+							$message = sprintf( __( '<strong>%s:</strong> The site is experiencing technical difficulties. Please contact administrator for more details.', 'hocwp-theme' ), get_bloginfo( 'name' ) );
+						} else {
+							$message = sprintf( __( '<strong>%s:</strong> The site is experiencing technical difficulties. Please contact administrator for more details. If you are owner of this site, try to <a href="%s">login here</a> to check it.', 'hocwp-theme' ), get_bloginfo( 'name' ), wp_login_url() );
+						}
+					}
+
 					wp_die( $message, __( 'Missing Required Plugins', 'hocwp-theme' ) );
 					exit;
 				}
