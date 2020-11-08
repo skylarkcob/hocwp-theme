@@ -205,6 +205,13 @@ function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
 
 add_filter( 'post_class', 'hocwp_theme_post_class_filter', 10, 3 );
 
+/**
+ * Open HTML tag.
+ *
+ * @param string $tag The HTML tag name.
+ * @param string $context The HTML tag context.
+ * @param string|array $attr The HTML attributes.
+ */
 function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
 	$tag = trim( $tag );
 	$tag = strtolower( $tag );
@@ -218,6 +225,11 @@ function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
 	printf( "<%s>\n", $tag );
 }
 
+/**
+ * Close HTML tag.
+ *
+ * @param string $tag The HTML tag name.
+ */
 function hocwp_theme_html_tag_close( $tag ) {
 	$tag = trim( $tag );
 	$tag = strtolower( $tag );
@@ -230,7 +242,7 @@ function hocwp_theme_html_tag_close( $tag ) {
  *
  * @param string $tag The HTML tag name.
  * @param string $context The HTML tag description.
- * @param string $attr Additional attributes.
+ * @param string|array $attr Additional attributes.
  * @param bool|true $echo Echo attributes.
  *
  * @return string

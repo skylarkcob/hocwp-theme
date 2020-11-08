@@ -131,8 +131,8 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 					$class .= ' hidden-field';
 				}
 				?>
-				<div class="<?php echo esc_attr( $class ); ?>">
-					<label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
+                <div class="<?php echo esc_attr( $class ); ?>">
+                    <label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
 					<?php
 					unset( $field['callback_args']['label'] );
 					call_user_func( $field['callback'], $field['callback_args'] );
@@ -145,14 +145,14 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 						$p->output();
 					}
 					?>
-				</div>
+                </div>
 				<?php
 			}
 			?>
-			<div class="custom-sortable">
-				<fieldset>
-					<legend><?php _e( 'Display:', 'hocwp-theme' ); ?></legend>
-					<div class="sortable-inner">
+            <div class="custom-sortable">
+                <fieldset>
+                    <legend><?php _e( 'Display:', 'hocwp-theme' ); ?></legend>
+                    <div class="sortable-inner">
 						<?php
 						$base_name = 'sortable';
 
@@ -182,9 +182,9 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 
 						HT_HTML_Field()->sortable( $params );
 						?>
-					</div>
-				</fieldset>
-			</div>
+                    </div>
+                </fieldset>
+            </div>
 			<?php
 		}
 	}
@@ -365,16 +365,19 @@ function hocwp_theme_admin_menu_list_socials_meta_box( $object, $box ) {
 
 			$walker = new Walker_Nav_Menu_Checklist();
 			?>
-			<div id="box-<?php echo $base_name; ?>" class="custom-box hocwp-theme-meta-box taxonomydiv">
-				<div id="tabs-panel-<?php echo $base_name; ?>-pop" class="tabs-panel tabs-panel-active" tabindex="0">
-					<ul id="<?php echo $base_name; ?>-checklist-pop"
-					    class="item-check-list hocwp-theme-custom-list categorychecklist form-no-clear">
+            <div id="box-<?php echo $base_name; ?>" class="custom-box hocwp-theme-meta-box taxonomydiv">
+                <div id="tabs-panel-<?php echo $base_name; ?>-pop" class="tabs-panel tabs-panel-active" tabindex="0">
+                    <ul id="<?php echo $base_name; ?>-checklist-pop"
+                        class="item-check-list hocwp-theme-custom-list categorychecklist form-no-clear">
 						<?php
 						$items = array();
 
 						foreach ( (array) $list_socials as $social ) {
+							$url = HT_Options()->get_tab( $social . '_url', '', 'social' );
+							$url = add_query_arg( 'theme_list_social', 1, $url );
+
 							$item = array(
-								'url'            => HT_Options()->get_tab( $social . '_url', '', 'social' ),
+								'url'            => $url,
 								'icon'           => HT_Options()->get_tab( $social . '_icon', '', 'social' ),
 								'type'           => 'list-socials',
 								'name'           => ucwords( $social ),
@@ -387,27 +390,26 @@ function hocwp_theme_admin_menu_list_socials_meta_box( $object, $box ) {
 						$args['walker'] = $walker;
 						echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $items ), 0, (object) $args );
 						?>
-					</ul>
-				</div>
-				<!-- /.tabs-panel -->
+                    </ul>
+                </div>
+                <!-- /.tabs-panel -->
 
-				<p class="button-controls wp-clearfix" data-items-type="custom">
+                <p class="button-controls wp-clearfix" data-items-type="custom">
 					<span class="list-controls hide-if-no-js">
 						<input type="checkbox"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
 						       id="<?php echo esc_attr( $base_name . '-tab' ); ?>" class="select-all"/>
 						<label
-							for="<?php echo esc_attr( $base_name . '-tab' ); ?>"><?php _e( 'Select All', 'hocwp-theme' ); ?></label>
+                                for="<?php echo esc_attr( $base_name . '-tab' ); ?>"><?php _e( 'Select All', 'hocwp-theme' ); ?></label>
 					</span>
-					<span class="add-to-menu">
+                    <span class="add-to-menu">
 						<button type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
 						        class="button disabled right"
-						        name="add-custom-menu-item"
-						        id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
+                                name="add-custom-menu-item"
+                                id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
 						<span class="spinner"></span>
 					</span>
-				</p>
-
-			</div>
+                </p>
+            </div>
 			<?php
 		}
 	}
@@ -428,11 +430,34 @@ function hocwp_theme_wp_setup_nav_menu_item_admin_column_filter( $menu_item ) {
 		$menu_item->type_label       = '';
 		$menu_item->target           = '';
 		$menu_item->description      = '';
-		$menu_item->classes          = array();
+		$menu_item->classes          = array( 'social-item' );
 		$menu_item->xfn              = '';
+		$menu_item->list_social      = 1;
 	}
 
 	return $menu_item;
 }
 
 add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_admin_column_filter' );
+
+function hocwp_theme_wp_add_nav_menu_item_action( $menu_id, $menu_item_db_id, $args ) {
+	if ( ! HT()->is_positive_number( $menu_id ) && HT()->is_positive_number( $menu_item_db_id ) ) {
+		$object = isset( $args['menu-item-object'] ) ? $args['menu-item-object'] : '';
+
+		if ( 'custom' == $object ) {
+			$url = isset( $args['menu-item-url'] ) ? $args['menu-item-url'] : '';
+
+			if ( ! empty( $url ) ) {
+				$params = HT()->get_params_from_url( $url );
+
+				if ( isset( $params['theme_list_social'] ) && 1 == $params['theme_list_social'] ) {
+					update_post_meta( $menu_item_db_id, '_menu_item_classes', array( 'social-item' ) );
+					update_post_meta( $menu_item_db_id, 'theme_list_social', 1 );
+				}
+			}
+		}
+	}
+}
+
+add_action( 'wp_add_nav_menu_item', 'hocwp_theme_wp_add_nav_menu_item_action', 10, 3 );
+add_action( 'wp_update_nav_menu_item', 'hocwp_theme_wp_add_nav_menu_item_action', 10, 3 );

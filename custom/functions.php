@@ -3,7 +3,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! trait_exists( 'HTC_Functions' ) ) {
+	require_once dirname( __FILE__ ) . '/trait-functions.php';
+}
+
 class HOCWP_Theme_Custom {
+	use HTC_Functions;
+
 	/*
 	 * Default function to register post type and taxonomy. Do not remove it.
 	 */

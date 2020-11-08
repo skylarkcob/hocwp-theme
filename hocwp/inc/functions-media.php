@@ -32,11 +32,11 @@ function hocwp_theme_is_image_url( $url ) {
 
 function hocwp_theme_attachment_path_to_postid( $path ) {
 	global $wpdb;
-	$upload = wp_upload_dir();
-	$path   = str_replace( $upload['basedir'], '', $path );
-	$sql    = 'SELECT post_id FROM ';
-	$sql .= $wpdb->postmeta;
-	$sql .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
+	$upload  = wp_upload_dir();
+	$path    = str_replace( $upload['basedir'], '', $path );
+	$sql     = 'SELECT post_id FROM ';
+	$sql     .= $wpdb->postmeta;
+	$sql     .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
 	$sql     = $wpdb->prepare( $sql, $path );
 	$post_id = $wpdb->get_var( $sql );
 
@@ -324,6 +324,18 @@ class HOCWP_Theme_Media {
 		update_post_meta( $id, 'source_url', $url );
 
 		return $id;
+	}
+
+	public function get_default_image_url() {
+		$thumbnail = HT_Options()->get_tab( 'default_thumbnail', '', 'writing' );
+
+		if ( $this->exists( $thumbnail ) ) {
+			$thumbnail = wp_get_original_image_url( $thumbnail );
+		}
+
+		$thumbnail = HT_Util()->get_my_image_url( 'no-thumbnail.webp' );
+
+		return apply_filters( 'hocwp_theme_default_image_url', $thumbnail );
 	}
 }
 

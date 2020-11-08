@@ -11,6 +11,31 @@ if ( 'post-new.php' !== $pagenow && 'post.php' !== $pagenow && 'link.php' != $pa
 	}
 }
 
+function hocwp_theme_default_meta_boxes() {
+	$args = array(
+		'public' => true
+	);
+
+	$post_types = get_post_types( $args );
+
+	if ( HT()->is_array_has_value( $post_types ) ) {
+		$meta = new HOCWP_Theme_Meta_Post();
+		$meta->set_post_types( $post_types );
+		$meta->set_id( 'extra-post-info' );
+		$meta->set_title( __( 'Extra Information', 'hocwp-theme' ) );
+		$meta->form_table = true;
+
+		$field = new HOCWP_Theme_Meta_Field( 'different_title', __( 'Different Title', 'hocwp-theme' ) );
+		$meta->add_field( $field );
+
+		$field = new HOCWP_Theme_Meta_Field( 'large_thumbnail', __( 'Large Thumbnail', 'hocwp-theme' ), 'media_upload' );
+		$meta->add_field( $field );
+	}
+}
+
+add_action( 'load-post.php', 'hocwp_theme_default_meta_boxes' );
+add_action( 'load-post-new.php', 'hocwp_theme_default_meta_boxes' );
+
 if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 	function hocwp_theme_meta_box_google_maps( $id = 'google_maps', $post_type = 'post', $args = array() ) {
 		$meta = new HOCWP_Theme_Meta_Post();

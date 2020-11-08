@@ -20,7 +20,13 @@ define( 'HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS', array(
 	'de.com'
 ) );
 
+if ( ! trait_exists( 'HOCWP_Theme_PHP' ) ) {
+	require_once dirname( __FILE__ ) . '/trait-php.php';
+}
+
 final class HOCWP_Theme {
+	use HOCWP_Theme_PHP;
+
 	public $version = HOCWP_THEME_CORE_VERSION;
 	protected static $_instance = null;
 
@@ -118,7 +124,7 @@ final class HOCWP_Theme {
 			$keyspace = $this->safe_string;
 		}
 
-		$pieces = [ ];
+		$pieces = [];
 
 		$max = mb_strlen( $keyspace, '8bit' ) - 1;
 
@@ -169,6 +175,10 @@ final class HOCWP_Theme {
 
 	public static function array_has_value( $arr, $count = 1 ) {
 		return ( is_array( $arr ) && count( $arr ) > ( $count - 1 ) );
+	}
+
+	public function is_array_has_value( $arr, $count = 1 ) {
+		return self::array_has_value( $arr, $count );
 	}
 
 	public static function in_array( $needle, $haystack ) {
@@ -406,6 +416,10 @@ final class HOCWP_Theme {
 
 	public static function is_positive_number( $number ) {
 		return ( is_numeric( $number ) && $number > 0 );
+	}
+
+	public function is_id_number( $number ) {
+		return self::is_positive_number( $number );
 	}
 
 	public function is_nonnegative_number( $number ) {

@@ -39,10 +39,11 @@ if ( ! defined( 'HOCWP_THEME_BLANK_STYLE' ) || ! HOCWP_THEME_BLANK_STYLE ) {
 	hocwp_theme_html_tag( 'div', 'site_container' );
 	?>
     <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'hocwp-theme' ); ?></a>
-    <header id="masthead" class="site-header">
-		<?php do_action( 'hocwp_theme_module_site_header' ); ?>
-    </header>
 	<?php
+	do_action( 'hocwp_theme_site_header_before' );
+	hocwp_theme_html_tag( 'header', 'site_header', array( 'class' => 'site-header', 'id' => 'masthead' ) );
+	do_action( 'hocwp_theme_module_site_header' );
+	hocwp_theme_html_tag_close( 'header' );
 	do_action( 'hocwp_theme_site_header_after' );
 	hocwp_theme_html_tag( 'div', 'site_content' );
 	do_action( 'hocwp_theme_site_content_top' );

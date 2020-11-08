@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.7.9 =
+* Update list social meta for admin menu.
+
 = 6.7.8 =
 * Stop using .min for css and js files.
 * Add menus_init function for custom.

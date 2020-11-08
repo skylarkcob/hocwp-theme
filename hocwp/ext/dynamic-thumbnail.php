@@ -72,10 +72,13 @@ if ( ! class_exists( 'HOCWP_Ext_Dynamic_Thumbnail' ) ) {
 				return;
 			}
 
-			$auto_thumbnail = HT_Options()->get_tab( 'auto_thumbnail', '', 'writing' );
+			// Check if post has thumbnail
+			if ( ! isset( $_POST['_thumbnail_id'] ) || ! HT_Media()->exists( $_POST['_thumbnail_id'] ) ) {
+				$auto_thumbnail = HT_Options()->get_tab( 'auto_thumbnail', '', 'writing' );
 
-			if ( $auto_thumbnail ) {
-				$this->auto_set_featured_image( $post_id );
+				if ( $auto_thumbnail ) {
+					$this->auto_set_featured_image( $post_id );
+				}
 			}
 		}
 
@@ -485,8 +488,8 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 
 	// Find and remove duplicate size in class name.
 	if ( HT()->array_has_value( $size ) ) {
-		$find = join( 'x', $size );
-		$find .= 'x';
+		$find  = join( 'x', $size );
+		$find  .= 'x';
 		$class = str_replace( $find, '', $class );
 	}
 
@@ -511,14 +514,14 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 	$class = str_replace( 'x wp-post-image', ' wp-post-image', $class );
 
 	if ( $attachment instanceof WP_Post ) {
-		$class .= ' attachment-id-' . $attachment->ID;
+		$class                 .= ' attachment-id-' . $attachment->ID;
 		$attr['data-media-id'] = $attachment->ID;
 	}
 
 	$object = get_post( $post_id );
 
 	if ( $object instanceof WP_Post ) {
-		$class .= ' post-type-' . $object->post_type;
+		$class                .= ' post-type-' . $object->post_type;
 		$attr['data-post-id'] = $object->ID;
 	}
 

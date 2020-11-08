@@ -37,7 +37,7 @@ require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
 $post_meta = ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'edit.php' == $pagenow );
 $term_meta = ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow );
 $link_meta = ( 'link.php' == $pagenow || 'link-add.php' == $pagenow );
-$menu_meta = ( 'nav-menus.php' == $pagenow );
+$menu_meta = ( 'nav-menus.php' == $pagenow || 'admin-ajax.php' == $pagenow );
 
 if ( $post_meta || $term_meta || $link_meta || $menu_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
@@ -266,13 +266,13 @@ if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow || 'customize.php
 			$box_class .= ' hocwp-theme';
 			echo '<div class="' . $box_class . '">';
 			?>
-			<p>
-				<label
-					for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>
-				<input class="widefat" id="<?php echo $widget->get_field_id( 'title' ); ?>"
-				       name="<?php echo $widget->get_field_name( 'title' ); ?>" type="text"
-				       value="<?php echo $title; ?>"/>
-			</p>
+            <p>
+                <label
+                        for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>
+                <input class="widefat" id="<?php echo $widget->get_field_id( 'title' ); ?>"
+                       name="<?php echo $widget->get_field_name( 'title' ); ?>" type="text"
+                       value="<?php echo $title; ?>"/>
+            </p>
 			<?php
 		}
 	}
@@ -289,11 +289,11 @@ if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow || 'customize.php
 if ( 'profile.php' == $pagenow || 'edit-user.php' == $pagenow ) {
 	function hocwp_theme_user_profile_fields( $user ) {
 		?>
-		<table class="form-table">
-			<tbody>
+        <table class="form-table">
+            <tbody>
 			<?php do_action( 'hocwp_theme_user_profile_fields', $user ); ?>
-			</tbody>
-		</table>
+            </tbody>
+        </table>
 		<?php
 	}
 
@@ -342,32 +342,32 @@ add_filter( 'admin_body_class', 'hocwp_theme_admin_body_class_filter' );
 
 function hocwp_theme_admin_footer_action() {
 	?>
-	<script>
-		jQuery(document).ready(function ($) {
-			// Backup current theme and database.
-			(function () {
-				$(document).keydown(function (e) {
-					if (e.ctrlKey && e.keyCode == 66) {
-						setTimeout(function () {
-							$.ajax({
-								type: "GET",
-								dataType: "json",
-								url: hocwpTheme.ajaxUrl,
-								data: {
-									action: "backup_this_theme"
-								},
-								success: function (response) {
-									if (response.success) {
-										console.log(response.data.message);
-									}
-								}
-							});
-						}, 1000);
-					}
-				})
-			})();
-		});
-	</script>
+    <script>
+        jQuery(document).ready(function ($) {
+            // Backup current theme and database.
+            (function () {
+                $(document).keydown(function (e) {
+                    if (e.ctrlKey && e.keyCode == 66) {
+                        setTimeout(function () {
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: hocwpTheme.ajaxUrl,
+                                data: {
+                                    action: "backup_this_theme"
+                                },
+                                success: function (response) {
+                                    if (response.success) {
+                                        console.log(response.data.message);
+                                    }
+                                }
+                            });
+                        }, 1000);
+                    }
+                })
+            })();
+        });
+    </script>
 	<?php
 }
 
