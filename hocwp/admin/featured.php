@@ -30,7 +30,7 @@ function hocwp_theme_save_post_action( $post_id ) {
 		return;
 	}
 
-	if ( ! HOCWP_Theme_Utility::can_save_post( $post_id, 'hocwp_theme_post_submitbox', 'hocwp_theme_post_submitbox_nonce' ) ) {
+	if ( ! HT_Util()->can_save_post( $post_id, 'hocwp_theme_post_submitbox', 'hocwp_theme_post_submitbox_nonce' ) ) {
 		return;
 	}
 
@@ -162,7 +162,7 @@ function hocwp_theme_hocwp_theme_featured_post_ajax_callback() {
 
 	$post_id = isset( $_POST['post_id'] ) ? $_POST['post_id'] : '';
 
-	if ( HOCWP_Theme::is_positive_number( $post_id ) ) {
+	if ( HT()->is_positive_number( $post_id ) ) {
 		if ( in_array( get_post_type( $post_id ), HT_Util()->post_types_support_featured() ) ) {
 			$featured = isset( $_POST['featured'] ) ? $_POST['featured'] : '';
 			$featured = absint( $featured );

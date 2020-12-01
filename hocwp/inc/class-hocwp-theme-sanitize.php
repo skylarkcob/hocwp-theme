@@ -91,7 +91,7 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function media_url( $url, $media_id ) {
-		if ( HOCWP_Theme::is_positive_number( $media_id ) && HT_Media()->exists( $media_id ) ) {
+		if ( HT()->is_positive_number( $media_id ) && HT_Media()->exists( $media_id ) ) {
 			if ( wp_attachment_is_image( $media_id ) ) {
 				$details = wp_get_attachment_image_src( $media_id, 'full' );
 				$url     = isset( $details[0] ) ? $details[0] : '';
@@ -121,11 +121,11 @@ final class HOCWP_Theme_Sanitize {
 			$id  = absint( $id );
 		}
 
-		if ( ! HOCWP_Theme::is_positive_number( $id ) ) {
+		if ( ! HT()->is_positive_number( $id ) ) {
 			$id = attachment_url_to_postid( $url );
 		}
 
-		if ( HOCWP_Theme::is_positive_number( $id ) ) {
+		if ( HT()->is_positive_number( $id ) ) {
 			$url  = self::media_url( $url, $id );
 			$icon = wp_mime_type_icon( $id );
 
@@ -144,7 +144,7 @@ final class HOCWP_Theme_Sanitize {
 			'mime_type'   => get_post_mime_type( $id )
 		);
 
-		return $result;
+		return apply_filters( 'hocwp_theme_sanitize_media_data', $result );
 	}
 
 	public function form_post( $key, $type, $data = null ) {
@@ -176,7 +176,7 @@ final class HOCWP_Theme_Sanitize {
 				case 'positive_integer':
 					$value = absint( $value );
 
-					if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
+					if ( ! HT()->is_positive_number( $value ) ) {
 						$value = '';
 					}
 

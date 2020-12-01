@@ -94,7 +94,7 @@ function hocwp_theme_settings_page_extension_form_after() {
 		<h2 class="screen-reader-text"><?php _e( 'Filter extensions list', 'hocwp-theme' ); ?></h2>
 		<?php
 		$hocwp_theme->extensions_list_table->views();
-		$url = HOCWP_Theme_Utility::get_current_url( true );
+		$url = HT_Util()->get_current_url( true );
 		?>
 		<form class="search-form search-extensions" method="post" action="">
 			<?php $hocwp_theme->extensions_list_table->search_box( __( 'Search', 'hocwp-theme' ), 'extension' ); ?>

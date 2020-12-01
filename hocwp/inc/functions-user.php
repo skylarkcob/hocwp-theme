@@ -47,7 +47,7 @@ function hocwp_theme_manage_users_custom_column_filter( $value, $column_name, $u
 			$value = get_user_meta( $user_id, $column_name, true );
 
 			if ( ! empty( $value ) ) {
-				$value = HOCWP_Theme_Utility::timestamp_to_string( $value );
+				$value = HT_Util()->timestamp_to_string( $value );
 			}
 
 			break;

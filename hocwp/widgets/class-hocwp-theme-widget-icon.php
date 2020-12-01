@@ -64,8 +64,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			$html_class = isset( $instance['html_class'] ) ? $instance['html_class'] : '';
 
 			if ( ! empty( $html_class ) ) {
-				$html_class = trim( $html_class );
-				$html_class .= ' ';
+				$html_class    = trim( $html_class );
+				$html_class    .= ' ';
 				$before_widget = preg_replace( '/class="/', 'class="' . $html_class, $before_widget, 1 );
 			}
 		}
@@ -94,6 +94,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		if ( ! empty( $html ) ) {
 			echo $html;
 		} else {
+			$outer_url = apply_filters( 'hocwp_theme_widget_icon_outer_url', false );
+
 			$name     = 'icon_url';
 			$icon_url = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 
@@ -103,10 +105,10 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 			$plain_title = esc_attr( wp_strip_all_tags( $title, true ) );
 
-			if ( ! empty( $title ) && ! empty( $icon_url ) ) {
-				$title = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $icon_url ), $plain_title, $title );
+			if ( ! empty( $title ) && ! empty( $icon_url ) && ! $outer_url ) {
+				$title = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( $icon_url ), esc_attr( $plain_title ), $title );
 			} else {
-				$title = str_replace( '<span>', '<span title="' . $plain_title . '">', $title );
+				$title = str_replace( '<span>', '<span title="' . esc_attr( $plain_title ) . '">', $title );
 			}
 
 			$name       = 'icon_image';
@@ -118,10 +120,10 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 			if ( empty( $icon_html ) && HT()->is_positive_number( $icon_image ) ) {
 				$icon      = wp_get_attachment_url( $icon_image );
-				$icon_html = sprintf( '<img class="icon" src="%s" alt="%s">', $icon, ltrim( $instance['title'], '!' ) );
+				$icon_html = sprintf( '<img class="icon" src="%s" alt="%s">', esc_attr( $icon ), esc_attr( ltrim( $instance['title'], '!' ) ) );
 			}
 
-			if ( ! empty( $icon_html ) && ! empty( $icon_url ) ) {
+			if ( ! empty( $icon_html ) && ! empty( $icon_url ) && ! $outer_url ) {
 				$icon_html = sprintf( '<a href="%s">%s</a>', esc_attr( $icon_url ), $icon_html );
 			}
 
@@ -157,6 +159,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			$before_title = isset( $args['before_title'] ) ? $args['before_title'] : '<h3 class="widget-title">';
 			$after_title  = isset( $args['after_title'] ) ? $args['after_title'] : '</h3>';
 
+			ob_start();
+
 			echo '<div class="icon-box" data-icon="' . esc_attr( $icon ) . '" data-hover-icon="' . esc_attr( $hover_icon ) . '">';
 
 			foreach ( $sortables as $sortable ) {
@@ -173,6 +177,14 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			}
 
 			echo '</div>';
+
+			$widget_html = ob_get_clean();
+
+			if ( $outer_url ) {
+				$widget_html = sprintf( '<a href="%1$s" title="%2$s">%3$s</a>', esc_attr( $icon_url ), esc_attr( $plain_title ), $widget_html );
+			}
+
+			echo $widget_html;
 		}
 
 		do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
@@ -186,16 +198,16 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 		$instance = wp_parse_args( $instance, $this->defaults );
 		?>
-		<nav class="nav-tab-wrapper wp-clearfix">
-			<a href="#widgetIconGeneral<?php echo $this->number; ?>"
-			   class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
-			<a href="#widgetIconAdvanced<?php echo $this->number; ?>"
-			   class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
-			<a href="#widgetIconSortable<?php echo $this->number; ?>"
-			   class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
-		</nav>
-		<div class="tab-content">
-			<div id="widgetIconGeneral<?php echo $this->number; ?>" class="tab-pane active">
+        <nav class="nav-tab-wrapper wp-clearfix">
+            <a href="#widgetIconGeneral<?php echo $this->number; ?>"
+               class="nav-tab nav-tab-active"><?php _e( 'General', 'hocwp-theme' ); ?></a>
+            <a href="#widgetIconAdvanced<?php echo $this->number; ?>"
+               class="nav-tab"><?php _e( 'Advanced', 'hocwp-theme' ); ?></a>
+            <a href="#widgetIconSortable<?php echo $this->number; ?>"
+               class="nav-tab"><?php _e( 'Sortable', 'hocwp-theme' ); ?></a>
+        </nav>
+        <div class="tab-content">
+            <div id="widgetIconGeneral<?php echo $this->number; ?>" class="tab-pane active">
 				<?php
 				$name  = 'icon_url';
 				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
@@ -209,8 +221,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 				HT_HTML_Field()->widget_field( $this, $name, __( 'Text:', 'hocwp-theme' ), $value, 'textarea', array( 'rows' => 3 ) );
 				?>
-			</div>
-			<div id="widgetIconAdvanced<?php echo $this->number; ?>" class="tab-pane">
+            </div>
+            <div id="widgetIconAdvanced<?php echo $this->number; ?>" class="tab-pane">
 				<?php
 				$name  = 'icon_html';
 				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
@@ -232,8 +244,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 				HT_HTML_Field()->widget_field( $this, $name, __( 'HTML Class Attribute:', 'hocwp-theme' ), $value );
 				?>
-			</div>
-			<div id="widgetIconSortable<?php echo $this->number; ?>" class="tab-pane">
+            </div>
+            <div id="widgetIconSortable<?php echo $this->number; ?>" class="tab-pane">
 				<?php
 				$options = $instance['sortables'];
 
@@ -244,8 +256,8 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 				HT_HTML_Field()->widget_field( $this, $name, __( 'Sortable:', 'hocwp-theme' ), $value, 'sortable', $args );
 				?>
-			</div>
-		</div>
+            </div>
+        </div>
 		<?php
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}

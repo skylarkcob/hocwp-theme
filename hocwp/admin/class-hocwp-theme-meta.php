@@ -77,6 +77,9 @@ abstract class HOCWP_Theme_Meta {
 			} elseif ( array( $class, 'datetime_picker' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-datepicker' );
 				$this->load_style( 'jquery-ui-style' );
+			} elseif ( array( $class, 'layout' ) === $callback ) {
+				$this->load_script( 'hocwp-theme' );
+				$this->load_script( 'hocwp-theme-admin' );
 			}
 		}
 
@@ -115,10 +118,10 @@ abstract class HOCWP_Theme_Meta {
 
 		$id   = isset( $field['id'] ) ? $field['id'] : '';
 		$name = isset( $field['name'] ) ? $field['name'] : '';
-		HOCWP_Theme::transmit( $id, $name );
+		HT()->transmit( $id, $name );
 		$title = isset( $field['title'] ) ? $field['title'] : '';
 		$label = isset( $field['label'] ) ? $field['label'] : '';
-		HOCWP_Theme::transmit( $title, $label );
+		HT()->transmit( $title, $label );
 		$field['callback_args']['id']    = $id;
 		$field['callback_args']['name']  = $name;
 		$field['callback_args']['label'] = $label;
@@ -253,7 +256,7 @@ abstract class HOCWP_Theme_Meta {
 					$format = 'Y-m-d';
 				}
 
-				$field['callback_args']['data-date-format'] = HOCWP_Theme::javascript_datetime_format( $format );
+				$field['callback_args']['data-date-format'] = HT()->javascript_datetime_format( $format );
 
 				if ( ! empty( $value ) ) {
 					$value = date( $format, $value );
@@ -353,7 +356,7 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	private function enqueue( $arr, $script = false ) {
-		if ( HOCWP_Theme::array_has_value( $arr ) ) {
+		if ( HT()->array_has_value( $arr ) ) {
 			$callback = 'wp_enqueue_style';
 
 			if ( $script ) {

@@ -60,9 +60,7 @@ final class HOCWP_Theme {
 		$max_upload   = (int) ( ini_get( 'upload_max_filesize' ) );
 		$max_post     = (int) ( ini_get( 'post_max_size' ) );
 		$memory_limit = (int) ( ini_get( 'memory_limit' ) );
-		$upload_mb    = min( $max_upload, $max_post, $memory_limit );
-
-		return $upload_mb;
+		return min( $max_upload, $max_post, $memory_limit );
 	}
 
 	/**
@@ -101,15 +99,15 @@ final class HOCWP_Theme {
 		return $ret;
 	}
 
-	public static function is_file( $file, $check = 'exists' ) {
-		return ( is_file( $file ) && ( ( 'exists' == $check && file_exists( $file ) ) || ( 'readable' == $check && is_readable( $file ) ) || ( ( 'writable' == $check || 'writeable' == $check ) && is_writable( $file ) ) || ( 'executable' == $check && is_executable( $file ) ) ) ) ? true : false;
+	public function is_file( $file, $check = 'exists' ) {
+		return is_file( $file ) && ( ( 'exists' == $check && file_exists( $file ) ) || ( 'readable' == $check && is_readable( $file ) ) || ( ( 'writable' == $check || 'writeable' == $check ) && is_writable( $file ) ) || ( 'executable' == $check && is_executable( $file ) ) );
 	}
 
-	public static function is_dir( $dir, $check = 'exists' ) {
-		return ( is_dir( $dir ) && ( ( 'exists' == $check && file_exists( $dir ) ) || ( 'readable' == $check && is_readable( $dir ) ) ) ) ? true : false;
+	public function is_dir( $dir, $check = 'exists' ) {
+		return is_dir( $dir ) && ( ( 'exists' == $check && file_exists( $dir ) ) || ( 'readable' == $check && is_readable( $dir ) ) );
 	}
 
-	public static function wrap_text( $text, $before, $after, $echo = false ) {
+	public function wrap_text( $text, $before, $after, $echo = false ) {
 		$text = $before . $text . $after;
 
 		if ( $echo ) {
@@ -168,12 +166,12 @@ final class HOCWP_Theme {
 	}
 
 	public function get_email_from_string( $string ) {
-		preg_match_all( "/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches );
+		preg_match_all( "/[._a-zA-Z0-9-]+@[._a-zA-Z0-9-]+/i", $string, $matches );
 
 		return $matches[0];
 	}
 
-	public static function array_has_value( $arr, $count = 1 ) {
+	public function array_has_value( $arr, $count = 1 ) {
 		return ( is_array( $arr ) && count( $arr ) > ( $count - 1 ) );
 	}
 
@@ -181,7 +179,7 @@ final class HOCWP_Theme {
 		return self::array_has_value( $arr, $count );
 	}
 
-	public static function in_array( $needle, $haystack ) {
+	public function in_array( $needle, $haystack ) {
 		if ( ! is_array( $haystack ) || is_array( $needle ) ) {
 			return false;
 		}
@@ -267,7 +265,7 @@ final class HOCWP_Theme {
 	}
 
 	public function is_string_empty( $string ) {
-		return ( is_string( $string ) && empty( $string ) ) ? true : false;
+		return is_string( $string ) && empty( $string );
 	}
 
 	public function get_value_in_array( $arr, $key, $default = '' ) {
@@ -372,10 +370,10 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
-	public static function array_merge_recursive( array $array1, array $array2 ) {
+	public function array_merge_recursive( array $array1, array $array2 ) {
 		$merged = $array1;
 
-		foreach ( $array2 as $key => &$value ) {
+		foreach ( $array2 as $key => $value ) {
 			if ( is_array( $value ) && isset ( $merged[ $key ] ) && is_array( $merged[ $key ] ) ) {
 				$merged[ $key ] = self::array_merge_recursive( $merged[ $key ], $value );
 			} else {
@@ -386,7 +384,7 @@ final class HOCWP_Theme {
 		return $merged;
 	}
 
-	public static function require_if_exists( $file, $require_once = false ) {
+	public function require_if_exists( $file, $require_once = false ) {
 		if ( self::is_file( $file ) ) {
 			if ( $require_once ) {
 				require_once $file;
@@ -414,7 +412,7 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
-	public static function is_positive_number( $number ) {
+	public function is_positive_number( $number ) {
 		return ( is_numeric( $number ) && $number > 0 );
 	}
 
@@ -426,7 +424,7 @@ final class HOCWP_Theme {
 		return ( is_numeric( $number ) && $number >= 0 );
 	}
 
-	public static function convert_to_boolean( $value ) {
+	public function convert_to_boolean( $value ) {
 		if ( is_numeric( $value ) ) {
 			if ( 0 == $value ) {
 				return false;
@@ -446,7 +444,7 @@ final class HOCWP_Theme {
 		return (bool) $value;
 	}
 
-	public static function random_color_hex() {
+	public function random_color_hex() {
 		$count = 1;
 		$part  = '';
 
@@ -463,7 +461,7 @@ final class HOCWP_Theme {
 			return $string;
 		}
 
-		$tmp = preg_replace( '/[^0-9\.' . $keep . ']/', '', $string );
+		$tmp = preg_replace( '/[^0-9.' . $keep . ']/', '', $string );
 
 		if ( null != $tmp && false != $tmp ) {
 			return $tmp;
@@ -488,7 +486,7 @@ final class HOCWP_Theme {
 		return $return;
 	}
 
-	public static function change_html_attribute( $tag, $attr, $value ) {
+	public function change_html_attribute( $tag, $attr, $value ) {
 		$tag = preg_replace( '/' . $attr . '="(.*?)"/i', $attr . '="' . $value . '"', $tag );
 
 		return $tag;
@@ -503,7 +501,7 @@ final class HOCWP_Theme {
 	 *
 	 * @return string The new HTML code with custom attributes.
 	 */
-	public static function add_html_attribute( $tag, $html, $attr ) {
+	public function add_html_attribute( $tag, $html, $attr ) {
 		if ( is_array( $attr ) ) {
 			$attr = self::attributes_to_string( $attr );
 		}
@@ -513,14 +511,14 @@ final class HOCWP_Theme {
 		return $html;
 	}
 
-	public static function get_attribute_from_html_tag( $string, $attr_name, $tag_name ) {
+	public function get_attribute_from_html_tag( $string, $attr_name, $tag_name ) {
 		preg_match_all( '/(<' . $tag_name . '.*?' . $attr_name . '=\"|\')(.*?)\"|\'.*?>/im', $string, $matches );
 		$matches = array_pop( $matches );
 
 		return array_pop( $matches );
 	}
 
-	public static function attributes_to_string( $atts ) {
+	public function attributes_to_string( $atts ) {
 		if ( is_array( $atts ) ) {
 			$temp = array();
 
@@ -539,7 +537,7 @@ final class HOCWP_Theme {
 		return $atts;
 	}
 
-	public static function attribute_to_array( $attr ) {
+	public function attribute_to_array( $attr ) {
 		if ( ! empty( $attr ) ) {
 			if ( ! is_array( $attr ) ) {
 				$x    = (array) new SimpleXMLElement( "<element $attr />" );
@@ -554,7 +552,7 @@ final class HOCWP_Theme {
 		return array();
 	}
 
-	public static function json_string_to_array( $json_string ) {
+	public function json_string_to_array( $json_string ) {
 		if ( ! is_array( $json_string ) ) {
 			$json_string = stripslashes( $json_string );
 			$json_string = json_decode( $json_string, true );
@@ -579,12 +577,10 @@ final class HOCWP_Theme {
 
 		$totime = strtotime( $string );
 
-		$result = date( $format, $totime );
-
-		return $result;
+		return date( $format, $totime );
 	}
 
-	public static function javascript_datetime_format( $php_format ) {
+	public function javascript_datetime_format( $php_format ) {
 		$matched_symbols = array(
 			'd' => 'dd',
 			'D' => 'D',
@@ -694,11 +690,11 @@ final class HOCWP_Theme {
 		return isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 	}
 
-	public static function is_IP( $IP ) {
+	public function is_IP( $IP ) {
 		return filter_var( $IP, FILTER_VALIDATE_IP );
 	}
 
-	public static function get_IP() {
+	public function get_IP() {
 		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && self::is_IP( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			return $_SERVER['HTTP_CLIENT_IP'];
 		}
@@ -710,7 +706,7 @@ final class HOCWP_Theme {
 		return isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
 	}
 
-	public static function url_exists( $url ) {
+	public function url_exists( $url ) {
 		if ( ! class_exists( 'WP_Filesystem_Direct' ) ) {
 			require ABSPATH . 'wp-includes/class-wp-error.php';
 			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
@@ -728,7 +724,7 @@ final class HOCWP_Theme {
 		return true;
 	}
 
-	public static function is_image_url( $url ) {
+	public function is_image_url( $url ) {
 		$img_formats = array( 'png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'ico' );
 
 		$path_info = pathinfo( $url );
@@ -742,7 +738,7 @@ final class HOCWP_Theme {
 		return false;
 	}
 
-	public static function is_image( $deprecated, $deprecated1 = null ) {
+	public function is_image( $deprecated, $deprecated1 = null ) {
 		if ( $deprecated || $deprecated1 ) {
 			HT()->debug( sprintf( 'Function %s is deprecated.', __CLASS__ . '::' . __FUNCTION__ ) );
 		}
@@ -750,7 +746,7 @@ final class HOCWP_Theme {
 		return false;
 	}
 
-	public static function get_first_image_source( $content ) {
+	public function get_first_image_source( $content ) {
 		$doc = new DOMDocument();
 		@$doc->loadHTML( $content );
 		$xpath = new DOMXPath( $doc );
@@ -793,7 +789,7 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
-	public static function get_all_image_from_string( $data, $output = 'img' ) {
+	public function get_all_image_from_string( $data, $output = 'img' ) {
 		$output = trim( $output );
 		preg_match_all( '/<img[^>]+>/i', $data, $matches );
 		$matches = isset( $matches[0] ) ? $matches[0] : array();
@@ -859,7 +855,7 @@ final class HOCWP_Theme {
 			}
 
 			if ( ! $result ) {
-				$result = ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Lighthouse' ) ) ? true : false;
+				$result = false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Lighthouse' );
 			}
 		}
 
@@ -907,7 +903,7 @@ final class HOCWP_Theme {
 		return $validation;
 	}
 
-	public static function get_domain_name( $url, $root = false ) {
+	public function get_domain_name( $url, $root = false ) {
 		if ( ! is_string( $url ) || empty( $url ) ) {
 			return '';
 		}
@@ -949,7 +945,7 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
-	public static function transmit( &$value, &$another, $filter = FILTER_SANITIZE_STRING ) {
+	public function transmit( &$value, &$another, $filter = FILTER_SANITIZE_STRING ) {
 		if ( $filter == FILTER_SANITIZE_NUMBER_INT || $filter == FILTER_SANITIZE_NUMBER_FLOAT ) {
 			if ( ( is_numeric( $value ) && ! is_numeric( $another ) ) || ( ! is_numeric( $value ) && is_numeric( $another ) ) ) {
 				if ( is_numeric( $value ) && ! is_numeric( $another ) ) {

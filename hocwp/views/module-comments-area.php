@@ -45,8 +45,8 @@ if ( have_comments() ) {
 		<?php
 	}
 } else {
-	HOCWP_Theme_Utility::wrap_text( '<h3>', __( 'No comments.', 'hocwp-theme' ), '</h3>' );
-	HOCWP_Theme_Utility::wrap_text( '<p>', __( 'You can be the first one to leave a comment.', 'hocwp-theme' ), '</p>' );
+	HT_Util()->wrap_text( '<h3>', __( 'No comments.', 'hocwp-theme' ), '</h3>' );
+	HT_Util()->wrap_text( '<p>', __( 'You can be the first one to leave a comment.', 'hocwp-theme' ), '</p>' );
 }
 
 if ( comments_open() ) {

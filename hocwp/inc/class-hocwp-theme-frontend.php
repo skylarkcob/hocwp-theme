@@ -7,6 +7,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public static $instance;
 
 	protected function __construct() {
+		parent::__construct();
+
 		if ( ! is_admin() ) {
 			add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes_filter' ), 99, 4 );
 		}
@@ -145,7 +147,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		self::pagination( $args );
 	}
 
-	public static function pagination( $args = array() ) {
+	public function pagination( $args = array() ) {
 		if ( $args instanceof WP_Query ) {
 			$args = array( 'query' => $args );
 		}
@@ -319,7 +321,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$items = paginate_links( $args );
 
-		if ( HOCWP_Theme::array_has_value( $items ) ) {
+		if ( HT()->array_has_value( $items ) ) {
 			$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
 
 			$layout = isset( $args['layout'] ) ? $args['layout'] : '';
@@ -649,7 +651,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function is_yoast_breadcrumb() {
-		if ( function_exists( 'yoast_breadcrumb' ) && class_exists('WPSEO_Options')) {
+		if ( function_exists( 'yoast_breadcrumb' ) && class_exists( 'WPSEO_Options' ) ) {
 			$breadcrumbs_enabled = current_theme_supports( 'yoast-seo-breadcrumbs' );
 
 			if ( ! $breadcrumbs_enabled ) {
@@ -663,7 +665,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		return false;
 	}
 
-	public static function breadcrumb( $args = array() ) {
+	public function breadcrumb( $args = array() ) {
 		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
 
 		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;

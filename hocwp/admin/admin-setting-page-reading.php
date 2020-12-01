@@ -151,6 +151,11 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'random', __( 'Random', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
 	$fields[] = $field;
 
+	$args['label'] = __( 'Redirect user to homepage if the search term is empty.', 'hocwp-theme' );
+
+	$field    = hocwp_theme_create_setting_field( 'redirect_empty_search', __( 'Redirect Empty Search', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
+
 	if ( version_compare( $wp_version, '5.5', '>=' ) ) {
 		$args = array(
 			'type'  => 'checkbox',

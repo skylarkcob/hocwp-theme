@@ -41,7 +41,7 @@ function hocwp_theme_notify_comment_tags() {
 
 function hocwp_theme_comment_reply_notification( $comment ) {
 	if ( 1 == $comment->comment_approved ) {
-		if ( HOCWP_Theme::is_positive_number( $comment->comment_parent ) ) {
+		if ( HT()->is_positive_number( $comment->comment_parent ) ) {
 			$parent = get_comment( $comment->comment_parent );
 
 			if ( is_email( $parent->comment_author_email ) && $parent->comment_author_email != $comment->comment_author_email ) {

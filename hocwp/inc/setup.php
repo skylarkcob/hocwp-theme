@@ -120,7 +120,7 @@ function hocwp_theme_check_domain_change() {
 	}
 
 	$old_domain = get_option( 'hocwp_theme_domain' );
-	$new_domain = HOCWP_Theme::get_domain_name( home_url() );
+	$new_domain = HT()->get_domain_name( home_url() );
 
 	if ( $new_domain != $old_domain ) {
 		update_option( 'hocwp_theme_domain', $new_domain );

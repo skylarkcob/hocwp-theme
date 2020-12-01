@@ -443,7 +443,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 		if ( empty( $action ) && ! isset( $_GET['extension'] ) && false !== ( $message = get_transient( $tr_name ) ) ) {
 			if ( ! empty( $message ) ) {
-				HOCWP_Theme_Utility::admin_notice( $message );
+				HT_Util()->admin_notice( $message );
 			}
 
 			delete_transient( $tr_name );

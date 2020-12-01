@@ -111,7 +111,7 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 	}
 
 	if ( empty( $href ) ) {
-		$href = HOCWP_Theme_Utility::get_current_url();
+		$href = HT_Util()->get_current_url();
 	}
 
 	$mobile    = $args['mobile'];

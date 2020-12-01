@@ -34,7 +34,7 @@ hocwpTheme.removeParam = function (key, sourceURL) {
 
     var lastChar = rtn.substr(rtn.length - 2);
 
-    if ("/?" == lastChar) {
+    if ("/?" === lastChar) {
         rtn = rtn.substr(0, rtn.length - 1);
     }
 
@@ -93,11 +93,7 @@ hocwpTheme.filterList = function (input) {
 };
 
 hocwpTheme.isEmail = function (email) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        return (true);
-    }
-
-    return (false);
+    return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 };
 
 hocwpTheme.isGooglePagespeed = function () {
@@ -111,7 +107,7 @@ hocwpTheme.isGooglePagespeed = function () {
         var close = document.getElementById("sc-gdpr-close"),
             accept = document.getElementById("sc-gdpr-accept");
 
-        if (localStorage.getItem("popState") != "shown") {
+        if (localStorage.getItem("popState") !== "shown") {
             popup.style.display = "block";
         }
 
@@ -125,3 +121,32 @@ hocwpTheme.isGooglePagespeed = function () {
         });
     }
 })();
+
+hocwpTheme.ajax = function ($, element, data, callback, params) {
+    data = data || {};
+    params = params || {};
+
+    data = $.extend({
+        action: hocwpTheme.ajaxAction,
+        callback: hocwpTheme.customAjaxCallback,
+        nonce: hocwpTheme.nonce
+    }, data);
+
+    params = $.extend({
+        type: "POST",
+        dataType: "JSON",
+        url: hocwpTheme.ajaxUrl,
+        cache: true,
+        data: data,
+        success: function (response) {
+            if ("function" === typeof callback) {
+                callback(response);
+            }
+        },
+        complete: function (response) {
+            element.closest("body").trigger("hocwpTheme:ajaxComplete", [element, response]);
+        }
+    }, params);
+
+    $.ajax(params);
+}

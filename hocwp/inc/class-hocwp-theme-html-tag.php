@@ -36,7 +36,7 @@ final class HOCWP_Theme_HTML_Tag {
 			if ( is_array( $attribute_name ) ) {
 				$atts = $attribute_name;
 			} else {
-				$atts = HOCWP_Theme::attribute_to_array( $attribute_name );
+				$atts = HT()->attribute_to_array( $attribute_name );
 			}
 
 			foreach ( $atts as $key => $value ) {
@@ -120,7 +120,7 @@ final class HOCWP_Theme_HTML_Tag {
 	}
 
 	public function set_wrap_tag( $tag_name ) {
-		if ( ! HOCWP_Theme::in_array( $tag_name, $this->self_closers ) ) {
+		if ( ! HT()->in_array( $tag_name, $this->self_closers ) ) {
 			$this->wrap_tag = $tag_name;
 		}
 	}
@@ -166,11 +166,11 @@ final class HOCWP_Theme_HTML_Tag {
 
 		$result .= '>';
 
-		if ( ! HOCWP_Theme::in_array( $tag_name, $this->self_closers ) || 'input' == $tag_name ) {
+		if ( ! HT()->in_array( $tag_name, $this->self_closers ) || 'input' == $tag_name ) {
 			$result .= $this->text;
 		}
 
-		if ( $this->get_close() && ! HOCWP_Theme::in_array( $tag_name, $this->self_closers ) ) {
+		if ( $this->get_close() && ! HT()->in_array( $tag_name, $this->self_closers ) ) {
 			$result .= sprintf( '</%s>', $tag_name );
 		}
 

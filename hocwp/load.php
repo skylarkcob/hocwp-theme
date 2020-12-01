@@ -6,12 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.7.8' );
+define( 'HOCWP_THEME_CORE_VERSION', '6.8.0' );
 
 /**
  * Theme developing mode.
  */
-define( 'HOCWP_THEME_DEVELOPING', ( ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) ? true : false ) );
+define( 'HOCWP_THEME_DEVELOPING', ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) );
 
 /**
  * Theme root path.
@@ -56,12 +56,12 @@ define( 'HOCWP_THEME_CUSTOM_URL', HOCWP_THEME_URL . '/custom' );
 /**
  * Detect doing ajax or not.
  */
-define( 'HOCWP_THEME_DOING_AJAX', ( ( defined( 'DOING_AJAX' ) && true === DOING_AJAX ) ? true : false ) );
+define( 'HOCWP_THEME_DOING_AJAX', ( defined( 'DOING_AJAX' ) && true === DOING_AJAX ) );
 
 /**
  * Detect doing cron or not.
  */
-define( 'HOCWP_THEME_DOING_CRON', ( ( defined( 'DOING_CRON' ) && true === DOING_CRON ) ? true : false ) );
+define( 'HOCWP_THEME_DOING_CRON', ( defined( 'DOING_CRON' ) && true === DOING_CRON ) );
 
 /*
  * Check current PHP version.
@@ -101,7 +101,6 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 			if ( false !== strpos( $uri, 'wordpress.org' ) ) {
 				switch_theme( $folder );
 				wp_die( $msg, $title, $args );
-				exit;
 			}
 		}
 
@@ -110,7 +109,6 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 			$folder = basename( $dir );
 			switch_theme( $folder );
 			wp_die( $msg, $title, $args );
-			exit;
 		}
 	}
 }

@@ -382,6 +382,7 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme-svg-icon.php';
 		//require $this->core_path . '/inc/class-hocwp-theme-color.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-tag.php';
+		require $this->core_path . '/inc/class-hocwp-theme-layout.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-field.php';
 		require $this->core_path . '/inc/class-hocwp-theme-metas.php';
 		require $this->core_path . '/inc/abstract-class-hocwp-theme-object.php';
@@ -449,26 +450,26 @@ final class HOCWP_Theme_Controller {
 			require $this->core_path . '/admin/meta.php';
 		}
 
-		HOCWP_Theme::require_if_exists( $this->custom_path . '/functions.php' );
-		HOCWP_Theme::require_if_exists( $this->custom_path . '/register.php' );
-		HOCWP_Theme::require_if_exists( $this->custom_path . '/hook.php' );
+		HT()->require_if_exists( $this->custom_path . '/functions.php' );
+		HT()->require_if_exists( $this->custom_path . '/register.php' );
+		HT()->require_if_exists( $this->custom_path . '/hook.php' );
 
 		if ( is_admin() ) {
-			HOCWP_Theme::require_if_exists( $this->custom_path . '/admin.php' );
+			HT()->require_if_exists( $this->custom_path . '/admin.php' );
 		}
 
-		HOCWP_Theme::require_if_exists( $this->custom_path . '/extensions.php' );
+		HT()->require_if_exists( $this->custom_path . '/extensions.php' );
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/load-custom-meta.php';
-			HOCWP_Theme::require_if_exists( $this->custom_path . '/meta.php' );
+			HT()->require_if_exists( $this->custom_path . '/meta.php' );
 
 			if ( $this->doing_ajax ) {
-				HOCWP_Theme::require_if_exists( $this->custom_path . '/ajax.php' );
+				HT()->require_if_exists( $this->custom_path . '/ajax.php' );
 			}
 		} else {
-			HOCWP_Theme::require_if_exists( $this->custom_path . '/front-end.php' );
-			HOCWP_Theme::require_if_exists( $this->custom_path . '/template.php' );
+			HT()->require_if_exists( $this->custom_path . '/front-end.php' );
+			HT()->require_if_exists( $this->custom_path . '/template.php' );
 		}
 
 		require_once $this->core_path . '/inc/customizer.php';

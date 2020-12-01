@@ -7,6 +7,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	public static $instance;
 
 	protected function __construct() {
+		parent::__construct();
 		add_filter( 'update_plugin_complete_actions', array( $this, 'update_plugin_complete_actions_filter' ), 10, 2 );
 	}
 
@@ -53,7 +54,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 			return true;
 		}
 
-		return ( is_array( $pages ) && in_array( $pagenow, $pages ) ) ? true : false;
+		return ( is_array( $pages ) && in_array( $pagenow, $pages ) );
 	}
 
 	public function is_post_new_update_page() {
@@ -153,6 +154,12 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 
 	public function add_setting_with_language( $field, &$fields ) {
 		HOCWP_EXT_Language()->generate_setting_with_language( $field, $fields );
+	}
+
+	public function skip_admin_notices() {
+		global $pagenow;
+
+		return in_array( $pagenow, array( 'update.php' ) );
 	}
 }
 

@@ -54,7 +54,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 
 	$value = isset( $options['site_icon'] ) ? $options['site_icon'] : '';
 
-	if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
+	if ( ! HT()->is_positive_number( $value ) ) {
 		$value = get_option( 'site_icon' );
 	}
 
@@ -134,7 +134,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 
 	$value = isset( $options['logo_image'] ) ? $options['logo_image'] : '';
 
-	if ( ! HOCWP_Theme::is_positive_number( $value ) ) {
+	if ( ! HT()->is_positive_number( $value ) ) {
 		$value = get_theme_mod( 'custom_logo' );
 	}
 

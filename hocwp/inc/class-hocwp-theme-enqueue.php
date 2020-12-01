@@ -31,6 +31,35 @@ class HOCWP_Theme_Enqueue {
 		$this->custom_lib_url .= 'lib/';
 	}
 
+	public function custom_lib_style( $handle, $src = '', $deps = array(), $ver = false, $media = 'all' ) {
+		if ( false === strpos( $handle, '-style' ) ) {
+			$handle .= '-style';
+		}
+
+		$src = $this->fix_custom_lib_url( $src );
+
+		wp_enqueue_style( $handle, $src, $deps, $ver, $media );
+	}
+
+	private function fix_custom_lib_url( $src ) {
+		if ( false === strpos( $src, $this->custom_lib_url ) ) {
+			$src = ltrim( $src, '/' );
+			$src = $this->custom_lib_url . $src;
+		}
+
+		return $src;
+	}
+
+	public function custom_lib_script( $handle, $src = '', $deps = array(), $ver = false, $in_footer = true ) {
+		$src = $this->fix_custom_lib_url( $src );
+
+		if ( is_bool( $deps ) && $deps ) {
+			$deps = array( 'jquery' );
+		}
+
+		wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
+	}
+
 	public function media_upload() {
 		wp_enqueue_media();
 		wp_enqueue_script( 'hocwp-theme-media-upload' );
@@ -215,9 +244,9 @@ class HOCWP_Theme_Enqueue {
 	private function auto_check_lib_version( &$args, &$base_dir, $abs_file ) {
 		if ( ( ! isset( $args['cdn'] ) || ! $args['cdn'] ) && ! HT()->is_dir( $base_dir ) ) {
 			// Auto check version
-			$tmp = dirname( $base_dir );
-			$tmp = trailingslashit( $tmp );
-			$tmp .= '*';
+			$tmp  = dirname( $base_dir );
+			$tmp  = trailingslashit( $tmp );
+			$tmp  .= '*';
 			$dirs = glob( $tmp, GLOB_ONLYDIR );
 
 			if ( HT()->array_has_value( $dirs ) ) {

@@ -52,6 +52,34 @@ final class HOCWP_Theme_HTML_Field {
 		unset( $args['label'], $args['for'], $args['label_for'] );
 	}
 
+	public static function layout( $args = array() ) {
+		$options = isset( $args['options'] ) ? $args['options'] : '';
+
+		if ( HT()->array_has_value( $options ) ) {
+			$lists = array();
+
+			foreach ( $options as $key => $option ) {
+				if ( $option instanceof HOCWP_Theme_Layout ) {
+					if ( ! empty( $option->image ) ) {
+						$lists[ $option->id ] = sprintf( '<img class="show-modal-me" src="%s" alt="%s" title="%s">', esc_attr( $option->image ), esc_attr( $option->name ), esc_attr( $option->name ) );
+					} else {
+						$lists[ $option->id ] = $option->name;
+					}
+				} else {
+					$lists[ $key ] = $option;
+				}
+			}
+
+			$args['options'] = $lists;
+			$args['type']    = 'radio';
+			?>
+            <div class="list-layout">
+				<?php self::input( $args ); ?>
+            </div>
+			<?php
+		}
+	}
+
 	public static function input( $args = array() ) {
 		$defaults = array(
 			'type' => 'text'
@@ -69,12 +97,20 @@ final class HOCWP_Theme_HTML_Field {
 			$args['value'] = 1;
 		}
 
+		$value   = isset( $args['value'] ) ? $args['value'] : '';
+		$default = isset( $args['default'] ) ? $args['default'] : '';
+
+		if ( ! isset( $args['value'] ) || '' === $value ) {
+			$value = $default;
+		}
+
+		unset( $args['default'] );
+
 		if ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) {
 			$options = isset( $args['options'] ) ? $args['options'] : '';
 
 			if ( is_array( $options ) && count( $options ) > 0 ) {
 				unset( $args['options'] );
-				$value = isset( $args['value'] ) ? $args['value'] : '';
 
 				foreach ( $options as $key => $data ) {
 					if ( is_string( $data ) ) {

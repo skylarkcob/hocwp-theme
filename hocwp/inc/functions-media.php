@@ -19,7 +19,7 @@ function hocwp_theme_media_file_exists( $id ) {
 }
 
 function hocwp_theme_is_image( $url, $id = 0 ) {
-	if ( HOCWP_Theme::is_positive_number( $id ) ) {
+	if ( HT()->is_positive_number( $id ) ) {
 		return wp_attachment_is_image( $id );
 	}
 
@@ -336,6 +336,24 @@ class HOCWP_Theme_Media {
 		$thumbnail = HT_Util()->get_my_image_url( 'no-thumbnail.webp' );
 
 		return apply_filters( 'hocwp_theme_default_image_url', $thumbnail );
+	}
+
+	public function get_image_size( $size ) {
+		return HT_Util()->get_image_size( $size );
+	}
+
+	public function convert_size_to_array( $thumbnail_size, $crop = true ) {
+		if ( is_array( $thumbnail_size ) ) {
+			return $thumbnail_size;
+		}
+
+		$size = HT_Media()->get_image_size( $thumbnail_size );
+
+		if ( isset( $size['width'] ) && ! empty( $size['width'] ) && isset( $size['height'] ) && ! empty( $size['height'] ) ) {
+			$thumbnail_size = array( $size['width'], $size['height'], $crop );
+		}
+
+		return $thumbnail_size;
 	}
 }
 

@@ -48,8 +48,12 @@ function hocwp_theme_wp_mail_from_filter( $email ) {
 add_filter( 'wp_mail_from', 'hocwp_theme_wp_mail_from_filter' );
 
 function hocwp_theme_phpmailer_init_action( $phpmailer ) {
-	if ( ! ( $phpmailer instanceof PHPMailer ) ) {
-		return;
+	global $wp_version;
+
+	if ( version_compare( $wp_version, '5.5.0', '<' ) ) {
+		if ( ! ( $phpmailer instanceof PHPMailer ) ) {
+			return;
+		}
 	}
 
 	global $hocwp_theme;

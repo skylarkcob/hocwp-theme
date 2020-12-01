@@ -155,63 +155,63 @@ add_filter( 'hocwp_theme_settings_page_smtp_settings_field', 'hocwp_theme_settin
 
 function hocwp_theme_settings_page_smtp_form_after() {
 	?>
-	<div id="poststuff">
-		<div class="postbox">
-			<h3 class="hndle">
-				<label for="title"><?php _e( 'Testing And Debugging Settings', 'hocwp-theme' ); ?></label>
-			</h3>
+    <div id="poststuff">
+        <div class="postbox">
+            <h3 class="hndle">
+                <label for="title"><?php _e( 'Testing And Debugging Settings', 'hocwp-theme' ); ?></label>
+            </h3>
 
-			<div class="inside">
-				<p><?php _e( 'You can use this section to send an email from your server using the above configured SMTP details to see if the email gets delivered.', 'hocwp-theme' ); ?></p>
+            <div class="inside">
+                <p><?php _e( 'You can use this section to send an email from your server using the above configured SMTP details to see if the email gets delivered.', 'hocwp-theme' ); ?></p>
 
-				<form method="post" action="">
+                <form method="post" action="">
 					<?php wp_nonce_field( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ); ?>
-					<table class="form-table">
-						<tbody>
-						<tr valign="top">
-							<th scope="row">
-								<label for="hocwp_theme_test_smtp_to"><?php _e( 'To:', 'hocwp-theme' ); ?></label>
-							</th>
-							<td>
-								<input id="hocwp_theme_test_smtp_to" name="hocwp_theme_test_smtp_to" value=""
-								       type="email" class="regular-text">
+                    <table class="form-table">
+                        <tbody>
+                        <tr valign="top">
+                            <th scope="row">
+                                <label for="hocwp_theme_test_smtp_to"><?php _e( 'To:', 'hocwp-theme' ); ?></label>
+                            </th>
+                            <td>
+                                <input id="hocwp_theme_test_smtp_to" name="hocwp_theme_test_smtp_to" value=""
+                                       type="email" class="regular-text">
 
-								<p class="description"><?php _e( "Enter the recipient's email address.", 'hocwp-theme' ); ?></p>
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row">
-								<label for="hocwp_theme_test_smtp_subject">
+                                <p class="description"><?php _e( "Enter the recipient's email address.", 'hocwp-theme' ); ?></p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row">
+                                <label for="hocwp_theme_test_smtp_subject">
 									<?php _e( 'Subject:', 'hocwp-theme' ); ?>
-								</label>
-							</th>
-							<td>
-								<input id="hocwp_theme_test_smtp_subject" name="hocwp_theme_test_smtp_subject" value=""
-								       type="text" class="regular-text">
+                                </label>
+                            </th>
+                            <td>
+                                <input id="hocwp_theme_test_smtp_subject" name="hocwp_theme_test_smtp_subject" value=""
+                                       type="text" class="regular-text">
 
-								<p class="description"><?php _e( 'Enter a subject for your message', 'hocwp-theme' ); ?></p>
-							</td>
-						</tr>
-						<tr valign="top">
-							<th scope="row">
-								<label for="hocwp_theme_test_smtp_message">
+                                <p class="description"><?php _e( 'Enter a subject for your message', 'hocwp-theme' ); ?></p>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th scope="row">
+                                <label for="hocwp_theme_test_smtp_message">
 									<?php _e( 'Message:', 'hocwp-theme' ); ?>
-								</label>
-							</th>
-							<td>
+                                </label>
+                            </th>
+                            <td>
 								<textarea name="hocwp_theme_test_smtp_message" id="hocwp_theme_test_smtp_message"
-								          rows="5" class="widefat"></textarea>
+                                          rows="5" class="widefat"></textarea>
 
-								<p class="description"><?php _e( 'Write your email message', 'hocwp-theme' ); ?></p>
-							</td>
-						</tr>
-						</tbody>
-					</table>
+                                <p class="description"><?php _e( 'Write your email message', 'hocwp-theme' ); ?></p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 					<?php submit_button( __( 'Send Test', 'hocwp-theme' ) ); ?>
-				</form>
-			</div>
-		</div>
-	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 	<?php
 }
 
@@ -239,9 +239,18 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 				}
 
 				if ( ! is_object( $phpmailer ) || ! is_a( $phpmailer, 'PHPMailer' ) ) {
-					load_template( ABSPATH . WPINC . '/class-phpmailer.php' );
-					load_template( ABSPATH . WPINC . '/class-smtp.php' );
-					$phpmailer = new PHPMailer( true );
+					global $wp_version;
+
+					if ( version_compare( $wp_version, '5.5.0', '<' ) ) {
+						load_template( ABSPATH . WPINC . '/class-phpmailer.php' );
+						load_template( ABSPATH . WPINC . '/class-smtp.php' );
+						$phpmailer = new PHPMailer( true );
+					} else {
+						require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+						require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+						require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+						$phpmailer = new PHPMailer\PHPMailer\PHPMailer( true );
+					}
 				}
 
 				$subject = isset( $_POST['hocwp_theme_test_smtp_subject'] ) ? $_POST['hocwp_theme_test_smtp_subject'] : '';
@@ -295,7 +304,7 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 					$args['type'] = 'error';
 				}
 
-				HOCWP_Theme_Utility::admin_notice( $args );
+				HT_Util()->admin_notice( $args );
 				$phpmailer = $tmp;
 			}
 		}

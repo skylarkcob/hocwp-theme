@@ -67,14 +67,14 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			'description' => __( 'These suggestions are based on the plugins you and other users have installed.', 'hocwp-theme' )
 		);
 
-		if ( HOCWP_Theme::array_has_value( HOCWP_Theme_Requirement::get_required_plugins() ) ) {
+		if ( HT()->array_has_value( HOCWP_Theme_Requirement::get_required_plugins() ) ) {
 			$tabs['required'] = array(
 				'text'        => _x( 'Required', 'Plugin Installer', 'hocwp-theme' ),
 				'description' => __( 'You must install these required plugins for theme can run normally.', 'hocwp-theme' )
 			);
 		}
 
-		if ( HOCWP_Theme::array_has_value( HT_Requirement()->get_recommended_plugins() ) ) {
+		if ( HT()->array_has_value( HT_Requirement()->get_recommended_plugins() ) ) {
 			$tabs['should_use'] = array(
 				'text'        => _x( 'Should Use', 'Plugin Installer', 'hocwp-theme' ),
 				'description' => __( 'You should install these recommended plugins for theme can work perfectly.', 'hocwp-theme' )

@@ -186,7 +186,7 @@ class HOCWP_Theme_Meta_Bookmark extends HOCWP_Theme_Meta {
 			return;
 		}
 
-		if ( ! HOCWP_Theme_Utility::can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
+		if ( ! HT_Util()->can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
 			return;
 		}
 

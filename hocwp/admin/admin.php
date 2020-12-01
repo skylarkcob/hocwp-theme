@@ -14,7 +14,7 @@ if ( empty( $post_type ) ) {
 }
 
 function hocwp_theme_admin_notices_action() {
-	if ( ! HOCWP_THEME_DEVELOPING ) {
+	if ( ! HOCWP_THEME_DEVELOPING && ! HT_Admin()->skip_admin_notices() ) {
 		$email = get_bloginfo( 'admin_email' );
 
 		if ( is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
@@ -25,7 +25,7 @@ function hocwp_theme_admin_notices_action() {
 				'message' => sprintf( __( 'You must change administrator\'s email address for site working, please go to %s and update it.', 'hocwp-theme' ), $link )
 			);
 
-			HOCWP_Theme_Utility::admin_notice( $args );
+			HT_Util()->admin_notice( $args );
 		}
 	}
 }
@@ -167,7 +167,7 @@ function hocwp_theme_admin_notices_required_plugins() {
 			'message' => sprintf( __( 'You must install required plugins for theme can work properly. Try to install and activate all plugins in %s.', 'hocwp-theme' ), $link )
 		);
 
-		HOCWP_Theme_Utility::admin_notice( $args );
+		HT_Util()->admin_notice( $args );
 	}
 
 	if ( ! HT_Requirement()->check_required_extensions() ) {
@@ -178,7 +178,7 @@ function hocwp_theme_admin_notices_required_plugins() {
 			'message' => sprintf( __( 'You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s.', 'hocwp-theme' ), $link )
 		);
 
-		HOCWP_Theme_Utility::admin_notice( $args );
+		HT_Util()->admin_notice( $args );
 	}
 
 	if ( ! HT_Requirement()->check_extension_woocommerce() ) {
@@ -189,7 +189,7 @@ function hocwp_theme_admin_notices_required_plugins() {
 			'message' => sprintf( __( 'You must enable WooCommerce extension for this theme. Try to activate it %s.', 'hocwp-theme' ), $link )
 		);
 
-		HOCWP_Theme_Utility::admin_notice( $args );
+		HT_Util()->admin_notice( $args );
 	}
 }
 
@@ -348,6 +348,8 @@ function hocwp_theme_admin_footer_action() {
             (function () {
                 $(document).keydown(function (e) {
                     if (e.ctrlKey && e.keyCode == 66) {
+                        console.log("<?php _e( 'Running backup...', 'hocwp-theme' ); ?>");
+
                         setTimeout(function () {
                             $.ajax({
                                 type: "GET",
@@ -368,10 +370,39 @@ function hocwp_theme_admin_footer_action() {
             })();
         });
     </script>
+    <div id="hocwpThemeModal" class="modal">
+        <span class="close" title="<?php esc_attr_e( 'Close', 'hocwp-theme' ); ?>">&times;</span>
+        <div id="hocwpThemeModalContent" class="modal-content"></div>
+        <div id="hocwpThemeModalCaption" class="modal-caption"></div>
+    </div>
 	<?php
 }
 
 add_action( 'admin_footer', 'hocwp_theme_admin_footer_action' );
+
+function hocwp_theme_display_post_states_filter( $post_states, $post ) {
+	if ( $post instanceof WP_Post ) {
+		$slug = get_page_template_slug( $post->ID );
+
+		if ( ! empty( $slug ) ) {
+			$file = trailingslashit( get_template_directory() ) . $slug;
+
+			if ( file_exists( $file ) ) {
+				$name = get_file_data( trailingslashit( get_template_directory() ) . $slug, array( 'name' => 'Template Name' ) );
+
+				if ( ! empty( $name ) && isset( $name['name'] ) && ! empty( $name['name'] ) ) {
+					$slug = $name['name'];
+				}
+
+				$post_states['template'] = sprintf( __( 'Template %s', 'hocwp-theme' ), $slug );
+			}
+		}
+	}
+
+	return $post_states;
+}
+
+add_filter( 'display_post_states', 'hocwp_theme_display_post_states_filter', 10, 2 );
 
 if ( 'admin-ajax.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';

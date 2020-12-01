@@ -2,6 +2,81 @@
     display: block;
 }
 
+.hocwp-theme .text-gray {
+    --text-opacity: 1 !important;
+    color: #b8c2cc !important;
+    color: rgba(184, 194, 204, var(--text-opacity)) !important;
+}
+
+.hocwp-theme .text-sm {
+    font-size: .875rem !important;
+}
+
+.hocwp-theme .whitespace-normal {
+    white-space: normal !important;
+}
+
+.hocwp-theme .text-orange {
+    --text-opacity: 1 !important;
+    color: #e1642e !important;
+    color: rgba(225, 100, 46, var(--text-opacity)) !important;
+}
+
+.hocwp-theme .inline {
+    display: inline !important;
+}
+
+.hocwp-theme .cursor-pointer {
+    cursor: pointer !important;
+}
+
+.postbox .inside .hocwp-theme input.disabled,
+.postbox .inside .hocwp-theme input:disabled,
+.postbox .inside .hocwp-theme select.disabled,
+.postbox .inside .hocwp-theme select:disabled,
+.postbox .inside .hocwp-theme textarea.disabled,
+.postbox .inside .hocwp-theme textarea:disabled {
+    padding: 0 8px;
+    line-height: 2;
+    min-height: 30px;
+    border-radius: 4px;
+    border: 1px solid #7e8993;
+}
+
+.hocwp-theme .mt-4 {
+    margin-top: 1rem !important;
+}
+
+.hocwp-theme .justify-between {
+    justify-content: space-between !important;
+}
+
+.hocwp-theme .flex {
+    display: flex !important;
+}
+
+.hocwp-theme .m-0 {
+    margin: 0 !important;
+}
+
+.hocwp-theme .items-center {
+    align-items: center !important;
+}
+
+.hocwp-theme .w-4 {
+    width: 1rem !important;
+}
+
+.postbox .inside .hocwp-theme button.copy {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.postbox .inside .hocwp-theme button.copy svg {
+    margin-right: 2px;
+}
+
 .inside .hocwp-theme {
     box-sizing: border-box;
 }
@@ -261,4 +336,125 @@
 
 .hocwp-theme .images-box .list-images li:hover .dashicons {
     display: block;
+}
+
+.hocwp-theme .list-layout {
+
+}
+
+.hocwp-theme .list-layout label {
+    float: left;
+    width: 33%;
+    position: relative;
+    margin-right: 30px;
+    vertical-align: top;
+    height: 300px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.hocwp-theme .list-layout input[type="radio"] {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    border: 1px solid orange;
+    z-index: 499;
+}
+
+.hocwp-theme .list-layout img {
+    max-width: 100%;
+    height: auto;
+    min-height: 100%;
+}
+
+.hocwp-theme .list-layout br {
+    display: none;
+}
+
+/*--------------------------------------------------------------
+# Modal content
+--------------------------------------------------------------*/
+#hocwpThemeModal.modal {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#hocwpThemeModal.modal .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 1000px;
+}
+
+#hocwpThemeModal.modal .modal-content * {
+    max-width: 100%;
+}
+
+#hocwpThemeModal.modal .modal-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 1000px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+#hocwpThemeModal.modal .modal-content,
+#hocwpThemeModal.modal .modal-caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+#hocwpThemeModal.modal .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#hocwpThemeModal.modal .close:hover,
+#hocwpThemeModal.modal .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
+    #hocwpThemeModal.modal .modal-content {
+        width: 100%;
+    }
 }

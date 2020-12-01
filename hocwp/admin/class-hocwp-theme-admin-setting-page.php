@@ -280,7 +280,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$type = isset( $field['args']['callback_args']['type'] ) ? $field['args']['callback_args']['type'] : '';
 
 		if ( ! empty( $type ) && ( 'radio' == $type || 'checkbox' == $type ) ) {
-			if ( isset( $field['args']['callback_args']['options'] ) && HOCWP_Theme::array_has_value( $field['args']['callback_args']['options'] ) ) {
+			if ( isset( $field['args']['callback_args']['options'] ) && HT()->array_has_value( $field['args']['callback_args']['options'] ) ) {
 				unset( $field['args']['label_for'] );
 			}
 		}
@@ -516,7 +516,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				'hidden_interval' => 2000
 			);
 
-			HOCWP_Theme_Utility::admin_notice( $args );
+			HT_Util()->admin_notice( $args );
 		}
 	}
 

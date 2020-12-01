@@ -129,7 +129,7 @@ final class HOCWP_Theme_Requirement {
 	public static function check_required_plugins() {
 		$plugins = self::get_required_plugins();
 
-		if ( HOCWP_Theme::array_has_value( $plugins ) ) {
+		if ( HT()->array_has_value( $plugins ) ) {
 			$active_plugins = get_option( 'active_plugins' );
 			$active_plugins = (array) $active_plugins;
 

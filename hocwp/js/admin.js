@@ -106,4 +106,29 @@ jQuery(document).ready(function ($) {
             }
         });
     })();
+
+    /*--------------------------------------------------------------
+    # Modal content
+    --------------------------------------------------------------*/
+    (function () {
+        const modal = $("#hocwpThemeModal");
+
+        body.on("click", ".hocwp-theme .show-modal-me", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that);
+
+            modal.find(".modal-content").html(element.clone());
+            modal.find(".modal-caption").html(element.attr("title"));
+            modal.fadeIn();
+        });
+
+        modal.on("click", ".close", function (e) {
+            e.preventDefault();
+            modal.find(".modal-content").html("");
+            modal.find(".modal-caption").html("");
+            modal.fadeOut();
+        });
+    })();
 });

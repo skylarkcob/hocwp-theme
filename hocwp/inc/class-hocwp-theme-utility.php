@@ -129,19 +129,19 @@ class HOCWP_Theme_Utility {
 		return ( 1 == $amp );
 	}
 
-	public static function get_wp_image_url( $name ) {
+	public function get_wp_image_url( $name ) {
 		return includes_url( 'images/' . $name );
 	}
 
-	public static function get_my_image_url( $name ) {
+	public function get_my_image_url( $name ) {
 		return HOCWP_THEME_CORE_URL . '/images/' . $name;
 	}
 
-	public static function get_custom_image_url( $name ) {
+	public function get_custom_image_url( $name ) {
 		return HOCWP_THEME_CUSTOM_URL . '/images/' . $name;
 	}
 
-	public static function get_current_url( $with_param = false ) {
+	public function get_current_url( $with_param = false ) {
 		global $hocwp_theme_protocol;
 		$current_url = $hocwp_theme_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -429,7 +429,7 @@ class HOCWP_Theme_Utility {
 		return ( is_object( $object ) && ! is_wp_error( $object ) );
 	}
 
-	public static function get_file_or_dir_url( $file_or_dir ) {
+	public function get_file_or_dir_url( $file_or_dir ) {
 		if ( ! empty( $file_or_dir ) ) {
 			$file_or_dir = wp_normalize_path( $file_or_dir );
 
@@ -447,7 +447,7 @@ class HOCWP_Theme_Utility {
 		return '';
 	}
 
-	public static function ajax_overlay() {
+	public function ajax_overlay() {
 		?>
         <div class="hocwp-theme ajax-overlay">
             <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
@@ -455,7 +455,7 @@ class HOCWP_Theme_Utility {
 		<?php
 	}
 
-	public static function filesystem() {
+	public function filesystem() {
 		global $wp_filesystem;
 
 		if ( ! $wp_filesystem ) {
@@ -474,7 +474,7 @@ class HOCWP_Theme_Utility {
 
 		$buffer = HT_Util()->read_all_text( $file );
 
-		if ( preg_match( '/class\s+(\w+)(.*)?\{/', $buffer, $matches ) ) {
+		if ( preg_match( '/class\s+(\w+)(.*)?{/', $buffer, $matches ) ) {
 			$class = $matches[1];
 		}
 
@@ -499,7 +499,7 @@ class HOCWP_Theme_Utility {
 		return $data;
 	}
 
-	public static function get_contents( $url ) {
+	public function get_contents( $url ) {
 		$result = '';
 
 		if ( ! empty( $url ) ) {
@@ -515,7 +515,7 @@ class HOCWP_Theme_Utility {
 		return $result;
 	}
 
-	public static function read_all_text( $path ) {
+	public function read_all_text( $path ) {
 		if ( HT()->is_file( $path ) ) {
 			return self::get_contents( $path );
 		}
@@ -523,7 +523,7 @@ class HOCWP_Theme_Utility {
 		return '';
 	}
 
-	public static function write_all_text( $path, $text ) {
+	public function write_all_text( $path, $text ) {
 		$filesystem = self::filesystem();
 
 		if ( $filesystem instanceof WP_Filesystem_Base ) {
@@ -533,11 +533,11 @@ class HOCWP_Theme_Utility {
 		return '';
 	}
 
-	public static function wrap_text( $before, $text, $after ) {
+	public function wrap_text( $before, $text, $after ) {
 		echo $before . $text . $after;
 	}
 
-	public static function normalize_path( $path, $slash = '/' ) {
+	public function normalize_path( $path, $slash = '/' ) {
 		if ( ! empty( $path ) ) {
 			$path = wp_normalize_path( $path );
 
@@ -582,7 +582,7 @@ class HOCWP_Theme_Utility {
 				break;
 		}
 
-		if ( null != $format && ! empty( $format ) ) {
+		if ( null !== $format && ! empty( $format ) ) {
 			$weekday = sprintf( '%s, %s', $weekday, current_time( $format ) );
 		}
 
@@ -601,7 +601,7 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_date_intervals', $date_intervals );
 	}
 
-	public static function admin_notice( $args = array() ) {
+	public function admin_notice( $args = array() ) {
 		if ( ! is_array( $args ) ) {
 			$args = array(
 				'message' => $args
@@ -634,7 +634,7 @@ class HOCWP_Theme_Utility {
 
 			$hidden_interval = isset( $args['hidden_interval'] ) ? $args['hidden_interval'] : 0;
 
-			if ( HOCWP_Theme::is_positive_number( $hidden_interval ) ) {
+			if ( HT()->is_positive_number( $hidden_interval ) ) {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
@@ -676,7 +676,7 @@ class HOCWP_Theme_Utility {
 		return $query->get_terms();
 	}
 
-	public static function get_image_sizes() {
+	public function get_image_sizes() {
 		global $_wp_additional_image_sizes;
 		$sizes = array();
 
@@ -697,7 +697,7 @@ class HOCWP_Theme_Utility {
 		return $sizes;
 	}
 
-	public static function get_image_size( $size ) {
+	public function get_image_size( $size ) {
 		if ( ! ( is_array( $size ) || has_image_size( $size ) ) ) {
 			$size  = strval( $size );
 			$sizes = self::get_image_sizes();
@@ -718,7 +718,7 @@ class HOCWP_Theme_Utility {
 		return $size;
 	}
 
-	public static function get_image_width( $size ) {
+	public function get_image_width( $size ) {
 		if ( ! $size = self::get_image_size( $size ) ) {
 			return false;
 		}
@@ -730,7 +730,7 @@ class HOCWP_Theme_Utility {
 		return false;
 	}
 
-	public static function get_image_height( $size ) {
+	public function get_image_height( $size ) {
 		if ( ! $size = self::get_image_size( $size ) ) {
 			return false;
 		}
@@ -768,7 +768,7 @@ class HOCWP_Theme_Utility {
 		return $hashed;
 	}
 
-	public static function timestamp_to_string( $timestamp, $format = null, $timezone = null ) {
+	public function timestamp_to_string( $timestamp, $format = null, $timezone = null ) {
 		if ( ! is_int( $timestamp ) ) {
 			$timestamp = intval( $timestamp );
 		}
@@ -814,7 +814,7 @@ class HOCWP_Theme_Utility {
 		wp_insert_term( $term, $taxonomy, $args );
 	}
 
-	public static function verify_nonce( $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
+	public function verify_nonce( $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
 		if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
 			$nonce = isset( $_REQUEST[ $nonce_name ] ) ? $_REQUEST[ $nonce_name ] : '';
 
@@ -824,7 +824,7 @@ class HOCWP_Theme_Utility {
 		return true;
 	}
 
-	public static function can_save_post( $post_id, $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
+	public function can_save_post( $post_id, $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
 		if ( ! self::verify_nonce( $nonce_action, $nonce_name ) ) {
 			return false;
 		}
@@ -903,6 +903,69 @@ class HOCWP_Theme_Utility {
 		unset( $sidebars, $id, $sidebar );
 
 		return $result;
+	}
+
+	public function get_first_taxonomy_or_term( $post_id, $output = 'term', $hierarchical = true ) {
+		$output = strtolower( $output );
+
+		$post_type = ( is_numeric( $post_id ) ) ? get_post_type( $post_id ) : $post_id;
+		$taxs      = get_object_taxonomies( $post_type, 'objects' );
+		$taxonomy  = '';
+
+		foreach ( $taxs as $tax ) {
+			if ( $tax instanceof WP_Taxonomy && ( 'any' === $hierarchical || false === $hierarchical || $tax->hierarchical ) ) {
+				$taxonomy = $tax;
+			}
+		}
+
+		if ( ! ( $taxonomy instanceof WP_Taxonomy ) && ( 'any' === $hierarchical || false === $hierarchical ) ) {
+			$taxonomy = array_shift( $taxs );
+		}
+
+		if ( $taxonomy instanceof WP_Taxonomy ) {
+			if ( 'term' != $output && 'terms' != $output ) {
+				return $taxonomy->name;
+			}
+
+			if ( HT()->is_positive_number( $post_id ) ) {
+				$terms = wp_get_object_terms( $post_id, $taxonomy->name );
+			} else {
+				$terms = HT_Util()->get_terms( $taxonomy->name, array( 'hide_empty' => false ) );
+			}
+
+			while ( ! HT()->is_array_has_value( $terms ) && HT()->is_array_has_value( $taxs ) && $taxonomy instanceof WP_Taxonomy ) {
+				$taxonomy = array_shift( $taxs );
+
+				if ( ! ( $taxonomy instanceof WP_Taxonomy ) || ( 'any' !== $hierarchical && false !== $hierarchical && ! $taxonomy->hierarchical ) ) {
+					$terms = array();
+					continue;
+				}
+
+				if ( HT()->is_id_number( $post_id ) ) {
+					$terms = wp_get_object_terms( $post_id, $taxonomy->name );
+				} else {
+					$terms = HT_Util()->get_terms( $taxonomy->name, array( 'hide_empty' => false ) );
+				}
+			}
+
+			if ( HT()->is_array_has_value( $terms ) ) {
+				if ( 'terms' == $output ) {
+					return $terms;
+				}
+
+				$term = current( $terms );
+
+				if ( $term instanceof WP_Term ) {
+					if ( 'term' == $output ) {
+						return $term;
+					} else {
+						return $term->taxonomy;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public function term_link_html( $term ) {
@@ -1012,7 +1075,7 @@ class HOCWP_Theme_Utility {
 		return json_decode( $data );
 	}
 
-	public static function get_user_role_names( $user ) {
+	public function get_user_role_names( $user ) {
 		$user = HT_Util()->return_user( $user );
 
 		if ( $user instanceof WP_User ) {
@@ -1040,7 +1103,7 @@ class HOCWP_Theme_Utility {
 		return null;
 	}
 
-	public static function get_paged() {
+	public function get_paged() {
 		$paged = get_query_var( 'paged' );
 
 		if ( ! HT()->is_positive_number( $paged ) ) {
@@ -1054,7 +1117,7 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_title_separator', ( class_exists( 'WPSEO_Options' ) ) ? WPSEO_Options::get( 'separator' ) : '&raquo;' );
 	}
 
-	public static function get_posts_per_page( $home = false ) {
+	public function get_posts_per_page( $home = false ) {
 		global $hocwp_theme;
 
 		if ( null === $home ) {
@@ -1163,7 +1226,7 @@ class HOCWP_Theme_Utility {
 		return $attachment_id;
 	}
 
-	public static function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
+	public function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
 		if ( ! function_exists( 'hocwp_theme_wp_mail_content_type_filter' ) ) {
 			/** @noinspection PhpIncludeInspection */
 			require_once HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
@@ -1176,7 +1239,7 @@ class HOCWP_Theme_Utility {
 		return $sent;
 	}
 
-	public static function post_types_support_featured() {
+	public function post_types_support_featured() {
 		$post_types = get_post_types( array( 'public' => true ) );
 		unset( $post_types['attachment'] );
 
@@ -1189,7 +1252,7 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'post_types_support_featured_sortable', $post_types );
 	}
 
-	public static function get_theme_option( $name, $default = '', $base = 'general' ) {
+	public function get_theme_option( $name, $default = '', $base = 'general' ) {
 		global $hocwp_theme;
 
 		if ( ! is_object( $hocwp_theme ) ) {
@@ -1229,13 +1292,11 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_option', $value, $name, $default, $base );
 	}
 
-	public static function get_theme_option_term( $name, $taxonomy = 'category', $base = 'general', $slug = '' ) {
+	public function get_theme_option_term( $name, $taxonomy = 'category', $base = 'general', $slug = '' ) {
 		$term_id = self::get_theme_option( $name, '', $base );
 
 		if ( ! HT()->is_positive_number( $term_id ) && ! empty( $slug ) ) {
-			$term = get_term_by( 'slug', $slug, $taxonomy );
-
-			return $term;
+			return get_term_by( 'slug', $slug, $taxonomy );
 		}
 
 		return get_term( $term_id, $taxonomy );
@@ -1255,7 +1316,7 @@ class HOCWP_Theme_Utility {
 		return $value;
 	}
 
-	public static function get_theme_option_post( $name, $post_type = 'any', $base = 'general', $slug = '' ) {
+	public function get_theme_option_post( $name, $post_type = 'any', $base = 'general', $slug = '' ) {
 		$id = self::get_theme_option( $name, '', $base );
 
 		if ( ! HT()->is_positive_number( $id ) ) {
@@ -1293,7 +1354,7 @@ class HOCWP_Theme_Utility {
 		}
 
 		/** @noinspection SqlNoDataSourceInspection */
-		$labels = array(
+		return array(
 			'name'                     => $name,
 			'singular_name'            => $singular_name,
 			'menu_name'                => $menu_name,
@@ -1325,8 +1386,6 @@ class HOCWP_Theme_Utility {
 			'item_scheduled'           => sprintf( _x( '%s scheduled.', 'custom post type', 'hocwp-theme' ), $name ),
 			'item_updated'             => sprintf( _x( '%s updated.', 'custom post type', 'hocwp-theme' ), $name ),
 		);
-
-		return $labels;
 	}
 
 	public function taxonomy_labels( $name, $singular_name = '', $menu_name = '' ) {
@@ -1338,7 +1397,7 @@ class HOCWP_Theme_Utility {
 			$menu_name = $name;
 		}
 
-		$labels = array(
+		return array(
 			'name'                       => $name,
 			'singular_name'              => $singular_name,
 			'menu_name'                  => $menu_name,
@@ -1362,8 +1421,6 @@ class HOCWP_Theme_Utility {
 			'most_used'                  => _x( 'Most Used', 'custom taxonomy term', 'hocwp-theme' ),
 			'back_to_items'              => sprintf( _x( '&larr; Back to %s', 'custom taxonomy term', 'hocwp-theme' ), $name )
 		);
-
-		return $labels;
 	}
 
 	private function post_type_or_taxonomy_defaults( $args, $post_type = true ) {
@@ -1896,9 +1953,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function toggle_duration() {
-		$duration = apply_filters( 'hocwp_theme_toggle_duration', 250 );
-
-		return $duration;
+		return apply_filters( 'hocwp_theme_toggle_duration', 250 );
 	}
 
 	public function unique_id( $prefix = '' ) {
@@ -2041,6 +2096,20 @@ class HOCWP_Theme_Utility {
 		return null;
 	}
 
+	public function background_image_css( $image, $color = '' ) {
+		$style = '';
+
+		if ( ! empty( $color ) ) {
+			$style .= 'background-color:' . $color . ';';
+		}
+
+		if ( HT_Media()->exists( $image ) ) {
+			$style .= sprintf( 'background-image: url("%s");', wp_get_original_image_url( $image ) );
+		}
+
+		return trim( $style );
+	}
+
 	/*
 	 * List deprecated functions.
 	 */
@@ -2089,7 +2158,7 @@ class HOCWP_Theme_Utility {
 		HT_Enqueue()->code_editor();
 	}
 
-	public static function pagination( $args = array() ) {
+	public function pagination( $args = array() ) {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Frontend()->' . __FUNCTION__ . '()' );
 		HT_Frontend()->pagination( $args );
 	}
@@ -2100,7 +2169,7 @@ class HOCWP_Theme_Utility {
 		return HT_Frontend()->get_archive_title( $prefix );
 	}
 
-	public static function breadcrumb( $args = array() ) {
+	public function breadcrumb( $args = array() ) {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.3.9', 'HT_Frontend()->' . __FUNCTION__ . '()' );
 		HT_Frontend()->breadcrumb( $args );
 	}

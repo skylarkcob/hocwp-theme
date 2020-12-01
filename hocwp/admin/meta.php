@@ -30,6 +30,8 @@ function hocwp_theme_default_meta_boxes() {
 
 		$field = new HOCWP_Theme_Meta_Field( 'large_thumbnail', __( 'Large Thumbnail', 'hocwp-theme' ), 'media_upload' );
 		$meta->add_field( $field );
+
+		do_action_ref_array( 'hocwp_theme_extra_information_meta_fields', array( &$meta ) );
 	}
 }
 

@@ -67,11 +67,11 @@ final class HOCWP_Theme_SVG_Icon {
 			$viewbox = array( 0, 0, 1972, 1972 );
 		}
 
-		if ( HOCWP_Theme::is_positive_number( $width ) ) {
+		if ( HT()->is_positive_number( $width ) ) {
 			$viewbox[2] = $width;
 		}
 
-		if ( HOCWP_Theme::is_positive_number( $height ) ) {
+		if ( HT()->is_positive_number( $height ) ) {
 			$viewbox[3] = $height;
 		}
 
@@ -346,7 +346,7 @@ final class HOCWP_Theme_SVG_Icon {
 	);
 
 	/**
-	 * Social Icons – domain mappings.
+	 * Social Icons ï¿½ domain mappings.
 	 *
 	 * By default, each Icon ID is matched against a .com TLD. To override this behavior,
 	 * specify all the domains it covers (including the .com TLD too, if applicable).
@@ -398,7 +398,7 @@ final class HOCWP_Theme_SVG_Icon {
 	);
 
 	/**
-	 * Social Icons – svg sources.
+	 * Social Icons ï¿½ svg sources.
 	 *
 	 * @var array
 	 */

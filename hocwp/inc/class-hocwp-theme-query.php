@@ -17,14 +17,14 @@ final class HOCWP_Theme_Query {
 	private function __construct() {
 	}
 
-	public static function pages_by_template( $template_name, $args = array() ) {
+	public function pages_by_template( $template_name, $args = array() ) {
 		$args['meta_key']   = '_wp_page_template';
 		$args['meta_value'] = $template_name;
 
 		return get_pages( $args );
 	}
 
-	public static function page_by_template( $template_name, $args = array() ) {
+	public function page_by_template( $template_name, $args = array() ) {
 		$pages = self::pages_by_template( $template_name, $args );
 
 		return array_shift( $pages );
@@ -34,7 +34,7 @@ final class HOCWP_Theme_Query {
 		return get_pages( $args );
 	}
 
-	public static function related( $args = array(), $type = 'post' ) {
+	public function related( $args = array(), $type = 'post' ) {
 		if ( ! isset( $args['post_type'] ) ) {
 			$args['post_type'] = $type;
 		}
@@ -74,7 +74,7 @@ final class HOCWP_Theme_Query {
 		return new WP_Query( $args );
 	}
 
-	public static function related_posts( $args = array() ) {
+	public function related_posts( $args = array() ) {
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 
 		$obj = get_post( $post_id );
@@ -180,7 +180,7 @@ final class HOCWP_Theme_Query {
 
 			$taxs = get_object_taxonomies( $obj );
 
-			if ( HOCWP_Theme::array_has_value( $taxs ) ) {
+			if ( HT()->array_has_value( $taxs ) ) {
 				$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
 
 				if ( ! is_array( $tax_query ) ) {
@@ -203,7 +203,7 @@ final class HOCWP_Theme_Query {
 						if ( ! $taxonomy->hierarchical ) {
 							$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
-							if ( HOCWP_Theme::array_has_value( $ids ) ) {
+							if ( HT()->array_has_value( $ids ) ) {
 								$tax_item['taxonomy'] = $tax;
 
 								$tax_item['terms'] = $ids;
@@ -252,7 +252,7 @@ final class HOCWP_Theme_Query {
 					foreach ( $taxs as $tax ) {
 						$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
-						if ( HOCWP_Theme::array_has_value( $ids ) && is_string( $tax ) ) {
+						if ( HT()->array_has_value( $ids ) && is_string( $tax ) ) {
 							$tax_item['taxonomy'] = $tax;
 
 							$tax_item['terms'] = $ids;
@@ -351,7 +351,7 @@ final class HOCWP_Theme_Query {
 		return $columns;
 	}
 
-	public static function terms( $args = array() ) {
+	public function terms( $args = array() ) {
 		$defaults = array(
 			'hide_empty' => false
 		);
@@ -397,12 +397,10 @@ final class HOCWP_Theme_Query {
 			$args['order']   = 'DESC';
 		}
 
-		$query = new WP_Query( $args );
-
-		return $query;
+		return new WP_Query( $args );
 	}
 
-	public static function posts_by_meta( $meta_key, $meta_value, $args = array() ) {
+	public function posts_by_meta( $meta_key, $meta_value, $args = array() ) {
 		$defaults = array(
 			'meta_key'   => $meta_key,
 			'meta_value' => $meta_value
@@ -484,7 +482,7 @@ final class HOCWP_Theme_Query {
 		return $result;
 	}
 
-	public static function posts_orderby_meta( $meta_key, $args = array() ) {
+	public function posts_orderby_meta( $meta_key, $args = array() ) {
 		$defaults = array(
 			'meta_key' => $meta_key,
 			'orderby'  => 'meta_value_num',
@@ -495,7 +493,7 @@ final class HOCWP_Theme_Query {
 		return new WP_Query( $args );
 	}
 
-	public static function get_top_commenters( $number = 10, $interval = 'all' ) {
+	public function get_top_commenters( $number = 10, $interval = 'all' ) {
 		global $wpdb;
 		$sql = "SELECT COUNT(comment_author_email) AS comments_count, comment_author_email, comment_author, comment_author_url";
 		$sql .= " FROM $wpdb->comments";
@@ -533,9 +531,7 @@ final class HOCWP_Theme_Query {
 		$sql .= " WHERE meta_key like '%$search%'";
 		$sql .= " GROUP BY meta_key";
 		$sql .= " ORDER BY meta_key";
-		$keys = $wpdb->get_col( $sql );
-
-		return $keys;
+		return $wpdb->get_col( $sql );
 	}
 
 	private function add_meta_or_tax_query_item( $item, &$args, $key = 'meta_query' ) {

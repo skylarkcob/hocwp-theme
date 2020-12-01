@@ -39,7 +39,7 @@ function hocwp_theme_check_license() {
 		}
 	}
 
-	if ( HOCWP_Theme::array_has_value( $blocks ) ) {
+	if ( HT()->array_has_value( $blocks ) ) {
 		if ( in_array( $ss, $blocks ) ) {
 			$msg = __( 'Your theme is blocked.', 'hocwp-theme' );
 			wp_die( $msg, __( 'Invalid License', 'hocwp-theme' ) );
