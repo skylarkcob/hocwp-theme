@@ -3,6 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( file_exists( dirname( __FILE__ ) . '/constants.php' ) ) {
+	require_once dirname( __FILE__ ) . '/constants.php';
+}
+
 if ( ! trait_exists( 'HTC_Functions' ) ) {
 	require_once dirname( __FILE__ ) . '/trait-functions.php';
 }
