@@ -289,7 +289,10 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 }
 
 function hocwp_theme_localize_script_l10n_media_upload() {
+	global $wp_version;
+
 	$l10n = array(
+		'wp_version'             => $wp_version,
 		'multiple'               => 0,
 		'removeImageButton'      => '<p class="hide-if-no-js remove"><a href="javascript:" class="remove-media">' . __( 'Remove %s', 'hocwp-theme' ) . '</a></p>',
 		'updateImageDescription' => '<p class="hide-if-no-js howto">' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',

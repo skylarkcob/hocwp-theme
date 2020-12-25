@@ -129,7 +129,9 @@ jQuery(document).ready(function ($) {
                             var widget = container.closest(".widget");
 
                             if (widget.length) {
-                                widget.find("input[type='submit']").val(wpWidgets.l10n.save).prop("disabled", false);
+                                let text = ("function" === typeof wp.i18n.__) ? wp.i18n.__("Save", "hocwp-theme") : (wpWidgets && wpWidgets.l10n && wpWidgets.l10n.save && $.trim(wpWidgets.l10n.save)) ? wpWidgets.l10n.save : "";
+
+                                widget.find("input[type='submit']").val(text).prop("disabled", false);
                                 alert = wpWidgets.l10n.saveAlert;
                             }
                         }

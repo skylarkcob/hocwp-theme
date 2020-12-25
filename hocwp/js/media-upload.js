@@ -2,8 +2,32 @@ window.wp = window.wp || {};
 window.hocwpTheme = window.hocwpTheme || {};
 window.hocwpThemeMediaUpload = window.hocwpThemeMediaUpload || {};
 
+var HOCWP_Theme_Media_Upload = function () {
+    this.openFrameEdit = function (frame, mediaId) {
+        frame.on("open", function () {
+            if (mediaId && $.isNumeric(mediaId)) {
+                frame.state().get("selection").add(wp.media.attachment(mediaId));
+            }
+        }).open();
+    };
+
+    this.ucWords = function (str) {
+        return str.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    };
+};
+
 jQuery(document).ready(function ($) {
     var body = $("body");
+
+    function __open_frame_edit(f, i) {
+        f.on("open", function () {
+            if (i && $.isNumeric(i)) {
+                f.state().get("selection").add(wp.media.attachment(i));
+            }
+        }).open();
+    }
 
     function hocwpThemeUCWords(str) {
         return str.replace(/\w\S*/g, function (txt) {
@@ -63,7 +87,7 @@ jQuery(document).ready(function ($) {
 
         frame.on("select", function () {
             var items = frame.state().get("selection"),
-                input = container.find("input"),
+                input = container.find("input").not(":input[type='submit']"),
                 oldValues = input.val(),
                 value = "";
 
@@ -151,7 +175,7 @@ jQuery(document).ready(function ($) {
 
         frame.on("select", function () {
             var items = frame.state().get("selection"),
-                input = container.find("input"),
+                input = container.find("input").not(":input[type='submit']"),
                 value = $.parseJSON(input.val()),
                 item = items.first().toJSON();
 
@@ -202,7 +226,7 @@ jQuery(document).ready(function ($) {
             removeMedia = container.find("button.remove-media-data");
 
         if (frame) {
-            frame.open();
+            //frame.open();
         } else {
             var title = $.trim(selectMedia.attr("data-title")) || hocwpThemeMediaUpload.l10n.title,
                 buttonText = $.trim(selectMedia.attr("data-button-text")) || hocwpThemeMediaUpload.l10n.buttonText,
@@ -227,8 +251,12 @@ jQuery(document).ready(function ($) {
 
             frame = wp.media(settings);
 
-            frame.open();
+            //frame.open();
         }
+
+        let mediaId = selectMedia.closest(".media-box").find("input[type='hidden']").val();
+
+        __open_frame_edit(frame, mediaId);
 
         frame.on("select", function () {
             var items = frame.state().get("selection");
@@ -255,7 +283,7 @@ jQuery(document).ready(function ($) {
                         image.setAttribute("alt", item.alt);
                         image.setAttribute("width", item.width);
                         image.setAttribute("height", item.height);
-                        container.find("input").val(item.id).trigger("change");
+                        container.find("input").not(":input[type='submit']").val(item.id).trigger("change");
                         selectMedia.html(image);
 
                         if (!selectMedia.hasClass("has-media")) {
@@ -270,7 +298,9 @@ jQuery(document).ready(function ($) {
                         }
 
                         if (widget.length) {
-                            widget.find("input[type='submit']").val(wpWidgets.l10n.save).prop("disabled", false);
+                            let text = ("function" === typeof wp.i18n.__) ? wp.i18n.__("Save", "hocwp-theme") : (wpWidgets && wpWidgets.l10n && wpWidgets.l10n.save && $.trim(wpWidgets.l10n.save)) ? wpWidgets.l10n.save : "";
+
+                            widget.find("input[type='submit']").val(text).prop("disabled", false);
                         }
                     }
                 }

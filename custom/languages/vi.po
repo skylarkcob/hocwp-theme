@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-12-25 19:16+0700\n"
-"PO-Revision-Date: 2020-12-25 19:16+0700\n"
+"POT-Creation-Date: 2020-12-25 20:01+0700\n"
+"PO-Revision-Date: 2020-12-25 20:01+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -765,7 +765,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:297
-#: hocwp/inc/functions-scripts.php:297
+#: hocwp/inc/functions-scripts.php:300
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -1647,7 +1647,7 @@ msgid "Remove media"
 msgstr "Xóa tập tin"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:1407
-#: hocwp/inc/functions-scripts.php:298
+#: hocwp/inc/functions-scripts.php:301
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
@@ -2034,42 +2034,42 @@ msgstr "Giao diện được tạo bởi %s"
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:294
+#: hocwp/inc/functions-scripts.php:297
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:295
+#: hocwp/inc/functions-scripts.php:298
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:299
+#: hocwp/inc/functions-scripts.php:302
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:374
+#: hocwp/inc/functions-scripts.php:377
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:375
+#: hocwp/inc/functions-scripts.php:378
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:376
+#: hocwp/inc/functions-scripts.php:379
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:377
+#: hocwp/inc/functions-scripts.php:380
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:378
+#: hocwp/inc/functions-scripts.php:381
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."
@@ -2332,6 +2332,10 @@ msgstr "Đăng ngày %s"
 msgctxt "post author"
 msgid "by %s"
 msgstr "bởi %s"
+
+#: hocwp/js/media-upload.js:273
+msgid "Save"
+msgstr "Lưu"
 
 #: hocwp/load.php:80
 #, php-format
@@ -3058,9 +3062,6 @@ msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
 
 #~ msgid "View Movie"
 #~ msgstr "Xem phim"
-
-#~ msgid "Save Film"
-#~ msgstr "Lưu phim"
 
 #, fuzzy
 #~| msgid "Recent Modified Hentai"
