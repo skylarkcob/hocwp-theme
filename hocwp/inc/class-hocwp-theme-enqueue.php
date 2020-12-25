@@ -153,8 +153,18 @@ class HOCWP_Theme_Enqueue {
 			$folder_name = 'popper';
 		}
 
+		$base_dir = $this->custom_lib_dir . $folder_name;
+
+		if ( ! is_dir( $base_dir ) ) {
+			return;
+		}
+
 		$base_url = $this->custom_lib_url . $folder_name . '/';
-		$base_dir = $this->custom_lib_dir . $folder_name . '/' . $args['version'];
+
+		if ( ! empty( $args['version'] ) && is_dir( trailingslashit( $base_dir ) . $args['version'] ) ) {
+			$base_dir = trailingslashit( $base_dir );
+			$base_dir .= $args['version'];
+		}
 
 		if ( $args['cdn'] ) {
 			_deprecated_argument( __FUNCTION__, '6.7.7', sprintf( __( 'Stop using %s param from %s for loading resource from CDN.', 'hocwp-theme' ), 'cdn', '$args' ) );
@@ -166,26 +176,28 @@ class HOCWP_Theme_Enqueue {
 
 		$base_dir = trailingslashit( $base_dir );
 
-		if ( ! empty( $args['version'] ) ) {
+		if ( ! empty( $args['version'] ) && false !== strpos( $base_dir, $args['version'] ) ) {
 			$base_url .= $args['version'];
 		}
 
 		$base_url = trailingslashit( $base_url );
 
-		$base_dir .= 'umd/';
-		$base_url .= 'umd/';
+		if ( is_dir( $base_dir . 'umd/' ) ) {
+			$base_dir .= 'umd/';
+			$base_url .= 'umd/';
+		}
 
 		if ( $args['utils'] ) {
 			$handle = 'popper-utils-' . $args['version'];
 			$handle = sanitize_title( $handle );
 
-			wp_enqueue_script( $handle, $base_url . 'popper-utils.min.js', array( 'jquery' ), false, true );
+			wp_enqueue_script( $handle, $base_url . 'popper-utils.js', array( 'jquery' ), false, true );
 		}
 
 		$handle = 'popper-' . $args['version'];
 		$handle = sanitize_title( $handle );
 
-		wp_enqueue_script( $handle, $base_url . 'popper.min.js', array( 'jquery' ), false, true );
+		wp_enqueue_script( $handle, $base_url . 'popper.js', array( 'jquery' ), false, true );
 
 		unset( $defaults, $base_url, $base_dir, $handle, $file );
 	}
@@ -195,7 +207,8 @@ class HOCWP_Theme_Enqueue {
 			'cdn'     => null,
 			'version' => '3.3.7',
 			'js'      => false,
-			'theme'   => false
+			'theme'   => false,
+			'bundle'  => false
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -231,11 +244,17 @@ class HOCWP_Theme_Enqueue {
 		if ( $args['js'] && HT()->is_file( $base_dir . 'js/bootstrap.min.js' ) ) {
 			$popper = isset( $args['popper'] ) ? $args['popper'] : array();
 
-			if ( HT()->array_has_value( $popper ) ) {
+			if ( HT()->array_has_value( $popper ) || $popper ) {
 				$this->popper( $popper );
 			}
 
-			wp_enqueue_script( $handle, $base_url . 'js/bootstrap.min.js', array( 'jquery' ), false, true );
+			$name = 'bootstrap';
+
+			if ( $args['bundle'] ) {
+				$name .= '.bundle';
+			}
+
+			wp_enqueue_script( $handle, $base_url . 'js/' . $name . '.min.js', array( 'jquery' ), false, true );
 		}
 
 		unset( $defaults, $base_url, $base_dir, $handle, $css_file );

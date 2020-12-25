@@ -15,11 +15,11 @@ function hocwp_theme_post_submitbox_misc_actions_action( $post ) {
 	$value = get_post_meta( $post->ID, 'featured', true );
 	do_action( 'hocwp_theme_post_submitbox_meta_field', $post );
 	?>
-	<div class="misc-pub-section misc-pub-featured">
-		<input type="checkbox" id="featured" name="featured" value="1" <?php checked( 1, $value ); ?>>
-		<label
-			for="featured"><?php printf( __( 'Make this %s as featured?', 'hocwp-theme' ), $type->labels->singular_name ); ?></label>
-	</div>
+    <div class="misc-pub-section misc-pub-featured">
+        <input type="checkbox" id="featured" name="featured" value="1" <?php checked( 1, $value ); ?>>
+        <label
+                for="featured"><?php printf( __( 'Make this %s as featured?', 'hocwp-theme' ), $type->labels->singular_name ); ?></label>
+    </div>
 	<?php
 }
 
@@ -128,7 +128,7 @@ function hocwp_theme_init_edit_columns() {
 	}
 }
 
-add_action( 'init', 'hocwp_theme_init_edit_columns' );
+add_action( 'init', 'hocwp_theme_init_edit_columns', 999 );
 
 function hocwp_theme_manage_posts_custom_column_action( $column_name, $post_id ) {
 	$obj       = get_post( $post_id );

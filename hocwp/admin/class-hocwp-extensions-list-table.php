@@ -429,10 +429,14 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 				$href = add_query_arg( 's', $_REQUEST['s'], $href );
 			}
+
+			if ( isset( $_REQUEST['paged'] ) ) {
+				$href = add_query_arg( 'paged', $_REQUEST['paged'], $href );
+			}
 			?>
-			<script type="text/javascript">
-				window.location.href = '<?php echo $href; ?>';
-			</script>
+            <script type="text/javascript">
+                window.location.href = '<?php echo $href; ?>';
+            </script>
 			<?php
 		}
 	}

@@ -586,6 +586,36 @@ final class HOCWP_Theme_HTML_Field {
 		self::select( $args );
 	}
 
+	public static function chosen_term( $args = array() ) {
+		if ( ! isset( $args['options'] ) ) {
+			$term_args = isset( $args['term_args'] ) ? $args['term_args'] : array();
+
+			if ( ! isset( $term_args['taxonomy'] ) ) {
+				$term_args['taxonomy'] = isset( $args['taxonomy'] ) ? $args['taxonomy'] : '';
+			}
+
+			$terms = HT_Util()->get_terms( $term_args['taxonomy'], $term_args );
+
+			if ( HT()->array_has_value( $terms ) ) {
+				$options = array();
+
+				foreach ( $terms as $term ) {
+					if ( $term instanceof WP_Term ) {
+						$options[ $term->term_id ] = $term->name;
+					}
+				}
+
+				$defaults = array(
+					'options' => $options
+				);
+
+				$args = wp_parse_args( $args, $defaults );
+			}
+		}
+
+		self::chosen( $args );
+	}
+
 	public static function chosen( $args = array() ) {
 		$args['data-chosen'] = 1;
 

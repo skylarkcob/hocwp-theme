@@ -80,6 +80,13 @@ abstract class HOCWP_Theme_Meta {
 			} elseif ( array( $class, 'layout' ) === $callback ) {
 				$this->load_script( 'hocwp-theme' );
 				$this->load_script( 'hocwp-theme-admin' );
+			} elseif ( array( $class, 'sortable' ) === $callback || array( $class, 'sortable_term' ) === $callback ) {
+				$this->load_style( 'hocwp-theme-admin-style' );
+				$this->load_style( 'hocwp-theme-sortable-style' );
+				$this->load_script( 'hocwp-theme-sortable' );
+			} elseif ( array( $class, 'chosen' ) === $callback || array( $class, 'chosen_term' ) === $callback ) {
+				$this->load_style( 'chosen-style' );
+				$this->load_script( 'chosen-select' );
 			}
 		}
 
