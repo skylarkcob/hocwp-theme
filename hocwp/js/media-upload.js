@@ -298,9 +298,7 @@ jQuery(document).ready(function ($) {
                         }
 
                         if (widget.length) {
-                            let text = ("function" === typeof wp.i18n.__) ? wp.i18n.__("Save", "hocwp-theme") : (wpWidgets && wpWidgets.l10n && wpWidgets.l10n.save && $.trim(wpWidgets.l10n.save)) ? wpWidgets.l10n.save : "";
-
-                            widget.find("input[type='submit']").val(text).prop("disabled", false);
+                            widget.find("input[type='submit']").val(hocwpTheme.l10n.save).prop("disabled", false);
                         }
                     }
                 }

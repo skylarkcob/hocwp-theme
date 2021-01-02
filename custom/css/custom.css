@@ -11,7 +11,17 @@ body {
 
 /* Responsive ---------------------------- */
 
+/* 125% screen width -------------------- */
+@media only screen and (max-width: 1536px) {
+
+}
+
 @media only screen and (max-width: 1403px) {
+
+}
+
+/* 150% screen width -------------------- */
+@media only screen and (max-width: 1280px) {
 
 }
 

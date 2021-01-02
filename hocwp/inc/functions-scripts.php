@@ -160,13 +160,16 @@ function hocwp_theme_localize_script_l10n() {
 		'l10n'                      => array(
 			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
 			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),
-			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - http://hocwp.net' )
+			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - http://hocwp.net' ),
+			'save'                       => __( 'Save', 'hocwp-theme' ),
+			'saveAlert'                  => __( 'The changes you made will be lost if you navigate away from this page.', 'hocwp-theme' )
 		),
 		'ajaxOverlay'               => $ajax_overlay,
 		'nonce'                     => wp_create_nonce( HOCWP_Theme()->get_textdomain() ),
 		'loadingGif'                => admin_url( 'images/loading.gif' ),
 		'loadMoreButton'            => hocwp_theme_load_more_button(),
-		'iconRemove'                => HT_HTML_Field()->icon_remove()
+		'iconRemove'                => HT_HTML_Field()->icon_remove(),
+		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width()
 	);
 
 	if ( is_admin() ) {

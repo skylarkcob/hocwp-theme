@@ -898,6 +898,10 @@ final class HOCWP_Theme_HTML_Field {
 					$tmp = json_decode( $tmp, true );
 				}
 
+				if ( ! is_array( $tmp ) ) {
+					$tmp = array();
+				}
+
 				foreach ( (array) $tmp as $key ) {
 					if ( is_array( $key ) || is_object( $key ) ) {
 						continue;

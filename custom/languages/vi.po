@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2020-12-25 20:01+0700\n"
-"PO-Revision-Date: 2020-12-25 20:01+0700\n"
+"POT-Creation-Date: 2021-01-02 20:24+0700\n"
+"PO-Revision-Date: 2021-01-02 20:24+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -539,7 +539,7 @@ msgid "All information about Google account and Google console."
 msgstr "Tất cả thông tin về tài khoản Google và Google console."
 
 #: hocwp/admin/admin-setting-page-social.php:65
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:341
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:344
 msgid "List Socials"
 msgstr "Danh sách mạng xã hội"
 
@@ -765,7 +765,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:297
-#: hocwp/inc/functions-scripts.php:300
+#: hocwp/inc/functions-scripts.php:303
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -889,15 +889,15 @@ msgstr "Thông tin mở rộng"
 msgid "Display:"
 msgstr "Hiển thị:"
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:361
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:364
 msgid "No items."
 msgstr "Không có mục nào."
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:402
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:405
 msgid "Select All"
 msgstr "Chọn tất cả"
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:408
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:411
 msgid "Add to Menu"
 msgstr "Thêm vào trình đơn"
 
@@ -1634,25 +1634,25 @@ msgstr "Xóa tất cả ảnh"
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1317
+#: hocwp/inc/class-hocwp-theme-html-field.php:1321
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1376
+#: hocwp/inc/class-hocwp-theme-html-field.php:1380
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1399
+#: hocwp/inc/class-hocwp-theme-html-field.php:1403
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1407
-#: hocwp/inc/functions-scripts.php:301
+#: hocwp/inc/class-hocwp-theme-html-field.php:1411
+#: hocwp/inc/functions-scripts.php:304
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1445
+#: hocwp/inc/class-hocwp-theme-html-field.php:1449
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -2030,46 +2030,54 @@ msgstr "Những thay đổi của bạn có thể chưa được lưu."
 msgid "Theme created by %s"
 msgstr "Giao diện được tạo bởi %s"
 
-#: hocwp/inc/functions-scripts.php:184
+#: hocwp/inc/functions-scripts.php:164
+msgid "Save"
+msgstr "Lưu"
+
+#: hocwp/inc/functions-scripts.php:165
+msgid "The changes you made will be lost if you navigate away from this page."
+msgstr "Những thay đổi bạn đã thực hiện sẽ bị mất nếu bạn rời khỏi trang này."
+
+#: hocwp/inc/functions-scripts.php:187
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:297
+#: hocwp/inc/functions-scripts.php:300
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:298
+#: hocwp/inc/functions-scripts.php:301
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:302
+#: hocwp/inc/functions-scripts.php:305
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:377
+#: hocwp/inc/functions-scripts.php:380
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:378
+#: hocwp/inc/functions-scripts.php:381
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:379
+#: hocwp/inc/functions-scripts.php:382
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:380
+#: hocwp/inc/functions-scripts.php:383
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:381
+#: hocwp/inc/functions-scripts.php:384
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."
@@ -2332,10 +2340,6 @@ msgstr "Đăng ngày %s"
 msgctxt "post author"
 msgid "by %s"
 msgstr "bởi %s"
-
-#: hocwp/js/media-upload.js:273
-msgid "Save"
-msgstr "Lưu"
 
 #: hocwp/load.php:80
 #, php-format

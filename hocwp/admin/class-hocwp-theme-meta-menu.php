@@ -280,6 +280,9 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 			if ( isset( $_POST[ $name ][ $menu_item_db_id ] ) ) {
 				$value = $_POST[ $name ][ $menu_item_db_id ];
 				update_post_meta( $menu_item_db_id, $field['meta_key'], $value );
+			} elseif ( isset( $_POST[ 'menu-item-' . $name ][ $menu_item_db_id ] ) ) {
+				$value = $_POST[ 'menu-item-' . $name ][ $menu_item_db_id ];
+				update_post_meta( $menu_item_db_id, $field['meta_key'], $value );
 			}
 		}
 

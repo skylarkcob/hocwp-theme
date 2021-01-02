@@ -1,3 +1,5 @@
+window.hocwpTheme = window.hocwpTheme || {};
+
 (function () {
     var container, button, menu, items, link, subMenu, i, len;
 
@@ -40,6 +42,10 @@
         parent = container.parentNode;
 
     var mobileWidth = parseInt(document.getElementsByTagName("body")[0].getAttribute("data-mobile-width"));
+
+    if ("number" !== typeof mobileWidth && hocwpTheme.mobileScreenWidth) {
+        mobileWidth = parseInt(hocwpTheme.mobileScreenWidth);
+    }
 
     if (null === mobileWidth || 'number' !== typeof mobileWidth || isNaN(mobileWidth) || 1 > mobileWidth) {
         return;
