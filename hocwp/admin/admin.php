@@ -159,6 +159,12 @@ if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == $plugin_page ) {
 
 
 function hocwp_theme_admin_notices_required_plugins() {
+	global $pagenow;
+
+	if ( 'updates.php' == $pagenow || 'update-core.php' == $pagenow || 'update.php' == $pagenow ) {
+		return;
+	}
+
 	if ( ! HT_Requirement()->check_required_plugins() && current_user_can( 'manage_options' ) ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '">' . _x( 'this list', 'required plugins list', 'hocwp-theme' ) . '</a>';
 

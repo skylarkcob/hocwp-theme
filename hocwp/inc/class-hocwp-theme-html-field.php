@@ -513,6 +513,31 @@ final class HOCWP_Theme_HTML_Field {
 		self::select( $args );
 	}
 
+	public static function select_menu( $args = array() ) {
+		$options = isset( $args['options'] ) ? $args['options'] : '';
+
+		if ( ! HT()->array_has_value( $options ) ) {
+			global $pagenow;
+
+			$options = array();
+			$lists   = wp_get_nav_menus();
+
+			if ( $lists ) {
+				foreach ( $lists as $obj ) {
+					$options[ $obj->term_id ] = $obj->name;
+				}
+			}
+
+			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
+				$args['option_all'] = __( '-- Choose menu --', 'hocwp-theme' );
+			}
+
+			$args['options'] = $options;
+		}
+
+		self::select( $args );
+	}
+
 	public static function select_page( $args = array() ) {
 		$options = isset( $args['options'] ) ? $args['options'] : '';
 

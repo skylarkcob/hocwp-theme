@@ -248,7 +248,19 @@ function hocwp_theme_html_tag_close( $tag ) {
  * @return string
  */
 function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo = true ) {
-	$attributes = apply_filters( 'hocwp_theme_html_tag_with_context_attributes', array(), $tag, $context );
+	if ( ! empty( $attr ) && ! is_array( $attr ) ) {
+		$attr = HT()->attribute_to_array( $attr );
+	}
+
+	if ( ! is_array( $attr ) ) {
+		$attr = array();
+	}
+
+	if ( ! empty( $context ) ) {
+		$attr['data_context'] = esc_attr( $context );
+	}
+
+	$attributes = apply_filters( 'hocwp_theme_html_tag_with_context_attributes', $attr, $tag, $context );
 
 	if ( is_array( $attributes ) ) {
 		$atts = $attributes;
@@ -256,26 +268,16 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 		$attributes = '';
 
 		foreach ( $atts as $att => $attribute ) {
+			if ( is_array( $attribute ) ) {
+				if ( 'class' == $att ) {
+					$attribute = join( ' ', $attribute );
+				}
+			}
+
 			$attributes .= sprintf( '%s="%s" ', $att, esc_attr( $attribute ) );
 		}
 
 		unset( $atts );
-	}
-
-	if ( is_array( $attr ) ) {
-		$atts = $attr;
-
-		$attr = '';
-
-		foreach ( $atts as $att => $attribute ) {
-			$attr .= sprintf( '%s="%s" ', $att, esc_attr( $attribute ) );
-		}
-
-		unset( $atts );
-	}
-
-	if ( ! empty( $attr ) ) {
-		$attributes .= ' ' . $attr;
 	}
 
 	$attributes = trim( $attributes );

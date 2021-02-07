@@ -24,8 +24,12 @@ if ( ! trait_exists( 'HOCWP_Theme_PHP' ) ) {
 	require_once dirname( __FILE__ ) . '/trait-php.php';
 }
 
+if ( ! trait_exists( 'HOCWP_Theme_Formatting' ) ) {
+	require_once dirname( __FILE__ ) . '/trait-formatting.php';
+}
+
 final class HOCWP_Theme {
-	use HOCWP_Theme_PHP;
+	use HOCWP_Theme_PHP, HOCWP_Theme_Formatting;
 
 	public $version = HOCWP_THEME_CORE_VERSION;
 	protected static $_instance = null;

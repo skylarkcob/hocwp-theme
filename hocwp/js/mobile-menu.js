@@ -1,7 +1,7 @@
 window.hocwpTheme = window.hocwpTheme || {};
 
 (function () {
-    var container, button, menu, items, link, subMenu, i, len;
+    var body, container, button, menu, items, link, subMenu, i, len;
 
     container = document.getElementById("mobile-navigation");
 
@@ -50,6 +50,8 @@ window.hocwpTheme = window.hocwpTheme || {};
     if (null === mobileWidth || 'number' !== typeof mobileWidth || isNaN(mobileWidth) || 1 > mobileWidth) {
         return;
     }
+
+    body = document.getElementsByTagName("body")[0];
 
     parent.style.position = "relative";
 
@@ -132,10 +134,14 @@ window.hocwpTheme = window.hocwpTheme || {};
     button.onclick = function () {
         if (-1 !== container.className.indexOf("toggled")) {
             container.className = container.className.replace(" toggled", "");
+            body.className = body.className.replace(" menu-opened", "");
+
             button.setAttribute("aria-expanded", "false");
             menu.setAttribute("aria-expanded", "false");
         } else {
             container.className += " toggled";
+            body.className += " menu-opened";
+
             button.setAttribute("aria-expanded", "true");
             menu.setAttribute("aria-expanded", "true");
         }

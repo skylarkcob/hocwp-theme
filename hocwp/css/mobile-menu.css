@@ -1,3 +1,11 @@
+:root {
+    --mobile-menu-color: #fff;
+    --mobile-menu-background: #333;
+    --mobile-menu-background-light: #404040;
+    --mobile-menu-border-color-dark: #222;
+    --mobile-menu-border-color-light: #484848;
+}
+
 .mobile-menu ul {
     margin: 0;
     padding: 0;
@@ -8,7 +16,7 @@
     width: 300px;
     top: 0;
     left: -300px;
-    background-color: #333;
+    background-color: var(--mobile-menu-background);
     bottom: 0;
     height: 100%;
     z-index: 99999;
@@ -28,7 +36,7 @@
     width: 47px;
     background: none;
     border: none;
-    color: #fff;
+    color: var(--mobile-menu-color);
     height: 41px;
 }
 
@@ -40,7 +48,7 @@
 }
 
 .mobile-menu > .menu-toggle .svg-icon {
-    fill: #fff;
+    fill: var(--mobile-menu-color);
     margin-left: auto;
     margin-right: auto;
 }
@@ -98,7 +106,6 @@
 
 .mobile-menu > .menu li {
     float: none;
-    border-bottom: 1px solid #222;
     width: 100%;
     text-align: left;
     margin-left: 0;
@@ -110,22 +117,12 @@
     margin-bottom: 0;
 }
 
-.mobile-menu > .menu .sub-menu li:last-child > a,
-.mobile-menu > .menu .sub-menu li:last-child {
-    border-bottom: none;
-}
-
 .mobile-menu > .menu li:last-child {
     margin-bottom: 50px;
 }
 
-.mobile-menu > .menu .sub-menu {
-    border-top: 1px solid #222;
-}
-
 .mobile-menu > .menu li a {
-    border-top: 1px solid #484848;
-    color: #fff;
+    color: var(--mobile-menu-color);
     padding: 0 10px;
     text-indent: inherit;
     background: none;
@@ -138,23 +135,13 @@
 }
 
 .mobile-menu > .menu li:last-child > a {
-    border-bottom: 1px solid #222;
     border-left: none;
     border-right: none;
-}
-
-.mobile-menu > .menu li:last-child {
-    border-bottom-color: #484848;
 }
 
 .mobile-menu > .menu li:first-child {
-    border-top: 1px solid #222;
     border-left: none;
     border-right: none;
-}
-
-.mobile-menu > .menu .sub-menu li:first-child {
-    border-top: none;
 }
 
 .site-header .mobile-menu ul.menu li.menu-item-has-children ul.sub-menu {
@@ -162,25 +149,11 @@
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    background: none;
-}
-
-.mobile-menu > .menu ul li:last-child a,
-.mobile-menu ul ul li:last-child a {
-
-}
-
-.mobile-menu ul ul li:last-child {
-    border-bottom: none;
-}
-
-.mobile-menu ul ul li a {
-
 }
 
 .mobile-menu .menu-item-has-children > a span.arrow {
     content: "";
-    color: #fff;
+    color: var(--mobile-menu-color);
     position: absolute;
     right: 8px;
     font-size: 44px;
@@ -188,7 +161,7 @@
     border-style: solid;
     top: 50%;
     border-width: 6px 0 6px 6px;
-    border-color: transparent transparent transparent #fff;
+    border-color: transparent transparent transparent var(--mobile-menu-color);
     transform: translate(0, -50%);
     z-index: 99999;
 }
@@ -217,10 +190,6 @@
 
 .mobile-menu .search-field {
     border-right: none;
-}
-
-.mobile-menu ul ul {
-    /*border-top: 1px solid #222;*/
 }
 
 .site-header .mobile-menu ul li a i,
@@ -314,7 +283,6 @@ button.menu-toggle[aria-expanded="true"] {
         position: fixed;
         left: 0;
         right: 0;
-        background-color: #222;
         z-index: 999999;
         bottom: 0;
         top: 0;
@@ -334,4 +302,29 @@ button.menu-toggle[aria-expanded="true"] {
     .mobile-menu.toggled.position-right > .menu-toggle[aria-expanded="true"] {
         float: right;
     }
+}
+
+.mobile-menu .sub-menu {
+    background-color: var(--mobile-menu-background-light);
+}
+
+.mobile-menu .sub-menu > li:not(:first-child),
+.mobile-menu > li {
+    border-bottom: 1px solid var(--mobile-menu-border-color-light);
+}
+
+.mobile-menu li > a[aria-expanded="true"],
+.mobile-menu .sub-menu > li:not(:last-child) > a,
+.mobile-menu .sub-menu > li:last-child,
+.mobile-menu > li > a {
+    border-bottom: 1px solid var(--mobile-menu-border-color-dark);
+}
+
+.mobile-menu .sub-menu > li:first-child + li,
+.mobile-menu .sub-menu > li:first-child {
+    border-top: 1px solid var(--mobile-menu-border-color-light);
+}
+
+.mobile-menu .sub-menu[aria-expanded="true"] .sub-menu[aria-expanded="true"] > li:last-child {
+
 }
