@@ -1,6 +1,7 @@
 == Changelog ==
 = 6.7.9 =
 * Update list social meta for admin menu.
+* Fix body class for page template in child folder.
 
 = 6.7.8 =
 * Stop using .min for css and js files.

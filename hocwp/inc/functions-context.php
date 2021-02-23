@@ -54,8 +54,20 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	// Slim page template class names (class = name - file suffix).
 	if ( is_page_template() ) {
-		$classes[] = basename( get_page_template_slug(), '.php' );
-		$tmp       = get_post_meta( get_the_ID(), '_wp_page_template', true );
+		$template_slug = get_page_template_slug();
+
+		$tmp_class = 'page-template-' . sanitize_html_class( str_replace( '.', '-', $template_slug ) );
+		unset( $classes[ array_search( $tmp_class, $classes ) ] );
+		$tmp_class = str_replace( '.', '-', $template_slug );
+		$tmp_class = str_replace( '/', '-', $tmp_class );
+		$tmp_class = 'page-template-' . $tmp_class;
+		$classes[] = sanitize_html_class( $tmp_class );
+
+		$classes[] = basename( $template_slug, '.php' );
+
+		unset( $template_slug, $tmp_class );
+
+		$tmp = get_post_meta( get_the_ID(), '_wp_page_template', true );
 
 		if ( $tmp ) {
 			$tmp = trailingslashit( get_template_directory() ) . $tmp;
