@@ -233,11 +233,9 @@ function hocwp_theme_preprocess_comment_check_captcha( $commentdata ) {
 
 				if ( ! $response ) {
 					wp_die( __( 'Bots are not allowed to submit comments.', 'hocwp-theme' ) );
-					exit;
 				}
 			} else {
 				wp_die( __( 'Bots are not allowed to submit comments. If you are not a bot then please enable JavaScript in browser.', 'hocwp-theme' ) );
-				exit;
 			}
 		}
 	}

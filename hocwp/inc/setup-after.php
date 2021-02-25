@@ -338,7 +338,6 @@ function hocwp_theme_check_environment() {
 		} else {
 			if ( 'wp-login.php' != $pagenow ) {
 				wp_die( __( '<strong>Error:</strong> One or more extensions are incompatible with the current theme core version.', 'hocwp-theme' ), __( 'Theme core version doesn\'t meet requirements', 'hocwp-theme' ) );
-				exit;
 			}
 		}
 	}
@@ -423,7 +422,6 @@ function hocwp_theme_check_environment() {
 					}
 
 					wp_die( $message, __( 'Missing Required Plugins', 'hocwp-theme' ) );
-					exit;
 				}
 			}
 		}
