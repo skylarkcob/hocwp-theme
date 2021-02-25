@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-01-02 20:23+0700\n"
+"POT-Creation-Date: 2021-02-25 22:49+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -196,8 +196,8 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:90 hocwp/admin/class-hocwp-theme-meta-menu.php:167 hocwp/inc/class-hocwp-theme-html-field.php:681
-#: hocwp/inc/class-hocwp-theme-html-field.php:706 hocwp/widgets/class-hocwp-theme-widget-icon.php:23
+#: hocwp/admin/admin-setting-page-general.php:90 hocwp/admin/class-hocwp-theme-meta-menu.php:167 hocwp/inc/class-hocwp-theme-html-field.php:706
+#: hocwp/inc/class-hocwp-theme-html-field.php:731 hocwp/widgets/class-hocwp-theme-widget-icon.php:23
 msgid "Text"
 msgstr ""
 
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:208 hocwp/inc/class-hocwp-theme-html-field.php:676 hocwp/inc/class-hocwp-theme-html-field.php:700
+#: hocwp/admin/admin-setting-page-reading.php:208 hocwp/inc/class-hocwp-theme-html-field.php:701 hocwp/inc/class-hocwp-theme-html-field.php:725
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr ""
@@ -532,48 +532,48 @@ msgstr ""
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:163 hocwp/admin/admin.php:174
+#: hocwp/admin/admin.php:169 hocwp/admin/admin.php:180
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:167
+#: hocwp/admin/admin.php:173
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:178
+#: hocwp/admin/admin.php:184
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:185
+#: hocwp/admin/admin.php:191
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:189
+#: hocwp/admin/admin.php:195
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:271
+#: hocwp/admin/admin.php:277
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:313 hocwp/inc/template-post.php:327
+#: hocwp/admin/admin.php:319 hocwp/inc/template-post.php:327
 msgid "Related posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:351
+#: hocwp/admin/admin.php:357
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:374 hocwp/inc/template-general.php:1034
+#: hocwp/admin/admin.php:380 hocwp/inc/template-general.php:1034
 msgid "Close"
 msgstr ""
 
-#: hocwp/admin/admin.php:397
+#: hocwp/admin/admin.php:403
 #, php-format
 msgid "Template %s"
 msgstr ""
@@ -1428,61 +1428,65 @@ msgstr ""
 msgid "-- Choose term --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:505 hocwp/inc/class-hocwp-theme-html-field.php:576
+#: hocwp/inc/class-hocwp-theme-html-field.php:505 hocwp/inc/class-hocwp-theme-html-field.php:601
 #, php-format
 msgid "-- Choose %s --"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:532
+msgid "-- Choose menu --"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:557
 msgid "-- Choose page --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:570
+#: hocwp/inc/class-hocwp-theme-html-field.php:595
 msgid "-- Choose post --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:686 hocwp/inc/class-hocwp-theme-html-field.php:712
+#: hocwp/inc/class-hocwp-theme-html-field.php:711 hocwp/inc/class-hocwp-theme-html-field.php:737
 msgid "URL"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:692 hocwp/inc/class-hocwp-theme-html-field.php:718 hocwp/inc/class-hocwp-theme-html-field.php:732
+#: hocwp/inc/class-hocwp-theme-html-field.php:717 hocwp/inc/class-hocwp-theme-html-field.php:743 hocwp/inc/class-hocwp-theme-html-field.php:757
 msgid "Remove"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:724
+#: hocwp/inc/class-hocwp-theme-html-field.php:749
 msgid "Add"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:764
+#: hocwp/inc/class-hocwp-theme-html-field.php:789
 msgid "Add images"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:769
+#: hocwp/inc/class-hocwp-theme-html-field.php:794
 msgid "Remove all images"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:846
+#: hocwp/inc/class-hocwp-theme-html-field.php:871
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1321
+#: hocwp/inc/class-hocwp-theme-html-field.php:1346
 msgid "Image Link:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1380
+#: hocwp/inc/class-hocwp-theme-html-field.php:1405
 msgid "Add media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1403
+#: hocwp/inc/class-hocwp-theme-html-field.php:1428
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1411 hocwp/inc/functions-scripts.php:304
+#: hocwp/inc/class-hocwp-theme-html-field.php:1436 hocwp/inc/functions-scripts.php:304
 #, php-format
 msgid "Choose %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1449
+#: hocwp/inc/class-hocwp-theme-html-field.php:1474
 msgid "Drag to find address!"
 msgstr ""
 
@@ -1835,7 +1839,7 @@ msgstr ""
 msgid "Invalid License"
 msgstr ""
 
-#: hocwp/inc/functions-license.php:56
+#: hocwp/inc/functions-license.php:55
 msgid "Notify license"
 msgstr ""
 
@@ -1999,26 +2003,26 @@ msgstr ""
 msgid "Theme core version doesn't meet requirements"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:416
+#: hocwp/inc/setup-after.php:415
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
 "working normally."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:419
+#: hocwp/inc/setup-after.php:418
 #, php-format
 msgid "<strong>%s:</strong> The site is experiencing technical difficulties. Please contact administrator for more details."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:421
+#: hocwp/inc/setup-after.php:420
 #, php-format
 msgid ""
 "<strong>%s:</strong> The site is experiencing technical difficulties. Please contact administrator for more details. If you are owner of this "
 "site, try to <a href=\"%s\">login here</a> to check it."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:425
+#: hocwp/inc/setup-after.php:424
 msgid "Missing Required Plugins"
 msgstr ""
 
@@ -2035,7 +2039,7 @@ msgstr ""
 msgid "Bots are not allowed to submit comments."
 msgstr ""
 
-#: hocwp/inc/template-comments.php:239
+#: hocwp/inc/template-comments.php:238
 msgid "Bots are not allowed to submit comments. If you are not a bot then please enable JavaScript in browser."
 msgstr ""
 
@@ -2155,6 +2159,49 @@ msgstr ""
 
 #: hocwp/views/module-header.php:41
 msgid "Skip to content"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:21
+#, php-format
+msgid "Last access: %s ago"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:25
+#, php-format
+msgid "Last modified: %s ago"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:29
+#, php-format
+msgid "Last changed: %s ago"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:35
+msgid "Theme Object"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:40
+msgid "Theme Statistics"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:45
+msgid "Theme Custom Statistics"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:55
+msgid "Theme Style File"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:64
+msgid "Theme Custom Readme"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:69
+msgid "Active Plugins"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:80
+msgid "Configure File"
 msgstr ""
 
 #: hocwp/widgets/class-hocwp-theme-widget-disqus-recent-comment.php:23
