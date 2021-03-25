@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.8.1 =
+* Update mobile menu when browser resized.
+
 = 6.7.9 =
 * Update list social meta for admin menu.
 * Fix body class for page template in child folder.
