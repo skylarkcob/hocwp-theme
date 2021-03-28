@@ -1,6 +1,8 @@
 == Changelog ==
 = 6.8.1 =
 * Update mobile menu when browser resized.
+* Add functions content_with_image and chosen_post html field.
+* Add functions enqueue slick and fancybox.
 
 = 6.7.9 =
 * Update list social meta for admin menu.

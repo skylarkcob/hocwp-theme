@@ -304,6 +304,27 @@ class HOCWP_Theme_Enqueue {
 		}
 	}
 
+	public function slick( $args = array() ) {
+		$defaults = array(
+			'theme' => false
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		wp_enqueue_style( 'slick-style', $this->custom_lib_url . 'slick/slick.css' );
+
+		if ( $args['theme'] ) {
+			wp_enqueue_style( 'slick-theme-style', $this->custom_lib_url . 'slick/slick-theme.css' );
+		}
+
+		wp_enqueue_script( 'slick', $this->custom_lib_url . 'slick/slick.js', array( 'jquery' ), false, true );
+	}
+
+	public function fancybox() {
+		wp_enqueue_style( 'fancybox-style', $this->custom_lib_url . 'fancybox/jquery.fancybox.css' );
+		wp_enqueue_script( 'fancybox', $this->custom_lib_url . 'fancybox/jquery.fancybox.js', array( 'jquery' ), false, true );
+	}
+
 	public function font_awesome( $args = array() ) {
 		$this->fontawesome( $args );
 	}

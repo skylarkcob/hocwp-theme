@@ -11,4 +11,12 @@ trait HOCWP_Theme_PHP {
 
 		return $params;
 	}
+
+	public function explode_empty_line( $string ) {
+		return preg_split( "#\n\s*\n#Uis", $string );
+	}
+
+	public function remove_empty_lines( $string ) {
+		return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
+	}
 }

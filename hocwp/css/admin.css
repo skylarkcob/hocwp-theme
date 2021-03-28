@@ -191,6 +191,8 @@
     padding: 0 10px;
 }
 
+
+.hocwp-theme .content-image-box * + .media-box,
 .hocwp-theme .settings-box td input[type="url"] + .media-box,
 .media-box + input[type="url"] {
     margin-top: 15px;

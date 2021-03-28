@@ -526,6 +526,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		$fields = $this->settings_field;
 
+		// Auto detect and load styles & scripts for setting page
 		if ( is_array( $fields ) ) {
 			foreach ( $fields as $field ) {
 				$tab = isset( $field['tab'] ) ? $field['tab'] : '';
@@ -544,6 +545,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 							break;
 						case 'image_link':
 						case 'media_upload':
+						case 'content_with_image':
 							HT_Enqueue()->media_upload();
 							break;
 						case 'images':

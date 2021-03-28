@@ -611,6 +611,56 @@ final class HOCWP_Theme_HTML_Field {
 		self::select( $args );
 	}
 
+	public static function chosen_post( $args = array() ) {
+		if ( ! isset( $args['options'] ) ) {
+			$post_args = isset( $args['post_args'] ) ? $args['post_args'] : array();
+
+			if ( ! isset( $post_args['post_type'] ) ) {
+				$post_args['post_type'] = isset( $args['post_type'] ) ? $args['post_type'] : '';
+			}
+
+			$defaults = array(
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1
+			);
+
+			$post_args = wp_parse_args( $post_args, $defaults );
+
+			$query = new WP_Query( $post_args );
+
+			if ( $query->have_posts() ) {
+				$options = array();
+
+				foreach ( $query->get_posts() as $obj ) {
+					if ( $obj instanceof WP_Post ) {
+						$options[ $obj->ID ] = $obj->post_title;
+					}
+				}
+
+				$defaults = array(
+					'options' => $options
+				);
+
+				$args = wp_parse_args( $args, $defaults );
+			}
+
+			if ( ! isset( $args['option_all'] ) ) {
+				$post_type = $post_args['post_type'];
+
+				$type = get_post_type_object( $post_type );
+
+				if ( $type instanceof WP_Post_Type ) {
+					$args['option_all'] = sprintf( __( 'Choose %s', 'hocwp-theme' ), $type->labels->name );
+				} else {
+					$args['option_all'] = __( 'Choose items', 'hocwp-theme' );
+				}
+			}
+		}
+
+		self::chosen( $args );
+	}
+
 	public static function chosen_term( $args = array() ) {
 		if ( ! isset( $args['options'] ) ) {
 			$term_args = isset( $args['term_args'] ) ? $args['term_args'] : array();
@@ -635,6 +685,18 @@ final class HOCWP_Theme_HTML_Field {
 				);
 
 				$args = wp_parse_args( $args, $defaults );
+			}
+
+			if ( ! isset( $args['option_all'] ) ) {
+				$name = $term_args['taxonomy'];
+
+				$type = get_taxonomy( $name );
+
+				if ( $type instanceof WP_Taxonomy ) {
+					$args['option_all'] = sprintf( __( 'Choose %s', 'hocwp-theme' ), $type->labels->name );
+				} else {
+					$args['option_all'] = __( 'Choose items', 'hocwp-theme' );
+				}
 			}
 		}
 
@@ -1321,39 +1383,62 @@ final class HOCWP_Theme_HTML_Field {
 		self::input( $args );
 	}
 
-	public static function image_link( $args = array() ) {
+	public static function content_with_image( $args = array() ) {
 		$base_value = isset( $args['value'] ) ? $args['value'] : '';
 		$base_id    = isset( $args['id'] ) ? $args['id'] : '';
 		$base_name  = isset( $args['name'] ) ? $args['name'] : '';
 
+		$content_key = isset( $args['content_key'] ) ? $args['content_key'] : '';
+
+		if ( empty( $content_key ) ) {
+			$content_key = 'content';
+		}
+
+		$content_key = HT_Sanitize()->html_id( $content_key );
+
+		$content_args = isset( $args['content_args'] ) ? $args['content_args'] : '';
+
+		if ( ! is_array( $content_args ) ) {
+			$content_args = array();
+		}
+
 		$id = $base_id;
 
 		if ( ! empty( $id ) ) {
-			$id .= '_link';
+			$id .= '_' . $content_key;
 		}
 
 		$name = $base_name;
 
 		if ( ! empty( $name ) ) {
-			$name .= '[link]';
+			$name .= '[' . $content_key . ']';
 		}
 
-		$args = array(
+		$defaults = array(
 			'id'    => $id,
 			'name'  => $name,
-			'value' => isset( $base_value['link'] ) ? $base_value['link'] : '',
+			'value' => isset( $base_value[ $content_key ] ) ? $base_value[ $content_key ] : '',
 			'class' => 'widefat',
-			'label' => __( 'Image Link:', 'hocwp-theme' )
+			'label' => __( 'Content:', 'hocwp-theme' )
 		);
 
-		self::input_url( $args );
+		$defaults = wp_parse_args( $content_args, $defaults );
+
+		$content_callback = isset( $args['content_callback'] ) ? $args['content_callback'] : '';
+
+		echo '<div class="content-image-box">';
+
+		if ( is_callable( $content_callback ) ) {
+			call_user_func( $content_callback, $defaults );
+		} else {
+			self::input( $defaults );
+		}
 
 		$id = $base_id;
 
 		if ( ! empty( $id ) ) {
 			$id .= '_image';
 		}
-
 
 		$name = $base_name;
 
@@ -1368,6 +1453,22 @@ final class HOCWP_Theme_HTML_Field {
 		);
 
 		self::media_upload( $args );
+
+		echo '</div>'; /* Closing .content-image-box */
+	}
+
+	public static function image_link( $args = array() ) {
+		$defaults = array(
+			'content_key'      => 'link',
+			'content_args'     => array(
+				'label' => __( 'Image Link:', 'hocwp-theme' )
+			),
+			'content_callback' => array( 'HOCWP_Theme_HTML_Field', 'input_url' )
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		self::content_with_image( $args );
 	}
 
 	public static function media_upload( $args = array() ) {

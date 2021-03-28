@@ -65,6 +65,7 @@ abstract class HOCWP_Theme_Meta {
 			if ( $callback === array( $class, 'media_upload' )
 			     || $callback === array( $class, 'image_link' )
 			     || $callback === array( $class, 'images' )
+			     || $callback === array( $class, 'content_with_image' )
 			) {
 				$this->load_script( 'hocwp-theme-media-upload' );
 				$this->load_style( 'hocwp-theme-admin-style' );
@@ -84,7 +85,10 @@ abstract class HOCWP_Theme_Meta {
 				$this->load_style( 'hocwp-theme-admin-style' );
 				$this->load_style( 'hocwp-theme-sortable-style' );
 				$this->load_script( 'hocwp-theme-sortable' );
-			} elseif ( array( $class, 'chosen' ) === $callback || array( $class, 'chosen_term' ) === $callback ) {
+			} elseif ( array( $class, 'chosen' ) === $callback
+			           || array( $class, 'chosen_term' ) === $callback
+			           || array( $class, 'chosen_post' ) === $callback
+			) {
 				$this->load_style( 'chosen-style' );
 				$this->load_script( 'chosen-select' );
 			}

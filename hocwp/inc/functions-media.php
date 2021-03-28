@@ -326,14 +326,20 @@ class HOCWP_Theme_Media {
 		return $id;
 	}
 
-	public function get_default_image_url() {
+	public function get_default_image_url( $size = false ) {
 		$thumbnail = HT_Options()->get_tab( 'default_thumbnail', '', 'writing' );
 
 		if ( $this->exists( $thumbnail ) ) {
-			$thumbnail = wp_get_original_image_url( $thumbnail );
+			if ( $size ) {
+				$thumbnail = wp_get_attachment_image_url( $thumbnail, $size );
+			} else {
+				$thumbnail = wp_get_original_image_url( $thumbnail );
+			}
 		}
 
-		$thumbnail = HT_Util()->get_my_image_url( 'no-thumbnail.webp' );
+		if ( empty( $thumbnail ) ) {
+			$thumbnail = HT_Util()->get_my_image_url( 'no-thumbnail.webp' );
+		}
 
 		return apply_filters( 'hocwp_theme_default_image_url', $thumbnail );
 	}
