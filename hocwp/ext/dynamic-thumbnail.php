@@ -262,7 +262,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 				}
 			}
 
-			if ( ! file_exists( $file_path ) ) {
+			if ( ! file_exists( $file_path ) && function_exists( 'imagecreatefromjpeg' ) ) {
 				$src = HOCWP_THEME_CORE_URL . '/ext/thumbnail.php';
 				$src = esc_url_raw( $src );
 
