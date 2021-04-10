@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-define( 'HOCWP_THEME_CORE_VERSION', '6.8.1' );
+const HOCWP_THEME_CORE_VERSION = '6.8.1';
 
 /**
  * Theme developing mode.
@@ -36,22 +36,22 @@ define( 'HOCWP_THEME_CORE_URL', untrailingslashit( HOCWP_THEME_URL . '/hocwp' ) 
 /**
  * CSS suffix.
  */
-define( 'HOCWP_THEME_CSS_SUFFIX', '.css' );
+const HOCWP_THEME_CSS_SUFFIX = '.css';
 
 /**
  * Javascript suffix.
  */
-define( 'HOCWP_THEME_JS_SUFFIX', '.js' );
+const HOCWP_THEME_JS_SUFFIX = '.js';
 
 /**
  * Theme custom path.
  */
-define( 'HOCWP_THEME_CUSTOM_PATH', HOCWP_THEME_PATH . '/custom' );
+const HOCWP_THEME_CUSTOM_PATH = HOCWP_THEME_PATH . '/custom';
 
 /**
  * Theme custom base url.
  */
-define( 'HOCWP_THEME_CUSTOM_URL', HOCWP_THEME_URL . '/custom' );
+const HOCWP_THEME_CUSTOM_URL = HOCWP_THEME_URL . '/custom';
 
 /**
  * Detect doing ajax or not.

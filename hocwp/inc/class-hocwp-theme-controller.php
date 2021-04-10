@@ -43,6 +43,10 @@ final class HOCWP_Theme_Controller {
 
 		$this->object = new stdClass();
 
+		$this->object->theme_core_version = HOCWP_THEME_CORE_VERSION;
+		$this->object->theme_core_path    = HOCWP_THEME_CORE_PATH;
+		$this->object->theme_core_url     = HOCWP_THEME_CORE_URL;
+
 		self::$instance = $this;
 
 		add_action( 'after_setup_theme', array( $this, 'load' ), 0 );

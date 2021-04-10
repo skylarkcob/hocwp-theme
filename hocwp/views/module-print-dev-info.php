@@ -199,6 +199,16 @@ if ( file_exists( $path ) ) {
 	hocwp_theme_dev_info_section_close();
 }
 
+$path = HOCWP_THEME_CORE_PATH . '/readme.txt';
+
+if ( file_exists( $path ) ) {
+	$data = HT_Util()->read_all_text( $path );
+	hocwp_theme_dev_info_section_open( __( 'Theme Core Readme', 'hocwp-theme' ) );
+	print_r( $data );
+	echo PHP_EOL;
+	hocwp_theme_dev_info_section_close();
+}
+
 hocwp_theme_dev_info_section_open( __( 'Active Plugins', 'hocwp-theme' ) );
 $data = get_option( 'active_plugins' );
 
@@ -234,6 +244,11 @@ if ( ! is_admin() ) {
 
 	hocwp_theme_dev_info_section_open( __( 'Theme Object', 'hocwp-theme' ) );
 	$theme = wp_get_theme();
+	print_r( $theme );
+	hocwp_theme_dev_info_section_close();
+
+	hocwp_theme_dev_info_section_open( __( 'Theme Core Object', 'hocwp-theme' ) );
+	$theme = $GLOBALS['hocwp_theme'];
 	print_r( $theme );
 	hocwp_theme_dev_info_section_close();
 
