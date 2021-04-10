@@ -3,6 +3,8 @@
 * Update mobile menu when browser resized.
 * Add functions content_with_image and chosen_post html field.
 * Add functions enqueue slick and fancybox.
+* Add function to show development information.
+* Update theme setting tab class.
 
 = 6.7.9 =
 * Update list social meta for admin menu.

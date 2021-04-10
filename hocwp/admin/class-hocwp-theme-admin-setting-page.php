@@ -401,7 +401,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function html() {
+		$this->tabs->get();
 		$theme = wp_get_theme();
+
+		$tab_obj = $this->tabs->tab;
 		?>
         <div class="wrap hocwp-theme">
             <h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
@@ -414,30 +417,44 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
                             <p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
                         </div>
-                        <div class="save-changes">
-							<?php
-							$this->submit_button(
-								array(
-									'attributes' => array(
-										'form' => 'hocwpOptions',
-										'id'   => 'settingSubmitTop'
-									)
-								)
-							);
+						<?php
+						if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || $tab_obj->submit_button ) {
 							?>
-                        </div>
+                            <div class="save-changes">
+								<?php
+								$this->submit_button(
+									array(
+										'attributes' => array(
+											'form' => 'hocwpOptions',
+											'id'   => 'settingSubmitTop'
+										)
+									)
+								);
+								?>
+                            </div>
+							<?php
+						}
+						?>
                     </div>
                 </div>
                 <div class="module-body clearfix">
-					<?php $this->tabs->html() ?>
+					<?php $this->tabs->html(); ?>
                     <div class="settings-content">
 						<?php
 						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
 
-						$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
+						if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || ( ! is_callable( $tab_obj->callback ) && ! file_exists( $tab_obj->callback ) ) ) {
+							$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
 
-						if ( $display ) {
-							$this->form_table();
+							if ( $display ) {
+								$this->form_table();
+							}
+						} else {
+							if ( is_callable( $tab_obj->callback ) ) {
+								call_user_func( $tab_obj->callback );
+							} elseif ( file_exists( $tab_obj->callback ) ) {
+								include $tab_obj->callback;
+							}
 						}
 
 						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
@@ -474,6 +491,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	private function form_table() {
+		$tab_obj = $this->tabs->tab;
 		?>
         <form id="hocwpOptions" method="post" action="options.php" autocomplete="off">
             <input type="hidden" name="tab"
@@ -496,14 +514,16 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			do_settings_sections( $this->menu_slug );
 			do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name );
 
-			$this->submit_button(
-				array(
-					'attributes' => array(
-						'form' => 'hocwpOptions',
-						'id'   => 'settingSubmitBottom'
+			if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || $tab_obj->submit_button ) {
+				$this->submit_button(
+					array(
+						'attributes' => array(
+							'form' => 'hocwpOptions',
+							'id'   => 'settingSubmitBottom'
+						)
 					)
-				)
-			);
+				);
+			}
 			?>
         </form>
 		<?php

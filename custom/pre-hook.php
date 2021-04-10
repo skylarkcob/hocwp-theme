@@ -8,14 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Data type: boolean
  */
-define( 'HOCWP_THEME_BLANK_STYLE', false );
+const HOCWP_THEME_BLANK_STYLE = false;
 
 /**
  * Define theme support microformats or not.
  *
  * Data type: boolean
  */
-define( 'HOCWP_THEME_SUPPORT_MICROFORMATS', false );
+const HOCWP_THEME_SUPPORT_MICROFORMATS = false;
 
 /**
  * Define the required plugins for current theme.
@@ -24,7 +24,7 @@ define( 'HOCWP_THEME_SUPPORT_MICROFORMATS', false );
  *
  * Each plugin slug separates by commas.
  */
-define( 'HOCWP_THEME_REQUIRED_PLUGINS', '' );
+const HOCWP_THEME_REQUIRED_PLUGINS = '';
 
 /**
  * Define the required extensions for current theme.
@@ -33,7 +33,7 @@ define( 'HOCWP_THEME_REQUIRED_PLUGINS', '' );
  *
  * Each plugin slug separates by commas.
  */
-define( 'HOCWP_THEME_REQUIRED_EXTENSIONS', '' );
+const HOCWP_THEME_REQUIRED_EXTENSIONS = '';
 
 /**
  * Define the recommended extensions for current theme.
@@ -42,7 +42,7 @@ define( 'HOCWP_THEME_REQUIRED_EXTENSIONS', '' );
  *
  * Each extension slug separates by commas.
  */
-define( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS', '' );
+const HOCWP_THEME_RECOMMENDED_EXTENSIONS = '';
 
 /**
  * Skip work time checking.
@@ -51,7 +51,7 @@ define( 'HOCWP_THEME_RECOMMENDED_EXTENSIONS', '' );
  *
  * If you still want to continue working, just define this value to TRUE.
  */
-define( 'HOCWP_THEME_OVERTIME', true );
+const HOCWP_THEME_OVERTIME = true;
 
 /**
  * Working time interval.
@@ -61,7 +61,7 @@ define( 'HOCWP_THEME_OVERTIME', true );
  * You should take a short break every 25 minutes. You can increase this number to work more longer. Define this
  * number to zero to skip this function.
  */
-define( 'HOCWP_THEME_BREAK_MINUTES', 25 );
+const HOCWP_THEME_BREAK_MINUTES = 25;
 
 /*
  * Custom theme supports using for add_theme_support function. You can apply default site background color, default
@@ -69,7 +69,7 @@ define( 'HOCWP_THEME_BREAK_MINUTES', 25 );
  *
  * With custom colors like this: [custom-color][type_name][HEX color]
  */
-define( 'HOCWP_THEME_SUPPORTS', array(
+const HOCWP_THEME_SUPPORTS = array(
 	'custom-background' => array(
 		'default-color' => '#ffffff',
 		'default-image' => ''
@@ -100,7 +100,7 @@ define( 'HOCWP_THEME_SUPPORTS', array(
 		'admin-head-callback'    => '',
 		'admin-preview-callback' => ''
 	)
-) );
+);
 
 /*
  * Setting default colors to apply for accent hue color picker. Each key contains child key: text, accent, secondary
@@ -108,7 +108,7 @@ define( 'HOCWP_THEME_SUPPORTS', array(
  *
  * [type_name][text or accent or secondary or borders][HEX color]
  */
-define( 'HOCWP_THEME_DEFAULT_COLORS', array(
+const HOCWP_THEME_DEFAULT_COLORS = array(
 	'content'       => array(
 		'text'      => '#444444',
 		'accent'    => '#ffffff',
@@ -121,7 +121,7 @@ define( 'HOCWP_THEME_DEFAULT_COLORS', array(
 		'secondary' => '#f7f7f7',
 		'borders'   => '#dfdfdf'
 	)
-) );
+);
 
 /*
  * Setting default CSS selectors for apply Default colors above. The key name (type_name) must same with keys in
@@ -129,7 +129,7 @@ define( 'HOCWP_THEME_DEFAULT_COLORS', array(
  *
  * You can fill like this: [type_name][text or accent or secondary or borders][css property] = [elements]
  */
-define( 'HOCWP_THEME_CSS_ELEMENT_SELECTORS', array(
+const HOCWP_THEME_CSS_ELEMENT_SELECTORS = array(
 	'content'      => array(
 		'accent'    => array(
 			'background-color' => array(),
@@ -183,4 +183,4 @@ define( 'HOCWP_THEME_CSS_ELEMENT_SELECTORS', array(
 			'color' => array()
 		)
 	)
-) );
+);

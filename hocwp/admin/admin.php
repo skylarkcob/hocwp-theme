@@ -79,6 +79,7 @@ add_action( 'after_setup_theme', function () {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-system-information.php';
 	}
 }, 20 );
 

@@ -76,12 +76,14 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 	}
 
 	public function html() {
-		$this->get();
+		if ( ! HT()->array_has_value( $this->tabs ) ) {
+			$this->get();
+		}
 
 		if ( HT()->array_has_value( $this->tabs ) ) {
 			?>
-			<div id="nav">
-				<ul class="nav-tab-wrapper">
+            <div id="nav">
+                <ul class="nav-tab-wrapper">
 					<?php
 					$current_url = HT_Util()->get_current_url( true );
 					$current_url = remove_query_arg( 'settings-updated', $current_url );
@@ -106,24 +108,24 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 							$li_class = 'menu-item';
 
 							if ( ( ( $this->tab instanceof HOCWP_Theme_Admin_Setting_Tab ) && $this->tab->name == $key ) || ( empty( $this->tab ) && 0 == $count ) ) {
-								$class .= ' nav-tab-active';
+								$class    .= ' nav-tab-active';
 								$li_class .= ' active';
 							}
 
 							$text = $tab->label;
 							$text = $icon . ' ' . $text;
 							?>
-							<li class="<?php echo $li_class; ?>">
-								<a class="<?php echo $class; ?>"
-								   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
-							</li>
+                            <li class="<?php echo $li_class; ?>">
+                                <a class="<?php echo $class; ?>"
+                                   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+                            </li>
 							<?php
 							$count ++;
 						}
 					}
 					?>
-				</ul>
-			</div>
+                </ul>
+            </div>
 			<?php
 		}
 	}

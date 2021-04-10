@@ -11,7 +11,12 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public $styles = array();
 	public $scripts = array();
 
-	public function __construct( $name, $label, $icon = '', $args = array() ) {
+	public $priority;
+
+	public $submit_button = true;
+	public $callback = null;
+
+	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10 ) {
 		if ( empty( $name ) ) {
 			_doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
 		}
@@ -27,11 +32,12 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		$label = ucwords( $label );
 		$label = strip_tags( $label );
 
-		$this->name  = $name;
-		$this->label = $label;
-		$this->icon  = $icon;
+		$this->name     = $name;
+		$this->label    = $label;
+		$this->icon     = $icon;
+		$this->priority = $priority;
 
-		add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'setting_tabs_filter' ) );
+		add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'setting_tabs_filter' ), $this->priority );
 
 		if ( $this->name != HT_Admin_Setting_Tabs()->tab_name ) {
 			return;

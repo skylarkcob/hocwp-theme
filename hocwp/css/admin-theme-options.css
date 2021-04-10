@@ -58,6 +58,8 @@
     width: 200px;
     background-color: #f2f2f2;
     border-right: 1px solid #dedede;
+    flex-basis: 200px;
+    max-width: 200px;
 }
 
 .hocwp-theme .settings-box #nav ul {
@@ -132,8 +134,11 @@
 }
 
 .hocwp-theme .settings-box #nav + div {
-    width: 100%;
+    width: calc(100% - 200px);
     padding: 0 20px 20px;
+    max-width: calc(100% - 200px);
+    box-sizing: border-box;
+    flex-basis: calc(100% - 200px);
 }
 
 .hocwp-theme .settings-box > .settings-content {
@@ -175,4 +180,10 @@
 .hocwp-theme .settings-box .module-footer {
     padding: 0 10px;
     color: #999;
+}
+
+.hocwp-theme #systemInformation {
+    overflow: scroll;
+    max-height: 600px;
+    margin-bottom: 20px;
 }

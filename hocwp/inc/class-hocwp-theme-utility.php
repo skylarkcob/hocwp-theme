@@ -768,6 +768,29 @@ class HOCWP_Theme_Utility {
 		return $hashed;
 	}
 
+	public function get_timezone() {
+		$times = get_option( 'timezone_string' );
+
+		// Remove old Etc mappings. Fallback to gmt_offset.
+		if ( false !== strpos( $times, 'Etc/GMT' ) ) {
+			$times = '';
+		}
+
+		if ( empty( $times ) ) { // Create a UTC+- zone if no timezone string exists
+			$current_offset = get_option( 'gmt_offset' );
+
+			if ( 0 == $current_offset ) {
+				$times = 'UTC+0';
+			} elseif ( $current_offset < 0 ) {
+				$times = 'UTC' . $current_offset;
+			} else {
+				$times = 'UTC+' . $current_offset;
+			}
+		}
+
+		return $times;
+	}
+
 	public function timestamp_to_string( $timestamp, $format = null, $timezone = null ) {
 		if ( ! is_int( $timestamp ) ) {
 			$timestamp = intval( $timestamp );
