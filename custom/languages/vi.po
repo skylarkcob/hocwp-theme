@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-04-10 08:40+0700\n"
-"PO-Revision-Date: 2021-04-10 08:40+0700\n"
+"POT-Creation-Date: 2021-04-15 20:03+0700\n"
+"PO-Revision-Date: 2021-04-15 20:08+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -561,25 +561,22 @@ msgstr "Biểu tượng %s"
 msgid "System Information"
 msgstr "Thông tin hệ thống"
 
-#: hocwp/admin/admin-setting-page-system-information.php:17
+#: hocwp/admin/admin-setting-page-writing.php:6
+msgid "Writing"
+msgstr "Viết"
+
 #: hocwp/admin/admin-setting-page-writing.php:10
 msgid "Default Thumbnail"
 msgstr "Ảnh mặc định"
 
-#: hocwp/admin/admin-setting-page-system-information.php:28
 #: hocwp/admin/admin-setting-page-writing.php:21
 msgid "Allow using custom HTML in term description."
 msgstr ""
 "Cho phép sử dụng mã HTML tùy chỉnh trong phần mô tả của chuyên mục hoặc thẻ."
 
-#: hocwp/admin/admin-setting-page-system-information.php:31
 #: hocwp/admin/admin-setting-page-writing.php:24
 msgid "Term HTML Description"
 msgstr "Mô tả chuyên mục HTML"
-
-#: hocwp/admin/admin-setting-page-writing.php:6
-msgid "Writing"
-msgstr "Viết"
 
 #: hocwp/admin/admin.php:21
 msgctxt "setting page"
@@ -603,12 +600,16 @@ msgstr "Danh sách plugin"
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:170 hocwp/admin/admin.php:181
+#: hocwp/admin/admin.php:99 hocwp/admin/views/admin-delete-posts.php:9
+msgid "Delete Posts"
+msgstr "Xóa bài viết"
+
+#: hocwp/admin/admin.php:176 hocwp/admin/admin.php:187
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:174
+#: hocwp/admin/admin.php:180
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -617,7 +618,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:185
+#: hocwp/admin/admin.php:191
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -626,12 +627,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:192
+#: hocwp/admin/admin.php:198
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:196
+#: hocwp/admin/admin.php:202
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -639,23 +640,23 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:278
+#: hocwp/admin/admin.php:284
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:320 hocwp/inc/template-post.php:327
+#: hocwp/admin/admin.php:326 hocwp/inc/template-post.php:327
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
-#: hocwp/admin/admin.php:358
+#: hocwp/admin/admin.php:364
 msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
-#: hocwp/admin/admin.php:381 hocwp/inc/template-general.php:1034
+#: hocwp/admin/admin.php:387 hocwp/inc/template-general.php:1034
 msgid "Close"
 msgstr "Đóng"
 
-#: hocwp/admin/admin.php:404
+#: hocwp/admin/admin.php:410
 #, php-format
 msgid "Template %s"
 msgstr "Mẫu %s"
@@ -1022,6 +1023,60 @@ msgstr "Sidebar mặc định"
 #: hocwp/admin/meta.php:180
 msgid "Display content box as full width."
 msgstr "Hiển thị nội dung theo dạng full."
+
+#: hocwp/admin/views/admin-delete-posts.php:10
+msgid ""
+"With this tool, you can search and delete any posts completely automatically."
+msgstr ""
+"Với công cụ này, bạn có thể tìm kiếm hoặc xóa bất kỳ bài viết nào hoàn toàn "
+"tự động."
+
+#: hocwp/admin/views/admin-delete-posts.php:12
+msgid "Search and delete posts"
+msgstr "Tìm kiếm và xóa bài viết"
+
+#: hocwp/admin/views/admin-delete-posts.php:31
+msgid "unknown post type"
+msgstr "loại bài viết không xác định"
+
+#: hocwp/admin/views/admin-delete-posts.php:44
+#, php-format
+msgid ""
+"<strong>Warning:</strong> You are preparing to permanently delete posts: %s."
+msgstr ""
+"<strong>Cảnh báo:</strong> Bạn đang chuẩn bị xóa các bài viết vĩnh viễn: %s."
+
+#: hocwp/admin/views/admin-delete-posts.php:45
+#, php-format
+msgid "Are you sure? %s"
+msgstr "Bạn chắc chứ? %s"
+
+#: hocwp/admin/views/admin-delete-posts.php:62
+#, php-format
+msgid "%s posts have been deleted!"
+msgstr "%s bài viết đã được xóa!"
+
+#: hocwp/admin/views/admin-delete-posts.php:64
+msgid "No posts are deleted."
+msgstr "Không có bài viết nào được xóa."
+
+#: hocwp/admin/views/admin-delete-posts.php:85
+msgid "Post IDs"
+msgstr "ID bài viết"
+
+#: hocwp/admin/views/admin-delete-posts.php:90
+msgid "Enter any post ID you want to remove, each ID separated by a commas."
+msgstr ""
+"Nhập bất kỳ ID bài viết nào mà bạn muốn xóa, mỗi ID được cách nhau bởi dấu "
+"phẩy."
+
+#: hocwp/admin/views/admin-delete-posts.php:96
+msgid "Delete"
+msgstr "Xóa"
+
+#: hocwp/admin/views/admin-delete-posts.php:98
+msgid "Reset"
+msgstr "Đặt lại"
 
 #: hocwp/admin/views/admin-system-information.php:15
 msgid "Copied!"
@@ -1628,7 +1683,7 @@ msgstr "-- Chọn bài viết --"
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:654
 #: hocwp/inc/class-hocwp-theme-html-field.php:696
-#: hocwp/inc/class-hocwp-theme-html-field.php:1537
+#: hocwp/inc/class-hocwp-theme-html-field.php:1541
 #: hocwp/inc/functions-scripts.php:304
 #, php-format
 msgid "Choose %s"
@@ -1670,19 +1725,19 @@ msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xế
 msgid "Content:"
 msgstr "Nội dung:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1464
+#: hocwp/inc/class-hocwp-theme-html-field.php:1468
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1506
+#: hocwp/inc/class-hocwp-theme-html-field.php:1510
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1529
+#: hocwp/inc/class-hocwp-theme-html-field.php:1533
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1575
+#: hocwp/inc/class-hocwp-theme-html-field.php:1580
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -2009,7 +2064,7 @@ msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr "&larr; Trở lại %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1801
+#: hocwp/inc/class-hocwp-theme-utility.php:1811
 msgid ""
 "The <strong>$sql_column</strong> argument just only contains MySQL query "
 "inside (), it isn't full MySQL query."
@@ -2410,208 +2465,258 @@ msgstr "Bạn có thể trở thành người đầu tiên để lại bình lu�
 msgid "Skip to content"
 msgstr "Chuyển đến nội dung"
 
-#: hocwp/views/module-print-dev-info.php:6
+#: hocwp/views/module-print-dev-info.php:8
 msgid "Yes"
 msgstr "Có"
 
-#: hocwp/views/module-print-dev-info.php:7
+#: hocwp/views/module-print-dev-info.php:9
 msgid "No"
 msgstr "Không"
 
-#: hocwp/views/module-print-dev-info.php:33
+#: hocwp/views/module-print-dev-info.php:35
 #, php-format
 msgid "Last access: %s ago"
 msgstr "Truy cập lần cuối: %s trước"
 
-#: hocwp/views/module-print-dev-info.php:37
+#: hocwp/views/module-print-dev-info.php:39
 #, php-format
 msgid "Last modified: %s ago"
 msgstr "Cập nhật lần cuối: %s trước"
 
-#: hocwp/views/module-print-dev-info.php:41
+#: hocwp/views/module-print-dev-info.php:43
 #, php-format
 msgid "Last changed: %s ago"
 msgstr "Thay đổi lần cuối: %s trước"
 
-#: hocwp/views/module-print-dev-info.php:47
+#: hocwp/views/module-print-dev-info.php:49
 msgid "WordPress Information"
 msgstr "Thông tin WordPress"
 
-#: hocwp/views/module-print-dev-info.php:48
+#: hocwp/views/module-print-dev-info.php:50
+#, php-format
+msgid "WP version: %s"
+msgstr "Phiên bản WP: %s"
+
+#: hocwp/views/module-print-dev-info.php:51
 #, php-format
 msgid "Home URL: %s"
 msgstr "Đường dẫn trang chủ: %s"
 
-#: hocwp/views/module-print-dev-info.php:49
+#: hocwp/views/module-print-dev-info.php:52
 #, php-format
 msgid "Site URL: %s"
 msgstr "Đường dẫn trang: %s"
 
-#: hocwp/views/module-print-dev-info.php:50
+#: hocwp/views/module-print-dev-info.php:53
+#, php-format
+msgid "Admin email: %s"
+msgstr "Địa chỉ email admin: %s"
+
+#: hocwp/views/module-print-dev-info.php:54
 #, php-format
 msgid "WP multisite: %s"
 msgstr "Đa trang WordPress: %s"
 
-#: hocwp/views/module-print-dev-info.php:59
+#: hocwp/views/module-print-dev-info.php:63
 #, php-format
 msgid "WP memory limit: %s"
 msgstr "Giới hạn bộ nhớ WordPress: %s"
 
-#: hocwp/views/module-print-dev-info.php:60
+#: hocwp/views/module-print-dev-info.php:65
+#, php-format
+msgid "Home directory: %s"
+msgstr "Đường dẫn thư mục trang chủ: %s"
+
+#: hocwp/views/module-print-dev-info.php:66
+#, php-format
+msgid "Content directory: %s"
+msgstr "Đường dẫn thư mục hiện tại: %s"
+
+#: hocwp/views/module-print-dev-info.php:67
+#, php-format
+msgid "Plugin directory: %s"
+msgstr "Đường dẫn thư mục plugin: %s"
+
+#: hocwp/views/module-print-dev-info.php:69
 #, php-format
 msgid "WP debug mode: %s"
 msgstr "Chế độ gỡ lỗi: %s"
 
-#: hocwp/views/module-print-dev-info.php:61
+#: hocwp/views/module-print-dev-info.php:70
 #, php-format
 msgid "WP debug log active: %s"
 msgstr "Kích hoạt tập tin gỡ lỗi: %s"
 
-#: hocwp/views/module-print-dev-info.php:62
+#: hocwp/views/module-print-dev-info.php:71
+#, php-format
+msgid "Table prefix: %s"
+msgstr "Tiền tố table: %s"
+
+#: hocwp/views/module-print-dev-info.php:73
+#, php-format
+msgid "Total users: %s"
+msgstr "Tổng số lượng người dùng: %s"
+
+#: hocwp/views/module-print-dev-info.php:74
 #, php-format
 msgid "WP debug log file location: %s"
 msgstr "Vị trí tập tin gỡ lỗi: %s"
 
-#: hocwp/views/module-print-dev-info.php:63
+#: hocwp/views/module-print-dev-info.php:75
 #, php-format
 msgid "WP cron: %s"
 msgstr "Lập lịch WordPress: %s"
 
-#: hocwp/views/module-print-dev-info.php:64
+#: hocwp/views/module-print-dev-info.php:76
 #, php-format
 msgid "Language: %s"
 msgstr "Ngôn ngữ: %s"
 
-#: hocwp/views/module-print-dev-info.php:66
+#: hocwp/views/module-print-dev-info.php:78
 #, php-format
 msgid "Upload directory location: %s"
 msgstr "Đường dẫn thư mục tải lên: %s"
 
-#: hocwp/views/module-print-dev-info.php:67
+#: hocwp/views/module-print-dev-info.php:79
 #, php-format
 msgid "Upload URL location: %s"
 msgstr "Đường dẫn tải lên: %s"
 
-#: hocwp/views/module-print-dev-info.php:69
+#: hocwp/views/module-print-dev-info.php:81
 #, php-format
 msgid "WP local time: %s"
 msgstr "Thời gian cục bộ: %s"
 
-#: hocwp/views/module-print-dev-info.php:70
+#: hocwp/views/module-print-dev-info.php:82
 #, php-format
 msgid "Site time: %s"
 msgstr "Giờ của trang: %s"
 
-#: hocwp/views/module-print-dev-info.php:71
+#: hocwp/views/module-print-dev-info.php:83
 #, php-format
 msgid "DB time: %s"
 msgstr "Giờ cơ sở dữ liệu: %s"
 
-#: hocwp/views/module-print-dev-info.php:72
+#: hocwp/views/module-print-dev-info.php:84
 #, php-format
 msgid "PHP time: %s"
 msgstr "Giờ PHP: %s"
 
-#: hocwp/views/module-print-dev-info.php:86
+#: hocwp/views/module-print-dev-info.php:96
 #, php-format
 msgid "Post types: %s"
 msgstr "Loại bài viết: %s"
 
-#: hocwp/views/module-print-dev-info.php:89
+#: hocwp/views/module-print-dev-info.php:99
 msgid "Server Information"
 msgstr "Thông tin máy chủ"
 
-#: hocwp/views/module-print-dev-info.php:90
+#: hocwp/views/module-print-dev-info.php:100
 #, php-format
 msgid "Operating system: %s"
 msgstr "Hệ điều hành: %s"
 
-#: hocwp/views/module-print-dev-info.php:91
+#: hocwp/views/module-print-dev-info.php:101
 #, php-format
 msgid "PHP version: %s"
 msgstr "Phiên bản PHP: %s"
 
-#: hocwp/views/module-print-dev-info.php:92
+#: hocwp/views/module-print-dev-info.php:102
+#, php-format
+msgid "MySQL version: %s"
+msgstr "Phiên bản MySQL: %s"
+
+#: hocwp/views/module-print-dev-info.php:103
 #, php-format
 msgid "PHP post max size: %s"
 msgstr "Kích thước PHP post tối đa: %s"
 
-#: hocwp/views/module-print-dev-info.php:93
+#: hocwp/views/module-print-dev-info.php:104
 #, php-format
 msgid "PHP time limit: %s"
 msgstr "Giới hạn thời gian PHP: %s"
 
-#: hocwp/views/module-print-dev-info.php:94
+#: hocwp/views/module-print-dev-info.php:105
 #, php-format
 msgid "PHP max input vars: %s"
 msgstr "Số lượng biến tối đa: %s"
 
-#: hocwp/views/module-print-dev-info.php:95
+#: hocwp/views/module-print-dev-info.php:106
+#, php-format
+msgid "Peak memory usage: %s"
+msgstr "Giới hạn bộ nhớ tối đa: %s"
+
+#: hocwp/views/module-print-dev-info.php:107
+#, php-format
+msgid "Current memory usage: %s"
+msgstr "Bộ nhớ đang dùng hiện tại: %s"
+
+#: hocwp/views/module-print-dev-info.php:108
 #, php-format
 msgid "Max upload size: %s"
 msgstr "Dung lượng tải lên tối đa: %s"
 
-#: hocwp/views/module-print-dev-info.php:101
+#: hocwp/views/module-print-dev-info.php:114
 msgid "N/A"
 msgstr "Không có sẵn"
 
-#: hocwp/views/module-print-dev-info.php:104
+#: hocwp/views/module-print-dev-info.php:117
 #, php-format
 msgid "cURL version: %s"
 msgstr "cURL: %s"
 
-#: hocwp/views/module-print-dev-info.php:105
+#: hocwp/views/module-print-dev-info.php:118
 #, php-format
 msgid "Suhosin installed: %s"
 msgstr "Suhosin được cài đặt: %s"
 
-#: hocwp/views/module-print-dev-info.php:106
+#: hocwp/views/module-print-dev-info.php:119
 #, php-format
 msgid "Default timezone is UTC: %s"
 msgstr "Múi giờ mặc định là UTC: %s"
 
-#: hocwp/views/module-print-dev-info.php:107
+#: hocwp/views/module-print-dev-info.php:120
 #, php-format
 msgid "PHP Extensions: %s"
 msgstr "Tiện ích PHP: %s"
 
-#: hocwp/views/module-print-dev-info.php:157
+#: hocwp/views/module-print-dev-info.php:170
 msgid "Remote get status"
 msgstr "Trạng thái remote get"
 
-#: hocwp/views/module-print-dev-info.php:186
+#: hocwp/views/module-print-dev-info.php:199
 msgid "Theme Style File"
 msgstr "Tập tin style giao diện"
 
-#: hocwp/views/module-print-dev-info.php:196
+#: hocwp/views/module-print-dev-info.php:209
 msgid "Theme Custom Readme"
 msgstr "Readme giao diện tùy chỉnh"
 
-#: hocwp/views/module-print-dev-info.php:206
+#: hocwp/views/module-print-dev-info.php:219
 msgid "Theme Core Readme"
 msgstr "Readme nhân giao diện"
 
-#: hocwp/views/module-print-dev-info.php:212
+#: hocwp/views/module-print-dev-info.php:225
 msgid "Active Plugins"
 msgstr "Các plugin đang kích hoạt"
 
-#: hocwp/views/module-print-dev-info.php:240
+#: hocwp/views/module-print-dev-info.php:255
 msgid "Configure File"
 msgstr "Tập tin config"
 
-#: hocwp/views/module-print-dev-info.php:245
+#: hocwp/views/module-print-dev-info.php:260
 msgid "Theme Object"
 msgstr "Đối tượng giao diện"
 
-#: hocwp/views/module-print-dev-info.php:250
+#: hocwp/views/module-print-dev-info.php:265
 msgid "Theme Core Object"
 msgstr "Đối tượng nhân giao diện"
 
-#: hocwp/views/module-print-dev-info.php:255
+#: hocwp/views/module-print-dev-info.php:270
 msgid "Theme Statistics"
 msgstr "Thống kê giao diện"
 
-#: hocwp/views/module-print-dev-info.php:260
+#: hocwp/views/module-print-dev-info.php:275
 msgid "Theme Custom Statistics"
 msgstr "Thống kê giao diện tùy chỉnh"
 
@@ -3197,9 +3302,6 @@ msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
 #~ msgid "Custom Base"
 #~ msgstr "Mã tùy chỉnh"
 
-#~ msgid "Scanning directory %s"
-#~ msgstr "Đang quét đường dẫn %s"
-
 #~ msgid "Minifying file %s"
 #~ msgstr "Đang tối giản tập tin %s"
 
@@ -3242,9 +3344,6 @@ msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
 
 #~ msgid "Japanese Name:"
 #~ msgstr "Tên Nhật:"
-
-#~ msgid "Total Episodes:"
-#~ msgstr "Số tập:"
 
 #, fuzzy
 #~| msgid "Search"

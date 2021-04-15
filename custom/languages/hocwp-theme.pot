@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-04-10 08:40+0700\n"
+"POT-Creation-Date: 2021-04-15 20:03+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -502,20 +502,20 @@ msgstr ""
 msgid "System Information"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-system-information.php:17 hocwp/admin/admin-setting-page-writing.php:10
+#: hocwp/admin/admin-setting-page-writing.php:6
+msgid "Writing"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-writing.php:10
 msgid "Default Thumbnail"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-system-information.php:28 hocwp/admin/admin-setting-page-writing.php:21
+#: hocwp/admin/admin-setting-page-writing.php:21
 msgid "Allow using custom HTML in term description."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-system-information.php:31 hocwp/admin/admin-setting-page-writing.php:24
+#: hocwp/admin/admin-setting-page-writing.php:24
 msgid "Term HTML Description"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-writing.php:6
-msgid "Writing"
 msgstr ""
 
 #: hocwp/admin/admin.php:21
@@ -536,48 +536,52 @@ msgstr ""
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:170 hocwp/admin/admin.php:181
+#: hocwp/admin/admin.php:99 hocwp/admin/views/admin-delete-posts.php:9
+msgid "Delete Posts"
+msgstr ""
+
+#: hocwp/admin/admin.php:176 hocwp/admin/admin.php:187
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:174
+#: hocwp/admin/admin.php:180
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:185
+#: hocwp/admin/admin.php:191
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:192
+#: hocwp/admin/admin.php:198
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:196
+#: hocwp/admin/admin.php:202
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:278
+#: hocwp/admin/admin.php:284
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:320 hocwp/inc/template-post.php:327
+#: hocwp/admin/admin.php:326 hocwp/inc/template-post.php:327
 msgid "Related posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:358
+#: hocwp/admin/admin.php:364
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:381 hocwp/inc/template-general.php:1034
+#: hocwp/admin/admin.php:387 hocwp/inc/template-general.php:1034
 msgid "Close"
 msgstr ""
 
-#: hocwp/admin/admin.php:404
+#: hocwp/admin/admin.php:410
 #, php-format
 msgid "Template %s"
 msgstr ""
@@ -908,6 +912,53 @@ msgstr ""
 
 #: hocwp/admin/meta.php:180
 msgid "Display content box as full width."
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:10
+msgid "With this tool, you can search and delete any posts completely automatically."
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:12
+msgid "Search and delete posts"
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:31
+msgid "unknown post type"
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:44
+#, php-format
+msgid "<strong>Warning:</strong> You are preparing to permanently delete posts: %s."
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:45
+#, php-format
+msgid "Are you sure? %s"
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:62
+#, php-format
+msgid "%s posts have been deleted!"
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:64
+msgid "No posts are deleted."
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:85
+msgid "Post IDs"
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:90
+msgid "Enter any post ID you want to remove, each ID separated by a commas."
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:96
+msgid "Delete"
+msgstr ""
+
+#: hocwp/admin/views/admin-delete-posts.php:98
+msgid "Reset"
 msgstr ""
 
 #: hocwp/admin/views/admin-system-information.php:15
@@ -1457,7 +1508,7 @@ msgstr ""
 msgid "-- Choose post --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:654 hocwp/inc/class-hocwp-theme-html-field.php:696 hocwp/inc/class-hocwp-theme-html-field.php:1537
+#: hocwp/inc/class-hocwp-theme-html-field.php:654 hocwp/inc/class-hocwp-theme-html-field.php:696 hocwp/inc/class-hocwp-theme-html-field.php:1541
 #: hocwp/inc/functions-scripts.php:304
 #, php-format
 msgid "Choose %s"
@@ -1495,19 +1546,19 @@ msgstr ""
 msgid "Content:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1464
+#: hocwp/inc/class-hocwp-theme-html-field.php:1468
 msgid "Image Link:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1506
+#: hocwp/inc/class-hocwp-theme-html-field.php:1510
 msgid "Add media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1529
+#: hocwp/inc/class-hocwp-theme-html-field.php:1533
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1575
+#: hocwp/inc/class-hocwp-theme-html-field.php:1580
 msgid "Drag to find address!"
 msgstr ""
 
@@ -1831,7 +1882,7 @@ msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1801
+#: hocwp/inc/class-hocwp-theme-utility.php:1811
 msgid "The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn't full MySQL query."
 msgstr ""
 
@@ -2182,208 +2233,258 @@ msgstr ""
 msgid "Skip to content"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:6
+#: hocwp/views/module-print-dev-info.php:8
 msgid "Yes"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:7
+#: hocwp/views/module-print-dev-info.php:9
 msgid "No"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:33
+#: hocwp/views/module-print-dev-info.php:35
 #, php-format
 msgid "Last access: %s ago"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:37
+#: hocwp/views/module-print-dev-info.php:39
 #, php-format
 msgid "Last modified: %s ago"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:41
+#: hocwp/views/module-print-dev-info.php:43
 #, php-format
 msgid "Last changed: %s ago"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:47
-msgid "WordPress Information"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:48
-#, php-format
-msgid "Home URL: %s"
-msgstr ""
-
 #: hocwp/views/module-print-dev-info.php:49
-#, php-format
-msgid "Site URL: %s"
+msgid "WordPress Information"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:50
 #, php-format
+msgid "WP version: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:51
+#, php-format
+msgid "Home URL: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:52
+#, php-format
+msgid "Site URL: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:53
+#, php-format
+msgid "Admin email: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:54
+#, php-format
 msgid "WP multisite: %s"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:59
-#, php-format
-msgid "WP memory limit: %s"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:60
-#, php-format
-msgid "WP debug mode: %s"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:61
-#, php-format
-msgid "WP debug log active: %s"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:62
-#, php-format
-msgid "WP debug log file location: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:63
 #, php-format
-msgid "WP cron: %s"
+msgid "WP memory limit: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:64
+#: hocwp/views/module-print-dev-info.php:65
 #, php-format
-msgid "Language: %s"
+msgid "Home directory: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:66
 #, php-format
-msgid "Upload directory location: %s"
+msgid "Content directory: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:67
 #, php-format
-msgid "Upload URL location: %s"
+msgid "Plugin directory: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:69
 #, php-format
-msgid "WP local time: %s"
+msgid "WP debug mode: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:70
 #, php-format
-msgid "Site time: %s"
+msgid "WP debug log active: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:71
 #, php-format
+msgid "Table prefix: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:73
+#, php-format
+msgid "Total users: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:74
+#, php-format
+msgid "WP debug log file location: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:75
+#, php-format
+msgid "WP cron: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:76
+#, php-format
+msgid "Language: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:78
+#, php-format
+msgid "Upload directory location: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:79
+#, php-format
+msgid "Upload URL location: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:81
+#, php-format
+msgid "WP local time: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:82
+#, php-format
+msgid "Site time: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:83
+#, php-format
 msgid "DB time: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:72
+#: hocwp/views/module-print-dev-info.php:84
 #, php-format
 msgid "PHP time: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:86
+#: hocwp/views/module-print-dev-info.php:96
 #, php-format
 msgid "Post types: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:89
+#: hocwp/views/module-print-dev-info.php:99
 msgid "Server Information"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:90
+#: hocwp/views/module-print-dev-info.php:100
 #, php-format
 msgid "Operating system: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:91
+#: hocwp/views/module-print-dev-info.php:101
 #, php-format
 msgid "PHP version: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:92
+#: hocwp/views/module-print-dev-info.php:102
+#, php-format
+msgid "MySQL version: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:103
 #, php-format
 msgid "PHP post max size: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:93
+#: hocwp/views/module-print-dev-info.php:104
 #, php-format
 msgid "PHP time limit: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:94
+#: hocwp/views/module-print-dev-info.php:105
 #, php-format
 msgid "PHP max input vars: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:95
-#, php-format
-msgid "Max upload size: %s"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:101
-msgid "N/A"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:104
-#, php-format
-msgid "cURL version: %s"
-msgstr ""
-
-#: hocwp/views/module-print-dev-info.php:105
-#, php-format
-msgid "Suhosin installed: %s"
-msgstr ""
-
 #: hocwp/views/module-print-dev-info.php:106
 #, php-format
-msgid "Default timezone is UTC: %s"
+msgid "Peak memory usage: %s"
 msgstr ""
 
 #: hocwp/views/module-print-dev-info.php:107
 #, php-format
+msgid "Current memory usage: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:108
+#, php-format
+msgid "Max upload size: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:114
+msgid "N/A"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:117
+#, php-format
+msgid "cURL version: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:118
+#, php-format
+msgid "Suhosin installed: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:119
+#, php-format
+msgid "Default timezone is UTC: %s"
+msgstr ""
+
+#: hocwp/views/module-print-dev-info.php:120
+#, php-format
 msgid "PHP Extensions: %s"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:157
+#: hocwp/views/module-print-dev-info.php:170
 msgid "Remote get status"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:186
+#: hocwp/views/module-print-dev-info.php:199
 msgid "Theme Style File"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:196
+#: hocwp/views/module-print-dev-info.php:209
 msgid "Theme Custom Readme"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:206
+#: hocwp/views/module-print-dev-info.php:219
 msgid "Theme Core Readme"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:212
+#: hocwp/views/module-print-dev-info.php:225
 msgid "Active Plugins"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:240
+#: hocwp/views/module-print-dev-info.php:255
 msgid "Configure File"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:245
+#: hocwp/views/module-print-dev-info.php:260
 msgid "Theme Object"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:250
+#: hocwp/views/module-print-dev-info.php:265
 msgid "Theme Core Object"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:255
+#: hocwp/views/module-print-dev-info.php:270
 msgid "Theme Statistics"
 msgstr ""
 
-#: hocwp/views/module-print-dev-info.php:260
+#: hocwp/views/module-print-dev-info.php:275
 msgid "Theme Custom Statistics"
 msgstr ""
 
