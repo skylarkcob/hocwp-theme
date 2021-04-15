@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+global $wpdb;
+
 $yes = __( 'Yes', 'hocwp-theme' );
 $no  = __( 'No', 'hocwp-theme' );
 
@@ -45,8 +47,10 @@ function hocwp_theme_dev_info_stats( $stats ) {
 }
 
 hocwp_theme_dev_info_section_open( __( 'WordPress Information', 'hocwp-theme' ) );
+printf( __( 'WP version: %s', 'hocwp-theme' ), $GLOBALS['wp_version'] . PHP_EOL );
 printf( __( 'Home URL: %s', 'hocwp-theme' ), home_url() . PHP_EOL );
 printf( __( 'Site URL: %s', 'hocwp-theme' ), site_url() . PHP_EOL );
+printf( __( 'Admin email: %s', 'hocwp-theme' ), get_bloginfo( 'admin_email' ) . PHP_EOL );
 printf( __( 'WP multisite: %s', 'hocwp-theme' ), ( is_multisite() ? $yes : $no ) . PHP_EOL );
 
 $memory = WP_MEMORY_LIMIT;
@@ -57,8 +61,16 @@ if ( function_exists( 'memory_get_usage' ) ) {
 }
 
 printf( __( 'WP memory limit: %s', 'hocwp-theme' ), size_format( HT()->memory_size_convert( $memory ) ) . PHP_EOL );
+
+printf( __( 'Home directory: %s', 'hocwp-theme' ), htmlspecialchars( ABSPATH ) . PHP_EOL );
+printf( __( 'Content directory: %s', 'hocwp-theme' ), htmlspecialchars( WP_CONTENT_DIR ) . PHP_EOL );
+printf( __( 'Plugin directory: %s', 'hocwp-theme' ), htmlspecialchars( WP_PLUGIN_DIR ) . PHP_EOL );
+
 printf( __( 'WP debug mode: %s', 'hocwp-theme' ), ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? $yes : $no ) . PHP_EOL );
 printf( __( 'WP debug log active: %s', 'hocwp-theme' ), ( ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) ? $yes : $no ) . PHP_EOL );
+printf( __( 'Table prefix: %s', 'hocwp-theme' ), HT_Util()->get_table_prefix() . PHP_EOL );
+$users = count_users();
+printf( __( 'Total users: %s', 'hocwp-theme' ), number_format_i18n( $users['total_users'] ) . PHP_EOL );
 printf( __( 'WP debug log file location: %s', 'hocwp-theme' ), ( ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) ? ini_get( 'error_log' ) : '' ) . PHP_EOL );
 printf( __( 'WP cron: %s', 'hocwp-theme' ), ( ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) ? $no : $yes ) . PHP_EOL );
 printf( __( 'Language: %s', 'hocwp-theme' ), get_locale() . PHP_EOL );
@@ -70,8 +82,6 @@ printf( __( 'WP local time: %s', 'hocwp-theme' ), HT_Util()->get_timezone() . PH
 printf( __( 'Site time: %s', 'hocwp-theme' ), ( current_time( 'mysql' ) ) . PHP_EOL );
 printf( __( 'DB time: %s', 'hocwp-theme' ), ( $wpdb->get_var( 'SELECT utc_timestamp()' ) ) . PHP_EOL );
 printf( __( 'PHP time: %s', 'hocwp-theme' ), date( 'Y-m-d H:i:s' ) . PHP_EOL );
-
-global $wpdb;
 
 $post_types = $wpdb->get_results( "SELECT post_type AS 'type', count(1) AS 'count' FROM {$wpdb->posts} GROUP BY post_type ORDER BY count DESC;" );
 
@@ -89,9 +99,12 @@ hocwp_theme_dev_info_section_close();
 hocwp_theme_dev_info_section_open( __( 'Server Information', 'hocwp-theme' ) );
 printf( __( 'Operating system: %s', 'hocwp-theme' ), php_uname() . PHP_EOL );
 printf( __( 'PHP version: %s', 'hocwp-theme' ), phpversion() . PHP_EOL );
+printf( __( 'MySQL version: %s', 'hocwp-theme' ), $wpdb->db_version() . PHP_EOL );
 printf( __( 'PHP post max size: %s', 'hocwp-theme' ), ( size_format( HT()->memory_size_convert( ini_get( 'post_max_size' ) ) ) ) . PHP_EOL );
 printf( __( 'PHP time limit: %s', 'hocwp-theme' ), ( ini_get( 'max_execution_time' ) ) . PHP_EOL );
 printf( __( 'PHP max input vars: %s', 'hocwp-theme' ), ( ini_get( 'max_input_vars' ) ) . PHP_EOL );
+printf( __( 'Peak memory usage: %s', 'hocwp-theme' ), size_format( memory_get_peak_usage( true ) ) . PHP_EOL );
+printf( __( 'Current memory usage: %s', 'hocwp-theme' ), size_format( memory_get_usage( true ) ) . PHP_EOL );
 printf( __( 'Max upload size: %s', 'hocwp-theme' ), ( size_format( wp_max_upload_size() ) ) . PHP_EOL );
 
 if ( function_exists( 'curl_version' ) ) {
@@ -226,6 +239,8 @@ if ( HT()->array_has_value( $data ) ) {
 		unset( $data[ $key ] );
 	}
 }
+
+$data['count'] = count( $data );
 
 print_r( $data );
 hocwp_theme_dev_info_section_close();

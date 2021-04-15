@@ -187,3 +187,7 @@
     max-height: 600px;
     margin-bottom: 20px;
 }
+
+.hocwp-theme label + .wp-editor-wrap {
+    margin-top: 20px;
+}

@@ -5,6 +5,8 @@
 * Add functions enqueue slick and fancybox.
 * Add function to show development information.
 * Update theme setting tab class.
+* Add tool for posts deleting.
+* Update theme development information.
 
 = 6.7.9 =
 * Update list social meta for admin menu.

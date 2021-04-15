@@ -1796,6 +1796,16 @@ class HOCWP_Theme_Utility {
 		return $res;
 	}
 
+	public function get_table_prefix() {
+		global $wpdb;
+
+		if ( is_multisite() ) {
+			return $wpdb->base_prefix;
+		} else {
+			return $wpdb->get_blog_prefix( 0 );
+		}
+	}
+
 	public function create_database_table( $table_name, $sql_column ) {
 		if ( false !== strpos( $sql_column, 'CREATE TABLE' ) || false !== strpos( $sql_column, 'create table' ) ) {
 			_doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );

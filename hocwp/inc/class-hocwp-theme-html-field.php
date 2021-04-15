@@ -1428,6 +1428,10 @@ final class HOCWP_Theme_HTML_Field {
 
 		echo '<div class="content-image-box">';
 
+		if ( ! is_callable( $content_callback ) ) {
+			$content_callback = array( HT_HTML_Field(), $content_callback );
+		}
+
 		if ( is_callable( $content_callback ) ) {
 			call_user_func( $content_callback, $defaults );
 		} else {
@@ -1559,7 +1563,8 @@ final class HOCWP_Theme_HTML_Field {
 					printf( $l10n['removeImageButton'], $media_type );
 				}
 				?>
-                <input id="<?php echo $args['id']; ?>" name="<?php echo $args['name']; ?>" value="<?php echo $value; ?>"
+                <input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['name'] ); ?>"
+                       value="<?php echo esc_attr( $value ); ?>"
                        type="hidden">
             </div>
 			<?php

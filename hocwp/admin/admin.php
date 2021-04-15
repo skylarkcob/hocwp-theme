@@ -95,9 +95,15 @@ function hocwp_theme_admin_menu_extra() {
 	add_theme_page( $title, $title, 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
 
 	add_theme_page( 'phpinfo()', __( 'PHP Info', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
+
+	add_management_page( __( 'Delete Posts', 'hocwp-theme' ), __( 'Delete Posts', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_delete_posts', 'hocwp_theme_admin_menu_delete_posts_callback' );
 }
 
 add_action( 'admin_menu', 'hocwp_theme_admin_menu_extra' );
+
+function hocwp_theme_admin_menu_delete_posts_callback() {
+	load_template( HOCWP_THEME_CORE_PATH . '/admin/views/admin-delete-posts.php' );
+}
 
 function hocwp_theme_admin_menu_theme_plugins_callback() {
 	load_template( HOCWP_THEME_CORE_PATH . '/admin/views/admin-theme-plugins.php' );

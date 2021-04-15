@@ -122,6 +122,10 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		}
 	}
 
+	public function add_a_field( $field ) {
+		$this->fields[] = $field;
+	}
+
 	public function fields_filter() {
 		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, HT_Options()->get( $this->name ) );
 
