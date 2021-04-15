@@ -87,7 +87,7 @@ $post_ids = '';
                 <td>
                     <input name="post_ids" type="text" id="post_ids" value="<?php echo esc_attr( $post_ids ); ?>"
                            class="regular-text">
-                    <p class="desc description"><?php _e( 'Enter any post ID you want to remove, each ID separated by a comma.', 'hocwp-theme' ); ?></p>
+                    <p class="desc description"><?php _e( 'Enter any post ID you want to remove, each ID separated by a commas.', 'hocwp-theme' ); ?></p>
                 </td>
             </tr>
             </tbody>
