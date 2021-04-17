@@ -1136,8 +1136,22 @@ class HOCWP_Theme_Utility {
 		return ( HT()->is_positive_number( $paged ) ) ? $paged : 1;
 	}
 
+	public function get_yoast_seo_title_separator() {
+		$sep = '&raquo;';
+
+		if ( class_exists( 'WPSEO_Options' ) ) {
+			if ( function_exists( 'YoastSEO' ) ) {
+				$sep = YoastSEO()->helpers->options->get_title_separator();
+			} else {
+				$sep = WPSEO_Options::get( 'separator' );
+			}
+		}
+
+		return $sep;
+	}
+
 	public function get_title_separator() {
-		return apply_filters( 'hocwp_theme_title_separator', ( class_exists( 'WPSEO_Options' ) ) ? WPSEO_Options::get( 'separator' ) : '&raquo;' );
+		return apply_filters( 'hocwp_theme_title_separator', $this->get_yoast_seo_title_separator() );
 	}
 
 	public function get_posts_per_page( $home = false ) {

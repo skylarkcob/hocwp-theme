@@ -7,6 +7,7 @@
 * Update theme setting tab class.
 * Add tool for posts deleting.
 * Update theme development information.
+* Update function get title separator for new Yoast SEO 15.2.
 
 = 6.7.9 =
 * Update list social meta for admin menu.
