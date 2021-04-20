@@ -8,6 +8,7 @@
 * Add tool for posts deleting.
 * Update theme development information.
 * Update function get title separator for new Yoast SEO 15.2.
+* Update mobile menu script hide site navigation when mobile navigation exists.
 
 = 6.7.9 =
 * Update list social meta for admin menu.

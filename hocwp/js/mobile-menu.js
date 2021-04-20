@@ -1,14 +1,25 @@
 window.hocwpTheme = window.hocwpTheme || {};
 
 (function () {
-    var body, container, button, menu, items, link, subMenu, i, len;
+    var body, container, button, menu, items, link, subMenu, i, len, siteNavigation, mobileWidth;
+
+    body = document.getElementsByTagName("body")[0];
+
+    mobileWidth = parseInt(body.getAttribute("data-mobile-width"));
+
+    siteNavigation = document.getElementById("site-navigation");
 
     // Find mobile menu container
     container = document.getElementById("mobile-navigation");
 
     if (!container) {
         // Find main menu container
-        container = document.getElementById("site-navigation");
+        container = siteNavigation;
+    } else {
+        // If has mobile navigation then hide site navigation
+        if (siteNavigation && screen.width <= mobileWidth) {
+            siteNavigation.style.display = "none";
+        }
     }
 
     if (!container) {
@@ -49,10 +60,6 @@ window.hocwpTheme = window.hocwpTheme || {};
 
     var mobileMenuClass = " " + mobileMenuID,
         parent = container.parentNode;
-
-    body = document.getElementsByTagName("body")[0];
-
-    var mobileWidth = parseInt(body.getAttribute("data-mobile-width"));
 
     if ("number" !== typeof mobileWidth && hocwpTheme.mobileScreenWidth) {
         mobileWidth = parseInt(hocwpTheme.mobileScreenWidth);
