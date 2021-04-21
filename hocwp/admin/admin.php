@@ -28,6 +28,18 @@ function hocwp_theme_admin_notices_action() {
 			HT_Util()->admin_notice( $args );
 		}
 	}
+
+	$updated_status = $_GET['updated_status'] ?? '';
+
+	if ( HT()->is_positive_number( $updated_status ) ) {
+		$select_status = $_REQUEST['select_status'] ?? '';
+
+		$msg = array(
+			'message' => sprintf( __( '%s posts have been updated to post status <strong>%s</strong>!', 'hocwp-theme' ), number_format_i18n( $updated_status ), $select_status )
+		);
+
+		HT_Admin()->admin_notice( $msg );
+	}
 }
 
 add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
@@ -80,6 +92,7 @@ add_action( 'after_setup_theme', function () {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-system-information.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-administration-tools.php';
 	}
 }, 20 );
 
@@ -96,7 +109,7 @@ function hocwp_theme_admin_menu_extra() {
 
 	add_theme_page( 'phpinfo()', __( 'PHP Info', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
 
-    add_theme_page( __( 'Delete Posts', 'hocwp-theme' ), __( 'Delete Posts', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_delete_posts', 'hocwp_theme_admin_menu_delete_posts_callback' );
+	add_theme_page( __( 'Delete Posts', 'hocwp-theme' ), __( 'Delete Posts', 'hocwp-theme' ), 'manage_options', 'hocwp_theme_delete_posts', 'hocwp_theme_admin_menu_delete_posts_callback' );
 }
 
 add_action( 'admin_menu', 'hocwp_theme_admin_menu_extra' );
@@ -416,6 +429,93 @@ function hocwp_theme_display_post_states_filter( $post_states, $post ) {
 }
 
 add_filter( 'display_post_states', 'hocwp_theme_display_post_states_filter', 10, 2 );
+
+function hocwp_theme_edit_posts_bulk_actions( $actions ) {
+	$actions['change_status'] = __( 'Change status', 'hocwp-theme' );
+
+	return $actions;
+}
+
+$post_types = get_post_types( array( 'public' => true ) );
+
+foreach ( $post_types as $type ) {
+	add_filter( 'bulk_actions-edit-' . $type, 'hocwp_theme_edit_posts_bulk_actions' );
+}
+
+function hocwp_theme_custom_edit_posts_bulk_action( $redirect_to, $do_action, $post_ids ) {
+	if ( HT()->array_has_value( $post_ids ) ) {
+		$select_status = $_REQUEST['select_status'] ?? '';
+
+		if ( ! empty( $select_status ) ) {
+			$count = 0;
+
+			foreach ( $post_ids as $post_id ) {
+				$data = array(
+					'ID'          => $post_id,
+					'post_status' => $select_status
+				);
+
+				$result = wp_update_post( $data );
+
+				if ( HT()->is_positive_number( $result ) ) {
+					$count ++;
+				}
+			}
+
+			$redirect_to = add_query_arg( 'updated_status', $count, $redirect_to );
+			$redirect_to = add_query_arg( 'select_status', $select_status, $redirect_to );
+		}
+	}
+
+	return $redirect_to;
+}
+
+foreach ( $post_types as $type ) {
+	add_filter( 'handle_bulk_actions-edit-' . $type, 'hocwp_theme_custom_edit_posts_bulk_action', 10, 3 );
+}
+
+function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
+	if ( 'top' == $which && ! empty( $post_type ) ) {
+		?>
+        <div id="hocwpThemeModal" class="modal small inline-submit choose-status" style="display: none">
+            <div class="inner">
+                <div class="modal-caption">
+                    <h3><?php _e( 'Change status', 'hocwp-theme' ); ?></h3>
+                </div>
+                <div class="inner modal-content">
+                    <div class="box">
+						<?php
+						$statuses = get_post_statuses();
+
+						if ( HT()->array_has_value( $statuses ) ) {
+							?>
+                            <select class="select-status" name="select_status">
+                                <option value=""><?php _e( 'Choose post status', 'hocwp-theme' ); ?></option>
+								<?php
+								foreach ( $statuses as $key => $status ) {
+									?>
+                                    <option value="<?php echo esc_attr( $key ); ?>"><?php echo $status; ?></option>
+									<?php
+								}
+								?>
+                            </select>
+							<?php
+							submit_button( __( 'Change', 'hocwp-theme' ) );
+						} else {
+							echo wpautop( __( 'No post status found!', 'hocwp-theme' ) );
+						}
+						?>
+                        <span class="close"
+                              title="<?php esc_attr_e( 'Close this box', 'hocwp-theme' ); ?>">&times;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<?php
+	}
+}
+
+add_action( 'restrict_manage_posts', 'hocwp_theme_custom_edit_posts_action_fields', 10, 2 );
 
 if ( 'admin-ajax.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';

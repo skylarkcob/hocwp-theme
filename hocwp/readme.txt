@@ -1,4 +1,10 @@
 == Changelog ==
+= 6.8.2 =
+* Add administration tools for theme.
+* Add bulk action change post status.
+* Update modal box style.
+* Add button function for html field.
+
 = 6.8.1 =
 * Update mobile menu when browser resized.
 * Add functions content_with_image and chosen_post html field.

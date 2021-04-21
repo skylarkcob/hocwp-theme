@@ -1,10 +1,11 @@
 jQuery(document).ready(function ($) {
-    var body = $("body");
+    const body = $("body");
 
     (function () {
         body.on("click", ".column-featured .hocwp-theme-featured", function (e) {
             e.preventDefault();
             var element = $(this);
+
             $.ajax({
                 type: "POST",
                 dataType: "JSON",
@@ -30,6 +31,33 @@ jQuery(document).ready(function ($) {
                     body.trigger("hocwpTheme:ajaxComplete", [element, response]);
                 }
             });
+        });
+    })();
+
+    (function () {
+        body.on("click", "input[type='submit'].action", function (e) {
+            let that = this,
+                element = $(that),
+                action = element.prev("select"),
+                form = element.closest("form"),
+                checkbox = form.find("table input[type='checkbox']:checked");
+
+            if ("change_status" === action.val()) {
+                e.preventDefault();
+
+                if (checkbox && checkbox.length && 0 < parseInt(checkbox.length)) {
+                    let modal = body.find(".choose-status.modal");
+
+                    if (modal && modal.length) {
+                        modal.fadeIn(200);
+                    }
+                }
+            }
+        });
+
+        body.on("click", ".choose-status.modal .close", function (e) {
+            e.preventDefault();
+            $(this).closest(".modal").fadeOut(500);
         });
     })();
 });

@@ -493,7 +493,8 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	private function form_table() {
 		$tab_obj = $this->tabs->tab;
 		?>
-        <form id="hocwpOptions" method="post" action="options.php" autocomplete="off">
+        <form id="hocwpOptions" method="post" action="options.php" autocomplete="off"
+              data-tab="<?php echo esc_attr( $this->tab ); ?>">
             <input type="hidden" name="tab"
                    value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
 			<?php

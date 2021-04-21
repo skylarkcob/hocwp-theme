@@ -365,3 +365,43 @@ function hocwp_theme_backup_this_theme_ajax_callback() {
 }
 
 add_action( 'wp_ajax_backup_this_theme', 'hocwp_theme_backup_this_theme_ajax_callback' );
+
+function hocwp_theme_change_site_url_ajax_callback() {
+	$data = array();
+
+	$old_url = $_POST['old_url'] ?? '';
+	$new_url = $_POST['new_url'] ?? '';
+
+	if ( ! empty( $old_url ) && ! empty( $new_url ) ) {
+		// Auto backup database first if available
+		if ( function_exists( 'hocwp_theme_dev_export_database' ) ) {
+			hocwp_theme_dev_export_database();
+		}
+
+		global $wpdb;
+
+		$sqls = array(
+			"UPDATE $wpdb->options SET option_value = replace(option_value, '%s', '%s');",
+			"UPDATE $wpdb->posts SET post_content = replace(post_content, '%s', '%s');",
+			"UPDATE $wpdb->postmeta SET meta_value = replace(meta_value,'%s','%s');",
+			"UPDATE $wpdb->usermeta SET meta_value = replace(meta_value, '%s','%s');",
+			"UPDATE $wpdb->termmeta SET meta_value = replace(meta_value, '%s','%s');",
+			"UPDATE $wpdb->commentmeta SET meta_value = replace(meta_value, '%s','%s');",
+			"UPDATE $wpdb->links SET link_url = replace(link_url, '%s','%s');",
+			"UPDATE $wpdb->links SET link_image = replace(link_image, '%s','%s');",
+			"UPDATE $wpdb->comments SET comment_content = replace(comment_content , '%s','%s');",
+			"UPDATE $wpdb->posts SET guid = replace(guid, '%s','%s');"
+		);
+
+		foreach ( $sqls as $sql ) {
+			$sql = sprintf( $sql, $old_url, $new_url );
+			$wpdb->query( $sql );
+		}
+
+		wp_send_json_success( $data );
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_ajax_callback' );

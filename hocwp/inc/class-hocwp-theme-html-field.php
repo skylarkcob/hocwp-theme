@@ -80,6 +80,60 @@ final class HOCWP_Theme_HTML_Field {
 		}
 	}
 
+	public static function button( $args = array() ) {
+		$defaults = array(
+			'text'        => null,
+			'type'        => 'primary',
+			'name'        => 'submit',
+			'wrap'        => true,
+			'attributes'  => '',
+			'button_type' => 'submit',
+			'html_tag'    => 'input'
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$html_tag = $args['html_tag'];
+
+		$button_type = $args['button_type'];
+
+		if ( 'input' != $html_tag ) {
+			$button = new HOCWP_Theme_HTML_Tag( $html_tag );
+
+			$text = $args['text'];
+
+			if ( empty( $text ) ) {
+				$text = __( 'Submit', 'hocwp-theme' );
+			}
+
+			$button->set_text( $text );
+			$button->add_attribute( 'class', $args['type'] );
+			$button->add_attribute( 'name', $args['name'] );
+			$button->add_attribute( 'type', $button_type );
+
+			$attributes = $args['attributes'];
+			$attributes = HT()->attribute_to_array( $attributes );
+
+			foreach ( $attributes as $att => $value ) {
+				$button->add_attribute( $att, $value );
+			}
+
+			$button->output();
+
+			return;
+		}
+
+		ob_start();
+		submit_button( $args['text'], $args['type'], $args['name'], $args['wrap'], $args['attributes'] );
+		$html = ob_get_clean();
+
+		if ( 'submit' != $button_type ) {
+			$html = str_replace( 'type="submit"', 'type="' . esc_attr( $button_type ) . '"', $html );
+		}
+
+		echo $html;
+	}
+
 	public static function input( $args = array() ) {
 		$defaults = array(
 			'type' => 'text'

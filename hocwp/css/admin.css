@@ -390,11 +390,43 @@
     background-color: rgba(0, 0, 0, 0.9);
 }
 
-#hocwpThemeModal.modal .modal-content {
+#hocwpThemeModal.modal > .inner {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#hocwpThemeModal.modal > .inner,
+#hocwpThemeModal.modal > .modal-footer,
+#hocwpThemeModal.modal > .modal-header,
+#hocwpThemeModal.modal > .modal-caption,
+#hocwpThemeModal.modal > .modal-content {
     margin: auto;
     display: block;
     width: 80%;
     max-width: 1000px;
+    background-color: #fff;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+#hocwpThemeModal.modal.medium > .inner,
+#hocwpThemeModal.modal.medium > .modal-footer,
+#hocwpThemeModal.modal.medium > .modal-header,
+#hocwpThemeModal.modal.medium > .modal-caption,
+#hocwpThemeModal.modal.medium > .modal-content {
+    width: 40%;
+    max-width: 800px;
+}
+
+#hocwpThemeModal.modal.small > .inner,
+#hocwpThemeModal.modal.small > .modal-footer,
+#hocwpThemeModal.modal.small > .modal-header,
+#hocwpThemeModal.modal.small > .modal-caption,
+#hocwpThemeModal.modal.small > .modal-content {
+    width: 20%;
+    max-width: 400px;
 }
 
 #hocwpThemeModal.modal .modal-content * {
@@ -402,18 +434,23 @@
 }
 
 #hocwpThemeModal.modal .modal-caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 1000px;
     text-align: center;
     color: #ccc;
-    padding: 10px 0;
-    height: 150px;
 }
 
-#hocwpThemeModal.modal .modal-content,
-#hocwpThemeModal.modal .modal-caption {
+#hocwpThemeModal.modal .modal-caption p {
+    margin: 0;
+}
+
+#hocwpThemeModal.modal.inline-submit p.submit {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+#hocwpThemeModal.modal > .inner,
+#hocwpThemeModal.modal > .modal-content,
+#hocwpThemeModal.modal > .modal-caption {
     -webkit-animation-name: zoom;
     -webkit-animation-duration: 0.6s;
     animation-name: zoom;
@@ -446,6 +483,13 @@
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;
+}
+
+#hocwpThemeModal.modal .inner .close {
+    top: 5px;
+    right: 8px;
+    color: #666;
+    font-size: 30px;
 }
 
 #hocwpThemeModal.modal .close:hover,
