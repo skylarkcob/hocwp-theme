@@ -79,11 +79,11 @@ add_filter( 'set-screen-option', 'hocwp_theme_settings_page_extension_set_screen
 
 function hocwp_theme_settings_page_extension_form_after() {
 	?>
-	<div style="padding-top: 10px;">
+    <div style="padding-top: 10px;">
 		<?php
 		global $hocwp_theme, $plugin_page;
 
-		if ( ! ! isset( $hocwp_theme->extensions_list_table ) ) {
+		if ( ! isset( $hocwp_theme->extensions_list_table ) ) {
 			$hocwp_theme->extensions_list_table = new HOCWP_Extensions_List_Table();
 		}
 
@@ -91,21 +91,21 @@ function hocwp_theme_settings_page_extension_form_after() {
 		$hocwp_theme->extensions_list_table->prepare_items();
 		$hocwp_theme->extensions_list_table->admin_notices();
 		?>
-		<h2 class="screen-reader-text"><?php _e( 'Filter extensions list', 'hocwp-theme' ); ?></h2>
+        <h2 class="screen-reader-text"><?php _e( 'Filter extensions list', 'hocwp-theme' ); ?></h2>
 		<?php
 		$hocwp_theme->extensions_list_table->views();
 		$url = HT_Util()->get_current_url( true );
 		?>
-		<form class="search-form search-extensions" method="post" action="">
+        <form class="search-form search-extensions" method="post" action="">
 			<?php $hocwp_theme->extensions_list_table->search_box( __( 'Search', 'hocwp-theme' ), 'extension' ); ?>
-		</form>
-		<form method="post">
-			<input type="hidden" name="page" value="<?php echo $plugin_page; ?>">
+        </form>
+        <form method="post">
+            <input type="hidden" name="page" value="<?php echo $plugin_page; ?>">
 			<?php
 			$hocwp_theme->extensions_list_table->display();
 			?>
-		</form>
-	</div>
+        </form>
+    </div>
 	<?php
 }
 
