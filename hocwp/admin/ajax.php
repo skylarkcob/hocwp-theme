@@ -405,3 +405,93 @@ function hocwp_theme_change_site_url_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_ajax_callback' );
+
+function hocwp_theme_import_administrative_boundaries_ajax_callback() {
+	$data = array();
+
+	$taxonomy = $_POST['taxonomy'] ?? '';
+
+	if ( taxonomy_exists( $taxonomy ) ) {
+		$district = $_POST['district'] ?? '';
+		$commune  = $_POST['commune'] ?? '';
+
+		$csv = HT_Util()->read_all_text( HOCWP_Theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
+		$csv = HT()->explode_new_line( $csv );
+		array_shift( $csv );
+		$csv = array_filter( $csv );
+
+		foreach ( $csv as $ab ) {
+			$ab   = explode( ',', $ab );
+			$name = array_shift( $ab );
+			$id   = array_shift( $ab );
+
+			$exists = term_exists( $name, $taxonomy );
+
+			if ( ! $exists ) {
+				$res = wp_insert_term( $name, $taxonomy );
+
+				if ( is_array( $res ) && isset( $res['term_id'] ) ) {
+					update_term_meta( $res['term_id'], 'ab_id', $id );
+
+					if ( $district && is_taxonomy_hierarchical( $taxonomy ) ) {
+						$name = array_shift( $ab );
+						$id   = array_shift( $ab );
+
+						if ( ! term_exists( $name, $taxonomy, $res['term_id'] ) ) {
+							$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $res['term_id'] ) );
+
+							if ( is_array( $res ) && isset( $res['term_id'] ) ) {
+								update_term_meta( $res['term_id'], 'ab_id', $id );
+
+								if ( $commune ) {
+									$name = array_shift( $ab );
+									$id   = array_shift( $ab );
+
+									if ( ! term_exists( $name, $taxonomy, $res['term_id'] ) ) {
+										$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $res['term_id'] ) );
+
+										if ( is_array( $res ) && isset( $res['term_id'] ) ) {
+											update_term_meta( $res['term_id'], 'ab_id', $id );
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} elseif ( is_array( $exists ) && isset( $exists['term_id'] ) ) {
+				if ( $district && is_taxonomy_hierarchical( $taxonomy ) ) {
+					$name = array_shift( $ab );
+					$id   = array_shift( $ab );
+
+					if ( ! term_exists( $name, $taxonomy, $exists['term_id'] ) ) {
+						$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $exists['term_id'] ) );
+
+						if ( is_array( $res ) && isset( $res['term_id'] ) ) {
+							update_term_meta( $res['term_id'], 'ab_id', $id );
+
+							if ( $commune ) {
+								$name = array_shift( $ab );
+								$id   = array_shift( $ab );
+
+								if ( ! term_exists( $name, $taxonomy, $res['term_id'] ) ) {
+									$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $res['term_id'] ) );
+
+									if ( is_array( $res ) && isset( $res['term_id'] ) ) {
+										update_term_meta( $res['term_id'], 'ab_id', $id );
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		wp_send_json_success( $data );
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_import_administrative_boundaries', 'hocwp_theme_import_administrative_boundaries_ajax_callback' );

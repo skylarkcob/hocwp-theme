@@ -2,6 +2,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+if ( ! current_user_can( 'manage_options' ) ) {
+	return;
+}
 
 $tab = new HOCWP_Theme_Admin_Setting_Tab( 'administration_tools', __( 'Administration Tools', 'hocwp-theme' ), '<span class="dashicons dashicons-admin-tools"></span>', array(), 999999999 );
 
@@ -28,6 +31,57 @@ $args = array(
 );
 
 $tab->add_field( 'submit_change_url', '', 'button', $args, 'string', 'change_url' );
+
+$args = array(
+	'title'       => __( 'Vietnamese Administrative Boundaries', 'hocwp-theme' ),
+	'description' => __( 'Import information about Vietnamese administrative boundaries into the database automatically.', 'hocwp-theme' )
+);
+
+$tab->add_section( 'vn_administrative_boundaries', $args );
+
+$args = array(
+	'type' => 'checkbox',
+	'text' => __( 'Import the administrative boundary at the district level?', 'hocwp-theme' )
+);
+
+$tab->add_field( 'district', __( 'District', 'hocwp-theme' ), 'input', $args, 'boolean', 'vn_administrative_boundaries' );
+
+$args = array(
+	'type' => 'checkbox',
+	'text' => __( 'Import the administrative boundary at the commune level?', 'hocwp-theme' )
+);
+
+$tab->add_field( 'commune', __( 'Commune', 'hocwp-theme' ), 'input', $args, 'boolean', 'vn_administrative_boundaries' );
+
+$taxs = get_taxonomies( array(), 'objects' );
+
+$options = array(
+	'' => __( 'Choose taxonomy', 'hocwp-theme' )
+);
+
+foreach ( $taxs as $tax ) {
+	if ( $tax instanceof WP_Taxonomy ) {
+		$options[ $tax->name ] = $tax->labels->singular_name;
+	}
+}
+
+$args = array(
+	'options' => $options
+);
+
+$tab->add_field( 'ab_taxonomy', __( 'Taxonomy', 'hocwp-theme' ), 'select', $args, 'string', 'vn_administrative_boundaries' );
+
+$args = array(
+	'attributes'  => array(
+		'data-ajax-button' => 1,
+		'data-message'     => __( 'Data has been imported successfully!', 'hocwp-theme' ),
+		'data-import-ab'   => 1
+	),
+	'button_type' => 'button',
+	'text'        => __( 'Import', 'hocwp-theme' )
+);
+
+$tab->add_field( 'import_ab', '', 'button', $args, 'string', 'vn_administrative_boundaries' );
 
 $tab->load_script( 'jquery' );
 $tab->load_script( 'hocwp-theme' );

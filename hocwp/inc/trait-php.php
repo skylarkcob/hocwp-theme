@@ -16,6 +16,10 @@ trait HOCWP_Theme_PHP {
 		return preg_split( "#\n\s*\n#Uis", $string );
 	}
 
+	public function explode_new_line( $string ) {
+		return preg_split( '/\r\n|\r|\n/', $string );
+	}
+
 	public function remove_empty_lines( $string ) {
 		return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
 	}

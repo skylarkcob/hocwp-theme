@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-04-21 21:27+0700\n"
+"POT-Creation-Date: 2021-04-22 08:42+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,6 +85,46 @@ msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:24
 msgid "Please make a backup before you change site URL."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:33
+msgid "Vietnamese Administrative Boundaries"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:34
+msgid "Import information about Vietnamese administrative boundaries into the database automatically."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:41
+msgid "Import the administrative boundary at the district level?"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:44
+msgid "District"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:48
+msgid "Import the administrative boundary at the commune level?"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:51
+msgid "Commune"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:56
+msgid "Choose taxonomy"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:69
+msgid "Taxonomy"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:74
+msgid "Data has been imported successfully!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:78
+msgid "Import"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-custom-code.php:8

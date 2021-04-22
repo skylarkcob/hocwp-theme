@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-04-21 21:27+0700\n"
-"PO-Revision-Date: 2021-04-21 22:02+0700\n"
+"POT-Creation-Date: 2021-04-22 08:42+0700\n"
+"PO-Revision-Date: 2021-04-22 08:44+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -87,6 +87,48 @@ msgstr "Tất cả đường dẫn đã được thay đổi thành công!"
 msgid "Please make a backup before you change site URL."
 msgstr ""
 "Vui lòng thực hiện sao lưu trước khi tiến hành thay đổi đường dẫn trang web."
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:33
+msgid "Vietnamese Administrative Boundaries"
+msgstr "Địa giới hành chính Việt Nam"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:34
+msgid ""
+"Import information about Vietnamese administrative boundaries into the "
+"database automatically."
+msgstr "Nhập dữ liệu địa giới hành chính Việt Nam vào cơ sở dữ liệu."
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:41
+msgid "Import the administrative boundary at the district level?"
+msgstr "Nhập dữ liệu địa giới hành chính cấp quận huyện?"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:44
+msgid "District"
+msgstr "Quận huyện"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:48
+msgid "Import the administrative boundary at the commune level?"
+msgstr "Nhập dữ liệu địa giới hành chính cấp phường xã?"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:51
+msgid "Commune"
+msgstr "Phường xã"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:56
+msgid "Choose taxonomy"
+msgstr "Chọn loại chuyên mục"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:69
+msgid "Taxonomy"
+msgstr "Loại chuyên mục"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:74
+msgid "Data has been imported successfully!"
+msgstr "Dữ liệu đã được nhập thành công!"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:78
+msgid "Import"
+msgstr "Nhập"
 
 #: hocwp/admin/admin-setting-page-custom-code.php:8
 msgid "Custom Code"
