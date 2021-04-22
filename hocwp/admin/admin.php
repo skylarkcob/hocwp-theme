@@ -76,7 +76,7 @@ require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.ph
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php';
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check.php';
 
-add_action( 'after_setup_theme', function () {
+add_action( 'admin_menu', function () {
 	global $pagenow, $hocwp_theme, $plugin_page;
 
 	if ( 'themes.php' == $pagenow && $plugin_page == $hocwp_theme->option->get_slug() ) {

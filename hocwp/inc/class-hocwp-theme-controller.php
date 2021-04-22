@@ -459,7 +459,9 @@ final class HOCWP_Theme_Controller {
 		HT()->require_if_exists( $this->custom_path . '/hook.php' );
 
 		if ( is_admin() ) {
-			HT()->require_if_exists( $this->custom_path . '/admin.php' );
+			add_action( 'admin_menu', function () {
+				HT()->require_if_exists( $this->custom_path . '/admin.php' );
+			} );
 		}
 
 		HT()->require_if_exists( $this->custom_path . '/extensions.php' );
