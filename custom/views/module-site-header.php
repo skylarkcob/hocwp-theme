@@ -4,3 +4,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 do_action( 'hocwp_theme_site_branding' );
+do_action( 'hocwp_theme_main_menu' );

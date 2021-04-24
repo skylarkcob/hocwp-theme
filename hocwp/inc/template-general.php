@@ -848,7 +848,9 @@ function hocwp_theme_mobile_menu( $args ) {
 add_action( 'hocwp_theme_mobile_menu', 'hocwp_theme_mobile_menu' );
 
 function hocwp_theme_wp_nav_menu_items_filter( $items, $args ) {
-	if ( 'mobile' == $args->theme_location ) {
+	$insert = apply_filters( 'hocwp_theme_insert_mobile_menu_search', ( 'mobile' == $args->theme_location && wp_is_mobile() ) );
+
+	if ( $insert ) {
 		$form  = get_search_form( false );
 		$form  = '<li class="menu-item search-item">' . $form . '</li>';
 		$items = $form . $items;

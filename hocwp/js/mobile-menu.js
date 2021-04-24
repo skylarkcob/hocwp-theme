@@ -72,7 +72,7 @@ window.hocwpTheme = window.hocwpTheme || {};
     parent.style.position = "relative";
 
     window.onresize = function () {
-        if (window.innerWidth > mobileWidth) {
+        if (screen.width > mobileWidth) {
             button.style.display = "none";
 
             if ("undefined" !== typeof menu) {
@@ -108,7 +108,7 @@ window.hocwpTheme = window.hocwpTheme || {};
         };
     };
 
-    if (window.innerWidth > mobileWidth) {
+    if (screen.width > mobileWidth) {
         button.style.display = "none";
 
         if (-1 !== menu.getAttribute("id").indexOf(mobileMenuID)) {
