@@ -61,7 +61,7 @@ $options = array(
 
 foreach ( $taxs as $tax ) {
 	if ( $tax instanceof WP_Taxonomy ) {
-		$options[ $tax->name ] = $tax->labels->singular_name;
+		$options[ $tax->name ] = sprintf( '%s (%s)', $tax->labels->singular_name, $tax->name );
 	}
 }
 

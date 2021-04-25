@@ -406,7 +406,23 @@ function hocwp_theme_change_site_url_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_ajax_callback' );
 
+global $hocwp_theme_import_administrative_boundaries;
+
+if ( ! class_exists( 'HOCWP_Theme_Import_Administrative_Boundaries_Process' ) ) {
+	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-import-administrative-boundaries.php';
+}
+
+if ( ! $hocwp_theme_import_administrative_boundaries instanceof HOCWP_Theme_Import_Administrative_Boundaries_Process ) {
+	$hocwp_theme_import_administrative_boundaries = new HOCWP_Theme_Import_Administrative_Boundaries_Process();
+}
+
 function hocwp_theme_import_administrative_boundaries_ajax_callback() {
+	global $hocwp_theme_import_administrative_boundaries;
+
+	if ( ! class_exists( 'HOCWP_Theme_Import_Administrative_Boundaries_Process' ) ) {
+		require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-import-administrative-boundaries.php';
+	}
+
 	$data = array();
 
 	$taxonomy = $_POST['taxonomy'] ?? '';
@@ -417,76 +433,28 @@ function hocwp_theme_import_administrative_boundaries_ajax_callback() {
 
 		$csv = HT_Util()->read_all_text( HOCWP_Theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
 		$csv = HT()->explode_new_line( $csv );
+
+		// Remove heading text
 		array_shift( $csv );
 		$csv = array_filter( $csv );
 
-		foreach ( $csv as $ab ) {
-			$ab   = explode( ',', $ab );
-			$name = array_shift( $ab );
-			$id   = array_shift( $ab );
-
-			$exists = term_exists( $name, $taxonomy );
-
-			if ( ! $exists ) {
-				$res = wp_insert_term( $name, $taxonomy );
-
-				if ( is_array( $res ) && isset( $res['term_id'] ) ) {
-					update_term_meta( $res['term_id'], 'ab_id', $id );
-
-					if ( $district && is_taxonomy_hierarchical( $taxonomy ) ) {
-						$name = array_shift( $ab );
-						$id   = array_shift( $ab );
-
-						if ( ! term_exists( $name, $taxonomy, $res['term_id'] ) ) {
-							$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $res['term_id'] ) );
-
-							if ( is_array( $res ) && isset( $res['term_id'] ) ) {
-								update_term_meta( $res['term_id'], 'ab_id', $id );
-
-								if ( $commune ) {
-									$name = array_shift( $ab );
-									$id   = array_shift( $ab );
-
-									if ( ! term_exists( $name, $taxonomy, $res['term_id'] ) ) {
-										$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $res['term_id'] ) );
-
-										if ( is_array( $res ) && isset( $res['term_id'] ) ) {
-											update_term_meta( $res['term_id'], 'ab_id', $id );
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			} elseif ( is_array( $exists ) && isset( $exists['term_id'] ) ) {
-				if ( $district && is_taxonomy_hierarchical( $taxonomy ) ) {
-					$name = array_shift( $ab );
-					$id   = array_shift( $ab );
-
-					if ( ! term_exists( $name, $taxonomy, $exists['term_id'] ) ) {
-						$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $exists['term_id'] ) );
-
-						if ( is_array( $res ) && isset( $res['term_id'] ) ) {
-							update_term_meta( $res['term_id'], 'ab_id', $id );
-
-							if ( $commune ) {
-								$name = array_shift( $ab );
-								$id   = array_shift( $ab );
-
-								if ( ! term_exists( $name, $taxonomy, $res['term_id'] ) ) {
-									$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $res['term_id'] ) );
-
-									if ( is_array( $res ) && isset( $res['term_id'] ) ) {
-										update_term_meta( $res['term_id'], 'ab_id', $id );
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		if ( ! $hocwp_theme_import_administrative_boundaries instanceof HOCWP_Theme_Import_Administrative_Boundaries_Process ) {
+			$hocwp_theme_import_administrative_boundaries = new HOCWP_Theme_Import_Administrative_Boundaries_Process();
 		}
+
+		$abs = $hocwp_theme_import_administrative_boundaries->convert_to_array( $csv, $district, $commune );
+
+		foreach ( $abs as $id => $value ) {
+			$item = array(
+				'id'       => $id,
+				'taxonomy' => $taxonomy,
+				'value'    => $value
+			);
+
+			$hocwp_theme_import_administrative_boundaries->push_to_queue( $item );
+		}
+
+		$hocwp_theme_import_administrative_boundaries->save()->dispatch();
 
 		wp_send_json_success( $data );
 	}
