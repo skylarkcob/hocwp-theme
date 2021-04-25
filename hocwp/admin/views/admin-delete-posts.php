@@ -3,7 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$post_ids = '';
+$post_ids    = '';
+$post_type   = '';
+$search_post = '';
 ?>
 <div class="wrap delete-posts-php">
     <h1><?php _e( 'Delete Posts', 'hocwp-theme' ); ?></h1>
@@ -13,19 +15,33 @@ $post_ids = '';
     <form id="delete-posts-form" method="post" class="delete-posts-form" action="">
 		<?php
 		if ( isset( $_POST['submit_form'] ) ) {
-			$post_ids = isset( $_POST['post_ids'] ) ? $_POST['post_ids'] : '';
+			$post_ids    = isset( $_POST['post_ids'] ) ? $_POST['post_ids'] : '';
+			$post_type   = $_POST['delete_post_type'] ?? '';
+			$search_post = $_POST['search_post'] ?? '';
 
-			if ( ! empty( $post_ids ) ) {
+			if ( ! empty( $post_ids ) || ! empty( $search_post ) ) {
 				$post_ids = explode( ',', $post_ids );
 				$post_ids = array_map( 'trim', $post_ids );
+
+				$search_post = explode( ',', $search_post );
+				$search_post = array_map( 'trim', $search_post );
+
+				$dels = array_merge( $post_ids, $search_post );
+				$dels = array_unique( $dels );
+				$dels = array_filter( $dels );
 
 				$confirm_delete = isset( $_POST['confirm_delete'] ) ? $_POST['confirm_delete'] : '';
 
 				if ( empty( $confirm_delete ) ) {
 					$msg = '';
 
-					foreach ( $post_ids as $id ) {
+					foreach ( $dels as $key => $id ) {
 						$pt = get_post_type( $id );
+
+						if ( ! empty( $post_type ) && $pt != $post_type ) {
+							unset( $dels[ $key ] );
+							continue;
+						}
 
 						if ( empty( $pt ) ) {
 							$pt = __( 'unknown post type', 'hocwp-theme' );
@@ -36,21 +52,23 @@ $post_ids = '';
 
 					$msg = rtrim( $msg, ', ' );
 
-					$confirm = get_submit_button( 'Yes', 'primary small', 'yes_delete', false );
-					$confirm .= '&nbsp;';
-					$confirm .= get_submit_button( 'No', 'default small', 'no_delete', false );
-					?>
-                    <div class="notice notice-warning is-dismissible">
-                        <p><?php printf( __( '<strong>Warning:</strong> You are preparing to permanently delete posts: %s.', 'hocwp-theme' ), $msg ); ?></p>
-                        <p class="confirm"><?php printf( __( 'Are you sure? %s', 'hocwp-theme' ), $confirm ); ?></p>
-                    </div>
-					<?php
+					if ( ! empty( $msg ) ) {
+						$confirm = get_submit_button( 'Yes', 'primary small', 'yes_delete', false );
+						$confirm .= '&nbsp;';
+						$confirm .= get_submit_button( 'No', 'default small', 'no_delete', false );
+						?>
+                        <div class="notice notice-warning is-dismissible">
+                            <p><?php printf( __( '<strong>Warning:</strong> You are preparing to permanently delete posts: %s.', 'hocwp-theme' ), $msg ); ?></p>
+                            <p class="confirm"><?php printf( __( 'Are you sure? %s', 'hocwp-theme' ), $confirm ); ?></p>
+                        </div>
+						<?php
+					}
 				}
 
 				if ( 1 == $confirm_delete ) {
 					$count = 0;
 
-					foreach ( $post_ids as $id ) {
+					foreach ( $dels as $id ) {
 						$result = wp_delete_post( $id, true );
 
 						if ( $result instanceof WP_Post ) {
@@ -76,10 +94,31 @@ $post_ids = '';
 		if ( is_array( $post_ids ) ) {
 			$post_ids = join( ', ', $post_ids );
 		}
+
+		$post_types = get_post_types( array(), 'objects' );
 		?>
         <input id="confirmDelete" name="confirm_delete" value="" type="hidden">
         <table class="form-table" role="presentation">
             <tbody>
+            <tr>
+                <th scope="row">
+                    <label for="delete_post_type"><?php _e( 'Post Type', 'hocwp-theme' ); ?></label>
+                </th>
+                <td>
+                    <select name="delete_post_type" id="delete_post_type" class="regular-text">
+                        <option value=""><?php _e( 'Choose post type', 'hocwp-theme' ); ?></option>
+						<?php
+						foreach ( $post_types as $pt ) {
+							?>
+                            <option value="<?php echo esc_attr( $pt->name ); ?>"<?php selected( $pt->name, $post_type ) ?>><?php echo $pt->labels->singular_name; ?>
+                                (<?php echo $pt->name; ?>)
+                            </option>
+							<?php
+						}
+						?>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <th scope="row">
                     <label for="post_ids"><?php _e( 'Post IDs', 'hocwp-theme' ); ?></label>
@@ -88,6 +127,16 @@ $post_ids = '';
                     <input name="post_ids" type="text" id="post_ids" value="<?php echo esc_attr( $post_ids ); ?>"
                            class="regular-text">
                     <p class="desc description"><?php _e( 'Enter any post ID you want to remove, each ID separated by a commas.', 'hocwp-theme' ); ?></p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="search_post"><?php _e( 'Search Post', 'hocwp-theme' ); ?></label>
+                </th>
+                <td>
+                    <input name="search_post" type="text" id="search_post" value=""
+                           class="regular-text"
+                           placeholder="<?php esc_attr_e( 'Enter keywords to search...', 'hocwp-theme' ); ?>">
                 </td>
             </tr>
             </tbody>

@@ -192,7 +192,7 @@ function hocwp_theme_load_more_button() {
 }
 
 function hocwp_theme_admin_enqueue_scripts_action() {
-	global $pagenow, $post_type;
+	global $pagenow, $post_type, $plugin_page;
 
 	$post_type_object = get_post_type_object( $post_type );
 
@@ -289,6 +289,13 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 
 	if ( $post_type_object instanceof WP_Post_Type && ! $post_type_object->public ) {
 		wp_enqueue_script( 'hocwp-theme-admin' );
+	}
+
+	if ( 'themes.php' == $pagenow && 'hocwp_theme_delete_posts' == $plugin_page ) {
+		wp_enqueue_script( 'suggest' );
+		HT_Enqueue()->autocomplete();
+		wp_enqueue_script( 'hocwp-theme' );
+		wp_enqueue_script( 'hocwp-theme-administration-tools', HOCWP_Theme()->core_url . '/js/admin-administration-tools.js', array( 'jquery' ), false, true );
 	}
 
 	unset( $colors );

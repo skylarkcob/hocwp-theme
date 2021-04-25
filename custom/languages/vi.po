@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-04-22 08:42+0700\n"
-"PO-Revision-Date: 2021-04-22 08:44+0700\n"
+"POT-Creation-Date: 2021-04-25 14:58+0700\n"
+"PO-Revision-Date: 2021-04-25 14:59+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -59,74 +59,74 @@ msgstr "Thanh bên"
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:6
+#: hocwp/admin/admin-setting-page-administration-tools.php:9
 msgid "Administration Tools"
 msgstr "Công cụ quản trị"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:11
+#: hocwp/admin/admin-setting-page-administration-tools.php:14
 msgid "Change URL"
 msgstr "Thay đổi đường dẫn"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:12
+#: hocwp/admin/admin-setting-page-administration-tools.php:15
 msgid "Change all old URLs in database into new URL."
 msgstr "Thay đổi tất cả đường dẫn cũ trong cơ sở dữ liệu thành đường dẫn mới."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:17
+#: hocwp/admin/admin-setting-page-administration-tools.php:20
 msgid "Old URL"
 msgstr "Đường dẫn cũ"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:18
+#: hocwp/admin/admin-setting-page-administration-tools.php:21
 msgid "New URL"
 msgstr "Đường dẫn mới"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:23
+#: hocwp/admin/admin-setting-page-administration-tools.php:26
 msgid "All URLs have been changed successfully!"
 msgstr "Tất cả đường dẫn đã được thay đổi thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:24
+#: hocwp/admin/admin-setting-page-administration-tools.php:27
 msgid "Please make a backup before you change site URL."
 msgstr ""
 "Vui lòng thực hiện sao lưu trước khi tiến hành thay đổi đường dẫn trang web."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:33
+#: hocwp/admin/admin-setting-page-administration-tools.php:36
 msgid "Vietnamese Administrative Boundaries"
 msgstr "Địa giới hành chính Việt Nam"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:34
+#: hocwp/admin/admin-setting-page-administration-tools.php:37
 msgid ""
 "Import information about Vietnamese administrative boundaries into the "
 "database automatically."
 msgstr "Nhập dữ liệu địa giới hành chính Việt Nam vào cơ sở dữ liệu."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:41
+#: hocwp/admin/admin-setting-page-administration-tools.php:44
 msgid "Import the administrative boundary at the district level?"
 msgstr "Nhập dữ liệu địa giới hành chính cấp quận huyện?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:44
+#: hocwp/admin/admin-setting-page-administration-tools.php:47
 msgid "District"
 msgstr "Quận huyện"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:48
+#: hocwp/admin/admin-setting-page-administration-tools.php:51
 msgid "Import the administrative boundary at the commune level?"
 msgstr "Nhập dữ liệu địa giới hành chính cấp phường xã?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:51
+#: hocwp/admin/admin-setting-page-administration-tools.php:54
 msgid "Commune"
 msgstr "Phường xã"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:56
+#: hocwp/admin/admin-setting-page-administration-tools.php:59
 msgid "Choose taxonomy"
 msgstr "Chọn loại chuyên mục"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:69
+#: hocwp/admin/admin-setting-page-administration-tools.php:72
 msgid "Taxonomy"
 msgstr "Loại chuyên mục"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:74
+#: hocwp/admin/admin-setting-page-administration-tools.php:77
 msgid "Data has been imported successfully!"
 msgstr "Dữ liệu đã được nhập thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:78
+#: hocwp/admin/admin-setting-page-administration-tools.php:81
 msgid "Import"
 msgstr "Nhập"
 
@@ -676,16 +676,16 @@ msgstr "Danh sách plugin"
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:112 hocwp/admin/views/admin-delete-posts.php:9
+#: hocwp/admin/admin.php:112 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr "Xóa bài viết"
 
-#: hocwp/admin/admin.php:189 hocwp/admin/admin.php:200
+#: hocwp/admin/admin.php:188 hocwp/admin/admin.php:199
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:193
+#: hocwp/admin/admin.php:192
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -694,7 +694,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:204
+#: hocwp/admin/admin.php:203
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -703,12 +703,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:211
+#: hocwp/admin/admin.php:210
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:215
+#: hocwp/admin/admin.php:214
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -716,44 +716,44 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:297
+#: hocwp/admin/admin.php:296
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:339 hocwp/inc/template-post.php:327
+#: hocwp/admin/admin.php:338 hocwp/inc/template-post.php:327
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
-#: hocwp/admin/admin.php:377
+#: hocwp/admin/admin.php:376
 msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
-#: hocwp/admin/admin.php:400 hocwp/inc/template-general.php:1034
+#: hocwp/admin/admin.php:399 hocwp/inc/template-general.php:1036
 msgid "Close"
 msgstr "Đóng"
 
-#: hocwp/admin/admin.php:423
+#: hocwp/admin/admin.php:422
 #, php-format
 msgid "Template %s"
 msgstr "Mẫu %s"
 
-#: hocwp/admin/admin.php:434 hocwp/admin/admin.php:483
+#: hocwp/admin/admin.php:433 hocwp/admin/admin.php:482
 msgid "Change status"
 msgstr "Thay đổi trạng thái"
 
-#: hocwp/admin/admin.php:493
+#: hocwp/admin/admin.php:492
 msgid "Choose post status"
 msgstr "Chọn trạng thái bài viết"
 
-#: hocwp/admin/admin.php:503
+#: hocwp/admin/admin.php:502
 msgid "Change"
 msgstr "Thay đổi"
 
-#: hocwp/admin/admin.php:505
+#: hocwp/admin/admin.php:504
 msgid "No post status found!"
 msgstr "Không có trạng thái bài viết nào được tìm thấy!"
 
-#: hocwp/admin/admin.php:509
+#: hocwp/admin/admin.php:508
 msgid "Close this box"
 msgstr "Đóng hộp này"
 
@@ -869,7 +869,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:297
-#: hocwp/inc/functions-scripts.php:306
+#: hocwp/inc/functions-scripts.php:313
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -1120,57 +1120,73 @@ msgstr "Sidebar mặc định"
 msgid "Display content box as full width."
 msgstr "Hiển thị nội dung theo dạng full."
 
-#: hocwp/admin/views/admin-delete-posts.php:10
+#: hocwp/admin/views/admin-delete-posts.php:12
 msgid ""
 "With this tool, you can search and delete any posts completely automatically."
 msgstr ""
 "Với công cụ này, bạn có thể tìm kiếm hoặc xóa bất kỳ bài viết nào hoàn toàn "
 "tự động."
 
-#: hocwp/admin/views/admin-delete-posts.php:12
+#: hocwp/admin/views/admin-delete-posts.php:14
 msgid "Search and delete posts"
 msgstr "Tìm kiếm và xóa bài viết"
 
-#: hocwp/admin/views/admin-delete-posts.php:31
+#: hocwp/admin/views/admin-delete-posts.php:47
 msgid "unknown post type"
 msgstr "loại bài viết không xác định"
 
-#: hocwp/admin/views/admin-delete-posts.php:44
+#: hocwp/admin/views/admin-delete-posts.php:61
 #, php-format
 msgid ""
 "<strong>Warning:</strong> You are preparing to permanently delete posts: %s."
 msgstr ""
 "<strong>Cảnh báo:</strong> Bạn đang chuẩn bị xóa các bài viết vĩnh viễn: %s."
 
-#: hocwp/admin/views/admin-delete-posts.php:45
+#: hocwp/admin/views/admin-delete-posts.php:62
 #, php-format
 msgid "Are you sure? %s"
 msgstr "Bạn chắc chứ? %s"
 
-#: hocwp/admin/views/admin-delete-posts.php:62
+#: hocwp/admin/views/admin-delete-posts.php:80
 #, php-format
 msgid "%s posts have been deleted!"
 msgstr "%s bài viết đã được xóa!"
 
-#: hocwp/admin/views/admin-delete-posts.php:64
+#: hocwp/admin/views/admin-delete-posts.php:82
 msgid "No posts are deleted."
 msgstr "Không có bài viết nào được xóa."
 
-#: hocwp/admin/views/admin-delete-posts.php:85
+#: hocwp/admin/views/admin-delete-posts.php:105
+msgid "Post Type"
+msgstr "Loại bài viết"
+
+#: hocwp/admin/views/admin-delete-posts.php:109
+msgid "Choose post type"
+msgstr "Chọn loại bài viết"
+
+#: hocwp/admin/views/admin-delete-posts.php:124
 msgid "Post IDs"
 msgstr "ID bài viết"
 
-#: hocwp/admin/views/admin-delete-posts.php:90
+#: hocwp/admin/views/admin-delete-posts.php:129
 msgid "Enter any post ID you want to remove, each ID separated by a commas."
 msgstr ""
 "Nhập bất kỳ ID bài viết nào mà bạn muốn xóa, mỗi ID được cách nhau bởi dấu "
 "phẩy."
 
-#: hocwp/admin/views/admin-delete-posts.php:96
+#: hocwp/admin/views/admin-delete-posts.php:134
+msgid "Search Post"
+msgstr "Tìm kiếm bài viết"
+
+#: hocwp/admin/views/admin-delete-posts.php:139
+msgid "Enter keywords to search..."
+msgstr "Nhập từ khóa để tìm kiếm..."
+
+#: hocwp/admin/views/admin-delete-posts.php:145
 msgid "Delete"
 msgstr "Xóa"
 
-#: hocwp/admin/views/admin-delete-posts.php:98
+#: hocwp/admin/views/admin-delete-posts.php:147
 msgid "Reset"
 msgstr "Đặt lại"
 
@@ -1784,7 +1800,7 @@ msgstr "-- Chọn bài viết --"
 #: hocwp/inc/class-hocwp-theme-html-field.php:708
 #: hocwp/inc/class-hocwp-theme-html-field.php:750
 #: hocwp/inc/class-hocwp-theme-html-field.php:1595
-#: hocwp/inc/functions-scripts.php:307
+#: hocwp/inc/functions-scripts.php:314
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
@@ -2227,42 +2243,42 @@ msgstr "Những thay đổi bạn đã thực hiện sẽ bị mất nếu bạn
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:303
+#: hocwp/inc/functions-scripts.php:310
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:304
+#: hocwp/inc/functions-scripts.php:311
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:308
+#: hocwp/inc/functions-scripts.php:315
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:383
+#: hocwp/inc/functions-scripts.php:390
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:384
+#: hocwp/inc/functions-scripts.php:391
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:385
+#: hocwp/inc/functions-scripts.php:392
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:386
+#: hocwp/inc/functions-scripts.php:393
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:387
+#: hocwp/inc/functions-scripts.php:394
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."
@@ -2455,13 +2471,13 @@ msgstr "Bài Trước"
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: hocwp/inc/template-general.php:870
+#: hocwp/inc/template-general.php:872
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1019
+#: hocwp/inc/template-general.php:1021
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website. By continuing to browse on this website, you accept the use of "
@@ -2471,7 +2487,7 @@ msgstr ""
 "truy cập trang web. Bằng cách tiếp tục truy cập trang web này, bạn chấp nhận "
 "cách sử dụng cookie cho các mục đích trên."
 
-#: hocwp/inc/template-general.php:1022
+#: hocwp/inc/template-general.php:1024
 #, php-format
 msgid ""
 "We use cookies to give you the best possible website experience. <span>By "
@@ -2481,24 +2497,24 @@ msgstr ""
 "cập trang web. <span>Bằng cách sử dụng %s, bạn đồng ý với <a href=\"%s\">%s</"
 "a> của chúng tôi</span>."
 
-#: hocwp/inc/template-general.php:1026
+#: hocwp/inc/template-general.php:1028
 msgid "Accept"
 msgstr "Chấp nhận"
 
-#: hocwp/inc/template-general.php:1559
+#: hocwp/inc/template-general.php:1561
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1571
+#: hocwp/inc/template-general.php:1573
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1572
+#: hocwp/inc/template-general.php:1574
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1679
+#: hocwp/inc/template-general.php:1681
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"

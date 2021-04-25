@@ -495,3 +495,61 @@ function hocwp_theme_import_administrative_boundaries_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_import_administrative_boundaries', 'hocwp_theme_import_administrative_boundaries_ajax_callback' );
+
+function hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback() {
+	$results = array();
+
+	$term = $_GET['term'] ?? '';
+
+	if ( ! empty( $term ) ) {
+		$post_type = $_GET['post_type'] ?? '';
+
+		if ( empty( $post_type ) ) {
+			$post_type = 'any';
+		}
+
+		$post_ids    = $_GET['post_ids'] ?? '';
+		$search_post = $_GET['search_post'] ?? '';
+
+		$post_ids = explode( ',', $post_ids );
+		$post_ids = array_map( 'trim', $post_ids );
+
+		$search_post = explode( ',', $search_post );
+		$search_post = array_map( 'trim', $search_post );
+
+		foreach ( $search_post as $key => $sp ) {
+			if ( ! is_numeric( $sp ) ) {
+				unset( $search_post[ $key ] );
+			}
+		}
+
+		$excludes = array_merge( $post_ids, $search_post );
+		$excludes = array_unique( $excludes );
+		$excludes = array_filter( $excludes );
+
+		$args = array(
+			'post_type'      => $post_type,
+			'posts_per_page' => - 1,
+			'post_status'    => 'any',
+			's'              => $term,
+			'post__not_in'   => $excludes
+		);
+
+		$query = new WP_Query( $args );
+
+		if ( $query->have_posts() ) {
+			foreach ( $query->get_posts() as $obj ) {
+				$results[] = array(
+					'value' => $obj->ID,
+					'label' => sprintf( '%s (%s - %s)', $obj->post_title, $obj->ID, $obj->post_type )
+				);
+			}
+		}
+	}
+
+	echo json_encode( $results );
+
+	wp_die();
+}
+
+add_action( 'wp_ajax_hocwp_theme_search_post', 'hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback' );

@@ -177,7 +177,6 @@ if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == $plugin_page ) {
 	add_action( 'admin_enqueue_scripts', 'hocwp_theme_enqueue_plugin_installer_scripts' );
 }
 
-
 function hocwp_theme_admin_notices_required_plugins() {
 	global $pagenow;
 

@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.8.3 =
+* Add search AJAX function for deleting post tool.
+
 = 6.8.2 =
 * Add administration tools for theme.
 * Add bulk action change post status.
