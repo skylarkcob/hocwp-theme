@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-04-25 14:58+0700\n"
+"POT-Creation-Date: 2021-04-26 20:06+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1324,6 +1324,11 @@ msgstr ""
 
 #: hocwp/ext/external-link/confirm-goout.php:23
 msgid "Go back"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-background-process.php:433
+#, php-format
+msgid "Every %d Minutes"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-controller.php:39 hocwp/inc/class-hocwp-theme-extension.php:194 hocwp/inc/class-hocwp-theme-requirement.php:19

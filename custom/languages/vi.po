@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-04-25 14:58+0700\n"
-"PO-Revision-Date: 2021-04-25 14:59+0700\n"
+"POT-Creation-Date: 2021-04-26 20:06+0700\n"
+"PO-Revision-Date: 2021-04-26 20:06+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -1481,6 +1481,11 @@ msgstr "Tiếp tục đến url"
 #: hocwp/ext/external-link/confirm-goout.php:23
 msgid "Go back"
 msgstr "Quay lại"
+
+#: hocwp/inc/class-hocwp-theme-background-process.php:433
+#, php-format
+msgid "Every %d Minutes"
+msgstr "Mỗi %d phút"
 
 #: hocwp/inc/class-hocwp-theme-controller.php:39
 #: hocwp/inc/class-hocwp-theme-extension.php:194
