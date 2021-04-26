@@ -430,7 +430,7 @@ abstract class HOCWP_Theme_Background_Process extends HOCWP_Theme_Async_Request 
 		// Adds every 5 minutes to the existing schedules.
 		$schedules[ $this->identifier . '_cron_interval' ] = array(
 			'interval' => MINUTE_IN_SECONDS * $interval,
-			'display'  => sprintf( __( 'Every %d Minutes' ), $interval ),
+			'display'  => sprintf( __( 'Every %d Minutes', 'hocwp-theme' ), $interval ),
 		);
 
 		return $schedules;
