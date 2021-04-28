@@ -11,6 +11,27 @@ $tab = new HOCWP_Theme_Admin_Setting_Tab( 'administration_tools', __( 'Administr
 $tab->submit_button = false;
 
 $args = array(
+	'title'       => __( 'Update Administrative Email', 'hocwp-theme' ),
+	'description' => __( 'Changing admin email address does not require confirmation.', 'hocwp-theme' )
+);
+
+$tab->add_section( 'administrative_email', $args );
+
+$tab->add_field( 'new_email', __( 'New Email', 'hocwp-theme' ), 'input', array( 'type' => 'email' ), 'string', 'administrative_email' );
+
+$args = array(
+	'attributes'  => array(
+		'data-ajax-button'  => 1,
+		'data-message'      => __( 'Admin email has been changed successfully!', 'hocwp-theme' ),
+		'data-change-email' => 1
+	),
+	'button_type' => 'button',
+	'text'        => __( 'Change', 'hocwp-theme' )
+);
+
+$tab->add_field( 'change_admin_email', '', 'button', $args, 'string', 'administrative_email' );
+
+$args = array(
 	'title'       => __( 'Change URL', 'hocwp-theme' ),
 	'description' => __( 'Change all old URLs in database into new URL.', 'hocwp-theme' )
 );

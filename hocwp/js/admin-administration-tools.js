@@ -3,6 +3,89 @@ window.hocwpTheme = window.hocwpTheme || {};
 jQuery(document).ready(function ($) {
     const body = $("body");
 
+    function _hocwp_theme_update_button_waiting_text(element, loading) {
+        var tagName = element.prop("tagName"),
+            text = "",
+            waiting = hocwpTheme.l10n.waiting,
+            normalText = element.attr("data-normal-text");
+
+        loading = loading || 1;
+        console.log(loading);
+        if ($.trim(normalText)) {
+            text = normalText;
+        } else {
+            if ("INPUT" === tagName) {
+                text = element.val();
+            } else {
+                text = element.text();
+            }
+        }
+
+        if ($.trim(text) && $.trim(waiting)) {
+            if (1 === loading) {
+                element.attr("data-normal-text", text);
+
+                if ("INPUT" === tagName) {
+                    element.val(waiting);
+                } else {
+                    element.text(waiting);
+                }
+            } else {
+                if ("INPUT" === tagName) {
+                    element.val(text);
+                } else {
+                    element.text(text);
+                }
+            }
+        }
+    }
+
+    // Change admin email
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-change-email='1'], form[data-tab='administration_tools'] input[data-change-email='1']", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                form = element.closest("form"),
+                newEmail = form.find(".new_email input");
+
+            if (!$.trim(newEmail.val())) {
+                newEmail.focus();
+                element.removeClass("disabled");
+                element.blur();
+            } else {
+                _hocwp_theme_update_button_waiting_text(element);
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_change_administrative_email",
+                        email: newEmail.val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(element.attr("data-message"));
+                            newEmail.val("");
+                            element.blur();
+                        } else if (response.data && response.data.message && $.trim(response.data.message)) {
+                            alert(response.data.message);
+                        }
+
+                        _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                    }
+                });
+            }
+        });
+    })();
+
     // Change site URL
     (function () {
         body.on("click", "form[data-tab='administration_tools'] button[data-change-url='1'], form[data-tab='administration_tools'] input[data-change-url='1']", function (e) {

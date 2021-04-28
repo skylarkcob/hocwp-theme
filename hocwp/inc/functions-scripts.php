@@ -162,7 +162,8 @@ function hocwp_theme_localize_script_l10n() {
 			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),
 			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - http://hocwp.net' ),
 			'save'                       => __( 'Save', 'hocwp-theme' ),
-			'saveAlert'                  => __( 'The changes you made will be lost if you navigate away from this page.', 'hocwp-theme' )
+			'saveAlert'                  => __( 'The changes you made will be lost if you navigate away from this page.', 'hocwp-theme' ),
+			'waiting'                    => __( 'Waiting...', 'hocwp-theme' )
 		),
 		'ajaxOverlay'               => $ajax_overlay,
 		'nonce'                     => wp_create_nonce( HOCWP_Theme()->get_textdomain() ),

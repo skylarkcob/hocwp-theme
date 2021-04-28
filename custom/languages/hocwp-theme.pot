@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-04-26 20:06+0700\n"
+"POT-Creation-Date: 2021-04-28 22:07+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,66 +64,86 @@ msgid "Administration Tools"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:14
-msgid "Change URL"
+msgid "Update Administrative Email"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:15
-msgid "Change all old URLs in database into new URL."
+msgid "Changing admin email address does not require confirmation."
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:20
-msgid "Old URL"
+msgid "New Email"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:21
-msgid "New URL"
+#: hocwp/admin/admin-setting-page-administration-tools.php:25
+msgid "Admin email has been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:26
-msgid "All URLs have been changed successfully!"
+#: hocwp/admin/admin-setting-page-administration-tools.php:29 hocwp/admin/admin.php:502
+msgid "Change"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:27
-msgid "Please make a backup before you change site URL."
+#: hocwp/admin/admin-setting-page-administration-tools.php:35
+msgid "Change URL"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:36
-msgid "Vietnamese Administrative Boundaries"
+msgid "Change all old URLs in database into new URL."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:37
-msgid "Import information about Vietnamese administrative boundaries into the database automatically."
+#: hocwp/admin/admin-setting-page-administration-tools.php:41
+msgid "Old URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:44
-msgid "Import the administrative boundary at the district level?"
+#: hocwp/admin/admin-setting-page-administration-tools.php:42
+msgid "New URL"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:47
+msgid "All URLs have been changed successfully!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:48
+msgid "Please make a backup before you change site URL."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:57
+msgid "Vietnamese Administrative Boundaries"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:58
+msgid "Import information about Vietnamese administrative boundaries into the database automatically."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:65
+msgid "Import the administrative boundary at the district level?"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:68
 msgid "District"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:51
+#: hocwp/admin/admin-setting-page-administration-tools.php:72
 msgid "Import the administrative boundary at the commune level?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:54
+#: hocwp/admin/admin-setting-page-administration-tools.php:75
 msgid "Commune"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:59
+#: hocwp/admin/admin-setting-page-administration-tools.php:80
 msgid "Choose taxonomy"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:72
+#: hocwp/admin/admin-setting-page-administration-tools.php:93
 msgid "Taxonomy"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:77
+#: hocwp/admin/admin-setting-page-administration-tools.php:98
 msgid "Data has been imported successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:81
+#: hocwp/admin/admin-setting-page-administration-tools.php:102
 msgid "Import"
 msgstr ""
 
@@ -667,10 +687,6 @@ msgstr ""
 msgid "Choose post status"
 msgstr ""
 
-#: hocwp/admin/admin.php:502
-msgid "Change"
-msgstr ""
-
 #: hocwp/admin/admin.php:504
 msgid "No post status found!"
 msgstr ""
@@ -697,6 +713,10 @@ msgstr ""
 
 #: hocwp/admin/ajax.php:360
 msgid "Backup done!"
+msgstr ""
+
+#: hocwp/admin/ajax.php:531
+msgid "Invalid email."
 msgstr ""
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:21
@@ -792,7 +812,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:313
+#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:314
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -1627,7 +1647,7 @@ msgid "-- Choose post --"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-html-field.php:708 hocwp/inc/class-hocwp-theme-html-field.php:750 hocwp/inc/class-hocwp-theme-html-field.php:1595
-#: hocwp/inc/functions-scripts.php:314
+#: hocwp/inc/functions-scripts.php:315
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -2054,46 +2074,50 @@ msgstr ""
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:187
-msgid "Load more"
+#: hocwp/inc/functions-scripts.php:166
+msgid "Waiting..."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:310
-#, php-format
-msgid "Remove %s"
+#: hocwp/inc/functions-scripts.php:188
+msgid "Load more"
 msgstr ""
 
 #: hocwp/inc/functions-scripts.php:311
 #, php-format
+msgid "Remove %s"
+msgstr ""
+
+#: hocwp/inc/functions-scripts.php:312
+#, php-format
 msgid "Click the %s to edit or update"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:315
+#: hocwp/inc/functions-scripts.php:316
 #, php-format
 msgid "Change %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:390
+#: hocwp/inc/functions-scripts.php:391
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:391
+#: hocwp/inc/functions-scripts.php:392
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:392
+#: hocwp/inc/functions-scripts.php:393
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:393
+#: hocwp/inc/functions-scripts.php:394
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:394
+#: hocwp/inc/functions-scripts.php:395
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""

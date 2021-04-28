@@ -521,3 +521,26 @@ function hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_search_post', 'hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback' );
+
+function hocwp_theme_change_administrative_email_ajax_callback() {
+	$data = array();
+
+	$email = $_POST['email'] ?? '';
+
+	if ( ! is_email( $email ) ) {
+		$data['message'] = __( 'Invalid email.', 'hocwp-theme' );
+	} else {
+		$old_email = get_bloginfo( 'admin_email' );
+		$result    = update_option( 'admin_email', $email );
+
+		if ( $result ) {
+			update_option( 'new_admin_email', $email );
+			wp_site_admin_email_change_notification( $old_email, $email, 'admin_email' );
+			wp_send_json_success( $data );
+		}
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_change_administrative_email', 'hocwp_theme_change_administrative_email_ajax_callback' );
