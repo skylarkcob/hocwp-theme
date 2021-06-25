@@ -99,8 +99,16 @@ jQuery(document).ready(function ($) {
             var termDesc = $(".term-php .form-table").find("textarea#description");
 
             if (termDesc && termDesc.length) {
-                termDesc.attr("rows", 20);
-                termDesc.hocwpCodeEditor();
+                setTimeout(function () {
+                    if ("none" !== termDesc.css("display")) {
+                        var container = termDesc.closest(".wp-editor-container");
+
+                        if (!container || !container.length) {
+                            termDesc.attr("rows", 20);
+                            termDesc.hocwpCodeEditor();
+                        }
+                    }
+                }, 1000);
             }
         }
     })();
