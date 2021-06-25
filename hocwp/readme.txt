@@ -1,6 +1,7 @@
 == Changelog ==
 = 6.8.3 =
 * Add search AJAX function for deleting post tool.
+* Update term description editor bug.
 
 = 6.8.2 =
 * Add administration tools for theme.
