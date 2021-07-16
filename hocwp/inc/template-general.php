@@ -1591,6 +1591,12 @@ function hocwp_theme_pre_get_posts_action( $query ) {
 	if ( $query instanceof WP_Query && $query->is_main_query() ) {
 		if ( $query->is_home() ) {
 			$query->set( 'posts_per_page', HT_Util()->get_posts_per_page( true ) );
+		} elseif ( $query->is_search() ) {
+			$search_post_types = HT_Options()->get_tab( 'search_post_types', '', 'reading' );
+
+			if ( ! empty( $search_post_types ) ) {
+				$query->set( 'post_type', $search_post_types );
+			}
 		}
 	}
 }

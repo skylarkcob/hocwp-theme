@@ -75,6 +75,9 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'post_types', __( 'Query Post Types', 'hocwp-theme' ), 'chosen', $args, 'array', 'reading' );
 	$fields[] = $field;
 
+	$field    = hocwp_theme_create_setting_field( 'search_post_types', __( 'Search Post Types', 'hocwp-theme' ), 'chosen', $args, 'array', 'reading' );
+	$fields[] = $field;
+
 	$lists = array(
 		'none'          => _x( 'No order', 'orderby', 'hocwp-theme' ),
 		'ID'            => _x( 'Post ID', 'orderby', 'hocwp-theme' ),
