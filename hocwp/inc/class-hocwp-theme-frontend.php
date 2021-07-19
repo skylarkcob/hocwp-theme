@@ -662,10 +662,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public function breadcrumb( $args = array() ) {
 		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
 
-		$before = '<div class="breadcrumb hocwp-breadcrumb">';
+		$type = $args['type'] ?? HT_Options()->get_tab( 'breadcrumb_type', '', 'reading' );
+
+		$before = '<div class="breadcrumb hocwp-breadcrumb" data-type="' . esc_attr( $type ) . '">';
 		$after  = '</div>';
 
-		if ( function_exists( 'bcn_display' ) ) {
+		if ( function_exists( 'bcn_display' ) && ( empty( $type ) || 'navxt' == $type ) ) {
 			$linked  = $args['linked'] ?? true;
 			$reverse = $args['reverse'] ?? false;
 			$force   = $args['force'] ?? false;
@@ -678,7 +680,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
 
-		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() ) {
+		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() && ( empty( $type ) || 'yoast_seo' == $type ) ) {
 			/** @noinspection PhpUndefinedFunctionInspection */
 			yoast_breadcrumb( $before, $after );
 
@@ -687,6 +689,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		if ( is_home() ) {
 			return;
+		}
+
+		if ( empty( $type ) || 'default' != $type ) {
+			$type = 'simple';
 		}
 
 		$separator = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
@@ -808,6 +814,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		if ( $bootstrap ) {
 			$ol = new HOCWP_Theme_HTML_Tag( 'ol' );
 			$ol->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
+			$ol->add_attribute( 'data-type', esc_attr( $type ) );
 
 			$html = '<li class="breadcrumb-item">' . $home_item . '</li>' . PHP_EOL;
 
@@ -822,6 +829,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		} else {
 			$nav = new HOCWP_Theme_HTML_Tag( 'nav' );
 			$nav->add_attribute( 'class', 'breadcrumb hocwp-breadcrumb' );
+			$nav->add_attribute( 'data-type', esc_attr( $type ) );
 
 			$span = new HOCWP_Theme_HTML_Tag( 'span' );
 

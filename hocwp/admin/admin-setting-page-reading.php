@@ -59,6 +59,26 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'cookie_alert', __( 'Cookie Alert', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
 	$fields[] = $field;
 
+	$types = array(
+		''        => __( '-- Choose breadcrumb type --', 'hocwp-theme' ),
+		'default' => __( 'Default', 'hocwp-theme' )
+	);
+
+	if ( HT_Util()->yoast_seo_exists() ) {
+		$types['yoast_seo'] = 'Yoast SEO';
+	}
+
+	if ( function_exists( 'bcn_display' ) ) {
+		$types['navxt'] = 'Breadcrumb NavXT';
+	}
+
+	$args = array(
+		'options' => $types
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'breadcrumb_type', __( 'Breadcrumb Type', 'hocwp-theme' ), 'select', $args, 'string', 'reading' );
+	$fields[] = $field;
+
 	$field    = hocwp_theme_create_setting_field( 'blog_page', __( 'Blog Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );
 	$fields[] = $field;
 

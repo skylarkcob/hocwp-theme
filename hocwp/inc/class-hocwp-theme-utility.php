@@ -1136,6 +1136,10 @@ class HOCWP_Theme_Utility {
 		return ( HT()->is_positive_number( $paged ) ) ? $paged : 1;
 	}
 
+	public function yoast_seo_exists() {
+		return ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) || is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) );
+	}
+
 	public function get_yoast_seo_title_separator() {
 		$sep = '&raquo;';
 
