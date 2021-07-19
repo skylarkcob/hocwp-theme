@@ -3,6 +3,7 @@
 * Add search AJAX function for deleting post tool.
 * Update term description editor bug.
 * Add post types selection for search result page.
+* Support site using Breadcrumb NavXT function.
 
 = 6.8.2 =
 * Add administration tools for theme.

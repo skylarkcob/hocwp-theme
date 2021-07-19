@@ -662,11 +662,25 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public function breadcrumb( $args = array() ) {
 		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
 
+		$before = '<div class="breadcrumb hocwp-breadcrumb">';
+		$after  = '</div>';
+
+		if ( function_exists( 'bcn_display' ) ) {
+			$linked  = $args['linked'] ?? true;
+			$reverse = $args['reverse'] ?? false;
+			$force   = $args['force'] ?? false;
+			echo $before;
+			bcn_display( false, $linked, $reverse, $force );
+			echo $after;
+
+			return;
+		}
+
 		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
 
 		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() ) {
 			/** @noinspection PhpUndefinedFunctionInspection */
-			yoast_breadcrumb( '<div class="breadcrumb hocwp-breadcrumb">', '</div>' );
+			yoast_breadcrumb( $before, $after );
 
 			return;
 		}
