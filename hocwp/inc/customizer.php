@@ -286,6 +286,10 @@ function hocwp_theme_customize_preview_init_action() {
 		'jquery'
 	), $theme_version, true );
 
+	if ( ! function_exists( 'hocwp_theme_get_inline_css' ) ) {
+		require_once HOCWP_THEME_CORE_PATH . '/inc/template.php';
+	}
+
 	wp_localize_script( 'hocwp-theme-customize-preview', 'hocwpThemeCustomizer', array(
 		'colors'     => hocwp_theme_get_customizer_color_vars(),
 		'elements'   => hocwp_theme_get_elements_array(),
@@ -297,6 +301,10 @@ add_action( 'customize_preview_init', 'hocwp_theme_customize_preview_init_action
 
 function hocwp_theme_customize_inline_css() {
 	$data = hocwp_theme_get_customizer_css();
+
+	if ( ! function_exists( 'hocwp_theme_get_inline_css' ) ) {
+		require_once HOCWP_THEME_CORE_PATH . '/inc/template.php';
+	}
 
 	// Allow user add custom inline css.
 	$data .= hocwp_theme_get_inline_css();
