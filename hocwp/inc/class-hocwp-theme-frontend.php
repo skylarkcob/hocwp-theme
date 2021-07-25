@@ -98,10 +98,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$args['menu_class'] = trim( $menu_class );
 
-		wp_nav_menu( wp_parse_args( array( 'theme_location' => '', $args ) ) );
+		wp_nav_menu( $args );
 	}
 
 	public function wp_nav_menu_helper( $args = array() ) {
+		if ( isset( $args['bootstrap'] ) && $args['bootstrap'] ) {
+			$this->bootstrap_nav_menu( $args );
+
+			return;
+		}
+
 		$container_class = isset( $args['container_class'] ) ? $args['container_class'] : '';
 
 		$position = isset( $args['position'] ) ? $args['position'] : 'left';
