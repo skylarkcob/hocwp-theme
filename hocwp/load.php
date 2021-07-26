@@ -9,6 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 const HOCWP_THEME_CORE_VERSION = '6.8.3';
 
 /**
+ * Requires PHP version.
+ */
+const HOCWP_THEME_REQUIRE_PHP_VERSION = '7.4';
+
+/**
  * Theme developing mode.
  */
 define( 'HOCWP_THEME_DEVELOPING', ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) );
@@ -68,7 +73,7 @@ define( 'HOCWP_THEME_DOING_CRON', ( defined( 'DOING_CRON' ) && true === DOING_CR
  */
 $php_version = phpversion();
 
-$require_version = '5.6';
+$require_version = HOCWP_THEME_REQUIRE_PHP_VERSION;
 
 if ( version_compare( $php_version, $require_version, '<' ) ) {
 	$dir = get_template_directory();
