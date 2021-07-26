@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '6.8.3';
+const HOCWP_THEME_CORE_VERSION = '6.8.4';
 
 /**
  * Requires PHP version.

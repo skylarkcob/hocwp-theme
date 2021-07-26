@@ -1,4 +1,8 @@
 == Changelog ==
+= 6.8.4 =
+* Theme requires PHP version 7.4 or later.
+* Update plugin lists table pagination.
+
 = 6.8.3 =
 * Add search AJAX function for deleting post tool.
 * Update term description editor bug.

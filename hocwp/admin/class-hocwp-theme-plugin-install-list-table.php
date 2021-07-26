@@ -123,7 +123,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 				}
 			}
 
-			$this->items = $lists;
+			$this->items = array_slice( $lists, ( $paged - 1 ) * $per_page, $per_page );
 			$total_items = count( $lists );
 		} elseif ( 'should_use' == $tab ) {
 			$plugins = HT_Requirement()->get_recommended_plugins();
@@ -137,7 +137,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 				}
 			}
 
-			$this->items = $lists;
+			$this->items = array_slice( $lists, ( $paged - 1 ) * $per_page, $per_page );
 			$total_items = count( $lists );
 		} elseif ( 'installed' == $tab ) {
 			$plugins = $this->get_installed_plugin_slugs();
@@ -151,7 +151,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 				}
 			}
 
-			$this->items = $lists;
+			$this->items = array_slice( $lists, ( $paged - 1 ) * $per_page, $per_page );
 			$total_items = count( $lists );
 		} elseif ( 'activated' == $tab ) {
 			$plugins = wp_get_active_and_valid_plugins();
@@ -168,7 +168,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 					}
 				}
 
-				$this->items = $lists;
+				$this->items = array_slice( $lists, ( $paged - 1 ) * $per_page, $per_page );
 				$total_items = count( $lists );
 			}
 		} else {
@@ -210,7 +210,6 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 				if ( ! is_wp_error( $api ) ) {
 					set_transient( $tr_name, $api, DAY_IN_SECONDS );
 				}
-
 			}
 
 			if ( is_wp_error( $api ) ) {
@@ -219,13 +218,14 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 				return;
 			}
 
-			$this->items = (array) $api->plugins;
+			$lists = (array) $api->plugins;
+
+			$this->items = $lists;
 			$total_items = $api->info['results'];
 
 			if ( isset( $api->info['groups'] ) ) {
 				$this->groups = $api->info['groups'];
 			}
-
 		}
 
 		if ( $this->orderby ) {
@@ -236,7 +236,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items,
-			'per_page'    => $per_page,
+			'per_page'    => $per_page
 		) );
 	}
 
@@ -272,8 +272,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$this->screen->render_screen_reader_content( 'heading_views' );
 		?>
-		<div class="wp-filter">
-			<ul class="filter-links">
+        <div class="wp-filter">
+            <ul class="filter-links">
 				<?php
 				if ( ! empty( $views ) ) {
 					foreach ( $views as $class => $view ) {
@@ -283,8 +283,8 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 					echo implode( " </li>\n", $views ) . "</li>\n";
 				}
 				?>
-			</ul>
-		</div>
+            </ul>
+        </div>
 		<?php
 	}
 }

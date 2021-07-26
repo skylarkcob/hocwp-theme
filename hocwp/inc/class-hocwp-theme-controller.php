@@ -384,7 +384,9 @@ final class HOCWP_Theme_Controller {
 
 		require $this->core_path . '/inc/class-hocwp-theme-requirement.php';
 		require $this->core_path . '/inc/class-hocwp-theme-svg-icon.php';
+
 		//require $this->core_path . '/inc/class-hocwp-theme-color.php';
+
 		require $this->core_path . '/inc/class-hocwp-theme-html-tag.php';
 		require $this->core_path . '/inc/class-hocwp-theme-layout.php';
 		require $this->core_path . '/inc/class-hocwp-theme-html-field.php';
@@ -393,7 +395,9 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme-post.php';
 		require $this->core_path . '/inc/class-hocwp-theme-term.php';
 		require $this->core_path . '/inc/class-hocwp-theme-query.php';
+
 		require $this->core_path . '/inc/template-tags.php';
+
 		require $this->core_path . '/inc/functions-scripts.php';
 		require $this->core_path . '/inc/functions-media.php';
 		require $this->core_path . '/inc/functions-user.php';
