@@ -3604,8 +3604,14 @@
     padding-right: 5px;
 }
 
+.display-block,
 .dp-b {
     display: block !important;
+}
+
+.display-flex,
+.dp-f {
+    display: flex !important;
 }
 
 .tt-u {
