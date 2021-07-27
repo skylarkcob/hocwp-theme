@@ -748,11 +748,13 @@
     padding: 10px !important
 }
 
+.py-10,
 .pv-10 {
     padding-top: 10px !important;
     padding-bottom: 10px !important
 }
 
+.px-10,
 .ph-10 {
     padding-left: 10px !important;
     padding-right: 10px !important
@@ -3604,14 +3606,24 @@
     padding-right: 5px;
 }
 
+.d-block,
 .display-block,
 .dp-b {
     display: block !important;
 }
 
+.d-flex,
 .display-flex,
 .dp-f {
     display: flex !important;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
 }
 
 .tt-u {
