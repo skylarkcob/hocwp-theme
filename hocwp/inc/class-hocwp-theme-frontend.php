@@ -484,6 +484,41 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 	}
 
+	public function list_social_html( $list_class = '' ) {
+		$list_socials = HT_Options()->get_tab( 'list_socials', '', 'social' );
+
+		if ( ! empty( $list_socials ) ) {
+			$list_socials = explode( ',', $list_socials );
+			$list_socials = array_map( 'trim', $list_socials );
+			$list_class   .= ' list-socials';
+			$list_class   = trim( $list_class );
+			?>
+            <ul class="<?php echo esc_attr( $list_class ); ?>">
+				<?php
+				foreach ( $list_socials as $social ) {
+					$url = HT_Options()->get_tab( $social . '_url', '', 'social' );
+
+					if ( ! empty( $url ) ) {
+						$icon = HT_Options()->get_tab( $social . '_icon', '', 'social' );
+
+						if ( empty( $icon ) ) {
+							$icon = ucfirst( $social );
+						}
+						?>
+                        <li class="social-item">
+                            <a href="<?php echo esc_url( $url ); ?>"
+                               title="<?php echo esc_attr( ucfirst( $social ) ); ?>"
+                               target="_blank" rel="nofollow"><?php echo $icon ?></a>
+                        </li>
+						<?php
+					}
+				}
+				?>
+            </ul>
+			<?php
+		}
+	}
+
 	public function get_archive_title( $args = array() ) {
 		global $wp_query;
 

@@ -48,6 +48,25 @@ blockquote cite::before {
     text-align: right;
 }
 
+.wp-calendar-table td#today {
+    color: #dd4b39;
+    font-weight: 700;
+}
+
+.wp-calendar-table caption {
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.wp-calendar-table th,
+.wp-calendar-table td {
+    text-align: center;
+}
+
+.wp-calendar-nav a:hover {
+    font-weight: 700;
+}
+
 span.edit-link {
     margin-left: 5px;
 }
@@ -130,7 +149,7 @@ p > ins > br {
 .search-form input[type="search"],
 .search-form input[type="text"],
 .search-form input[type="submit"] {
-    line-height: 23px;
+    line-height: 20px;
     padding: 5px 15px;
     font-size: 13px;
     max-width: 100%;
@@ -181,6 +200,28 @@ p > ins > br {
 }
 
 .widget img.dsq-widget-avatar {
+    margin-right: 4px;
+}
+
+.widget_rss .rss-widget-icon {
+    display: inline-block;
+    width: 20px;
+    vertical-align: -2px;
+    margin-right: 5px;
+}
+
+.widget_rss li a.rsswidget {
+    font-weight: 700;
+}
+
+.widget_rss li a.rsswidget + span.rss-date {
+    display: inline-block;
+    font-size: 13px;
+}
+
+.widget_rss li a.rsswidget + span.rss-date:before {
+    content: " - ";
+    display: inline-block;
     margin-right: 4px;
 }
 

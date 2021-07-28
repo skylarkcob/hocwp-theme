@@ -3626,6 +3626,10 @@
     justify-content: space-between;
 }
 
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
 .tt-u {
     text-transform: uppercase;
 }
@@ -3638,4 +3642,16 @@
 .loading-ajax,
 .loading-ajax * {
     cursor: progress;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
 }

@@ -304,6 +304,11 @@ class HOCWP_Theme_Enqueue {
 		}
 	}
 
+	public function swiper( $args = array() ) {
+		wp_enqueue_style( 'swiper-style', 'https://unpkg.com/swiper/swiper-bundle.min.css' );
+		wp_enqueue_script( 'swiper', 'https://unpkg.com/swiper/swiper-bundle.min.js', array(), false, true );
+	}
+
 	public function slick( $args = array() ) {
 		$defaults = array(
 			'theme' => false
