@@ -15,6 +15,19 @@ add_action( 'load-post-new.php', 'hocwp_theme_custom_post_meta' );
 add_action( 'load-edit.php', 'hocwp_theme_custom_post_meta' );
 
 /**
+ * Add custom meta fields for Extra Information meta box.
+ *
+ * @param HOCWP_Theme_Meta_Post $meta Meta object for post, page or custom post types.
+ */
+function hocwp_theme_custom_extra_information_meta_fields( $meta ) {
+	if ( $meta instanceof HOCWP_Theme_Meta_Post ) {
+
+	}
+}
+
+add_action( 'hocwp_theme_extra_information_meta_fields', 'hocwp_theme_custom_extra_information_meta_fields' );
+
+/**
  * Add custom meta fields for term.
  */
 function hocwp_theme_custom_term_meta() {
