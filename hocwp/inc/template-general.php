@@ -790,7 +790,9 @@ function hocwp_theme_main_menu( $args ) {
 
 	$container_class = 'primary-menus main-menu primary-menu';
 
-	$theme_location = isset( $args['theme_location'] ) ? $args['theme_location'] : 'menu-1';
+	$menu = apply_filters( 'hocwp_theme_main_menu_default_location', 'menu-1' );
+
+	$theme_location = isset( $args['theme_location'] ) ? $args['theme_location'] : $menu;
 
 	$defaults = array(
 		'theme_location'  => $theme_location,
@@ -848,12 +850,27 @@ function hocwp_theme_mobile_menu( $args ) {
 add_action( 'hocwp_theme_mobile_menu', 'hocwp_theme_mobile_menu' );
 
 function hocwp_theme_wp_nav_menu_items_filter( $items, $args ) {
-	$insert = apply_filters( 'hocwp_theme_insert_mobile_menu_search', ( 'mobile' == $args->theme_location && wp_is_mobile() ) );
+	$full_width = $args->full_width ?? false;
 
-	if ( $insert ) {
-		$form  = get_search_form( false );
-		$form  = '<li class="menu-item search-item">' . $form . '</li>';
-		$items = $form . $items;
+	if ( $full_width && ( 'mobile' == $args->theme_location && wp_is_mobile() ) ) {
+		$label = apply_filters( 'hocwp_theme_mobile_menu_close_label', __( 'Menu', 'hocwp-theme' ) );
+
+		$before = '<li class="menu-item label-item"><div class="d-flex"><span class="label">';
+		$after  = '</span><a href="javascript:" class="close-menu" title="' . __( 'Close menu', 'hocwp-theme' ) . '">&times;</a></div></li>';
+		$item   = $before . $label . $after;
+		$items  = $item . $items;
+	}
+
+	$has_form = ( false !== strpos( $items, 'name="s"' ) && ( false !== strpos( $items, 'search-form' ) || false !== strpos( $items, 'search-submit' ) ) );
+
+	if ( ! $has_form ) {
+		$insert = apply_filters( 'hocwp_theme_insert_mobile_menu_search', ( 'mobile' == $args->theme_location && wp_is_mobile() ) );
+
+		if ( $insert ) {
+			$form  = get_search_form( false );
+			$form  = '<li class="menu-item search-item">' . $form . '</li>';
+			$items = $form . $items;
+		}
 	}
 
 	return $items;
@@ -1862,3 +1879,17 @@ function hocwp_theme_custom_nav_menu_css_class_filter( $classes, $item ) {
 }
 
 add_filter( 'nav_menu_css_class', 'hocwp_theme_custom_nav_menu_css_class_filter', 10, 2 );
+
+function hocwp_theme_main_menu_default_location_filter( $location ) {
+	if ( wp_is_mobile() ) {
+		$menus = HT_Util()->get_nav_menu_items_by_location( 'mobile' );
+
+		if ( HT()->array_has_value( $menus ) ) {
+			$location = 'mobile';
+		}
+	}
+
+	return $location;
+}
+
+add_filter( 'hocwp_theme_main_menu_default_location', 'hocwp_theme_main_menu_default_location_filter' );

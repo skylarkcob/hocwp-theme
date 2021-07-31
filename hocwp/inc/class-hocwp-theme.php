@@ -64,6 +64,7 @@ final class HOCWP_Theme {
 		$max_upload   = (int) ( ini_get( 'upload_max_filesize' ) );
 		$max_post     = (int) ( ini_get( 'post_max_size' ) );
 		$memory_limit = (int) ( ini_get( 'memory_limit' ) );
+
 		return min( $max_upload, $max_post, $memory_limit );
 	}
 
@@ -751,6 +752,10 @@ final class HOCWP_Theme {
 	}
 
 	public function get_first_image_source( $content ) {
+		if ( empty( $content ) ) {
+			return '';
+		}
+
 		$doc = new DOMDocument();
 		@$doc->loadHTML( $content );
 		$xpath = new DOMXPath( $doc );

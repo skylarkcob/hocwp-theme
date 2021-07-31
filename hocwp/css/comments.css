@@ -106,7 +106,6 @@
     font-size: 13px;
     clear: both;
     text-align: left;
-    color: #ddd;
 }
 
 .comment-list, .comment-list .children {
@@ -165,9 +164,13 @@ li.comment {
     margin-top: 15px;
     padding: 10px;
     border-radius: 5px;
-    color: #ccc;
+    color: #c6c6c6;
     border: 1px solid #f8f8f8;
     margin-bottom: 0;
+}
+
+.comment-meta .comment-metadata {
+    margin-bottom: 20px;
 }
 
 .comment-respond input[type="text"],
@@ -184,4 +187,8 @@ li.comment {
         width: 100%;
         border-radius: 0;
     }
+}
+
+.comment-form .form-submit input[type="submit"] {
+    padding: 0.6em 1em;
 }

@@ -71,7 +71,7 @@ function hocwp_theme_dashboard_widget_recent_draft_callback( $tmp, $args ) {
 				<div class="draft-title">
 					<a href="<?php echo $edit_url; ?>"
 					   aria-label="<?php printf( __( 'Edit %s', 'hocwp-theme' ), get_the_title() ); ?>"><?php the_title(); ?></a>
-					<time datetime="<?php echo get_the_date( 'c' ); ?>"><?php echo get_the_date( 'F j, Y' ); ?></time>
+					<time datetime="<?php echo get_the_date( DATE_W3C ); ?>"><?php echo get_the_date( 'F j, Y' ); ?></time>
 					<a href="<?php echo $edit_url; ?>">
 						<button class="button-link">
 							<span class="dashicons dashicons-edit"></span>

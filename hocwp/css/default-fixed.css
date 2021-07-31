@@ -2,6 +2,12 @@ html {
     -webkit-font-smoothing: antialiased;
 }
 
+@media only screen and (max-width: 600px) {
+    body {
+        position: static !important;
+    }
+}
+
 abbr {
     text-decoration: none;
 }
@@ -115,8 +121,22 @@ p > ins > br {
     display: none;
 }
 
+.ins iframe,
+.google-auto-placed ins,
+.entry-content ins,
+.widget ins,
 .hocwp-ads ins {
-    max-width: 100%;
+    max-width: 100% !important;
+}
+
+.google-auto-placed ins,
+.google-auto-placed ins iframe {
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+    padding: 0.6em 1em;
 }
 
 .search-form {

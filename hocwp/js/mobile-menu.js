@@ -132,6 +132,14 @@ window.hocwpTheme = window.hocwpTheme || {};
         }
     });
 
+    let closeButton = menu.getElementsByClassName("close-menu")[0];
+
+    if (closeButton) {
+        closeButton.addEventListener("click", function (e) {
+            button.click();
+        });
+    }
+
     // Detect if user click outside the menu and menu control button.
     window.addEventListener("click", function (e) {
         if (!menu.contains(e.target) && !button.contains(e.target)) {

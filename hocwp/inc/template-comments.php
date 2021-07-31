@@ -32,7 +32,7 @@ function hocwp_theme_comments_template( $args = array() ) {
 
 	$defaults = array(
 		'post_id'        => get_the_ID(),
-		'comment_system' => $options['discussion']['comment_system'],
+		'comment_system' => $options['discussion']['comment_system'] ?? 'default',
 		'tabs'           => array(
 			array(
 				'href' => 'facebook',
@@ -140,16 +140,16 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 
 function hocwp_theme_comments_template_google() {
 	?>
-	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-	<div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
-	<script>
-		gapi.comments.render('google_comments', {
-			href: window.location,
-			width: '624',
-			first_party_property: 'BLOGGER',
-			view_type: 'FILTERED_POSTMOD'
-		});
-	</script>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+    <script>
+        gapi.comments.render('google_comments', {
+            href: window.location,
+            width: '624',
+            first_party_property: 'BLOGGER',
+            view_type: 'FILTERED_POSTMOD'
+        });
+    </script>
 	<?php
 }
 
@@ -186,21 +186,21 @@ function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post
 		}
 	}
 	?>
-	<div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
-	<script>
-		var disqus_config = function () {
-			this.page.url = "<?php echo $url; ?>";
-			this.page.identifier = "<?php echo $identifier; ?>";
-		};
+    <div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "<?php echo $url; ?>";
+            this.page.identifier = "<?php echo $identifier; ?>";
+        };
 
-		(function () {
-			var d = document, s = d.createElement("script"), ts = +new Date();
-			s.src = "//<?php echo $shortname; ?>.disqus.com/embed.js";
-			s.setAttribute("data-timestamp", ts.toString());
-			(d.head || d.body).appendChild(s);
-		})();
-	</script>
-	<noscript><?php printf( __( 'Please enable JavaScript to view the <a href="%s">comments powered by Disqus</a>.', 'hocwp-theme' ), 'https://disqus.com/?ref_noscript' ); ?></noscript>
+        (function () {
+            var d = document, s = d.createElement("script"), ts = +new Date();
+            s.src = "//<?php echo $shortname; ?>.disqus.com/embed.js";
+            s.setAttribute("data-timestamp", ts.toString());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript><?php printf( __( 'Please enable JavaScript to view the <a href="%s">comments powered by Disqus</a>.', 'hocwp-theme' ), 'https://disqus.com/?ref_noscript' ); ?></noscript>
 	<?php
 }
 

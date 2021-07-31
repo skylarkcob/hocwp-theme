@@ -463,7 +463,65 @@ class HOCWP_Theme_Utility {
 				require ABSPATH . 'wp-admin/includes/file.php';
 			}
 
-			WP_Filesystem();
+			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+
+			$method = get_filesystem_method( false, false );
+
+			if ( ! $method ) {
+				return false;
+			}
+
+			if ( ! class_exists( "WP_Filesystem_$method" ) ) {
+
+				/**
+				 * Filters the path for a specific filesystem method class file.
+				 *
+				 * @param string $path Path to the specific filesystem method class file.
+				 * @param string $method The filesystem method to use.
+				 *
+				 * @since 2.6.0
+				 *
+				 * @see get_filesystem_method()
+				 *
+				 */
+				$abstraction_file = apply_filters( 'filesystem_method_file', ABSPATH . 'wp-admin/includes/class-wp-filesystem-' . $method . '.php', $method );
+
+				if ( ! file_exists( $abstraction_file ) ) {
+					return false;
+				}
+
+				require_once $abstraction_file;
+			}
+			$method = "WP_Filesystem_$method";
+
+			$wp_filesystem = new $method( false );
+
+			/*
+			 * Define the timeouts for the connections. Only available after the constructor is called
+			 * to allow for per-transport overriding of the default.
+			 */
+			if ( ! defined( 'FS_CONNECT_TIMEOUT' ) ) {
+				define( 'FS_CONNECT_TIMEOUT', 30 );
+			}
+			if ( ! defined( 'FS_TIMEOUT' ) ) {
+				define( 'FS_TIMEOUT', 30 );
+			}
+
+			if ( is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors() ) {
+				return false;
+			}
+
+			if ( ! $wp_filesystem->connect() ) {
+				return false; // There was an error connecting to the server.
+			}
+
+			// Set the permission constants if not already set.
+			if ( ! defined( 'FS_CHMOD_DIR' ) ) {
+				define( 'FS_CHMOD_DIR', ( fileperms( ABSPATH ) & 0777 | 0755 ) );
+			}
+			if ( ! defined( 'FS_CHMOD_FILE' ) ) {
+				define( 'FS_CHMOD_FILE', ( fileperms( ABSPATH . 'index.php' ) & 0777 | 0644 ) );
+			}
 		}
 
 		return $wp_filesystem;

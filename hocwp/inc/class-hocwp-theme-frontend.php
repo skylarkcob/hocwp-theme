@@ -98,7 +98,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$args['menu_class'] = trim( $menu_class );
 
-		wp_nav_menu( $args );
+		$menu = apply_filters( 'hocwp_theme_main_menu_default_location', 'menu-1' );
+
+		$args['theme_location'] = $args['theme_location'] ?? $menu;
+
+		wp_nav_menu( wp_parse_args( $args, array( 'theme_location' => '' ) ) );
 	}
 
 	public function wp_nav_menu_helper( $args = array() ) {
@@ -117,6 +121,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 
 		$container_class .= ' position-' . $position;
+
+		$full_width = $args['full_width'] ?? false;
+
+		if ( $full_width ) {
+			$container_class .= ' full-width displaying-stretch';
+		}
 
 		$button = isset( $args['mobile_button'] ) ? $args['mobile_button'] : '';
 
@@ -146,7 +156,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$args['container_class'] = trim( $container_class );
 
-		wp_nav_menu( $args );
+		$menu = apply_filters( 'hocwp_theme_main_menu_default_location', 'menu-1' );
+
+		$args['theme_location'] = $args['theme_location'] ?? $menu;
+
+		wp_nav_menu( wp_parse_args( $args, array( 'theme_location' => '' ) ) );
 	}
 
 	public function the_query_pagination( $args = array() ) {
@@ -793,11 +807,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			if ( ! $has_cat ) {
 				if ( 'post' != $obj->post_type && 'page' != $obj->post_type ) {
-					$type = get_post_type_object( $obj->post_type );
+					$type_obj = get_post_type_object( $obj->post_type );
 
 					$tmp = '';
 
-					if ( ! $type->has_archive ) {
+					if ( ! $type_obj->has_archive ) {
 						$taxonomies = get_object_taxonomies( $obj, 'objects' );
 
 						$taxonomy = null;
@@ -818,11 +832,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 							}
 						}
 					} else {
-						$tmp = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type->labels->singular_name );
+						$tmp = sprintf( $link_schema, get_post_type_archive_link( $obj->post_type ), $type_obj->labels->singular_name );
 					}
 
 					if ( empty( $tmp ) ) {
-						$tmp = $type->labels->singular_name;
+						$tmp = $type_obj->labels->singular_name;
 					}
 
 					array_unshift( $items, $tmp );

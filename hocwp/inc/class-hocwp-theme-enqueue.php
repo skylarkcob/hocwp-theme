@@ -305,8 +305,23 @@ class HOCWP_Theme_Enqueue {
 	}
 
 	public function swiper( $args = array() ) {
-		wp_enqueue_style( 'swiper-style', 'https://unpkg.com/swiper/swiper-bundle.min.css' );
-		wp_enqueue_script( 'swiper', 'https://unpkg.com/swiper/swiper-bundle.min.js', array(), false, true );
+		$defaults = array(
+			'css_url' => '',
+			'js_url'  => ''
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$css_url = $args['css_url'];
+		$js_url  = $args['js_url'];
+
+		if ( ! empty( $css_url ) ) {
+			wp_enqueue_style( 'swiper-style', $css_url );
+		}
+
+		if ( ! empty( $js_url ) ) {
+			wp_enqueue_script( 'swiper', $js_url, array(), false, true );
+		}
 	}
 
 	public function slick( $args = array() ) {

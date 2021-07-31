@@ -25,10 +25,21 @@
     margin-left: 0 !important;
 }
 
+.mobile-menu.full-width > .menu {
+    width: 100% !important;
+    right: 100%;
+    left: auto;
+}
+
 .mobile-menu.position-right .menu {
     left: auto;
     right: -300px;
     margin-right: 0 !important;
+}
+
+.mobile-menu.full-width.position-right .menu {
+    right: auto;
+    left: 100%;
 }
 
 .mobile-menu > .menu-toggle {
@@ -64,7 +75,7 @@
 }
 
 .mobile-menu.displaying-stretch > .menu-toggle[aria-expanded="true"] {
-    display: none;
+    display: none !important;
     opacity: 0;
     visibility: hidden;
 }
@@ -173,6 +184,44 @@
 
 .mobile-menu .menu-item-has-children > a[aria-expanded="false"] {
     background: none;
+}
+
+.mobile-menu .menu-item.label-item > * {
+    align-items: center;
+    vertical-align: middle;
+}
+
+.mobile-menu .menu-item.label-item > div > *:last-child {
+    margin-left: auto;
+    margin-right: 30px !important;
+}
+
+.mobile-menu .menu-item.label-item .close-menu {
+    font-size: 27px;
+    font-weight: 400;
+    padding: 5px;
+    border: 1px solid #fff;
+    line-height: 1;
+    margin: 10px;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px !important;
+    text-align: center !important;
+    display: block;
+}
+
+.mobile-menu .menu-item.label-item .close-menu:hover,
+.mobile-menu .menu-item.label-item .close-menu:focus {
+    background-color: #555;
+}
+
+.mobile-menu .menu-item.label-item .label {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 400;
+    max-width: calc(100% - 60px);
+    flex-basis: calc(100% - 60px);
 }
 
 .mobile-menu .menu li a {
