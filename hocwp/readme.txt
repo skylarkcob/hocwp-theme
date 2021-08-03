@@ -2,9 +2,10 @@
 = 6.8.4 =
 * Theme requires PHP version 7.4 or later.
 * Update plugin lists table pagination.
+* Display warning if current theme is not compatible with new block widgets on WordPress 5.8.
 
 = 6.8.3 =
-* Add search AJAX function for deleting post tool.
+* Add search AJAX functions for deleting post tool.
 * Update term description editor bug.
 * Add post types selection for search result page.
 * Support site using Breadcrumb NavXT function.

@@ -3,6 +3,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! defined( '' ) ) {
+	/**
+	 * Define if current theme is compatible with WordPress block editor and block widget.
+	 */
+	define( 'HOCWP_THEME_BLOCK_COMPATIBLE', false );
+}
+
 if ( ! defined( 'HOCWP_THEME_BLANK_STYLE' ) ) {
 	/**
 	 * Define theme load default styles and scripts or not.

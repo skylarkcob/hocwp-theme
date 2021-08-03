@@ -14,6 +14,19 @@ if ( empty( $post_type ) ) {
 }
 
 function hocwp_theme_admin_notices_action() {
+	$compatible = apply_filters( 'hocwp_theme_block_compatible', HOCWP_THEME_BLOCK_COMPATIBLE );
+
+	if ( ! $compatible && ! HT_Extension()->is_active( 'hocwp/ext/classic-widgets.php' ) ) {
+		$link = sprintf( '<a href="%s">Classic Widgets</a>', esc_url( admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=inactive' ) ) );
+
+		$args = array(
+			'type'    => 'warning',
+			'message' => sprintf( __( 'Current theme is not compatible with WordPress 5.8 or later, please active %s extension for theme works normally.', 'hocwp-theme' ), $link )
+		);
+
+		HT_Util()->admin_notice( $args );
+	}
+
 	if ( ! HOCWP_THEME_DEVELOPING && ! HT_Admin()->skip_admin_notices() ) {
 		$email = get_bloginfo( 'admin_email' );
 

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-07-31 15:42+0700\n"
-"PO-Revision-Date: 2021-07-31 15:42+0700\n"
+"POT-Creation-Date: 2021-08-03 21:40+0700\n"
+"PO-Revision-Date: 2021-08-03 21:41+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -80,7 +80,7 @@ msgid "Admin email has been changed successfully!"
 msgstr "Địa chỉ email quản trị đã được cập nhật thành công!"
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:29
-#: hocwp/admin/admin.php:502
+#: hocwp/admin/admin.php:515
 msgid "Change"
 msgstr "Thay đổi"
 
@@ -254,7 +254,7 @@ msgstr "Tiêu đề thư"
 msgid "Mail Message"
 msgstr "Nội dung thư"
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:104
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:117
 #: hocwp/inc/setup-after.php:161
 msgid "Extensions"
 msgstr "Gói mở rộng"
@@ -683,12 +683,22 @@ msgstr ""
 msgid "Term HTML Description"
 msgstr "Mô tả chuyên mục HTML"
 
-#: hocwp/admin/admin.php:21
+#: hocwp/admin/admin.php:24
+#, php-format
+msgid ""
+"Current theme is not compatible with WordPress 5.8 or later, please active "
+"%s extension for theme works normally."
+msgstr ""
+"Giao diện hiện tại chưa tương thích với phiên bản WordPress 5.8 hoặc cao "
+"hơn, vui lòng kích hoạt gói mở rộng %s để giao diện được hoạt động bình "
+"thường."
+
+#: hocwp/admin/admin.php:34
 msgctxt "setting page"
 msgid "general settings page"
 msgstr "trang cài đặt chung"
 
-#: hocwp/admin/admin.php:25
+#: hocwp/admin/admin.php:38
 #, php-format
 msgid ""
 "You must change administrator's email address for site working, please go to "
@@ -697,29 +707,29 @@ msgstr ""
 "Bạn phải thay đổi địa chỉ email của người quản trị để trang web được hoạt "
 "động, vui lòng đến %s và cập nhật nó."
 
-#: hocwp/admin/admin.php:38
+#: hocwp/admin/admin.php:51
 #, php-format
 msgid "%s posts have been updated to post status <strong>%s</strong>!"
 msgstr "%s bài viết đã được cập nhật trạng thái sang <strong>%s</strong>!"
 
-#: hocwp/admin/admin.php:107 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:120 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:110 hocwp/inc/setup-after.php:170
+#: hocwp/admin/admin.php:123 hocwp/inc/setup-after.php:170
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:112 hocwp/admin/views/admin-delete-posts.php:11
+#: hocwp/admin/admin.php:125 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr "Xóa bài viết"
 
-#: hocwp/admin/admin.php:188 hocwp/admin/admin.php:199
+#: hocwp/admin/admin.php:201 hocwp/admin/admin.php:212
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:192
+#: hocwp/admin/admin.php:205
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -728,7 +738,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:203
+#: hocwp/admin/admin.php:216
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -737,12 +747,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:210
+#: hocwp/admin/admin.php:223
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:214
+#: hocwp/admin/admin.php:227
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -750,40 +760,40 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:296
+#: hocwp/admin/admin.php:309
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:338 hocwp/inc/template-post.php:327
+#: hocwp/admin/admin.php:351 hocwp/inc/template-post.php:327
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
-#: hocwp/admin/admin.php:376
+#: hocwp/admin/admin.php:389
 msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
-#: hocwp/admin/admin.php:399 hocwp/inc/template-general.php:1053
+#: hocwp/admin/admin.php:412 hocwp/inc/template-general.php:1053
 msgid "Close"
 msgstr "Đóng"
 
-#: hocwp/admin/admin.php:422
+#: hocwp/admin/admin.php:435
 #, php-format
 msgid "Template %s"
 msgstr "Mẫu %s"
 
-#: hocwp/admin/admin.php:433 hocwp/admin/admin.php:482
+#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:495
 msgid "Change status"
 msgstr "Thay đổi trạng thái"
 
-#: hocwp/admin/admin.php:492
+#: hocwp/admin/admin.php:505
 msgid "Choose post status"
 msgstr "Chọn trạng thái bài viết"
 
-#: hocwp/admin/admin.php:504
+#: hocwp/admin/admin.php:517
 msgid "No post status found!"
 msgstr "Không có trạng thái bài viết nào được tìm thấy!"
 
-#: hocwp/admin/admin.php:508
+#: hocwp/admin/admin.php:521
 msgid "Close this box"
 msgstr "Đóng hộp này"
 
