@@ -3,6 +3,7 @@
 * Theme requires PHP version 7.4 or later.
 * Update plugin lists table pagination.
 * Display warning if current theme is not compatible with new block widgets on WordPress 5.8.
+* Add Classic Editor extension.
 
 = 6.8.3 =
 * Add search AJAX functions for deleting post tool.
