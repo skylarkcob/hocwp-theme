@@ -408,6 +408,17 @@
     background-color: #fff;
     overflow: hidden;
     box-sizing: border-box;
+}
+
+#hocwpThemeModal.modal > .inner > .modal-footer,
+#hocwpThemeModal.modal > .inner > .modal-header,
+#hocwpThemeModal.modal > .inner > .modal-caption,
+#hocwpThemeModal.modal > .inner > .modal-content,
+#hocwpThemeModal.modal > .inner.padding,
+#hocwpThemeModal.modal > .modal-footer,
+#hocwpThemeModal.modal > .modal-header,
+#hocwpThemeModal.modal > .modal-caption,
+#hocwpThemeModal.modal > .modal-content {
     padding: 20px;
 }
 
@@ -436,6 +447,22 @@
 #hocwpThemeModal.modal .modal-caption {
     text-align: center;
     color: #ccc;
+    line-height: 1.3;
+}
+
+#hocwpThemeModal.modal .modal-caption.text-left {
+    text-align: left;
+}
+
+#hocwpThemeModal.modal .modal-caption {
+    background-color: #f1f1f1;
+    border-radius: 5px 5px 0;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+#hocwpThemeModal.modal .modal-caption h2,
+#hocwpThemeModal.modal .modal-caption h3 {
+    margin: 0;
 }
 
 #hocwpThemeModal.modal .modal-caption p {
@@ -455,6 +482,33 @@
     -webkit-animation-duration: 0.6s;
     animation-name: zoom;
     animation-duration: 0.6s;
+}
+
+#hocwpThemeModal.modal .modal-footer {
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    text-align: right;
+    border-radius: 0 0 5px 5px;
+}
+
+#hocwpThemeModal.modal .modal-footer .submit + .submit {
+    margin-left: 5px;
+}
+
+#hocwpThemeModal.modal label {
+    display: block;
+    font-weight: 400;
+    font-size: 14px;
+    margin-bottom: 4px;
+    font-style: italic;
+}
+
+#hocwpThemeModal.modal select {
+    float: none;
+}
+
+#hocwpThemeModal.modal .form-row + .form-row {
+    margin-top: 20px;
 }
 
 @-webkit-keyframes zoom {

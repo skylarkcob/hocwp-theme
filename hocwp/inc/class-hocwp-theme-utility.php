@@ -258,13 +258,6 @@ class HOCWP_Theme_Utility {
 		return $current->ID;
 	}
 
-	public function get_first_term( $post_id = null, $taxonomy = 'category' ) {
-		$post_id = $this->return_post( $post_id, 'id' );
-		$terms   = wp_get_post_terms( $post_id, $taxonomy );
-
-		return ( HT()->array_has_value( $terms ) ) ? current( $terms ) : null;
-	}
-
 	public function get_term_link( $term ) {
 		return '<a href="' . esc_url( get_term_link( $term ) ) . '" rel="category ' . HT_Sanitize()->html_class( $term->taxonomy ) . ' tag">' . $term->name . '</a>';
 	}
@@ -984,6 +977,13 @@ class HOCWP_Theme_Utility {
 		unset( $sidebars, $id, $sidebar );
 
 		return $result;
+	}
+
+	public function get_first_term( $post_id = null, $taxonomy = 'category' ) {
+		$post_id = $this->return_post( $post_id, 'id' );
+		$terms   = wp_get_post_terms( $post_id, $taxonomy );
+
+		return ( HT()->array_has_value( $terms ) ) ? current( $terms ) : null;
 	}
 
 	public function get_first_taxonomy_or_term( $post_id, $output = 'term', $hierarchical = true ) {

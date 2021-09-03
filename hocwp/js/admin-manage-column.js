@@ -42,7 +42,7 @@ jQuery(document).ready(function ($) {
                 form = element.closest("form"),
                 checkbox = form.find("table input[type='checkbox']:checked");
 
-            if ("change_status" === action.val()) {
+            if ("change_status" === action.val() || "change_category" === action.val()) {
                 e.preventDefault();
 
                 if (checkbox && checkbox.length && 0 < parseInt(checkbox.length)) {
@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        body.on("click", ".choose-status.modal .close", function (e) {
+        body.on("click", ".choose-status.modal .close, .hocwp-theme-modal .close-modal", function (e) {
             e.preventDefault();
             $(this).closest(".modal").fadeOut(500);
         });

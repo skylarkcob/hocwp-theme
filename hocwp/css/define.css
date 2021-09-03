@@ -18,6 +18,12 @@
     margin-right: 0 !important
 }
 
+.ml-auto,
+.margin-left-auto,
+.ml-a {
+    margin-left: auto !important;
+}
+
 .pd-n {
     padding: 0 !important
 }
@@ -3654,4 +3660,16 @@
 
 .text-right {
     text-align: right;
+}
+
+.fit-cover {
+    overflow: hidden;
+    display: flex;
+}
+
+.fit-cover img {
+    object-position: center;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
 }

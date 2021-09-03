@@ -85,7 +85,6 @@ jQuery(document).ready(function ($) {
             clone.removeClass("base-data");
 
             clone.find("input").each(function () {
-                console.log($(this).attr("id"));
                 $(this).attr("id", $(this).attr("id") + count);
             });
 

@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class HOCWP_Theme_Admin_Setting_Tabs {
 	protected static $instance;
@@ -61,6 +64,12 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 		return ( isset( $this->tabs[ $name ] ) ) ? $this->tabs[ $name ] : null;
 	}
 
+	public function short_tabs( $key ) {
+		return function ( $a, $b ) use ( $key ) {
+			return strnatcmp( $a[ $key ], $b[ $key ] );
+		};
+	}
+
 	public function get() {
 		$this->tabs = apply_filters( 'hocwp_theme_settings_page_tabs', $this->tabs );
 
@@ -94,7 +103,7 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 					if ( isset( $this->tabs['extension'] ) ) {
 						$exts = $this->tabs['extension'];
 						unset( $this->tabs['extension'] );
-						$this->tabs['extension'] = $exts;
+						HT()->insert_to_array( $this->tabs, $exts, 'before_tail', 'extension' );
 
 						unset( $exts );
 					}

@@ -5,14 +5,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_settings_page_extension_tab( $tabs ) {
 	$tabs['extension'] = array(
-		'text' => __( 'Extensions', 'hocwp-theme' ),
-		'icon' => '<span class="dashicons dashicons-admin-plugins"></span>'
+		'text'     => __( 'Extensions', 'hocwp-theme' ),
+		'icon'     => '<span class="dashicons dashicons-admin-plugins"></span>',
+		'priority' => 10
 	);
 
 	return $tabs;
 }
 
-add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_extension_tab' );
+add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_extension_tab', 99 );
 
 global $hocwp_theme;
 

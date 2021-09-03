@@ -214,7 +214,7 @@ final class HOCWP_Theme {
 		return $array;
 	}
 
-	public function insert_to_array( $array, $item, $index, $key = '' ) {
+	public function insert_to_array( &$array, $item, $index, $key = '' ) {
 		if ( is_array( $array ) ) {
 			$count = count( $array );
 

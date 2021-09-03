@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-08-03 21:40+0700\n"
-"PO-Revision-Date: 2021-08-03 21:41+0700\n"
+"POT-Creation-Date: 2021-09-03 21:00+0700\n"
+"PO-Revision-Date: 2021-09-03 21:00+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -25,7 +25,7 @@ msgid "Menu"
 msgstr "Trình đơn"
 
 #: custom/views/template-amp.php:26
-#: hocwp/admin/admin-setting-page-extension.php:100
+#: hocwp/admin/admin-setting-page-extension.php:101
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -59,95 +59,95 @@ msgstr "Thanh bên"
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:9
+#: hocwp/admin/admin-setting-page-administration-tools.php:10
 msgid "Administration Tools"
 msgstr "Công cụ quản trị"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:14
+#: hocwp/admin/admin-setting-page-administration-tools.php:15
 msgid "Update Administrative Email"
 msgstr "Cập nhật email quản trị"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:15
+#: hocwp/admin/admin-setting-page-administration-tools.php:16
 msgid "Changing admin email address does not require confirmation."
 msgstr "Thay đổi địa chỉ email quản trị không cần xác nhận."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:20
+#: hocwp/admin/admin-setting-page-administration-tools.php:21
 msgid "New Email"
 msgstr "Địa chỉ email mới"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:25
+#: hocwp/admin/admin-setting-page-administration-tools.php:26
 msgid "Admin email has been changed successfully!"
 msgstr "Địa chỉ email quản trị đã được cập nhật thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:29
-#: hocwp/admin/admin.php:515
+#: hocwp/admin/admin-setting-page-administration-tools.php:30
+#: hocwp/admin/admin.php:558
 msgid "Change"
 msgstr "Thay đổi"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:35
+#: hocwp/admin/admin-setting-page-administration-tools.php:36
 msgid "Change URL"
 msgstr "Thay đổi đường dẫn"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:36
+#: hocwp/admin/admin-setting-page-administration-tools.php:37
 msgid "Change all old URLs in database into new URL."
 msgstr "Thay đổi tất cả đường dẫn cũ trong cơ sở dữ liệu thành đường dẫn mới."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:41
+#: hocwp/admin/admin-setting-page-administration-tools.php:42
 msgid "Old URL"
 msgstr "Đường dẫn cũ"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:42
+#: hocwp/admin/admin-setting-page-administration-tools.php:43
 msgid "New URL"
 msgstr "Đường dẫn mới"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:47
+#: hocwp/admin/admin-setting-page-administration-tools.php:48
 msgid "All URLs have been changed successfully!"
 msgstr "Tất cả đường dẫn đã được thay đổi thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:48
+#: hocwp/admin/admin-setting-page-administration-tools.php:49
 msgid "Please make a backup before you change site URL."
 msgstr ""
 "Vui lòng thực hiện sao lưu trước khi tiến hành thay đổi đường dẫn trang web."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:57
+#: hocwp/admin/admin-setting-page-administration-tools.php:58
 msgid "Vietnamese Administrative Boundaries"
 msgstr "Địa giới hành chính Việt Nam"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:58
+#: hocwp/admin/admin-setting-page-administration-tools.php:59
 msgid ""
 "Import information about Vietnamese administrative boundaries into the "
 "database automatically."
 msgstr "Nhập dữ liệu địa giới hành chính Việt Nam vào cơ sở dữ liệu."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:65
+#: hocwp/admin/admin-setting-page-administration-tools.php:66
 msgid "Import the administrative boundary at the district level?"
 msgstr "Nhập dữ liệu địa giới hành chính cấp quận huyện?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:68
+#: hocwp/admin/admin-setting-page-administration-tools.php:69
 msgid "District"
 msgstr "Quận huyện"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:72
+#: hocwp/admin/admin-setting-page-administration-tools.php:73
 msgid "Import the administrative boundary at the commune level?"
 msgstr "Nhập dữ liệu địa giới hành chính cấp phường xã?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:75
+#: hocwp/admin/admin-setting-page-administration-tools.php:76
 msgid "Commune"
 msgstr "Phường xã"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:80
+#: hocwp/admin/admin-setting-page-administration-tools.php:81
 msgid "Choose taxonomy"
 msgstr "Chọn loại chuyên mục"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:93
+#: hocwp/admin/admin-setting-page-administration-tools.php:94
 msgid "Taxonomy"
 msgstr "Loại chuyên mục"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:98
+#: hocwp/admin/admin-setting-page-administration-tools.php:99
 msgid "Data has been imported successfully!"
 msgstr "Dữ liệu đã được nhập thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:102
+#: hocwp/admin/admin-setting-page-administration-tools.php:103
 msgid "Import"
 msgstr "Nhập"
 
@@ -254,20 +254,20 @@ msgstr "Tiêu đề thư"
 msgid "Mail Message"
 msgstr "Nội dung thư"
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:117
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:115
 #: hocwp/inc/setup-after.php:161
 msgid "Extensions"
 msgstr "Gói mở rộng"
 
-#: hocwp/admin/admin-setting-page-extension.php:57
+#: hocwp/admin/admin-setting-page-extension.php:58
 msgid "Number of items per page:"
 msgstr "Số lượng đối tượng hiển thị trên mỗi trang:"
 
-#: hocwp/admin/admin-setting-page-extension.php:65
+#: hocwp/admin/admin-setting-page-extension.php:66
 msgid "Columns"
 msgstr "Cột"
 
-#: hocwp/admin/admin-setting-page-extension.php:94
+#: hocwp/admin/admin-setting-page-extension.php:95
 msgid "Filter extensions list"
 msgstr "Lọc danh sách gói mở rộng"
 
@@ -707,29 +707,29 @@ msgstr ""
 "Bạn phải thay đổi địa chỉ email của người quản trị để trang web được hoạt "
 "động, vui lòng đến %s và cập nhật nó."
 
-#: hocwp/admin/admin.php:51
+#: hocwp/admin/admin.php:49
 #, php-format
-msgid "%s posts have been updated to post status <strong>%s</strong>!"
-msgstr "%s bài viết đã được cập nhật trạng thái sang <strong>%s</strong>!"
+msgid "%s posts have been updated!"
+msgstr "%s bài viết đã được cập nhật!"
 
-#: hocwp/admin/admin.php:120 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:118 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:123 hocwp/inc/setup-after.php:170
+#: hocwp/admin/admin.php:121 hocwp/inc/setup-after.php:170
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:125 hocwp/admin/views/admin-delete-posts.php:11
+#: hocwp/admin/admin.php:123 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr "Xóa bài viết"
 
-#: hocwp/admin/admin.php:201 hocwp/admin/admin.php:212
+#: hocwp/admin/admin.php:199 hocwp/admin/admin.php:210
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:205
+#: hocwp/admin/admin.php:203
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -738,7 +738,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:216
+#: hocwp/admin/admin.php:214
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -747,12 +747,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:223
+#: hocwp/admin/admin.php:221
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:227
+#: hocwp/admin/admin.php:225
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -760,42 +760,55 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:309
+#: hocwp/admin/admin.php:307
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:351 hocwp/inc/template-post.php:327
+#: hocwp/admin/admin.php:349 hocwp/inc/template-post.php:327
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
-#: hocwp/admin/admin.php:389
+#: hocwp/admin/admin.php:387
 msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
-#: hocwp/admin/admin.php:412 hocwp/inc/template-general.php:1053
+#: hocwp/admin/admin.php:410 hocwp/admin/admin.php:559
+#: hocwp/inc/template-general.php:1053
 msgid "Close"
 msgstr "Đóng"
 
-#: hocwp/admin/admin.php:435
+#: hocwp/admin/admin.php:433
 #, php-format
 msgid "Template %s"
 msgstr "Mẫu %s"
 
-#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:495
+#: hocwp/admin/admin.php:444 hocwp/admin/admin.php:504
 msgid "Change status"
 msgstr "Thay đổi trạng thái"
 
-#: hocwp/admin/admin.php:505
+#: hocwp/admin/admin.php:445
+msgid "Change category"
+msgstr "Thay đổi chuyên mục"
+
+#: hocwp/admin/admin.php:506
+msgid "Close this box"
+msgstr "Đóng hộp này"
+
+#: hocwp/admin/admin.php:516
+msgid "Post status:"
+msgstr "Trạng thái bài viết:"
+
+#: hocwp/admin/admin.php:518
 msgid "Choose post status"
 msgstr "Chọn trạng thái bài viết"
 
-#: hocwp/admin/admin.php:517
-msgid "No post status found!"
-msgstr "Không có trạng thái bài viết nào được tìm thấy!"
-
-#: hocwp/admin/admin.php:521
-msgid "Close this box"
-msgstr "Đóng hộp này"
+#: hocwp/admin/admin.php:546 hocwp/inc/class-hocwp-theme-html-field.php:708
+#: hocwp/inc/class-hocwp-theme-html-field.php:750
+#: hocwp/inc/class-hocwp-theme-html-field.php:1605
+#: hocwp/inc/functions-scripts.php:315
+#, php-format
+msgid "Choose %s"
+msgstr "Chọn %s"
 
 #: hocwp/admin/ajax.php:44
 msgid "AJAX nonce is invalid."
@@ -972,7 +985,7 @@ msgstr ""
 "<strong>Thông báo:</strong> Mọi thiết lập đều đã được lưu. Để có thể lưu các "
 "cài đặt, đừng quên nhấn vào nút 'Lưu thiết lập' hoặc 'Lưu thay đổi'."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-tab.php:21
+#: hocwp/admin/class-hocwp-theme-admin-setting-tab.php:24
 msgid "The tab name is not valid."
 msgstr "Tên tab không đúng."
 
@@ -1846,14 +1859,6 @@ msgstr "-- Chọn trang --"
 msgid "-- Choose post --"
 msgstr "-- Chọn bài viết --"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:708
-#: hocwp/inc/class-hocwp-theme-html-field.php:750
-#: hocwp/inc/class-hocwp-theme-html-field.php:1595
-#: hocwp/inc/functions-scripts.php:315
-#, php-format
-msgid "Choose %s"
-msgstr "Chọn %s"
-
 #: hocwp/inc/class-hocwp-theme-html-field.php:710
 #: hocwp/inc/class-hocwp-theme-html-field.php:752
 msgid "Choose items"
@@ -1886,23 +1891,30 @@ msgstr "Xóa tất cả ảnh"
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1476
+#: hocwp/inc/class-hocwp-theme-html-field.php:1192
+#: hocwp/inc/class-hocwp-theme-html-field.php:1251
+#: hocwp/inc/class-hocwp-theme-html-field.php:1280
+#, php-format
+msgid "%s (ID: %s - Taxonomy: %s - Post count: %s)"
+msgstr "%s (Mã ID: %s - Thể loại: %s - Số bài viết: %s)"
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:1486
 msgid "Content:"
 msgstr "Nội dung:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1522
+#: hocwp/inc/class-hocwp-theme-html-field.php:1532
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1564
+#: hocwp/inc/class-hocwp-theme-html-field.php:1574
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1587
+#: hocwp/inc/class-hocwp-theme-html-field.php:1597
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1634
+#: hocwp/inc/class-hocwp-theme-html-field.php:1644
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -1910,57 +1922,57 @@ msgstr "Kéo để tìm địa chỉ!"
 msgid "File can not be compressed!"
 msgstr "Tập tin không thể nén!"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:371
+#: hocwp/inc/class-hocwp-theme-utility.php:364
 msgid ""
 "An error has occurred, which probably means the feed is down. Try again "
 "later."
 msgstr "Đã có lỗi xảy ra, có thể luồng tin không hoạt động. Hãy thử lại sau."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:621
+#: hocwp/inc/class-hocwp-theme-utility.php:614
 msgid "Monday"
 msgstr "Thứ hai"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:624
+#: hocwp/inc/class-hocwp-theme-utility.php:617
 msgid "Tuesday"
 msgstr "Thứ ba"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:627
+#: hocwp/inc/class-hocwp-theme-utility.php:620
 msgid "Wednesday"
 msgstr "Thứ tư"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:630
+#: hocwp/inc/class-hocwp-theme-utility.php:623
 msgid "Thursday"
 msgstr "Thứ năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:633
+#: hocwp/inc/class-hocwp-theme-utility.php:626
 msgid "Friday"
 msgstr "Thứ sáu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:636
+#: hocwp/inc/class-hocwp-theme-utility.php:629
 msgid "Saturday"
 msgstr "Thứ bảy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:639
+#: hocwp/inc/class-hocwp-theme-utility.php:632
 msgid "Sunday"
 msgstr "Chủ nhật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:652
+#: hocwp/inc/class-hocwp-theme-utility.php:645
 msgid "All date"
 msgstr "Tất cả ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:653
+#: hocwp/inc/class-hocwp-theme-utility.php:646
 msgid "Daily"
 msgstr "Hàng ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:654
+#: hocwp/inc/class-hocwp-theme-utility.php:647
 msgid "Weekly"
 msgstr "Hàng tuần"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:655
+#: hocwp/inc/class-hocwp-theme-utility.php:648
 msgid "Monthly"
 msgstr "Hàng tháng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:656
+#: hocwp/inc/class-hocwp-theme-utility.php:649
 msgid "Yearly"
 msgstr "Hàng năm"
 
@@ -3367,6 +3379,13 @@ msgstr ""
 #, php-format
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
+
+#, php-format
+#~ msgid "%s posts have been updated to post status <strong>%s</strong>!"
+#~ msgstr "%s bài viết đã được cập nhật trạng thái sang <strong>%s</strong>!"
+
+#~ msgid "No post status found!"
+#~ msgstr "Không có trạng thái bài viết nào được tìm thấy!"
 
 #~ msgid "Previous page"
 #~ msgstr "Trang trước"

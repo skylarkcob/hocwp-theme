@@ -1189,7 +1189,9 @@ final class HOCWP_Theme_HTML_Field {
 
 					$sub = $id . '_' . $tax->name;
 
-					$connects[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '">' . $obj->name . ' (' . $tax->labels->singular_name . ')</li>';
+					$label = sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $obj->name, $obj->term_id, $tax->labels->singular_name, $obj->count );
+
+					$connects[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '">' . $label . '</li>';
 				}
 			}
 
@@ -1246,7 +1248,9 @@ final class HOCWP_Theme_HTML_Field {
 							continue;
 						}
 
-						$tmp .= '<li class="ui-state-default" data-taxonomy="' . $taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '">' . $obj->name . ' (' . $tax->labels->singular_name . ')</li>';
+						$label = sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $obj->name, $obj->term_id, $tax->labels->singular_name, $obj->count );
+
+						$tmp .= '<li class="ui-state-default" data-taxonomy="' . $taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '" title="' . esc_attr( $label ) . '">' . $label . '</li>';
 					}
 
 					$ul->set_text( $tmp );
@@ -1273,7 +1277,9 @@ final class HOCWP_Theme_HTML_Field {
 					continue;
 				}
 
-				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '">' . $obj->name . ' (' . $tax->labels->singular_name . ')</li>';
+				$label = sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $obj->name, $obj->term_id, $tax->labels->singular_name, $obj->count );
+
+				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '" title="' . esc_attr( $label ) . '">' . $label . '</li>';
 			}
 		}
 
@@ -1431,9 +1437,13 @@ final class HOCWP_Theme_HTML_Field {
 		$args['value'] = $size[0];
 		self::field_label( $args );
 		self::input( $args );
+
 		echo ' <span>x </span>&nbsp;';
 		$args['name']  = $name_height;
 		$args['value'] = $size[1];
+
+		$args['id'] = $args['id'] . '_height';
+
 		self::input( $args );
 	}
 
