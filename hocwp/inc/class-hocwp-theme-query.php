@@ -74,6 +74,54 @@ final class HOCWP_Theme_Query {
 		return new WP_Query( $args );
 	}
 
+	public function same_category_posts( $args = array(), $hierarchical = true ) {
+		$taxs = get_object_taxonomies( get_post_type() );
+
+		$query = new WP_Query();
+
+		if ( HT()->array_has_value( $taxs ) ) {
+			if ( $hierarchical ) {
+				foreach ( $taxs as $key => $tax ) {
+					if ( ! is_taxonomy_hierarchical( $tax ) ) {
+						unset( $taxs[ $key ] );
+					}
+				}
+			}
+
+			$terms = wp_get_object_terms( get_the_ID(), $taxs );
+
+			if ( HT()->array_has_value( $terms ) ) {
+				$has = false;
+
+				$tax_query = $args['tax_query'] ?? '';
+
+				if ( ! is_array( $tax_query ) ) {
+					$tax_query = array();
+				}
+
+				foreach ( $terms as $term ) {
+					$tax_query[] = array(
+						'taxonomy' => $term->taxonomy,
+						'field'    => 'term_id',
+						'terms'    => array( $term->term_id )
+					);
+
+					$has = true;
+				}
+
+				if ( $has && HT()->array_has_value( $tax_query ) ) {
+					$tax_query['relation'] = 'AND';
+
+					$args['tax_query'] = $tax_query;
+
+					$query = new WP_Query( $args );
+				}
+			}
+		}
+
+		return $query;
+	}
+
 	public function related_posts( $args = array() ) {
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 
@@ -395,6 +443,21 @@ final class HOCWP_Theme_Query {
 
 			$args['orderby'] = 'post_views';
 			$args['order']   = 'DESC';
+		} elseif ( class_exists( '\WordPressPopularPosts\Query' ) ) {
+			$query = new \WordPressPopularPosts\Query();
+			$lists = $query->get_posts();
+
+			if ( HT()->array_has_value( $lists ) ) {
+				$ids = array();
+
+				foreach ( $lists as $obj ) {
+					$ids[] = $obj->id;
+				}
+
+				$args['post__in'] = $ids;
+				$args['orderby']  = 'post__in';
+				unset( $args['meta_key'] );
+			}
 		}
 
 		return new WP_Query( $args );
@@ -531,6 +594,7 @@ final class HOCWP_Theme_Query {
 		$sql .= " WHERE meta_key like '%$search%'";
 		$sql .= " GROUP BY meta_key";
 		$sql .= " ORDER BY meta_key";
+
 		return $wpdb->get_col( $sql );
 	}
 

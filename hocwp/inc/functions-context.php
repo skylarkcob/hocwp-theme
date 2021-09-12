@@ -144,7 +144,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 			$sidebar_position = $tmp;
 		}
 
-		$tmp = get_post_meta( get_the_ID(), 'full_width', true );
+		$tmp = HT_Frontend()->is_full_width();
 
 		if ( 1 == $tmp ) {
 			$classes[] = 'full-width';
@@ -302,10 +302,6 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 }
 
 function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
-	if ( 'amp' == $context ) {
-		return $atts;
-	}
-
 	$tag = strtolower( $tag );
 
 	$atts = (array) $atts;

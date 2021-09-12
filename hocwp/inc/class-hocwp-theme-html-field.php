@@ -212,7 +212,13 @@ final class HOCWP_Theme_HTML_Field {
 						}
 					}
 
+					$attributes = $atts['attributes'] ?? '';
+					unset( $atts['attributes'] );
+
 					$input->set_attributes( $atts );
+
+					$input->add_attributes( $attributes );
+
 					$lb->set_text( $input );
 					$lb->output();
 					echo '<br>';
@@ -234,7 +240,13 @@ final class HOCWP_Theme_HTML_Field {
 			self::field_label( $args, $input );
 		}
 
+		$attributes = $args['attributes'] ?? '';
+		unset( $args['attributes'] );
+
 		$input->set_attributes( $args );
+
+		$input->add_attributes( $attributes );
+
 		$input->output();
 
 		if ( 1 == $right_label || true == $right_label ) {
@@ -286,7 +298,14 @@ final class HOCWP_Theme_HTML_Field {
 
 		$textarea->set_text( $value );
 		self::field_label( $args );
+
+		$attributes = $args['attributes'] ?? '';
+		unset( $args['attributes'] );
+
 		$textarea->set_attributes( $args );
+
+		$textarea->add_attributes( $attributes );
+
 		$textarea->output();
 	}
 
@@ -331,7 +350,14 @@ final class HOCWP_Theme_HTML_Field {
 
 	public static function label( $args = array() ) {
 		$label = new HOCWP_Theme_HTML_Tag( 'label' );
+
+		$attributes = $args['attributes'] ?? '';
+		unset( $args['attributes'] );
+
 		$label->set_attributes( $args );
+
+		$label->add_attributes( $attributes );
+
 		$text = isset( $args['text'] ) ? $args['text'] : '';
 		$label->set_text( $text );
 		$label->output();
@@ -358,7 +384,13 @@ final class HOCWP_Theme_HTML_Field {
 				$ov   = isset( $args['value'] ) ? $args['value'] : $current;
 				unset( $args['text'] );
 				$args['value'] = $ov;
+
+				$attributes = $args['attributes'] ?? '';
+				unset( $args['attributes'] );
+
 				$opt->set_attributes( $args );
+
+				$opt->add_attributes( $attributes );
 			} else {
 				if ( empty( $args ) ) {
 					$text = $current;
@@ -399,6 +431,7 @@ final class HOCWP_Theme_HTML_Field {
 		$value   = isset( $args['value'] ) ? $args['value'] : '';
 		$select  = new HOCWP_Theme_HTML_Tag( 'select' );
 		$options = isset( $args['options'] ) ? $args['options'] : '';
+
 		unset( $args['value'], $args['options'] );
 		$oh = '';
 
@@ -428,6 +461,7 @@ final class HOCWP_Theme_HTML_Field {
 					$optgroup = new HOCWP_Theme_HTML_Tag( 'optgroup' );
 					$ops_html = '';
 					$label    = $option['label'];
+
 					unset( $option['label'] );
 
 					foreach ( $option as $k => $child ) {
@@ -451,7 +485,13 @@ final class HOCWP_Theme_HTML_Field {
 
 		unset( $args['option_all'] );
 
+		$attributes = $args['attributes'] ?? '';
+		unset( $args['attributes'] );
+
 		$select->set_attributes( $args );
+
+		$select->add_attributes( $attributes );
+
 		$select->set_text( $oh );
 		$select->output();
 	}
@@ -503,6 +543,7 @@ final class HOCWP_Theme_HTML_Field {
 
 			$options  = array();
 			$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : 'category';
+
 			unset( $args['taxonomy'] );
 
 			if ( is_array( $taxonomy ) && 1 == count( $taxonomy ) ) {
@@ -518,6 +559,8 @@ final class HOCWP_Theme_HTML_Field {
 			$default_args = array( 'hide_empty' => false );
 			$term_args    = wp_parse_args( $term_args, $default_args );
 
+			$taxonomies = null;
+
 			if ( is_array( $taxonomy ) ) {
 				$taxonomies = $taxonomy;
 
@@ -532,7 +575,7 @@ final class HOCWP_Theme_HTML_Field {
 
 					foreach ( $terms as $obj ) {
 						$options[ $taxonomy ][] = array(
-							'text'          => $obj->name,
+							'text'          => $obj->name . ' (' . $obj->count . ')',
 							'value'         => $taxonomy . ',' . $obj->term_id,
 							'data-term'     => $obj->term_id,
 							'data-taxonomy' => $taxonomy
@@ -543,7 +586,7 @@ final class HOCWP_Theme_HTML_Field {
 				$terms = HT_Util()->get_terms( $taxonomy, $term_args );
 
 				foreach ( $terms as $obj ) {
-					$options[ $obj->term_id ] = $obj->name;
+					$options[ $obj->term_id ] = $obj->name . ' (' . $obj->count . ')';
 				}
 			}
 
@@ -1150,6 +1193,18 @@ final class HOCWP_Theme_HTML_Field {
 		self::sortable_term( $args );
 	}
 
+	public static function term_label( $term, $tax ) {
+		if ( $term instanceof WP_Term && $tax instanceof WP_Taxonomy ) {
+			return sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $term->name, $term->term_id, $tax->labels->singular_name, $term->count );
+		} elseif ( $term instanceof WP_Term ) {
+			return sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $term->name, $term->term_id, $term->taxonomy, $term->count );
+		} elseif ( $tax instanceof WP_Taxonomy ) {
+			return sprintf( __( 'Unknown name (Taxonomy: %s)', 'hocwp-theme' ), $tax->labels->singular_name );
+		}
+
+		return __( 'Unknown', 'hocwp-theme' );
+	}
+
 	public static function sortable_term( $args = array() ) {
 		$id = $args['id'];
 		$id = sanitize_html_class( $id );
@@ -1189,7 +1244,7 @@ final class HOCWP_Theme_HTML_Field {
 
 					$sub = $id . '_' . $tax->name;
 
-					$label = sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $obj->name, $obj->term_id, $tax->labels->singular_name, $obj->count );
+					$label = self::term_label( $obj, $tax );
 
 					$connects[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '">' . $label . '</li>';
 				}
@@ -1248,7 +1303,7 @@ final class HOCWP_Theme_HTML_Field {
 							continue;
 						}
 
-						$label = sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $obj->name, $obj->term_id, $tax->labels->singular_name, $obj->count );
+						$label = self::term_label( $obj, $tax );
 
 						$tmp .= '<li class="ui-state-default" data-taxonomy="' . $taxonomy . '" data-id="' . $obj->term_id . '" data-connect-list="' . $sub . '" title="' . esc_attr( $label ) . '">' . $label . '</li>';
 					}
@@ -1277,7 +1332,7 @@ final class HOCWP_Theme_HTML_Field {
 					continue;
 				}
 
-				$label = sprintf( __( '%s (ID: %s - Taxonomy: %s - Post count: %s)', 'hocwp-theme' ), $obj->name, $obj->term_id, $tax->labels->singular_name, $obj->count );
+				$label = self::term_label( $obj, $tax );
 
 				$lists[] = '<li class="ui-state-default" data-taxonomy="' . $obj->taxonomy . '" data-id="' . $obj->term_id . '" title="' . esc_attr( $label ) . '">' . $label . '</li>';
 			}
@@ -1732,7 +1787,9 @@ final class HOCWP_Theme_HTML_Field {
 		$args['attributes'] = wp_parse_args( $attributes, $defaults );
 
 		$html = new HOCWP_Theme_HTML_Tag( $args['tag_name'] );
+
 		$html->set_attributes( $args['attributes'] );
+
 		$html->set_text( $args['text'] );
 		$html->output();
 	}

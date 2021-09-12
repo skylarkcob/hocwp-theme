@@ -27,6 +27,16 @@ final class HOCWP_Theme_HTML_Tag {
 		return array_key_exists( $attribute_name, $this->attributes );
 	}
 
+	public function add_attributes( $attributes ) {
+		if ( is_array( $attributes ) ) {
+			if ( is_array( $this->attributes ) ) {
+				$this->attributes = wp_parse_args( $attributes, $this->attributes );
+			} else {
+				$this->attributes = $attributes;
+			}
+		}
+	}
+
 	public function add_attribute( $attribute_name, $value = null ) {
 		if ( ! is_array( $this->attributes ) ) {
 			$this->attributes = array();

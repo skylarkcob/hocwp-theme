@@ -593,13 +593,16 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					HT_HTML_Field()->label( $args );
 
 					$args = array(
-						'id'       => $this->get_field_id( 'term' ),
-						'name'     => $this->get_field_name( 'term' ),
-						'taxonomy' => $taxonomies,
-						'class'    => 'widefat',
-						'multiple' => 'multiple',
-						'value'    => $term,
-						'callback' => 'select_term'
+						'id'         => $this->get_field_id( 'term' ),
+						'name'       => $this->get_field_name( 'term' ),
+						'taxonomy'   => $taxonomies,
+						'class'      => 'widefat',
+						'multiple'   => 'multiple',
+						'value'      => $term,
+						'attributes' => array(
+							'data-placeholder' => __( 'Choose some terms', 'hocwp-theme' )
+						),
+						'callback'   => 'select_term'
 					);
 
 					HT_HTML_Field()->chosen( $args );

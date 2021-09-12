@@ -545,8 +545,16 @@ final class HOCWP_Theme {
 	public function attribute_to_array( $attr ) {
 		if ( ! empty( $attr ) ) {
 			if ( ! is_array( $attr ) ) {
+				$has_amp = ( false !== strpos( $attr, 'amp' ) );
+
+				if ( $has_amp ) {
+					$attr = str_replace( 'amp', '', $attr );
+				}
+
 				$x    = (array) new SimpleXMLElement( "<element $attr />" );
 				$attr = current( $x );
+
+				$attr['amp'] = '';
 
 				return $attr;
 			}
@@ -796,6 +804,24 @@ final class HOCWP_Theme {
 		}
 
 		return $result;
+	}
+
+	public function get_images_from_dir( $dir, $extensions = array( 'jpg', 'jpeg', 'png', 'gif' ) ) {
+		if ( $handle = @opendir( $dir ) ) {
+			$files = array();
+
+			while ( false !== ( $entry = readdir( $handle ) ) ) {
+				$files[] = $entry;
+			}
+
+			$images = preg_grep( '/\.(' . join( '|', $extensions ) . ')(?:[\?\#].*)?$/i', $files );
+
+			closedir( $handle );
+
+			return $images;
+		}
+
+		return null;
 	}
 
 	public function get_all_image_from_string( $data, $output = 'img' ) {

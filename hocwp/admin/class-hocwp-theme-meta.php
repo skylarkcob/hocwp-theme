@@ -78,6 +78,9 @@ abstract class HOCWP_Theme_Meta {
 			} elseif ( array( $class, 'datetime_picker' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-datepicker' );
 				$this->load_style( 'jquery-ui-style' );
+			} elseif ( array( $class, 'color_picker' ) === $callback ) {
+				$this->load_script( 'wp-color-picker' );
+				$this->load_script( 'hocwp-theme-color-picker' );
 			} elseif ( array( $class, 'layout' ) === $callback ) {
 				$this->load_script( 'hocwp-theme' );
 				$this->load_script( 'hocwp-theme-admin' );

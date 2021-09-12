@@ -163,6 +163,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		wp_nav_menu( wp_parse_args( $args, array( 'theme_location' => '' ) ) );
 	}
 
+	public function is_full_width() {
+		$full_width = is_page_template( 'custom/page-templates/full-width.php' );
+
+		if ( ! $full_width && ( is_single() || is_page() || is_singular() ) ) {
+			$full_width = get_post_meta( get_the_ID(), 'full_width', true );
+		}
+
+		return $full_width;
+	}
+
 	public function the_query_pagination( $args = array() ) {
 		self::pagination( $args );
 	}
@@ -644,8 +654,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				$title = sprintf( __( 'Search results for: %s', 'hocwp-theme' ), $title );
 			}
 		} elseif ( ! ( is_home() && is_front_page() ) && ! is_front_page() ) {
-			// Blog archive page
-			$title = __( 'Recent posts', 'hocwp-theme' );
+			if ( is_page_template() ) {
+				$title = get_the_title();
+			} else {
+				// Blog archive page
+				$title = __( 'Recent posts', 'hocwp-theme' );
+			}
 		} else {
 			$title = __( 'Archives', 'hocwp-theme' );
 		}
@@ -1086,6 +1100,174 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
                 window.requestAnimationFrame(step);
             }
         </script>
+		<?php
+	}
+
+	/**
+	 * Convert post loop tag into specific HTML.
+	 *
+	 * @param string $thumb_size Post thumbnail size.
+	 * @param array $sort List of HTML tag for generating on loop post.
+	 *
+	 * @return array The converted HTML for loop tag.
+	 */
+	public function convert_loop_tag_to_html( $thumb_size = 'post-thumbnail', $sort = array() ) {
+		if ( is_string( $sort ) && ! empty( $sort ) ) {
+			$sort = array( $sort );
+		}
+
+		// Displaying default post HTML in loop
+		if ( empty( $sort ) ) {
+			$sort = array( 'thumbnail', 'post_title', 'post_excerpt' );
+		}
+
+		foreach ( $sort as $index => $sort_key ) {
+			$html = $sort_key;
+
+			$thumb_box = false;
+
+			// User can use post_thumbnail or thumbnail tag for display post thumbnail HTML
+			$html = str_replace( 'post_thumbnail', 'thumbnail', $html );
+
+			if ( $thumb_size && false !== strpos( $html, 'thumbnail' ) ) {
+				$thumb_box = ( false !== strpos( $html, ' ' ) );
+				$thumbnail = get_the_post_thumbnail( null, $thumb_size );
+
+				if ( ! empty( $thumbnail ) ) {
+					$thumbnail = sprintf( '<a href="%s" title="%s" class="post-thumb">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), $thumbnail );
+				}
+
+				$html = str_replace( 'thumbnail', $thumbnail, $html );
+			}
+
+			if ( false !== strpos( $html, 'post_title' ) ) {
+				$post_title = get_the_title();
+
+				if ( ! empty( $post_title ) ) {
+					$post_title = sprintf( '<a href="%s" title="%s">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), get_the_title() );
+					$post_title = sprintf( '<h2 class="post-title">%s</h2>', $post_title );
+				}
+
+				$html = str_replace( 'post_title', $post_title, $html );
+			}
+
+			if ( false !== strpos( $html, 'posted_on' ) ) {
+				$parts = explode( '|', $html );
+
+				$count = count( $parts );
+
+				if ( 2 != $count ) {
+					$date = get_the_date();
+
+					$modified = get_the_modified_date();
+				} else {
+					$date = get_the_date( $parts[1] );
+
+					$modified = get_the_modified_date( $parts[1] );
+
+					$html = str_replace( '|' . $parts[1], '', $html );
+				}
+
+				$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+
+				if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+					$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+				}
+
+				$time_string = sprintf(
+					$time_string,
+					esc_attr( get_the_date( DATE_W3C ) ),
+					esc_html( $date ),
+					esc_attr( get_the_modified_date( DATE_W3C ) ),
+					esc_html( $modified )
+				);
+
+				$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
+
+				$posted_on = '<span class="posted-on">' . $posted_on . '</span>';
+
+				$html = str_replace( 'posted_on', $posted_on, $html );
+			}
+
+			if ( false !== strpos( $html, 'post_excerpt' ) ) {
+				$excerpt = get_the_excerpt();
+
+				if ( ! empty( $excerpt ) ) {
+					$excerpt = sprintf( '<p class="summary">%s</p>', $excerpt );
+				}
+
+				$html = str_replace( 'post_excerpt', $excerpt, $html );
+			}
+
+			if ( false !== strpos( $html, 'category' ) ) {
+				$taxs  = get_object_taxonomies( get_post_type(), 'objects' );
+				$terms = '';
+
+				if ( HT()->array_has_value( $taxs ) ) {
+					ob_start();
+
+					foreach ( $taxs as $tax ) {
+						if ( $tax instanceof WP_Taxonomy && $tax->hierarchical ) {
+							the_terms( get_the_ID(), $tax->name );
+						}
+					}
+
+					$terms = ob_get_clean();
+				}
+
+				if ( ! empty( $terms ) ) {
+					$terms = sprintf( '<div class="terms">%s</div>', $terms );
+				}
+
+				$html = str_replace( 'category', $terms, $html );
+			}
+
+			if ( $thumb_box ) {
+				$html = sprintf( '<div class="thumb-box">%s</div>', $html );
+			}
+
+			$sort[ $index ] = $html;
+		}
+
+		return $sort;
+	}
+
+	public function post_meta( $sort = array() ) {
+		if ( is_string( $sort ) && ! empty( $sort ) ) {
+			$sort = array( $sort );
+		}
+
+		if ( empty( $sort ) ) {
+			$sort = array( 'posted_on', 'category' );
+		}
+
+		$sort = $this->convert_loop_tag_to_html( null, $sort );
+
+		$sort = apply_filters( 'hocwp_theme_loop_post_meta_html_data', $sort );
+
+		$html = join( '', $sort );
+		echo $html;
+	}
+
+	public function loop_post( $thumb_size = 'post-thumbnail', $post_class = '', $sort = array() ) {
+		if ( is_string( $sort ) && ! empty( $sort ) ) {
+			$sort = array( $sort );
+		}
+
+		// Displaying default post HTML in loop
+		if ( empty( $sort ) ) {
+			$sort = array( 'thumbnail', 'post_title', 'post_excerpt' );
+		}
+
+		$sort = $this->convert_loop_tag_to_html( $thumb_size, $sort );
+
+		$sort = apply_filters( 'hocwp_theme_loop_post_html_data', $sort );
+
+		$html = join( '', $sort );
+		?>
+        <div <?php post_class( $post_class ); ?>>
+			<?php echo $html; ?>
+        </div>
 		<?php
 	}
 

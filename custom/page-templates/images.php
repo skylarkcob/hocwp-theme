@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Blog
+ * Template Name: Images
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,7 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 
 $args = array(
-	'paged' => HT_Frontend()->get_paged()
+	'paged' => HT_Frontend()->get_paged(),
+	'tax_query'      => array(
+		'relation' => 'AND',
+		array(
+			'taxonomy' => 'post_format',
+			'field'    => 'slug',
+			'terms'    => array( 'post-format-image' ),
+		)
+	)
 );
 
 $query = new WP_Query( $args );

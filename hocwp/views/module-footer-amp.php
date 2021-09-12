@@ -12,5 +12,6 @@ hocwp_theme_html_tag_close( 'footer' );
 do_action( 'hocwp_theme_site_footer_after' );
 hocwp_theme_html_tag_close( 'div' );
 do_action( 'hocwp_theme_wp_footer_amp' );
+wp_footer();
 hocwp_theme_html_tag_close( 'body' );
 hocwp_theme_html_tag_close( 'html' );

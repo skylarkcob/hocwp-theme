@@ -1,4 +1,11 @@
 == Changelog ==
+= 6.8.5 =
+* 03/09/2021: Add functions for user change category in bulk actions.
+* 12/09/2021: Add default Images and Videos template.
+* 12/09/2021: Add function to display post in loop.
+* 12/09/2021: Add placeholder for terms chosen.
+* 12/09/2021: Hide sidebar for Full Width template.
+
 = 6.8.4 =
 * Theme requires PHP version 7.4 or later.
 * Update plugin lists table pagination.

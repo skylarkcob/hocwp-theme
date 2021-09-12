@@ -537,9 +537,11 @@ div.menu li a {
     float: right;
 }
 
+.full-width .site-content .main-content,
 .full-width .site-content .sidebar,
 .full-width .site-content .content-area {
     width: 100%;
+    max-width: 100%;
 }
 
 .full-width .site-content .sidebar {
