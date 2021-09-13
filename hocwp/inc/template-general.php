@@ -1910,13 +1910,3 @@ function hocwp_theme_q2w3_fixed_widget_filter( $value ) {
 }
 
 add_filter( 'option_q2w3_fixed_widget', 'hocwp_theme_q2w3_fixed_widget_filter' );
-
-function hocwp_theme_show_admin_bar_filter( $show ) {
-	if ( HT_Util()->is_amp() ) {
-		$show = false;
-	}
-
-	return $show;
-}
-
-add_filter( 'show_admin_bar', 'hocwp_theme_show_admin_bar_filter' );

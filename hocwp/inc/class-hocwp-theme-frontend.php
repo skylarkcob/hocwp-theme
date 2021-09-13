@@ -167,10 +167,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$full_width = is_page_template( 'custom/page-templates/full-width.php' );
 
 		if ( ! $full_width && ( is_single() || is_page() || is_singular() ) ) {
-			$full_width = get_post_meta( get_the_ID(), 'full_width', true );
+			if ( is_single() || is_page() || is_singular() ) {
+				$full_width = get_post_meta( get_the_ID(), 'full_width', true );
+			} elseif ( is_category() || is_tag() || is_tax() ) {
+				$full_width = get_term_meta( get_queried_object_id(), 'full_width', true );
+			}
 		}
 
-		return $full_width;
+		return apply_filters( 'hocwp_theme_is_template_full_width', $full_width );
 	}
 
 	public function the_query_pagination( $args = array() ) {
