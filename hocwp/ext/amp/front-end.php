@@ -58,6 +58,16 @@ function hocwp_ext_amp_wp_action() {
 			exit;
 		}
 	}
+
+	// Fix Referenced AMP URL is self-canonical AMP
+	if ( is_page() || is_singular() || is_single() ) {
+		$amp_status = get_post_meta( get_the_ID(), 'amp_status', true );
+
+		if ( 'disabled' != $amp_status ) {
+			remove_action( 'wp_head', 'rel_canonical' );
+			add_filter( 'wpseo_canonical', '__return_false', 10, 1 );
+		}
+	}
 }
 
 add_action( 'wp', 'hocwp_ext_amp_wp_action' );

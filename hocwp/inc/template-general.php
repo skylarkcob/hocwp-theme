@@ -1758,6 +1758,10 @@ function hocwp_theme_check_endpoint() {
 			exit;
 		}
 	}
+
+	if(function_exists('')) {
+	    hocwp_ext_amp_custom_wp_head();
+	}
 }
 
 add_action( 'wp', 'hocwp_theme_check_endpoint' );

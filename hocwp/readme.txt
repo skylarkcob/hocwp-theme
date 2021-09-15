@@ -5,6 +5,7 @@
 * 12/09/2021: Add function to display post in loop.
 * 12/09/2021: Add placeholder for terms chosen.
 * 12/09/2021: Hide sidebar for Full Width template.
+* 15/09/2021: Fix Referenced AMP URL is self-canonical AMP error.
 
 = 6.8.4 =
 * Theme requires PHP version 7.4 or later.
