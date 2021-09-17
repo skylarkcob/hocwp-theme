@@ -447,6 +447,21 @@ final class HOCWP_Theme_Query {
 			$query = new \WordPressPopularPosts\Query();
 			$lists = $query->get_posts();
 
+			if ( ! HT()->array_has_value( $lists ) ) {
+				$query = new \WordPressPopularPosts\Query();
+				$lists = $query->get_posts( 'last7days' );
+			}
+
+			if ( ! HT()->array_has_value( $lists ) ) {
+				$query = new \WordPressPopularPosts\Query();
+				$lists = $query->get_posts( 'last30days' );
+			}
+
+			if ( ! HT()->array_has_value( $lists ) ) {
+				$query = new \WordPressPopularPosts\Query();
+				$lists = $query->get_posts( 'all' );
+			}
+
 			if ( HT()->array_has_value( $lists ) ) {
 				$ids = array();
 

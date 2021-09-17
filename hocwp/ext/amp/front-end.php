@@ -45,6 +45,9 @@ function hocwp_ext_amp_custom_wp_head() {
 			}
 		}
 	}
+
+	$value = HT_Options()->get_tab( 'amp_head', '', 'amp' );
+	echo $value;
 }
 
 add_action( 'hocwp_theme_wp_head_amp', 'hocwp_ext_amp_custom_wp_head' );

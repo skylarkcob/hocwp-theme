@@ -76,6 +76,9 @@ function hocwp_theme_settings_page_amp_field() {
 	$field    = hocwp_theme_create_setting_field( 'amp_footer', __( 'Site Footer', 'hocwp-theme' ), 'editor', array(), 'html', 'amp' );
 	$fields[] = $field;
 
+	$field    = hocwp_theme_create_setting_field( 'amp_head', __( 'Add to Head', 'hocwp-theme' ), 'editor', array(), 'html', 'amp' );
+	$fields[] = $field;
+
 	return $fields;
 }
 
