@@ -76,7 +76,12 @@ function hocwp_theme_settings_page_amp_field() {
 	$field    = hocwp_theme_create_setting_field( 'amp_footer', __( 'Site Footer', 'hocwp-theme' ), 'editor', array(), 'html', 'amp' );
 	$fields[] = $field;
 
-	$field    = hocwp_theme_create_setting_field( 'amp_head', __( 'Add to Head', 'hocwp-theme' ), 'textarea', array(), 'html', 'amp' );
+	$args = array(
+		'data-code-editor' => 1,
+		'data-mode'        => 'htmlmixed'
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'amp_head', __( 'Add to Head', 'hocwp-theme' ), 'textarea', $args, 'html', 'amp' );
 	$fields[] = $field;
 
 	return $fields;
