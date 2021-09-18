@@ -141,6 +141,13 @@ function hocwp_theme_after_admin_init_action() {
 	if ( ! function_exists( 'hocwp_theme_check_license' ) || ! has_action( 'init', 'hocwp_theme_check_license' ) ) {
 		exit;
 	}
+
+	// Create theme text file for current theme information
+	$filename = trailingslashit( dirname( HOCWP_THEME_PATH ) ) . HOCWP_THEME_NAME . '.themename';
+
+	if ( ! file_exists( $filename ) ) {
+		HT_Util()->write_all_text( $filename, HOCWP_THEME_NAME );
+	}
 }
 
 add_action( 'admin_init', 'hocwp_theme_after_admin_init_action' );
