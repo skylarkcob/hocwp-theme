@@ -191,6 +191,9 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 		}
 	}
 
+	$field    = new HOCWP_Theme_Admin_Setting_Field( 'mobile_logo', __( 'Mobile Logo', 'hocwp-theme' ), 'media_upload', '', 'id', 'general', 'site_identity' );
+	$fields[] = $field;
+
 	return $fields;
 }
 

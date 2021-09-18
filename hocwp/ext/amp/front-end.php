@@ -67,8 +67,8 @@ function hocwp_ext_amp_wp_action() {
 		$amp_status = get_post_meta( get_the_ID(), 'amp_status', true );
 
 		if ( 'disabled' != $amp_status ) {
-			remove_action( 'wp_head', 'rel_canonical' );
-			add_filter( 'wpseo_canonical', '__return_false', 10, 1 );
+			add_filter( 'get_canonical_url', '__return_false', 99 );
+			add_filter( 'wpseo_canonical', '__return_false', 99 );
 		}
 	}
 }

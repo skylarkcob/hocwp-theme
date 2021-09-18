@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-09-17 23:17+0700\n"
-"PO-Revision-Date: 2021-09-17 23:18+0700\n"
+"POT-Creation-Date: 2021-09-18 22:44+0700\n"
+"PO-Revision-Date: 2021-09-18 22:44+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -315,6 +315,10 @@ msgstr "Mã HTML"
 #: hocwp/admin/admin-setting-page-general.php:145
 msgid "Logo Image"
 msgstr "Hình ảnh"
+
+#: hocwp/admin/admin-setting-page-general.php:194
+msgid "Mobile Logo"
+msgstr "Logo cho điện thoại"
 
 #: hocwp/admin/admin-setting-page-home.php:6
 #: hocwp/inc/class-hocwp-theme-frontend.php:776
@@ -1438,7 +1442,7 @@ msgstr "CSS tùy chỉnh"
 msgid "Site Footer"
 msgstr "Chân trang"
 
-#: hocwp/ext/amp/admin-setting-page.php:79
+#: hocwp/ext/amp/admin-setting-page.php:84
 msgid "Add to Head"
 msgstr "Thêm vào thẻ Head"
 
@@ -2563,20 +2567,20 @@ msgstr ""
 msgid "Accept"
 msgstr "Chấp nhận"
 
-#: hocwp/inc/template-general.php:1581
+#: hocwp/inc/template-general.php:1589
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1593
+#: hocwp/inc/template-general.php:1601
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1594
+#: hocwp/inc/template-general.php:1602
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1707
+#: hocwp/inc/template-general.php:1715
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"

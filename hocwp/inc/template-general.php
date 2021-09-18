@@ -1099,6 +1099,14 @@ function hocwp_theme_theme_mod_custom_logo_filter( $mod ) {
 	if ( 'image' == $logo_display ) {
 		$id = isset( $options['general']['logo_image'] ) ? $options['general']['logo_image'] : '';
 
+		if ( wp_is_mobile() ) {
+			$mobile = isset( $options['general']['mobile_logo'] ) ? $options['general']['mobile_logo'] : '';
+
+			if ( HT_Media()->exists( $mobile ) ) {
+				$id = $mobile;
+			}
+		}
+
 		if ( HT()->is_positive_number( $id ) ) {
 			$mod = $id;
 		}
@@ -1757,10 +1765,6 @@ function hocwp_theme_check_endpoint() {
 			wp_redirect( get_permalink( $query->posts[0] ) );
 			exit;
 		}
-	}
-
-	if(function_exists('')) {
-	    hocwp_ext_amp_custom_wp_head();
 	}
 }
 
