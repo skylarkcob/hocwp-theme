@@ -70,6 +70,13 @@ function hocwp_theme_switch_theme_action( $new_name, $new_theme ) {
 
 	set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
 	do_action( 'hocwp_theme_deactivation' );
+
+	// Delete theme information text file for current theme
+	$filename = trailingslashit( dirname( HOCWP_THEME_PATH ) ) . HOCWP_THEME_NAME . '.themename';
+
+	if ( file_exists( $filename ) ) {
+		@unlink( $filename );
+	}
 }
 
 add_action( 'switch_theme', 'hocwp_theme_switch_theme_action', 10, 2 );
