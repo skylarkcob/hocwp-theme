@@ -286,6 +286,13 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 				}
 			}
 
+			$sub = substr( $att, 0, 5 );
+
+			if ( 'data_' == $sub ) {
+				$att = ltrim( $att, 'data_' );
+				$att = 'data-' . $att;
+			}
+
 			$attributes .= sprintf( '%s="%s" ', $att, esc_attr( $attribute ) );
 		}
 
