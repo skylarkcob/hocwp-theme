@@ -7,6 +7,7 @@
 * 12/09/2021: Hide sidebar for Full Width template.
 * 15/09/2021: Fix Referenced AMP URL is self-canonical AMP error.
 * 18/09/2021: Add mobile logo image setting.
+* 19/09/2021: Fix An active PHP session was detected site health.
 
 = 6.8.4 =
 * Theme requires PHP version 7.4 or later.

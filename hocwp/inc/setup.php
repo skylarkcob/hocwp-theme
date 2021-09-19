@@ -5,7 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_setup_start_session() {
 	if ( ! session_id() ) {
-		session_start();
+		session_start( [
+			'read_and_close' => true,
+		] );
 	}
 
 	if ( isset( $_REQUEST['get_terms'] ) ) {
@@ -51,6 +53,12 @@ function hocwp_theme_setup_start_session() {
 }
 
 add_action( 'init', 'hocwp_theme_setup_start_session' );
+
+function hocwp_theme_close_session() {
+	session_write_close();
+}
+
+add_action( 'requests-curl.before_request', 'hocwp_theme_close_session' );
 
 function hocwp_theme_after_switch_theme_action( $old_name, $old_theme ) {
 	if ( ! current_user_can( 'switch_themes' ) ) {
