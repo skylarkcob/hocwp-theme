@@ -650,7 +650,8 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 
 	ob_start();
 	?>
-    <button type="submit" class="btn js-search-submit search-submit">
+    <button type="submit" class="btn js-search-submit search-submit"
+            aria-label="<?php esc_attr_e( 'Search', 'hocwp-theme' ); ?>">
 		<?php
 		if ( empty( $icon ) ) {
 			HOCWP_Theme_SVG_Icon::search();
@@ -777,7 +778,7 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 	?>
     <div class="menu-overlay-bg"></div>
     <button id="<?php echo esc_attr( $id ); ?>" class="menu-toggle" aria-controls="<?php echo $control; ?>"
-            aria-expanded="false">
+            aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
 		<?php
 		HT_SVG_Icon()->bars();
 		HT_SVG_Icon()->close();

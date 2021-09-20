@@ -12,7 +12,8 @@ hocwp_theme_load_views( 'module-print-dev-info' );
 echo '</div>';
 ?>
 <button id="copySystemInfo" class="button"
-        data-copied-text="<?php esc_attr_e( 'Copied!', 'hocwp-theme' ); ?>"><?php _e( 'Copy all', 'hocwp-theme' ); ?></button>
+        data-copied-text="<?php esc_attr_e( 'Copied!', 'hocwp-theme' ); ?>"
+        aria-label="<?php esc_attr_e( 'Copy all', 'hocwp-theme' ); ?>"><?php _e( 'Copy all', 'hocwp-theme' ); ?></button>
 <script>
     function copyFunction() {
         const el = this;

@@ -1072,7 +1072,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
         <button id="backToTop" class="back-to-top"
                 onclick="scrollToTop(1000);"
                 title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
-                style="<?php echo $style; ?>"><?php echo $text; ?></button>
+                style="<?php echo $style; ?>"
+                aria-label="<?php esc_attr_e( 'Go to top', 'hocwp-theme' ); ?>"><?php echo $text; ?></button>
         <!--suppress JSUnresolvedVariable -->
         <script>
             window.onscroll = function () {

@@ -905,7 +905,8 @@ final class HOCWP_Theme_HTML_Field {
 					<?php //self::input( $args ); ?>
                 </div>
                 <button type="button" name="add-row"
-                        class="button add-data-html"><?php _e( 'Add', 'hocwp-theme' ); ?></button>
+                        class="button add-data-html"
+                        aria-label="<?php esc_attr_e( 'Add', 'hocwp-theme' ); ?>"><?php _e( 'Add', 'hocwp-theme' ); ?></button>
             </div>
 			<?php
 		}
@@ -944,12 +945,14 @@ final class HOCWP_Theme_HTML_Field {
 		?>
         <div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
              data-column="<?php echo esc_attr( $column ); ?>">
-            <button type="button" class="button insert-medias insert-images add_media"><span
+            <button type="button" class="button insert-medias insert-images add_media"
+                    aria-label="<?php esc_attr_e( 'Add images', 'hocwp-theme' ); ?>"><span
                         class="wp-media-buttons-icon"></span> <?php _e( 'Add images', 'hocwp-theme' ); ?></button>
 			<?php
 			if ( ! empty( $images ) ) {
 				?>
-                <button type="button" class="button remove-medias remove-images add_media"><span
+                <button type="button" class="button remove-medias remove-images add_media"
+                        aria-label="<?php esc_attr_e( 'Remove all images', 'hocwp-theme' ); ?>"><span
                             class="wp-media-buttons-icon"></span> <?php _e( 'Remove all images', 'hocwp-theme' ); ?>
                 </button>
 				<?php
@@ -1649,7 +1652,8 @@ final class HOCWP_Theme_HTML_Field {
                     </a>
                     <button type="button"
                             class="remove-media-data button"
-                            style="<?php echo $rms; ?>"><?php _e( 'Remove media', 'hocwp-theme' ); ?></button>
+                            style="<?php echo $rms; ?>"
+                            aria-label="<?php esc_attr_e( 'Remove media', 'hocwp-theme' ); ?>"><?php _e( 'Remove media', 'hocwp-theme' ); ?></button>
                 </p>
                 <input id="<?php echo $args['id']; ?>_id" name="<?php echo $args['name']; ?>[id]"
                        value="<?php echo $id; ?>"

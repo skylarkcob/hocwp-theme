@@ -24,7 +24,8 @@ $args = array(
 	'attributes'  => array(
 		'data-ajax-button'  => 1,
 		'data-message'      => __( 'Admin email has been changed successfully!', 'hocwp-theme' ),
-		'data-change-email' => 1
+		'data-change-email' => 1,
+		'aria-label'        => __( 'Change', 'hocwp-theme' )
 	),
 	'button_type' => 'button',
 	'text'        => __( 'Change', 'hocwp-theme' )
@@ -47,7 +48,8 @@ $args = array(
 		'data-ajax-button'     => 1,
 		'data-message'         => __( 'All URLs have been changed successfully!', 'hocwp-theme' ),
 		'data-confirm-message' => __( 'Please make a backup before you change site URL.', 'hocwp-theme' ),
-		'data-change-url'      => 1
+		'data-change-url'      => 1,
+		'aria-label'           => __( 'Change URL', 'hocwp-theme' )
 	),
 	'button_type' => 'button'
 );
@@ -97,7 +99,8 @@ $args = array(
 	'attributes'  => array(
 		'data-ajax-button' => 1,
 		'data-message'     => __( 'Data has been imported successfully!', 'hocwp-theme' ),
-		'data-import-ab'   => 1
+		'data-import-ab'   => 1,
+		'aria-label'       => __( 'Import', 'hocwp-theme' )
 	),
 	'button_type' => 'button',
 	'text'        => __( 'Import', 'hocwp-theme' )

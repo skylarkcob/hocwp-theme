@@ -408,7 +408,8 @@ function hocwp_theme_admin_menu_list_socials_meta_box( $object, $box ) {
 						<button type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
 						        class="button disabled right"
                                 name="add-custom-menu-item"
-                                id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
+                                id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"
+                                aria-label="<?php esc_attr_e( 'Add to Menu', 'hocwp-theme' ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
 						<span class="spinner"></span>
 					</span>
                 </p>
