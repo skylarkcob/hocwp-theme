@@ -1117,6 +1117,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	 * @return array The converted HTML for loop tag.
 	 */
 	public function convert_loop_tag_to_html( $thumb_size = 'post-thumbnail', $sort = array() ) {
+		$multi_char = '~';
+
 		if ( is_string( $sort ) && ! empty( $sort ) ) {
 			$sort = array( $sort );
 		}
@@ -1127,108 +1129,118 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 
 		foreach ( $sort as $index => $sort_key ) {
-			$html = $sort_key;
+			$multi = ( false !== strpos( $sort_key, $multi_char ) );
 
-			$thumb_box = false;
+			if ( $multi ) {
+				$html = $this->convert_loop_tag_to_html( $thumb_size, explode( $multi_char, $sort_key ) );
+				$html = join( PHP_EOL, $html );
+			} else {
+				$html = $sort_key;
 
-			// User can use post_thumbnail or thumbnail tag for display post thumbnail HTML
-			$html = str_replace( 'post_thumbnail', 'thumbnail', $html );
+				// User can use post_thumbnail or thumbnail tag for display post thumbnail HTML
+				$html = str_replace( 'post_thumbnail', 'thumbnail', $html );
 
-			if ( $thumb_size && false !== strpos( $html, 'thumbnail' ) ) {
-				$thumb_box = ( false !== strpos( $html, ' ' ) );
-				$thumbnail = get_the_post_thumbnail( null, $thumb_size );
+				if ( $thumb_size && false !== strpos( $html, 'thumbnail' ) ) {
+					$thumbnail = get_the_post_thumbnail( null, $thumb_size );
 
-				if ( ! empty( $thumbnail ) ) {
-					$thumbnail = sprintf( '<a href="%s" title="%s" class="post-thumb">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), $thumbnail );
-				}
-
-				$html = str_replace( 'thumbnail', $thumbnail, $html );
-			}
-
-			if ( false !== strpos( $html, 'post_title' ) ) {
-				$post_title = get_the_title();
-
-				if ( ! empty( $post_title ) ) {
-					$post_title = sprintf( '<a href="%s" title="%s">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), get_the_title() );
-					$post_title = sprintf( '<h2 class="post-title">%s</h2>', $post_title );
-				}
-
-				$html = str_replace( 'post_title', $post_title, $html );
-			}
-
-			if ( false !== strpos( $html, 'posted_on' ) ) {
-				$parts = explode( '|', $html );
-
-				$count = count( $parts );
-
-				if ( 2 != $count ) {
-					$date = get_the_date();
-
-					$modified = get_the_modified_date();
-				} else {
-					$date = get_the_date( $parts[1] );
-
-					$modified = get_the_modified_date( $parts[1] );
-
-					$html = str_replace( '|' . $parts[1], '', $html );
-				}
-
-				$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-				if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-					$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
-				}
-
-				$time_string = sprintf(
-					$time_string,
-					esc_attr( get_the_date( DATE_W3C ) ),
-					esc_html( $date ),
-					esc_attr( get_the_modified_date( DATE_W3C ) ),
-					esc_html( $modified )
-				);
-
-				$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
-
-				$posted_on = '<span class="posted-on">' . $posted_on . '</span>';
-
-				$html = str_replace( 'posted_on', $posted_on, $html );
-			}
-
-			if ( false !== strpos( $html, 'post_excerpt' ) ) {
-				$excerpt = get_the_excerpt();
-
-				if ( ! empty( $excerpt ) ) {
-					$excerpt = sprintf( '<p class="summary">%s</p>', $excerpt );
-				}
-
-				$html = str_replace( 'post_excerpt', $excerpt, $html );
-			}
-
-			if ( false !== strpos( $html, 'category' ) ) {
-				$taxs  = get_object_taxonomies( get_post_type(), 'objects' );
-				$terms = '';
-
-				if ( HT()->array_has_value( $taxs ) ) {
-					ob_start();
-
-					foreach ( $taxs as $tax ) {
-						if ( $tax instanceof WP_Taxonomy && $tax->hierarchical ) {
-							the_terms( get_the_ID(), $tax->name );
-						}
+					if ( ! empty( $thumbnail ) ) {
+						$thumbnail = sprintf( '<a href="%s" title="%s" class="post-thumb">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), $thumbnail );
 					}
 
-					$terms = ob_get_clean();
+					$html = str_replace( 'thumbnail', $thumbnail, $html );
 				}
 
-				if ( ! empty( $terms ) ) {
-					$terms = sprintf( '<div class="terms">%s</div>', $terms );
+				if ( false !== strpos( $html, 'post_title' ) ) {
+					$post_title = get_the_title();
+
+					if ( ! empty( $post_title ) ) {
+						$post_title = sprintf( '<a href="%s" title="%s">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), get_the_title() );
+						$post_title = sprintf( '<h2 class="post-title">%s</h2>', $post_title );
+					}
+
+					$html = str_replace( 'post_title', $post_title, $html );
 				}
 
-				$html = str_replace( 'category', $terms, $html );
+				if ( false !== strpos( $html, 'posted_on' ) ) {
+					$parts = explode( '|', $html );
+
+					$count = count( $parts );
+
+					if ( 2 != $count ) {
+						$date = get_the_date();
+
+						$modified = get_the_modified_date();
+					} else {
+						$date = get_the_date( $parts[1] );
+
+						$modified = get_the_modified_date( $parts[1] );
+
+						$html = str_replace( '|' . $parts[1], '', $html );
+					}
+
+					$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+
+					if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+						$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+					}
+
+					$time_string = sprintf(
+						$time_string,
+						esc_attr( get_the_date( DATE_W3C ) ),
+						esc_html( $date ),
+						esc_attr( get_the_modified_date( DATE_W3C ) ),
+						esc_html( $modified )
+					);
+
+					$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
+
+					$posted_on = '<span class="posted-on">' . $posted_on . '</span>';
+
+					$html = str_replace( 'posted_on', $posted_on, $html );
+				}
+
+				if ( false !== strpos( $html, 'post_excerpt' ) ) {
+					$excerpt = get_the_excerpt();
+
+					if ( ! empty( $excerpt ) ) {
+						$excerpt = sprintf( '<p class="summary">%s</p>', $excerpt );
+					}
+
+					$html = str_replace( 'post_excerpt', $excerpt, $html );
+				}
+
+				if ( false !== strpos( $html, 'category' ) ) {
+					$taxs  = get_object_taxonomies( get_post_type(), 'objects' );
+					$terms = '';
+
+					if ( HT()->array_has_value( $taxs ) ) {
+						ob_start();
+
+						foreach ( $taxs as $tax ) {
+							if ( $tax instanceof WP_Taxonomy && $tax->hierarchical ) {
+								the_terms( get_the_ID(), $tax->name );
+							}
+						}
+
+						$terms = ob_get_clean();
+					}
+
+					if ( ! empty( $terms ) ) {
+						$terms = sprintf( '<div class="terms">%s</div>', $terms );
+					}
+
+					$html = str_replace( 'category', $terms, $html );
+				}
 			}
 
-			if ( $thumb_box ) {
-				$html = sprintf( '<div class="thumb-box">%s</div>', $html );
+			if ( $multi ) {
+				$class = 'details-wrap';
+
+				if ( false !== strpos( $sort_key, 'thumbnail' ) ) {
+					$class .= ' thumb-box';
+				}
+
+				$html = sprintf( '<div class="%s" data-key="%s">%s</div>', $class, esc_attr( $sort_key ), $html );
 			}
 
 			$sort[ $index ] = $html;

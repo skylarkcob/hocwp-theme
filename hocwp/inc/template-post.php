@@ -367,7 +367,7 @@ function hocwp_theme_post_date() {
 }
 
 function hocwp_theme_post_modified_date() {
-	$time_string = '<time itemprop="dateModified" datetime="%1$s">%2$s</time>';
+	$time_string = '<time datetime="%1$s">%2$s</time>';
 
 	$time_string = sprintf( $time_string,
 		esc_attr( get_the_modified_date( DATE_W3C ) ),
