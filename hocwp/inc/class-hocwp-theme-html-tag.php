@@ -145,7 +145,9 @@ final class HOCWP_Theme_HTML_Tag {
 
 	public function __construct( $name ) {
 		$this->set_name( $name );
+
 		if ( 'img' == strtolower( $name ) ) {
+			// Add default empty alt attribute for image
 			$this->add_attribute( 'alt', '' );
 		}
 	}
@@ -165,6 +167,11 @@ final class HOCWP_Theme_HTML_Tag {
 		}
 
 		$this->attributes = apply_filters( 'hocwp_theme_html_tag_attributes', $this->attributes, $this );
+
+		// Add default aria-label for button to fix Buttons do not have an accessible name
+		if ( 'button' == $this->get_name() && ! isset( $this->attributes['aria-label'] ) && ! empty( $this->get_text() ) ) {
+			$this->attributes['aria-label'] = esc_attr( $this->get_text() );
+		}
 
 		foreach ( (array) $this->attributes as $key => $value ) {
 			$result .= sprintf( ' %1$s="%2$s"', $key, trim( esc_attr( maybe_serialize( $value ) ) ) );
