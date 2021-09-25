@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-09-20 08:51+0700\n"
-"PO-Revision-Date: 2021-09-20 08:52+0700\n"
+"POT-Creation-Date: 2021-09-25 21:27+0700\n"
+"PO-Revision-Date: 2021-09-25 21:27+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -1804,11 +1804,11 @@ msgstr "Lên trên"
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1304
+#: hocwp/inc/class-hocwp-theme-frontend.php:1316
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1308
+#: hocwp/inc/class-hocwp-theme-frontend.php:1320
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -1816,11 +1816,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1317
+#: hocwp/inc/class-hocwp-theme-frontend.php:1329
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1333
+#: hocwp/inc/class-hocwp-theme-frontend.php:1345
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
