@@ -9,6 +9,7 @@
 * 18/09/2021: Add mobile logo image setting.
 * 19/09/2021: Fix An active PHP session was detected site health.
 * 20/09/2021: Add aria-label attribute for button to fix Buttons do not have an accessible name.
+* 30/09/2021: Update PHP document for SMTP functions. Create new API HocWP site for posting development guides.
 
 = 6.8.4 =
 * Theme requires PHP version 7.4 or later.

@@ -47,6 +47,13 @@ function hocwp_theme_wp_mail_from_filter( $email ) {
 
 add_filter( 'wp_mail_from', 'hocwp_theme_wp_mail_from_filter' );
 
+/**
+ * Action to change $phpmailer object for SMTP setting on theme.
+ *
+ * @since Theme core version 6.8.5.1
+ *
+ * @param $phpmailer
+ */
 function hocwp_theme_phpmailer_init_action( $phpmailer ) {
 	global $wp_version;
 

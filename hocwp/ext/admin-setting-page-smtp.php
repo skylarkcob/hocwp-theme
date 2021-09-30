@@ -217,6 +217,11 @@ function hocwp_theme_settings_page_smtp_form_after() {
 
 add_action( 'hocwp_theme_settings_page_smtp_form_after', 'hocwp_theme_settings_page_smtp_form_after' );
 
+/**
+ * Action to show admin notices when user sending test email for new SMTP Setting.
+ *
+ * @since Theme core version 6.8.5.1
+ */
 function hocwp_theme_settings_page_smtp_admin_notices_action() {
 	if ( isset( $_POST['submit'] ) ) {
 		if ( HT_Util()->verify_nonce( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ) ) {
