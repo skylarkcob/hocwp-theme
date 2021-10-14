@@ -1,5 +1,7 @@
 (function () {
-    if (screen.width < 1240) {
+    var windowWidth = window.innerWidth || window.screen.width;
+
+    if (windowWidth < 1240) {
         return;
     }
 
@@ -80,7 +82,7 @@
         hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer);
 
         window.addEventListener("scroll", function () {
-            if (screen.width < 1240) {
+            if (windowWidth < 1240) {
                 return;
             }
 

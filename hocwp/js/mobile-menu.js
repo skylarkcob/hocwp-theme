@@ -1,11 +1,12 @@
 window.hocwpTheme = window.hocwpTheme || {};
 
 (function () {
-    var body, container, button, menu, items, link, subMenu, i, len, siteNavigation, mobileWidth;
+    var body, container, button, menu, items, link, subMenu, i, len, siteNavigation, mobileWidth, windowWidth;
 
     body = document.getElementsByTagName("body")[0];
 
     mobileWidth = parseInt(body.getAttribute("data-mobile-width"));
+    windowWidth = window.innerWidth || window.screen.width;
 
     siteNavigation = document.getElementById("site-navigation");
 
@@ -17,7 +18,7 @@ window.hocwpTheme = window.hocwpTheme || {};
         container = siteNavigation;
     } else {
         // If has mobile navigation then hide site navigation
-        if (siteNavigation && screen.width <= mobileWidth) {
+        if (siteNavigation && windowWidth <= mobileWidth) {
             siteNavigation.style.display = "none";
         }
     }
@@ -72,7 +73,9 @@ window.hocwpTheme = window.hocwpTheme || {};
     parent.style.position = "relative";
 
     window.onresize = function () {
-        if (screen.width > mobileWidth) {
+        windowWidth = window.innerWidth || window.screen.width;
+
+        if (windowWidth > mobileWidth) {
             button.style.display = "none";
 
             if ("undefined" !== typeof menu) {
@@ -108,7 +111,7 @@ window.hocwpTheme = window.hocwpTheme || {};
         };
     };
 
-    if (screen.width > mobileWidth) {
+    if (windowWidth > mobileWidth) {
         button.style.display = "none";
 
         if (-1 !== menu.getAttribute("id").indexOf(mobileMenuID)) {
