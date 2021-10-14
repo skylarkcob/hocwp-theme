@@ -127,7 +127,7 @@ final class HOCWP_Theme {
 			$keyspace = $this->safe_string;
 		}
 
-		$pieces = [];
+		$pieces = [ ];
 
 		$max = mb_strlen( $keyspace, '8bit' ) - 1;
 
@@ -554,7 +554,9 @@ final class HOCWP_Theme {
 				$x    = (array) new SimpleXMLElement( "<element $attr />" );
 				$attr = current( $x );
 
-				$attr['amp'] = '';
+				if ( $has_amp ) {
+					$attr['amp'] = '';
+				}
 
 				return $attr;
 			}
