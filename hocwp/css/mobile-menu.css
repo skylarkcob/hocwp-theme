@@ -51,6 +51,21 @@
     height: 41px;
 }
 
+.mobile-menu > .menu-toggle span[class*="line-"] {
+    width: 16px;
+    height: 2px;
+    display: block;
+    background: #fff;
+    border-radius: 2px;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+}
+
+.mobile-menu > .menu-toggle span[class*="line-"]:not(:first-child) {
+    margin-top: 2px;
+}
+
 .site-header .mobile-menu ul.menu li.menu-item-has-children ul.sub-menu,
 .mobile-menu > .menu,
 .mobile-menu > .menu-toggle[aria-expanded="true"] .icon-bars,
@@ -67,6 +82,34 @@
 .mobile-menu > .menu-toggle[aria-expanded="true"] {
     margin-left: 300px;
     height: 44px;
+}
+
+.mobile-menu > .menu-toggle[aria-expanded="true"].icon-bars {
+    position: relative;
+}
+
+.mobile-menu > .menu-toggle[aria-expanded="true"] span[class*="line-"] {
+    height: 20px;
+    width: 2px;
+    position: absolute;
+    left: 23px;
+    border-radius: 1px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.mobile-menu > .menu-toggle[aria-expanded="true"] span[class*="line-"]:first-child {
+    top: 11px;
+    transform: rotate(-135deg);
+}
+
+.mobile-menu > .menu-toggle[aria-expanded="true"] span[class*="line-"]:nth-child(3) {
+    transform: rotate(135deg);
+    top: 9px;
+}
+
+.mobile-menu > .menu-toggle[aria-expanded="true"] span[class*="line-"]:nth-child(2) {
+    display: none;
 }
 
 .mobile-menu.position-right > .menu-toggle[aria-expanded="true"] {
