@@ -12,6 +12,7 @@
 * 30/09/2021: Update PHP document for SMTP functions. Create new API HocWP site for posting development guides.
 * 14/10/2021: Update screen width not working on Safari resulting mobile not working.
 * 15/10/2021: Add bars icon for mobile menu toggle button.
+* 17/10/2021: Update function get title separator on Yoast SEO Premium.
 
 = 6.8.4 =
 * Theme requires PHP version 7.4 or later.
