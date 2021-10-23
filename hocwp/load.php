@@ -6,12 +6,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '6.8.5.2';
+const HOCWP_THEME_CORE_VERSION = '6.8.6';
+
+$theme = wp_get_theme();
+
+$require_version = $theme->get( 'RequiresPHP' );
+
+if ( empty( $require_version ) ) {
+	$require_version = '7.4';
+}
 
 /**
  * Requires PHP version.
  */
-const HOCWP_THEME_REQUIRE_PHP_VERSION = '7.4';
+define( 'HOCWP_THEME_REQUIRE_PHP_VERSION', $require_version );
 
 /**
  * Theme developing mode.
@@ -73,8 +81,6 @@ define( 'HOCWP_THEME_DOING_CRON', ( defined( 'DOING_CRON' ) && true === DOING_CR
  */
 $php_version = phpversion();
 
-$require_version = HOCWP_THEME_REQUIRE_PHP_VERSION;
-
 if ( version_compare( $php_version, $require_version, '<' ) ) {
 	$dir = get_template_directory();
 	$dir = dirname( $dir );
@@ -115,10 +121,14 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 			switch_theme( $folder );
 			wp_die( $msg, $title, $args );
 		}
+
+		unset( $args, $title, $has, $msg );
 	}
+
+	unset( $dir, $dirs );
 }
 
-unset( $php_version, $require_version );
+unset( $theme, $php_version, $require_version );
 
 /*
  * Load Theme Controller Class.

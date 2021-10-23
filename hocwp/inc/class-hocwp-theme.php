@@ -222,13 +222,13 @@ final class HOCWP_Theme {
 				$index = absint( $index );
 			}
 
-			if ( 'head' == $index ) {
+			if ( 'head' == $index || 'first' == $index ) {
 				$index = 1;
-			} elseif ( 'after_head' == $index ) {
+			} elseif ( 'after_head' == $index || 'after_first' == $index ) {
 				$index = 2;
-			} elseif ( 'tail' == $index ) {
+			} elseif ( 'tail' == $index || 'last' == $index ) {
 				$index = $count + 1;
-			} elseif ( 'before_tail' == $index ) {
+			} elseif ( 'before_tail' == $index || 'before_last' == $index ) {
 				$index = $count;
 			} elseif ( 'rand' == $index || 'random' == $index ) {
 				$index = rand( 1, $count );
@@ -740,7 +740,7 @@ final class HOCWP_Theme {
 	}
 
 	public function is_image_url( $url ) {
-		$img_formats = array( 'png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'ico' );
+		$img_formats = array( 'png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff', 'bmp', 'ico', 'webp', 'svg' );
 
 		$path_info = pathinfo( $url );
 		$extension = isset( $path_info['extension'] ) ? $path_info['extension'] : '';

@@ -3,44 +3,115 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$folders = array(
+	HOCWP_THEME_PATH,
+	HOCWP_THEME_CUSTOM_PATH,
+	HOCWP_THEME_CORE_PATH
+);
+
+define( 'HOCWP_THEME_LICENSE_FILE_FOLDERS', $folders );
+
+/**
+ * Main hook for block or unblock license for theme and plugins.
+ */
 function hocwp_theme_check_license() {
 	global $hocwp_theme;
 
-	$options = $hocwp_theme->options;
-	$theme   = wp_get_theme();
-	$ss      = $theme->get_stylesheet();
-	$blocks  = isset( $options['blocked_products'] ) ? $options['blocked_products'] : '';
+	$blocked = false;
 
+	// Check blocked file from theme folders, detect if current theme blocked
+	foreach ( HOCWP_THEME_LICENSE_FILE_FOLDERS as $dir ) {
+		$file = trailingslashit( $dir );
+		$file .= 'blocked.license';
+
+		if ( file_exists( $file ) ) {
+			$blocked = true;
+			break;
+		}
+	}
+
+	// Theme options array
+	$options = $hocwp_theme->options;
+
+	// Get all blocked products in theme options
+	$blocks = isset( $options['blocked_products'] ) ? $options['blocked_products'] : '';
+
+	// Return an empty array for default
 	if ( ! is_array( $blocks ) ) {
 		$blocks = array();
 	}
 
-	$block = isset( $_GET['block_license'] ) ? $_GET['block_license'] : '';
+	// Get current theme object
+	$theme = wp_get_theme();
 
-	if ( 1 == $block ) {
-		$pass = isset( $_GET['pass'] ) ? $_GET['pass'] : '';
+	// Get current stylesheet folder name of current theme
+	$ss = $theme->get_stylesheet();
 
-		if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
-			$product = isset( $_GET['product'] ) ? $_GET['product'] : '';
-			$unblock = isset( $_GET['unblock'] ) ? $_GET['unblock'] : '';
+	// Re-check current theme license blocked
+	if ( ! $blocked ) {
+		$blocked = in_array( $ss, $blocks );
+	}
 
-			if ( 1 == $unblock ) {
-				unset( $blocks[ array_search( $product, $blocks ) ] );
-			} elseif ( ! in_array( $product, $blocks ) ) {
-				$blocks[] = $product;
+	// Get current product from URL
+	$product = isset( $_GET['product'] ) ? $_GET['product'] : '';
+
+	// Save theme license changes status
+	$lic_change = false;
+
+	// Check unblock param from URL
+	$unblock = isset( $_GET['unblock'] ) ? $_GET['unblock'] : '';
+
+	// If current theme not blocked or product different with theme
+	if ( ! $blocked || $ss != $product || 1 == $unblock ) {
+		// Check block_license param from URL
+		$block = isset( $_GET['block_license'] ) ? $_GET['block_license'] : '';
+
+		if ( 1 == $block ) {
+			$pass = isset( $_GET['pass'] ) ? $_GET['pass'] : '';
+
+			// Check pass param from URL
+			if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
+				// Check for unblock dynamic product from URL
+				if ( 1 == $unblock ) {
+					// Remove product from blocked licenses
+					unset( $blocks[ array_search( $product, $blocks ) ] );
+
+					// Remove blocked license file from theme folders
+					if ( $ss == $product ) {
+						hocwp_theme_update_blocked_license_file( false );
+						$blocked = false;
+					}
+
+					$lic_change = true;
+				} elseif ( ! in_array( $product, $blocks ) ) {
+					$blocks[]   = $product;
+					$lic_change = true;
+				}
 			}
-
-			$blocks = array_unique( $blocks );
-			$blocks = array_filter( $blocks );
-
-			$options['blocked_products'] = $blocks;
-
-			update_option( HOCWP_Theme()->get_prefix(), $options );
 		}
 	}
 
-	if ( HT()->array_has_value( $blocks ) ) {
-		if ( in_array( $ss, $blocks ) ) {
+	if ( $blocked && ! $lic_change ) {
+		if ( ! in_array( $ss, $blocks ) ) {
+			$blocks[]   = $ss;
+			$lic_change = true;
+		}
+	}
+
+	if ( $lic_change ) {
+		$blocks = array_unique( $blocks );
+		$blocks = array_filter( $blocks );
+
+		$options['blocked_products'] = $blocks;
+
+		update_option( HOCWP_Theme()->get_prefix(), $options );
+	}
+
+	if ( $blocked || HT()->array_has_value( $blocks ) ) {
+		if ( $blocked || in_array( $ss, $blocks ) ) {
+			// Create static file to block current theme
+			hocwp_theme_update_blocked_license_file();
+
 			$msg = __( 'Your theme is blocked.', 'hocwp-theme' );
 			wp_die( $msg, __( 'Invalid License', 'hocwp-theme' ) );
 		}
@@ -84,3 +155,24 @@ function hocwp_theme_check_license() {
 }
 
 add_action( 'init', 'hocwp_theme_check_license' );
+
+function hocwp_theme_update_blocked_license_file( $block = true ) {
+	foreach ( HOCWP_THEME_LICENSE_FILE_FOLDERS as $dir ) {
+		$file = trailingslashit( $dir );
+		$file .= 'blocked.license';
+
+		if ( $block && ! file_exists( $file ) ) {
+			$system = HT_Util()->filesystem();
+
+			if ( $system instanceof WP_Filesystem_Base ) {
+				$system->put_contents( $file, '' );
+			}
+		} elseif ( ! $block && file_exists( $file ) ) {
+			$system = HT_Util()->filesystem();
+
+			if ( $system instanceof WP_Filesystem_Base ) {
+				$system->delete( $file );
+			}
+		}
+	}
+}

@@ -263,9 +263,9 @@ class HOCWP_Theme_Enqueue {
 	private function auto_check_lib_version( &$args, &$base_dir, $abs_file ) {
 		if ( ( ! isset( $args['cdn'] ) || ! $args['cdn'] ) && ! HT()->is_dir( $base_dir ) ) {
 			// Auto check version
-			$tmp  = dirname( $base_dir );
-			$tmp  = trailingslashit( $tmp );
-			$tmp  .= '*';
+			$tmp = dirname( $base_dir );
+			$tmp = trailingslashit( $tmp );
+			$tmp .= '*';
 			$dirs = glob( $tmp, GLOB_ONLYDIR );
 
 			if ( HT()->array_has_value( $dirs ) ) {
@@ -306,8 +306,8 @@ class HOCWP_Theme_Enqueue {
 
 	public function swiper( $args = array() ) {
 		$defaults = array(
-			'css_url' => '',
-			'js_url'  => ''
+			'css_url' => $this->custom_lib_url . 'swiper/swiper-bundle.min.css',
+			'js_url'  => $this->custom_lib_url . 'swiper/swiper-bundle.min.js'
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -340,9 +340,17 @@ class HOCWP_Theme_Enqueue {
 		wp_enqueue_script( 'slick', $this->custom_lib_url . 'slick/slick.js', array( 'jquery' ), false, true );
 	}
 
-	public function fancybox() {
-		wp_enqueue_style( 'fancybox-style', $this->custom_lib_url . 'fancybox/jquery.fancybox.css' );
-		wp_enqueue_script( 'fancybox', $this->custom_lib_url . 'fancybox/jquery.fancybox.js', array( 'jquery' ), false, true );
+	public function fancybox( $version = false ) {
+		if ( 4 == $version || ( is_string( $version ) && version_compare( $version, '4', '>=' ) ) ) {
+			$css_url = $this->custom_lib_url . 'fancybox/fancybox.css';
+			$js_url  = $this->custom_lib_url . 'fancybox/fancybox.umd.js';
+		} else {
+			$css_url = $this->custom_lib_url . 'fancybox/jquery.fancybox.css';
+			$js_url  = $this->custom_lib_url . 'fancybox/jquery.fancybox.js';
+		}
+
+		wp_enqueue_style( 'fancybox-style', $css_url );
+		wp_enqueue_script( 'fancybox', $js_url, array( 'jquery' ), false, true );
 	}
 
 	public function font_awesome( $args = array() ) {

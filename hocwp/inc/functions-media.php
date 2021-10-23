@@ -32,11 +32,11 @@ function hocwp_theme_is_image_url( $url ) {
 
 function hocwp_theme_attachment_path_to_postid( $path ) {
 	global $wpdb;
-	$upload  = wp_upload_dir();
-	$path    = str_replace( $upload['basedir'], '', $path );
-	$sql     = 'SELECT post_id FROM ';
-	$sql     .= $wpdb->postmeta;
-	$sql     .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
+	$upload = wp_upload_dir();
+	$path   = str_replace( $upload['basedir'], '', $path );
+	$sql    = 'SELECT post_id FROM ';
+	$sql .= $wpdb->postmeta;
+	$sql .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
 	$sql     = $wpdb->prepare( $sql, $path );
 	$post_id = $wpdb->get_var( $sql );
 
@@ -147,7 +147,7 @@ class HOCWP_Theme_Media {
 	}
 
 	public function is_webp_image( $file ) {
-		if ( is_file( $file ) ) {
+		if ( is_file( $file ) && HT()->is_image_url( $file ) ) {
 			$mime = wp_get_image_mime( $file );
 
 			if ( 'image/webp' == $mime ) {

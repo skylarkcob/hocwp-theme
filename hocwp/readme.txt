@@ -1,4 +1,11 @@
 == Changelog ==
+= 6.8.6 =
+* 19/10/2021: Add fields method into class HTML Field for using multiple fields in single field.
+* 23/10/2021: Allow using multi fields in single field for theme options.
+* 23/10/2021: Update get_field_value, allows get value for sub field in theme options.
+* 23/10/2021: Add social sharing buttons for using in post or page.
+* 23/10/2021: Update license functions, add file into theme folders for re-check license.
+
 = 6.8.5 =
 * 03/09/2021: Add functions for user change category in bulk actions.
 * 12/09/2021: Add default Images and Videos template.
