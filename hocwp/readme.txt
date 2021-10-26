@@ -5,6 +5,7 @@
 * 23/10/2021: Update get_field_value, allows get value for sub field in theme options.
 * 23/10/2021: Add social sharing buttons for using in post or page.
 * 23/10/2021: Update license functions, add file into theme folders for re-check license.
+* 26/10/2021: Update mobile menu style.
 
 = 6.8.5 =
 * 03/09/2021: Add functions for user change category in bulk actions.
