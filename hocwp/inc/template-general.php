@@ -902,6 +902,69 @@ function hocwp_theme_wp_nav_menu_items_filter( $items, $args ) {
 
 add_filter( 'wp_nav_menu_items', 'hocwp_theme_wp_nav_menu_items_filter', 10, 2 );
 
+/**
+ * Update menu item object properties
+ *
+ * @param $items List menu items
+ *
+ * @return mixed
+ */
+function hocwp_theme_wp_nav_menu_objects_filter( $items ) {
+	if ( HT()->array_has_value( $items ) ) {
+		foreach ( $items as $key => $item ) {
+			if ( is_object( $item ) ) {
+				if ( 'custom' == $item->object && 'custom' == $item->type ) {
+					$params = HT()->get_params_from_url( $item->url );
+
+					// Remove param for social url
+					$item->url = remove_query_arg( 'theme_list_social', $item->url );
+
+					// Dynamic post type link
+					$pt = $params['post_type'] ?? '';
+
+					if ( empty( $pt ) ) {
+						$pt = get_post_meta( $item->ID, 'post_type', true );
+					}
+
+					if ( ! empty( $pt ) && post_type_exists( $pt ) ) {
+						$item->url = get_post_type_archive_link( $pt );
+					}
+
+					$items[ $key ] = $item;
+				}
+			}
+		}
+	}
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_objects', 'hocwp_theme_wp_nav_menu_objects_filter' );
+
+function hocwp_theme_custom_nav_menu_css_class_filter( $classes, $item ) {
+	if ( $item instanceof WP_Post && ( 'custom' == $item->type || 'custom' == $item->object ) ) {
+		$theme_list_social = get_post_meta( $item->ID, 'theme_list_social', true );
+
+		if ( 1 == $theme_list_social ) {
+			$classes[] = 'social-item';
+			$classes[] = 'list-social-item';
+			$classes[] = 'menu-item-type-social';
+			$classes[] = 'menu-item-social';
+
+			if ( ! empty( $item->post_name ) ) {
+				$classes[] = $item->post_name;
+				$classes[] = 'item-social-' . $item->post_name;
+			}
+
+			$classes = apply_filters( 'hocwp_theme_menu_item_social_classes', $classes, $item );
+		}
+	}
+
+	return $classes;
+}
+
+add_filter( 'nav_menu_css_class', 'hocwp_theme_custom_nav_menu_css_class_filter', 10, 2 );
+
 function hocwp_theme_human_time_diff_filter( $since, $diff ) {
 	if ( $diff < MINUTE_IN_SECONDS ) {
 		$secs = $diff;
@@ -1887,30 +1950,6 @@ function hocwp_theme_fix_not_found_paged() {
 }
 
 add_action( 'template_redirect', 'hocwp_theme_fix_not_found_paged' );
-
-function hocwp_theme_custom_nav_menu_css_class_filter( $classes, $item ) {
-	if ( $item instanceof WP_Post && ( 'custom' == $item->type || 'custom' == $item->object ) ) {
-		$theme_list_social = get_post_meta( $item->ID, 'theme_list_social', true );
-
-		if ( 1 == $theme_list_social ) {
-			$classes[] = 'social-item';
-			$classes[] = 'list-social-item';
-			$classes[] = 'menu-item-type-social';
-			$classes[] = 'menu-item-social';
-
-			if ( ! empty( $item->post_name ) ) {
-				$classes[] = $item->post_name;
-				$classes[] = 'item-social-' . $item->post_name;
-			}
-
-			$classes = apply_filters( 'hocwp_theme_menu_item_social_classes', $classes, $item );
-		}
-	}
-
-	return $classes;
-}
-
-add_filter( 'nav_menu_css_class', 'hocwp_theme_custom_nav_menu_css_class_filter', 10, 2 );
 
 function hocwp_theme_main_menu_default_location_filter( $location ) {
 	if ( wp_is_mobile() ) {

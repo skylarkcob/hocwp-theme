@@ -333,11 +333,11 @@ function hocwp_theme_check_environment() {
 				if ( HT()->array_has_value( $invalid_exts ) ) {
 					foreach ( $invalid_exts as $data ) {
 						?>
-                        <div class="error notice is-dismissible">
-                            <p>
+						<div class="error notice is-dismissible">
+							<p>
 								<?php printf( __( '<strong>%s:</strong> This extension requires theme core version at least %s.', 'hocwp-theme' ), $data['name'], $data['requires_core'] ); ?>
-                            </p>
-                        </div>
+							</p>
+						</div>
 						<?php
 					}
 				}
@@ -467,6 +467,25 @@ function hocwp_theme_add_url_endpoint() {
 }
 
 add_action( 'init', 'hocwp_theme_add_url_endpoint' );
+
+function hocwp_theme_custom_get_ancestors_filter( $ancestors, $object_id, $object_type, $resource_type ) {
+	if ( HT()->array_has_value( $ancestors ) ) {
+		if ( 'taxonomy' == $resource_type ) {
+			// Fix Attempt to read term property for none term object
+			foreach ( $ancestors as $key => $id ) {
+				$obj = get_term( $id, $object_type );
+
+				if ( ! ( $obj instanceof WP_Term ) ) {
+					unset( $ancestors[ $key ] );
+				}
+			}
+		}
+	}
+
+	return $ancestors;
+}
+
+add_filter( 'get_ancestors', 'hocwp_theme_custom_get_ancestors_filter', 10, 4 );
 
 $disable_lazy_loading = HT_Options()->get_tab( 'disable_lazy_loading', '', 'reading' );
 

@@ -30,17 +30,19 @@ function hocwp_theme_setup_start_session() {
 				$return = strtolower( $return );
 
 				foreach ( $terms as $key => $term ) {
-					if ( empty( $q ) || false !== strpos( $term->name, $q ) ) {
-						if ( 'name' == $return ) {
-							$output[ $key ]['value'] = $term->name;
-						} else {
-							$output[ $key ]['value'] = $term->term_id;
-						}
+					if ( $term instanceof WP_Term ) {
+						if ( empty( $q ) || false !== strpos( $term->name, $q ) ) {
+							if ( 'name' == $return ) {
+								$output[ $key ]['value'] = $term->name;
+							} else {
+								$output[ $key ]['value'] = $term->term_id;
+							}
 
-						$output[ $key ]['name']    = $term->name;
-						$output[ $key ]['term_id'] = $term->term_id;
-						$output[ $key ]['count']   = $term->count;
-						$output[ $key ]['slug']    = $term->slug;
+							$output[ $key ]['name']    = $term->name;
+							$output[ $key ]['term_id'] = $term->term_id;
+							$output[ $key ]['count']   = $term->count;
+							$output[ $key ]['slug']    = $term->slug;
+						}
 					}
 				}
 			}

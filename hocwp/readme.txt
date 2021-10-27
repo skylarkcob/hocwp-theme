@@ -1,4 +1,8 @@
 == Changelog ==
+= 6.8.6.1 =
+* 27/10/2021: Add custom post types archive link to menu check list.
+* 27/10/2021: Fix none object properties warning.
+
 = 6.8.6 =
 * 19/10/2021: Add fields method into class HTML Field for using multiple fields in single field.
 * 23/10/2021: Allow using multi fields in single field for theme options.

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2021-10-23 20:01+0700\n"
-"PO-Revision-Date: 2021-10-23 20:02+0700\n"
+"POT-Creation-Date: 2021-10-27 20:08+0700\n"
+"PO-Revision-Date: 2021-10-27 20:09+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -628,7 +628,7 @@ msgid "All information about Google account and Google console."
 msgstr "Tất cả thông tin về tài khoản Google và Google console."
 
 #: hocwp/admin/admin-setting-page-social.php:65
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:344
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:347
 msgid "List Socials"
 msgstr "Danh sách mạng xã hội"
 
@@ -757,7 +757,7 @@ msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
 #: hocwp/admin/admin.php:410 hocwp/admin/admin.php:559
-#: hocwp/inc/template-general.php:1077
+#: hocwp/inc/template-general.php:1140
 msgid "Close"
 msgstr "Đóng"
 
@@ -1034,15 +1034,19 @@ msgstr "Thông tin mở rộng"
 msgid "Display:"
 msgstr "Hiển thị:"
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:364
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:363
+msgid "List Post Types"
+msgstr "Danh sách loại bài viết"
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:391
 msgid "No items."
 msgstr "Không có mục nào."
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:405
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:449
 msgid "Select All"
 msgstr "Chọn tất cả"
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:412
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:456
 msgid "Add to Menu"
 msgstr "Thêm vào trình đơn"
 
@@ -2561,13 +2565,13 @@ msgstr "Trình đơn"
 msgid "Close menu"
 msgstr "Đóng trình đơn"
 
-#: hocwp/inc/template-general.php:913
+#: hocwp/inc/template-general.php:976
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] "%s giây"
 
-#: hocwp/inc/template-general.php:1062
+#: hocwp/inc/template-general.php:1125
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website. By continuing to browse on this website, you accept the use of "
@@ -2577,7 +2581,7 @@ msgstr ""
 "truy cập trang web. Bằng cách tiếp tục truy cập trang web này, bạn chấp nhận "
 "cách sử dụng cookie cho các mục đích trên."
 
-#: hocwp/inc/template-general.php:1065
+#: hocwp/inc/template-general.php:1128
 #, php-format
 msgid ""
 "We use cookies to give you the best possible website experience. <span>By "
@@ -2587,24 +2591,24 @@ msgstr ""
 "cập trang web. <span>Bằng cách sử dụng %s, bạn đồng ý với <a href=\"%s\">%s</"
 "a> của chúng tôi</span>."
 
-#: hocwp/inc/template-general.php:1069
+#: hocwp/inc/template-general.php:1132
 msgid "Accept"
 msgstr "Chấp nhận"
 
-#: hocwp/inc/template-general.php:1610
+#: hocwp/inc/template-general.php:1673
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/template-general.php:1622
+#: hocwp/inc/template-general.php:1685
 msgid "Submit URL"
 msgstr "Gửi URL"
 
-#: hocwp/inc/template-general.php:1623
+#: hocwp/inc/template-general.php:1686
 msgid "Submit URL to Google Search Console"
 msgstr "Gửi URL đến Google Search Console"
 
-#: hocwp/inc/template-general.php:1736
+#: hocwp/inc/template-general.php:1799
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"

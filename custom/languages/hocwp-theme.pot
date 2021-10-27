@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-10-23 20:01+0700\n"
+"POT-Creation-Date: 2021-10-27 20:08+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -568,7 +568,7 @@ msgstr ""
 msgid "All information about Google account and Google console."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:65 hocwp/admin/class-hocwp-theme-meta-menu.php:344
+#: hocwp/admin/admin-setting-page-social.php:65 hocwp/admin/class-hocwp-theme-meta-menu.php:347
 msgid "List Socials"
 msgstr ""
 
@@ -670,7 +670,7 @@ msgstr ""
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:410 hocwp/admin/admin.php:559 hocwp/inc/template-general.php:1077
+#: hocwp/admin/admin.php:410 hocwp/admin/admin.php:559 hocwp/inc/template-general.php:1140
 msgid "Close"
 msgstr ""
 
@@ -921,15 +921,19 @@ msgstr ""
 msgid "Display:"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:364
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:363
+msgid "List Post Types"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:391
 msgid "No items."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:405
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:449
 msgid "Select All"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta-menu.php:412
+#: hocwp/admin/class-hocwp-theme-meta-menu.php:456
 msgid "Add to Menu"
 msgstr ""
 
@@ -2326,42 +2330,42 @@ msgstr ""
 msgid "Close menu"
 msgstr ""
 
-#: hocwp/inc/template-general.php:913
+#: hocwp/inc/template-general.php:976
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/inc/template-general.php:1062
+#: hocwp/inc/template-general.php:1125
 msgid ""
 "This website uses cookies to ensure you get the best experience on our website. By continuing to browse on this website, you accept the use of "
 "cookies for the above purposes."
 msgstr ""
 
-#: hocwp/inc/template-general.php:1065
+#: hocwp/inc/template-general.php:1128
 #, php-format
 msgid "We use cookies to give you the best possible website experience. <span>By using %s, you agree to our <a href=\"%s\">%s</a></span>."
 msgstr ""
 
-#: hocwp/inc/template-general.php:1069
+#: hocwp/inc/template-general.php:1132
 msgid "Accept"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1610
+#: hocwp/inc/template-general.php:1673
 #, php-format
 msgid "Share on %s"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1622
+#: hocwp/inc/template-general.php:1685
 msgid "Submit URL"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1623
+#: hocwp/inc/template-general.php:1686
 msgid "Submit URL to Google Search Console"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1736
+#: hocwp/inc/template-general.php:1799
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
