@@ -766,7 +766,7 @@ function hocwp_theme_wp_page_menu_args_filter( $args ) {
 add_filter( 'wp_page_menu_args', 'hocwp_theme_wp_page_menu_args_filter', 99 );
 
 function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
-	$mobile_menu_icon = apply_filters( 'hocwp_theme_mobile_menu_icon', 'svg', $control, $id );
+	$mobile_menu_icon = apply_filters( 'hocwp_theme_mobile_menu_icon', 'bars', $control, $id );
 
 	if ( empty( $control ) ) {
 		$control = 'main-menu';
