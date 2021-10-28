@@ -1,7 +1,7 @@
 <?php
 /*
  * Name: External Link
- * Description: Make all external link as nofollow and contro go out url.
+ * Description: Make all external links as nofollow and control go out url.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
