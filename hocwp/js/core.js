@@ -4,7 +4,7 @@ window.hocwpTheme = window.hocwpTheme || {};
 function HOCWP_Theme() {
     this.log = function (string) {
         log(string);
-    }
+    };
 
     this.get_param_by_name = function (url, name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -13,7 +13,7 @@ function HOCWP_Theme() {
             results = regex.exec(url);
 
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
+    };
 
     this.remove_param = function (key, sourceURL) {
         var rtn = sourceURL.split("?")[0],
@@ -42,11 +42,11 @@ function HOCWP_Theme() {
         }
 
         return rtn;
-    }
+    };
 
     this.remove_params = function (url) {
         return url.split(/[?#]/)[0];
-    }
+    };
 
     this.add_param = function (key, value, url) {
         var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
@@ -57,7 +57,7 @@ function HOCWP_Theme() {
         } else {
             return url + separator + key + "=" + value;
         }
-    }
+    };
 
     this.filter_list = function (input) {
         var filter, ul, li, a, i, txtValue;
@@ -83,15 +83,15 @@ function HOCWP_Theme() {
                 li[i].style.display = "none";
             }
         }
-    }
+    };
 
     this.is_email = function (email) {
         return /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-    }
+    };
 
     this.is_google_pagespeed = function () {
         return (navigator.userAgent.indexOf("Speed Insights") !== -1 || navigator.userAgent.indexOf("Chrome-Lighthouse") !== -1 || navigator.userAgent.indexOf("Page Speed") !== -1 || navigator.userAgent.indexOf("Pagespeed") !== -1);
-    }
+    };
 
     this.popup = function (popup) {
         if (popup) {
@@ -111,7 +111,7 @@ function HOCWP_Theme() {
                 localStorage.setItem("popState", "shown");
             });
         }
-    }
+    };
 
     this.ajax = function ($, element, data, callback, params) {
         data = data || {};
@@ -198,4 +198,4 @@ hocwpTheme.isGooglePagespeed = function () {
 hocwpTheme.ajax = function ($, element, data, callback, params) {
     let obj = new HOCWP_Theme();
     obj.ajax($, element, data, callback, params);
-}
+};

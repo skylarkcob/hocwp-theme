@@ -57,6 +57,33 @@ $args = array(
 $tab->add_field( 'submit_change_url', '', 'button', $args, 'string', 'change_url' );
 
 $args = array(
+	'title'       => __( 'Database Optimize', 'hocwp-theme' ),
+	'description' => __( 'Update database, remove transients and more.', 'hocwp-theme' )
+);
+
+$tab->add_section( 'database_optimize', $args );
+
+$args = array(
+	'description' => __( 'Enter the transient name you want to delete, all transients will be deleted if this field is empty.', 'hocwp-theme' )
+);
+
+$tab->add_field( 'remove_transient', __( 'Remove Transients', 'hocwp-theme' ), 'input', $args, 'string', 'database_optimize' );
+
+$args = array(
+	'attributes'  => array(
+		'data-ajax-button'      => 1,
+		'data-message'          => __( 'Transients have been removed!', 'hocwp-theme' ),
+		'data-confirm-message'  => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+		'data-delete-transient' => 1,
+		'aria-label'            => __( 'Delete', 'hocwp-theme' )
+	),
+	'button_type' => 'button',
+	'text'        => __( 'Delete', 'hocwp-theme' )
+);
+
+$tab->add_field( 'delete_transient', '', 'button', $args, 'string', 'database_optimize' );
+
+$args = array(
 	'title'       => __( 'Vietnamese Administrative Boundaries', 'hocwp-theme' ),
 	'description' => __( 'Import information about Vietnamese administrative boundaries into the database automatically.', 'hocwp-theme' )
 );

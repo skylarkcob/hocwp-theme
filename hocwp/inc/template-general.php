@@ -766,7 +766,13 @@ function hocwp_theme_wp_page_menu_args_filter( $args ) {
 add_filter( 'wp_page_menu_args', 'hocwp_theme_wp_page_menu_args_filter', 99 );
 
 function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
-	$mobile_menu_icon = apply_filters( 'hocwp_theme_mobile_menu_icon', 'bars', $control, $id );
+	$mobile_menu_icon = HT_Options()->get_tab( 'menu_toggle_icon', '', 'reading' );
+
+	if ( empty( $mobile_menu_icon ) ) {
+		$mobile_menu_icon = 'bars';
+	}
+
+	$mobile_menu_icon = apply_filters( 'hocwp_theme_mobile_menu_icon', $mobile_menu_icon, $control, $id );
 
 	if ( empty( $control ) ) {
 		$control = 'main-menu';
@@ -778,9 +784,13 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 
 	$class = 'menu-toggle';
 
-	if ( 'svg' == $mobile_menu_icon || 'bars' == $mobile_menu_icon ) {
+	if ( 'svg' == $mobile_menu_icon || 'bars' == $mobile_menu_icon || 'burger' == $mobile_menu_icon ) {
 		$class .= ' icon-';
 		$class .= sanitize_html_class( $mobile_menu_icon );
+	}
+
+	if ( 'default' == $mobile_menu_icon ) {
+		$mobile_menu_icon = 'svg';
 	}
 
 	ob_start();
@@ -797,6 +807,11 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 			?>
 			<span class="line-1"></span>
 			<span class="line-2"></span>
+			<span class="line-3"></span>
+			<?php
+		} elseif ( 'burger' == $mobile_menu_icon ) {
+			?>
+			<span class="line-1"></span>
 			<span class="line-3"></span>
 			<?php
 		} else {
@@ -1978,3 +1993,13 @@ function hocwp_theme_q2w3_fixed_widget_filter( $value ) {
 }
 
 add_filter( 'option_q2w3_fixed_widget', 'hocwp_theme_q2w3_fixed_widget_filter' );
+
+function hocwp_theme_wp_body_open_action() {
+	$file = HT_Custom()->get_path() . '/images/svg.html';
+
+	if ( file_exists( $file ) ) {
+		include_once $file;
+	}
+}
+
+add_action( 'wp_body_open', 'hocwp_theme_wp_body_open_action' );

@@ -37,6 +37,12 @@ function hocwp_theme_settings_page_reading_section() {
 		'title' => __( 'Back To Top Button', 'hocwp-theme' )
 	);
 
+	$sections['theme_customization'] = array(
+		'tab'   => 'reading',
+		'id'    => 'theme_customization',
+		'title' => __( 'Theme Customization', 'hocwp-theme' )
+	);
+
 	return $sections;
 }
 
@@ -47,7 +53,7 @@ function hocwp_theme_settings_page_reading_field() {
 
 	$fields = array();
 
-	$field    = hocwp_theme_create_setting_field( 'theme_color', __( 'Theme Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading' );
+	$field    = hocwp_theme_create_setting_field( 'theme_color', __( 'Theme Color', 'hocwp-theme' ), 'color_picker', '', 'string', 'reading', 'theme_customization' );
 	$fields[] = $field;
 
 	$args = array(
@@ -72,11 +78,29 @@ function hocwp_theme_settings_page_reading_field() {
 		$types['navxt'] = 'Breadcrumb NavXT';
 	}
 
+	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
+		$types['rank_math'] = 'Rank Math';
+	}
+
 	$args = array(
 		'options' => $types
 	);
 
-	$field    = hocwp_theme_create_setting_field( 'breadcrumb_type', __( 'Breadcrumb Type', 'hocwp-theme' ), 'select', $args, 'string', 'reading' );
+	$field    = hocwp_theme_create_setting_field( 'breadcrumb_type', __( 'Breadcrumb Type', 'hocwp-theme' ), 'select', $args, 'string', 'reading', 'theme_customization' );
+	$fields[] = $field;
+
+	$types = array(
+		''       => __( '-- Choose menu toggle icon --', 'hocwp-theme' ),
+		'svg'    => __( 'SVG icon', 'hocwp-theme' ),
+		'bars'   => __( 'Line bars', 'hocwp-theme' ),
+		'burger' => __( 'Line burger', 'hocwp-theme' )
+	);
+
+	$args = array(
+		'options' => $types
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'menu_toggle_icon', __( 'Menu Toggle Icon', 'hocwp-theme' ), 'select', $args, 'string', 'reading', 'theme_customization' );
 	$fields[] = $field;
 
 	$field    = hocwp_theme_create_setting_field( 'blog_page', __( 'Blog Page', 'hocwp-theme' ), 'select_page', '', 'positive_number', 'reading' );

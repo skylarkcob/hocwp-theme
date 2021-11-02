@@ -10,6 +10,11 @@
 * 23/10/2021: Add social sharing buttons for using in post or page.
 * 23/10/2021: Update license functions, add file into theme folders for re-check license.
 * 26/10/2021: Update mobile menu style.
+* 02/11/2021: Add admin tools remove transient.
+* 02/11/2021: Fix default empty thumbnail echo.
+* 02/11/2021: Add mobile toggle icon burger.
+* 02/11/2021: Add blank page template.
+* 02/11/2021: Add theme support Rank Math SEO.
 
 = 6.8.5 =
 * 03/09/2021: Add functions for user change category in bulk actions.

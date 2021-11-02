@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
             normalText = element.attr("data-normal-text");
 
         loading = loading || 1;
-        console.log(loading);
+
         if ($.trim(normalText)) {
             text = normalText;
         } else {
@@ -80,6 +80,9 @@ jQuery(document).ready(function ($) {
                     complete: function (response) {
                         body.trigger("hocwpTheme:ajaxComplete", [element, response]);
                         _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
                     }
                 });
             }
@@ -124,9 +127,51 @@ jQuery(document).ready(function ($) {
                         },
                         complete: function (response) {
                             body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        },
+                        error: function (jqXHR, exception) {
+                            alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
                         }
                     });
                 }
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
+    })();
+
+    // Delete transient
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-delete-transient='1'], form[data-tab='administration_tools'] input[data-delete-transient='1']", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                form = element.closest("form"),
+                transient = form.find(".remove_transient input");
+
+            if (confirm(element.attr("data-confirm-message"))) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_delete_transient",
+                        transient: transient.val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(element.attr("data-message"));
+                        }
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                    }
+                });
             } else {
                 element.removeClass("disabled");
                 element.blur();
@@ -169,6 +214,9 @@ jQuery(document).ready(function ($) {
                     },
                     complete: function (response) {
                         body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
                     }
                 });
             }

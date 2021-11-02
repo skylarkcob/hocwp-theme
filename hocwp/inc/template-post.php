@@ -174,7 +174,9 @@ function hocwp_theme_the_post_thumbnail_action( $args ) {
 
 function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
 	if ( empty( $html ) ) {
+		ob_start();
 		do_action( 'hocwp_theme_post_thumbnail_default', $size, $attr );
+		$html = ob_get_clean();
 	} else {
 		if ( is_array( $attr ) && isset( $attr['post_link'] ) && (bool) $attr['post_link'] ) {
 			$before = sprintf( '<a class="img-hyperlink post-link" href="%s" title="%s">', get_the_permalink(), get_the_title() );

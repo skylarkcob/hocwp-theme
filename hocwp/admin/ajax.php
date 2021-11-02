@@ -384,6 +384,7 @@ function hocwp_theme_change_site_url_ajax_callback() {
 			"UPDATE $wpdb->options SET option_value = replace(option_value, '%s', '%s');",
 			"UPDATE $wpdb->posts SET post_content = replace(post_content, '%s', '%s');",
 			"UPDATE $wpdb->postmeta SET meta_value = replace(meta_value,'%s','%s');",
+			"UPDATE $wpdb->users SET user_url = replace(user_url, '%s','%s');",
 			"UPDATE $wpdb->usermeta SET meta_value = replace(meta_value, '%s','%s');",
 			"UPDATE $wpdb->termmeta SET meta_value = replace(meta_value, '%s','%s');",
 			"UPDATE $wpdb->commentmeta SET meta_value = replace(meta_value, '%s','%s');",
@@ -405,6 +406,17 @@ function hocwp_theme_change_site_url_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_ajax_callback' );
+
+function hocwp_theme_delete_transient_ajax_callback() {
+	$data = array();
+
+	$transient = $_POST['transient'] ?? '';
+	HT_Util()->delete_transient( $transient );
+
+	wp_send_json_success( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_delete_transient', 'hocwp_theme_delete_transient_ajax_callback' );
 
 global $hocwp_theme_import_administrative_boundaries;
 

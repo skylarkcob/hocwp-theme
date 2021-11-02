@@ -23,7 +23,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function site_logo( $args = array(), $echo = true ) {
-		$logo       = get_custom_logo();
+		$logo = get_custom_logo();
+
 		$site_title = get_bloginfo( 'name' );
 
 		if ( ! display_header_text() ) {
@@ -800,10 +801,26 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		return false;
 	}
 
+	public function is_rank_math_breadcrumb() {
+		$options = get_option( 'rank-math-options-general' );
+
+		if ( ! isset( $options['breadcrumbs'] ) || 'on' !== $options['breadcrumbs'] ) {
+			return false;
+		}
+
+		return function_exists( 'rank_math_the_breadcrumbs' );
+	}
+
 	public function breadcrumb( $args = array() ) {
 		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
 
 		$type = $args['type'] ?? HT_Options()->get_tab( 'breadcrumb_type', '', 'reading' );
+
+		if ( 'yoast_seo' == $type && ! HT_Frontend()->is_yoast_breadcrumb() ) {
+			$type = 'default';
+		} elseif ( 'rank_math' == $type && ! HT_Frontend()->is_rank_math_breadcrumb() ) {
+			$type = 'default';
+		}
 
 		$before = '<div class="breadcrumb hocwp-breadcrumb" data-type="' . esc_attr( $type ) . '">';
 		$after  = '</div>';
@@ -824,6 +841,22 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() && ( empty( $type ) || 'yoast_seo' == $type ) ) {
 			/** @noinspection PhpUndefinedFunctionInspection */
 			yoast_breadcrumb( $before, $after );
+
+			return;
+		}
+
+		if ( ! $bootstrap && HT_Frontend()->is_rank_math_breadcrumb() && ( empty( $type ) || 'rank_math' == $type ) ) {
+			if ( isset( $args['separator'] ) ) {
+				$args['delimiter'] = $args['separator'];
+			}
+
+			if ( ! isset( $args['wrap_before'] ) ) {
+				$args['wrap_before'] = $before;
+				$args['wrap_after']  = $after;
+			}
+
+			/** @noinspection PhpUndefinedFunctionInspection */
+			rank_math_the_breadcrumbs( $args );
 
 			return;
 		}
@@ -1298,6 +1331,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					}
 
 					$html = str_replace( 'category', $terms, $html );
+				}
+
+				if ( false !== strpos( $html, 'read_more' ) ) {
+					$more = sprintf( __( '<a href="%s" class="read-more-link">Read more &rarr;</a>', 'hocwp-theme' ), get_the_permalink() );
+
+					$html = str_replace( 'read_more', $more, $html );
 				}
 			}
 

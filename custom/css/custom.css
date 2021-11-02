@@ -84,6 +84,9 @@ body {
 
 }
 
+/*
+ * WordPress Admin Bar un-fixed.
+ */
 @media only screen and (max-width: 600px) {
 
 }
