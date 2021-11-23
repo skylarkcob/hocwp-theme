@@ -66,6 +66,21 @@ function hocwp_theme_settings_page_custom_code_field() {
 			)
 		),
 		array(
+			'id'    => 'open_body',
+			'title' => __( 'Open Body Code', 'hocwp-theme' ),
+			'tab'   => 'custom_code',
+			'args'  => array(
+				'type'          => 'html',
+				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
+				'description'   => __( 'Add code after open <code>&lt;body&gt;</code> tag.', 'hocwp-theme' ),
+				'callback_args' => array(
+					'class'            => 'widefat',
+					'data-code-editor' => 1,
+					'rows'             => 15
+				)
+			)
+		),
+		array(
 			'id'    => 'body',
 			'title' => __( 'Body Code', 'hocwp-theme' ),
 			'tab'   => 'custom_code',

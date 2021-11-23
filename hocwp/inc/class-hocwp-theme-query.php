@@ -30,6 +30,16 @@ final class HOCWP_Theme_Query {
 		return array_shift( $pages );
 	}
 
+	public function blog_page() {
+		$blog = HT_Options()->get_tab( 'blog_page', '', 'reading' );
+
+		if ( HT()->is_positive_number( $blog ) ) {
+			return get_post( $blog );
+		}
+
+		return HT_Query()->page_by_template( 'custom/page-templates/blog.php' );
+	}
+
 	public function pages( $args = array() ) {
 		return get_pages( $args );
 	}

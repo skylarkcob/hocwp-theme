@@ -377,7 +377,7 @@ class HOCWP_Theme_Enqueue {
 		$url_lib .= $folder_name;
 		$url_lib = trailingslashit( $url_lib );
 
-		if ( null === $args ) {
+		if ( null === $args || false === $args ) {
 			$base_dir = $dir_lib . 'css/font-awesome.min.css';
 
 			if ( file_exists( $base_dir ) ) {

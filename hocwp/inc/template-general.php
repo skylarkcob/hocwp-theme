@@ -765,6 +765,14 @@ function hocwp_theme_wp_page_menu_args_filter( $args ) {
 
 add_filter( 'wp_page_menu_args', 'hocwp_theme_wp_page_menu_args_filter', 99 );
 
+function hocwp_theme_wp_page_menu_filter( $menu ) {
+	$menu = str_replace( '"page_item', '"menu-item page_item page-item', $menu );
+
+	return $menu;
+}
+
+add_filter( 'wp_page_menu', 'hocwp_theme_wp_page_menu_filter' );
+
 function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 	$mobile_menu_icon = HT_Options()->get_tab( 'menu_toggle_icon', '', 'reading' );
 
@@ -1938,7 +1946,7 @@ function hocwp_theme_fix_not_found_paged() {
 
 	if ( is_page() ) {
 		// Load blog page when page chosen in reading settings.
-		$blog = HT_Options()->get_tab( 'blog_page', 'reading' );
+		$blog = HT_Options()->get_tab( 'blog_page', '', 'reading' );
 
 		if ( ! empty( $blog ) && is_page( $blog ) && ! is_page_template( 'custom/page-templates/blog.php' ) ) {
 			$path = HOCWP_Theme()->custom_path . '/page-templates/blog.php';
@@ -2000,6 +2008,9 @@ function hocwp_theme_wp_body_open_action() {
 	if ( file_exists( $file ) ) {
 		include_once $file;
 	}
+
+	$code = HT_Options()->get_tab( 'open_body', '', 'custom_code' );
+	echo $code;
 }
 
 add_action( 'wp_body_open', 'hocwp_theme_wp_body_open_action' );

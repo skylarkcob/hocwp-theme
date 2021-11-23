@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-11-02 10:52+0700\n"
+"POT-Creation-Date: 2021-11-23 21:43+0700\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,18 +171,26 @@ msgid "Add code between <code>&lt;head&gt;</code> and <code>&lt;/head&gt;</code>
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-custom-code.php:70
-msgid "Body Code"
+msgid "Open Body Code"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-custom-code.php:75
-msgid "Add code between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> tag."
+msgid "Add code after open <code>&lt;body&gt;</code> tag."
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-custom-code.php:85
-msgid "Footer Code"
+msgid "Body Code"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-custom-code.php:90
+msgid "Add code between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> tag."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:100
+msgid "Footer Code"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-custom-code.php:105
 msgid "Add code before closing <code>&lt;body&gt;</code> tag."
 msgstr ""
 
@@ -723,7 +731,7 @@ msgstr ""
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:410 hocwp/admin/admin.php:559 hocwp/inc/template-general.php:1155
+#: hocwp/admin/admin.php:410 hocwp/admin/admin.php:559 hocwp/inc/template-general.php:1163
 msgid "Close"
 msgstr ""
 
@@ -753,7 +761,7 @@ msgid "Choose post status"
 msgstr ""
 
 #: hocwp/admin/admin.php:546 hocwp/inc/class-hocwp-theme-html-field.php:751 hocwp/inc/class-hocwp-theme-html-field.php:793
-#: hocwp/inc/class-hocwp-theme-html-field.php:1709 hocwp/inc/functions-scripts.php:315
+#: hocwp/inc/class-hocwp-theme-html-field.php:1709 hocwp/inc/functions-scripts.php:317
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -875,7 +883,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:314
+#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:316
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -2151,71 +2159,71 @@ msgstr ""
 msgid "Notify license"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:161
+#: hocwp/inc/functions-scripts.php:163
 msgid "Are you sure you want to delete?"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:162
+#: hocwp/inc/functions-scripts.php:164
 msgid "Changes you made may not be saved."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:163
+#: hocwp/inc/functions-scripts.php:165
 #, php-format
 msgid "Theme created by %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:164
+#: hocwp/inc/functions-scripts.php:166
 msgid "Save"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:165
+#: hocwp/inc/functions-scripts.php:167
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:166
+#: hocwp/inc/functions-scripts.php:168
 msgid "Waiting..."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:188
+#: hocwp/inc/functions-scripts.php:190
 msgid "Load more"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:311
+#: hocwp/inc/functions-scripts.php:313
 #, php-format
 msgid "Remove %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:312
+#: hocwp/inc/functions-scripts.php:314
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:316
+#: hocwp/inc/functions-scripts.php:318
 #, php-format
 msgid "Change %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:391
+#: hocwp/inc/functions-scripts.php:393
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:392
+#: hocwp/inc/functions-scripts.php:394
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:393
+#: hocwp/inc/functions-scripts.php:395
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:394
+#: hocwp/inc/functions-scripts.php:396
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:395
+#: hocwp/inc/functions-scripts.php:397
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""
@@ -2372,54 +2380,54 @@ msgstr ""
 msgid "Previous Posts"
 msgstr ""
 
-#: hocwp/inc/template-general.php:801
+#: hocwp/inc/template-general.php:809
 msgid "Toggle menu"
 msgstr ""
 
-#: hocwp/inc/template-general.php:821 hocwp/inc/template-general.php:895
+#: hocwp/inc/template-general.php:829 hocwp/inc/template-general.php:903
 msgid "Menu"
 msgstr ""
 
-#: hocwp/inc/template-general.php:898
+#: hocwp/inc/template-general.php:906
 msgid "Close menu"
 msgstr ""
 
-#: hocwp/inc/template-general.php:991
+#: hocwp/inc/template-general.php:999
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/inc/template-general.php:1140
+#: hocwp/inc/template-general.php:1148
 msgid ""
 "This website uses cookies to ensure you get the best experience on our website. By continuing to browse on this website, you accept the use of "
 "cookies for the above purposes."
 msgstr ""
 
-#: hocwp/inc/template-general.php:1143
+#: hocwp/inc/template-general.php:1151
 #, php-format
 msgid "We use cookies to give you the best possible website experience. <span>By using %s, you agree to our <a href=\"%s\">%s</a></span>."
 msgstr ""
 
-#: hocwp/inc/template-general.php:1147
+#: hocwp/inc/template-general.php:1155
 msgid "Accept"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1688
+#: hocwp/inc/template-general.php:1696
 #, php-format
 msgid "Share on %s"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1700
+#: hocwp/inc/template-general.php:1708
 msgid "Submit URL"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1701
+#: hocwp/inc/template-general.php:1709
 msgid "Submit URL to Google Search Console"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1814
+#: hocwp/inc/template-general.php:1822
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
