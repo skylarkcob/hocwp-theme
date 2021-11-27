@@ -191,3 +191,28 @@
 .hocwp-theme label + .wp-editor-wrap {
     margin-top: 20px;
 }
+
+/* View mode classic ------------------------------- */
+
+.hocwp-theme[data-view-mode="classic"] .settings-box {
+    background: none;
+    box-shadow: none;
+}
+
+.hocwp-theme[data-view-mode="classic"] .settings-box .module-body {
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    display: block;
+}
+
+.hocwp-theme[data-view-mode="classic"] .nav-tab-wrapper {
+    margin: 1.5em 0 1em;
+}
+
+.hocwp-theme[data-view-mode="classic"] #systemInformation {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    line-height: 25px;
+}

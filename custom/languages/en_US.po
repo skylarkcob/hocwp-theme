@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-11-23 21:43+0700\n"
-"PO-Revision-Date: 2021-11-23 21:44+0700\n"
+"POT-Creation-Date: 2021-11-27 14:14+0700\n"
+"PO-Revision-Date: 2021-11-27 14:14+0700\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: en_US\n"
@@ -271,19 +271,19 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:58
+#: hocwp/admin/admin-setting-page-extension.php:61
 msgid "Number of items per page:"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:66
+#: hocwp/admin/admin-setting-page-extension.php:69
 msgid "Columns"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:95
+#: hocwp/admin/admin-setting-page-extension.php:98
 msgid "Filter extensions list"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:101
+#: hocwp/admin/admin-setting-page-extension.php:104
 #: hocwp/inc/template-general.php:654
 msgid "Search"
 msgstr ""
@@ -434,8 +434,9 @@ msgid "-- Choose breadcrumb type --"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:70
-#: hocwp/admin/admin-setting-page-reading.php:184 hocwp/admin/meta.php:169
-#: hocwp/inc/class-hocwp-theme-customize.php:70
+#: hocwp/admin/admin-setting-page-reading.php:184
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:110
+#: hocwp/admin/meta.php:169 hocwp/inc/class-hocwp-theme-customize.php:70
 msgid "Default"
 msgstr ""
 
@@ -958,27 +959,35 @@ msgstr ""
 msgid "<strong>Notice:</strong> %s extension(s) deactivated."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:510
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:523
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:111
+msgid "Classic"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:122
+msgid "View mode"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:568
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:583
 msgid "Theme Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:510
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:568
 #: hocwp/inc/setup-after.php:159
 msgid "Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:529
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:619
 #, php-format
 msgid "%s options"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:531
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:621
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:579
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:669
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If "
@@ -986,12 +995,12 @@ msgid ""
 "\">contact us</a> for more information."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:582
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:672
 #, php-format
 msgid "Theme core version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:649
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:742
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."

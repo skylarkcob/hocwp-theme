@@ -90,24 +90,52 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 		}
 
 		if ( HT()->array_has_value( $this->tabs ) ) {
-			?>
-            <div id="nav">
-                <ul class="nav-tab-wrapper">
+			$current_url = HT_Util()->get_current_url( true );
+			$current_url = remove_query_arg( 'settings-updated', $current_url );
+
+			$count = 0;
+
+			// Move tab Extensions to the last.
+			if ( isset( $this->tabs['extension'] ) ) {
+				$exts = $this->tabs['extension'];
+				unset( $this->tabs['extension'] );
+				HT()->insert_to_array( $this->tabs, $exts, 'before_tail', 'extension' );
+
+				unset( $exts );
+			}
+
+			$mode = get_user_setting( 'theme_settings_view_mode' );
+
+			if ( 'classic' == $mode ) {
+				?>
+				<nav class="nav-tab-wrapper">
 					<?php
-					$current_url = HT_Util()->get_current_url( true );
-					$current_url = remove_query_arg( 'settings-updated', $current_url );
+					foreach ( $this->tabs as $key => $tab ) {
+						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {
+							$url   = add_query_arg( array( 'tab' => $key ), $current_url );
+							$class = 'nav-tab';
 
-					$count = 0;
+							if ( ( ( $this->tab instanceof HOCWP_Theme_Admin_Setting_Tab ) && $this->tab->name == $key ) || ( empty( $this->tab ) && 0 == $count ) ) {
+								$class .= ' nav-tab-active';
+							}
 
-					// Move tab Extensions to the last.
-					if ( isset( $this->tabs['extension'] ) ) {
-						$exts = $this->tabs['extension'];
-						unset( $this->tabs['extension'] );
-						HT()->insert_to_array( $this->tabs, $exts, 'before_tail', 'extension' );
-
-						unset( $exts );
+							$text = $tab->label;
+							?>
+							<a class="<?php echo $class; ?>"
+							   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+							<?php
+							$count ++;
+						}
 					}
-
+					?>
+				</nav>
+				<?php
+				return;
+			}
+			?>
+			<div id="nav">
+				<ul class="nav-tab-wrapper">
+					<?php
 					foreach ( $this->tabs as $key => $tab ) {
 						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {
 							$url   = add_query_arg( array( 'tab' => $key ), $current_url );
@@ -117,24 +145,27 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 							$li_class = 'menu-item';
 
 							if ( ( ( $this->tab instanceof HOCWP_Theme_Admin_Setting_Tab ) && $this->tab->name == $key ) || ( empty( $this->tab ) && 0 == $count ) ) {
-								$class    .= ' nav-tab-active';
+								$class .= ' nav-tab-active';
 								$li_class .= ' active';
 							}
 
 							$text = $tab->label;
-							$text = $icon . ' ' . $text;
+
+							if ( ! empty( $icon ) ) {
+								$text = $icon . ' ' . $text;
+							}
 							?>
-                            <li class="<?php echo $li_class; ?>">
-                                <a class="<?php echo $class; ?>"
-                                   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
-                            </li>
+							<li class="<?php echo $li_class; ?>">
+								<a class="<?php echo $class; ?>"
+								   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+							</li>
 							<?php
 							$count ++;
 						}
 					}
 					?>
-                </ul>
-            </div>
+				</ul>
+			</div>
 			<?php
 		}
 	}

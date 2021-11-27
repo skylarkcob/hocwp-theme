@@ -87,7 +87,65 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		return array( 'option_group' => $option_group, 'option_name' => $option_name );
 	}
 
+	public function screen_options_action() {
+		add_filter( 'screen_options_show_submit', '__return_true' );
+
+		if ( isset( $_POST['screen-options-apply'] ) ) {
+			$mode = $_POST['mode'] ?? '';
+
+			if ( ! empty( $mode ) ) {
+				set_user_setting( 'theme_settings_view_mode', $mode );
+			}
+		}
+
+		add_filter( 'screen_settings', array( $this, 'screen_settings_filter' ), 10, 2 );
+	}
+
+	public function screen_settings_filter( $settings, $screen ) {
+		if ( $screen instanceof WP_Screen ) {
+			global $hocwp_theme;
+
+			if ( $screen->id == $hocwp_theme->option->hook_suffix ) {
+				$view_modes = array(
+					'default' => __( 'Default', 'hocwp-theme' ),
+					'classic' => __( 'Classic', 'hocwp-theme' )
+				);
+
+				$view_modes = apply_filters( 'hocwp_theme_admin_setting_page_view_modes', $view_modes );
+
+				if ( HT()->array_has_value( $view_modes ) ) {
+					$mode = get_user_setting( 'theme_settings_view_mode', 'default' );
+
+					ob_start();
+					?>
+					<fieldset class="metabox-prefs view-mode">
+						<legend><?php _e( 'View mode', 'hocwp-theme' ); ?></legend>
+						<?php
+						foreach ( $view_modes as $view_mode => $label ) {
+							?>
+							<label for="<?php echo esc_attr( $view_mode ); ?>-view-mode">
+								<input id="<?php echo esc_attr( $view_mode ); ?>-view-mode" type="radio" name="mode"
+								       value="<?php echo esc_attr( $view_mode ); ?>" <?php checked( $view_mode, $mode ); ?> />
+								<?php echo $label; ?>
+							</label>
+							<?php
+						}
+						?>
+					</fieldset>
+					<?php
+					$settings .= ob_get_clean();
+				}
+			}
+		}
+
+		return $settings;
+	}
+
 	public function settings_init() {
+		global $hocwp_theme;
+
+		add_action( "load-{$hocwp_theme->option->hook_suffix}", array( $this, 'screen_options_action' ) );
+
 		/**
 		 * Register Setting
 		 */
@@ -518,70 +576,105 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$theme = wp_get_theme();
 
 		$tab_obj = $this->tabs->tab;
+
+		$mode = get_user_setting( 'theme_settings_view_mode', 'default' );
 		?>
-		<div class="wrap hocwp-theme">
+		<div class="wrap hocwp-theme" data-view-mode="<?php echo esc_attr( $mode ); ?>">
 			<h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
 			<hr class="wp-header-end" style="clear: both;">
 			<div class="settings-box clearfix module">
-				<div class="header module-header">
-					<div class="inner clearfix">
-						<div class="theme-info">
-							<h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
+				<?php
+				if ( 'classic' == $mode ) {
+					?>
+					<div class="module-body clearfix">
+						<?php $this->tabs->html(); ?>
+						<div class="settings-content">
+							<?php
+							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
 
-							<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
-						</div>
-						<?php
-						if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || $tab_obj->submit_button ) {
+							if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || ( ! is_callable( $tab_obj->callback ) && ! file_exists( $tab_obj->callback ) ) ) {
+								$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
+
+								if ( $display ) {
+									$this->form_table();
+								}
+							} else {
+								if ( is_callable( $tab_obj->callback ) ) {
+									call_user_func( $tab_obj->callback );
+								} elseif ( file_exists( $tab_obj->callback ) ) {
+									include $tab_obj->callback;
+								}
+							}
+
+							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
 							?>
-							<div class="save-changes">
-								<?php
-								$this->submit_button(
-									array(
-										'attributes' => array(
-											'form' => 'hocwpOptions',
-											'id'   => 'settingSubmitTop'
-										)
-									)
-								);
-								?>
+						</div>
+					</div>
+					<?php
+				} else {
+					?>
+					<div class="header module-header">
+						<div class="inner clearfix">
+							<div class="theme-info">
+								<h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
+
+								<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
 							</div>
 							<?php
-						}
-						?>
-					</div>
-				</div>
-				<div class="module-body clearfix">
-					<?php $this->tabs->html(); ?>
-					<div class="settings-content">
-						<?php
-						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
-
-						if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || ( ! is_callable( $tab_obj->callback ) && ! file_exists( $tab_obj->callback ) ) ) {
-							$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
-
-							if ( $display ) {
-								$this->form_table();
+							if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || $tab_obj->submit_button ) {
+								?>
+								<div class="save-changes">
+									<?php
+									$this->submit_button(
+										array(
+											'attributes' => array(
+												'form' => 'hocwpOptions',
+												'id'   => 'settingSubmitTop'
+											)
+										)
+									);
+									?>
+								</div>
+								<?php
 							}
-						} else {
-							if ( is_callable( $tab_obj->callback ) ) {
-								call_user_func( $tab_obj->callback );
-							} elseif ( file_exists( $tab_obj->callback ) ) {
-								include $tab_obj->callback;
-							}
-						}
+							?>
+						</div>
+					</div>
+					<div class="module-body clearfix">
+						<?php $this->tabs->html(); ?>
+						<div class="settings-content">
+							<?php
+							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
 
-						do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
-						?>
+							if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || ( ! is_callable( $tab_obj->callback ) && ! file_exists( $tab_obj->callback ) ) ) {
+								$display = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_display_form', true );
+
+								if ( $display ) {
+									$this->form_table();
+								}
+							} else {
+								if ( is_callable( $tab_obj->callback ) ) {
+									call_user_func( $tab_obj->callback );
+								} elseif ( file_exists( $tab_obj->callback ) ) {
+									include $tab_obj->callback;
+								}
+							}
+
+							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
+							?>
+						</div>
 					</div>
-				</div>
-				<div class="module-footer clearfix">
-					<div class="author-info">
-						<p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
+					<div class="module-footer clearfix">
+						<div class="author-info">
+							<p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
+						</div>
+						<div class="core-version">
+							<p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
+						</div>
 					</div>
-					<div class="core-version">
-						<p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
-					</div>
-				</div>
+					<?php
+				}
+				?>
 			</div>
 		</div>
 		<?php

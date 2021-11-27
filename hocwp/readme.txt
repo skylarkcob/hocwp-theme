@@ -3,6 +3,9 @@
 * 23/11/2021: Add translation files for English US language.
 * 23/11/2021: Fix page menu class.
 * 23/11/2021: Add URL to localized object script.
+* 27/11/2021: Fix screen options not showing in theme settings page. Change admin_menu to admin_init for hook load.
+* 27/11/2021: Add theme settings page view mode for user can schange styles.
+* 27/11/2021: Use set_screen_options to update theme extensions per_page.
 
 = 6.8.6.2 =
 * 03/11/2021: Add custom code after open body tag.
