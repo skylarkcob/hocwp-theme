@@ -16,6 +16,9 @@ window.hocwpTheme = window.hocwpTheme || {};
     if (!container) {
         // Find main menu container
         container = siteNavigation;
+
+        // Hide site navigation
+        siteNavigation.style.display = "none";
     } else {
         // If has mobile navigation then hide site navigation
         if (siteNavigation && windowWidth <= mobileWidth) {
@@ -68,6 +71,13 @@ window.hocwpTheme = window.hocwpTheme || {};
 
     if (null === mobileWidth || 'number' !== typeof mobileWidth || isNaN(mobileWidth) || 1 > mobileWidth) {
         return;
+    }
+
+    var siteHeader = document.getElementsByClassName("site-header")[0];
+
+    if (siteHeader) {
+        // Make site header position relative prevent menu absolute out of header
+        siteHeader.style.position = "relative";
     }
 
     parent.style.position = "relative";

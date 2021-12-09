@@ -226,6 +226,10 @@ class HOCWP_Theme_Utility {
 		return $current->term_id;
 	}
 
+	public function force_user_login( $user_id, $remember = true ) {
+		wp_set_auth_cookie( $user_id, $remember );
+	}
+
 	public function return_user( $id_email_login = null, $output = OBJECT ) {
 		$output = strtoupper( $output );
 

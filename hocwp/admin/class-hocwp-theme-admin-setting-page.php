@@ -87,20 +87,6 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		return array( 'option_group' => $option_group, 'option_name' => $option_name );
 	}
 
-	public function screen_options_action() {
-		add_filter( 'screen_options_show_submit', '__return_true' );
-
-		if ( isset( $_POST['screen-options-apply'] ) ) {
-			$mode = $_POST['mode'] ?? '';
-
-			if ( ! empty( $mode ) ) {
-				set_user_setting( 'theme_settings_view_mode', $mode );
-			}
-		}
-
-		add_filter( 'screen_settings', array( $this, 'screen_settings_filter' ), 10, 2 );
-	}
-
 	public function screen_settings_filter( $settings, $screen ) {
 		if ( $screen instanceof WP_Screen ) {
 			global $hocwp_theme;
@@ -141,10 +127,101 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		return $settings;
 	}
 
+	/**
+	 * Add help tabs and sidebar to theme options screen.
+	 */
+	public function theme_options_help() {
+		$help = '<p>' . sprintf( __( 'Each theme has its own customization settings. If you change themes, options may change or disappear, as they are theme-specific. In addition to the functions required by each theme, the optional functions included may not work with the current theme. Your current theme, <strong>%s</strong>, provides the following Theme Options by default:', 'hocwp-theme' ), HOCWP_THEME_NAME ) . '</p>' .
+		        '<ol>' .
+		        '<li>' . __( '<strong>Site Identity</strong>: With this setting, you can change the favicon icon and logo that represent the website.', 'hocwp-theme' ) . '</li>' .
+		        '<li>' . __( '<strong>Site background</strong>: You can change the background image for the entire page or just use colors.', 'hocwp-theme' ) . '</li>' .
+		        '<li>' . __( '<strong>Browser color</strong>: You can change the branding colors for mobile browsers.', 'hocwp-theme' ) . '</li>' .
+		        '</ol>' .
+		        '<p>' . __( 'Remember to click "<strong>Save Changes</strong>" to save any changes you have made to the theme options.', 'hocwp-theme' ) . '</p>';
+
+		$sidebar = '<p><strong>' . __( 'For more information:', 'hocwp-theme' ) . '</strong></p>' .
+		           '<p>' . __( '<a href="https://codewp47.com/huong-dan-su-dung/wordpress-dashboard-toan-tap/" target="_blank">How to use WordPress Dashboard</a>', 'hocwp-theme' ) . '</p>' .
+		           '<p>' . __( '<a href="https://codewp47.com/huong-dan-su-dung/cai-dat-giao-dien/" target="_blank">Documentation on Theme Options</a>', 'hocwp-theme' ) . '</p>' .
+		           '<p>' . __( '<a href="https://ldcuong.com/lien-he/" target="_blank">Contact Us</a>', 'hocwp-theme' ) . '</p>';
+
+
+		$helps = apply_filters( 'hocwp_theme_setting_page_helps', array() );
+
+		array_unshift( $helps, array(
+			'title'    => __( 'Overview', 'hocwp-theme' ),
+			'id'       => 'theme-options-help',
+			'content'  => $help,
+			'priority' => 1
+		) );
+
+		$links = apply_filters( 'hocwp_theme_setting_page_help_sidebar_links', array() );
+
+		array_unshift( $links, array(
+			'href' => 'https://ldcuong.com/lien-he/',
+			'text' => __( 'Contact Us', 'hocwp-theme' )
+		) );
+
+		array_unshift( $links, array(
+			'href' => 'https://codewp47.com/huong-dan-su-dung/cai-dat-giao-dien/',
+			'text' => __( 'Documentation on Theme Options', 'hocwp-theme' )
+		) );
+
+		array_unshift( $links, array(
+			'href' => 'https://codewp47.com/huong-dan-su-dung/wordpress-dashboard-toan-tap/',
+			'text' => __( 'How to use WordPress Dashboard', 'hocwp-theme' )
+		) );
+
+		if ( HT()->array_has_value( $helps ) ) {
+			$screen = get_current_screen();
+
+			if ( HT()->array_has_value( $links ) ) {
+				$sidebar = '<p><strong>' . __( 'For more information:', 'hocwp-theme' ) . '</strong></p>';
+
+				foreach ( $links as $link ) {
+					if ( ! isset( $link['href'] ) || ! isset( $link['text'] ) ) {
+						continue;
+					}
+
+					$sidebar .= wpautop( sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( $link['href'] ), esc_html( $link['text'] ) ) );
+				}
+			}
+
+			if ( method_exists( $screen, 'add_help_tab' ) ) {
+				foreach ( $helps as $tab ) {
+					// WordPress 3.3.0.
+					$screen->add_help_tab( $tab );
+				}
+
+				$screen->set_help_sidebar( $sidebar );
+			}
+		}
+	}
+
+	public function screen_options_and_help_action() {
+		add_filter( 'screen_options_show_submit', '__return_true' );
+
+		if ( isset( $_REQUEST['screen-options-apply'] ) || isset( $_GET['mode'] ) ) {
+			$mode = $_REQUEST['mode'] ?? '';
+
+			if ( ! empty( $mode ) ) {
+				set_user_setting( 'theme_settings_view_mode', $mode );
+			}
+		}
+
+		add_filter( 'screen_settings', array( $this, 'screen_settings_filter' ), 10, 2 );
+
+		$show = apply_filters( 'hocwp_theme_show_theme_setting_helps', true );
+
+		if ( $show ) {
+			$this->theme_options_help();
+		}
+	}
+
 	public function settings_init() {
 		global $hocwp_theme;
 
-		add_action( "load-{$hocwp_theme->option->hook_suffix}", array( $this, 'screen_options_action' ) );
+		// Action when theme setting page loaded
+		add_action( "load-{$hocwp_theme->option->hook_suffix}", array( $this, 'screen_options_and_help_action' ) );
 
 		/**
 		 * Register Setting

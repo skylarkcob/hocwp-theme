@@ -1,4 +1,10 @@
 == Changelog ==
+= 6.8.8 =
+* 30/11/2021: Hide site navigation when mobile navigation found.
+* 30/11/2021: Update mobile menu script, make site header position relative.
+* 02/12/2021: Add function to make user logged in.
+* 02/12/2021: Add help tab for theme settings screen.
+
 = 6.8.7 =
 * 23/11/2021: Add translation files for English US language.
 * 23/11/2021: Fix page menu class.

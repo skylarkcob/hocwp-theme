@@ -51,6 +51,8 @@
     height: 41px;
 }
 
+.mobile-menu.has-close > .menu:before,
+.mobile-menu.has-close > .menu:after,
 .mobile-menu > .menu-toggle span[class*="line-"] {
     width: 18px;
     height: 2px;
@@ -62,12 +64,33 @@
     vertical-align: middle;
 }
 
+.mobile-menu > .menu-toggle.icon-burger-3 span[class*="line-"],
 .mobile-menu > .menu-toggle.icon-burger span[class*="line-"] {
     width: 25px;
 }
 
-.mobile-menu > .menu-toggle.icon-burger:not([aria-expanded="true"]) span.line-3 {
+.mobile-menu > .menu-toggle.icon-burger span[class*="line-"] {
+    display: none;
+}
+
+.mobile-menu > .menu-toggle.icon-burger span.line-3,
+.mobile-menu > .menu-toggle.icon-burger span[class*="line-"]:last-child,
+.mobile-menu > .menu-toggle.icon-burger span[class*="line-"]:first-child {
+    display: block;
+}
+
+.mobile-menu > .menu-toggle.icon-burger-3:not([aria-expanded="true"]) span.line-3,
+.mobile-menu > .menu-toggle.icon-burger-3:not([aria-expanded="true"]) span.line-2 {
     width: 20px;
+    margin-top: 5px;
+}
+
+.mobile-menu > .menu-toggle.icon-burger-3:not([aria-expanded="true"]) span.line-3 {
+    width: 13px;
+}
+
+.mobile-menu > .menu-toggle.icon-burger:not([aria-expanded="true"]) span.line-3 {
+    width: 19px;
     margin-top: 7px;
 }
 
@@ -113,14 +136,17 @@
     height: 25px;
 }
 
+.mobile-menu > .menu:before,
 .mobile-menu > .menu-toggle[aria-expanded="true"] span[class*="line-"]:first-child {
     top: 11px;
     transform: rotate(-135deg);
 }
 
+.mobile-menu > .menu:after,
 .mobile-menu > .menu-toggle[aria-expanded="true"] span.line-3 {
     transform: rotate(135deg);
-    top: 9px;
+    top: 11px;
+    margin-top: 0;
 }
 
 .mobile-menu > .menu-toggle[aria-expanded="true"] span.line-2 {
@@ -478,4 +504,24 @@ button.menu-toggle[aria-expanded="true"] {
 
 .mobile-menu .sub-menu[aria-expanded="true"] .sub-menu[aria-expanded="true"] > li:last-child {
 
+}
+
+.mobile-menu.has-close > .menu {
+    padding-top: 50px;
+}
+
+.mobile-menu.has-close > .menu:before {
+    content: "";
+}
+
+.mobile-menu.has-close > .menu:after {
+    content: "";
+}
+
+.mobile-menu.has-close > .menu:before,
+.mobile-menu.has-close > .menu:after {
+    position: absolute;
+    top: 22px;
+    right: 25px;
+    z-index: 499;
 }

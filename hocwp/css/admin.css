@@ -85,7 +85,7 @@
     font-style: italic;
 }
 
-.hocwp-theme .settings-box td label + input,
+.hocwp-theme .settings-box td label + input:not(.button):not([type="button"]),
 .hocwp-theme label + select + .chosen-container {
     margin-top: 4px;
 }
