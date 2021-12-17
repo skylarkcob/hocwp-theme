@@ -1,4 +1,15 @@
 == Changelog ==
+= 6.8.9 =
+* 17/12/2021: Add custom constant mobile screen width.
+* 17/12/2021: Add option for user disable variable sidebar.
+* 17/12/2021: Add option for user update default text for empty post content.
+* 17/12/2021: Allow user change view mode for setting page screen.
+* 17/12/2021: Update clear none for heading in post content.
+* 17/12/2021: Update HTML field class.
+* 17/12/2021: Add tab button for quicktags toolbar.
+* 17/12/2021: Add bulk action for user change post type.
+* 17/12/2021: Update mobile menu script.
+
 = 6.8.8 =
 * 30/11/2021: Hide site navigation when mobile navigation found.
 * 30/11/2021: Update mobile menu script, make site header position relative.

@@ -301,10 +301,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$count ++;
 				}
 
-				$end_size = absint( $args['end_size'] );
-				$count += $end_size;
-				$mid_size = absint( $args['mid_size'] );
-				$count += $mid_size;
+				$end_size  = absint( $args['end_size'] );
+				$count     += $end_size;
+				$mid_size  = absint( $args['mid_size'] );
+				$count     += $mid_size;
 				$prev_next = $args['prev_next'];
 
 				if ( 1 == $prev_next ) {
@@ -519,10 +519,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		if ( ! empty( $list_socials ) ) {
 			$list_socials = explode( ',', $list_socials );
 			$list_socials = array_map( 'trim', $list_socials );
-			$list_class .= ' list-socials';
-			$list_class = trim( $list_class );
+			$list_class   .= ' list-socials';
+			$list_class   = trim( $list_class );
 			?>
-			<ul class="<?php echo esc_attr( $list_class ); ?>">
+            <ul class="<?php echo esc_attr( $list_class ); ?>">
 				<?php
 				foreach ( $list_socials as $social ) {
 					$url = HT_Options()->get_tab( $social . '_url', '', 'social' );
@@ -534,16 +534,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 							$icon = ucfirst( $social );
 						}
 						?>
-						<li class="social-item">
-							<a href="<?php echo esc_url( $url ); ?>"
-							   title="<?php echo esc_attr( ucfirst( $social ) ); ?>"
-							   target="_blank" rel="nofollow"><?php echo $icon ?></a>
-						</li>
+                        <li class="social-item">
+                            <a href="<?php echo esc_url( $url ); ?>"
+                               title="<?php echo esc_attr( ucfirst( $social ) ); ?>"
+                               target="_blank" rel="nofollow"><?php echo $icon ?></a>
+                        </li>
 						<?php
 					}
 				}
 				?>
-			</ul>
+            </ul>
 			<?php
 		}
 	}
@@ -610,10 +610,20 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$url = $data['url'];
 			$url = add_query_arg( $data['params'], $url );
 			?>
-			<a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
-			   class="icon button circle is-outline tooltip <?php echo esc_attr( $social ); ?> show-for-medium tooltipstered"><?php echo $data['icon']; ?></a>
+            <a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
+               class="icon button circle is-outline tooltip <?php echo esc_attr( $social ); ?> show-for-medium tooltipstered"><?php echo $data['icon']; ?></a>
 			<?php
 		}
+	}
+
+	public function get_current_title( $args = array() ) {
+		if ( is_singular() || is_single() || is_page() ) {
+			$title = get_the_title();
+		} else {
+			$title = $this->get_archive_title( $args );
+		}
+
+		return apply_filters( 'hocwp_theme_current_title', $title );
 	}
 
 	public function get_archive_title( $args = array() ) {
@@ -725,6 +735,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			if ( $prefix && ! empty( $title ) ) {
 				$title = sprintf( __( 'Search results for: %s', 'hocwp-theme' ), $title );
+			} elseif ( empty( $title ) ) {
+				$title = __( 'Search results', 'hocwp-theme' );
 			}
 		} elseif ( ! ( is_home() && is_front_page() ) && ! is_front_page() ) {
 			if ( is_page_template() ) {
@@ -1009,7 +1021,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			ob_start();
 			?>
-			<span>
+            <span>
 				<?php
 				if ( empty( $separator ) ) {
 					echo $home_item;
@@ -1081,39 +1093,39 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$ajax_url = add_query_arg( $params, $ajax_url );
 		?>
-		<div class="fb-like-buttons like-share clearfix">
-			<div class="item">
-				<div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
-				     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
-				     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
+        <div class="fb-like-buttons like-share clearfix">
+            <div class="item">
+                <div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
+                     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
+                     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
 				<?php
 				if ( $recommend ) {
 					?>
-					<div data-share="true" data-show-faces="false" data-action="recommend" data-layout="button_count"
-					     data-href="<?php echo $url; ?>" class="fb-like fb_iframe_widget"></div>
+                    <div data-share="true" data-show-faces="false" data-action="recommend" data-layout="button_count"
+                         data-href="<?php echo $url; ?>" class="fb-like fb_iframe_widget"></div>
 					<?php
 				}
 				?>
-			</div>
+            </div>
 			<?php do_action( 'hocwp_theme_facebook_share_button', $args ); ?>
-		</div>
-		<script>
-			function updateFacebookData(event) {
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
-				xhr.send();
-			}
+        </div>
+        <script>
+            function updateFacebookData(event) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
+                xhr.send();
+            }
 
-			window.fbAsyncInit = function () {
-				FB.Event.subscribe("edge.create", function () {
-					updateFacebookData('like');
-				});
+            window.fbAsyncInit = function () {
+                FB.Event.subscribe("edge.create", function () {
+                    updateFacebookData('like');
+                });
 
-				FB.Event.subscribe("edge.remove", function () {
-					updateFacebookData('unlike');
-				});
-			};
-		</script>
+                FB.Event.subscribe("edge.remove", function () {
+                    updateFacebookData('unlike');
+                });
+            };
+        </script>
 		<?php
 		$after = HT()->get_value_in_array( $args, 'after' );
 
@@ -1124,12 +1136,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 		$class   = isset( $args['class'] ) ? $args['class'] : 'addthis_native_toolbox';
 		$class   = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class );
-		$class .= ' addthis-tools';
-		$url = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
+		$class   .= ' addthis-tools';
+		$url     = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
 		?>
-		<!-- Go to www.addthis.com/dashboard to customize your tools -->
-		<div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
-		     data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
+             data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
 		<?php
 	}
 
@@ -1170,42 +1182,42 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$style = trim( $style );
 		?>
-		<button id="backToTop" class="back-to-top"
-		        onclick="scrollToTop(1000);"
-		        title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
-		        style="<?php echo $style; ?>"
-		        aria-label="<?php esc_attr_e( 'Go to top', 'hocwp-theme' ); ?>"><?php echo $text; ?></button>
-		<!--suppress JSUnresolvedVariable -->
-		<script>
-			window.onscroll = function () {
-				scrollFunction()
-			};
+        <button id="backToTop" class="back-to-top"
+                onclick="scrollToTop(1000);"
+                title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
+                style="<?php echo $style; ?>"
+                aria-label="<?php esc_attr_e( 'Go to top', 'hocwp-theme' ); ?>"><?php echo $text; ?></button>
+        <!--suppress JSUnresolvedVariable -->
+        <script>
+            window.onscroll = function () {
+                scrollFunction()
+            };
 
-			function scrollFunction() {
-				if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-					document.getElementById("backToTop").style.display = "block";
-				} else {
-					document.getElementById("backToTop").style.display = "none";
-				}
-			}
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("backToTop").style.display = "block";
+                } else {
+                    document.getElementById("backToTop").style.display = "none";
+                }
+            }
 
-			function scrollToTop(scrollDuration) {
-				var cosParameter = window.scrollY / 2,
-					scrollCount = 0,
-					oldTimestamp = performance.now();
+            function scrollToTop(scrollDuration) {
+                var cosParameter = window.scrollY / 2,
+                    scrollCount = 0,
+                    oldTimestamp = performance.now();
 
-				function step(newTimestamp) {
-					scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
-					if (scrollCount >= Math.PI) window.scrollTo(0, 0);
-					if (window.scrollY === 0) return;
-					window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
-					oldTimestamp = newTimestamp;
-					window.requestAnimationFrame(step);
-				}
+                function step(newTimestamp) {
+                    scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+                    if (scrollCount >= Math.PI) window.scrollTo(0, 0);
+                    if (window.scrollY === 0) return;
+                    window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+                    oldTimestamp = newTimestamp;
+                    window.requestAnimationFrame(step);
+                }
 
-				window.requestAnimationFrame(step);
-			}
-		</script>
+                window.requestAnimationFrame(step);
+            }
+        </script>
 		<?php
 	}
 
@@ -1389,9 +1401,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$html = join( '', $sort );
 		?>
-		<div <?php post_class( $post_class ); ?>>
+        <div <?php post_class( $post_class ); ?>>
 			<?php echo $html; ?>
-		</div>
+        </div>
 		<?php
 	}
 
@@ -1406,25 +1418,25 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			if ( $page instanceof WP_Post && 'page' == $page->post_type ) {
 				?>
-				<header class="page-header">
-					<h2 class="page-title"><?php echo get_the_title( $page ); ?></h2>
-				</header>
-				<!-- .page-header -->
-				<div class="page-content entry-content">
+                <header class="page-header">
+                    <h2 class="page-title"><?php echo get_the_title( $page ); ?></h2>
+                </header>
+                <!-- .page-header -->
+                <div class="page-content entry-content">
 					<?php
 					$content = apply_filters( 'the_content', $page->post_content );
 					echo $content;
 					?>
-				</div>
+                </div>
 				<?php
 			} else {
 				?>
-				<header class="page-header">
-					<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h2>
-				</header>
-				<!-- .page-header -->
-				<div class="page-content entry-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
+                <header class="page-header">
+                    <h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h2>
+                </header>
+                <!-- .page-header -->
+                <div class="page-content entry-content">
+                    <p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
 					<?php
 					get_search_form();
 
@@ -1432,9 +1444,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						the_widget( 'WP_Widget_Recent_Posts' );
 					}
 					?>
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
-						<ul>
+                    <div class="widget widget_categories">
+                        <h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
+                        <ul>
 							<?php
 							wp_list_categories( array(
 								'orderby'    => 'count',
@@ -1444,9 +1456,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 								'number'     => 10,
 							) );
 							?>
-						</ul>
-					</div>
-					<!-- .widget -->
+                        </ul>
+                    </div>
+                    <!-- .widget -->
 					<?php
 					/* translators: %1$s: smiley */
 					$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'hocwp-theme' ), convert_smilies( ':)' ) ) . '</p>';
@@ -1461,8 +1473,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						the_widget( 'WP_Widget_Tag_Cloud' );
 					}
 					?>
-				</div>
-				<!-- .page-content -->
+                </div>
+                <!-- .page-content -->
 				<?php
 			}
 		}

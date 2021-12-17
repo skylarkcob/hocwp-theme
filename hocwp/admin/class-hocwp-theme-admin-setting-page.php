@@ -81,7 +81,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		if ( ! empty( $this->tabs->tab_name ) ) {
 			$option_group .= '_' . $this->tabs->tab_name;
-			$option_name .= '[' . $this->tabs->tab_name . ']';
+			$option_name  .= '[' . $this->tabs->tab_name . ']';
 		}
 
 		return array( 'option_group' => $option_group, 'option_name' => $option_name );
@@ -104,20 +104,20 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 					ob_start();
 					?>
-					<fieldset class="metabox-prefs view-mode">
-						<legend><?php _e( 'View mode', 'hocwp-theme' ); ?></legend>
+                    <fieldset class="metabox-prefs view-mode">
+                        <legend><?php _e( 'View mode', 'hocwp-theme' ); ?></legend>
 						<?php
 						foreach ( $view_modes as $view_mode => $label ) {
 							?>
-							<label for="<?php echo esc_attr( $view_mode ); ?>-view-mode">
-								<input id="<?php echo esc_attr( $view_mode ); ?>-view-mode" type="radio" name="mode"
-								       value="<?php echo esc_attr( $view_mode ); ?>" <?php checked( $view_mode, $mode ); ?> />
+                            <label for="<?php echo esc_attr( $view_mode ); ?>-view-mode">
+                                <input id="<?php echo esc_attr( $view_mode ); ?>-view-mode" type="radio" name="mode"
+                                       value="<?php echo esc_attr( $view_mode ); ?>" <?php checked( $view_mode, $mode ); ?> />
 								<?php echo $label; ?>
-							</label>
+                            </label>
 							<?php
 						}
 						?>
-					</fieldset>
+                    </fieldset>
 					<?php
 					$settings .= ob_get_clean();
 				}
@@ -481,8 +481,14 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					$a_args['name'] = $new_name;
 					$a_args['id']   = HT_Sanitize()->html_id( $new_name );
 
-					// Add field title label
-					$a_args['label'] = $a_field['title'] ?? '';
+					if ( empty( $a_args['label'] ) ) {
+						// Add field title label
+						$a_args['label'] = $a_field['title'] ?? '';
+
+						if ( empty( $a_args['label'] ) ) {
+							$a_args['label'] = $a_field['label'] ?? '';
+						}
+					}
 
 					// Add field class
 					$a_args['class'] = $a_args['class'] ?? 'regular-text';
@@ -656,16 +662,16 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		$mode = get_user_setting( 'theme_settings_view_mode', 'default' );
 		?>
-		<div class="wrap hocwp-theme" data-view-mode="<?php echo esc_attr( $mode ); ?>">
-			<h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
-			<hr class="wp-header-end" style="clear: both;">
-			<div class="settings-box clearfix module">
+        <div class="wrap hocwp-theme" data-view-mode="<?php echo esc_attr( $mode ); ?>">
+            <h1 class="hidden"><?php _e( 'Theme Settings', 'hocwp-theme' ); ?></h1>
+            <hr class="wp-header-end" style="clear: both;">
+            <div class="settings-box clearfix module">
 				<?php
 				if ( 'classic' == $mode ) {
 					?>
-					<div class="module-body clearfix">
+                    <div class="module-body clearfix">
 						<?php $this->tabs->html(); ?>
-						<div class="settings-content">
+                        <div class="settings-content">
 							<?php
 							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
 
@@ -685,22 +691,22 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
 							?>
-						</div>
-					</div>
+                        </div>
+                    </div>
 					<?php
 				} else {
 					?>
-					<div class="header module-header">
-						<div class="inner clearfix">
-							<div class="theme-info">
-								<h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
+                    <div class="header module-header">
+                        <div class="inner clearfix">
+                            <div class="theme-info">
+                                <h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
 
-								<p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
-							</div>
+                                <p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
+                            </div>
 							<?php
 							if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || $tab_obj->submit_button ) {
 								?>
-								<div class="save-changes">
+                                <div class="save-changes">
 									<?php
 									$this->submit_button(
 										array(
@@ -711,15 +717,15 @@ final class HOCWP_Theme_Admin_Setting_Page {
 										)
 									);
 									?>
-								</div>
+                                </div>
 								<?php
 							}
 							?>
-						</div>
-					</div>
-					<div class="module-body clearfix">
+                        </div>
+                    </div>
+                    <div class="module-body clearfix">
 						<?php $this->tabs->html(); ?>
-						<div class="settings-content">
+                        <div class="settings-content">
 							<?php
 							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_before' );
 
@@ -739,21 +745,21 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 							do_action( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_form_after' );
 							?>
-						</div>
-					</div>
-					<div class="module-footer clearfix">
-						<div class="author-info">
-							<p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
-						</div>
-						<div class="core-version">
-							<p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
-						</div>
-					</div>
+                        </div>
+                    </div>
+                    <div class="module-footer clearfix">
+                        <div class="author-info">
+                            <p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
+                        </div>
+                        <div class="core-version">
+                            <p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
+                        </div>
+                    </div>
 					<?php
 				}
 				?>
-			</div>
-		</div>
+            </div>
+        </div>
 		<?php
 	}
 
@@ -776,10 +782,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	private function form_table() {
 		$tab_obj = $this->tabs->tab;
 		?>
-		<form id="hocwpOptions" method="post" action="options.php" autocomplete="off"
-		      data-tab="<?php echo esc_attr( $this->tab ); ?>">
-			<input type="hidden" name="tab"
-			       value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
+        <form id="hocwpOptions" method="post" action="options.php" autocomplete="off"
+              data-tab="<?php echo esc_attr( $this->tab ); ?>">
+            <input type="hidden" name="tab"
+                   value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
 			<?php
 			$data = $this->get_option_group_and_name();
 			settings_fields( $this->menu_slug );
@@ -787,11 +793,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 			if ( isset( $wp_settings_fields[ $this->menu_slug ]['default'] ) ) {
 				?>
-				<table class="form-table">
-					<tbody>
+                <table class="form-table">
+                    <tbody>
 					<?php do_settings_fields( $this->menu_slug, 'default' ); ?>
-					</tbody>
-				</table>
+                    </tbody>
+                </table>
 				<?php
 			}
 
@@ -809,7 +815,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				);
 			}
 			?>
-		</form>
+        </form>
 		<?php
 	}
 
@@ -849,6 +855,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 							break;
 						case 'image_link':
 						case 'media_upload':
+						case 'content_image':
 						case 'content_with_image':
 							HT_Enqueue()->media_upload();
 							break;

@@ -302,13 +302,13 @@ if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow || 'customize.php
 			$box_class .= ' hocwp-theme';
 			echo '<div class="' . $box_class . '">';
 			?>
-			<p>
-				<label
-					for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>
-				<input class="widefat" id="<?php echo $widget->get_field_id( 'title' ); ?>"
-				       name="<?php echo $widget->get_field_name( 'title' ); ?>" type="text"
-				       value="<?php echo $title; ?>"/>
-			</p>
+            <p>
+                <label
+                        for="<?php echo $widget->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hocwp-theme' ); ?></label>
+                <input class="widefat" id="<?php echo $widget->get_field_id( 'title' ); ?>"
+                       name="<?php echo $widget->get_field_name( 'title' ); ?>" type="text"
+                       value="<?php echo $title; ?>"/>
+            </p>
 			<?php
 		}
 	}
@@ -325,11 +325,11 @@ if ( 'widgets.php' == $pagenow || 'admin-ajax.php' == $pagenow || 'customize.php
 if ( 'profile.php' == $pagenow || 'edit-user.php' == $pagenow ) {
 	function hocwp_theme_user_profile_fields( $user ) {
 		?>
-		<table class="form-table">
-			<tbody>
+        <table class="form-table">
+            <tbody>
 			<?php do_action( 'hocwp_theme_user_profile_fields', $user ); ?>
-			</tbody>
-		</table>
+            </tbody>
+        </table>
 		<?php
 	}
 
@@ -378,40 +378,40 @@ add_filter( 'admin_body_class', 'hocwp_theme_admin_body_class_filter' );
 
 function hocwp_theme_admin_footer_action() {
 	?>
-	<script>
-		jQuery(document).ready(function ($) {
-			// Backup current theme and database.
-			(function () {
-				$(document).keydown(function (e) {
-					if (e.ctrlKey && e.keyCode == 66) {
-						console.log("<?php _e( 'Running backup...', 'hocwp-theme' ); ?>");
+    <script>
+        jQuery(document).ready(function ($) {
+            // Backup current theme and database.
+            (function () {
+                $(document).keydown(function (e) {
+                    if (e.ctrlKey && e.keyCode == 66) {
+                        console.log("<?php _e( 'Running backup...', 'hocwp-theme' ); ?>");
 
-						setTimeout(function () {
-							$.ajax({
-								type: "GET",
-								dataType: "json",
-								url: hocwpTheme.ajaxUrl,
-								data: {
-									action: "backup_this_theme"
-								},
-								success: function (response) {
-									if (response.success) {
-										console.log(response.data.message);
-									}
-								}
-							});
-						}, 1000);
-					}
-				})
-			})();
-		});
-	</script>
-	<div id="hocwpThemeModal" class="modal">
-		<span class="close" title="<?php esc_attr_e( 'Close', 'hocwp-theme' ); ?>">&times;</span>
+                        setTimeout(function () {
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: hocwpTheme.ajaxUrl,
+                                data: {
+                                    action: "backup_this_theme"
+                                },
+                                success: function (response) {
+                                    if (response.success) {
+                                        console.log(response.data.message);
+                                    }
+                                }
+                            });
+                        }, 1000);
+                    }
+                })
+            })();
+        });
+    </script>
+    <div id="hocwpThemeModal" class="modal">
+        <span class="close" title="<?php esc_attr_e( 'Close', 'hocwp-theme' ); ?>">&times;</span>
 
-		<div id="hocwpThemeModalContent" class="modal-content"></div>
-		<div id="hocwpThemeModalCaption" class="modal-caption"></div>
-	</div>
+        <div id="hocwpThemeModalContent" class="modal-content"></div>
+        <div id="hocwpThemeModalCaption" class="modal-caption"></div>
+    </div>
 	<?php
 }
 
@@ -442,8 +442,9 @@ function hocwp_theme_display_post_states_filter( $post_states, $post ) {
 add_filter( 'display_post_states', 'hocwp_theme_display_post_states_filter', 10, 2 );
 
 function hocwp_theme_edit_posts_bulk_actions( $actions ) {
-	$actions['change_status']   = __( 'Change status', 'hocwp-theme' );
-	$actions['change_category'] = __( 'Change category', 'hocwp-theme' );
+	$actions['change_status']    = __( 'Change status', 'hocwp-theme' );
+	$actions['change_category']  = __( 'Change category', 'hocwp-theme' );
+	$actions['change_post_type'] = __( 'Change post type', 'hocwp-theme' );
 
 	return $actions;
 }
@@ -454,13 +455,24 @@ foreach ( $post_types as $type ) {
 	add_filter( 'bulk_actions-edit-' . $type, 'hocwp_theme_edit_posts_bulk_actions' );
 }
 
+/**
+ * Action to check and update post status, update post terms, update post type.
+ *
+ * @param $redirect_to
+ * @param $do_action
+ * @param $post_ids
+ *
+ * @return mixed|string
+ */
 function hocwp_theme_custom_edit_posts_bulk_action( $redirect_to, $do_action, $post_ids ) {
 	if ( HT()->array_has_value( $post_ids ) ) {
 		$select_terms = $_REQUEST['select_terms'] ?? '';
 
 		$select_status = $_REQUEST['select_status'] ?? '';
 
-		if ( ! empty( $select_status ) || HT()->array_has_value( $select_terms ) ) {
+		$select_pt = $_REQUEST['select_post_type'] ?? '';
+
+		if ( ! empty( $select_status ) || HT()->array_has_value( $select_terms ) || ! empty( $select_pt ) ) {
 			$count = 0;
 
 			foreach ( $post_ids as $post_id ) {
@@ -470,11 +482,18 @@ function hocwp_theme_custom_edit_posts_bulk_action( $redirect_to, $do_action, $p
 					}
 				}
 
-				if ( ! empty( $select_status ) ) {
+				if ( ! empty( $select_status ) || ! empty( $select_pt ) ) {
 					$data = array(
-						'ID'          => $post_id,
-						'post_status' => $select_status
+						'ID' => $post_id
 					);
+
+					if ( ! empty( $select_status ) ) {
+						$data['post_status'] = $select_status;
+					}
+
+					if ( ! empty( $select_pt ) ) {
+						$data['post_type'] = $select_pt;
+					}
 
 					wp_update_post( $data );
 				}
@@ -485,6 +504,11 @@ function hocwp_theme_custom_edit_posts_bulk_action( $redirect_to, $do_action, $p
 			$redirect_to = add_query_arg( 'updated_posts', $count, $redirect_to );
 			$redirect_to = add_query_arg( 'select_status', $select_status, $redirect_to );
 			$redirect_to = add_query_arg( 'select_terms', $select_terms, $redirect_to );
+			$redirect_to = add_query_arg( 'select_post_type', $select_pt, $redirect_to );
+
+			if ( post_type_exists( $select_pt ) ) {
+				$redirect_to = add_query_arg( 'post_type', $select_pt, $redirect_to );
+			}
 		}
 	}
 
@@ -498,34 +522,34 @@ foreach ( $post_types as $type ) {
 function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 	if ( 'top' == $which && ! empty( $post_type ) ) {
 		?>
-		<div id="hocwpThemeModal" class="modal small inline-submit hocwp-theme-modal choose-status"
-		     style="display: none">
-			<div class="inner">
-				<div class="modal-caption text-left">
-					<h3><?php _e( 'Change status', 'hocwp-theme' ); ?></h3>
+        <div id="hocwpThemeModal" class="modal small inline-submit hocwp-theme-modal choose-status"
+             style="display: none">
+            <div class="inner">
+                <div class="modal-caption text-left">
+                    <h3><?php _e( 'Change status', 'hocwp-theme' ); ?></h3>
                     <span class="close"
                           title="<?php esc_attr_e( 'Close this box', 'hocwp-theme' ); ?>">&times;</span>
-				</div>
-				<div class="inner modal-content">
-					<div class="box">
+                </div>
+                <div class="inner modal-content">
+                    <div class="box">
 						<?php
 						$statuses = get_post_statuses();
 
 						if ( HT()->array_has_value( $statuses ) ) {
 							?>
-							<div class="status-area form-row">
-								<label for="select-status"><?php _e( 'Post status:', 'hocwp-theme' ); ?></label>
-								<select id="select-status" class="select-status" name="select_status">
-									<option value=""><?php _e( 'Choose post status', 'hocwp-theme' ); ?></option>
+                            <div class="status-area form-row">
+                                <label for="select-status"><?php _e( 'Post status:', 'hocwp-theme' ); ?></label>
+                                <select id="select-status" class="select-status" name="select_status">
+                                    <option value=""><?php _e( 'Choose post status', 'hocwp-theme' ); ?></option>
 									<?php
 									foreach ( $statuses as $key => $status ) {
 										?>
-										<option value="<?php echo esc_attr( $key ); ?>"><?php echo $status; ?></option>
+                                        <option value="<?php echo esc_attr( $key ); ?>"><?php echo $status; ?></option>
 										<?php
 									}
 									?>
-								</select>
-							</div>
+                                </select>
+                            </div>
 							<?php
 						}
 
@@ -535,10 +559,10 @@ function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 							foreach ( $taxs as $tax ) {
 								$id = 'select-taxonomy-' . $tax->name;
 								?>
-								<div class="taxonomy-area form-row <?php echo esc_attr( $tax->name ); ?>">
-									<label
-										for="<?php echo esc_attr( $id ); ?>"><?php echo $tax->labels->singular_name; ?>
-										:</label>
+                                <div class="taxonomy-area form-row <?php echo esc_attr( $tax->name ); ?>">
+                                    <label
+                                            for="<?php echo esc_attr( $id ); ?>"><?php echo $tax->labels->singular_name; ?>
+                                        :</label>
 									<?php
 									wp_dropdown_categories( array(
 										'id'              => $id,
@@ -548,23 +572,47 @@ function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 										'show_option_all' => sprintf( __( 'Choose %s', 'hocwp-theme' ), $tax->labels->singular_name )
 									) );
 									?>
-								</div>
+                                </div>
 								<?php
 							}
 						}
+
+						$post_types = get_post_types( array( 'public' => true ) );
+
+						if ( HT()->array_has_value( $post_types ) ) {
+							?>
+                            <div class="post-type-area form-row">
+                                <label for="select-post-type"><?php _e( 'Post type:', 'hocwp-theme' ); ?></label>
+                                <select id="select-post-type" class="select-post-type" name="select_post_type">
+                                    <option value=""><?php _e( 'Choose post type', 'hocwp-theme' ); ?></option>
+									<?php
+									foreach ( $post_types as $pt ) {
+										$obj = get_post_type_object( $pt );
+
+										if ( $obj instanceof WP_Post_Type ) {
+											?>
+                                            <option value="<?php echo esc_attr( $pt ); ?>"><?php printf( '%s (%s)', $obj->labels->singular_name, $pt ); ?></option>
+											<?php
+										}
+									}
+									?>
+                                </select>
+                            </div>
+							<?php
+						}
 						?>
-					</div>
-				</div>
-				<div class="modal-footer modal-bottom">
+                    </div>
+                </div>
+                <div class="modal-footer modal-bottom">
 					<?php
 					submit_button( __( 'Change', 'hocwp-theme' ) );
 					$submit = get_submit_button( __( 'Close', 'hocwp-theme' ), 'default large modal-close close-modal', 'close-modal' );
 					$submit = str_replace( 'type="submit"', 'type="button"', $submit );
 					echo $submit;
 					?>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 		<?php
 	}
 }

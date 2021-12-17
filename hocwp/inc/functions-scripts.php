@@ -45,7 +45,8 @@ function hocwp_theme_script_loader_src_filter( $src, $handle ) {
 add_filter( 'script_loader_src', 'hocwp_theme_script_loader_src_filter', 10, 2 );
 
 function hocwp_theme_mobile_menu_media_screen_width() {
-	$width = apply_filters( 'hocwp_theme_mobile_menu_media_screen_width', 980 );
+	$width = defined( 'HOCWP_THEME_MOBILE_SCREEN_WIDTH' ) ? HOCWP_THEME_MOBILE_SCREEN_WIDTH : 980;
+	$width = apply_filters( 'hocwp_theme_mobile_menu_media_screen_width', $width );
 
 	if ( 1 > $width ) {
 		$width = 999999;
@@ -187,7 +188,7 @@ function hocwp_theme_localize_script_l10n() {
 function hocwp_theme_load_more_button() {
 	ob_start();
 	?>
-	<a class="load-more-button btn" href="#"><?php _e( 'Load more', 'hocwp-theme' ); ?></a>
+    <a class="load-more-button btn" href="#"><?php _e( 'Load more', 'hocwp-theme' ); ?></a>
 	<?php
 	$html = ob_get_clean();
 
@@ -394,6 +395,7 @@ function hocwp_theme_frontend_and_backend_scripts() {
 			'dl'       => _x( 'HTML Description List Element', 'quicktags description', 'hocwp-theme' ),
 			'dt'       => _x( 'HTML Definition Term Element', 'quicktags description', 'hocwp-theme' ),
 			'dd'       => _x( 'HTML Description Element', 'quicktags description', 'hocwp-theme' ),
+			'tab'      => _x( 'Indentation', 'quicktags description', 'hocwp-theme' ),
 			'nextpage' => _x( 'Split the article into multiple pages.', 'quicktags description', 'hocwp-theme' )
 		)
 	);

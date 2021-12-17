@@ -42,7 +42,7 @@ jQuery(document).ready(function ($) {
                 form = element.closest("form"),
                 checkbox = form.find("table input[type='checkbox']:checked");
 
-            if ("change_status" === action.val() || "change_category" === action.val()) {
+            if ("change_status" === action.val() || "change_category" === action.val() || "change_post_type" === action.val()) {
                 e.preventDefault();
 
                 if (checkbox && checkbox.length && 0 < parseInt(checkbox.length)) {

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function hocwp_theme_setup_start_session() {
 	if ( ! session_id() ) {
 		session_start( [
-			'read_and_close' => true,
+			'read_and_close' => true
 		] );
 	}
 

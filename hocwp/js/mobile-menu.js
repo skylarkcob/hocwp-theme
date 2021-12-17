@@ -8,6 +8,7 @@ window.hocwpTheme = window.hocwpTheme || {};
     mobileWidth = parseInt(body.getAttribute("data-mobile-width"));
     windowWidth = window.innerWidth || window.screen.width;
 
+    // Find primary menu container
     siteNavigation = document.getElementById("site-navigation");
 
     // Find mobile menu container
@@ -17,8 +18,10 @@ window.hocwpTheme = window.hocwpTheme || {};
         // Find main menu container
         container = siteNavigation;
 
-        // Hide site navigation
-        siteNavigation.style.display = "none";
+        if (siteNavigation && windowWidth <= mobileWidth) {
+            // Hide site navigation
+            siteNavigation.style.display = "none";
+        }
     } else {
         // If has mobile navigation then hide site navigation
         if (siteNavigation && windowWidth <= mobileWidth) {

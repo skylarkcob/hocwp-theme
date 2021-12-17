@@ -184,3 +184,5 @@ const HOCWP_THEME_CSS_ELEMENT_SELECTORS = array(
 		)
 	)
 );
+
+define( 'HOCWP_THEME_MOBILE_SCREEN_WIDTH', 980 );

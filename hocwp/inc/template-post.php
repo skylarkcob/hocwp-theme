@@ -283,19 +283,34 @@ function hocwp_theme_the_content() {
 add_action( 'hocwp_theme_the_content', 'hocwp_theme_the_content' );
 
 function hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content( $content ) {
-	if ( false !== strpos( $content, '[' ) ) {
-		$data = array(
-			'<p>['    => '[',
-			']</p>'   => ']',
-			']<br />' => ']',
-			']<br>'   => ']',
-			']<br/>'  => ']'
-		);
+	if ( empty( $content ) ) {
+		// Display default content if post has empty content.
+		$default = HT_Options()->get_tab( 'default_content', '', 'reading' );
 
-		$content = strtr( $content, $data );
+		if ( ! empty( $default ) ) {
+			$default = do_shortcode( $default );
+			$default = wpautop( $default );
+
+			$content = $default;
+		}
+	} else {
+		if ( false !== strpos( $content, '[' ) ) {
+			$data = array(
+				'<p>['    => '[',
+				']</p>'   => ']',
+				']<br />' => ']',
+				']<br>'   => ']',
+				']<br/>'  => ']'
+			);
+
+			$content = strtr( $content, $data );
+		}
 	}
 
-	return $content;
+	// Remove empty paragraph in post content.
+	$content = force_balance_tags( $content );
+
+	return preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content );
 }
 
 add_filter( 'the_content', 'hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content' );

@@ -581,6 +581,15 @@ button.disabled {
     box-sizing: border-box;
 }
 
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 {
+    clear: none;
+}
+
 #sc-gdpr-box {
     display: block;
     position: fixed;

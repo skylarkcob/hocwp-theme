@@ -20,6 +20,7 @@ if ( have_comments() ) {
     <h2 class="comments-title">
 		<?php
 		$comment_count = get_comments_number();
+
 		if ( 1 === $comment_count ) {
 			printf( __( 'One thought on &ldquo;%1$s&rdquo;', 'hocwp-theme' ), '<span>' . get_the_title() . '</span>' );
 		} else {

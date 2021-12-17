@@ -164,6 +164,9 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'excerpt_length_mobile', __( 'Excerpt Length Mobile', 'hocwp-theme' ), '', $args, 'positive_integer', 'reading' );
 	$fields[] = $field;
 
+	$field    = hocwp_theme_create_setting_field( 'default_content', __( 'Default Post Content', 'hocwp-theme' ), 'editor', array(), 'html', 'reading' );
+	$fields[] = $field;
+
 	$args = array(
 		'class' => 'medium-text',
 		'type'  => 'checkbox',
@@ -171,6 +174,11 @@ function hocwp_theme_settings_page_reading_field() {
 	);
 
 	$field    = hocwp_theme_create_setting_field( 'sticky_last_widget', __( 'Sticky Last Widget', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
+
+	$args['label'] = __( 'Use different sidebar on each theme layout page.', 'hocwp-theme' );
+
+	$field    = hocwp_theme_create_setting_field( 'variable_sidebar', __( 'Variable Sidebar', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
 	$fields[] = $field;
 
 	$args['label'] = __( 'Show float post nav links on single page.', 'hocwp-theme' );
