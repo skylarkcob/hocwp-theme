@@ -21,17 +21,31 @@ $tab->add_section( 'administrative_email', $args );
 $tab->add_field( 'new_email', __( 'New Email', 'hocwp-theme' ), 'input', array( 'type' => 'email' ), 'string', 'administrative_email' );
 
 $args = array(
-	'attributes'  => array(
-		'data-ajax-button'  => 1,
-		'data-message'      => __( 'Admin email has been changed successfully!', 'hocwp-theme' ),
-		'data-change-email' => 1,
-		'aria-label'        => __( 'Change', 'hocwp-theme' )
-	),
-	'button_type' => 'button',
-	'text'        => __( 'Change', 'hocwp-theme' )
+	'buttons' => array(
+		'change_admin_email' => array(
+			'attributes'  => array(
+				'data-ajax-button'  => 1,
+				'data-message'      => __( 'Admin email has been changed successfully!', 'hocwp-theme' ),
+				'data-change-email' => 1,
+				'aria-label'        => __( 'Change', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Change', 'hocwp-theme' )
+		),
+		'send_test_email'    => array(
+			'attributes'  => array(
+				'data-ajax-button'     => 1,
+				'data-message'         => __( 'Testing email has been sent successfully!', 'hocwp-theme' ),
+				'data-send-test-email' => 1,
+				'aria-label'           => __( 'Send Test Email', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Send Test Email', 'hocwp-theme' )
+		)
+	)
 );
 
-$tab->add_field( 'change_admin_email', '', 'button', $args, 'string', 'administrative_email' );
+$tab->add_field( 'change_admin_email', '', 'buttons', $args, 'string', 'administrative_email' );
 
 $args = array(
 	'title'       => __( 'Change URL', 'hocwp-theme' ),

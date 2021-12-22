@@ -556,3 +556,31 @@ function hocwp_theme_change_administrative_email_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_change_administrative_email', 'hocwp_theme_change_administrative_email_ajax_callback' );
+
+function hocwp_theme_send_test_email_ajax_callback() {
+	$data = array();
+
+	$email = $_POST['email'] ?? '';
+
+	if ( ! is_email( $email ) ) {
+		$email = get_bloginfo( 'admin_email' );
+	}
+
+	if ( is_email( $email ) ) {
+		$subject = sprintf( __( '[%s] Testing email', 'hocwp-theme' ), get_bloginfo( 'name' ) );
+		$message = __( 'This is a testing email. If you see this message, it means your email setting works normally.', 'hocwp-theme' );
+		$sent    = HT_Util()->html_mail( $email, $subject, $message );
+
+		if ( $sent ) {
+			wp_send_json_success( $data );
+		} else {
+			$data['message'] = __( 'The mailing system is not working!', 'hocwp-theme' );
+		}
+	} else {
+		$data['message'] = __( 'Invalid email address!', 'hocwp-theme' );
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_send_test_email', 'hocwp_theme_send_test_email_ajax_callback' );

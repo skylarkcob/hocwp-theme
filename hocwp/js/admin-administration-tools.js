@@ -89,6 +89,49 @@ jQuery(document).ready(function ($) {
         });
     })();
 
+    // Send test email
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-send-test-email='1'], form[data-tab='administration_tools'] input[data-send-test-email='1']", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                form = element.closest("form"),
+                newEmail = form.find(".new_email input");
+
+            _hocwp_theme_update_button_waiting_text(element);
+
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                url: hocwpTheme.ajaxUrl,
+                cache: true,
+                data: {
+                    action: "hocwp_theme_send_test_email",
+                    email: newEmail.val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        alert(element.attr("data-message"));
+                        newEmail.val("");
+                        element.blur();
+                    } else if (response.data && response.data.message && $.trim(response.data.message)) {
+                        alert(response.data.message);
+                    }
+
+                    _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                },
+                complete: function (response) {
+                    body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                },
+                error: function (jqXHR, exception) {
+                    alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                }
+            });
+        });
+    })();
+
     // Change site URL
     (function () {
         body.on("click", "form[data-tab='administration_tools'] button[data-change-url='1'], form[data-tab='administration_tools'] input[data-change-url='1']", function (e) {

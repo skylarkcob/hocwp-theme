@@ -77,6 +77,10 @@
     margin-right: 2px;
 }
 
+.hocwp-theme .button + .button {
+    margin-left: 20px;
+}
+
 .inside .hocwp-theme {
     box-sizing: border-box;
 }

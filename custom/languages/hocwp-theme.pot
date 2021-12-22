@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-12-17 21:26+0700\n"
+"POT-Creation-Date: 2021-12-22 20:16+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -49,104 +49,112 @@ msgstr ""
 msgid "New Email"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:26
+#: hocwp/admin/admin-setting-page-administration-tools.php:28
 msgid "Admin email has been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:28 hocwp/admin/admin-setting-page-administration-tools.php:31 hocwp/admin/admin.php:608
+#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:608
 msgid "Change"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:37 hocwp/admin/admin-setting-page-administration-tools.php:52
+#: hocwp/admin/admin-setting-page-administration-tools.php:38
+msgid "Testing email has been sent successfully!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:40 hocwp/admin/admin-setting-page-administration-tools.php:43
+msgid "Send Test Email"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:51 hocwp/admin/admin-setting-page-administration-tools.php:66
 msgid "Change URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:38
+#: hocwp/admin/admin-setting-page-administration-tools.php:52
 msgid "Change all old URLs in database into new URL."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:43
+#: hocwp/admin/admin-setting-page-administration-tools.php:57
 msgid "Old URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:44
+#: hocwp/admin/admin-setting-page-administration-tools.php:58
 msgid "New URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:49
+#: hocwp/admin/admin-setting-page-administration-tools.php:63
 msgid "All URLs have been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:50
+#: hocwp/admin/admin-setting-page-administration-tools.php:64
 msgid "Please make a backup before you change site URL."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:60
+#: hocwp/admin/admin-setting-page-administration-tools.php:74
 msgid "Database Optimize"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:61
+#: hocwp/admin/admin-setting-page-administration-tools.php:75
 msgid "Update database, remove transients and more."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:67
+#: hocwp/admin/admin-setting-page-administration-tools.php:81
 msgid "Enter the transient name you want to delete, all transients will be deleted if this field is empty."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:70
+#: hocwp/admin/admin-setting-page-administration-tools.php:84
 msgid "Remove Transients"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:75
+#: hocwp/admin/admin-setting-page-administration-tools.php:89
 msgid "Transients have been removed!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:76
+#: hocwp/admin/admin-setting-page-administration-tools.php:90
 msgid "Please make a backup before you do this action."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:78 hocwp/admin/admin-setting-page-administration-tools.php:81
+#: hocwp/admin/admin-setting-page-administration-tools.php:92 hocwp/admin/admin-setting-page-administration-tools.php:95
 #: hocwp/admin/views/admin-delete-posts.php:145
 msgid "Delete"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:87
+#: hocwp/admin/admin-setting-page-administration-tools.php:101
 msgid "Vietnamese Administrative Boundaries"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:88
+#: hocwp/admin/admin-setting-page-administration-tools.php:102
 msgid "Import information about Vietnamese administrative boundaries into the database automatically."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:95
+#: hocwp/admin/admin-setting-page-administration-tools.php:109
 msgid "Import the administrative boundary at the district level?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:98
+#: hocwp/admin/admin-setting-page-administration-tools.php:112
 msgid "District"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:102
+#: hocwp/admin/admin-setting-page-administration-tools.php:116
 msgid "Import the administrative boundary at the commune level?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:105
+#: hocwp/admin/admin-setting-page-administration-tools.php:119
 msgid "Commune"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:110
+#: hocwp/admin/admin-setting-page-administration-tools.php:124
 msgid "Choose taxonomy"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:123
+#: hocwp/admin/admin-setting-page-administration-tools.php:137
 msgid "Taxonomy"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:128
+#: hocwp/admin/admin-setting-page-administration-tools.php:142
 msgid "Data has been imported successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:130 hocwp/admin/admin-setting-page-administration-tools.php:133
+#: hocwp/admin/admin-setting-page-administration-tools.php:144 hocwp/admin/admin-setting-page-administration-tools.php:147
 msgid "Import"
 msgstr ""
 
@@ -299,8 +307,8 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:90 hocwp/admin/class-hocwp-theme-meta-menu.php:167 hocwp/inc/class-hocwp-theme-html-field.php:865
-#: hocwp/inc/class-hocwp-theme-html-field.php:890 hocwp/widgets/class-hocwp-theme-widget-icon.php:23
+#: hocwp/admin/admin-setting-page-general.php:90 hocwp/admin/class-hocwp-theme-meta-menu.php:167 hocwp/inc/class-hocwp-theme-html-field.php:880
+#: hocwp/inc/class-hocwp-theme-html-field.php:905 hocwp/widgets/class-hocwp-theme-widget-icon.php:23
 msgid "Text"
 msgstr ""
 
@@ -604,7 +612,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:263 hocwp/inc/class-hocwp-theme-html-field.php:860 hocwp/inc/class-hocwp-theme-html-field.php:884
+#: hocwp/admin/admin-setting-page-reading.php:263 hocwp/inc/class-hocwp-theme-html-field.php:875 hocwp/inc/class-hocwp-theme-html-field.php:899
 #: hocwp/widgets/class-hocwp-theme-widget-icon.php:21
 msgid "Icon"
 msgstr ""
@@ -776,8 +784,8 @@ msgstr ""
 msgid "Choose post status"
 msgstr ""
 
-#: hocwp/admin/admin.php:572 hocwp/inc/class-hocwp-theme-html-field.php:751 hocwp/inc/class-hocwp-theme-html-field.php:793
-#: hocwp/inc/class-hocwp-theme-html-field.php:1725 hocwp/inc/functions-scripts.php:318
+#: hocwp/admin/admin.php:572 hocwp/inc/class-hocwp-theme-html-field.php:766 hocwp/inc/class-hocwp-theme-html-field.php:808
+#: hocwp/inc/class-hocwp-theme-html-field.php:1740 hocwp/inc/functions-scripts.php:318
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -812,6 +820,23 @@ msgstr ""
 
 #: hocwp/admin/ajax.php:543
 msgid "Invalid email."
+msgstr ""
+
+#: hocwp/admin/ajax.php:570
+#, php-format
+msgid "[%s] Testing email"
+msgstr ""
+
+#: hocwp/admin/ajax.php:571
+msgid "This is a testing email. If you see this message, it means your email setting works normally."
+msgstr ""
+
+#: hocwp/admin/ajax.php:577
+msgid "The mailing system is not working!"
+msgstr ""
+
+#: hocwp/admin/ajax.php:580
+msgid "Invalid email address!"
 msgstr ""
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:21
@@ -1798,94 +1823,94 @@ msgstr ""
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:106
+#: hocwp/inc/class-hocwp-theme-html-field.php:121
 msgid "Submit"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:509 hocwp/widgets/class-hocwp-theme-widget-tabber.php:108
+#: hocwp/inc/class-hocwp-theme-html-field.php:524 hocwp/widgets/class-hocwp-theme-widget-tabber.php:108
 msgid "-- Choose sidebar --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:596
+#: hocwp/inc/class-hocwp-theme-html-field.php:611
 msgid "-- Choose term --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:602 hocwp/inc/class-hocwp-theme-html-field.php:698
+#: hocwp/inc/class-hocwp-theme-html-field.php:617 hocwp/inc/class-hocwp-theme-html-field.php:713
 #, php-format
 msgid "-- Choose %s --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:629
+#: hocwp/inc/class-hocwp-theme-html-field.php:644
 msgid "-- Choose menu --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:654
+#: hocwp/inc/class-hocwp-theme-html-field.php:669
 msgid "-- Choose page --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:692
+#: hocwp/inc/class-hocwp-theme-html-field.php:707
 msgid "-- Choose post --"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:753 hocwp/inc/class-hocwp-theme-html-field.php:795
+#: hocwp/inc/class-hocwp-theme-html-field.php:768 hocwp/inc/class-hocwp-theme-html-field.php:810
 msgid "Choose items"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:870 hocwp/inc/class-hocwp-theme-html-field.php:896
+#: hocwp/inc/class-hocwp-theme-html-field.php:885 hocwp/inc/class-hocwp-theme-html-field.php:911
 msgid "URL"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:876 hocwp/inc/class-hocwp-theme-html-field.php:902 hocwp/inc/class-hocwp-theme-html-field.php:917
+#: hocwp/inc/class-hocwp-theme-html-field.php:891 hocwp/inc/class-hocwp-theme-html-field.php:917 hocwp/inc/class-hocwp-theme-html-field.php:932
 msgid "Remove"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:909
+#: hocwp/inc/class-hocwp-theme-html-field.php:924
 msgid "Add"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:949 hocwp/inc/class-hocwp-theme-html-field.php:950
+#: hocwp/inc/class-hocwp-theme-html-field.php:964 hocwp/inc/class-hocwp-theme-html-field.php:965
 msgid "Add images"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:955 hocwp/inc/class-hocwp-theme-html-field.php:956
+#: hocwp/inc/class-hocwp-theme-html-field.php:970 hocwp/inc/class-hocwp-theme-html-field.php:971
 msgid "Remove all images"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1033
+#: hocwp/inc/class-hocwp-theme-html-field.php:1048
 msgid "You must pass list_type in arguments for this sortable list."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1201 hocwp/inc/class-hocwp-theme-html-field.php:1203
+#: hocwp/inc/class-hocwp-theme-html-field.php:1216 hocwp/inc/class-hocwp-theme-html-field.php:1218
 #, php-format
 msgid "%s (ID: %s - Taxonomy: %s - Post count: %s)"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1205
+#: hocwp/inc/class-hocwp-theme-html-field.php:1220
 #, php-format
 msgid "Unknown name (Taxonomy: %s)"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1208
+#: hocwp/inc/class-hocwp-theme-html-field.php:1223
 msgid "Unknown"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1593
+#: hocwp/inc/class-hocwp-theme-html-field.php:1608
 msgid "Content:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1639
+#: hocwp/inc/class-hocwp-theme-html-field.php:1654
 msgid "Image Link:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1693
+#: hocwp/inc/class-hocwp-theme-html-field.php:1708
 msgid "Add media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1717
+#: hocwp/inc/class-hocwp-theme-html-field.php:1732
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1764
+#: hocwp/inc/class-hocwp-theme-html-field.php:1779
 msgid "Drag to find address!"
 msgstr ""
 
@@ -2562,25 +2587,25 @@ msgstr ""
 msgid "Invalid PHP Version"
 msgstr ""
 
-#: hocwp/views/module-comments-area.php:24
+#: hocwp/views/module-comments-area.php:25
 #, php-format
 msgid "One thought on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: hocwp/views/module-comments-area.php:26
+#: hocwp/views/module-comments-area.php:27
 #, php-format
 msgid "%1$s thoughts on &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#: hocwp/views/module-comments-area.php:44
+#: hocwp/views/module-comments-area.php:45
 msgid "Comments are closed."
 msgstr ""
 
-#: hocwp/views/module-comments-area.php:48
+#: hocwp/views/module-comments-area.php:49
 msgid "No comments."
 msgstr ""
 
-#: hocwp/views/module-comments-area.php:49
+#: hocwp/views/module-comments-area.php:50
 msgid "You can be the first one to leave a comment."
 msgstr ""
 

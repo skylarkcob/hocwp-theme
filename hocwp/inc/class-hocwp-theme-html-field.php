@@ -80,6 +80,21 @@ final class HOCWP_Theme_HTML_Field {
 		}
 	}
 
+	public static function buttons( $args = array() ) {
+		$buttons = $args['buttons'] ?? '';
+
+		if ( HT()->array_has_value( $buttons ) ) {
+			foreach ( $buttons as $id => $button ) {
+				if ( is_array( $button ) ) {
+					$button['name'] = $id;
+					$button['wrap'] = false;
+
+					self::button( $button );
+				}
+			}
+		}
+	}
+
 	public static function button( $args = array() ) {
 		$defaults = array(
 			'text'        => null,
