@@ -52,7 +52,11 @@
 }
 
 .hocwp-theme .flex {
-    display: flex !important;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex !important; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
 .hocwp-theme .m-0 {
@@ -344,7 +348,11 @@
 }
 
 .hocwp-theme .list-layout {
-    display: flex;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
     flex-wrap: wrap;
     justify-content: space-between;
 }
@@ -358,8 +366,15 @@
     vertical-align: top;
     overflow: hidden;
     border: 1px solid #ddd;
-    display: flex;
     align-self: self-start;
+}
+
+.hocwp-theme .list-layout label {
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
 .hocwp-theme .list-layout input[type="radio"] {

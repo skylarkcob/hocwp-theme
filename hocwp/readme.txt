@@ -10,6 +10,7 @@
 * 17/12/2021: Add bulk action for user change post type.
 * 17/12/2021: Update mobile menu script.
 * 22/12/2021: Add testing email tool.
+* 29/12/2021: Fix flex cross browsers compatible.
 
 = 6.8.8 =
 * 30/11/2021: Hide site navigation when mobile navigation found.
