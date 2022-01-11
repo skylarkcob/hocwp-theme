@@ -50,7 +50,9 @@ $search_post = '';
 						$msg .= sprintf( '<strong>%s (%s - %s)</strong>, ', get_the_title( $id ), $id, $pt );
 					}
 
-					$msg = rtrim( $msg, ', ' );
+					if ( ! empty( $msg ) ) {
+						$msg = rtrim( $msg, ', ' );
+					}
 
 					if ( ! empty( $msg ) ) {
 						$confirm = get_submit_button( 'Yes', 'primary small', 'yes_delete', false );

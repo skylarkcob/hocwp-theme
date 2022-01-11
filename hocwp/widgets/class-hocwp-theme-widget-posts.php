@@ -105,8 +105,10 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 							}
 						}
 
-						$term_id = trim( $term_id );
-						$term_id = rtrim( $term_id, ',' );
+						if ( ! empty( $term_id ) ) {
+							$term_id = trim( $term_id );
+							$term_id = rtrim( $term_id, ',' );
+						}
 
 						if ( ! empty( $term_id ) ) {
 							$params['taxonomy'] = $term->taxonomy;

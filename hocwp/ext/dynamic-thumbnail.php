@@ -483,7 +483,10 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 	} elseif ( is_array( $size ) ) {
 		$class = str_replace( 'x' . $replace, '', $class );
 		$class = str_replace( 'x size', ' size', $class );
-		$class = rtrim( $class, 'x' );
+
+		if ( ! empty( $class ) ) {
+			$class = rtrim( $class, 'x' );
+		}
 	}
 
 	// Find and remove duplicate size in class name.

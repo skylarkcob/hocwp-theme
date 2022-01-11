@@ -45,7 +45,9 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 	 */
 	public function manage_nav_menus_columns_filter( $columns ) {
 		foreach ( (array) $this->fields as $field ) {
-			$columns[ $field['id'] ] = rtrim( $field['title'], ':' );
+			if ( is_array( $field ) && isset( $field['title'] ) ) {
+				$columns[ $field['id'] ] = rtrim( $field['title'], ':' );
+			}
 		}
 
 		return $columns;
@@ -131,8 +133,8 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 					$class .= ' hidden-field';
 				}
 				?>
-				<div class="<?php echo esc_attr( $class ); ?>">
-					<label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
+                <div class="<?php echo esc_attr( $class ); ?>">
+                    <label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
 					<?php
 					unset( $field['callback_args']['label'] );
 					call_user_func( $field['callback'], $field['callback_args'] );
@@ -145,14 +147,14 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 						$p->output();
 					}
 					?>
-				</div>
+                </div>
 				<?php
 			}
 			?>
-			<div class="custom-sortable">
-				<fieldset>
-					<legend><?php _e( 'Display:', 'hocwp-theme' ); ?></legend>
-					<div class="sortable-inner">
+            <div class="custom-sortable">
+                <fieldset>
+                    <legend><?php _e( 'Display:', 'hocwp-theme' ); ?></legend>
+                    <div class="sortable-inner">
 						<?php
 						$base_name = 'sortable';
 
@@ -175,16 +177,16 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 							$this->sanitize_field_data( $field, $item );
 							$sortable = isset( $field['callback_args']['sortable'] ) ? $field['callback_args']['sortable'] : '';
 
-							if ( $sortable ) {
+							if ( $sortable && is_array( $field ) && isset( $field['title'] ) ) {
 								$params['lists'][ $field['real_name'] ] = rtrim( $field['title'], ':' );
 							}
 						}
 
 						HT_HTML_Field()->sortable( $params );
 						?>
-					</div>
-				</fieldset>
-			</div>
+                    </div>
+                </fieldset>
+            </div>
 			<?php
 		}
 	}
@@ -395,10 +397,10 @@ function hocwp_theme_admin_menu_custom_list_meta_box( $object, $box ) {
 
 			$walker = new Walker_Nav_Menu_Checklist();
 			?>
-			<div id="box-<?php echo $base_name; ?>" class="custom-box hocwp-theme-meta-box taxonomydiv">
-				<div id="tabs-panel-<?php echo $base_name; ?>-pop" class="tabs-panel tabs-panel-active" tabindex="0">
-					<ul id="<?php echo $base_name; ?>-checklist-pop"
-					    class="item-check-list hocwp-theme-custom-list categorychecklist form-no-clear">
+            <div id="box-<?php echo $base_name; ?>" class="custom-box hocwp-theme-meta-box taxonomydiv">
+                <div id="tabs-panel-<?php echo $base_name; ?>-pop" class="tabs-panel tabs-panel-active" tabindex="0">
+                    <ul id="<?php echo $base_name; ?>-checklist-pop"
+                        class="item-check-list hocwp-theme-custom-list categorychecklist form-no-clear">
 						<?php
 						$items = array();
 
@@ -437,27 +439,27 @@ function hocwp_theme_admin_menu_custom_list_meta_box( $object, $box ) {
 						$args['walker'] = $walker;
 						echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $items ), 0, (object) $args );
 						?>
-					</ul>
-				</div>
-				<!-- /.tabs-panel -->
+                    </ul>
+                </div>
+                <!-- /.tabs-panel -->
 
-				<p class="button-controls wp-clearfix" data-items-type="custom">
+                <p class="button-controls wp-clearfix" data-items-type="custom">
 					<span class="list-controls hide-if-no-js">
 						<input type="checkbox"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
 						       id="<?php echo esc_attr( $base_name . '-tab' ); ?>" class="select-all"/>
 						<label
-							for="<?php echo esc_attr( $base_name . '-tab' ); ?>"><?php _e( 'Select All', 'hocwp-theme' ); ?></label>
+                                for="<?php echo esc_attr( $base_name . '-tab' ); ?>"><?php _e( 'Select All', 'hocwp-theme' ); ?></label>
 					</span>
                     <span class="add-to-menu">
 						<button type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>
 						        class="button disabled right"
-						        name="add-custom-menu-item"
-						        id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"
-						        aria-label="<?php esc_attr_e( 'Add to Menu', 'hocwp-theme' ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
+                                name="add-custom-menu-item"
+                                id="<?php echo esc_attr( 'submit-custom-' . $base_name ); ?>"
+                                aria-label="<?php esc_attr_e( 'Add to Menu', 'hocwp-theme' ); ?>"><?php esc_html_e( 'Add to Menu', 'hocwp-theme' ); ?></button>
 						<span class="spinner"></span>
 					</span>
-				</p>
-			</div>
+                </p>
+            </div>
 			<?php
 		}
 	}
