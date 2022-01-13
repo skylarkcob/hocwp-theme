@@ -11,6 +11,7 @@
 * 17/12/2021: Update mobile menu script.
 * 22/12/2021: Add testing email tool.
 * 29/12/2021: Fix flex cross browsers compatible.
+* 13/01/2022: Add custom function for filter custom string content.
 
 = 6.8.8 =
 * 30/11/2021: Hide site navigation when mobile navigation found.
