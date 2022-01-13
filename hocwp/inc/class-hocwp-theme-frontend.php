@@ -1424,7 +1424,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
                 <!-- .page-header -->
                 <div class="page-content entry-content">
 					<?php
-					$content = apply_filters( 'the_content', $page->post_content );
+					$content = HT_Util()->apply_the_content( $page->post_content );
 					echo $content;
 					?>
                 </div>

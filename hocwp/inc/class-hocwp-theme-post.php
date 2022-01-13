@@ -172,7 +172,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 
 			$excerpt = strip_shortcodes( $excerpt );
 
-			$excerpt = apply_filters( 'the_content', $excerpt );
+			$excerpt = HT_Util()->apply_the_content( $excerpt );
 			$excerpt = str_replace( ']]>', ']]&gt;', $excerpt );
 
 			wp_reset_postdata();
