@@ -3,11 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-global $pagenow, $plugin_page, $hocwp_theme, $post_type;
-
-if ( empty( $plugin_page ) && isset( $_GET['page'] ) ) {
-	$plugin_page = $_GET['page'];
-}
+global $pagenow, $hocwp_theme, $post_type;
 
 if ( empty( $post_type ) ) {
 	$post_type = HT_Admin()->get_current_post_type();
@@ -84,13 +80,18 @@ if ( $menu_meta ) {
 }
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php';
+
+// Load custom class setting field for each setting page tabs
+require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field-general.php';
+require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field-home.php';
+
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php';
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check.php';
 
 add_action( 'admin_menu', function () {
-	global $pagenow, $hocwp_theme, $plugin_page;
+	global $pagenow, $hocwp_theme;
 
-	if ( 'themes.php' == $pagenow && $plugin_page == $hocwp_theme->option->get_slug() ) {
+	if ( ( 'themes.php' == $pagenow || 'options.php' == $pagenow ) && HT_Admin()->get_plugin_page() == $hocwp_theme->option->get_slug() ) {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-writing.php';
@@ -184,7 +185,7 @@ function hocwp_theme_enqueue_plugin_installer_scripts() {
 	wp_enqueue_script( 'updates' );
 }
 
-if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == $plugin_page ) {
+if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == HT_Admin()->get_plugin_page() ) {
 	add_action( 'admin_enqueue_scripts', 'hocwp_theme_enqueue_plugin_installer_scripts' );
 }
 

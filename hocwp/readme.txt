@@ -12,6 +12,9 @@
 * 22/12/2021: Add testing email tool.
 * 29/12/2021: Fix flex cross browsers compatible.
 * 13/01/2022: Add custom function for filter custom string content.
+* 14/01/2022: Add function get current $plugin_page.
+* 14/01/2022: Fix sanitize function on theme setting page, now load all tabs when form submit, check $plugin_page.
+* 14/01/2022: Add two classes for home and general setting page object.
 
 = 6.8.8 =
 * 30/11/2021: Hide site navigation when mobile navigation found.

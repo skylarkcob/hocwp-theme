@@ -39,15 +39,27 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 		return $update_actions;
 	}
 
+	public function get_plugin_page() {
+		global $plugin_page;
+
+		$cur_page = $plugin_page;
+
+		if ( empty( $cur_page ) ) {
+			$cur_page = $_REQUEST['page'] ?? '';
+
+			if ( empty( $cur_page ) ) {
+				$cur_page = $_REQUEST['option_page'] ?? '';
+			}
+		}
+
+		return $cur_page;
+	}
+
 	public function is_admin_page( $pages, $admin_page = '' ) {
 		global $pagenow;
 
-		if ( ! empty( $admin_page ) ) {
-			global $plugin_page;
-
-			if ( ! empty( $plugin_page ) && $admin_page != $plugin_page ) {
-				return false;
-			}
+		if ( ! empty( $admin_page ) && $admin_page != $this->get_plugin_page() ) {
+			return false;
 		}
 
 		if ( is_string( $pages ) && $pagenow == $pages ) {
@@ -106,8 +118,8 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 			$post_id = $_POST['post_ID'];
 		}
 
-		if ( ! HT()->is_positive_number( $post_id ) && HT_Admin()->is_admin_page( 'post-new.php' ) ) {
-			$post_id = HT_Admin()->get_current_new_post( 'ID' );
+		if ( ! HT()->is_positive_number( $post_id ) && $this->is_admin_page( 'post-new.php' ) ) {
+			$post_id = $this->get_current_new_post( 'ID' );
 		}
 
 		return $post_id;

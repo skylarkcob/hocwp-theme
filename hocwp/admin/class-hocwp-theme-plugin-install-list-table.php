@@ -11,11 +11,9 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 	private $error;
 
 	public function __construct( $args = array() ) {
-		global $plugin_page;
-
 		parent::__construct( $args );
 
-		if ( 'hocwp_theme_plugins' == $plugin_page ) {
+		if ( 'hocwp_theme_plugins' == HT_Admin()->get_plugin_page() ) {
 			add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links_filter' ), 10, 2 );
 		}
 	}

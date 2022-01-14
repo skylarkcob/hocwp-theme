@@ -34,7 +34,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			return;
 		}
 
-		global $hocwp_theme, $plugin_page, $pagenow;
+		global $hocwp_theme, $pagenow;
 
 		if ( isset( $hocwp_theme->option ) && $hocwp_theme->option instanceof HOCWP_Theme_Admin_Setting_Page ) {
 			return;
@@ -46,11 +46,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		add_action( 'admin_menu', array( $this, 'admin_menu_action' ) );
 
-		if ( 'options.php' == $pagenow || $this->menu_slug == $plugin_page ) {
+		if ( 'options.php' == $pagenow || $this->menu_slug == HT_Admin()->get_plugin_page() ) {
 			add_action( 'admin_init', array( $this, 'settings_init' ) );
 		}
 
-		if ( $this->menu_slug == $plugin_page ) {
+		if ( $this->menu_slug == HT_Admin()->get_plugin_page() ) {
 			$this->tab = $this->tabs->tab_name;
 			add_action( 'admin_notices', array( $this, 'saved_notices' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 99 );
@@ -610,6 +610,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function sanitize( $input ) {
+		if ( empty( $this->tabs ) ) {
+			$this->tabs->get();
+		}
+
 		if ( empty( $this->tab ) ) {
 			$this->tab = $this->tabs->get_tab_name();
 		}
@@ -632,8 +636,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			}
 		}
 
-		$input = apply_filters( 'hocwp_theme_sanitize_option', $input );
-		$input = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tabs->tab_name, $input );
+		// Filter theme options
+		$input = apply_filters( 'hocwp_theme_sanitize_option', $input, $this );
+
+		// Filter options for current setting page
+		$input[ $this->tab ] = apply_filters( 'hocwp_theme_sanitize_option_' . $this->tabs->tab_name, $input[ $this->tab ], $this );
 
 		$options = (array) get_option( $this->menu_slug );
 
@@ -655,7 +662,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function html() {
-		$this->tabs->get();
+		if ( empty( $this->tabs ) ) {
+			$this->tabs->get();
+		}
+
 		$theme = wp_get_theme();
 
 		$tab_obj = $this->tabs->tab;
