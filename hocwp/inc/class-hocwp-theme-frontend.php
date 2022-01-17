@@ -1229,7 +1229,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	 *
 	 * @return array The converted HTML for loop tag.
 	 */
-	public function convert_loop_tag_to_html( $thumb_size = 'post-thumbnail', $sort = array() ) {
+	public function convert_loop_tag_to_html( $thumb_size = 'post-thumbnail', $sort = array(), $post_id = null ) {
 		$multi_char = '~';
 
 		if ( is_string( $sort ) && ! empty( $sort ) ) {
@@ -1245,7 +1245,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$multi = ( false !== strpos( $sort_key, $multi_char ) );
 
 			if ( $multi ) {
-				$html = $this->convert_loop_tag_to_html( $thumb_size, explode( $multi_char, $sort_key ) );
+				$html = $this->convert_loop_tag_to_html( $thumb_size, explode( $multi_char, $sort_key ), $post_id );
 				$html = join( PHP_EOL, $html );
 			} else {
 				$html = $sort_key;
@@ -1254,7 +1254,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				$html = str_replace( 'post_thumbnail', 'thumbnail', $html );
 
 				if ( $thumb_size && false !== strpos( $html, 'thumbnail' ) ) {
-					$thumbnail = get_the_post_thumbnail( null, $thumb_size );
+					$thumbnail = get_the_post_thumbnail( $post_id, $thumb_size );
 
 					if ( ! empty( $thumbnail ) ) {
 						$thumbnail = sprintf( '<a href="%s" title="%s" class="post-thumb">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), $thumbnail );
@@ -1264,7 +1264,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 
 				if ( false !== strpos( $html, 'post_title' ) ) {
-					$post_title = get_the_title();
+					$post_title = get_the_title( $post_id );
 
 					if ( ! empty( $post_title ) ) {
 						$post_title = sprintf( '<a href="%s" title="%s">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), get_the_title() );
@@ -1280,32 +1280,32 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$count = count( $parts );
 
 					if ( 2 != $count ) {
-						$date = get_the_date();
+						$date = get_the_date( '', $post_id );
 
-						$modified = get_the_modified_date();
+						$modified = get_the_modified_date( '', $post_id );
 					} else {
-						$date = get_the_date( $parts[1] );
+						$date = get_the_date( $parts[1], $post_id );
 
-						$modified = get_the_modified_date( $parts[1] );
+						$modified = get_the_modified_date( $parts[1], $post_id );
 
 						$html = str_replace( '|' . $parts[1], '', $html );
 					}
 
 					$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
-					if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+					if ( get_the_time( 'U', $post_id ) !== get_the_modified_time( 'U', $post_id ) ) {
 						$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 					}
 
 					$time_string = sprintf(
 						$time_string,
-						esc_attr( get_the_date( DATE_W3C ) ),
+						esc_attr( get_the_date( DATE_W3C, $post_id ) ),
 						esc_html( $date ),
-						esc_attr( get_the_modified_date( DATE_W3C ) ),
+						esc_attr( get_the_modified_date( DATE_W3C, $post_id ) ),
 						esc_html( $modified )
 					);
 
-					$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
+					$posted_on = '<a href="' . esc_url( get_permalink( $post_id ) ) . '" rel="bookmark">' . $time_string . '</a>';
 
 					$posted_on = '<span class="posted-on">' . $posted_on . '</span>';
 
@@ -1313,7 +1313,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 
 				if ( false !== strpos( $html, 'post_excerpt' ) ) {
-					$excerpt = get_the_excerpt();
+					$excerpt = get_the_excerpt( $post_id );
 
 					if ( ! empty( $excerpt ) ) {
 						$excerpt = sprintf( '<p class="summary">%s</p>', $excerpt );
@@ -1323,15 +1323,21 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 
 				if ( false !== strpos( $html, 'category' ) ) {
-					$taxs  = get_object_taxonomies( get_post_type(), 'objects' );
+					$taxs  = get_object_taxonomies( get_post_type( $post_id ), 'objects' );
 					$terms = '';
 
 					if ( HT()->array_has_value( $taxs ) ) {
+						$id = $post_id;
+
+						if ( ! HT()->is_positive_number( $id ) ) {
+							$id = get_the_ID();
+						}
+
 						ob_start();
 
 						foreach ( $taxs as $tax ) {
 							if ( $tax instanceof WP_Taxonomy && $tax->hierarchical ) {
-								the_terms( get_the_ID(), $tax->name );
+								the_terms( $id, $tax->name );
 							}
 						}
 
@@ -1346,7 +1352,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 
 				if ( false !== strpos( $html, 'read_more' ) ) {
-					$more = sprintf( __( '<a href="%s" class="read-more-link">Read more &rarr;</a>', 'hocwp-theme' ), get_the_permalink() );
+					$more = sprintf( __( '<a href="%s" class="read-more-link">Read more &rarr;</a>', 'hocwp-theme' ), get_the_permalink( $post_id ) );
 
 					$html = str_replace( 'read_more', $more, $html );
 				}
@@ -1368,7 +1374,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		return $sort;
 	}
 
-	public function post_meta( $sort = array() ) {
+	public function post_meta( $sort = array(), $post_id = null ) {
 		if ( is_string( $sort ) && ! empty( $sort ) ) {
 			$sort = array( $sort );
 		}
@@ -1377,15 +1383,15 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$sort = array( 'posted_on', 'category' );
 		}
 
-		$sort = $this->convert_loop_tag_to_html( null, $sort );
+		$sort = $this->convert_loop_tag_to_html( null, $sort, $post_id );
 
-		$sort = apply_filters( 'hocwp_theme_loop_post_meta_html_data', $sort );
+		$sort = apply_filters( 'hocwp_theme_loop_post_meta_html_data', $sort, $post_id );
 
 		$html = join( '', $sort );
 		echo $html;
 	}
 
-	public function loop_post( $thumb_size = 'post-thumbnail', $post_class = '', $sort = array() ) {
+	public function loop_post( $thumb_size = 'post-thumbnail', $post_class = '', $sort = array(), $post_id = null ) {
 		if ( is_string( $sort ) && ! empty( $sort ) ) {
 			$sort = array( $sort );
 		}
@@ -1395,13 +1401,13 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$sort = array( 'thumbnail', 'post_title', 'post_excerpt' );
 		}
 
-		$sort = $this->convert_loop_tag_to_html( $thumb_size, $sort );
+		$sort = $this->convert_loop_tag_to_html( $thumb_size, $sort, $post_id );
 
-		$sort = apply_filters( 'hocwp_theme_loop_post_html_data', $sort );
+		$sort = apply_filters( 'hocwp_theme_loop_post_html_data', $sort, $post_id );
 
 		$html = join( '', $sort );
 		?>
-        <div <?php post_class( $post_class ); ?>>
+        <div <?php post_class( $post_class, $post_id ); ?>>
 			<?php echo $html; ?>
         </div>
 		<?php
