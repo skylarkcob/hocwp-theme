@@ -78,6 +78,10 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 		}
 
 		if ( ! ( $this->tab instanceof HOCWP_Theme_Admin_Setting_Tab ) ) {
+			if ( empty( $this->tab_name ) ) {
+				$this->get_tab_name();
+			}
+
 			$this->tab = $this->get_by_name( $this->tab_name );
 		}
 
@@ -108,7 +112,7 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 
 			if ( 'classic' == $mode ) {
 				?>
-				<nav class="nav-tab-wrapper">
+                <nav class="nav-tab-wrapper">
 					<?php
 					foreach ( $this->tabs as $key => $tab ) {
 						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {
@@ -121,20 +125,20 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 
 							$text = $tab->label;
 							?>
-							<a class="<?php echo $class; ?>"
-							   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+                            <a class="<?php echo $class; ?>"
+                               href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
 							<?php
 							$count ++;
 						}
 					}
 					?>
-				</nav>
+                </nav>
 				<?php
 				return;
 			}
 			?>
-			<div id="nav">
-				<ul class="nav-tab-wrapper">
+            <div id="nav">
+                <ul class="nav-tab-wrapper">
 					<?php
 					foreach ( $this->tabs as $key => $tab ) {
 						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {
@@ -145,7 +149,7 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 							$li_class = 'menu-item';
 
 							if ( ( ( $this->tab instanceof HOCWP_Theme_Admin_Setting_Tab ) && $this->tab->name == $key ) || ( empty( $this->tab ) && 0 == $count ) ) {
-								$class .= ' nav-tab-active';
+								$class    .= ' nav-tab-active';
 								$li_class .= ' active';
 							}
 
@@ -155,17 +159,17 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 								$text = $icon . ' ' . $text;
 							}
 							?>
-							<li class="<?php echo $li_class; ?>">
-								<a class="<?php echo $class; ?>"
-								   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
-							</li>
+                            <li class="<?php echo $li_class; ?>">
+                                <a class="<?php echo $class; ?>"
+                                   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+                            </li>
 							<?php
 							$count ++;
 						}
 					}
 					?>
-				</ul>
-			</div>
+                </ul>
+            </div>
 			<?php
 		}
 	}

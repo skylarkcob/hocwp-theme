@@ -610,9 +610,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function sanitize( $input ) {
-		if ( empty( $this->tabs ) ) {
-			$this->tabs->get();
-		}
+		$this->update_list_tabs();
 
 		if ( empty( $this->tab ) ) {
 			$this->tab = $this->tabs->get_tab_name();
@@ -661,10 +659,14 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		) );
 	}
 
-	public function html() {
-		if ( empty( $this->tabs ) ) {
+	private function update_list_tabs() {
+		if ( empty( $this->tabs ) || ! ( $this->tabs instanceof HOCWP_Theme_Admin_Setting_Tabs ) || ! HT()->array_has_value( $this->tabs->tabs ) ) {
 			$this->tabs->get();
 		}
+	}
+
+	public function html() {
+		$this->update_list_tabs();
 
 		$theme = wp_get_theme();
 
