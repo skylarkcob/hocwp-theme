@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-01-13 21:50+0700\n"
+"POT-Creation-Date: 2022-01-21 15:45+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Admin email has been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:608
+#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:609
 msgid "Change"
 msgstr ""
 
@@ -258,7 +258,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:115 hocwp/inc/setup-after.php:168
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:116 hocwp/inc/setup-after.php:168
 msgid "Extensions"
 msgstr ""
 
@@ -682,119 +682,119 @@ msgstr ""
 msgid "Term HTML Description"
 msgstr ""
 
-#: hocwp/admin/admin.php:24
+#: hocwp/admin/admin.php:20
 #, php-format
 msgid "Current theme is not compatible with WordPress 5.8 or later, please active %s extension for theme works normally."
 msgstr ""
 
-#: hocwp/admin/admin.php:34
+#: hocwp/admin/admin.php:30
 msgctxt "setting page"
 msgid "general settings page"
 msgstr ""
 
-#: hocwp/admin/admin.php:38
+#: hocwp/admin/admin.php:34
 #, php-format
 msgid "You must change administrator's email address for site working, please go to %s and update it."
 msgstr ""
 
-#: hocwp/admin/admin.php:49
+#: hocwp/admin/admin.php:45
 #, php-format
 msgid "%s posts have been updated!"
 msgstr ""
 
-#: hocwp/admin/admin.php:118 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:119 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:121 hocwp/inc/setup-after.php:177
+#: hocwp/admin/admin.php:122 hocwp/inc/setup-after.php:177
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:123 hocwp/admin/views/admin-delete-posts.php:11
+#: hocwp/admin/admin.php:124 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:199 hocwp/admin/admin.php:210
+#: hocwp/admin/admin.php:200 hocwp/admin/admin.php:211
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:203
+#: hocwp/admin/admin.php:204
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:214
+#: hocwp/admin/admin.php:215
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:221
+#: hocwp/admin/admin.php:222
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:225
+#: hocwp/admin/admin.php:226
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:307
+#: hocwp/admin/admin.php:308
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:349 hocwp/inc/template-post.php:344
+#: hocwp/admin/admin.php:350 hocwp/inc/template-post.php:344
 msgid "Related posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:387
+#: hocwp/admin/admin.php:388
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:410 hocwp/admin/admin.php:609 hocwp/inc/template-general.php:1163
+#: hocwp/admin/admin.php:411 hocwp/admin/admin.php:610 hocwp/inc/template-general.php:1163
 msgid "Close"
 msgstr ""
 
-#: hocwp/admin/admin.php:434
+#: hocwp/admin/admin.php:435
 #, php-format
 msgid "Template %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:445 hocwp/admin/admin.php:529
+#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:530
 msgid "Change status"
 msgstr ""
 
-#: hocwp/admin/admin.php:446
+#: hocwp/admin/admin.php:447
 msgid "Change category"
 msgstr ""
 
-#: hocwp/admin/admin.php:447
+#: hocwp/admin/admin.php:448
 msgid "Change post type"
 msgstr ""
 
-#: hocwp/admin/admin.php:531
+#: hocwp/admin/admin.php:532
 msgid "Close this box"
 msgstr ""
 
-#: hocwp/admin/admin.php:541
+#: hocwp/admin/admin.php:542
 msgid "Post status:"
 msgstr ""
 
-#: hocwp/admin/admin.php:543
+#: hocwp/admin/admin.php:544
 msgid "Choose post status"
 msgstr ""
 
-#: hocwp/admin/admin.php:572 hocwp/inc/class-hocwp-theme-html-field.php:766 hocwp/inc/class-hocwp-theme-html-field.php:808
+#: hocwp/admin/admin.php:573 hocwp/inc/class-hocwp-theme-html-field.php:766 hocwp/inc/class-hocwp-theme-html-field.php:808
 #: hocwp/inc/class-hocwp-theme-html-field.php:1740 hocwp/inc/functions-scripts.php:318
 #, php-format
 msgid "Choose %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:585 hocwp/widgets/class-hocwp-theme-widget-posts.php:527
+#: hocwp/admin/admin.php:586 hocwp/widgets/class-hocwp-theme-widget-posts.php:527
 msgid "Post type:"
 msgstr ""
 
-#: hocwp/admin/admin.php:587 hocwp/admin/views/admin-delete-posts.php:111
+#: hocwp/admin/admin.php:588 hocwp/admin/views/admin-delete-posts.php:111
 msgid "Choose post type"
 msgstr ""
 
@@ -1011,37 +1011,37 @@ msgstr ""
 msgid "How to use WordPress Dashboard"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:651 hocwp/admin/class-hocwp-theme-admin-setting-page.php:666
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:656 hocwp/admin/class-hocwp-theme-admin-setting-page.php:678
 msgid "Theme Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:651 hocwp/inc/setup-after.php:159
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:656 hocwp/inc/setup-after.php:159
 msgid "Settings"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:702
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:714
 #, php-format
 msgid "%s options"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:704
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:716
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:752
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:764
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If you have any questions please feel free to <a target=\"_blank\" href="
 "\"%s\">contact us</a> for more information."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:755
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:767
 #, php-format
 msgid "Theme core version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:825
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:837
 msgid "<strong>Notice:</strong> All settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
 msgstr ""
 
@@ -1123,48 +1123,48 @@ msgstr ""
 msgid "You must call this class in callback of <strong>load-{$pagenow}</strong> action."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:51
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:49
 msgctxt "Plugin Installer"
 msgid "Installed"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:52
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:50
 msgid "The list of plugins are being installing on your site."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:60
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:58
 msgctxt "Plugin Installer"
 msgid "Activated"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:61
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:59
 msgid "The list of plugins are being activated on your site."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:66
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:64
 msgctxt "Plugin Installer"
 msgid "Recommended"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:67
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:65
 msgid "These suggestions are based on the plugins you and other users have installed."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:72
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:70
 msgctxt "Plugin Installer"
 msgid "Required"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:73
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:71
 msgid "You must install these required plugins for theme can run normally."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:79
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:77
 msgctxt "Plugin Installer"
 msgid "Should Use"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:80
+#: hocwp/admin/class-hocwp-theme-plugin-install-list-table.php:78
 msgid "You should install these recommended plugins for theme can work perfectly."
 msgstr ""
 
@@ -1801,24 +1801,24 @@ msgstr ""
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1349
+#: hocwp/inc/class-hocwp-theme-frontend.php:1355
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1435
+#: hocwp/inc/class-hocwp-theme-frontend.php:1441
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1439
+#: hocwp/inc/class-hocwp-theme-frontend.php:1445
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1448
+#: hocwp/inc/class-hocwp-theme-frontend.php:1454
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1464
+#: hocwp/inc/class-hocwp-theme-frontend.php:1470
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""

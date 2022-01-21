@@ -1,4 +1,8 @@
 == Changelog ==
+= 6.7.0 =
+* 21/01/2022: Update security for remote login.
+* 21/01/2022: Update prepare for Nutifood US Cali theme.
+
 = 6.8.9 =
 * 17/12/2021: Add custom constant mobile screen width.
 * 17/12/2021: Add option for user disable variable sidebar.
