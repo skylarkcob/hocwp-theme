@@ -1,5 +1,5 @@
 == Changelog ==
-= 6.7.0 =
+= 6.9.0 =
 * 21/01/2022: Update security for remote login.
 * 21/01/2022: Update prepare for Nutifood US Cali theme.
 
