@@ -3,6 +3,7 @@
  * Template Name: Blank Page
  */
 
+defined( 'ABSPATH' ) || exit;
 get_header();
 
 global $hocwp_theme;

@@ -2,6 +2,13 @@
 = 6.9.0 =
 * 21/01/2022: Update security for remote login.
 * 21/01/2022: Update prepare for Nutifood US Cali theme.
+* 07/02/2022: Allow admin tab object can use view link on admin bar.
+* 07/02/2022: Fix translation text on admin setting page footer.
+* 07/02/2022: Add default admin ajax to fetch administrative boundaries relation.
+* 07/02/2022: Now can use both args and callback_args for field in fields function.
+* 07/02/2022: Now use lozad script for lazy load image by default.
+* 07/02/2022: Fix media upload script bugs.
+* 07/02/2022: Update HTML field class.
 
 = 6.8.9 =
 * 17/12/2021: Add custom constant mobile screen width.

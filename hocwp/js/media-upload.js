@@ -96,7 +96,7 @@ jQuery(document).ready(function ($) {
                 value = $.parseJSON(oldValues);
             }
 
-            if (!value) {
+            if (!value || "object" !== typeof value) {
                 value = [];
             }
 
@@ -225,9 +225,7 @@ jQuery(document).ready(function ($) {
             frame = null,
             removeMedia = container.find("button.remove-media-data");
 
-        if (frame) {
-            //frame.open();
-        } else {
+        if (!frame) {
             var title = $.trim(selectMedia.attr("data-title")) || hocwpThemeMediaUpload.l10n.title,
                 buttonText = $.trim(selectMedia.attr("data-button-text")) || hocwpThemeMediaUpload.l10n.buttonText,
                 media_type = $.trim(selectMedia.attr("data-media-type")) || "image";
@@ -250,8 +248,6 @@ jQuery(document).ready(function ($) {
             }
 
             frame = wp.media(settings);
-
-            //frame.open();
         }
 
         let mediaId = selectMedia.closest(".media-box").find("input[type='hidden']").val();
@@ -261,9 +257,7 @@ jQuery(document).ready(function ($) {
         frame.on("select", function () {
             var items = frame.state().get("selection");
 
-            if (multiple) {
-
-            } else {
+            if (!multiple) {
                 var item = items.first().toJSON();
 
                 if (item) {

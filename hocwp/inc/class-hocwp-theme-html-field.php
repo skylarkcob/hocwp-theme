@@ -1398,16 +1398,18 @@ final class HOCWP_Theme_HTML_Field {
 			$connects = array();
 
 			foreach ( $values as $std ) {
-				$obj = get_post( $std->id );
+				if ( isset( $std->id ) ) {
+					$obj = get_post( $std->id );
 
-				if ( $obj instanceof WP_Post ) {
-					$results[ $obj->ID ] = $obj;
+					if ( $obj instanceof WP_Post ) {
+						$results[ $obj->ID ] = $obj;
 
-					$type = get_post_type_object( $obj->post_type );
+						$type = get_post_type_object( $obj->post_type );
 
-					$sub = $id . '_' . $type->name;
+						$sub = $id . '_' . $type->name;
 
-					$connects[] = '<li class="ui-state-default" data-post-type="' . $obj->post_type . '" data-id="' . $obj->ID . '" data-connect-list="' . $sub . '">' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li>';
+						$connects[] = '<li class="ui-state-default" data-post-type="' . $obj->post_type . '" data-id="' . $obj->ID . '" data-connect-list="' . $sub . '">' . $obj->post_title . ' (' . $type->labels->singular_name . ')</li>';
+					}
 				}
 			}
 
@@ -1541,6 +1543,10 @@ final class HOCWP_Theme_HTML_Field {
 					}
 
 					$args = $field['args'] ?? '';
+
+					if ( empty( $args ) && isset( $field['callback_args'] ) ) {
+						$args = $field['callback_args'];
+					}
 
 					if ( ! is_array( $args ) ) {
 						$args = array();

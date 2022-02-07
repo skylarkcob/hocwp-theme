@@ -24,6 +24,10 @@ trait HOCWP_Theme_PHP {
 		return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
 	}
 
+	public function remove_html_tag( $tag, $string, $replace = '' ) {
+		return preg_replace( "/<" . $tag . "[^>]+\>/i", $replace, $string );
+	}
+
 	function memory_size_convert( $size ) {
 		$l   = substr( $size, - 1 );
 		$ret = substr( $size, 0, - 1 );

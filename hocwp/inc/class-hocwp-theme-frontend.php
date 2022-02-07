@@ -1145,6 +1145,22 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		<?php
 	}
 
+	public function lazy_image( $class, $src, $width = '', $height = '', $title = '' ) {
+		if ( empty( $src ) ) {
+			return;
+		}
+
+		$class .= ' lozad';
+		$class = trim( $class );
+		?>
+        <img class="<?php echo esc_attr( $class ); ?>"
+             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2880 1398'%3E%3C/svg%3E"
+             data-src="<?php echo $src; ?>"
+             alt="<?php echo esc_attr( $title ); ?>" width="<?php echo esc_attr( $width ); ?>"
+             height="<?php echo esc_attr( $height ); ?>">
+		<?php
+	}
+
 	public function back_to_top_button() {
 		if ( ! function_exists( 'hocwp_theme_get_option' ) ) {
 			return;

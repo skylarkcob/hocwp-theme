@@ -276,6 +276,53 @@ class HOCWP_Theme_Utility {
 	}
 
 	/**
+	 * Convert CSV of Administrative Boundaries string to array data.
+	 *
+	 * @param $csv string CSV data.
+	 * @param $district bool Load district.
+	 * @param $commune bool Load commune.
+	 *
+	 * @return array Array of Administrative Boundaries data.
+	 */
+	public function convert_administrative_boundaries_to_array( $csv, $district, $commune ) {
+		$abs = array();
+
+		foreach ( $csv as $ab ) {
+			$ab = explode( ',', $ab );
+
+			$name = array_shift( $ab );
+			$id   = array_shift( $ab );
+
+			if ( ! isset( $abs[ $id ]['name'] ) || empty( $abs[ $id ]['name'] ) ) {
+				$abs[ $id ]['name'] = $name;
+				$abs[ $id ]['type'] = 'province';
+			}
+
+			if ( $district ) {
+				$name = array_shift( $ab );
+				$d_id = array_shift( $ab );
+
+				if ( ! isset( $abs[ $id ][ $d_id ]['name'] ) || empty( $abs[ $id ][ $d_id ]['name'] ) ) {
+					$abs[ $id ][ $d_id ]['name'] = $name;
+					$abs[ $id ][ $d_id ]['type'] = 'district';
+				}
+
+				if ( $commune ) {
+					$name = array_shift( $ab );
+					$c_id = array_shift( $ab );
+
+					if ( ! isset( $abs[ $id ][ $d_id ][ $c_id ]['name'] ) || empty( $abs[ $id ][ $d_id ][ $c_id ]['name'] ) ) {
+						$abs[ $id ][ $d_id ][ $c_id ]['name'] = $name;
+						$abs[ $id ][ $d_id ][ $c_id ]['type'] = 'commune';
+					}
+				}
+			}
+		}
+
+		return $abs;
+	}
+
+	/**
 	 * Get list of functions for a filter or action hook.
 	 *
 	 * @param $hook string Hook name.
@@ -1608,9 +1655,9 @@ class HOCWP_Theme_Utility {
 			$defaults['feeds']               = false;
 
 			if ( ! $post_type ) {
-				$args['show_in_quick_edit'] = false;
-				$args['show_admin_column']  = false;
-				$args['show_tagcloud']      = false;
+				$defaults['show_in_quick_edit'] = false;
+				$defaults['show_admin_column']  = false;
+				$defaults['show_tagcloud']      = false;
 			}
 		}
 

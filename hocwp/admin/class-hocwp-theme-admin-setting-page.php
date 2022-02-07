@@ -450,6 +450,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					// Check field args
 					$a_args = $a_field['args'] ?? '';
 
+                    // Re-check callback args if empty args param.
+					if ( empty( $a_args ) && isset( $a_field['callback_args'] ) ) {
+						$a_args = $a_field['callback_args'];
+					}
+
 					if ( ! is_array( $a_args ) ) {
 						$a_args = array();
 					}
@@ -865,6 +870,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						case 'color_picker':
 							HT_Enqueue()->color_picker();
 							break;
+						case 'image_upload':
 						case 'image_link':
 						case 'media_upload':
 						case 'content_image':

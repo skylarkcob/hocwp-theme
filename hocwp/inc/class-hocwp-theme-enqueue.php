@@ -211,7 +211,11 @@ class HOCWP_Theme_Enqueue {
 			'bundle'  => false
 		);
 
-		$args = wp_parse_args( $args, $defaults );
+		if ( is_array( $args ) ) {
+			$args = wp_parse_args( $args, $defaults );
+		} else {
+			$args = $defaults;
+		}
 
 		$base_url = $this->custom_lib_url . 'bootstrap/';
 		$base_dir = $this->custom_lib_dir . 'bootstrap/' . $args['version'];
@@ -263,9 +267,9 @@ class HOCWP_Theme_Enqueue {
 	private function auto_check_lib_version( &$args, &$base_dir, $abs_file ) {
 		if ( ( ! isset( $args['cdn'] ) || ! $args['cdn'] ) && ! HT()->is_dir( $base_dir ) ) {
 			// Auto check version
-			$tmp = dirname( $base_dir );
-			$tmp = trailingslashit( $tmp );
-			$tmp .= '*';
+			$tmp  = dirname( $base_dir );
+			$tmp  = trailingslashit( $tmp );
+			$tmp  .= '*';
 			$dirs = glob( $tmp, GLOB_ONLYDIR );
 
 			if ( HT()->array_has_value( $dirs ) ) {

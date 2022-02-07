@@ -19,6 +19,8 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public $submit_button = true;
 	public $callback = null;
 
+	public $queried_object = '';
+
 	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10 ) {
 		if ( empty( $name ) ) {
 			_doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
@@ -66,6 +68,59 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		}
 
 		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_field', array( $this, 'fields_filter' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu_action' ), 999 );
+	}
+
+	public function admin_bar_menu_action( $admin_bar ) {
+		if ( $admin_bar instanceof WP_Admin_Bar ) {
+			if ( ! empty( $this->queried_object ) ) {
+				$title = '';
+
+				if ( $this->queried_object instanceof WP_Post ) {
+					$url  = get_permalink( $this->queried_object );
+					$text = $this->queried_object->post_title;
+
+					$obj = get_post_type_object( $this->queried_object->post_type );
+
+					if ( $obj instanceof WP_Post_Type ) {
+						$title = sprintf( '%s: %s', $obj->labels->singular_name, $text );
+					}
+
+				} elseif ( $this->queried_object instanceof WP_Term ) {
+					$url  = get_term_link( $this->queried_object );
+					$text = $this->queried_object->name;
+
+					$obj = get_taxonomy( $this->queried_object->taxonomy );
+
+					if ( $obj instanceof WP_Taxonomy ) {
+						$title = sprintf( '%s: %s', $obj->labels->singular_name, $text );
+					}
+				} else {
+					$url  = $this->queried_object;
+					$text = $this->label;
+				}
+
+				if ( empty( $title ) ) {
+					$title = sprintf( __( 'View %s front-end', 'hocwp-theme' ), $this->label );
+				}
+
+				$args = array(
+					'id'    => $this->name,
+					'title' => sprintf( __( 'View %s', 'hocwp-theme' ), $text ),
+					'href'  => $url,
+					'meta'  => array(
+						'target' => '_blank',
+						'title'  => sprintf( __( 'View %s', 'hocwp-theme' ), $title )
+					)
+				);
+
+				$admin_bar->add_node( $args );
+			}
+		}
+	}
+
+	public function add_queried_object( $object ) {
+		$this->queried_object = $object;
 	}
 
 	public function enqueue_scripts() {

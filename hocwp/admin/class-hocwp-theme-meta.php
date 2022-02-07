@@ -81,6 +81,8 @@ abstract class HOCWP_Theme_Meta {
 			} elseif ( array( $class, 'color_picker' ) === $callback ) {
 				$this->load_script( 'wp-color-picker' );
 				$this->load_script( 'hocwp-theme-color-picker' );
+			} elseif ( array( $class, 'code_editor' ) === $callback ) {
+				HT_Enqueue()->code_editor();
 			} elseif ( array( $class, 'layout' ) === $callback ) {
 				$this->load_script( 'hocwp-theme' );
 				$this->load_script( 'hocwp-theme-admin' );

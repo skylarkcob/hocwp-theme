@@ -476,6 +476,53 @@ function hocwp_theme_import_administrative_boundaries_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_import_administrative_boundaries', 'hocwp_theme_import_administrative_boundaries_ajax_callback' );
 
+function hocwp_theme_fetch_administrative_boundaries_ajax_callback() {
+	$data = array();
+
+	$type = $_REQUEST['type'] ?? '';
+	$id   = $_REQUEST['id'] ?? '';
+
+	if ( ! empty( $type ) && ! empty( $id ) ) {
+		$csv = HT_Util()->read_all_text( HOCWP_Theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
+		$csv = HT()->explode_new_line( $csv );
+
+		// Remove heading text
+		array_shift( $csv );
+		$csv = array_filter( $csv );
+
+		$lists = HT_Util()->convert_administrative_boundaries_to_array( $csv, true, true );
+
+		$parent = $_REQUEST['parent'] ?? '';
+
+		if ( 'province' == $type ) {
+			$type  = 'district';
+			$lists = $lists[ $id ] ?? '';
+		} elseif ( 'district' == $type ) {
+			$type  = 'commune';
+			$lists = $lists[ $parent ][ $id ] ?? '';
+		}
+
+		$option = $_REQUEST['option'] ?? '';
+
+		foreach ( $lists as $key => $item ) {
+			if ( 'name' != $key && 'type' != $key ) {
+				$option .= sprintf( '<option value="%s" data-type="%s">%s</option>', esc_attr( $key ), esc_attr( $item['type'] ), $item['name'] );
+			}
+		}
+
+		$data['type'] = $type;
+
+		$data['option'] = $option;
+
+		wp_send_json_success( $data );
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_fetch_administrative_boundaries', 'hocwp_theme_fetch_administrative_boundaries_ajax_callback' );
+add_action( 'wp_ajax_nopriv_fetch_administrative_boundaries', 'hocwp_theme_fetch_administrative_boundaries_ajax_callback' );
+
 function hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback() {
 	$results = array();
 

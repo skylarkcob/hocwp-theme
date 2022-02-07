@@ -149,40 +149,6 @@ trait HOCWP_Theme_Import_Administrative_Boundaries {
 	}
 
 	public function convert_to_array( $csv, $district, $commune ) {
-		$abs = array();
-
-		foreach ( $csv as $ab ) {
-			$ab = explode( ',', $ab );
-
-			$name = array_shift( $ab );
-			$id   = array_shift( $ab );
-
-			if ( ! isset( $abs[ $id ]['name'] ) || empty( $abs[ $id ]['name'] ) ) {
-				$abs[ $id ]['name'] = $name;
-				$abs[ $id ]['type'] = 'province';
-			}
-
-			if ( $district ) {
-				$name = array_shift( $ab );
-				$d_id = array_shift( $ab );
-
-				if ( ! isset( $abs[ $id ][ $d_id ]['name'] ) || empty( $abs[ $id ][ $d_id ]['name'] ) ) {
-					$abs[ $id ][ $d_id ]['name'] = $name;
-					$abs[ $id ][ $d_id ]['type'] = 'district';
-				}
-
-				if ( $commune ) {
-					$name = array_shift( $ab );
-					$c_id = array_shift( $ab );
-
-					if ( ! isset( $abs[ $id ][ $d_id ][ $c_id ]['name'] ) || empty( $abs[ $id ][ $d_id ][ $c_id ]['name'] ) ) {
-						$abs[ $id ][ $d_id ][ $c_id ]['name'] = $name;
-						$abs[ $id ][ $d_id ][ $c_id ]['type'] = 'commune';
-					}
-				}
-			}
-		}
-
-		return $abs;
+		return HT_Util()->convert_administrative_boundaries_to_array( $csv, $district, $commune );
 	}
 }
