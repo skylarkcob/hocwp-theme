@@ -130,4 +130,18 @@ jQuery(document).ready(function ($) {
             modal.fadeOut();
         });
     })();
+
+    // Sticky save setting button
+    (function () {
+        const settingsBox = $(".hocwp-theme .settings-box"),
+            sticky = settingsBox.find(".module-header input[type='submit']"),
+            sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height(),
+            sBottom = settingsBox.find(".module-footer").offset().top - 120;
+
+        hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
+
+        $(window).scroll(function () {
+            hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
+        });
+    })();
 });

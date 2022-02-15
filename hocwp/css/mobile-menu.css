@@ -64,6 +64,10 @@
     vertical-align: middle;
 }
 
+.mobile-menu > .menu-toggle[data-icon-type="burger-3"] span[class*="line-3"] {
+    margin-left: 0;
+}
+
 .mobile-menu > .menu-toggle.icon-burger-3 span[class*="line-"],
 .mobile-menu > .menu-toggle.icon-burger span[class*="line-"] {
     width: 25px;

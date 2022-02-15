@@ -374,6 +374,12 @@ final class HOCWP_Theme_HTML_Field {
 		$label->add_attributes( $attributes );
 
 		$text = isset( $args['text'] ) ? $args['text'] : '';
+
+		// Re-check label param
+		if ( empty( $text ) ) {
+			$text = $args['label'] ?? '';
+		}
+
 		$label->set_text( $text );
 		$label->output();
 	}
@@ -960,6 +966,13 @@ final class HOCWP_Theme_HTML_Field {
 		?>
         <div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
              data-column="<?php echo esc_attr( $column ); ?>">
+			<?php
+			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
+				?>
+                <p class="label"><?php self::label( $args ); ?></p>
+				<?php
+			}
+			?>
             <button type="button" class="button insert-medias insert-images add_media"
                     aria-label="<?php esc_attr_e( 'Add images', 'hocwp-theme' ); ?>"><span
                         class="wp-media-buttons-icon"></span> <?php _e( 'Add images', 'hocwp-theme' ); ?></button>

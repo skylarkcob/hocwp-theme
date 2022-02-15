@@ -305,6 +305,10 @@
     border: 1px solid #ddd;
 }
 
+.hocwp-theme .images-box .list-images li img:hover {
+
+}
+
 .hocwp-theme .images-box[data-column="3"] .list-images li img {
     max-height: 180px;
     height: 180px;
@@ -394,6 +398,17 @@
 
 .hocwp-theme .list-layout br {
     display: none;
+}
+
+.hocwp-theme .field-row:after,
+.hocwp-theme .field-row:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.hocwp-theme .field-row p.label {
+    margin-bottom: 20px;
 }
 
 .hocwp-theme .multiple-fields .field-row {

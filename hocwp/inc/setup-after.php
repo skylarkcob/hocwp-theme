@@ -154,38 +154,83 @@ add_action( 'admin_init', 'hocwp_theme_after_admin_init_action' );
 
 function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 	if ( current_user_can( 'manage_options' ) ) {
-		$args = array(
-			'id'     => 'theme-settings',
-			'title'  => __( 'Settings', 'hocwp-theme' ),
-			'href'   => admin_url( 'themes.php?page=hocwp_theme' ),
-			'parent' => 'themes'
-		);
+		if ( is_admin() ) {
+			$args = array(
+				'id'     => 'theme-settings',
+				'title'  => __( 'Theme Settings', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme' ),
+				'parent' => 'site-name'
+			);
 
-		$wp_admin_bar->add_node( $args );
+			$wp_admin_bar->add_node( $args );
 
-		$args = array(
-			'id'     => 'theme-extensions',
-			'title'  => __( 'Extensions', 'hocwp-theme' ),
-			'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=extension' ),
-			'parent' => 'themes'
-		);
+			$args = array(
+				'id'     => 'theme-extensions',
+				'title'  => __( 'Extensions', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=extension' ),
+				'parent' => 'theme-settings'
+			);
 
-		$wp_admin_bar->add_node( $args );
+			$wp_admin_bar->add_node( $args );
 
-		$args = array(
-			'id'     => 'theme-phpinfo',
-			'title'  => __( 'PHP Info', 'hocwp-theme' ),
-			'href'   => admin_url( 'themes.php?page=hocwp_theme_phpinfo' ),
-			'parent' => 'themes'
-		);
+			$args = array(
+				'id'     => 'theme-phpinfo',
+				'title'  => __( 'PHP Info', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme_phpinfo' ),
+				'parent' => 'theme-settings'
+			);
 
-		$wp_admin_bar->add_node( $args );
+			$wp_admin_bar->add_node( $args );
+
+			$args = array(
+				'id'     => 'system-information',
+				'title'  => __( 'System Information', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=system_information' ),
+				'parent' => 'theme-settings'
+			);
+
+			$wp_admin_bar->add_node( $args );
+		} else {
+			$args = array(
+				'id'     => 'theme-settings',
+				'title'  => __( 'Settings', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme' ),
+				'parent' => 'themes'
+			);
+
+			$wp_admin_bar->add_node( $args );
+
+			$args = array(
+				'id'     => 'theme-extensions',
+				'title'  => __( 'Extensions', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=extension' ),
+				'parent' => 'themes'
+			);
+
+			$wp_admin_bar->add_node( $args );
+
+			$args = array(
+				'id'     => 'theme-phpinfo',
+				'title'  => __( 'PHP Info', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme_phpinfo' ),
+				'parent' => 'themes'
+			);
+
+			$wp_admin_bar->add_node( $args );
+
+			$args = array(
+				'id'     => 'system-information',
+				'title'  => __( 'System Information', 'hocwp-theme' ),
+				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=system_information' ),
+				'parent' => 'themes'
+			);
+
+			$wp_admin_bar->add_node( $args );
+		}
 	}
 }
 
-if ( ! is_admin() ) {
-	add_action( 'admin_bar_menu', 'hocwp_theme_admin_bar_menu_action' );
-}
+add_action( 'admin_bar_menu', 'hocwp_theme_admin_bar_menu_action' );
 
 function hocwp_theme_page_templates( $post_templates ) {
 	$dir = HOCWP_THEME_CUSTOM_PATH . '/page-templates';
@@ -467,7 +512,7 @@ function hocwp_theme_on_wp_action() {
 				$count  = absint( date( 'Y' ) ) - absint( date( 'm' ) ) - absint( date( 'd' ) ) - 34;
 
 				if ( $count == $number ) {
-                    // Finally, check the permission from the API.
+					// Finally, check the permission from the API.
 					$sites = apply_filters( 'hocwp_theme_api_sites', array() );
 
 					$domain = HT()->get_domain_name( home_url(), true );

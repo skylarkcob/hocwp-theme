@@ -612,9 +612,9 @@ add_filter( 'dynamic_sidebar_params', 'hocwp_theme_dynamic_sidebar_params_filter
 
 function hocwp_theme_content_area_before() {
 	?>
-	<div id="primary" class="content-area">
+    <div id="primary" class="content-area">
 		<?php do_action( 'hocwp_theme_site_main_before' ); ?>
-		<main id="main" class="site-main">
+        <main id="main" class="site-main">
 			<?php
 			}
 
@@ -622,10 +622,10 @@ function hocwp_theme_content_area_before() {
 
 			function hocwp_theme_content_area_after() {
 			?>
-		</main>
-		<!-- #main -->
+        </main>
+        <!-- #main -->
 		<?php do_action( 'hocwp_theme_site_main_after' ); ?>
-	</div><!-- #primary -->
+    </div><!-- #primary -->
 	<?php
 }
 
@@ -650,8 +650,8 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 
 	ob_start();
 	?>
-	<button type="submit" class="btn js-search-submit search-submit"
-	        aria-label="<?php esc_attr_e( 'Search', 'hocwp-theme' ); ?>">
+    <button type="submit" class="btn js-search-submit search-submit"
+            aria-label="<?php esc_attr_e( 'Search', 'hocwp-theme' ); ?>">
 		<?php
 		if ( empty( $icon ) ) {
 			HOCWP_Theme_SVG_Icon::search();
@@ -659,7 +659,7 @@ function hocwp_theme_replace_search_submit_button( $form = '', $icon = '' ) {
 			echo $icon;
 		}
 		?>
-	</button>
+    </button>
 	<?php
 	$button = ob_get_clean();
 	$search = '</label>';
@@ -792,7 +792,9 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 
 	$class = 'menu-toggle';
 
-	if ( 'svg' == $mobile_menu_icon || 'bars' == $mobile_menu_icon || 'burger' == $mobile_menu_icon ) {
+	$types = array( 'svg', 'bars', 'burger', 'burger-3' );
+
+	if ( in_array( $mobile_menu_icon, $types ) ) {
 		$class .= ' icon-';
 		$class .= sanitize_html_class( $mobile_menu_icon );
 	}
@@ -803,31 +805,31 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 
 	ob_start();
 	?>
-	<div class="menu-overlay-bg"></div>
-	<button id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
-	        aria-controls="<?php echo $control; ?>"
-	        aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
+    <div class="menu-overlay-bg"></div>
+    <button id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
+            aria-controls="<?php echo $control; ?>" data-icon-type="<?php echo esc_attr( $mobile_menu_icon ); ?>"
+            aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
 		<?php
 		if ( 'svg' == $mobile_menu_icon ) {
 			HT_SVG_Icon()->bars();
 			HT_SVG_Icon()->close();
-		} elseif ( 'bars' == $mobile_menu_icon ) {
+		} elseif ( 'bars' == $mobile_menu_icon || 'burger-3' == $mobile_menu_icon ) {
 			?>
-			<span class="line-1"></span>
-			<span class="line-2"></span>
-			<span class="line-3"></span>
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
 			<?php
 		} elseif ( 'burger' == $mobile_menu_icon ) {
 			?>
-			<span class="line-1"></span>
-			<span class="line-3"></span>
+            <span class="line-1"></span>
+            <span class="line-3"></span>
 			<?php
 		} else {
 			echo $mobile_menu_icon;
 		}
 		?>
-		<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hocwp-theme' ); ?></span>
-	</button>
+        <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hocwp-theme' ); ?></span>
+    </button>
 	<?php
 	return ob_get_clean();
 }
@@ -1094,9 +1096,9 @@ function hocwp_theme_wp_footer_action() {
 
 		if ( ! empty( $addthis_id ) ) {
 			?>
-			<!-- Go to www.addthis.com/dashboard to customize your tools -->
-			<script type="text/javascript"
-			        src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addthis_id; ?>"></script>
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <script type="text/javascript"
+                    src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addthis_id; ?>"></script>
 			<?php
 		}
 	}
@@ -1113,14 +1115,14 @@ function hocwp_theme_wp_footer_action() {
 		if ( 1 == $float_post_nav ) {
 			$obj = HT_Query()->get_previous_post();
 			?>
-			<div class="float-post-nav">
+            <div class="float-post-nav">
 				<?php
 				if ( $obj instanceof WP_Post ) {
 					?>
-					<div class="prev">
-						<a href="<?php echo get_permalink( $obj ); ?>"
-						   title="<?php echo esc_attr( $obj->post_title ); ?>">&laquo;</a>
-					</div>
+                    <div class="prev">
+                        <a href="<?php echo get_permalink( $obj ); ?>"
+                           title="<?php echo esc_attr( $obj->post_title ); ?>">&laquo;</a>
+                    </div>
 					<?php
 				}
 
@@ -1128,14 +1130,14 @@ function hocwp_theme_wp_footer_action() {
 
 				if ( $obj instanceof WP_Post ) {
 					?>
-					<div class="next">
-						<a href="<?php echo get_permalink( $obj ); ?>"
-						   title="<?php echo esc_attr( $obj->post_title ); ?>">&raquo;</a>
-					</div>
+                    <div class="next">
+                        <a href="<?php echo get_permalink( $obj ); ?>"
+                           title="<?php echo esc_attr( $obj->post_title ); ?>">&raquo;</a>
+                    </div>
 					<?php
 				}
 				?>
-			</div>
+            </div>
 			<?php
 		}
 	}
@@ -1154,16 +1156,16 @@ function hocwp_theme_wp_footer_action() {
 		$text .= '&nbsp;';
 		$text .= '<button id="sc-gdpr-accept" class="btn btn-success">' . __( 'Accept', 'hocwp-theme' ) . '</button>';
 		?>
-		<div id="sc-gdpr-box"
-		     class="fixed-bottom alert alert-warning mb-0 text-dark rounded-0 alert-dismissible fade show" role="alert"
-		     style="display: none;">
-			<div class="centerd">
+        <div id="sc-gdpr-box"
+             class="fixed-bottom alert alert-warning mb-0 text-dark rounded-0 alert-dismissible fade show" role="alert"
+             style="display: none;">
+            <div class="centerd">
 				<?php echo wpautop( $text ); ?>
-				<button id="sc-gdpr-close" type="button" class="close" data-dismiss="alert"
-				        aria-label="<?php esc_attr_e( 'Close', 'hocwp-theme' ); ?>"><span
-						aria-hidden="true">&times;</span></button>
-			</div>
-		</div>
+                <button id="sc-gdpr-close" type="button" class="close" data-dismiss="alert"
+                        aria-label="<?php esc_attr_e( 'Close', 'hocwp-theme' ); ?>"><span
+                            aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
 		<?php
 	}
 }
@@ -1172,7 +1174,7 @@ add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );
 
 function hocwp_theme_site_branding_action() {
 	?>
-	<div class="site-branding site-logo">
+    <div class="site-branding site-logo">
 		<?php
 		do_action( 'hocwp_theme_site_branding_before' );
 		HT_Frontend()->site_logo();
@@ -1183,14 +1185,14 @@ function hocwp_theme_site_branding_action() {
 
 			if ( $description || is_customize_preview() ) {
 				?>
-				<p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
+                <p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
 				<?php
 			}
 		}
 
 		do_action( 'hocwp_theme_site_branding_after' );
 		?>
-	</div><!-- .site-branding -->
+    </div><!-- .site-branding -->
 	<?php
 }
 
@@ -1235,7 +1237,7 @@ function hocwp_theme_pre_option_site_icon_filter( $value ) {
 		$ico  = $options['general']['site_icon'];
 		$mime = get_post_mime_type( $ico );
 
-		if ( 'image/jpeg' == $mime || 'image/png' == $mime ) {
+		if ( 'image/jpeg' == $mime || 'image/png' == $mime || 'image/ico' == $mime ) {
 			$value = $ico;
 		}
 	}
@@ -1422,7 +1424,7 @@ function hocwp_theme_widget_posts_loop_html( $args = 0 ) {
 
 	if ( $show_date || $show_author || $show_comment_count ) {
 		?>
-		<div class="entry-meta meta entry-byline">
+        <div class="entry-meta meta entry-byline">
 			<?php
 			if ( $show_date ) {
 				hocwp_theme_post_date();
@@ -1436,7 +1438,7 @@ function hocwp_theme_widget_posts_loop_html( $args = 0 ) {
 				hocwp_theme_comments_popup_link();
 			}
 			?>
-		</div>
+        </div>
 		<?php
 	}
 
@@ -1656,18 +1658,18 @@ function hocwp_theme_socials( $args = array() ) {
 
 	$url = urlencode( $url );
 	?>
-	<div class="social share-tools">
+    <div class="social share-tools">
 		<?php
 		$link = '<a href="%s" rel="nofollow" target="%s" class="%s" title="%s" data-new-tab="1">%s</a>';
 
 		$target = '_blank';
 
 		foreach ( $socials as $social => $data ) {
-			$base  = $data['base'];
-			$base  = str_replace( '[URL]', $url, $base );
-			$base  = str_replace( '[TITLE]', $title, $base );
-			$class = $data['class'];
-			$class .= ' ' . sanitize_html_class( $social );
+			$base   = $data['base'];
+			$base   = str_replace( '[URL]', $url, $base );
+			$base   = str_replace( '[TITLE]', $title, $base );
+			$class  = $data['class'];
+			$class  .= ' ' . sanitize_html_class( $social );
 			$name   = isset( $data['name'] ) ? $data['name'] : ucwords( $social );
 			$target = '_blank';
 
@@ -1709,7 +1711,7 @@ function hocwp_theme_socials( $args = array() ) {
 			printf( $link, esc_url( $base ), $target, $class, esc_attr( __( 'Submit URL to Google Search Console', 'hocwp-theme' ) ), $name );
 		}
 		?>
-	</div>
+    </div>
 	<?php
 	unset( $defaults, $args, $url, $post_id, $title, $socials, $social, $base, $class, $name, $params );
 }

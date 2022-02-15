@@ -9,6 +9,14 @@
 * 07/02/2022: Now use lozad script for lazy load image by default.
 * 07/02/2022: Fix media upload script bugs.
 * 07/02/2022: Update HTML field class.
+* 15/02/2022: Update menu mobile toggle button burger 3 lines.
+* 15/02/2022: Add fixed save button when scrolling down on theme settings page.
+* 15/02/2022: Add function check custom page template.
+* 15/02/2022: Fix HTML field not showing label.
+* 15/02/2022: Add function load WebP image first in theme.
+* 15/02/2022: Add heading quicktags.
+* 15/02/2022: Add theme admin bar nodes.
+* 15/02/2022: Update core script.
 
 = 6.8.9 =
 * 17/12/2021: Add custom constant mobile screen width.

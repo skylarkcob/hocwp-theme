@@ -164,8 +164,24 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		wp_nav_menu( wp_parse_args( $args, array( 'theme_location' => '' ) ) );
 	}
 
+	public function is_custom_page_template( $file ) {
+		if ( is_array( $file ) ) {
+			foreach ( $file as $a ) {
+				if ( $this->is_custom_page_template( $a ) ) {
+					return true;
+				}
+			}
+		} else {
+			$file = rtrim( $file, '.php' );
+
+			return is_page_template( 'custom/page-templates/' . $file . '.php' );
+		}
+
+		return false;
+	}
+
 	public function is_full_width() {
-		$full_width = is_page_template( 'custom/page-templates/full-width.php' );
+		$full_width = $this->is_custom_page_template( 'full-width' );
 
 		if ( ! $full_width && ( is_single() || is_page() || is_singular() ) ) {
 			if ( is_single() || is_page() || is_singular() ) {
@@ -1148,6 +1164,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public function lazy_image( $class, $src, $width = '', $height = '', $title = '' ) {
 		if ( empty( $src ) ) {
 			return;
+		}
+
+		if ( is_numeric( $src ) && HT_Media()->exists( $src ) ) {
+			$src = wp_get_attachment_image_url( $src, 'full' );
 		}
 
 		$class .= ' lozad';

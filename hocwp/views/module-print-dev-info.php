@@ -190,6 +190,27 @@ if ( ! is_admin() ) {
 
 hocwp_theme_dev_info_section_close();
 
+$number = 20;
+
+if ( ! is_admin() ) {
+	$number = - 1;
+}
+
+$files = HT()->get_last_modified_files( get_template_directory(), $number );
+
+if ( HT()->array_has_value( $files ) ) {
+	hocwp_theme_dev_info_section_open( __( 'Recent Modified Theme Files', 'hocwp-theme' ) );
+
+	$count = 1;
+
+	foreach ( $files as $path => $time ) {
+		printf( '%s. %s: %s', $count, $path, date( 'Y-m-d H:i:s', $time ) . PHP_EOL );
+		$count ++;
+	}
+
+	hocwp_theme_dev_info_section_close();
+}
+
 if ( ! is_admin() ) {
 	$path = get_template_directory() . '/style.css';
 

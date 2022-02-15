@@ -23,6 +23,12 @@ if ( 'reading' != $hocwp_theme->option->tab ) {
 function hocwp_theme_settings_page_reading_section() {
 	$sections = array();
 
+	$sections['optimize'] = array(
+		'tab'   => 'reading',
+		'id'    => 'optimize',
+		'title' => __( 'Site Optimize', 'hocwp-theme' )
+	);
+
 	if ( hocwp_theme_is_shop_site() ) {
 		$sections['shop_section'] = array(
 			'tab'   => 'reading',
@@ -90,10 +96,11 @@ function hocwp_theme_settings_page_reading_field() {
 	$fields[] = $field;
 
 	$types = array(
-		''       => __( '-- Choose menu toggle icon --', 'hocwp-theme' ),
-		'svg'    => __( 'SVG icon', 'hocwp-theme' ),
-		'bars'   => __( 'Line bars', 'hocwp-theme' ),
-		'burger' => __( 'Line burger', 'hocwp-theme' )
+		''         => __( '-- Choose menu toggle icon --', 'hocwp-theme' ),
+		'svg'      => __( 'SVG icon', 'hocwp-theme' ),
+		'bars'     => __( 'Line bars', 'hocwp-theme' ),
+		'burger'   => __( 'Line burger', 'hocwp-theme' ),
+		'burger-3' => __( 'Line burger 3', 'hocwp-theme' )
 	);
 
 	$args = array(
@@ -217,9 +224,17 @@ function hocwp_theme_settings_page_reading_field() {
 			'label' => __( 'Since WordPress version 5.5, all images will be used lazy loading, check here if you want to disable this function?', 'hocwp-theme' )
 		);
 
-		$field    = hocwp_theme_create_setting_field( 'disable_lazy_loading', __( 'Disable Lazy Loading', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+		$field    = hocwp_theme_create_setting_field( 'disable_lazy_loading', __( 'Disable Lazy Loading', 'hocwp-theme' ), '', $args, 'boolean', 'reading', 'optimize' );
 		$fields[] = $field;
 	}
+
+	$args = array(
+		'type'  => 'checkbox',
+		'label' => __( 'Use WebP images instead of regular images to reduce page load time.', 'hocwp-theme' )
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'use_webp', __( 'Use WebP', 'hocwp-theme' ), '', $args, 'boolean', 'reading', 'optimize' );
+	$fields[] = $field;
 
 	if ( hocwp_theme_is_shop_site() ) {
 		$fields[] = array(

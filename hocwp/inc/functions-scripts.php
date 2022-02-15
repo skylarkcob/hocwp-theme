@@ -396,6 +396,9 @@ function hocwp_theme_frontend_and_backend_scripts() {
 			'dt'       => _x( 'HTML Definition Term Element', 'quicktags description', 'hocwp-theme' ),
 			'dd'       => _x( 'HTML Description Element', 'quicktags description', 'hocwp-theme' ),
 			'tab'      => _x( 'Indentation', 'quicktags description', 'hocwp-theme' ),
+			'h2'       => _x( 'Heading 2', 'quicktags description', 'hocwp-theme' ),
+			'h3'       => _x( 'Heading 3', 'quicktags description', 'hocwp-theme' ),
+			'h4'       => _x( 'Heading 4', 'quicktags description', 'hocwp-theme' ),
 			'nextpage' => _x( 'Split the article into multiple pages.', 'quicktags description', 'hocwp-theme' )
 		)
 	);

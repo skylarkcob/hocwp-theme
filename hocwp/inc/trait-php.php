@@ -28,7 +28,7 @@ trait HOCWP_Theme_PHP {
 		return preg_replace( "/<" . $tag . "[^>]+\>/i", $replace, $string );
 	}
 
-	function memory_size_convert( $size ) {
+	public function memory_size_convert( $size ) {
 		$l   = substr( $size, - 1 );
 		$ret = substr( $size, 0, - 1 );
 
@@ -46,5 +46,53 @@ trait HOCWP_Theme_PHP {
 		}
 
 		return $ret;
+	}
+
+	public function get_value_in_arrays( $key, $arr1, $arr2 ) {
+		$value = $arr1[ $key ] ?? '';
+
+		if ( empty( $value ) ) {
+			$value = $arr2[ $key ] ?? '';
+		}
+
+		return $value;
+	}
+
+	public function get_last_modified_files( $dir, $number = 10, $mode = null ) {
+		$lists = array();
+
+		if ( ! class_exists( 'RecursiveDirectoryIterator' ) ) {
+			return $lists;
+		}
+
+		if ( is_file( $dir ) ) {
+			$dir = dirname( $dir );
+		}
+
+		if ( null === $mode ) {
+			$mode = RecursiveIteratorIterator::CHILD_FIRST;
+		}
+
+		$rii = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $dir ), $mode );
+
+		foreach ( $rii as $file_path => $cls_spl ) {
+			if ( $cls_spl->isFile() ) {
+				$lists[] = $file_path;
+			}
+		}
+
+		$lists = array_combine( $lists, array_map( 'filemtime', $lists ) );
+
+		arsort( $lists );
+
+		if ( 0 < $number && $number < count( $lists ) ) {
+			$lists = array_slice( $lists, 0, $number );
+		}
+
+		return $lists;
+	}
+
+	public function current_milliseconds() {
+		return round( microtime( true ) * 1000 );
 	}
 }

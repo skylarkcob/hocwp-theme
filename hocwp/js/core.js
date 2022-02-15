@@ -141,39 +141,82 @@ function HOCWP_Theme() {
 
         $.ajax(params);
     }
+
+    this.screenWidth = function () {
+        return window.innerWidth || window.screen.width;
+    };
+
+    this.screenHeight = function () {
+        return window.innerHeight || window.screen.height;
+    };
+
+    this.sticky = function ($, element, top, htmlClass, bottom) {
+        if ("number" === typeof top) {
+            var scroll = $(window).scrollTop();
+
+            bottom = bottom || 0;
+
+            if ("object" !== typeof element) {
+                element = $(element);
+            }
+
+            htmlClass = htmlClass || "is-sticky fixed";
+
+            if (scroll >= top) {
+                log(scroll + this.screenHeight());
+                if (bottom > top && bottom <= (scroll + this.screenHeight())) {
+                    element.removeClass(htmlClass);
+                } else if (!element.hasClass(htmlClass)) {
+                    element.addClass(htmlClass)
+                }
+            } else {
+                element.removeClass(htmlClass);
+            }
+        }
+    };
+
+    this.showDevLog = function () {
+        setTimeout(function () {
+            if (hocwpTheme && hocwpTheme.l10n && hocwpTheme.l10n.themeCreatedBy) {
+                log("%c" + hocwpTheme.l10n.themeCreatedBy, "font-size:16px;color:red;font-family:tahoma;padding:10px 0");
+            }
+        }, 5000);
+    };
+
+    this.updateBodyAttributes = function () {
+        document.getElementsByTagName("body")[0].setAttribute("data-screen-width", this.screenWidth());
+    };
+
+    this.init = function () {
+        this.showDevLog();
+        this.updateBodyAttributes();
+        this.popup(document.getElementById("sc-gdpr-box"));
+    }
 }
+
+hocwpTheme.object = new HOCWP_Theme();
+hocwpTheme.object.init();
 
 var log = console.log.bind(document);
 
 hocwpTheme.getParamByName = function (url, name) {
-    let obj = new HOCWP_Theme();
-    return obj.get_param_by_name(url, name);
+    return hocwpTheme.object.get_param_by_name(url, name);
 };
 
 hocwpTheme.removeParam = function (key, sourceURL) {
-    let obj = new HOCWP_Theme();
-    return obj.remove_param(key, sourceURL);
+    return hocwpTheme.object.remove_param(key, sourceURL);
 };
 
 hocwpTheme.removeParams = function (url) {
-    let obj = new HOCWP_Theme();
-    return obj.remove_params(url);
+    return hocwpTheme.object.remove_params(url);
 };
 
 hocwpTheme.addParam = function (key, value, url) {
-    let obj = new HOCWP_Theme();
-    return obj.add_param(key, value, url);
+    return hocwpTheme.object.add_param(key, value, url);
 };
 
-setTimeout(function () {
-    if (hocwpTheme && hocwpTheme.l10n && hocwpTheme.l10n.themeCreatedBy) {
-        log("%c" + hocwpTheme.l10n.themeCreatedBy, "font-size:16px;color:red;font-family:tahoma;padding:10px 0");
-    }
-}, 5000);
-
 function hocwpThemeFilterList(input) {
-    let obj = new HOCWP_Theme();
-    obj.filter_list(input);
+    hocwpTheme.object.filter_list(input);
 }
 
 hocwpTheme.filterList = function (input) {
@@ -181,21 +224,17 @@ hocwpTheme.filterList = function (input) {
 };
 
 hocwpTheme.isEmail = function (email) {
-    let obj = new HOCWP_Theme();
-    return obj.is_email(email);
+    return hocwpTheme.object.is_email(email);
 };
 
 hocwpTheme.isGooglePagespeed = function () {
-    let obj = new HOCWP_Theme();
-    return obj.is_google_pagespeed();
+    return hocwpTheme.object.is_google_pagespeed();
 };
 
-(function () {
-    let obj = new HOCWP_Theme();
-    obj.popup(document.getElementById("sc-gdpr-box"));
-})();
+hocwpTheme.screenWidth = function () {
+    return hocwpTheme.object.screenWidth();
+};
 
 hocwpTheme.ajax = function ($, element, data, callback, params) {
-    let obj = new HOCWP_Theme();
-    obj.ajax($, element, data, callback, params);
+    hocwpTheme.object.ajax($, element, data, callback, params);
 };

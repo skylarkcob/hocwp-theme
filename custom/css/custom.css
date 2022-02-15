@@ -15,6 +15,46 @@ body {
 
 /* Responsive ---------------------------- */
 
+/* =========== For larger screen width =========== */
+
+@media only screen and (min-width: 2133px) {
+
+}
+
+@media only screen and (min-width: 2400px) {
+
+}
+
+@media only screen and (min-width: 2560px) {
+
+}
+
+@media only screen and (min-width: 2880px) {
+
+}
+
+@media only screen and (min-width: 3840px) {
+
+}
+
+@media only screen and (min-width: 5760px) {
+
+}
+
+@media only screen and (min-width: 7680px) {
+
+}
+
+/*
+ * Base screen width is 1920px
+ */
+
+/* =========== For smaller screen width =========== */
+
+@media only screen and (max-width: 1745px) {
+
+}
+
 /* 125% screen width -------------------- */
 @media only screen and (max-width: 1536px) {
 

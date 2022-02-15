@@ -30,6 +30,18 @@ final class HOCWP_Theme_Query {
 		return array_shift( $pages );
 	}
 
+	public function pages_by_custom_template( $file, $args = array() ) {
+		$file = rtrim( $file, '.php' );
+
+		return $this->pages_by_template( 'custom/page-templates/' . $file . '.php', $args );
+	}
+
+	public function page_by_custom_template( $file, $args = array() ) {
+		$pages = self::pages_by_custom_template( $file, $args );
+
+		return array_shift( $pages );
+	}
+
 	public function blog_page() {
 		$blog = HT_Options()->get_tab( 'blog_page', '', 'reading' );
 

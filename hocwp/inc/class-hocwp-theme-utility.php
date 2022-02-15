@@ -129,15 +129,53 @@ class HOCWP_Theme_Utility {
 		return ( 1 == $amp );
 	}
 
+	/**
+	 * Get image url in WordPress core folder.
+	 *
+	 * @param string $name Image name.
+	 *
+	 * @return string Image url.
+	 */
 	public function get_wp_image_url( $name ) {
 		return includes_url( 'images/' . $name );
 	}
 
+	/**
+	 * Get WebP image name if exists when user enable Use WebP in reading setting tab.
+	 *
+	 * @param string $name Image name.
+	 * @param string $path Directory contains image.
+	 *
+	 * @return string Regular image name or WebP image name.
+	 */
+	public function detect_webp_image_instead( $name, $path ) {
+		$use_webp = HT_Options()->get_tab( 'use_webp', '', 'reading' );
+
+		// Check using WebP images instead of regular images
+		if ( $use_webp ) {
+			$info = pathinfo( $name );
+
+			if ( isset( $info['extension'] ) && 'webp' != $info['extension'] ) {
+				$use_webp = $path . $info['filename'] . '.webp';
+
+				if ( file_exists( $use_webp ) ) {
+					$name = $info['filename'] . '.webp';
+				}
+			}
+		}
+
+		return $name;
+	}
+
 	public function get_my_image_url( $name ) {
+		$name = $this->detect_webp_image_instead( $name, HOCWP_THEME_CORE_PATH . '/images/' );
+
 		return HOCWP_THEME_CORE_URL . '/images/' . $name;
 	}
 
 	public function get_custom_image_url( $name ) {
+		$name = $this->detect_webp_image_instead( $name, HOCWP_THEME_CUSTOM_PATH . '/images/' );
+
 		return HOCWP_THEME_CUSTOM_URL . '/images/' . $name;
 	}
 
@@ -287,7 +325,7 @@ class HOCWP_Theme_Utility {
 	public function convert_administrative_boundaries_to_array( $csv, $district, $commune ) {
 		$abs = array();
 
-		foreach ( $csv as $ab ) {
+		foreach ( (array) $csv as $ab ) {
 			$ab = explode( ',', $ab );
 
 			$name = array_shift( $ab );
