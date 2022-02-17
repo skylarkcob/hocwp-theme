@@ -50,6 +50,13 @@
     color: #fff;
 }
 
+.hocwp-theme .settings-box .header h2 {
+    font-size: 22px;
+    line-height: 1;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
 .hocwp-theme .settings-box .author-info,
 .hocwp-theme .settings-box .header .theme-info {
     float: left;
@@ -70,6 +77,33 @@
     line-height: 1;
 }
 
+.hocwp-theme .form-table th .dashicons-admin-collapse,
+.hocwp-theme .form-table th .dashicons-editor-expand {
+    color: #999;
+    opacity: .2;
+    transition: all 1s;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.hocwp-theme .form-table tr.collapsed {
+    border-bottom: 1px dashed #eee;
+}
+
+.hocwp-theme .form-table th .dashicons-admin-collapse:hover,
+.hocwp-theme .form-table th .dashicons-editor-expand:hover {
+    opacity: 1;
+}
+
+.hocwp-theme .form-table th .dashicons-editor-expand {
+    display: none;
+}
+
+.hocwp-theme .form-table th .dashicons-admin-collapse {
+    transform: rotate(90deg);
+}
+
 .hocwp-theme .settings-box #nav {
     float: left;
     width: 200px;
@@ -77,12 +111,35 @@
     border-right: 1px solid #dedede;
     flex-basis: 200px;
     max-width: 200px;
+    position: relative;
 }
 
 .hocwp-theme .settings-box #nav ul {
     margin: 0;
     padding: 0;
     border: none;
+    transition: all 1s;
+    position: relative;
+    top: 0;
+    bottom: auto;
+    width: 199px;
+}
+
+.hocwp-theme .settings-box #nav ul.reached-bottom,
+.hocwp-theme .settings-box #nav ul.fixed {
+    z-index: 99;
+    position: fixed;
+    border-top: 1px solid #dedede;
+    top: 0;
+}
+
+.admin-bar .hocwp-theme .settings-box #nav ul.fixed {
+    top: 32px;
+}
+
+.hocwp-theme .settings-box #nav ul.reached-bottom {
+    bottom: 112px;
+    top: auto;
 }
 
 .hocwp-theme .settings-box #nav ul li {
@@ -131,6 +188,10 @@
 
 .hocwp-theme .settings-box #nav li:last-child {
     margin-bottom: 100px;
+}
+
+.hocwp-theme .settings-box #nav .reached-bottom li:last-child {
+    margin-bottom: -1px;
 }
 
 .hocwp-theme .settings-box #nav li:hover a {
@@ -193,14 +254,23 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#e7e7e7', GradientType=0);
 }
 
-.hocwp-theme .settings-box,
 .hocwp-theme .settings-box .module-footer {
     border-radius: 0 0 5px 5px;
+}
+
+.hocwp-theme .settings-box {
+    border-radius: 10px 10px 5px 5px;
+}
+
+.hocwp-theme .settings-box .header {
+    border-radius: 10px 10px 0 0;
 }
 
 .hocwp-theme .settings-box .module-footer {
     padding: 0 10px;
     color: #999;
+    position: relative;
+    z-index: 222;
 }
 
 .hocwp-theme #systemInformation {
@@ -215,6 +285,7 @@
 
 /* View mode classic ------------------------------- */
 
+.hocwp-theme[data-view-mode="classic"] .multiple-fields .field-row,
 .hocwp-theme[data-view-mode="classic"] .settings-box {
     background: none;
     box-shadow: none;
@@ -236,4 +307,12 @@
     border: 1px solid #ddd;
     padding: 15px;
     line-height: 25px;
+}
+
+.hocwp-theme[data-view-mode="classic"] .form-table tr th .dashicons {
+    display: none;
+}
+
+.hocwp-theme[data-view-mode="classic"] .multiple-fields .field-row ~ .field-row {
+    border-top-color: #e6e6e6;
 }

@@ -279,7 +279,16 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				continue;
 			}
 
-			add_settings_field( $field['id'], $field['title'], $field['callback'], $field['page'], $field['section'], $field['args'] );
+			// Add title label for
+			if ( ! isset( $field['args']['label_for'] ) && isset( $field['args']['callback_args']['id'] ) ) {
+				$field['args']['label_for'] = $field['args']['callback_args']['id'];
+			}
+
+			$title = $field['title'];
+			$title .= ' <span class="dashicons dashicons-admin-collapse" title="' . esc_attr__( 'Collapse', 'hocwp-theme' ) . '"></span>';
+			$title .= ' <span class="dashicons dashicons-editor-expand" title="' . esc_attr__( 'Expand', 'hocwp-theme' ) . '"></span>';
+
+			add_settings_field( $field['id'], $title, $field['callback'], $field['page'], $field['section'], $field['args'] );
 		}
 	}
 
@@ -450,7 +459,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					// Check field args
 					$a_args = $a_field['args'] ?? '';
 
-                    // Re-check callback args if empty args param.
+					// Re-check callback args if empty args param.
 					if ( empty( $a_args ) && isset( $a_field['callback_args'] ) ) {
 						$a_args = $a_field['callback_args'];
 					}

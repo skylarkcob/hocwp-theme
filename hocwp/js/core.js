@@ -163,14 +163,16 @@ function HOCWP_Theme() {
             htmlClass = htmlClass || "is-sticky fixed";
 
             if (scroll >= top) {
-                log(scroll + this.screenHeight());
-                if (bottom > top && bottom <= (scroll + this.screenHeight())) {
+                if (bottom > top && bottom <= scroll) {
                     element.removeClass(htmlClass);
+                    element.addClass("reached-bottom");
                 } else if (!element.hasClass(htmlClass)) {
-                    element.addClass(htmlClass)
+                    element.addClass(htmlClass);
+                    element.removeClass("reached-bottom");
                 }
             } else {
                 element.removeClass(htmlClass);
+                element.removeClass("reached-bottom");
             }
         }
     };

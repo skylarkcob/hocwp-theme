@@ -131,17 +131,60 @@ jQuery(document).ready(function ($) {
         });
     })();
 
-    // Sticky save setting button
+    // Sticky save setting button and sidebar
     (function () {
         const settingsBox = $(".hocwp-theme .settings-box"),
             sticky = settingsBox.find(".module-header input[type='submit']"),
             sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height(),
-            sBottom = settingsBox.find(".module-footer").offset().top - 120;
+            sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120,
+            sidebar = settingsBox.find("#nav ul"),
+            sideTop = sidebar.offset().top + (sidebar.height() / 3);
 
         hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
 
+        if (settingsBox.find(".settings-content").height() > sidebar.height()) {
+            hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+        }
+
         $(window).scroll(function () {
             hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
+
+            if (settingsBox.find(".settings-content").height() > sidebar.height()) {
+                hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+            }
+        });
+    })();
+
+    // Collapse expand setting row
+    (function () {
+        body.on("click", ".hocwp-theme .form-table th .dashicons-admin-collapse", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                row = element.closest("tr");
+
+            row.children("td").slideUp();
+            element.hide();
+
+            row.find(".dashicons-editor-expand").fadeIn();
+
+            row.addClass("collapsed");
+        });
+
+        body.on("click", ".hocwp-theme .form-table th .dashicons-editor-expand", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                row = element.closest("tr");
+
+            row.removeClass("collapsed");
+
+            row.children("td").slideDown();
+            element.hide();
+
+            row.find(".dashicons-admin-collapse").fadeIn();
         });
     })();
 });

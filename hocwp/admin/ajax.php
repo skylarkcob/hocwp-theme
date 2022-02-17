@@ -506,7 +506,7 @@ function hocwp_theme_fetch_administrative_boundaries_ajax_callback() {
 
 		foreach ( $lists as $key => $item ) {
 			if ( 'name' != $key && 'type' != $key ) {
-				$option .= sprintf( '<option value="%s" data-type="%s">%s</option>', esc_attr( $key ), esc_attr( $item['type'] ), $item['name'] );
+				$option .= sprintf( '<option data-name="%s" value="%s" data-type="%s">%s</option>', esc_attr( $item['name'] ), esc_attr( $key ), esc_attr( $item['type'] ), $item['name'] );
 			}
 		}
 
