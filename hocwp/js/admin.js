@@ -136,9 +136,10 @@ jQuery(document).ready(function ($) {
         const settingsBox = $(".hocwp-theme .settings-box"),
             sticky = settingsBox.find(".module-header input[type='submit']"),
             sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height(),
-            sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120,
             sidebar = settingsBox.find("#nav ul"),
             sideTop = sidebar.offset().top + (sidebar.height() / 3);
+
+        var sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
 
         hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
 
@@ -147,6 +148,8 @@ jQuery(document).ready(function ($) {
         }
 
         $(window).scroll(function () {
+            sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
+
             hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
 
             if (settingsBox.find(".settings-content").height() > sidebar.height()) {

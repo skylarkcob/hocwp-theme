@@ -17,6 +17,12 @@
 * 15/02/2022: Add heading quicktags.
 * 15/02/2022: Add theme admin bar nodes.
 * 15/02/2022: Update core script.
+* 23/02/2022: Update fields label, title and description.
+* 23/02/2022: Auto load sortable script when using sortable field on meta page.
+* 23/02/2022: Fix bug for sticky sidebar and save button on admin setting page.
+* 23/02/2022: Add function to detect browser information.
+* 23/02/2022: Add browser information to body attributes.
+* 23/02/2022: Fix use WebP functions, skip with unsupported browsers.
 
 = 6.8.9 =
 * 17/12/2021: Add custom constant mobile screen width.

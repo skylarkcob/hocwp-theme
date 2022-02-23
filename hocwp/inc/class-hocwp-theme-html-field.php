@@ -1025,6 +1025,10 @@ final class HOCWP_Theme_HTML_Field {
 			$value = '';
 		}
 
+		if ( isset( $args['title'] ) && ! empty( $args['title'] ) && isset( $args['label'] ) ) {
+			unset( $args['label'] );
+		}
+
 		if ( empty( $lists ) ) {
 			$options = isset( $args['options'] ) ? $args['options'] : '';
 			$options = (array) $options;
@@ -1056,6 +1060,12 @@ final class HOCWP_Theme_HTML_Field {
 
 			$list_type = isset( $args['list_type'] ) ? $args['list_type'] : '';
 			unset( $args['list_type'] );
+
+			if ( isset( $args['title'] ) && isset( $args['description'] ) ) {
+				self::label( array( 'text' => $args['title'], 'for' => $args['id'] ) );
+			}
+
+			echo '<div class="clearfix">';
 
 			if ( empty( $list_type ) ) {
 				_doing_it_wrong( __CLASS__ . ':' . __FUNCTION__, __( 'You must pass list_type in arguments for this sortable list.', 'hocwp-theme' ), '6.1.8' );
@@ -1211,6 +1221,10 @@ final class HOCWP_Theme_HTML_Field {
 
 			$args['type'] = 'hidden';
 			self::input( $args );
+
+			echo '</div>';
+
+			self::description( $args );
 		}
 	}
 

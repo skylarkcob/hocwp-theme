@@ -4,6 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 trait HOCWP_Theme_PHP {
+	public function get_user_agent() {
+		return $_SERVER['HTTP_USER_AGENT'] ?? '';
+	}
+
 	public function get_params_from_url( $url ) {
 		$parse = parse_url( $url );
 		$parse = isset( $parse['query'] ) ? $parse['query'] : '';
@@ -94,5 +98,112 @@ trait HOCWP_Theme_PHP {
 
 	public function current_milliseconds() {
 		return round( microtime( true ) * 1000 );
+	}
+
+	public function get_ie_version( $agent = null ) {
+		if ( empty( $agent ) ) {
+			$agent = $this->get_user_agent();
+		}
+
+		// Detect IE below 11
+		if ( strrpos( $agent, 'MSIE' ) !== false ) {
+			$parts   = explode( 'MSIE', $agent );
+			$version = (int) $parts[1];
+
+			return $version;
+		}
+
+		// Detect IE 11
+		if ( strrpos( $agent, 'Trident/' ) !== false ) {
+			$parts   = explode( 'rv:', $agent );
+			$version = (int) $parts[1];
+
+			return $version;
+		}
+
+		// Not found
+		return null;
+	}
+
+	public function get_browser() {
+		$u_agent  = $this->get_user_agent();
+		$bname    = 'Unknown';
+		$platform = 'Unknown';
+		$ub       = '';
+
+		// First get the platform
+		if ( preg_match( '/linux/i', $u_agent ) ) {
+			$platform = 'linux';
+		} elseif ( preg_match( '/macintosh|mac os x/i', $u_agent ) ) {
+			$platform = 'mac';
+		} elseif ( preg_match( '/windows|win32/i', $u_agent ) ) {
+			$platform = 'windows';
+		}
+
+		// Next get the name of the useragent yes separately and for good reason
+		if ( preg_match( '/MSIE/i', $u_agent ) && ! preg_match( '/Opera/i', $u_agent ) ) {
+			$bname = 'Internet Explorer';
+			$ub    = 'MSIE';
+		} elseif ( preg_match( '/Firefox/i', $u_agent ) ) {
+			$bname = 'Mozilla Firefox';
+			$ub    = 'Firefox';
+		} elseif ( preg_match( '/OPR/i', $u_agent ) ) {
+			$bname = 'Opera';
+			$ub    = 'Opera';
+		} elseif ( preg_match( '/Chrome/i', $u_agent ) && ! preg_match( '/Edge/i', $u_agent ) ) {
+			$bname = 'Google Chrome';
+			$ub    = 'Chrome';
+		} elseif ( preg_match( '/Safari/i', $u_agent ) && ! preg_match( '/Edge/i', $u_agent ) ) {
+			$bname = 'Apple Safari';
+			$ub    = 'Safari';
+		} elseif ( preg_match( '/Netscape/i', $u_agent ) ) {
+			$bname = 'Netscape';
+			$ub    = 'Netscape';
+		} elseif ( preg_match( '/Edge/i', $u_agent ) ) {
+			$bname = 'Edge';
+			$ub    = 'Edge';
+		} elseif ( preg_match( '/Trident/i', $u_agent ) ) {
+			$bname = 'Internet Explorer';
+			$ub    = 'MSIE';
+		}
+
+		// Finally, get the correct version number
+		$known   = array( 'Version', $ub, 'other' );
+		$pattern = '#(?<browser>' . join( '|', $known ) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+
+		preg_match_all( $pattern, $u_agent, $matches );
+
+		// See how many we have
+		$i = count( $matches['browser'] );
+
+		if ( $i != 1 ) {
+			// We will have two since we are not using 'other' argument yet
+			// See if version is before or after the name
+			if ( strripos( $u_agent, 'Version' ) < strripos( $u_agent, $ub ) ) {
+				$version = $matches['version'][0];
+			} else {
+				$version = $matches['version'][1] ?? '';
+			}
+		} else {
+			$version = $matches['version'][0];
+		}
+
+		// Check if we have a number
+		if ( $version == null || $version == '' ) {
+			if ( 'msie' == strtolower( $ub ) ) {
+				$version = $this->get_ie_version( $u_agent );
+			} else {
+				$version = '?';
+			}
+		}
+
+		return array(
+			'user_agent' => $u_agent,
+			'name'       => $bname,
+			'short_name' => $ub,
+			'version'    => $version,
+			'platform'   => $platform,
+			'pattern'    => $pattern
+		);
 	}
 }

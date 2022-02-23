@@ -701,10 +701,6 @@ final class HOCWP_Theme {
 		return $str;
 	}
 
-	public function get_user_agent() {
-		return isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
-	}
-
 	public function is_IP( $IP ) {
 		return filter_var( $IP, FILTER_VALIDATE_IP );
 	}

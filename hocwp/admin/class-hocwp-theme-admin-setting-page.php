@@ -495,6 +495,18 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					$a_args['name'] = $new_name;
 					$a_args['id']   = HT_Sanitize()->html_id( $new_name );
 
+					if ( empty( $a_args['label'] ) && isset( $a_field['label'] ) && ! empty( $a_field['label'] ) ) {
+						$a_args['label'] = $a_field['label'];
+					}
+
+					if ( empty( $a_args['title'] ) && isset( $a_field['title'] ) && ! empty( $a_field['title'] ) ) {
+						$a_args['title'] = $a_field['title'];
+					}
+
+					if ( empty( $a_args['description'] ) && isset( $a_field['description'] ) && ! empty( $a_field['description'] ) ) {
+						$a_args['description'] = $a_field['description'];
+					}
+
 					if ( empty( $a_args['label'] ) ) {
 						// Add field title label
 						$a_args['label'] = $a_field['title'] ?? '';

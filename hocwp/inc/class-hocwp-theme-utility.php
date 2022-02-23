@@ -155,11 +155,32 @@ class HOCWP_Theme_Utility {
 		if ( $use_webp ) {
 			$info = pathinfo( $name );
 
-			if ( isset( $info['extension'] ) && 'webp' != $info['extension'] ) {
-				$use_webp = $path . $info['filename'] . '.webp';
+			if ( isset( $info['extension'] ) ) {
+				$browser = HT()->get_browser();
 
-				if ( file_exists( $use_webp ) ) {
-					$name = $info['filename'] . '.webp';
+				$ext = 'webp';
+
+				if ( isset( $browser['short_name'] ) ) {
+					$short = strtolower( $browser['short_name'] );
+
+					// Using jpg instead if browser not support webp
+					if ( 'safari' === $short ) {
+						$version = $browser['version'] ?? '';
+
+						if ( version_compare( $version, '14', '<' ) ) {
+							$ext = 'jpg';
+						}
+					} elseif ( 'msie' === $short ) {
+						$ext = 'jpg';
+					}
+				}
+
+				if ( $ext != $info['extension'] ) {
+					$use_webp = $path . $info['filename'] . '.' . $ext;
+
+					if ( file_exists( $use_webp ) ) {
+						$name = $info['filename'] . '.' . $ext;
+					}
 				}
 			}
 		}
@@ -311,6 +332,36 @@ class HOCWP_Theme_Utility {
 		$content = wp_replace_insecure_home_url( $content );
 
 		return apply_filters( 'hocwp_theme_the_content_filter', $content );
+	}
+
+	public function convert_terms_data( &$lists, $taxonomy, $return = 'term_id' ) {
+		foreach ( $lists as $key => $value ) {
+			$term = null;
+
+			if ( is_numeric( $value ) ) {
+				$term = get_term( $value, $taxonomy );
+			} elseif ( is_string( $value ) ) {
+				$term = get_term_by( 'slug', $value, $taxonomy );
+
+				if ( ! ( $term instanceof WP_Term ) ) {
+					$term = get_term_by( 'name', $value, $taxonomy );
+				}
+			}
+
+			if ( $term instanceof WP_Term ) {
+				if ( 'term_id' == $return ) {
+					$value = $term->term_id;
+				} elseif ( 'name' == $return ) {
+					$value = $term->name;
+				} elseif ( 'slug' == $return ) {
+					$value = $term->slug;
+				}
+
+				$lists[ $key ] = $value;
+			}
+		}
+
+		return $lists;
 	}
 
 	/**

@@ -279,6 +279,7 @@
     margin-bottom: 20px;
 }
 
+.hocwp-theme .field-row label + div,
 .hocwp-theme label + .wp-editor-wrap {
     margin-top: 20px;
 }

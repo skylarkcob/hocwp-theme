@@ -329,6 +329,26 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 			$atts['class'] = join( ' ', get_body_class() );
 
+			$atts['data-theme-core-version'] = HOCWP_THEME_CORE_VERSION;
+
+			$browser = HT()->get_browser();
+
+			if ( isset( $browser['name'] ) && ! empty( $browser['name'] ) ) {
+				$atts['data-browser'] = $browser['name'];
+
+				if ( isset( $browser['short_name'] ) ) {
+					$atts['data-browser-name'] = strtolower( $browser['short_name'] );
+				}
+
+				if ( isset( $browser['version'] ) ) {
+					$atts['data-browser-version'] = $browser['version'];
+				}
+			}
+
+			$atts['data-platform'] = $browser['platform'] ?? '';
+
+			$atts['data-is-mobile'] = HT()->bool_to_int( wp_is_mobile() );
+
 			break;
 		case 'footer':
 			switch ( $context ) {

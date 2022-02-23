@@ -399,6 +399,10 @@ abstract class HOCWP_Theme_Meta {
 				wp_enqueue_editor();
 				HT_Enqueue()->sortable();
 			}
+
+			if ( in_array( 'sortable', $this->scripts ) ) {
+				HT_Enqueue()->sortable();
+			}
 		}
 
 		$this->enqueue( $this->styles );
