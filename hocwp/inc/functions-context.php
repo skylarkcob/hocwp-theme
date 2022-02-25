@@ -331,7 +331,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 			$atts['data-theme-core-version'] = HOCWP_THEME_CORE_VERSION;
 
-			$browser = HT()->get_browser();
+			$browser = HT_Util()->get_browser();
 
 			if ( isset( $browser['name'] ) && ! empty( $browser['name'] ) ) {
 				$atts['data-browser'] = $browser['name'];

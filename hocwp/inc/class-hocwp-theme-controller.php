@@ -55,6 +55,8 @@ final class HOCWP_Theme_Controller {
 	private function defaults() {
 		global $hocwp_theme, $is_opera, $hocwp_theme_protocol;
 
+		$this->object->browser = HT()->get_browser();
+
 		if ( empty( $hocwp_theme_protocol ) ) {
 			$hocwp_theme_protocol = ( isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) != 'off' ) ? 'https://' : 'http://';
 		}

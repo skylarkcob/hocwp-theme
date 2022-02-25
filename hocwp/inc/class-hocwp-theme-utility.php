@@ -129,6 +129,16 @@ class HOCWP_Theme_Utility {
 		return ( 1 == $amp );
 	}
 
+	public function get_browser() {
+		global $hocwp_theme;
+
+		if ( ! isset( $hocwp_theme->browser ) || ! HT()->array_has_value( $hocwp_theme->browser ) ) {
+			$hocwp_theme->browser = HT()->get_browser();
+		}
+
+		return $hocwp_theme->browser;
+	}
+
 	/**
 	 * Get image url in WordPress core folder.
 	 *
@@ -156,7 +166,7 @@ class HOCWP_Theme_Utility {
 			$info = pathinfo( $name );
 
 			if ( isset( $info['extension'] ) ) {
-				$browser = HT()->get_browser();
+				$browser = HT_Util()->get_browser();
 
 				$ext = 'webp';
 
