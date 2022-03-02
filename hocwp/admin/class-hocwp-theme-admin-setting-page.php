@@ -92,6 +92,21 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			global $hocwp_theme;
 
 			if ( $screen->id == $hocwp_theme->option->hook_suffix ) {
+				$value = get_user_setting( 'theme_settings_collapse_expand' );
+
+				ob_start();
+				?>
+                <fieldset class="metabox-prefs functions">
+                    <legend><?php _e( 'Functions', 'hocwp-theme' ); ?></legend>
+                    <label for="collapse-expand">
+                        <input id="collapse-expand" type="checkbox" name="collapse_expand"
+							<?php checked( 'on', $value ); ?> />
+						<?php _e( 'Enable collapse and expand setting rows.', 'hocwp-theme' ); ?>
+                    </label>
+                </fieldset>
+				<?php
+				$settings .= ob_get_clean();
+
 				$view_modes = array(
 					'default' => __( 'Default', 'hocwp-theme' ),
 					'classic' => __( 'Classic', 'hocwp-theme' )
@@ -206,6 +221,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			if ( ! empty( $mode ) ) {
 				set_user_setting( 'theme_settings_view_mode', $mode );
 			}
+
+			$value = $_REQUEST['collapse_expand'] ?? '';
+
+			set_user_setting( 'theme_settings_collapse_expand', $value );
 		}
 
 		add_filter( 'screen_settings', array( $this, 'screen_settings_filter' ), 10, 2 );
@@ -270,6 +289,12 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			}
 		}
 
+		if ( isset( $_REQUEST['screen-options-apply'] ) ) {
+			$collapse_expand = $_REQUEST['collapse_expand'] ?? '';
+		} else {
+			$collapse_expand = get_user_setting( 'theme_settings_collapse_expand' );
+		}
+
 		foreach ( (array) $this->settings_field as $key => $field ) {
 			$field = $this->sanitize_field( $field );
 
@@ -285,8 +310,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			}
 
 			$title = $field['title'];
-			$title .= ' <span class="dashicons dashicons-admin-collapse" title="' . esc_attr__( 'Collapse', 'hocwp-theme' ) . '"></span>';
-			$title .= ' <span class="dashicons dashicons-editor-expand" title="' . esc_attr__( 'Expand', 'hocwp-theme' ) . '"></span>';
+
+			if ( 'on' == $collapse_expand ) {
+				$title .= ' <span class="dashicons dashicons-admin-collapse" title="' . esc_attr__( 'Collapse', 'hocwp-theme' ) . '"></span>';
+				$title .= ' <span class="dashicons dashicons-editor-expand" title="' . esc_attr__( 'Expand', 'hocwp-theme' ) . '"></span>';
+			}
 
 			add_settings_field( $field['id'], $title, $field['callback'], $field['page'], $field['section'], $field['args'] );
 		}

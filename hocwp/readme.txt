@@ -1,4 +1,14 @@
 == Changelog ==
+= 6.9.1 =
+* 02/03/2022: Move product setting from reading tab to WooCommerce tab.
+* 02/03/2022: Make collapse expand setting row as optional option.
+* 02/03/2022: Check and load scripts for meta.
+* 02/03/2022: Add image_size html field for size setting.
+* 02/03/2022: Update layout class.
+* 02/03/2022: Skip default post content for custom page template.
+* 02/03/2022: Fix bug on boolean zero image from default array.
+* 02/03/2022: Add default support for lozad lazy.
+
 = 6.9.0 =
 * 21/01/2022: Update security for remote login.
 * 21/01/2022: Update prepare for Nutifood US Cali theme.

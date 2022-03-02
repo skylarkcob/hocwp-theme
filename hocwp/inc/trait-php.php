@@ -55,7 +55,7 @@ trait HOCWP_Theme_PHP {
 	public function get_value_in_arrays( $key, $arr1, $arr2 ) {
 		$value = $arr1[ $key ] ?? '';
 
-		if ( empty( $value ) ) {
+		if ( '' == $value ) {
 			$value = $arr2[ $key ] ?? '';
 		}
 

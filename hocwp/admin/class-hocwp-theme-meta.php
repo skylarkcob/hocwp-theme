@@ -65,6 +65,7 @@ abstract class HOCWP_Theme_Meta {
 			if ( $callback === array( $class, 'media_upload' )
 			     || $callback === array( $class, 'image_link' )
 			     || $callback === array( $class, 'images' )
+			     || $callback === array( $class, 'image_upload' )
 			     || $callback === array( $class, 'content_with_image' )
 			) {
 				$this->load_script( 'hocwp-theme-media-upload' );
@@ -391,7 +392,7 @@ abstract class HOCWP_Theme_Meta {
 
 	public function admin_scripts() {
 		if ( is_array( $this->scripts ) ) {
-			if ( in_array( 'hocwp-theme-media-upload', $this->scripts ) ) {
+			if ( in_array( 'hocwp-theme-media-upload', $this->scripts ) || in_array( 'media-upload', $this->scripts ) ) {
 				HT_Enqueue()->media_upload();
 			}
 

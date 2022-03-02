@@ -29,14 +29,6 @@ function hocwp_theme_settings_page_reading_section() {
 		'title' => __( 'Site Optimize', 'hocwp-theme' )
 	);
 
-	if ( hocwp_theme_is_shop_site() ) {
-		$sections['shop_section'] = array(
-			'tab'   => 'reading',
-			'id'    => 'shop_section',
-			'title' => __( 'Shop Settings', 'hocwp-theme' )
-		);
-	}
-
 	$sections['back_top_section'] = array(
 		'tab'   => 'reading',
 		'id'    => 'back_top_section',
@@ -235,23 +227,6 @@ function hocwp_theme_settings_page_reading_field() {
 
 	$field    = hocwp_theme_create_setting_field( 'use_webp', __( 'Use WebP', 'hocwp-theme' ), '', $args, 'boolean', 'reading', 'optimize' );
 	$fields[] = $field;
-
-	if ( hocwp_theme_is_shop_site() ) {
-		$fields[] = array(
-			'tab'     => 'reading',
-			'section' => 'shop_section',
-			'id'      => 'products_per_page',
-			'title'   => __( 'Products Per Page', 'hocwp-theme' ),
-			'args'    => array(
-				'label_for'     => true,
-				'default'       => $GLOBALS['hocwp_theme']->defaults['posts_per_page'],
-				'callback_args' => array(
-					'class' => 'small-text',
-					'type'  => 'number'
-				)
-			)
-		);
-	}
 
 	$args = array(
 		'class' => 'medium-text',

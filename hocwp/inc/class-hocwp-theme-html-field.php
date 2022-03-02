@@ -1523,20 +1523,57 @@ final class HOCWP_Theme_HTML_Field {
 		self::sortable( $args );
 	}
 
+	public static function image_size( $args = array() ) {
+		$id      = $args['id'] ?? '';
+		$name    = $args['name'] ?? '';
+		$value   = $args['value'] ?? '';
+		$default = $args['default'] ?? '';
+
+		$w = HT()->get_value_in_arrays( 'width', $value, $default );
+		$h = HT()->get_value_in_arrays( 'height', $value, $default );
+		$c = HT()->get_value_in_arrays( 'crop', $value, $default );
+		?>
+        <div class="image-size">
+            <fieldset>
+                <label for="<?php echo esc_attr( $id ); ?>_w"><?php _e( 'Width', 'hocwp-theme' ); ?></label>
+                <input name="<?php echo esc_attr( $name ); ?>[width]" type="number" step="1" min="0"
+                       id="<?php echo esc_attr( $id ); ?>_w"
+                       value="<?php echo esc_attr( $w ); ?>"
+                       class="small-text">
+                <br>
+                <label for="<?php echo esc_attr( $id ); ?>_h"><?php _e( 'Height', 'hocwp-theme' ); ?></label>
+                <input name="<?php echo esc_attr( $name ); ?>[height]" type="number" step="1" min="0"
+                       id="<?php echo esc_attr( $id ); ?>_h"
+                       value="<?php echo esc_attr( $h ); ?>"
+                       class="small-text">
+            </fieldset>
+            <input name="<?php echo esc_attr( $name ); ?>[crop]" type="checkbox"
+                   id="<?php echo esc_attr( $id ); ?>_crop"
+                   value="1"<?php checked( 1, $c ); ?>>
+            <label for="<?php echo esc_attr( $id ); ?>_crop"><?php _e( 'Scale the image to the correct size (the thumbnail will keep the scale)', 'hocwp-theme' ); ?></label>
+        </div>
+		<?php
+	}
+
 	public static function size( $args = array() ) {
-		$name          = $args['name'];
-		$name_width    = $name . '[width]';
-		$name_height   = $name . '[height]';
-		$class         = isset( $args['class'] ) ? $args['class'] : '';
-		$class         .= ' small-text';
+		$name        = $args['name'];
+		$name_width  = $name . '[width]';
+		$name_height = $name . '[height]';
+
+		$class = isset( $args['class'] ) ? $args['class'] : '';
+		$class .= ' small-text';
+
 		$args['class'] = trim( $class );
 		$args['type']  = 'number';
 		$args['min']   = 0;
 		$args['step']  = 1;
-		$size          = isset( $args['value'] ) ? $args['value'] : '';
-		$size          = HT_Sanitize()->size( $size );
+
+		$size = isset( $args['value'] ) ? $args['value'] : '';
+		$size = HT_Sanitize()->size( $size );
+
 		$args['name']  = $name_width;
 		$args['value'] = $size[0];
+
 		self::field_label( $args );
 		self::input( $args );
 

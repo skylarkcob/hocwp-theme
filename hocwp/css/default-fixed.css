@@ -638,3 +638,7 @@ button.disabled {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.lozad:not([data-loaded="true"]) {
+    max-height: 10px;
+}

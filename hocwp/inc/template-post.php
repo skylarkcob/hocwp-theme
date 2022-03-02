@@ -283,7 +283,7 @@ function hocwp_theme_the_content() {
 add_action( 'hocwp_theme_the_content', 'hocwp_theme_the_content' );
 
 function hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content( $content ) {
-	if ( empty( $content ) ) {
+	if ( empty( $content ) && ! is_page_template() ) {
 		// Display default content if post has empty content.
 		$default = HT_Options()->get_tab( 'default_content', '', 'reading' );
 

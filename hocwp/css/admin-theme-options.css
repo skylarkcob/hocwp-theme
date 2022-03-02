@@ -279,6 +279,7 @@
     margin-bottom: 20px;
 }
 
+.hocwp-theme .field-row label + textarea,
 .hocwp-theme .field-row label + div,
 .hocwp-theme label + .wp-editor-wrap {
     margin-top: 20px;
@@ -316,4 +317,20 @@
 
 .hocwp-theme[data-view-mode="classic"] .multiple-fields .field-row ~ .field-row {
     border-top-color: #e6e6e6;
+}
+
+.hocwp-theme .settings-box td .image-size fieldset label {
+    min-width: 10em;
+    vertical-align: baseline;
+    margin: 0.35em 0 0.5em;
+    display: inline-block;
+    font-style: normal;
+}
+
+.hocwp-theme .settings-box td .image-size input[type="number"] {
+    margin: 0 0 1em;
+}
+
+.hocwp-theme .settings-box td .image-size input[type="checkbox"] {
+    margin-top: 0;
 }

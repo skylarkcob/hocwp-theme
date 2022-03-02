@@ -193,6 +193,13 @@ function HOCWP_Theme() {
         this.showDevLog();
         this.updateBodyAttributes();
         this.popup(document.getElementById("sc-gdpr-box"));
+
+        setTimeout(function () {
+            if ("function" === typeof lozad) {
+                var observer = lozad();
+                observer.observe();
+            }
+        }, 500);
     }
 }
 

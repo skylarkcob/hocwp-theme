@@ -3628,10 +3628,16 @@
     display: flex !important; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
+.d-flex.center,
+.display-flex.center,
+.dp-f.center,
 .align-items-center {
     align-items: center;
 }
 
+.d-flex.space,
+.display-flex.space,
+.dp-f.space,
 .justify-content-between {
     justify-content: space-between;
 }

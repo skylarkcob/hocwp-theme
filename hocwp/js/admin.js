@@ -133,29 +133,32 @@ jQuery(document).ready(function ($) {
 
     // Sticky save setting button and sidebar
     (function () {
-        const settingsBox = $(".hocwp-theme .settings-box"),
-            sticky = settingsBox.find(".module-header input[type='submit']"),
-            sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height(),
-            sidebar = settingsBox.find("#nav ul"),
-            sideTop = sidebar.offset().top + (sidebar.height() / 3);
+        const settingsBox = $(".hocwp-theme .settings-box");
 
-        var sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
+        if (settingsBox && settingsBox.length) {
+            const sticky = settingsBox.find(".module-header input[type='submit']"),
+                sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height(),
+                sidebar = settingsBox.find("#nav ul"),
+                sideTop = sidebar.offset().top + (sidebar.height() / 3);
 
-        hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
-
-        if (settingsBox.find(".settings-content").height() > sidebar.height()) {
-            hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
-        }
-
-        $(window).scroll(function () {
-            sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
+            var sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
 
             hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
 
             if (settingsBox.find(".settings-content").height() > sidebar.height()) {
                 hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
             }
-        });
+
+            $(window).scroll(function () {
+                sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
+
+                hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
+
+                if (settingsBox.find(".settings-content").height() > sidebar.height()) {
+                    hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                }
+            });
+        }
     })();
 
     // Collapse expand setting row
