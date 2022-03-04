@@ -680,9 +680,18 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					$type  = isset( $field['args']['type'] ) ? $field['args']['type'] : '';
 
 					if ( ! empty( $type ) ) {
-						$data = isset( $input[ $this->tabs->tab_name ] ) ? $input[ $this->tabs->tab_name ] : array();
+						$type  = strtolower( $type );
+						$data  = isset( $input[ $this->tabs->tab_name ] ) ? $input[ $this->tabs->tab_name ] : array();
+						$value = HT_Sanitize()->form_post( $name, $type, $data );
 
-						$input[ $this->tabs->tab_name ][ $name ] = HT_Sanitize()->form_post( $name, $type, $data );
+						// Remove empty json data value
+						if ( 'json' == $type || 'array' == $type || 'sortable' == $type ) {
+							if ( '[]' == $value ) {
+								$value = '';
+							}
+						}
+
+						$input[ $this->tabs->tab_name ][ $name ] = $value;
 					}
 				}
 			}

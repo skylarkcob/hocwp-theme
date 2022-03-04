@@ -1023,6 +1023,9 @@ final class HOCWP_Theme_HTML_Field {
 
 		if ( '[]' == $value ) {
 			$value = '';
+
+			// Skip empty json value @since 6.9.1
+			$args['value'] = '';
 		}
 
 		if ( isset( $args['title'] ) && ! empty( $args['title'] ) && isset( $args['label'] ) ) {
@@ -1170,7 +1173,8 @@ final class HOCWP_Theme_HTML_Field {
 						$tmp[] = $key;
 					}
 
-					$args['value'] = json_encode( $tmp );
+					// Skip #beta value @since 6.9.1
+					//$args['value'] = json_encode( $tmp );
 				}
 			}
 

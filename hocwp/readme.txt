@@ -8,6 +8,7 @@
 * 02/03/2022: Skip default post content for custom page template.
 * 02/03/2022: Fix bug on boolean zero image from default array.
 * 02/03/2022: Add default support for lozad lazy.
+* 04/03/2022: Fix auto add value to sortable json data.
 
 = 6.9.0 =
 * 21/01/2022: Update security for remote login.

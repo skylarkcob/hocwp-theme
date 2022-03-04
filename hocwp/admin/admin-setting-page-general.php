@@ -197,7 +197,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 	return $fields;
 }
 
-add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_settings_page_general_field' );
+add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_settings_page_general_field', 99 );
 
 function hocwp_theme_admin_setting_page_general_scripts() {
 	HT_Enqueue()->media_upload();
