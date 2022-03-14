@@ -280,6 +280,19 @@ abstract class HOCWP_Theme_Meta {
 				}
 			}
 
+			$cb = $field['callback'] ?? '';
+
+			if ( array( 'HOCWP_Theme_HTML_Field', 'latitude_longitude' ) == $cb || 'latitude_longitude' == $cb ) {
+				$type = $field['callback_args']['type'] ?? '';
+
+				if ( 'array' != $type ) {
+					$name = $field['id'] ?? '';
+
+					$field['callback_args'][ $name . '_latitude' ]  = call_user_func( $this->get_value_callback, $obj_id, $name . '_latitude', $this->single_value );
+					$field['callback_args'][ $name . '_longitude' ] = call_user_func( $this->get_value_callback, $obj_id, $name . '_longitude', $this->single_value );
+				}
+			}
+
 			$field['callback_args']['value'] = $value;
 		}
 
@@ -332,7 +345,23 @@ abstract class HOCWP_Theme_Meta {
 				continue;
 			}
 
+			$cb = $field['callback'] ?? '';
+
 			$id = $this->get_name( $field, true );
+
+			if ( array( 'HOCWP_Theme_HTML_Field', 'latitude_longitude' ) == $cb || 'latitude_longitude' == $cb ) {
+				$type = $field['callback_args']['type'] ?? '';
+
+				if ( 'array' != $type ) {
+					$key   = $id . '_latitude';
+					$value = $_POST[ $key ] ?? '';
+					call_user_func( $this->update_value_callback, $obj_id, $key, $value );
+					$key   = $id . '_longitude';
+					$value = $_POST[ $key ] ?? '';
+					call_user_func( $this->update_value_callback, $obj_id, $key, $value );
+					continue;
+				}
+			}
 
 			if ( $this->is_checkbox_field( $field, true ) ) {
 				$options = $field['callback_args']['options'];

@@ -1319,6 +1319,105 @@ class HOCWP_Theme_Utility {
 		return $id;
 	}
 
+	public function calculate_place_distance( $destinations, $origins, $args = array() ) {
+		if ( ! is_array( $args ) ) {
+			$args = array(
+				'key' => $args
+			);
+		}
+
+		$defaults = array(
+			'key'          => HT_Options()->get_tab( 'google_api_key', '', 'social' ),
+			'language'     => get_locale(),
+			'destinations' => $destinations,
+			'origins'      => $origins
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$url = 'https://maps.googleapis.com/maps/api/distancematrix/json';
+		$url = add_query_arg( $args, $url );
+
+		$res = wp_remote_get( $url );
+
+		$res = wp_remote_retrieve_body( $res );
+
+		if ( ! empty( $res ) ) {
+			$res = json_decode( $res );
+		}
+
+		return $res;
+	}
+
+	public function find_near_place( $query, $latitude, $longitude, $args = array() ) {
+		if ( ! is_array( $args ) ) {
+			$args = array(
+				'key' => $args
+			);
+		}
+
+		$defaults = array(
+			'key'          => HT_Options()->get_tab( 'google_api_key', '', 'social' ),
+			'language'     => get_locale(),
+			'input'        => $query,
+			'strictbounds' => 'true',
+			'types'        => 'establishment',
+			'radius'       => 30000,
+			'location'     => $latitude . ',' . $longitude
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+		$url = add_query_arg( $args, $url );
+
+		$res = wp_remote_get( $url );
+
+		$res = wp_remote_retrieve_body( $res );
+
+		if ( ! empty( $res ) ) {
+			$res = json_decode( $res );
+		}
+
+		return $res;
+	}
+
+	public function latlong_to_address( $params = array() ) {
+		if ( ! is_array( $params ) && ! empty( $params ) ) {
+			$params = array(
+				'key' => $params
+			);
+		}
+
+		$defaults = array(
+			'key'      => HT_Options()->get_tab( 'google_api_key', '', 'social' ),
+			'language' => get_locale()
+		);
+
+		$params = wp_parse_args( $params, $defaults );
+
+		if ( ! isset( $params['latlng'] ) ) {
+			$lat = $params['latitude'] ?? '';
+			$lng = $params['longitude'] ?? '';
+
+			if ( ! empty( $lat ) && ! empty( $lng ) ) {
+				$params['latlng'] = $lat . ',' . $lng;
+			}
+		}
+
+		$url = 'https://maps.googleapis.com/maps/api/geocode/json';
+		$url = add_query_arg( $params, $url );
+
+		$res = wp_remote_get( $url );
+		$res = wp_remote_retrieve_body( $res );
+
+		if ( ! empty( $res ) ) {
+			$res = json_decode( $res );
+		}
+
+		return $res;
+	}
+
 	public function get_youtube_video_info( $url, $api_key = '' ) {
 		if ( ! function_exists( 'hocwp_theme_get_option' ) ) {
 			return null;

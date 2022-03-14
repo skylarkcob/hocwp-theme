@@ -620,6 +620,49 @@ function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 
 add_action( 'restrict_manage_posts', 'hocwp_theme_custom_edit_posts_action_fields', 10, 2 );
 
+function hocwp_theme_updated_option_action() {
+	global $pagenow;
+
+	if ( 'options.php' == $pagenow ) {
+		$sizes = array( 'thumbnail', 'medium', 'large' );
+
+		$options = HT_Options()->get();
+
+		$change = false;
+
+		foreach ( $sizes as $s ) {
+			$w = $_POST[ $s . '_size_w' ] ?? '';
+			$h = $_POST[ $s . '_size_h' ] ?? '';
+			$c = $_POST[ $s . '_crop' ] ?? 0;
+
+			if ( is_numeric( $w ) ) {
+				if ( ! is_numeric( $h ) ) {
+					$h = $w;
+				}
+
+				$options['media'][ 'size_' . $s ]['width']  = $w;
+				$options['media'][ 'size_' . $s ]['height'] = $h;
+
+				if ( 'thumbnail' == $s ) {
+					$options['media'][ 'size_' . $s ]['crop'] = $c;
+				}
+
+				$change = true;
+			}
+		}
+
+		if ( $change ) {
+			remove_action( 'updated_option', 'hocwp_theme_updated_option_action' );
+			remove_action( 'update_option_hocwp_theme', 'hocwp_theme_update_option_media_action' );
+			update_option( 'hocwp_theme', $options );
+			add_action( 'update_option_hocwp_theme', 'hocwp_theme_update_option_media_action', 10, 2 );
+			add_action( 'updated_option', 'hocwp_theme_updated_option_action' );
+		}
+	}
+}
+
+add_action( 'updated_option', 'hocwp_theme_updated_option_action' );
+
 if ( 'admin-ajax.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';
 }

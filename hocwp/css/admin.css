@@ -48,6 +48,7 @@
 }
 
 .hocwp-theme .justify-between {
+    -webkit-justify-content: space-between;
     justify-content: space-between !important;
 }
 
@@ -357,7 +358,10 @@
     display: -ms-flexbox; /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Chrome */
     display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+    -webkit-justify-content: space-between;
     justify-content: space-between;
 }
 
@@ -576,6 +580,22 @@
 
 #hocwpThemeModal.modal .form-row + .form-row {
     margin-top: 20px;
+}
+
+.hocwp-theme .lat-long label {
+    display: block;
+}
+
+.hocwp-theme .lat-long {
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.hocwp-theme .lat-long > div {
+    margin-right: 2%;
 }
 
 @-webkit-keyframes zoom {

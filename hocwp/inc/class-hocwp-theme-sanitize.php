@@ -198,6 +198,14 @@ final class HOCWP_Theme_Sanitize {
 		return $value;
 	}
 
+	public function phone( $phone ) {
+		$phone = wp_strip_all_tags( $phone );
+		$phone = HT()->keep_only_number( $phone, '' );
+		$phone = str_replace( array( '.', '-', ' ' ), '', $phone );
+
+		return $phone;
+	}
+
 	public function size( $size ) {
 		if ( is_array( $size ) ) {
 			if ( ! isset( $size['width'] ) ) {

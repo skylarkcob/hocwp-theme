@@ -40,6 +40,13 @@ class HOCWP_Theme_Meta_Field extends HOCWP_Theme_Admin_Field {
 			$field['name'] = $this->callback_args['name'];
 		}
 
+		if ( array( 'HOCWP_Theme_HTML_Field', 'latitude_longitude' ) == $this->callback
+		     || 'latitude_longitude' == $this->callback ) {
+			if ( ! isset( $field['callback_args']['type'] ) ) {
+				$field['callback_args']['type'] = $this->data_type;
+			}
+		}
+
 		return $field;
 	}
 }

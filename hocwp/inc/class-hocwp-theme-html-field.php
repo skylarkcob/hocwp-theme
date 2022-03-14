@@ -1645,8 +1645,15 @@ final class HOCWP_Theme_HTML_Field {
 
 	public static function content_with_image( $args = array() ) {
 		$base_value = isset( $args['value'] ) ? $args['value'] : '';
-		$base_id    = isset( $args['id'] ) ? $args['id'] : '';
-		$base_name  = isset( $args['name'] ) ? $args['name'] : '';
+
+		if ( HT_Media()->exists( $base_value ) ) {
+			$base_value = array(
+				'image' => $base_value
+			);
+		}
+
+		$base_id   = isset( $args['id'] ) ? $args['id'] : '';
+		$base_name = isset( $args['name'] ) ? $args['name'] : '';
 
 		$content_key = isset( $args['content_key'] ) ? $args['content_key'] : '';
 
@@ -1842,6 +1849,60 @@ final class HOCWP_Theme_HTML_Field {
             </div>
 			<?php
 		}
+	}
+
+	public static function latitude_longitude( $args = array() ) {
+		$args['class'] = 'medium-text';
+
+		$type = $args['type'] ?? '';
+
+		$name  = $args['name'] ?? '';
+		$id    = $args['id'] ?? '';
+		$value = $args['value'] ?? '';
+
+		$args['type'] = 'text';
+		?>
+        <div class="lat-long">
+            <div>
+				<?php
+				$a_args = $args;
+
+				$a_args['id'] = $id . '_latitude';
+
+				if ( 'array' == $type ) {
+					$a_args['name']  = $name . '[latitude]';
+					$a_args['value'] = $value['latitude'] ?? '';
+				} else {
+					$a_args['name']  = $name . '_latitude';
+					$a_args['value'] = $args[ $a_args['name'] ] ?? '';
+				}
+
+				$a_args['label'] = __( 'Latitude:', 'hocwp-theme' );
+
+				self::input( $a_args );
+				?>
+            </div>
+            <div>
+				<?php
+				$a_args = $args;
+
+				$a_args['id'] = $id . '_longitude';
+
+				if ( 'array' == $type ) {
+					$a_args['name']  = $name . '[longitude]';
+					$a_args['value'] = $value['longitude'] ?? '';
+				} else {
+					$a_args['name']  = $name . '_longitude';
+					$a_args['value'] = $args[ $a_args['name'] ] ?? '';
+				}
+
+				$a_args['label'] = __( 'Longitude:', 'hocwp-theme' );
+
+				self::input( $a_args );
+				?>
+            </div>
+        </div>
+		<?php
 	}
 
 	public static function google_maps( $args = array() ) {

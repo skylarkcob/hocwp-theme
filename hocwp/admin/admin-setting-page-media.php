@@ -15,6 +15,7 @@ function hocwp_theme_settings_page_media_tab( $tabs ) {
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_media_tab' );
 
 global $hocwp_theme;
+
 if ( 'media' != $hocwp_theme->option->tab ) {
 	return;
 }
@@ -49,7 +50,70 @@ function hocwp_theme_settings_page_media_field() {
 	$field    = hocwp_theme_create_setting_field( 'big_image_size_threshold', __( 'Big Image Size Threshold', 'hocwp-theme' ), 'input', $args, 'positive_integer', 'media' );
 	$fields[] = $field;
 
+	$sizes = HT_Util()->get_image_sizes();
+
+	$args = array();
+
+	foreach ( $sizes as $key => $size ) {
+		if ( false === strpos( $key, 'woocommerce' ) && false === strpos( $key, 'shop' ) ) {
+			$title = str_replace( '_', ' ', $key );
+			$title = str_replace( '-', ' ', $title );
+			$title = ucwords( $title );
+
+			$args['default'] = $size;
+
+			$field    = new HOCWP_Theme_Admin_Setting_Field( 'size_' . $key, $title, 'image_size', $args, 'array', 'media', 'image_sizes' );
+			$fields[] = $field;
+		}
+	}
+
 	return $fields;
 }
 
 add_filter( 'hocwp_theme_settings_page_media_settings_field', 'hocwp_theme_settings_page_media_field' );
+
+function hocwp_theme_settings_page_media_section_filter() {
+	$sections = array();
+
+	$sections['image_sizes'] = array(
+		'tab'         => 'media',
+		'id'          => 'image_sizes',
+		'title'       => __( 'Image Sizes', 'hocwp-theme' ),
+		'description' => __( 'Image size settings, including width, height and image crop function.', 'hocwp-theme' )
+	);
+
+	return $sections;
+}
+
+add_filter( 'hocwp_theme_settings_page_media_settings_section', 'hocwp_theme_settings_page_media_section_filter' );
+
+function hocwp_theme_update_option_media_action( $old_value, $value ) {
+	$tab = $_REQUEST['tab'] ?? '';
+
+	// Sync all media sizes
+	if ( 'media' == $tab ) {
+		$media = $value['media'] ?? '';
+
+		$sizes = array( 'thumbnail', 'medium', 'large' );
+
+		foreach ( $sizes as $s ) {
+			$size = $media[ 'size_' . $s ] ?? '';
+
+			$w = $size['width'] ?? '';
+			$h = $size['height'] ?? '';
+			$c = $size['crop'] ?? 0;
+
+			if ( is_numeric( $w ) ) {
+				if ( ! is_numeric( $h ) ) {
+					$h = $w;
+				}
+
+				update_option( $s . '_size_w', $w );
+				update_option( $s . '_size_h', $h );
+				update_option( $s . '_crop', $c );
+			}
+		}
+	}
+}
+
+add_action( 'update_option_hocwp_theme', 'hocwp_theme_update_option_media_action', 10, 2 );

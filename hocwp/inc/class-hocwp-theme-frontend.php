@@ -993,6 +993,20 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			unset( $has_cat );
+		} elseif ( is_page() ) {
+			$parent = get_post_parent( get_the_ID() );
+
+			// Loop through all parent posts @since version 6.9.1
+			while ( $parent instanceof WP_Post ) {
+				$tmp = sprintf( $link_schema, get_permalink( $parent ), $parent->post_title );
+				array_unshift( $items, $tmp );
+
+				if ( ! HT()->is_positive_number( $parent->post_parent ) ) {
+					break;
+				}
+
+				$parent = get_post( $parent->post_parent );
+			}
 		}
 
 		$last_item = '';
@@ -1168,6 +1182,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		if ( is_numeric( $src ) && HT_Media()->exists( $src ) ) {
 			$src = wp_get_attachment_image_url( $src, 'full' );
+		} elseif ( is_array( $src ) ) {
+			$id = $src['image'] ?? '';
+
+			if ( HT_Media()->exists( $id ) ) {
+				$src = wp_get_attachment_image_url( $id, 'full' );
+			}
+		}
+
+		if ( ! is_string( $src ) ) {
+			return;
 		}
 
 		$class .= ' lozad';
@@ -1442,11 +1466,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$sort = apply_filters( 'hocwp_theme_loop_post_html_data', $sort, $post_id );
 
 		$html = join( '', $sort );
-		?>
-        <div <?php post_class( $post_class, $post_id ); ?>>
-			<?php echo $html; ?>
-        </div>
-		<?php
+
+		if ( null !== $post_class ) {
+			?>
+            <div <?php post_class( $post_class, $post_id ); ?>>
+				<?php echo $html; ?>
+            </div>
+			<?php
+		} else {
+			echo $html;
+		}
 	}
 
 	public function content_404() {

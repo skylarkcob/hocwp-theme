@@ -20,6 +20,8 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public $callback = null;
 
 	public $queried_object = '';
+	public $link;
+	public $link_text;
 
 	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10 ) {
 		if ( empty( $name ) ) {
@@ -111,6 +113,18 @@ class HOCWP_Theme_Admin_Setting_Tab {
 					'meta'  => array(
 						'target' => '_blank',
 						'title'  => sprintf( __( 'View %s', 'hocwp-theme' ), $title )
+					)
+				);
+
+				$admin_bar->add_node( $args );
+			} elseif ( ! empty( $this->link ) && $this->link_text ) {
+				$args = array(
+					'id'    => $this->name,
+					'title' => sprintf( __( 'View %s', 'hocwp-theme' ), $this->link_text ),
+					'href'  => $this->link,
+					'meta'  => array(
+						'target' => '_blank',
+						'title'  => sprintf( __( 'View %s', 'hocwp-theme' ), $this->link_text )
 					)
 				);
 

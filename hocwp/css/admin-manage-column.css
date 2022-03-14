@@ -88,3 +88,9 @@ td.column-featured {
 .edit-php td.column-featured > span.dashicons.sortable-active {
     margin-right: 20px;
 }
+
+.wp-list-table td img {
+    max-width: 100%;
+    max-height: 100px;
+    width: auto;
+}

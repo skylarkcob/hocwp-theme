@@ -9,6 +9,19 @@
 * 02/03/2022: Fix bug on boolean zero image from default array.
 * 02/03/2022: Add default support for lozad lazy.
 * 04/03/2022: Fix auto add value to sortable json data.
+* 09/03/2022: Fix fixed sidebar and save change button bugs on theme setting page.
+* 10/03/2022: Add Google Maps API class.
+* 11/03/2022: Fix breadcrumbs page has parents.
+* 14/03/2022: Add image sizes option on media settings page and sync with default media setting.
+* 14/03/2022: Make setting tab can have custom link and label on admin bar.
+* 14/03/2022: Update latitude and longitude field.
+* 14/03/2022: Fix compatible issue with flex css3.
+* 14/03/2022: Add Google Maps API classes.
+* 14/03/2022: Display parent in default breadcrumb.
+* 14/03/2022: Lazy load image can pass array src param now.
+* 14/03/2022: Make content image field compatible with single image upload field.
+* 14/03/2022: Add sanitize phone function.
+* 14/03/2022: Fix sticky scroll script.
 
 = 6.9.0 =
 * 21/01/2022: Update security for remote login.

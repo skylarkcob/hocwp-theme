@@ -3639,10 +3639,13 @@
 .display-flex.space,
 .dp-f.space,
 .justify-content-between {
+    -webkit-justify-content: space-between;
     justify-content: space-between;
 }
 
 .flex-wrap {
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
@@ -3682,9 +3685,13 @@
 }
 
 .fit-cover img {
+    -o-object-position: center;
     object-position: center;
+    -webkit-align-items: center;
     align-items: center;
+    -webkit-justify-content: center;
     justify-content: center;
+    -o-object-fit: cover;
     object-fit: cover;
 }
 

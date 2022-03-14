@@ -137,6 +137,7 @@
     top: 32px;
 }
 
+.admin-bar .hocwp-theme .settings-box #nav ul.fixed.reached-bottom,
 .hocwp-theme .settings-box #nav ul.reached-bottom {
     bottom: 112px;
     top: auto;

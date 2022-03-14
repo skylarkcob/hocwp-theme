@@ -38,14 +38,15 @@ function hocwp_theme_update_custom_permalinks_base() {
 
 add_action( 'init', 'hocwp_theme_update_custom_permalinks_base', 999 );
 
-function hocwp_theme_upate_permalinks_base_saved( $old_value, $value ) {
+function hocwp_theme_update_permalinks_base_saved( $old_value, $value ) {
 	$old_per = isset( $old_value['permalinks'] ) ? $old_value['permalinks'] : '';
 	$old_per = md5( maybe_serialize( $old_per ) );
 	$per     = isset( $value['permalinks'] ) ? $value['permalinks'] : '';
 	$per     = md5( maybe_serialize( $per ) );
+
 	if ( $per != $old_per ) {
 		set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
 	}
 }
 
-add_action( 'update_option_hocwp_theme', 'hocwp_theme_upate_permalinks_base_saved', 10, 2 );
+add_action( 'update_option_hocwp_theme', 'hocwp_theme_update_permalinks_base_saved', 10, 2 );
