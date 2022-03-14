@@ -59,6 +59,7 @@ abstract class HOCWP_Theme_Meta {
 
 		$callback = $field['callback'];
 
+		// Check to load styles and scripts on meta page
 		if ( is_array( $callback ) ) {
 			$class = 'HOCWP_Theme_HTML_Field';
 

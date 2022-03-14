@@ -1017,10 +1017,12 @@ final class HOCWP_Theme_HTML_Field {
 		$lists = (array) $lists;
 		$lists = array_filter( $lists );
 
+		// Connects can be boolean or array of lists
 		$connects = isset( $args['connects'] ) ? $args['connects'] : true;
 
 		$value = isset( $args['value'] ) ? $args['value'] : '';
 
+		// Check empty value
 		if ( '[]' == $value ) {
 			$value = '';
 
@@ -1028,10 +1030,12 @@ final class HOCWP_Theme_HTML_Field {
 			$args['value'] = '';
 		}
 
+		// Skip label if title exists
 		if ( isset( $args['title'] ) && ! empty( $args['title'] ) && isset( $args['label'] ) ) {
 			unset( $args['label'] );
 		}
 
+		// Check back options param if not having lists
 		if ( empty( $lists ) ) {
 			$options = isset( $args['options'] ) ? $args['options'] : '';
 			$options = (array) $options;
@@ -1039,19 +1043,27 @@ final class HOCWP_Theme_HTML_Field {
 
 			if ( HT()->array_has_value( $options ) ) {
 				if ( empty( $value ) ) {
-					$value = array_keys( $options );
-					$value = json_encode( $value );
+					if ( ! $connects ) {
+						$value = array_keys( $options );
+						$value = json_encode( $value );
+					}
+
 					$lists = $options;
 				} else {
-					$items = json_decode( $value, true );
+					if ( $connects ) {
+						$lists = $options;
+					} else {
+						$items = json_decode( $value, true );
 
-					foreach ( $items as $item ) {
-						$lists[ $item ] = $options[ $item ];
+						foreach ( $items as $item ) {
+							$lists[ $item ] = $options[ $item ];
+						}
 					}
 				}
 			}
 		}
 
+		// Display lists or connects
 		if ( HT()->array_has_value( $lists ) || HT()->array_has_value( $connects ) ) {
 			$id = $args['id'];
 			$id = sanitize_html_class( $id );
@@ -1070,10 +1082,8 @@ final class HOCWP_Theme_HTML_Field {
 
 			echo '<div class="clearfix">';
 
-			if ( empty( $list_type ) ) {
-				_doing_it_wrong( __CLASS__ . ':' . __FUNCTION__, __( 'You must pass list_type in arguments for this sortable list.', 'hocwp-theme' ), '6.1.8' );
-
-				return;
+			if ( 'post' != $list_type && 'term' != $list_type && 'image' != $list_type ) {
+				$list_type = 'custom';
 			}
 
 			$ul = new HOCWP_Theme_HTML_Tag( 'ul' );
@@ -1103,6 +1113,9 @@ final class HOCWP_Theme_HTML_Field {
 
 			$li_html = '';
 
+			$result_html = '';
+
+			// If empty value, list all items
 			if ( empty( $value ) ) {
 				foreach ( $lists as $key => $list ) {
 					if ( empty( $list ) ) {
@@ -1120,6 +1133,7 @@ final class HOCWP_Theme_HTML_Field {
 					}
 				}
 			} else {
+				// Skip connects value in source list
 				$tmp = $value;
 
 				if ( ! is_array( $tmp ) ) {
@@ -1146,14 +1160,23 @@ final class HOCWP_Theme_HTML_Field {
 						$li->add_attribute( 'class', 'ui-state-default' );
 						$li->set_text( $list );
 						$li->add_attribute( 'data-value', $key );
-						$li_html .= $li->build();
+						$html = $li->build();
 					} else {
-						$li_html .= $list;
+						$html = $list;
 					}
 
+					// Skip connects value
+					if ( ! $connects ) {
+						$li_html .= $html;
+					} else {
+						$result_html .= $html;
+					}
+
+					// Remove all value keys in source list
 					unset( $lists[ $key ] );
 				}
 
+				// Display not chosen items in source list
 				if ( HT()->array_has_value( $lists ) ) {
 					foreach ( $lists as $key => $list ) {
 						if ( empty( $list ) ) {
@@ -1173,11 +1196,13 @@ final class HOCWP_Theme_HTML_Field {
 						$tmp[] = $key;
 					}
 
-					// Skip #beta value @since 6.9.1
-					//$args['value'] = json_encode( $tmp );
+					if ( ! $connects && 'post' != $list_type && 'term' != $list_type && 'image' != $list_type ) {
+						$args['value'] = json_encode( $tmp );
+					}
 				}
 			}
 
+			// List source items
 			$ul->set_text( $li_html );
 			$ul->output();
 
@@ -1197,27 +1222,33 @@ final class HOCWP_Theme_HTML_Field {
 
 				$ul->add_attribute( 'class', $class );
 				$ul->add_attribute( 'data-sortable', 1 );
-				$li_html = '';
 
-				if ( HT()->array_has_value( $connects ) ) {
-					foreach ( (array) $connects as $key => $list ) {
-						if ( empty( $list ) ) {
-							continue;
-						}
+				if ( empty( $result_html ) ) {
+					$li_html = '';
 
-						if ( ! HT()->string_contain( $list, '</li>' ) ) {
-							$li = new HOCWP_Theme_HTML_Tag( 'li' );
-							$li->add_attribute( 'class', 'ui-state-default' );
-							$li->set_text( $list );
-							$li->add_attribute( 'data-value', $key );
-							$li_html .= $li->build();
-						} else {
-							$li_html .= $list;
+					if ( HT()->array_has_value( $connects ) ) {
+						foreach ( (array) $connects as $key => $list ) {
+							if ( empty( $list ) ) {
+								continue;
+							}
+
+							if ( ! HT()->string_contain( $list, '</li>' ) ) {
+								$li = new HOCWP_Theme_HTML_Tag( 'li' );
+								$li->add_attribute( 'class', 'ui-state-default' );
+								$li->set_text( $list );
+								$li->add_attribute( 'data-value', $key );
+								$li_html .= $li->build();
+							} else {
+								$li_html .= $list;
+							}
 						}
 					}
+
+					$ul->set_text( $li_html );
+				} else {
+					$ul->set_text( $result_html );
 				}
 
-				$ul->set_text( $li_html );
 				$ul->output();
 			}
 

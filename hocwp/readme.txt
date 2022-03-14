@@ -1,4 +1,8 @@
 == Changelog ==
+= 6.9.2 =
+* 14/03/2022: Fix sortable html field.
+* 14/03/2022: Release core version 6.9.2 after US Cali theme.
+
 = 6.9.1 =
 * 02/03/2022: Move product setting from reading tab to WooCommerce tab.
 * 02/03/2022: Make collapse expand setting row as optional option.

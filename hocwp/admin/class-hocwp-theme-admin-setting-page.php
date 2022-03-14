@@ -919,14 +919,20 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				if ( $tab == $this->tabs->tab_name ) {
 					$callback = isset( $field['args']['callback'][1] ) ? $field['args']['callback'][1] : '';
 
+					// Check to load styles and scripts on setting page
 					switch ( $callback ) {
 						case 'sortable_category':
 						case 'sortable':
+						case 'sortable_post':
+						case 'sortable_page':
 						case 'sortable_term':
 							HT_Enqueue()->sortable();
 							break;
 						case 'color_picker':
 							HT_Enqueue()->color_picker();
+							break;
+						case 'date_picker':
+							HT_Enqueue()->datetime_picker();
 							break;
 						case 'image_upload':
 						case 'image_link':
@@ -949,6 +955,8 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						case 'code_editor':
 							HT_Enqueue()->code_editor();
 							break;
+						case 'chosen_term':
+						case 'chosen_post':
 						case 'chosen':
 							HT_Enqueue()->chosen();
 							break;

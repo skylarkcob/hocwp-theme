@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2022-03-14 14:44+0700\n"
-"PO-Revision-Date: 2022-03-14 14:56+0700\n"
+"POT-Creation-Date: 2022-03-14 22:52+0700\n"
+"PO-Revision-Date: 2022-03-14 22:52+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -902,7 +902,7 @@ msgstr "Chọn trạng thái bài viết"
 
 #: hocwp/admin/admin.php:573 hocwp/inc/class-hocwp-theme-html-field.php:772
 #: hocwp/inc/class-hocwp-theme-html-field.php:814
-#: hocwp/inc/class-hocwp-theme-html-field.php:1821
+#: hocwp/inc/class-hocwp-theme-html-field.php:1852
 #: hocwp/inc/functions-scripts.php:318
 #, php-format
 msgid "Choose %s"
@@ -2184,63 +2184,59 @@ msgstr "Thêm hình ảnh"
 msgid "Remove all images"
 msgstr "Xóa tất cả ảnh"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1074
-msgid "You must pass list_type in arguments for this sortable list."
-msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
-
-#: hocwp/inc/class-hocwp-theme-html-field.php:1247
-#: hocwp/inc/class-hocwp-theme-html-field.php:1249
+#: hocwp/inc/class-hocwp-theme-html-field.php:1278
+#: hocwp/inc/class-hocwp-theme-html-field.php:1280
 #, php-format
 msgid "%s (ID: %s - Taxonomy: %s - Post count: %s)"
 msgstr "%s (Mã ID: %s - Thể loại: %s - Số bài viết: %s)"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1251
+#: hocwp/inc/class-hocwp-theme-html-field.php:1282
 #, php-format
 msgid "Unknown name (Taxonomy: %s)"
 msgstr "Tên không xác định (Thể loại: %s)"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1254
+#: hocwp/inc/class-hocwp-theme-html-field.php:1285
 msgid "Unknown"
 msgstr "Không xác định"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1542
+#: hocwp/inc/class-hocwp-theme-html-field.php:1573
 msgid "Width"
 msgstr "Chiều rộng"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1548
+#: hocwp/inc/class-hocwp-theme-html-field.php:1579
 msgid "Height"
 msgstr "Chiều cao"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1557
+#: hocwp/inc/class-hocwp-theme-html-field.php:1588
 msgid "Scale the image to the correct size (the thumbnail will keep the scale)"
 msgstr ""
 "Thu nhỏ ảnh theo kích thước chính xác (ảnh thu nhỏ sẽ được giữ nguyên tỉ lệ)"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1689
+#: hocwp/inc/class-hocwp-theme-html-field.php:1720
 msgid "Content:"
 msgstr "Nội dung:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1735
+#: hocwp/inc/class-hocwp-theme-html-field.php:1766
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1789
+#: hocwp/inc/class-hocwp-theme-html-field.php:1820
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1813
+#: hocwp/inc/class-hocwp-theme-html-field.php:1844
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1880
+#: hocwp/inc/class-hocwp-theme-html-field.php:1911
 msgid "Latitude:"
 msgstr "Vĩ độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1899
+#: hocwp/inc/class-hocwp-theme-html-field.php:1930
 msgid "Longitude:"
 msgstr "Kinh độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1914
+#: hocwp/inc/class-hocwp-theme-html-field.php:1945
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -3738,6 +3734,9 @@ msgstr ""
 #, php-format
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
+
+#~ msgid "You must pass list_type in arguments for this sortable list."
+#~ msgstr "Bạn phải truyền tham số list_type vào cho danh sách sắp xếp."
 
 #~ msgid "Shop Settings"
 #~ msgstr "Cài đặt cửa hàng"
