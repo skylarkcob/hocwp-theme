@@ -5,9 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_settings_page_extension_tab( $tabs ) {
 	$tabs['extension'] = array(
-		'text'     => __( 'Extensions', 'hocwp-theme' ),
-		'icon'     => '<span class="dashicons dashicons-admin-plugins"></span>',
-		'priority' => 10
+		'text'          => __( 'Extensions', 'hocwp-theme' ),
+		'icon'          => '<span class="dashicons dashicons-admin-plugins"></span>',
+		'priority'      => 10,
+		'submit_button' => false
 	);
 
 	return $tabs;

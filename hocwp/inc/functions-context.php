@@ -162,6 +162,17 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	unset( $sidebar_position );
 
+	global $wp_styles;
+
+	if ( isset( $wp_styles->done ) && HT()->array_has_value( $wp_styles->done ) ) {
+		foreach ( $wp_styles->done as $style ) {
+			if ( false !== strpos( $style, 'bootstrap' ) ) {
+				$classes[] = 'has-bootstrap';
+				break;
+			}
+		}
+	}
+
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 	$classes = array_map( 'sanitize_html_class', $classes );

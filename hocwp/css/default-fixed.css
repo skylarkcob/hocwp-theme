@@ -411,7 +411,7 @@ button[aria-expanded="false"] {
     font-family: 'Font Awesome 5 Brands', 'FontAwesome', sans-serif;
 }
 
-.hocwp-theme > .site, .container {
+.hocwp-theme > .site, body:not(.has-bootstrap) .container {
     max-width: 100%;
 }
 

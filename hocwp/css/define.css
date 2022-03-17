@@ -3580,6 +3580,10 @@
     text-overflow: ellipsis !important;
 }
 
+.text-bold {
+    font-weight: 700;
+}
+
 .red {
     color: #f00;
 }
@@ -3618,6 +3622,9 @@
     display: block !important;
 }
 
+.dp-f.flickity-enabled .flickity-slider,
+.display-flex.flickity-enabled .flickity-slider,
+.d-flex.flickity-enabled .flickity-slider,
 .d-flex,
 .display-flex,
 .dp-f {
@@ -3628,6 +3635,9 @@
     display: flex !important; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
+.dp-f.flickity-enabled.center .flickity-slider,
+.display-flex.flickity-enabled.center .flickity-slider,
+.d-flex.flickity-enabled.center .flickity-slider,
 .d-flex.center,
 .display-flex.center,
 .dp-f.center,
@@ -3635,6 +3645,9 @@
     align-items: center;
 }
 
+.dp-f.flickity-enabled.space .flickity-slider,
+.display-flex.flickity-enabled.space .flickity-slider,
+.d-flex.flickity-enabled.space .flickity-slider,
 .d-flex.space,
 .display-flex.space,
 .dp-f.space,
@@ -3647,6 +3660,12 @@
     -ms-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
+}
+
+.dp-f.flickity-enabled,
+.display-flex.flickity-enabled,
+.d-flex.flickity-enabled {
+    display: block !important;
 }
 
 .tt-u {
@@ -3675,6 +3694,8 @@
     text-align: right;
 }
 
+.fit-scale-down,
+.fit-contain,
 .fit-cover {
     overflow: hidden;
     display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
@@ -3684,6 +3705,8 @@
     display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
+.fit-scale-down img,
+.fit-contain img,
 .fit-cover img {
     -o-object-position: center;
     object-position: center;
@@ -3691,8 +3714,21 @@
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
+}
+
+.fit-cover img {
     -o-object-fit: cover;
     object-fit: cover;
+}
+
+.fit-contain img {
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+
+.fit-scale-down img {
+    -o-object-fit: scale-down;
+    object-fit: scale-down;
 }
 
 .display-none,

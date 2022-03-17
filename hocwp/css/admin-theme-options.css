@@ -77,6 +77,10 @@
     line-height: 1;
 }
 
+.hocwp-theme .settings-box .header input[type="submit"].reached-bottom {
+    position: static !important;
+}
+
 .hocwp-theme .form-table th .dashicons-admin-collapse,
 .hocwp-theme .form-table th .dashicons-editor-expand {
     color: #999;

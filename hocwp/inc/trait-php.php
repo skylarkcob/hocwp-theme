@@ -28,6 +28,12 @@ trait HOCWP_Theme_PHP {
 		return preg_replace( "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string );
 	}
 
+	public function remove_empty_tag_p( $string ) {
+		$pattern = "/<p[^>]*><\\/p[^>]*>/";
+
+		return preg_replace( $pattern, '', $string );
+	}
+
 	public function remove_html_tag( $tag, $string, $replace = '' ) {
 		return preg_replace( "/<" . $tag . "[^>]+\>/i", $replace, $string );
 	}

@@ -464,6 +464,20 @@ final class HOCWP_Theme_Controller {
 
 		HT()->require_if_exists( $this->custom_path . '/functions.php' );
 		HT()->require_if_exists( $this->custom_path . '/register.php' );
+
+		// Autoload all PHP files in custom inc folder
+		$inc = $this->custom_path . '/inc';
+
+		if ( is_dir( $inc ) ) {
+			$path  = $inc;
+			$files = scandir( $path );
+			$files = array_diff( scandir( $path ), array( '.', '..', 'index.php' ) );
+
+			foreach ( $files as $file ) {
+				HT()->require_if_exists( $inc . '/' . $file );
+			}
+		}
+
 		HT()->require_if_exists( $this->custom_path . '/hook.php' );
 
 		if ( is_admin() ) {

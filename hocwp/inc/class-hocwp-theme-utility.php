@@ -335,7 +335,7 @@ class HOCWP_Theme_Utility {
 		$content = do_shortcode( $content );
 		$content = do_blocks( $content );
 		$content = wptexturize( $content );
-		$content = wpautop( $content );
+
 		$content = shortcode_unautop( $content );
 		$content = prepend_attachment( $content );
 		$content = wp_filter_content_tags( $content );

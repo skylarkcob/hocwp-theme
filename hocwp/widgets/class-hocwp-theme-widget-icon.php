@@ -14,6 +14,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			'hover_icon_image' => '',
 			'hover_icon_html'  => '',
 			'text'             => '',
+			'page'             => '',
 			'sortable'         => '',
 			'background_image' => '',
 			'html_class'       => '',
@@ -101,6 +102,14 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 
 			if ( is_email( $icon_url ) ) {
 				$icon_url = sprintf( 'mailto:%s?subject=%s', $icon_url, $title );
+			}
+
+			if ( empty( $icon_url ) ) {
+				$page = $instance['page'] ?? '';
+
+				if ( HT()->is_positive_number( $page ) ) {
+					$icon_url = get_permalink( $page );
+				}
 			}
 
 			$plain_title = esc_attr( wp_strip_all_tags( $title, true ) );
@@ -240,6 +249,10 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 				HT_HTML_Field()->widget_field( $this, $name, __( 'Background Image:', 'hocwp-theme' ), $value, 'media_upload', array( 'container' => 'div' ) );
 
+				$name  = 'page';
+				$value = $instance[ $name ] ?? '';
+				HT_HTML_Field()->widget_field( $this, $name, __( 'Link to Page:', 'hocwp-theme' ), $value, 'select_page', array( 'option_all' => __( '-- Choose page --', 'hocwp-theme' ) ) );
+
 				$name  = 'html_class';
 				$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
 				HT_HTML_Field()->widget_field( $this, $name, __( 'HTML Class Attribute:', 'hocwp-theme' ), $value );
@@ -274,6 +287,7 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 		$instance['sortable']         = $new_instance['sortable'];
 		$instance['hover_icon_image'] = $new_instance['hover_icon_image'];
 		$instance['hover_icon_html']  = $new_instance['hover_icon_html'];
+		$instance['page']             = $new_instance['page'];
 		$instance['html_class']       = sanitize_text_field( remove_accents( $new_instance['html_class'] ) );
 
 		return $instance;

@@ -19,6 +19,8 @@ function hocwp_theme_default_meta_boxes() {
 	$post_types = get_post_types( $args );
 
 	if ( HT()->is_array_has_value( $post_types ) ) {
+		$post_types = apply_filters( 'hocwp_theme_extra_info_meta_box_post_types', $post_types );
+
 		$meta = new HOCWP_Theme_Meta_Post();
 		$meta->set_post_types( $post_types );
 		$meta->set_id( 'extra-post-info' );

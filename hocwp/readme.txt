@@ -2,6 +2,12 @@
 = 6.9.2 =
 * 14/03/2022: Fix sortable html field.
 * 14/03/2022: Release core version 6.9.2 after US Cali theme.
+* 17/03/2022: Hide submit button on theme extensions page.
+* 17/03/2022: Filter extra information meta post types.
+* 17/03/2022: Autoload all files in theme custom inc folder.
+* 17/03/2022: Disable auto paragraph from content.
+* 17/03/2022: Auto detect bootstrap load.
+* 17/03/2022: Add link to page into icon widget.
 
 = 6.9.1 =
 * 02/03/2022: Move product setting from reading tab to WooCommerce tab.

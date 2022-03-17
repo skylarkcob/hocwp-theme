@@ -54,7 +54,11 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 
 			$icon = ( is_array( $tab ) && isset( $tab['icon'] ) ) ? $tab['icon'] : '';
 
+			$submit_button = $tab['submit_button'] ?? true;
+
 			$tab = new HOCWP_Theme_Admin_Setting_Tab( $name, $label, $icon );
+
+			$tab->submit_button = $submit_button;
 		}
 
 		return $tab;
