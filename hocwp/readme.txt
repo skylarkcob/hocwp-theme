@@ -8,6 +8,10 @@
 * 17/03/2022: Disable auto paragraph from content.
 * 17/03/2022: Auto detect bootstrap load.
 * 17/03/2022: Add link to page into icon widget.
+* 20/03/2022: Add function create download from textarea.
+* 20/03/2022: Check sticky element exists before init.
+* 20/03/2022: Add import & export admin tools.
+* 20/03/2022: Add inline fields html.
 
 = 6.9.1 =
 * 02/03/2022: Move product setting from reading tab to WooCommerce tab.

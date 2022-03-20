@@ -183,6 +183,87 @@ jQuery(document).ready(function ($) {
         });
     })();
 
+    // Fetch option value
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-fetch='1'], form[data-tab='administration_tools'] input[data-fetch='1']", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                form = element.closest("form"),
+                option = form.find("#hocwp_theme_administration_tools_export_option_name");
+
+            if (!$.trim(option.val())) {
+                alert(element.attr("data-empty-message"));
+                element.removeClass("disabled");
+                element.blur();
+                option.focus();
+            } else {
+                if (confirm(element.attr("data-confirm-message"))) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        url: hocwpTheme.ajaxUrl,
+                        cache: true,
+                        data: {
+                            action: "hocwp_theme_fetch_option",
+                            option: option.val()
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                body.find("#administration_tools_theme_settings").val(response.data.option);
+                                alert(element.attr("data-message"));
+                            } else {
+                                if (response.data && response.data.message && $.trim(response.data.message)) {
+                                    alert(response.data.message);
+                                }
+                            }
+                        },
+                        complete: function (response) {
+                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        },
+                        error: function (jqXHR, exception) {
+                            alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                        }
+                    });
+                } else {
+                    element.removeClass("disabled");
+                    element.blur();
+                }
+            }
+        });
+    })();
+
+    // Export option value
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-export='1'], form[data-tab='administration_tools'] input[data-export='1']", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                form = element.closest("form"),
+                option = form.find("#hocwp_theme_administration_tools_export_option_name");
+
+            if (confirm(element.attr("data-confirm-message"))) {
+                var file_name = "theme-settings";
+
+                if ($.trim(option.val())) {
+                    file_name = option.val()
+                }
+
+                file_name += "-" + Date.now() + ".txt";
+
+                hocwpTheme.object.downloadTextarea("#administration_tools_theme_settings", file_name);
+                element.removeClass("disabled");
+                element.blur();
+
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
+    })();
+
     // Delete transient
     (function () {
         body.on("click", "form[data-tab='administration_tools'] button[data-delete-transient='1'], form[data-tab='administration_tools'] input[data-delete-transient='1']", function (e) {

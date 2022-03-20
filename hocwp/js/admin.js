@@ -137,10 +137,15 @@ jQuery(document).ready(function ($) {
 
         if (settingsBox && settingsBox.length) {
             const sticky = settingsBox.find(".module-header input[type='submit']"),
-                sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height(),
                 sidebar = settingsBox.find("#nav ul"),
                 sideTop = sidebar.offset().top + (sidebar.height() / 3),
                 form = settingsBox.find(".settings-content > form");
+
+            var sTop = null;
+
+            if (sticky && sticky.length) {
+                sTop = sticky.offset().top + $(".hocwp-theme .settings-box .module-header").height();
+            }
 
             var sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
 

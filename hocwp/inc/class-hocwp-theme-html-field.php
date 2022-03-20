@@ -1621,6 +1621,13 @@ final class HOCWP_Theme_HTML_Field {
 		self::input( $args );
 	}
 
+	public static function inline_fields( $args = array() ) {
+		$args['columns'] = 1;
+
+		$args['container_class'] = 'inline-fields';
+		self::fields( $args );
+	}
+
 	/**
 	 * Display multiple fields in single field.
 	 *
@@ -1631,11 +1638,17 @@ final class HOCWP_Theme_HTML_Field {
 
 		if ( HT()->array_has_value( $fields ) ) {
 			$columns = $args['columns'] ?? 1;
+			$c_class = $args['container_class'] ?? '';
+			$c_class .= ' multiple-fields';
 			?>
-            <div class="multiple-fields" data-columns="<?php echo esc_attr( $columns ); ?>">
+            <div class="<?php echo esc_attr( trim( $c_class ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>">
 				<?php
 				foreach ( $fields as $base => $field ) {
 					$cb = $field['callback'] ?? '';
+
+					if ( ! is_callable( $cb ) && is_string( $cb ) ) {
+						$cb = array( __CLASS__, $cb );
+					}
 
 					if ( ! is_callable( $cb ) ) {
 						$cb = array( __CLASS__, 'input' );

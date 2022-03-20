@@ -150,6 +150,28 @@ function HOCWP_Theme() {
         return window.innerHeight || window.screen.height;
     };
 
+    this.downloadTextarea = function (id, file_name, file_type) {
+        let data = document.querySelector(id).value;
+        let file = "data-" + Date.now() + ".txt";
+
+        if (file_name) {
+            file = file_name;
+        }
+
+        let link = document.createElement("a");
+        link.download = file;
+
+        file_type = file_type || "text/plain";
+
+        let blob = new Blob([data], {
+            type: file_type
+        });
+
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        URL.revokeObjectURL(link.href);
+    };
+
     this.sticky = function ($, element, top, htmlClass, bottom) {
         if ("number" === typeof top) {
             var scroll = $(window).scrollTop();
@@ -158,6 +180,10 @@ function HOCWP_Theme() {
 
             if ("object" !== typeof element) {
                 element = $(element);
+            }
+
+            if (!element || !element.length) {
+                return false;
             }
 
             htmlClass = htmlClass || "is-sticky fixed";

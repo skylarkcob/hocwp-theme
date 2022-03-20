@@ -332,6 +332,10 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function apply_the_content( $content ) {
+		if ( empty( $content ) ) {
+			return $content;
+		}
+
 		$content = do_shortcode( $content );
 		$content = do_blocks( $content );
 		$content = wptexturize( $content );

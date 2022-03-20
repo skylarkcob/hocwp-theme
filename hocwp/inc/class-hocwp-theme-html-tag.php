@@ -184,6 +184,10 @@ final class HOCWP_Theme_HTML_Tag {
 		$result .= '>';
 
 		if ( ! HT()->in_array( $tag_name, $this->self_closers ) || 'input' == $tag_name ) {
+			if ( is_array( $this->text ) || is_object( $this->text ) ) {
+				$this->text = maybe_serialize( $this->text );
+			}
+
 			$result .= $this->text;
 		}
 

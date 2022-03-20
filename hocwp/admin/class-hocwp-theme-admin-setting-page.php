@@ -478,6 +478,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		// Check and sanitize all child fields
 		$is_fields = ( is_array( $callback ) && isset( $callback['1'] ) && 'fields' == $callback[1] );
 
+		if ( ! $is_fields ) {
+			$is_fields = ( is_array( $callback ) && isset( $callback['1'] ) && 'inline_fields' == $callback[1] );
+		}
+
 		if ( $is_fields ) {
 			// Get list child fields
 			$fields = $field['args']['callback_args']['fields'] ?? '';

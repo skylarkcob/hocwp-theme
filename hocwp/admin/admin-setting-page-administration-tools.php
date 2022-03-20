@@ -71,6 +71,72 @@ $args = array(
 $tab->add_field( 'submit_change_url', '', 'button', $args, 'string', 'change_url' );
 
 $args = array(
+	'title'       => __( 'Import & Export', 'hocwp-theme' ),
+	'description' => __( 'Import and export theme settings or any options in database.', 'hocwp-theme' )
+);
+
+$tab->add_section( 'import_export', $args );
+
+$value = HOCWP_Theme()->get_options();
+
+$args = array(
+	'attributes'  => array(
+		'readonly' => 'readonly'
+	),
+	'value'       => $value,
+	'description' => __( 'Copy the setting value and fill in the data entry box to import into the database when needed.', 'hocwp-theme' )
+);
+
+$tab->add_field( 'theme_settings', __( 'Theme Settings', 'hocwp-theme' ), 'textarea', $args, 'string', 'import_export' );
+
+$args = array(
+	'fields' => array(
+		'option_name'   => array(
+			'callback' => 'input',
+			'title'    => __( 'Option name:', 'hocwp-theme' )
+		),
+		'inlines_field' => array(
+			'callback' => 'inline_fields',
+			'args'     => array(
+				'fields' => array(
+					'fetch'  => array(
+						'callback' => 'button',
+						'args'     => array(
+							'attributes'  => array(
+								'data-ajax-button'     => 1,
+								'data-empty-message'   => __( 'Please enter option name to fetch value.', 'hocwp-theme' ),
+								'data-message'         => __( 'Data has been fetched!', 'hocwp-theme' ),
+								'data-confirm-message' => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+								'data-fetch'           => 1,
+								'aria-label'           => __( 'Fetch', 'hocwp-theme' )
+							),
+							'button_type' => 'button',
+							'text'        => __( 'Fetch', 'hocwp-theme' )
+						)
+					),
+					'export' => array(
+						'callback' => 'button',
+						'args'     => array(
+							'attributes'  => array(
+								'data-ajax-button'     => 1,
+								'data-message'         => __( 'Settings have been exported!', 'hocwp-theme' ),
+								'data-confirm-message' => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+								'data-export'          => 1,
+								'aria-label'           => __( 'Export', 'hocwp-theme' )
+							),
+							'button_type' => 'button',
+							'text'        => __( 'Export', 'hocwp-theme' )
+						)
+					)
+				)
+			)
+		)
+	)
+);
+
+$tab->add_field( 'export', __( 'Export', 'hocwp-theme' ), 'fields', $args, 'string', 'import_export' );
+
+$args = array(
 	'title'       => __( 'Database Optimize', 'hocwp-theme' ),
 	'description' => __( 'Update database, remove transients and more.', 'hocwp-theme' )
 );

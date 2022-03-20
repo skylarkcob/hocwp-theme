@@ -441,6 +441,18 @@
     margin-right: 2%;
 }
 
+.hocwp-theme .inline-fields > * {
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.hocwp-theme .inline-fields > * ~ * {
+    margin-left: 10px;
+}
+
 /*--------------------------------------------------------------
 # Modal content
 --------------------------------------------------------------*/
