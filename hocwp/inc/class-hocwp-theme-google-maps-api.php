@@ -31,6 +31,10 @@ class HOCWP_Theme_Google_Maps_API {
 	 * @return mixed|object
 	 */
 	public function get_result() {
+		if ( empty( $this->result ) ) {
+			$this->fetch();
+		}
+
 		return $this->result;
 	}
 

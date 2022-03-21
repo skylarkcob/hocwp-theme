@@ -372,6 +372,8 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme.php';
 		require $this->core_path . '/inc/class-hocwp-theme-google-maps-api.php';
 		require $this->core_path . '/inc/class-hocwp-theme-google-maps-find-place-api.php';
+		require $this->core_path . '/inc/class-hocwp-theme-google-maps-autocomplete-api.php';
+		require $this->core_path . '/inc/class-hocwp-theme-google-maps-distance-matrix-api.php';
 		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
 		require $this->core_path . '/inc/class-hocwp-theme-enqueue.php';
 		require $this->core_path . '/inc/class-hocwp-theme-utility.php';

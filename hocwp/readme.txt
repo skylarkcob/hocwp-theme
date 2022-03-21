@@ -12,6 +12,8 @@
 * 20/03/2022: Check sticky element exists before init.
 * 20/03/2022: Add import & export admin tools.
 * 20/03/2022: Add inline fields html.
+* 21/03/2022: Update Google Maps API classes.
+* 21/03/2022: Add remove backward slash core script.
 
 = 6.9.1 =
 * 02/03/2022: Move product setting from reading tab to WooCommerce tab.

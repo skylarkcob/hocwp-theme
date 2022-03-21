@@ -6,6 +6,10 @@ function HOCWP_Theme() {
         log(string);
     };
 
+    this.remove_backward_slash = function (string) {
+        return string.replace(/\\/g, "");
+    };
+
     this.get_param_by_name = function (url, name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 

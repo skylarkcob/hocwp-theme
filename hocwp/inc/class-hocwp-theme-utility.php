@@ -1331,26 +1331,15 @@ class HOCWP_Theme_Utility {
 		}
 
 		$defaults = array(
-			'key'          => HT_Options()->get_tab( 'google_api_key', '', 'social' ),
-			'language'     => get_locale(),
 			'destinations' => $destinations,
 			'origins'      => $origins
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$url = 'https://maps.googleapis.com/maps/api/distancematrix/json';
-		$url = add_query_arg( $args, $url );
+		$api = new HOCWP_Theme_Maps_Distance_Matrix( $args );
 
-		$res = wp_remote_get( $url );
-
-		$res = wp_remote_retrieve_body( $res );
-
-		if ( ! empty( $res ) ) {
-			$res = json_decode( $res );
-		}
-
-		return $res;
+		return $api->get_result();
 	}
 
 	public function find_near_place( $query, $latitude, $longitude, $args = array() ) {
@@ -1361,29 +1350,15 @@ class HOCWP_Theme_Utility {
 		}
 
 		$defaults = array(
-			'key'          => HT_Options()->get_tab( 'google_api_key', '', 'social' ),
-			'language'     => get_locale(),
-			'input'        => $query,
-			'strictbounds' => 'true',
-			'types'        => 'establishment',
-			'radius'       => 30000,
-			'location'     => $latitude . ',' . $longitude
+			'input'    => $query,
+			'location' => $latitude . ',' . $longitude
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-		$url = add_query_arg( $args, $url );
+		$api = new HOCWP_Theme_Maps_Autocomplete( $args );
 
-		$res = wp_remote_get( $url );
-
-		$res = wp_remote_retrieve_body( $res );
-
-		if ( ! empty( $res ) ) {
-			$res = json_decode( $res );
-		}
-
-		return $res;
+		return $api->get_result();
 	}
 
 	public function latlong_to_address( $params = array() ) {
