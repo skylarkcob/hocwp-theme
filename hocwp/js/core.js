@@ -197,16 +197,21 @@ function HOCWP_Theme() {
                     scrollPosition = $(window).height() + scroll,
                     percent = (scrollHeight - scrollPosition) / scrollHeight;
 
+                if (0.04 >= percent) {
+                    element.addClass("reached-bottom");
+                } else {
+                    element.removeClass("reached-bottom");
+                }
+
                 if (bottom > top && bottom <= scroll) {
                     element.removeClass(htmlClass);
                     element.addClass("reached-bottom");
                 } else if (!element.hasClass(htmlClass)) {
                     element.addClass(htmlClass);
-                    element.removeClass("reached-bottom");
-                }
 
-                if (0.04 >= percent) {
-                    element.addClass("reached-bottom");
+                    if (0.04 < percent) {
+                        element.removeClass("reached-bottom");
+                    }
                 }
             } else {
                 element.removeClass(htmlClass);
