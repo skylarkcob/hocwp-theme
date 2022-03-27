@@ -268,7 +268,14 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		 */
 		$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
 
-		if ( function_exists( 'HOCWP_EXT_Language' ) && 'language' != $this->tabs->tab_name ) {
+		$skip_tabs = array(
+			'administration_tools',
+			'language'
+		);
+
+		$skip_tabs = apply_filters( 'hocwp_theme_skip_multiple_language_setting_tabs', $skip_tabs );
+
+		if ( function_exists( 'HOCWP_EXT_Language' ) && ! in_array( $this->tabs->tab_name, $skip_tabs ) ) {
 			$multiple_option = HOCWP_EXT_Language()->get_option( 'multiple_option' );
 
 			if ( $multiple_option && function_exists( 'pll_languages_list' ) ) {

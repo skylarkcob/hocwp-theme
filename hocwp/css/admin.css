@@ -154,6 +154,19 @@
 
 .hocwp-theme .wp-picker-holder {
     position: absolute;
+    z-index: 499;
+}
+
+.hocwp-theme .wp-picker-input-wrap > label {
+    margin: 0 5px 5px !important;
+}
+
+.hocwp-theme .wp-picker-input-wrap > label + .wp-picker-clear {
+    height: 30px;
+}
+
+.hocwp-theme .wp-picker-container button.wp-color-result[style*="background"] {
+    color: #fff;
 }
 
 .hocwp-theme textarea[data-code-editor="1"] + .CodeMirror-wrap,

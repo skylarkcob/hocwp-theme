@@ -322,7 +322,6 @@ final class HOCWP_Theme_HTML_Field {
 		$textarea->add_attributes( $attributes );
 
 		$textarea->output();
-		self::description( $args );
 	}
 
 	public static function code_editor( $args = array() ) {

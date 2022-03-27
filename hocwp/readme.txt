@@ -15,6 +15,7 @@
 * 21/03/2022: Update Google Maps API classes.
 * 21/03/2022: Add remove backward slash core script.
 * 22/03/2022: Fix sticky reached bottom bugs.
+* 28/03/2022: Fix color picker styles.
 
 = 6.9.1 =
 * 02/03/2022: Move product setting from reading tab to WooCommerce tab.

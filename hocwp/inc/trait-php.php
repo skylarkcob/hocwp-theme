@@ -102,6 +102,17 @@ trait HOCWP_Theme_PHP {
 		return $lists;
 	}
 
+	public function add_string_with_char( &$string, $add_text, $char = ' ', $char_position = 'head' ) {
+		if ( ! empty( $add_text ) ) {
+			if ( 'head' == $char_position ) {
+				$string = $add_text . $char . $string;
+			} else {
+				$string .= $char;
+				$string .= $add_text;
+			}
+		}
+	}
+
 	public function current_milliseconds() {
 		return round( microtime( true ) * 1000 );
 	}
