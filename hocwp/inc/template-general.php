@@ -847,7 +847,8 @@ function hocwp_theme_main_menu( $args ) {
 		'theme_location'  => $theme_location,
 		'container_id'    => 'site-navigation',
 		'menu_id'         => 'main-menu',
-		'container_class' => $container_class
+		'container_class' => $container_class,
+		'mobile_control'  => true
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -1097,8 +1098,7 @@ function hocwp_theme_wp_footer_action() {
 		if ( ! empty( $addthis_id ) ) {
 			?>
             <!-- Go to www.addthis.com/dashboard to customize your tools -->
-            <script type="text/javascript"
-                    src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addthis_id; ?>"></script>
+            <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addthis_id; ?>"></script>
 			<?php
 		}
 	}

@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
     $.fn.hocwpSelectChosen = function (options) {
         if ($.fn.chosen) {
-            var settings = $.extend({
+            var settings = $.extend({}, {
                 width: "100%"
             }, $.fn.hocwpSelectChosen.defaults, options);
 

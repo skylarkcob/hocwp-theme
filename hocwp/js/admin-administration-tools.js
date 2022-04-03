@@ -191,7 +191,7 @@ jQuery(document).ready(function ($) {
             var that = this,
                 element = $(that),
                 form = element.closest("form"),
-                option = form.find("#hocwp_theme_administration_tools_export_option_name");
+                option = form.find("#hocwp_theme_administration_tools_exports_option_name");
 
             if (!$.trim(option.val())) {
                 alert(element.attr("data-empty-message"));
@@ -242,7 +242,7 @@ jQuery(document).ready(function ($) {
             var that = this,
                 element = $(that),
                 form = element.closest("form"),
-                option = form.find("#hocwp_theme_administration_tools_export_option_name");
+                option = form.find("#hocwp_theme_administration_tools_exports_option_name");
 
             if (confirm(element.attr("data-confirm-message"))) {
                 var file_name = "theme-settings";
@@ -257,6 +257,81 @@ jQuery(document).ready(function ($) {
                 element.removeClass("disabled");
                 element.blur();
 
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
+    })();
+
+    // Import option value
+    (function () {
+        var inputFile = $("#choose-setting-file");
+
+        // Open file dialog
+        body.on("click", "form[data-tab='administration_tools'] button[data-load-settings='1'], form[data-tab='administration_tools'] input[data-load-settings='1']", function (e) {
+            e.preventDefault();
+            inputFile.trigger("click");
+
+            setTimeout(function () {
+                $(this).removeClass("disabled");
+                $(this).blur();
+            }, 1000);
+        });
+
+        // Load setting file to textarea
+        inputFile.on("change", function () {
+            var files = inputFile.prop("files"),
+                fileReader = new FileReader(),
+                td = inputFile.closest("td"),
+                button = td.find("button[data-load-settings='1'], input[data-load-settings='1']");
+
+            if (files && files.length) {
+                fileReader.onload = function () {
+                    td.find("textarea").val(fileReader.result);
+                };
+
+                fileReader.readAsText(files[0]);
+                button.removeClass("disabled");
+                button.blur();
+            }
+        });
+
+        // Import option to database
+        body.on("click", "form[data-tab='administration_tools'] button[data-import='1'], form[data-tab='administration_tools'] input[data-import='1']", function (e) {
+            e.preventDefault();
+
+            var that = this,
+                element = $(that),
+                form = element.closest("form"),
+                option = form.find("#hocwp_theme_administration_tools_imports_option_name"),
+                value = form.find("#hocwp_theme_administration_tools_imports_option_value");
+
+            if (confirm(element.attr("data-confirm-message"))) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_import_settings",
+                        option: option.val(),
+                        value: value.val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(element.attr("data-message"));
+                            option.val("");
+                            value.val("");
+                        }
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                    }
+                });
             } else {
                 element.removeClass("disabled");
                 element.blur();

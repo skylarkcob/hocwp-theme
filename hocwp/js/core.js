@@ -121,13 +121,13 @@ function HOCWP_Theme() {
         data = data || {};
         params = params || {};
 
-        data = $.extend({
+        data = $.extend({}, {
             action: hocwpTheme.ajaxAction,
             callback: hocwpTheme.customAjaxCallback,
             nonce: hocwpTheme.nonce
         }, data);
 
-        params = $.extend({
+        params = $.extend({}, {
             type: "POST",
             dataType: "JSON",
             url: hocwpTheme.ajaxUrl,

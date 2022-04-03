@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<hr class="wp-header-end" style="clear: both;">
 	<embed id="hocwp-theme-phpinfo" src="<?php echo HOCWP_THEME_CORE_URL . '/admin/views/phpinfo.php' ?>"
 	       class="widefat">
-		<script type="text/javascript">
+		<script>
 			jQuery(document).ready(function ($) {
 				var phpInfo = $('#hocwp-theme-phpinfo');
 				if (phpInfo.length) {

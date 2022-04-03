@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
 
     $.fn.hocwpCodeEditor = function (options) {
         if (wp.codeEditor) {
-            var settings = $.extend(wp.codeEditor.defaultSettings, $.fn.hocwpCodeEditor.defaults, options);
+            var settings = $.extend({}, wp.codeEditor.defaultSettings, $.fn.hocwpCodeEditor.defaults, options);
 
             return this.each(function () {
                 var defaultSettings = settings,

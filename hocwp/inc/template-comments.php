@@ -140,7 +140,7 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 
 function hocwp_theme_comments_template_google() {
 	?>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <script src="https://apis.google.com/js/plusone.js"></script>
     <div id="google_comments"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
     <script>
         gapi.comments.render('google_comments', {

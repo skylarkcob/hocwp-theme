@@ -429,8 +429,12 @@
 }
 
 .hocwp-theme .multiple-fields .field-row {
-    box-shadow: inset 1px 2px 1px #fff;
+    box-shadow: inset 0 2px 0 #fff;
     padding-bottom: 15px;
+}
+
+.hocwp-theme .inline-fields .field-row {
+    box-shadow: none;
 }
 
 .hocwp-theme .multiple-fields .field-row:first-child {

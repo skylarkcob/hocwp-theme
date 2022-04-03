@@ -1,4 +1,10 @@
 == Changelog ==
+= 6.9.3 =
+* 03/04/2022: Remove attribute type="text/javascript".
+* 03/04/2022: Add param to disable mobile menu button.
+* 03/04/2022: Add default carousel function, auto detect carousel scripts.
+* 03/04/2022: Add option import tools.
+
 = 6.9.2 =
 * 14/03/2022: Fix sortable html field.
 * 14/03/2022: Release core version 6.9.2 after US Cali theme.

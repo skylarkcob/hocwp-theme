@@ -134,7 +134,71 @@ $args = array(
 	)
 );
 
-$tab->add_field( 'export', __( 'Export', 'hocwp-theme' ), 'fields', $args, 'string', 'import_export' );
+$tab->add_field( 'exports', __( 'Export', 'hocwp-theme' ), 'fields', $args, 'string', 'import_export' );
+
+$args = array(
+	'fields' => array(
+		'option_name'   => array(
+			'callback' => 'input',
+			'title'    => __( 'Option name:', 'hocwp-theme' )
+		),
+		'option_value'  => array(
+			'callback' => 'textarea',
+			'title'    => __( 'Option value:', 'hocwp-theme' ),
+			'args'     => array(
+				'class' => 'widefat'
+			)
+		),
+		'inlines_field' => array(
+			'callback' => 'inline_fields',
+			'args'     => array(
+				'fields' => array(
+					'load_settings' => array(
+						'callback' => 'button',
+						'args'     => array(
+							'attributes'  => array(
+								'data-ajax-button'     => 1,
+								'data-message'         => __( 'Settings have been loaded!', 'hocwp-theme' ),
+								'data-confirm-message' => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+								'data-load-settings'   => 1,
+								'aria-label'           => __( 'Load Settings', 'hocwp-theme' )
+							),
+							'button_type' => 'button',
+							'type'        => 'default',
+							'text'        => __( 'Load settings', 'hocwp-theme' )
+						)
+					),
+					'import'        => array(
+						'callback' => 'button',
+						'args'     => array(
+							'attributes'  => array(
+								'data-ajax-button'     => 1,
+								'data-message'         => __( 'Settings have been imported!', 'hocwp-theme' ),
+								'data-confirm-message' => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+								'data-import'          => 1,
+								'aria-label'           => __( 'Import', 'hocwp-theme' )
+							),
+							'button_type' => 'button',
+							'text'        => __( 'Import', 'hocwp-theme' )
+						)
+					),
+					'input_file'    => array(
+						'callback' => 'input',
+						'args'     => array(
+							'attributes' => array(
+								'id'    => 'choose-setting-file',
+								'style' => 'display:none'
+							),
+							'type'       => 'file'
+						)
+					)
+				)
+			)
+		)
+	)
+);
+
+$tab->add_field( 'imports', __( 'Import', 'hocwp-theme' ), 'fields', $args, 'string', 'import_export' );
 
 $args = array(
 	'title'       => __( 'Database Optimize', 'hocwp-theme' ),

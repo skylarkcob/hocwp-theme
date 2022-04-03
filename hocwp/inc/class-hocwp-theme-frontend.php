@@ -113,6 +113,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			return;
 		}
 
+		$mobile_control = $args['mobile_control'] ?? false;
+
 		$container_class = isset( $args['container_class'] ) ? $args['container_class'] : '';
 
 		$position = isset( $args['position'] ) ? $args['position'] : 'left';
@@ -152,6 +154,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$defaults = array(
 			'items_wrap' => $button
 		);
+
+		if ( ! $mobile_control ) {
+			unset( $defaults['items_wrap'] );
+		}
 
 		$args = wp_parse_args( $args, $defaults );
 

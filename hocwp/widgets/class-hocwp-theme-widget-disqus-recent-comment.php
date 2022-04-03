@@ -63,7 +63,7 @@ class HOCWP_Theme_Widget_Disqus_Recent_Comment extends WP_Widget {
 		do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
 		?>
 		<div class="dsq-widget">
-			<script type="text/javascript" src="<?php echo $url; ?>"></script>
+			<script src="<?php echo $url; ?>"></script>
 		</div>
 		<?php
 		do_action( 'hocwp_theme_widget_after', $args, $instance, $this );

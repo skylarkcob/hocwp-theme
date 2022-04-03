@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
                     container = sortable.parent(),
                     connectWith = sortable.attr("data-connect-with");
 
-                var settings = $.extend({
+                var settings = $.extend({}, {
                     placeholder: "ui-state-highlight",
                     cancel: ".ui-state-disabled",
                     items: "li:not(.ui-state-disabled)",

@@ -650,3 +650,19 @@ function hocwp_theme_fetch_option_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_fetch_option', 'hocwp_theme_fetch_option_ajax_callback' );
+
+function hocwp_theme_import_settings_ajax_callback() {
+	$data = array();
+
+	$option = $_POST['option'] ?? '';
+	$value  = $_POST['value'] ?? '';
+
+	if ( ! empty( $option ) && ! empty( $value ) ) {
+		$data['updated'] = update_option( $option, $value );
+		wp_send_json_success( $data );
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_import_settings', 'hocwp_theme_import_settings_ajax_callback' );
