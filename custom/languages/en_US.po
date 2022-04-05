@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-04-03 21:46+0700\n"
-"PO-Revision-Date: 2022-04-03 21:46+0700\n"
+"POT-Creation-Date: 2022-04-05 11:29+0700\n"
+"PO-Revision-Date: 2022-04-05 11:29+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: en_US\n"
@@ -783,18 +783,25 @@ msgstr ""
 msgid "All information about Google account and Google console."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:65
+#: hocwp/admin/admin-setting-page-social.php:58
+msgid ""
+"CAPTCHA helps protect you from spam and password decryption by asking you to "
+"complete a simple test that proves you are human and not a computer trying "
+"to break into a password protected account."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:72
 #: hocwp/admin/class-hocwp-theme-meta-menu.php:349
 msgid "List Socials"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:68
+#: hocwp/admin/admin-setting-page-social.php:75
 msgid ""
 "You can specify a list of the socials on your site if current theme "
 "supports. Each social separated by commas. E.g: facebook, google, youtube"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:160
+#: hocwp/admin/admin-setting-page-social.php:167
 #, php-format
 msgid "%s Icon"
 msgstr ""
@@ -2527,7 +2534,7 @@ msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2155
+#: hocwp/inc/class-hocwp-theme-utility.php:2191
 msgid ""
 "The <strong>$sql_column</strong> argument just only contains MySQL query "
 "inside (), it isn't full MySQL query."
