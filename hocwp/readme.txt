@@ -4,6 +4,7 @@
 * 03/04/2022: Add param to disable mobile menu button.
 * 03/04/2022: Add default carousel function, auto detect carousel scripts.
 * 03/04/2022: Add option import tools.
+* 05/04/2022: Add hCaptcha.
 
 = 6.9.2 =
 * 14/03/2022: Fix sortable html field.

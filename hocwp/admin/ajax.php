@@ -656,6 +656,8 @@ function hocwp_theme_import_settings_ajax_callback() {
 
 	$option = $_POST['option'] ?? '';
 	$value  = $_POST['value'] ?? '';
+	$value  = wp_unslash( $value );
+	$value  = maybe_unserialize( $value );
 
 	if ( ! empty( $option ) && ! empty( $value ) ) {
 		$data['updated'] = update_option( $option, $value );

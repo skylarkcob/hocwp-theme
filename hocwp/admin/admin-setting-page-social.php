@@ -51,6 +51,13 @@ function hocwp_theme_settings_page_social_section() {
 		'description' => __( 'All information about Google account and Google console.', 'hocwp-theme' )
 	);
 
+	$sections['captcha'] = array(
+		'tab'         => 'social',
+		'id'          => 'captcha',
+		'title'       => 'Captcha',
+		'description' => __( 'CAPTCHA helps protect you from spam and password decryption by asking you to complete a simple test that proves you are human and not a computer trying to break into a password protected account.', 'hocwp-theme' )
+	);
+
 	return $sections;
 }
 
@@ -199,32 +206,6 @@ function hocwp_theme_settings_page_social_field() {
 	$fields[] = array(
 		'tab'     => 'social',
 		'section' => 'google',
-		'id'      => 'recaptcha_site_key',
-		'title'   => 'reCAPTCHA Site Key',
-		'args'    => array(
-			'label_for'     => true,
-			'callback_args' => array(
-				'class' => 'regular-text'
-			)
-		)
-	);
-
-	$fields[] = array(
-		'tab'     => 'social',
-		'section' => 'google',
-		'id'      => 'recaptcha_secret_key',
-		'title'   => 'reCAPTCHA Secret Key',
-		'args'    => array(
-			'label_for'     => true,
-			'callback_args' => array(
-				'class' => 'regular-text'
-			)
-		)
-	);
-
-	$fields[] = array(
-		'tab'     => 'social',
-		'section' => 'google',
 		'id'      => 'search_engine_id',
 		'title'   => 'Search engine ID',
 		'args'    => array(
@@ -240,6 +221,58 @@ function hocwp_theme_settings_page_social_field() {
 		'id'    => 'addthis_id',
 		'title' => 'AddThis ID',
 		'args'  => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'captcha',
+		'id'      => 'recaptcha_site_key',
+		'title'   => 'reCAPTCHA Site Key',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'captcha',
+		'id'      => 'recaptcha_secret_key',
+		'title'   => 'reCAPTCHA Secret Key',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'captcha',
+		'id'      => 'hcaptcha_site_key',
+		'title'   => 'hCaptcha Site Key',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'captcha',
+		'id'      => 'hcaptcha_secret_key',
+		'title'   => 'hCaptcha Secret Key',
+		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(
 				'class' => 'regular-text'

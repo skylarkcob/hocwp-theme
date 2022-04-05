@@ -2021,6 +2021,40 @@ class HOCWP_Theme_Utility {
 		return $url;
 	}
 
+	public function inline_script( $id, $src, $atts = array(), $async = true, $defer = true ) {
+		?>
+        <script>
+            (function (d, s, id) {
+                var js, gjs = d.getElementsByTagName(s)[0];
+
+                if (d.getElementById(id)) {
+                    return;
+                }
+
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "<?php echo esc_url( $src ); ?>";
+
+				<?php
+				if ( $async ) {
+					echo 'js.async = "async";';
+				}
+
+				if ( $defer ) {
+					echo 'js.defer = "defer";';
+				}
+
+				foreach ( $atts as $key => $value ) {
+					echo 'js.setAttribute("' . esc_attr( $key ) . '", "' . esc_attr( $value ) . '");';
+				}
+				?>
+
+                gjs.parentNode.insertBefore(js, gjs);
+            }(document, "script", "<?php echo esc_attr( $id ); ?>"));
+        </script>
+		<?php
+	}
+
 	public function load_google_javascript_sdk( $args = array() ) {
 		$load = isset( $args['load'] ) ? (bool) $args['load'] : false;
 		$load = apply_filters( 'hocwp_theme_load_google_sdk_javascript', $load );
@@ -2048,9 +2082,11 @@ class HOCWP_Theme_Utility {
         <script>
             (function (d, s, id) {
                 var js, gjs = d.getElementsByTagName(s)[0];
+
                 if (d.getElementById(id)) {
                     return;
                 }
+
                 js = d.createElement(s);
                 js.id = id;
                 js.async = "async";
@@ -2251,6 +2287,47 @@ class HOCWP_Theme_Utility {
 		return $options;
 	}
 
+	public function hcaptcha( $atts = array(), $script_params = array() ) {
+		$defaults = array(
+			'hl' => get_locale()
+		);
+
+		$script_params = wp_parse_args( $script_params, $defaults );
+
+		$url = 'https://www.hCaptcha.com/1/api.js';
+		$url = add_query_arg( $script_params, $url );
+
+		$this->inline_script( 'hcaptcha', $url );
+
+		$div = new HOCWP_Theme_HTML_Tag( 'div' );
+
+		$defaults = array(
+			'data-sitekey' => HT_Options()->get_tab( 'hcaptcha_site_key', '', 'social' )
+		);
+
+		$atts = wp_parse_args( $atts, $defaults );
+
+		$div->set_attributes( $atts );
+		$div->add_attribute( 'class', 'h-captcha' );
+		$div->output();
+	}
+
+	public function hcaptcha_valid( $params = array() ) {
+		$defaults = array(
+			'secret'   => HT_Options()->get_tab( 'hcaptcha_secret_key', '', 'social' ),
+			'response' => $_POST['h-captcha-response'] ?? ''
+		);
+
+		$params = wp_parse_args( $params, $defaults );
+
+		$url = 'https://hcaptcha.com/siteverify';
+		$url = add_query_arg( $params, $url );
+		$res = wp_remote_get( $url, $params );
+		$res = wp_remote_retrieve_body( $res );
+
+		return json_decode( $res );
+	}
+
 	public function recaptcha( $version = 'v2' ) {
 		$options  = $this->get_theme_options( 'social' );
 		$site_key = isset( $options['recaptcha_site_key'] ) ? $options['recaptcha_site_key'] : '';
@@ -2264,9 +2341,11 @@ class HOCWP_Theme_Utility {
             <script>
                 (function (d, s, id) {
                     var js, gjs = d.getElementsByTagName(s)[0];
+
                     if (d.getElementById(id)) {
                         return;
                     }
+
                     js = d.createElement(s);
                     js.id = id;
                     js.async = "async";
