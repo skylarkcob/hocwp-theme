@@ -4,10 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_after_setup_theme() {
-	if ( HT_Util()->is_vr_theme() ) {
-		show_admin_bar( false );
-	}
-
 	$editor_color_palette = array();
 
 	if ( function_exists( 'hocwp_theme_get_color_for_area' ) ) {
