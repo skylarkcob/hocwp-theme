@@ -166,18 +166,21 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	if ( isset( $wp_styles->done ) && HT()->array_has_value( $wp_styles->done ) ) {
 		foreach ( $wp_styles->done as $style ) {
-			if ( false !== strpos( $style, 'bootstrap' ) ) {
+			if ( str_contains( $style, 'bootstrap' ) ) {
 				$classes[] = 'has-bootstrap';
 				break;
 			}
 		}
 	}
 
+	if ( HT_Util()->is_vr_theme() ) {
+		$classes[] = 'vtour';
+	}
+
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
-	$classes = array_map( 'sanitize_html_class', $classes );
 
-	return $classes;
+	return array_map( 'sanitize_html_class', $classes );
 }
 
 add_filter( 'body_class', 'hocwp_theme_body_class_filter' );
@@ -300,7 +303,7 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 			$sub = substr( $att, 0, 5 );
 
 			if ( 'data_' == $sub ) {
-				$att = ltrim( $att, 'data_' );
+				$att = HT()->trim_string( $att, 'data_' );
 				$att = 'data-' . $att;
 			}
 
@@ -328,7 +331,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 		case 'html':
 			$client_info = HT_Util()->get_client_info();
 
-			$screen_width = isset( $client_info['screen_width'] ) ? $client_info['screen_width'] : 'unknown';
+			$screen_width = $client_info['screen_width'] ?? 'unknown';
 
 			if ( HT()->is_positive_number( $screen_width ) ) {
 				$atts['data-screen-width'] = $screen_width;
@@ -385,9 +388,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 			break;
 	}
 
-	$atts = array_unique( $atts );
-
-	return $atts;
+	return array_unique( $atts );
 }
 
 add_filter( 'hocwp_theme_html_tag_with_context_attributes', 'hocwp_theme_html_tag_with_context_attributes', 10, 3 );

@@ -6,14 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '6.9.2';
+const HOCWP_THEME_CORE_VERSION = '6.9.3';
 
 $theme = wp_get_theme();
 
 $require_version = $theme->get( 'RequiresPHP' );
 
 if ( empty( $require_version ) ) {
-	$require_version = '7.4';
+	$require_version = '8';
 }
 
 /**
@@ -87,7 +87,7 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 
 	$dirs = array_filter( glob( $dir . '/*' ), 'is_dir' );
 
-	if ( ! empty( $dirs ) && is_array( $dirs ) ) {
+	if ( ! empty( $dirs ) ) {
 		$msg   = sprintf( __( '<strong>Error:</strong> You are using PHP version %s, please upgrade PHP version to at least %s.', 'hocwp-theme' ), $php_version, $require_version );
 		$title = __( 'Invalid PHP Version', 'hocwp-theme' );
 
@@ -109,7 +109,7 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 			$theme = wp_get_theme( $folder );
 			$uri   = $theme->get( 'ThemeURI' );
 
-			if ( false !== strpos( $uri, 'wordpress.org' ) ) {
+			if ( str_contains( $uri, 'wordpress.org' ) ) {
 				switch_theme( $folder );
 				wp_die( $msg, $title, $args );
 			}

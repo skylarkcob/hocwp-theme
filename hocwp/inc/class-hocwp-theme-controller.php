@@ -68,10 +68,10 @@ final class HOCWP_Theme_Controller {
 		}
 
 		if ( ! isset( $this->object->client_info ) ) {
-			$client_info = isset( $_COOKIE['hocwp_theme_client_info'] ) ? $_COOKIE['hocwp_theme_client_info'] : '';
+			$client_info = $_COOKIE['hocwp_theme_client_info'] ?? '';
 
 			if ( empty( $client_info ) ) {
-				$client_info = isset( $_SESSION['hocwp_theme_client_info'] ) ? $_SESSION['hocwp_theme_client_info'] : '';
+				$client_info = $_SESSION['hocwp_theme_client_info'] ?? '';
 			}
 
 			if ( is_string( $client_info ) ) {
@@ -90,7 +90,7 @@ final class HOCWP_Theme_Controller {
 		}
 
 		if ( ! isset( $this->object->options ) ) {
-			$this->object->options = (array) get_option( $this->get_prefix() );
+			$this->object->options = $this->get_options();
 		}
 
 		$this->object->is_wc_activated = class_exists( 'WC_Product' );
@@ -203,9 +203,26 @@ final class HOCWP_Theme_Controller {
 	}
 
 	public function get_options() {
-		$this->object->options = (array) get_option( $this->get_prefix() );
+		if ( ! isset( $this->object->options ) ) {
+			$this->object->options = array();
+		}
 
-		return $this->object->options;
+		if ( ! HT()->array_has_value( $this->object->options ) ) {
+			$this->object->options = (array) get_option( $this->get_prefix() );
+
+			if ( ! isset( $this->object->defaults ) ) {
+				$this->object->defaults = array();
+			}
+
+			if ( isset( $this->object->defaults['options'] ) && HT()->array_has_value( $this->object->defaults['options'] ) ) {
+				$this->object->options = wp_parse_args( $this->object->options, $this->object->defaults['options'] );
+			}
+		}
+
+		// Remove empty value as 0 and 1 index
+		$this->object->options = array_filter( $this->object->options );
+
+		return apply_filters( 'hocwp_theme_options', $this->object->options );
 	}
 
 	public function get_textdomain() {
@@ -273,7 +290,7 @@ final class HOCWP_Theme_Controller {
 				if ( file_exists( $ext_file ) ) {
 					$data = get_file_data( $ext_file, array( 'name' => 'Name', 'requires_core' => 'Requires core' ) );
 
-					$requires_core = isset( $data['requires_core'] ) ? $data['requires_core'] : '';
+					$requires_core = $data['requires_core'] ?? '';
 
 					if ( ! empty( $requires_core ) && version_compare( HOCWP_THEME_CORE_VERSION, $requires_core, '<' ) ) {
 						$data['file'] = $ext_file;

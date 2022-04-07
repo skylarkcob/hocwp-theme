@@ -4,9 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_article_before( $args ) {
-	$container = isset( $args['container'] ) ? $args['container'] : 'article';
+	$container = $args['container'] ?? 'article';
 
-	$class = isset( $args['class'] ) ? $args['class'] : '';
+	$class = $args['class'] ?? '';
 	$class .= ' ' . join( ' ', get_post_class() );
 	$class = trim( $class );
 
@@ -16,7 +16,7 @@ function hocwp_theme_article_before( $args ) {
 add_action( 'hocwp_theme_article_before', 'hocwp_theme_article_before' );
 
 function hocwp_theme_article_after( $args ) {
-	$container = isset( $args['container'] ) ? $args['container'] : 'article';
+	$container = $args['container'] ?? 'article';
 	echo '</' . $container . '>';
 }
 
@@ -57,8 +57,8 @@ function hocwp_theme_comments_popup_link() {
 }
 
 function hocwp_theme_excerpt_more_filter( $more ) {
-	global $hocwp_theme;
-	$options = isset( $hocwp_theme->options['reading'] ) ? $hocwp_theme->options['reading'] : '';
+	$options = HT_Options()->get( 'reading' );
+
 	if ( is_array( $options ) && isset( $options['excerpt_more'] ) && ! empty( $options['excerpt_more'] ) ) {
 		$more = $options['excerpt_more'];
 		$more = str_replace( '[PERMALINK]', get_the_permalink(), $more );
@@ -70,7 +70,7 @@ function hocwp_theme_excerpt_more_filter( $more ) {
 add_filter( 'excerpt_more', 'hocwp_theme_excerpt_more_filter' );
 
 function hocwp_theme_excerpt_length_filter( $length ) {
-	global $hocwp_theme, $wp_query;
+	global $wp_query;
 
 	if ( isset( $wp_query->query_vars['excerpt_length'] ) ) {
 		$length = $wp_query->query_vars['excerpt_length'];
@@ -80,7 +80,7 @@ function hocwp_theme_excerpt_length_filter( $length ) {
 		}
 	}
 
-	$options = isset( $hocwp_theme->options['reading'] ) ? $hocwp_theme->options['reading'] : '';
+	$options = HT_Options()->get( 'reading' );
 
 	if ( wp_is_mobile() ) {
 		if ( is_array( $options ) && isset( $options['excerpt_length_mobile'] ) && ! empty( $options['excerpt_length_mobile'] ) ) {
@@ -98,19 +98,19 @@ add_filter( 'excerpt_length', 'hocwp_theme_excerpt_length_filter' );
 function hocwp_theme_the_title( $args = array() ) {
 	global $hocwp_theme;
 	$in_loop = true;
-	$query   = isset( $hocwp_theme->loop_data['query'] ) ? $hocwp_theme->loop_data['query'] : null;
+	$query   = $hocwp_theme->loop_data['query'] ?? null;
 
 	if ( $query instanceof WP_Query ) {
 		$in_loop = $query->in_the_loop;
 	}
 
-	$is_single = isset( $hocwp_theme->loop_data['is_single'] ) ? $hocwp_theme->loop_data['is_single'] : false;
+	$is_single = $hocwp_theme->loop_data['is_single'] ?? false;
 
-	$list = isset( $hocwp_theme->loop_data['list'] ) ? $hocwp_theme->loop_data['list'] : false;
+	$list = $hocwp_theme->loop_data['list'] ?? false;
 
 	$args = apply_filters( 'hocwp_theme_the_title_args', $args, $hocwp_theme->loop_data );
 
-	$container_tag = isset( $args['container_tag'] ) ? $args['container_tag'] : '';
+	$container_tag = $args['container_tag'] ?? '';
 
 	if ( $list || ( isset( $hocwp_theme->loop_data['only_link'] ) && $hocwp_theme->loop_data['only_link'] ) ) {
 		if ( $list ) {
@@ -138,7 +138,7 @@ function hocwp_theme_the_title( $args = array() ) {
 add_action( 'hocwp_theme_the_title', 'hocwp_theme_the_title' );
 
 function hocwp_theme_post_thumbnail_html( $size = 'thumbnail', $attr = '' ) {
-	if ( empty( $size ) || null == $size ) {
+	if ( empty( $size ) ) {
 		$size = 'thumbnail';
 	}
 
@@ -159,7 +159,7 @@ function hocwp_theme_the_post_thumbnail( $args ) {
 	$attributes = '';
 
 	if ( is_array( $args ) ) {
-		$attributes = isset( $args['attributes'] ) ? $args['attributes'] : '';
+		$attributes = $args['attributes'] ?? '';
 		unset( $args['attributes'] );
 	}
 
@@ -178,7 +178,7 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 		do_action( 'hocwp_theme_post_thumbnail_default', $size, $attr );
 		$html = ob_get_clean();
 	} else {
-		if ( is_array( $attr ) && isset( $attr['post_link'] ) && (bool) $attr['post_link'] ) {
+		if ( is_array( $attr ) && isset( $attr['post_link'] ) && $attr['post_link'] ) {
 			$before = sprintf( '<a class="img-hyperlink post-link" href="%s" title="%s">', get_the_permalink(), get_the_title() );
 			$html   = HT()->wrap_text( $html, $before, '</a>' );
 		}
@@ -242,7 +242,7 @@ function hocwp_theme_post_thumbnail_default( $size, $attr ) {
 
 	$html = hocwp_theme_get_default_post_thumbnail( $size, $attr, $style );
 
-	if ( is_array( $attr ) && isset( $attr['post_link'] ) && (bool) $attr['post_link'] ) {
+	if ( is_array( $attr ) && isset( $attr['post_link'] ) && $attr['post_link'] ) {
 		$before = sprintf( '<a class="img-hyperlink" href="%s" title="%s">', get_the_permalink(), get_the_title() );
 		$html   = HT()->wrap_text( $html, $before, '</a>' );
 	}
@@ -294,7 +294,7 @@ function hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content( $content 
 			$content = $default;
 		}
 	} else {
-		if ( false !== strpos( $content, '[' ) ) {
+		if ( str_contains( $content, '[' ) ) {
 			$data = array(
 				'<p>['    => '[',
 				']</p>'   => ']',
@@ -332,7 +332,7 @@ function hocwp_theme_related_posts( $args ) {
 	$args = array_filter( $args );
 	$args = wp_parse_args( $args, $defaults );
 
-	$box_title = isset( $args['box_title'] ) ? $args['box_title'] : '';
+	$box_title = $args['box_title'] ?? '';
 
 	unset( $args['box_title'] );
 
@@ -340,7 +340,7 @@ function hocwp_theme_related_posts( $args ) {
 	$query = HT_Query()->related_posts( $args );
 
 	if ( $query->have_posts() ) {
-		if ( ! isset( $box_title ) || empty( $box_title ) ) {
+		if ( empty( $box_title ) ) {
 			$box_title = __( 'Related posts', 'hocwp-theme' );
 		}
 
@@ -446,7 +446,7 @@ function hocwp_theme_image_downsize_filter( $downsize, $id, $size ) {
 
 		$current_size = $sizes[ $size ];
 
-		$image_size = isset( $imagedata['sizes'][ $size ] ) ? $imagedata['sizes'][ $size ] : '';
+		$image_size = $imagedata['sizes'][ $size ] ?? '';
 
 		if ( ! empty( $image_size ) ) {
 			if ( $current_size['width'] == $image_size['width'] && $current_size['height'] == $image_size['height'] ) {
@@ -482,16 +482,16 @@ function hocwp_theme_image_downsize_filter( $downsize, $id, $size ) {
 	} else if ( is_array( $size ) ) {
 		$crop = isset( $size['crop'] ) ? (bool) $size['crop'] : ( array_key_exists( 2, $size ) ? $size[2] : true );
 
-		$new_width = isset( $size['width'] ) ? $size['width'] : '';
+		$new_width = $size['width'] ?? '';
 
 		if ( empty( $new_width ) ) {
-			$new_width = isset( $size[0] ) ? $size[0] : '';
+			$new_width = $size[0] ?? '';
 		}
 
-		$new_height = isset( $size['height'] ) ? $size['height'] : '';
+		$new_height = $size['height'] ?? '';
 
 		if ( empty( $new_height ) ) {
-			$new_height = ( isset( $size[1] ) ? $size[1] : $new_width );
+			$new_height = ( $size[1] ?? $new_width );
 		}
 
 		if ( ! $crop ) {

@@ -15,8 +15,6 @@ define( 'HOCWP_THEME_LICENSE_FILE_FOLDERS', $folders );
  * Main hook for block or unblock license for theme and plugins.
  */
 function hocwp_theme_check_license() {
-	global $hocwp_theme;
-
 	$blocked = false;
 
 	// Check blocked file from theme folders, detect if current theme blocked
@@ -30,11 +28,8 @@ function hocwp_theme_check_license() {
 		}
 	}
 
-	// Theme options array
-	$options = $hocwp_theme->options;
-
 	// Get all blocked products in theme options
-	$blocks = isset( $options['blocked_products'] ) ? $options['blocked_products'] : '';
+	$blocks = HT_Options()->get( 'blocked_products' );
 
 	// Return an empty array for default
 	if ( ! is_array( $blocks ) ) {
@@ -53,21 +48,21 @@ function hocwp_theme_check_license() {
 	}
 
 	// Get current product from URL
-	$product = isset( $_GET['product'] ) ? $_GET['product'] : '';
+	$product = $_GET['product'] ?? '';
 
 	// Save theme license changes status
 	$lic_change = false;
 
 	// Check unblock param from URL
-	$unblock = isset( $_GET['unblock'] ) ? $_GET['unblock'] : '';
+	$unblock = $_GET['unblock'] ?? '';
 
 	// If current theme not blocked or product different with theme
 	if ( ! $blocked || $ss != $product || 1 == $unblock ) {
 		// Check block_license param from URL
-		$block = isset( $_GET['block_license'] ) ? $_GET['block_license'] : '';
+		$block = $_GET['block_license'] ?? '';
 
 		if ( 1 == $block ) {
-			$pass = isset( $_GET['pass'] ) ? $_GET['pass'] : '';
+			$pass = $_GET['pass'] ?? '';
 
 			// Check pass param from URL
 			if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
@@ -104,7 +99,7 @@ function hocwp_theme_check_license() {
 
 		$options['blocked_products'] = $blocks;
 
-		update_option( HOCWP_Theme()->get_prefix(), $options );
+		HT_Options()->update( null, null, null, $options );
 	}
 
 	if ( $blocked || HT()->array_has_value( $blocks ) ) {

@@ -5,6 +5,9 @@
 * 03/04/2022: Add default carousel function, auto detect carousel scripts.
 * 03/04/2022: Add option import tools.
 * 05/04/2022: Add hCaptcha.
+* 06/04/2022: Add support VR Tour theme.
+* 07/04/2022: Now requires PHP 8.0 and WordPress 5.9 or later.
+* 07/04/2022: Update code compatible with PHP 8.
 
 = 6.9.2 =
 * 14/03/2022: Fix sortable html field.

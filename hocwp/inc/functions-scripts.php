@@ -180,9 +180,7 @@ function hocwp_theme_localize_script_l10n() {
 		$args = apply_filters( 'hocwp_theme_localize_script_l10n_admin', $args );
 	}
 
-	$args = apply_filters( 'hocwp_theme_localize_script_l10n', $args );
-
-	return $args;
+	return apply_filters( 'hocwp_theme_localize_script_l10n', $args );
 }
 
 function hocwp_theme_load_more_button() {
@@ -274,7 +272,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 
 	if ( is_object( $colors ) ) {
 		$bg     = end( $colors->colors );
-		$border = isset( $colors->colors[2] ) ? $colors->colors[2] : end( $colors->colors );
+		$border = $colors->colors[2] ?? end( $colors->colors );
 
 		$css = '.hocwp-theme .settings-box .header {
 				background: ' . $bg . ';
@@ -325,10 +323,9 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 
 function hocwp_theme_load_google_maps_script( $google_api_key = '' ) {
 	if ( empty( $google_api_key ) ) {
-		global $hocwp_theme;
-		$options = $hocwp_theme->options;
+		$options = HT_Options()->get( 'social' );
 
-		$google_api_key = isset( $options['social']['google_api_key'] ) ? $options['social']['google_api_key'] : '';
+		$google_api_key = $options['google_api_key'] ?? '';
 	}
 
 	if ( ! empty( $google_api_key ) ) {
@@ -347,8 +344,7 @@ function hocwp_theme_load_google_maps_script( $google_api_key = '' ) {
 }
 
 function hocwp_theme_frontend_and_backend_scripts() {
-	global $hocwp_theme;
-	$options = $hocwp_theme->options;
+	wp_enqueue_script( 'utils' );
 
 	//hocwp_theme_load_google_maps_script();
 
@@ -423,8 +419,8 @@ function hocwp_theme_register_global_scripts() {
 	$deps = array( 'jquery', 'hocwp-theme', 'hocwp-theme-ajax-button' );
 	wp_register_script( 'hocwp-theme-update-meta', $src, $deps, false, true );
 
-	$src  = HOCWP_THEME_CORE_URL . '/js/boolean-meta' . HOCWP_THEME_JS_SUFFIX;
-	$deps = array( 'jquery', 'hocwp-theme', 'hocwp-theme-ajax-button' );
+	$src = HOCWP_THEME_CORE_URL . '/js/boolean-meta' . HOCWP_THEME_JS_SUFFIX;
+
 	wp_register_script( 'hocwp-theme-boolean-meta', $src, $deps, false, true );
 
 	$src  = HOCWP_THEME_CORE_URL . '/js/combobox' . HOCWP_THEME_JS_SUFFIX;

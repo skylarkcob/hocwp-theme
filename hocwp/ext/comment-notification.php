@@ -15,7 +15,7 @@ if ( ! $load ) {
 }
 
 function hocwp_theme_comment_notification_transition_comment_status_action( $new_status, $old_status, $comment ) {
-	if ( 'approved' == $new_status ) {
+	if ( 'approved' == $new_status && $old_status != $new_status ) {
 		hocwp_theme_comment_reply_notification( $comment );
 	}
 }
@@ -23,7 +23,9 @@ function hocwp_theme_comment_notification_transition_comment_status_action( $new
 add_action( 'transition_comment_status', 'hocwp_theme_comment_notification_transition_comment_status_action', 10, 3 );
 
 function hocwp_theme_comment_notification_wp_insert_comment_action( $id, $comment ) {
-	hocwp_theme_comment_reply_notification( $comment );
+	if ( HT()->is_positive_number( $id ) ) {
+		hocwp_theme_comment_reply_notification( $comment );
+	}
 }
 
 add_action( 'wp_insert_comment', 'hocwp_theme_comment_notification_wp_insert_comment_action', 10, 2 );
@@ -45,12 +47,13 @@ function hocwp_theme_comment_reply_notification( $comment ) {
 			$parent = get_comment( $comment->comment_parent );
 
 			if ( is_email( $parent->comment_author_email ) && $parent->comment_author_email != $comment->comment_author_email ) {
-				global $hocwp_theme;
+				$options = HT_Options()->get( 'discussion' );
 
-				$options = $hocwp_theme->options['discussion'];
-				$obj     = get_post( $parent->comment_post_ID );
-				$subject = isset( $options['cn_mail_subject'] ) ? $options['cn_mail_subject'] : '';
-				$tags    = hocwp_theme_notify_comment_tags();
+				$obj = get_post( $parent->comment_post_ID );
+
+				$subject = $options['cn_mail_subject'] ?? '';
+
+				$tags = hocwp_theme_notify_comment_tags();
 
 				$replace = array(
 					$obj->post_title,

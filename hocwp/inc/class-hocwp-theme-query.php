@@ -31,7 +31,7 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function pages_by_custom_template( $file, $args = array() ) {
-		$file = rtrim( $file, '.php' );
+		$file = HT()->trim_string( $file, '.php' );
 
 		return $this->pages_by_template( 'custom/page-templates/' . $file . '.php', $args );
 	}
@@ -65,7 +65,7 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function by_post_format( $format, $args = array() ) {
-		$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+		$tax_query = $args['tax_query'] ?? array();
 
 		if ( ! is_array( $format ) ) {
 			$format = array( $format );
@@ -145,7 +145,7 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function related_posts( $args = array() ) {
-		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+		$post_id = $args['post_id'] ?? get_the_ID();
 
 		$obj = get_post( $post_id );
 
@@ -169,7 +169,7 @@ final class HOCWP_Theme_Query {
 		if ( false === ( $query = get_transient( $tr_name ) ) ) {
 			$query = new WP_Query();
 
-			$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : '';
+			$taxonomy = $args['taxonomy'] ?? '';
 			unset( $args['taxonomy'] );
 
 			if ( ! empty( $taxonomy ) ) {
@@ -177,7 +177,7 @@ final class HOCWP_Theme_Query {
 					$taxonomy = array( $taxonomy );
 				}
 
-				$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : '';
+				$tax_query = $args['tax_query'] ?? '';
 
 				if ( ! is_array( $tax_query ) ) {
 					$tax_query = array();
@@ -251,7 +251,7 @@ final class HOCWP_Theme_Query {
 			$taxs = get_object_taxonomies( $obj );
 
 			if ( HT()->array_has_value( $taxs ) ) {
-				$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+				$tax_query = $args['tax_query'] ?? array();
 
 				if ( ! is_array( $tax_query ) ) {
 					$tax_query = array();
@@ -377,11 +377,11 @@ final class HOCWP_Theme_Query {
 	public function get_posts_by_menu_order( $menu_order, $args = array() ) {
 		global $wpdb;
 
-		$join    = isset( $args['join'] ) ? $args['join'] : '';
-		$where   = isset( $args['where'] ) ? $args['where'] : '';
-		$groupby = isset( $args['groupby'] ) ? $args['groupby'] : '';
-		$orderby = isset( $args['orderby'] ) ? $args['orderby'] : '';
-		$limit   = isset( $args['limit'] ) ? $args['limit'] : '';
+		$join    = $args['join'] ?? '';
+		$where   = $args['where'] ?? '';
+		$groupby = $args['groupby'] ?? '';
+		$orderby = $args['orderby'] ?? '';
+		$limit   = $args['limit'] ?? '';
 
 		$query = "SELECT ID FROM ";
 		$query .= $wpdb->posts;
@@ -410,7 +410,7 @@ final class HOCWP_Theme_Query {
 
 		$columns = $wpdb->get_col( $query );
 
-		$output = isset( $args['output'] ) ? $args['output'] : object;
+		$output = $args['output'] ?? object;
 
 		if ( HT()->array_has_value( $columns ) ) {
 			if ( object == $output ) {
@@ -426,7 +426,7 @@ final class HOCWP_Theme_Query {
 			'hide_empty' => false
 		);
 
-		if ( ! is_array( $args ) && is_string( $args ) ) {
+		if ( is_string( $args ) ) {
 			$args = array( 'taxonomy' => $args );
 		}
 
@@ -508,7 +508,7 @@ final class HOCWP_Theme_Query {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$meta_query = isset( $args['meta_query'] ) ? $args['meta_query'] : '';
+		$meta_query = $args['meta_query'] ?? '';
 
 		if ( ! is_array( $meta_query ) ) {
 			$meta_query = array();
@@ -534,7 +534,7 @@ final class HOCWP_Theme_Query {
 
 	public function get_post_by_column( $column_name, $column_value, $output = 'OBJECT', $args = array() ) {
 		global $wpdb;
-		$post_types = isset( $args['post_type'] ) ? $args['post_type'] : '';
+		$post_types = $args['post_type'] ?? '';
 		$post_types = (array) $post_types;
 
 		$output = strtoupper( $output );
@@ -646,13 +646,11 @@ final class HOCWP_Theme_Query {
 			}
 
 			if ( isset( $args[ $key ] ) ) {
-				array_push( $args[ $key ], $item );
+				$args[ $key ][] = $item;
 			} else {
 				$args[ $key ] = array( $item );
 			}
 		}
-
-		return $args;
 	}
 
 	public function add_tax_query_item( $tax_item, &$args ) {

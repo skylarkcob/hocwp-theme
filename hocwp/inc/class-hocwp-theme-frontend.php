@@ -56,7 +56,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$wrap = $args['condition'] ? 'home_wrap' : 'single_wrap';
 
-		if ( false === strpos( $logo, '<img' ) && ( false === strpos( $contents, '<h1' ) || false === strpos( $wrap, '<h1' ) ) ) {
+		if ( ! str_contains( $logo, '<img' ) && ( ! str_contains( $contents, '<h1' ) || ! str_contains( $wrap, '<h1' ) ) ) {
 			$html = sprintf( $args[ $wrap ], $classname, $contents );
 		} else {
 			$html = $logo;
@@ -87,13 +87,13 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$args['fallback_cb'] = 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap::fallback';
 		$args['walker']      = new HOCWP_Theme_Walker_Nav_Menu_Bootstrap();
 
-		$container_class = isset( $args['container_class'] ) ? $args['container_class'] : '';
+		$container_class = $args['container_class'] ?? '';
 
 		$container_class .= ' collapse navbar-collapse';
 
 		$args['container_class'] = trim( $container_class );
 
-		$menu_class = isset( $args['menu_class'] ) ? $args['menu_class'] : '';
+		$menu_class = $args['menu_class'] ?? '';
 
 		$menu_class .= ' navbar-nav mr-auto';
 
@@ -115,9 +115,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$mobile_control = $args['mobile_control'] ?? false;
 
-		$container_class = isset( $args['container_class'] ) ? $args['container_class'] : '';
+		$container_class = $args['container_class'] ?? '';
 
-		$position = isset( $args['position'] ) ? $args['position'] : 'left';
+		$position = $args['position'] ?? 'left';
 
 		if ( 'left' !== $position ) {
 			$position = 'right';
@@ -131,15 +131,15 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$container_class .= ' full-width displaying-stretch';
 		}
 
-		$button = isset( $args['mobile_button'] ) ? $args['mobile_button'] : '';
+		$button = $args['mobile_button'] ?? '';
 
-		$button_control = isset( $args['button_control'] ) ? $args['button_control'] : '';
+		$button_control = $args['button_control'] ?? '';
 
 		if ( empty( $button ) ) {
 			$button = hocwp_theme_menu_button( $button_control );
 		}
 
-		$mobile_button_id = isset( $args['mobile_button_id'] ) ? $args['mobile_button_id'] : '';
+		$mobile_button_id = $args['mobile_button_id'] ?? '';
 
 		if ( empty( $mobile_button_id ) ) {
 			if ( empty( $button_control ) ) {
@@ -178,7 +178,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 			}
 		} else {
-			$file = rtrim( $file, '.php' );
+			$file = HT()->trim_string( $file, '.php' );
 
 			return is_page_template( 'custom/page-templates/' . $file . '.php' );
 		}
@@ -205,7 +205,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function pagination( $args = array() ) {
-		if ( $args instanceof WP_Query ) {
+		if ( ! is_array( $args ) && $args instanceof WP_Query ) {
 			$args = array( 'query' => $args );
 		}
 
@@ -261,22 +261,22 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		);
 
 		$args = wp_parse_args( $args, $pla );
-		$next = isset( $args['next'] ) ? $args['next'] : '';
+		$next = $args['next'] ?? '';
 
-		$load_more = isset( $args['load_more'] ) ? $args['load_more'] : '';
+		$load_more = $args['load_more'] ?? '';
 
 		if ( $load_more ) {
 			$next = true;
 		}
 
 		if ( empty( $next ) ) {
-			$next = isset( $args['next_text'] ) ? $args['next_text'] : '';
+			$next = $args['next_text'] ?? '';
 		}
 
-		$prev = isset( $args['prev'] ) ? $args['prev'] : '';
+		$prev = $args['prev'] ?? '';
 
 		if ( empty( $prev ) ) {
-			$prev = isset( $args['prev_text'] ) ? $args['prev_text'] : '';
+			$prev = $args['prev_text'] ?? '';
 		}
 
 		if ( ! empty( $next ) || ! empty( $prev ) ) {
@@ -297,7 +297,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$dynamic_size = HT()->convert_to_boolean( $args['dynamic_size'] );
 
-		$first_last = isset( $args['first_last'] ) ? (bool) $args['first_last'] : false;
+		$first_last = $args['first_last'] ?? false;
 
 		if ( ! $first_last ) {
 			if ( isset( $args['first'] ) && isset( $args['last'] ) ) {
@@ -305,7 +305,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 		}
 
-		if ( $load_more || ! empty( $load_more ) ) {
+		if ( $load_more ) {
 			$dynamic_size = false;
 
 			$args['mid_size'] = $big;
@@ -379,9 +379,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$items = paginate_links( $args );
 
 		if ( HT()->array_has_value( $items ) ) {
-			$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
+			$bootstrap = $args['bootstrap'] ?? false;
 
-			$layout = isset( $args['layout'] ) ? $args['layout'] : '';
+			$layout = $args['layout'] ?? '';
 
 			if ( empty( $layout ) && $bootstrap ) {
 				$layout = 'bootstrap';
@@ -398,9 +398,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$class .= ' layout-' . $layout;
 			$class = trim( $class );
 
-			$ajax = isset( $args['ajax'] ) ? (bool) $args['ajax'] : false;
+			$ajax = $args['ajax'] ?? false;
 
-			$list_id = isset( $args['list_id'] ) ? $args['list_id'] : '';
+			$list_id = $args['list_id'] ?? '';
 
 			if ( $load_more ) {
 				$ajax = true;
@@ -410,7 +410,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 			}
 
-			$root_url = get_pagenum_link( 1 );
+			$root_url = get_pagenum_link();
 			$root_url = apply_filters( 'hocwp_theme_pagination_first_item_url', $root_url, $args );
 
 			if ( $bootstrap ) {
@@ -449,10 +449,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			if ( $first_last ) {
-				$first = isset( $args['first'] ) ? $args['first'] : '';
+				$first = $args['first'] ?? '';
 
 				if ( empty( $first ) ) {
-					$first = isset( $args['first_text'] ) ? $args['first_text'] : '';
+					$first = $args['first_text'] ?? '';
 				}
 
 				if ( ! empty( $first ) && 2 < $current ) {
@@ -471,7 +471,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				if ( $bootstrap ) {
 					$item = str_replace( 'page-numbers', 'page-numbers page-link', $item ) . PHP_EOL;
 
-					if ( false !== strpos( $item, 'current' ) ) {
+					if ( str_contains( $item, 'current' ) ) {
 						$class .= ' active';
 					}
 				}
@@ -484,10 +484,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			if ( $first_last ) {
-				$last = isset( $args['last'] ) ? $args['last'] : '';
+				$last = $args['last'] ?? '';
 
 				if ( empty( $last ) ) {
-					$last = isset( $args['last_text'] ) ? $args['last_text'] : '';
+					$last = $args['last_text'] ?? '';
 				}
 
 				if ( ! empty( $last ) && $current < ( $total - 1 ) ) {
@@ -500,7 +500,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 			}
 
-			$current_total = isset( $args['current_total'] ) ? $args['current_total'] : false;
+			$current_total = $args['current_total'] ?? false;
 
 			if ( $current_total ) {
 				if ( ! is_string( $current_total ) || ( ! HT()->string_contain( $current_total, '[CURRENT]' ) && ! HT()->string_contain( $current_total, '[TOTAL]' ) ) ) {
@@ -870,7 +870,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			return;
 		}
 
-		$bootstrap = isset( $args['bootstrap'] ) ? $args['bootstrap'] : false;
+		$bootstrap = $args['bootstrap'] ?? false;
 
 		if ( ! $bootstrap && HT_Frontend()->is_yoast_breadcrumb() && ( empty( $type ) || 'yoast_seo' == $type ) ) {
 			/** @noinspection PhpUndefinedFunctionInspection */
@@ -903,7 +903,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$type = 'simple';
 		}
 
-		$separator = isset( $args['separator'] ) ? $args['separator'] : '&#xBB;';
+		$separator = $args['separator'] ?? '&#xBB;';
 
 		if ( $bootstrap ) {
 			/** @noinspection HtmlUnknownTarget */
@@ -932,8 +932,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$has_cat = false;
 
 			if ( ! ( $term instanceof WP_Term ) ) {
-				$terms   = wp_get_post_categories( $obj->ID );
-				$has_cat = false;
+				$terms = wp_get_post_categories( $obj->ID );
 
 				if ( ! is_wp_error( $terms ) && HT()->array_has_value( $terms ) ) {
 					$term = array_shift( $terms );
@@ -977,7 +976,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						}
 
 						if ( $taxonomy instanceof WP_Taxonomy ) {
-							$terms = wp_get_post_terms( $obj->ID, $taxonomy->name );
+							$terms = (array) wp_get_post_terms( $obj->ID, $taxonomy->name );
 							$term  = current( $terms );
 
 							if ( $term instanceof WP_Term ) {
@@ -1090,23 +1089,23 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function facebook_share_button( $args = array() ) {
-		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+		$post_id = $args['post_id'] ?? get_the_ID();
 
-		$url = isset( $args['url'] ) ? $args['url'] : '';
+		$url = $args['url'] ?? '';
 
 		if ( empty( $url ) ) {
 			$url = get_permalink( $post_id );
 		}
 
-		$layout = isset( $args['layout'] ) ? $args['layout'] : 'button_count';
-		$action = isset( $args['action'] ) ? $args['action'] : 'like';
+		$layout = $args['layout'] ?? 'button_count';
+		$action = $args['action'] ?? 'like';
 
-		$show_faces = isset( $args['show_faces'] ) ? $args['show_faces'] : false;
+		$show_faces = $args['show_faces'] ?? false;
 		$show_faces = HT()->bool_to_string( $show_faces );
 
-		$share = isset( $args['share'] ) ? $args['share'] : true;
+		$share = $args['share'] ?? true;
 
-		$recommend = isset( $args['recommend'] ) ? $args['recommend'] : false;
+		$recommend = $args['recommend'] ?? false;
 
 		if ( $recommend ) {
 			$share = false;
@@ -1147,7 +1146,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
         </div>
         <script>
             function updateFacebookData(event) {
-                var xhr = new XMLHttpRequest();
+                let xhr = new XMLHttpRequest();
                 xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
                 xhr.send();
             }
@@ -1169,11 +1168,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function addthis_toolbox( $args = array() ) {
-		$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
-		$class   = isset( $args['class'] ) ? $args['class'] : 'addthis_native_toolbox';
+		$post_id = $args['post_id'] ?? get_the_ID();
+		$class   = $args['class'] ?? 'addthis_native_toolbox';
 		$class   = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class );
 		$class   .= ' addthis-tools';
-		$url     = isset( $args['url'] ) ? $args['url'] : get_the_permalink();
+		$url     = $args['url'] ?? get_the_permalink();
 		?>
         <!-- Go to www.addthis.com/dashboard to customize your tools -->
         <div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
@@ -1268,7 +1267,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
             }
 
             function scrollToTop(scrollDuration) {
-                var cosParameter = window.scrollY / 2,
+                let cosParameter = window.scrollY / 2,
                     scrollCount = 0,
                     oldTimestamp = performance.now();
 
@@ -1308,7 +1307,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 
 		foreach ( $sort as $index => $sort_key ) {
-			$multi = ( false !== strpos( $sort_key, $multi_char ) );
+			$multi = ( str_contains( $sort_key, $multi_char ) );
 
 			if ( $multi ) {
 				$html = $this->convert_loop_tag_to_html( $thumb_size, explode( $multi_char, $sort_key ), $post_id );
@@ -1319,7 +1318,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				// User can use post_thumbnail or thumbnail tag for display post thumbnail HTML
 				$html = str_replace( 'post_thumbnail', 'thumbnail', $html );
 
-				if ( $thumb_size && false !== strpos( $html, 'thumbnail' ) ) {
+				if ( $thumb_size && str_contains( $html, 'thumbnail' ) ) {
 					$thumbnail = get_the_post_thumbnail( $post_id, $thumb_size );
 
 					if ( ! empty( $thumbnail ) ) {
@@ -1329,7 +1328,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$html = str_replace( 'thumbnail', $thumbnail, $html );
 				}
 
-				if ( false !== strpos( $html, 'post_title' ) ) {
+				if ( str_contains( $html, 'post_title' ) ) {
 					$post_title = get_the_title( $post_id );
 
 					if ( ! empty( $post_title ) ) {
@@ -1340,7 +1339,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$html = str_replace( 'post_title', $post_title, $html );
 				}
 
-				if ( false !== strpos( $html, 'posted_on' ) ) {
+				if ( str_contains( $html, 'posted_on' ) ) {
 					$parts = explode( '|', $html );
 
 					$count = count( $parts );
@@ -1378,7 +1377,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$html = str_replace( 'posted_on', $posted_on, $html );
 				}
 
-				if ( false !== strpos( $html, 'post_excerpt' ) ) {
+				if ( str_contains( $html, 'post_excerpt' ) ) {
 					$excerpt = get_the_excerpt( $post_id );
 
 					if ( ! empty( $excerpt ) ) {
@@ -1388,7 +1387,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$html = str_replace( 'post_excerpt', $excerpt, $html );
 				}
 
-				if ( false !== strpos( $html, 'category' ) ) {
+				if ( str_contains( $html, 'category' ) ) {
 					$taxs  = get_object_taxonomies( get_post_type( $post_id ), 'objects' );
 					$terms = '';
 
@@ -1417,7 +1416,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$html = str_replace( 'category', $terms, $html );
 				}
 
-				if ( false !== strpos( $html, 'read_more' ) ) {
+				if ( str_contains( $html, 'read_more' ) ) {
 					$more = sprintf( __( '<a href="%s" class="read-more-link">Read more &rarr;</a>', 'hocwp-theme' ), get_the_permalink( $post_id ) );
 
 					$html = str_replace( 'read_more', $more, $html );
@@ -1427,7 +1426,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			if ( $multi ) {
 				$class = 'details-wrap';
 
-				if ( false !== strpos( $sort_key, 'thumbnail' ) ) {
+				if ( str_contains( $sort_key, 'thumbnail' ) ) {
 					$class .= ' thumb-box';
 				}
 

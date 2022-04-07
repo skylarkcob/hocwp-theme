@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-define( 'HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS', array(
+const HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS = array(
 	'com.vn',
 	'org.vn',
 	'edu.vn',
@@ -18,7 +18,7 @@ define( 'HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS', array(
 	'gov.vn',
 	'co.uk',
 	'de.com'
-) );
+);
 
 if ( ! trait_exists( 'HOCWP_Theme_PHP' ) ) {
 	require_once dirname( __FILE__ ) . '/trait-php.php';
@@ -127,7 +127,7 @@ final class HOCWP_Theme {
 			$keyspace = $this->safe_string;
 		}
 
-		$pieces = [ ];
+		$pieces = [];
 
 		$max = mb_strlen( $keyspace, '8bit' ) - 1;
 
@@ -238,7 +238,7 @@ final class HOCWP_Theme {
 				if ( $index > $count ) {
 					$array = $this->_insert_to_array_helper( $array, $item, $key );
 				} else {
-					$count = $j = 0;
+					$count = 0;
 					$tmp   = array();
 
 					foreach ( $array as $i => $value ) {
@@ -274,7 +274,7 @@ final class HOCWP_Theme {
 	}
 
 	public function get_value_in_array( $arr, $key, $default = '' ) {
-		if ( ! is_array( $arr ) || is_object( $key ) || is_object( $arr ) || $this->is_string_empty( $key ) ) {
+		if ( ! is_array( $arr ) || is_object( $key ) || $this->is_string_empty( $key ) ) {
 			return $default;
 		}
 
@@ -293,43 +293,41 @@ final class HOCWP_Theme {
 				} else {
 					$tmp = $arr;
 
-					if ( is_array( $tmp ) ) {
-						$has_value = false;
-						$level     = 0;
+					$has_value = false;
+					$level     = 0;
 
-						foreach ( $key as $index => $child_key ) {
-							if ( is_array( $child_key ) ) {
-								if ( count( $child_key ) == 1 ) {
-									$child_key = array_shift( $child_key );
-								}
+					foreach ( $key as $child_key ) {
+						if ( is_array( $child_key ) ) {
+							if ( count( $child_key ) == 1 ) {
+								$child_key = array_shift( $child_key );
+							}
 
-								$result = $this->get_value_in_array( $tmp, $child_key );
-							} else {
-								if ( isset( $tmp[ $child_key ] ) ) {
-									$tmp       = $tmp[ $child_key ];
-									$has_value = true;
-									$level ++;
-									$has_key = true;
-								}
+							$result = $this->get_value_in_array( $tmp, $child_key );
+						} else {
+							if ( isset( $tmp[ $child_key ] ) ) {
+								$tmp       = $tmp[ $child_key ];
+								$has_value = true;
+								$level ++;
+								$has_key = true;
 							}
 						}
+					}
 
-						if ( ! $has_value ) {
-							reset( $key );
-							$first_key = current( $key );
+					if ( ! $has_value ) {
+						reset( $key );
+						$first_key = current( $key );
 
-							if ( HT()->array_has_value( $arr ) ) {
-								$tmp = $this->get_value_in_array( $arr, $first_key );
+						if ( HT()->array_has_value( $arr ) ) {
+							$tmp = $this->get_value_in_array( $arr, $first_key );
 
-								if ( HT()->array_has_value( $tmp ) ) {
-									$result = $this->get_value_in_array( $tmp, $key );
-								}
+							if ( HT()->array_has_value( $tmp ) ) {
+								$result = $this->get_value_in_array( $tmp, $key );
 							}
 						}
+					}
 
-						if ( $has_value && $this->is_string_empty( $result ) ) {
-							$result = $tmp;
-						}
+					if ( $has_value && $this->is_string_empty( $result ) ) {
+						$result = $tmp;
 					}
 				}
 			} else {
@@ -361,18 +359,11 @@ final class HOCWP_Theme {
 	public function get_method_value( $key, $method = 'post', $default = '' ) {
 		$method = strtoupper( $method );
 
-		switch ( $method ) {
-			case 'POST':
-				$result = $this->get_value_in_array( $_POST, $key, $default );
-				break;
-			case 'GET':
-				$result = $this->get_value_in_array( $_GET, $key, $default );
-				break;
-			default:
-				$result = $this->get_value_in_array( $_REQUEST, $key, $default );
-		}
-
-		return $result;
+		return match ( $method ) {
+			'POST' => $this->get_value_in_array( $_POST, $key, $default ),
+			'GET' => $this->get_value_in_array( $_GET, $key, $default ),
+			default => $this->get_value_in_array( $_REQUEST, $key, $default ),
+		};
 	}
 
 	public function array_merge_recursive( array $array1, array $array2 ) {
@@ -417,8 +408,10 @@ final class HOCWP_Theme {
 		return $result;
 	}
 
-	public function is_positive_number( $number ) {
-		return ( is_numeric( $number ) && $number > 0 );
+	public function is_positive_number( $number, $compare = 0 ) {
+		$compare = abs( $compare );
+
+		return ( is_numeric( $number ) && $number > $compare );
 	}
 
 	public function is_id_number( $number ) {
@@ -468,7 +461,7 @@ final class HOCWP_Theme {
 
 		$tmp = preg_replace( '/[^0-9.' . $keep . ']/', '', $string );
 
-		if ( null != $tmp && false != $tmp ) {
+		if ( $tmp ) {
 			return $tmp;
 		}
 
@@ -492,9 +485,7 @@ final class HOCWP_Theme {
 	}
 
 	public function change_html_attribute( $tag, $attr, $value ) {
-		$tag = preg_replace( '/' . $attr . '="(.*?)"/i', $attr . '="' . $value . '"', $tag );
-
-		return $tag;
+		return preg_replace( '/' . $attr . '="(.*?)"/i', $attr . '="' . $value . '"', $tag );
 	}
 
 	/**
@@ -511,9 +502,7 @@ final class HOCWP_Theme {
 			$attr = self::attributes_to_string( $attr );
 		}
 
-		$html = preg_replace( '^' . preg_quote( '<' . $tag . ' ' ) . '^', '<' . $tag . ' ' . $attr . ' ', $html );
-
-		return $html;
+		return preg_replace( '^' . preg_quote( '<' . $tag . ' ' ) . '^', '<' . $tag . ' ' . $attr . ' ', $html );
 	}
 
 	public function get_attribute_from_html_tag( $string, $attr_name, $tag_name ) {
@@ -545,7 +534,7 @@ final class HOCWP_Theme {
 	public function attribute_to_array( $attr ) {
 		if ( ! empty( $attr ) ) {
 			if ( ! is_array( $attr ) ) {
-				$has_amp = ( false !== strpos( $attr, 'amp' ) );
+				$has_amp = ( str_contains( $attr, 'amp' ) );
 
 				if ( $has_amp ) {
 					$attr = str_replace( 'amp', '', $attr );
@@ -573,9 +562,7 @@ final class HOCWP_Theme {
 			$json_string = json_decode( $json_string, true );
 		}
 
-		$json_string = (array) $json_string;
-
-		return $json_string;
+		return (array) $json_string;
 	}
 
 	public function string_to_datetime( $string, $format = '' ) {
@@ -586,7 +573,7 @@ final class HOCWP_Theme {
 		$string = str_replace( '/', '-', $string );
 		$string = trim( $string );
 
-		if ( false !== strpos( $format, ' ' ) && false !== strpos( $format, 'i' ) && false == strpos( $string, ' ' ) ) {
+		if ( str_contains( $format, ' ' ) && str_contains( $format, 'i' ) && false == strpos( $string, ' ' ) ) {
 			$string .= ' 23:59:59';
 		}
 
@@ -595,7 +582,7 @@ final class HOCWP_Theme {
 		return date( $format, $totime );
 	}
 
-	public function javascript_datetime_format( $php_format ) {
+	public function javascript_datetime_format( $php_format, $escaping = false ) {
 		$matched_symbols = array(
 			'd' => 'dd',
 			'D' => 'D',
@@ -627,17 +614,12 @@ final class HOCWP_Theme {
 			'u' => ''
 		);
 
-		$result   = '';
-		$escaping = false;
+		$result = '';
 
 		for ( $i = 0; $i < strlen( $php_format ); $i ++ ) {
 			$char = $php_format[ $i ];
 
-			if ( isset( $matched_symbols[ $char ] ) ) {
-				$result .= $matched_symbols[ $char ];
-			} else {
-				$result .= $char;
-			}
+			$result = $result . $matched_symbols[ $char ] ?? $result . $char;
 		}
 
 		if ( $escaping ) {
@@ -714,7 +696,7 @@ final class HOCWP_Theme {
 			return $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}
 
-		return isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
+		return $_SERVER['REMOTE_ADDR'] ?? '';
 	}
 
 	public function url_exists( $url ) {
@@ -739,7 +721,7 @@ final class HOCWP_Theme {
 		$img_formats = array( 'png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff', 'bmp', 'ico', 'webp', 'svg' );
 
 		$path_info = pathinfo( $url );
-		$extension = isset( $path_info['extension'] ) ? $path_info['extension'] : '';
+		$extension = $path_info['extension'] ?? '';
 		$extension = trim( strtolower( $extension ) );
 
 		if ( in_array( $extension, $img_formats ) ) {
@@ -825,7 +807,7 @@ final class HOCWP_Theme {
 	public function get_all_image_from_string( $data, $output = 'img' ) {
 		$output = trim( $output );
 		preg_match_all( '/<img[^>]+>/i', $data, $matches );
-		$matches = isset( $matches[0] ) ? $matches[0] : array();
+		$matches = $matches[0] ?? array();
 
 		if ( ! self::array_has_value( $matches ) && ! empty( $data ) ) {
 			if ( false !== HT()->string_contain( $data, '//' ) ) {
@@ -888,7 +870,7 @@ final class HOCWP_Theme {
 			}
 
 			if ( ! $result ) {
-				$result = false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Lighthouse' );
+				$result = str_contains( $_SERVER['HTTP_USER_AGENT'], 'Lighthouse' );
 			}
 		}
 
@@ -947,7 +929,7 @@ final class HOCWP_Theme {
 
 		$url    = strval( $url );
 		$parse  = parse_url( $url );
-		$result = isset( $parse['host'] ) ? $parse['host'] : '';
+		$result = $parse['host'] ?? '';
 
 		if ( $root && ! self::is_IP( $result ) ) {
 			$tmp   = explode( '.', $result );
@@ -973,9 +955,8 @@ final class HOCWP_Theme {
 		$result = str_replace( 'www.', '', $result );
 		$result = str_replace( 'https://', '', $result );
 		$result = str_replace( 'http://', '', $result );
-		$result = ltrim( $result, '//' );
 
-		return $result;
+		return ltrim( $result, '/' );
 	}
 
 	public function transmit( &$value, &$another, $filter = FILTER_SANITIZE_STRING ) {
@@ -1001,7 +982,7 @@ final class HOCWP_Theme {
 	}
 
 	public function bool_to_string( $value, $uppercase = false ) {
-		$value = ( (bool) $value ) ? 'true' : 'false';
+		$value = ( $value ) ? 'true' : 'false';
 
 		if ( $uppercase ) {
 			$value = strtoupper( $value );
@@ -1029,16 +1010,14 @@ final class HOCWP_Theme {
 
 		$diff = $now->diff( $date );
 
-		if ( $diff instanceof DateInterval ) {
-			$days = $diff->days;
+		$days = $diff->days;
 
-			if ( 0 === $days && 'today' === $check ) {
-				return true;
-			} elseif ( 1 === $days && 'tomorrow' === $check ) {
-				return true;
-			} elseif ( - 1 === $days && 'yesterday' === $check ) {
-				return true;
-			}
+		if ( 0 === $days && 'today' === $check ) {
+			return true;
+		} elseif ( 1 === $days && 'tomorrow' === $check ) {
+			return true;
+		} elseif ( - 1 === $days && 'yesterday' === $check ) {
+			return true;
 		}
 
 		return false;

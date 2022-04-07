@@ -27,12 +27,11 @@ function hocwp_theme_change_default_avatar( $avatar, $id_or_email, $size, $defau
 add_filter( 'get_avatar', 'hocwp_theme_change_default_avatar', 10, 6 );
 
 function hocwp_theme_comments_template( $args = array() ) {
-	global $hocwp_theme;
-	$options = $hocwp_theme->options;
+	$options = HT_Options()->get( 'discussion' );
 
 	$defaults = array(
 		'post_id'        => get_the_ID(),
-		'comment_system' => $options['discussion']['comment_system'] ?? 'default',
+		'comment_system' => $options['comment_system'] ?? 'default',
 		'tabs'           => array(
 			array(
 				'href' => 'facebook',
@@ -65,15 +64,13 @@ function hocwp_theme_comments_template( $args = array() ) {
 		$comment_system = $args['comment_system'];
 
 		switch ( $comment_system ) {
+			case 'google':
+			case 'gplus':
+			case 'default_and_facebook':
 			case 'tabber':
 				break;
 			case 'facebook':
 				hocwp_theme_comments_template_facebook( $args );
-				break;
-			case 'gplus':
-			case 'google':
-				break;
-			case 'default_and_facebook':
 				break;
 			case 'disqus':
 				hocwp_theme_comments_template_disqus();
@@ -188,13 +185,13 @@ function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post
 	?>
     <div id="disqus_thread"><?php _e( 'Loading...', 'hocwp-theme' ); ?></div>
     <script>
-        var disqus_config = function () {
+        let disqus_config = function () {
             this.page.url = "<?php echo $url; ?>";
             this.page.identifier = "<?php echo $identifier; ?>";
         };
 
         (function () {
-            var d = document, s = d.createElement("script"), ts = +new Date();
+            let d = document, s = d.createElement("script"), ts = +new Date();
             s.src = "//<?php echo $shortname; ?>.disqus.com/embed.js";
             s.setAttribute("data-timestamp", ts.toString());
             (d.head || d.body).appendChild(s);
@@ -207,7 +204,7 @@ function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post
 function hocwp_theme_add_captcha_to_comment_form( $submit_field ) {
 	if ( ! is_user_logged_in() ) {
 		$options = HT_Util()->get_theme_options( 'discussion' );
-		$captcha = isset( $options['captcha'] ) ? $options['captcha'] : '';
+		$captcha = $options['captcha'] ?? '';
 
 		if ( 1 == $captcha ) {
 			ob_start();
@@ -225,7 +222,7 @@ add_filter( 'comment_form_submit_field', 'hocwp_theme_add_captcha_to_comment_for
 function hocwp_theme_preprocess_comment_check_captcha( $commentdata ) {
 	if ( ! is_user_logged_in() ) {
 		$options = HT_Util()->get_theme_options( 'discussion' );
-		$captcha = isset( $options['captcha'] ) ? $options['captcha'] : '';
+		$captcha = $options['captcha'] ?? '';
 
 		if ( 1 == $captcha ) {
 			if ( isset( $_POST['g-recaptcha-response'] ) ) {

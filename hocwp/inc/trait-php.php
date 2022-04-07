@@ -10,10 +10,42 @@ trait HOCWP_Theme_PHP {
 
 	public function get_params_from_url( $url ) {
 		$parse = parse_url( $url );
-		$parse = isset( $parse['query'] ) ? $parse['query'] : '';
+		$parse = $parse['query'] ?? '';
 		parse_str( $parse, $params );
 
 		return $params;
+	}
+
+	public function is_start_with( $string, $word ) {
+		$len = strlen( $word );
+
+		return ( substr( $string, 0, $len ) === $word );
+	}
+
+	public function is_end_with( $string, $word ) {
+		$len = strlen( $word );
+
+		if ( $len == 0 ) {
+			return true;
+		}
+
+		return ( substr( $string, - $len ) === $word );
+	}
+
+	public function trim_string( $str, $word, $pos = 'left' ) {
+		$pos = strtolower( $pos );
+
+		if ( 'left' != $pos ) {
+			$pos = 'right';
+		}
+
+		if ( 'left' == $pos && $this->is_start_with( $str, $word ) ) {
+			$str = substr( $str, strlen( $word ) );
+		} elseif ( 'right' == $pos && $this->is_end_with( $str, $word ) ) {
+			$str = substr( $str, 0, strrpos( $str, $word ) );
+		}
+
+		return $str;
 	}
 
 	public function explode_empty_line( $string ) {
@@ -56,6 +88,10 @@ trait HOCWP_Theme_PHP {
 		}
 
 		return $ret;
+	}
+
+	public function is_array_key_valid( $key ) {
+		return ( is_string( $key ) || is_int( $key ) );
 	}
 
 	public function get_value_in_arrays( $key, $arr1, $arr2 ) {
@@ -124,18 +160,16 @@ trait HOCWP_Theme_PHP {
 
 		// Detect IE below 11
 		if ( strrpos( $agent, 'MSIE' ) !== false ) {
-			$parts   = explode( 'MSIE', $agent );
-			$version = (int) $parts[1];
+			$parts = explode( 'MSIE', $agent );
 
-			return $version;
+			return (int) $parts[1];
 		}
 
 		// Detect IE 11
 		if ( strrpos( $agent, 'Trident/' ) !== false ) {
-			$parts   = explode( 'rv:', $agent );
-			$version = (int) $parts[1];
+			$parts = explode( 'rv:', $agent );
 
-			return $version;
+			return (int) $parts[1];
 		}
 
 		// Not found
