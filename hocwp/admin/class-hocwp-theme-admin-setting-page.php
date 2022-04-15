@@ -632,6 +632,8 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$secs = $callback->settings_section;
 			$id   = $args['id'];
 
+			echo '<input class="section-info" type="hidden" data-id="' . esc_attr( $id ) . '">';
+
 			if ( isset( $secs[ $id ]['description'] ) ) {
 				echo wpautop( $secs[ $id ]['description'] );
 			} else {

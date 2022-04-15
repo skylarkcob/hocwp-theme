@@ -223,6 +223,18 @@ function hocwp_theme_settings_page_social_field() {
 	);
 
 	$fields[] = array(
+		'tab'   => 'social',
+		'id'    => 'addthis_widget_id',
+		'title' => 'AddThis Tool ID',
+		'args'  => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
 		'tab'     => 'social',
 		'section' => 'captcha',
 		'id'      => 'recaptcha_site_key',

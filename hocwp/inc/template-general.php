@@ -1874,19 +1874,15 @@ function hocwp_theme_print_url_params_as_hidden( $excludes ) {
 	}
 
 	$url   = HT_Util()->get_current_url( true );
-	$parts = parse_url( $url );
+	$query = HT()->get_params_from_url( $url );
 
-	if ( isset( $parts['query'] ) ) {
-		parse_str( $parts['query'], $query );
-
-		if ( HT()->array_has_value( $query ) ) {
-			foreach ( $query as $key => $value ) {
-				if ( in_array( $key, $excludes ) ) {
-					continue;
-				}
-
-				echo '<input type="hidden" value="' . esc_attr( $value ) . '" name="' . esc_attr( $key ) . '">' . PHP_EOL;
+	if ( HT()->array_has_value( $query ) ) {
+		foreach ( $query as $key => $value ) {
+			if ( in_array( $key, $excludes ) ) {
+				continue;
 			}
+
+			echo '<input type="hidden" value="' . esc_attr( $value ) . '" name="' . esc_attr( $key ) . '">' . PHP_EOL;
 		}
 	}
 }
@@ -1894,11 +1890,6 @@ function hocwp_theme_print_url_params_as_hidden( $excludes ) {
 add_action( 'hocwp_theme_print_url_params_as_hidden', 'hocwp_theme_print_url_params_as_hidden' );
 
 function hocwp_theme_fix_not_found_paged() {
-	if ( HT_Util()->is_vr_theme() && ! is_home() && ! is_front_page() ) {
-		wp_redirect( home_url() );
-		exit;
-	}
-
 	if ( defined( 'HOCWP_THEME_USE_DEFAULT_TEMPLATE' ) && HOCWP_THEME_USE_DEFAULT_TEMPLATE ) {
 		$post_types = get_post_types( array( '_builtin' => false, 'public' => true ), 'objects' );
 

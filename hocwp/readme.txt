@@ -1,4 +1,13 @@
 == Changelog ==
+= 6.9.4 =
+* 15/04/2022: Add mobile setting tab.
+* 15/04/2022: Add setting for add this inline tool id.
+* 15/04/2022: Fix bug setting field not receive section.
+* 15/04/2022: Add message class for most used strings.
+* 15/04/2022: Update addthis share tool receives specific tool id.
+* 15/04/2022: Add VR Tour extension now theme fully supports 360.
+* 15/04/2022: Add lozad for default lazy load.
+
 = 6.9.3 =
 * 03/04/2022: Remove attribute type="text/javascript".
 * 03/04/2022: Add param to disable mobile menu button.

@@ -94,6 +94,7 @@ add_action( 'admin_menu', function () {
 	if ( ( 'themes.php' == $pagenow || 'options.php' == $pagenow ) && HT_Admin()->get_plugin_page() == $hocwp_theme->option->get_slug() ) {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-mobile.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-writing.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-reading.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-discussion.php';

@@ -82,7 +82,12 @@
     margin-right: 2px;
 }
 
-.hocwp-theme .button + .button {
+.hocwp-theme .media-box[data-media-type="file"] p label,
+.hocwp-theme .media-box[data-media-type="file"] .media-url {
+    vertical-align: top;
+}
+
+.hocwp-theme .inline-fields .button + .button {
     margin-left: 20px;
 }
 
@@ -94,6 +99,7 @@
     font-style: italic;
 }
 
+.hocwp-theme .multiple-fields .field-row label + select,
 .hocwp-theme .settings-box td label + input:not(.button):not([type="button"]),
 .hocwp-theme label + select + .chosen-container {
     margin-top: 4px;

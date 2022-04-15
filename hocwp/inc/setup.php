@@ -4,6 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_setup_start_session() {
+	if ( ! is_admin() ) {
+		if ( HT_Util()->is_vr_theme() || defined( 'VR_DIR' ) ) {
+			if ( ! function_exists( 'HT_Extension' ) || ! HT_Extension()->is_active( 'ext/vtour.php' ) ) {
+				wp_die( HT_Message()->invalid_vtour_theme() );
+			}
+		}
+	}
+
 	if ( ! session_id() ) {
 		session_start( [
 			'read_and_close' => true

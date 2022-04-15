@@ -614,7 +614,20 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function is_vr_theme() {
-		return file_exists( HOCWP_THEME_CUSTOM_PATH . '/vtour' );
+		$result = false;
+
+		if ( defined( 'VR_DIR' ) ) {
+			$result = true;
+		}
+
+		if ( ! $result && function_exists( 'HT_VR' ) ) {
+			$file = trailingslashit( ABSPATH );
+			$file .= HT_VR()->detect_vr_folder() . '/tour.xml';
+
+			$result = file_exists( $file );
+		}
+
+		return apply_filters( 'hocwp_theme_is_vr_tour', $result );
 	}
 
 	public function get_file_or_dir_url( $file_or_dir ) {
@@ -1245,8 +1258,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_youtube_video_id( $url ) {
-		$parse = parse_url( $url, PHP_URL_QUERY );
-		parse_str( $parse, $params );
+		$params = HT()->get_params_from_url( $url );
 
 		$id = '';
 
@@ -1634,42 +1646,51 @@ class HOCWP_Theme_Utility {
 	 * @return mixed The option value of key in base index or full options array.
 	 */
 	public function get_theme_option( $name, $default = '', $base = 'general' ) {
-		$options = HOCWP_Theme()->get_options();
+		$value = '';
 
-		// Get base option value from options
-		if ( HT()->is_array_key_valid( $base ) ) {
-			$options = $options[ $base ] ?? '';
+		// Try to get mobile settings first
+		if ( wp_is_mobile() && 'mobile' != $base ) {
+			$value = $this->get_theme_option( $name, $default, 'mobile' );
 		}
 
-		// Get option value by key name
-		if ( HT()->is_array_key_valid( $name ) ) {
-			$value = false;
+		if ( '' === $value ) {
+			$options = HOCWP_Theme()->get_options();
 
-			if ( function_exists( 'HOCWP_EXT_Language' ) && function_exists( 'pll_current_language' ) ) {
-				$lang = pll_current_language();
+			// Get base option value from options
+			if ( HT()->is_array_key_valid( $base ) ) {
+				$options = $options[ $base ] ?? '';
+			}
 
-				if ( ! empty( $lang ) ) {
-					$dl = pll_default_language();
+			// Get option value by key name
+			if ( HT()->is_array_key_valid( $name ) ) {
+				$value = false;
 
-					if ( $lang != $dl ) {
-						$ln    = $name . '_' . $lang;
-						$value = $options[ $ln ] ?? '';
+				if ( function_exists( 'HOCWP_EXT_Language' ) && function_exists( 'pll_current_language' ) ) {
+					$lang = pll_current_language();
+
+					if ( ! empty( $lang ) ) {
+						$dl = pll_default_language();
+
+						if ( $lang != $dl ) {
+							$ln    = $name . '_' . $lang;
+							$value = $options[ $ln ] ?? '';
+						}
 					}
 				}
+
+				if ( empty( $value ) ) {
+					$value = $options[ $name ] ?? '';
+				}
+			} else {
+				$value = $options;
 			}
 
-			if ( empty( $value ) ) {
-				$value = $options[ $name ] ?? '';
+			if ( empty( $value ) && gettype( $value ) != gettype( $default ) && ! isset( $options[ $name ] ) ) {
+				$value = $default;
 			}
-		} else {
-			$value = $options;
 		}
 
-		if ( empty( $value ) && gettype( $value ) != gettype( $default ) && ! isset( $options[ $name ] ) ) {
-			$value = $default;
-		}
-
-		return apply_filters( 'hocwp_theme_option', $value, $name, $default, $base );
+		return apply_filters( 'hocwp_theme_option', maybe_unserialize( $value ), $name, $default, $base );
 	}
 
 	public function get_theme_option_term( $name, $taxonomy = 'category', $base = 'general', $slug = '' ) {
@@ -2007,8 +2028,8 @@ class HOCWP_Theme_Utility {
 				return $url;
 			}
 
-			$parts = parse_url( $url );
-			parse_str( $parts['query'], $query );
+			$query = HT()->get_params_from_url( $url );
+
 			$id = '';
 
 			if ( isset( $query['id'] ) ) {

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2022-04-07 21:46+0700\n"
-"PO-Revision-Date: 2022-04-07 21:46+0700\n"
+"POT-Creation-Date: 2022-04-15 08:26+0700\n"
+"PO-Revision-Date: 2022-04-15 08:27+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: custom\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: functions.php:61 hocwp/inc/setup-after.php:22
+#: functions.php:61 hocwp/inc/setup-after.php:18
 msgid "Primary"
 msgstr "Chính"
 
@@ -27,7 +27,7 @@ msgstr "Chính"
 msgid "Sidebar"
 msgstr "Thanh bên"
 
-#: functions.php:114 hocwp/inc/class-hocwp-theme-utility.php:1916
+#: functions.php:114 hocwp/inc/class-hocwp-theme-utility.php:1937
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
@@ -53,7 +53,7 @@ msgstr "Địa chỉ email quản trị đã được cập nhật thành công!
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:30
 #: hocwp/admin/admin-setting-page-administration-tools.php:33
-#: hocwp/admin/admin.php:609
+#: hocwp/admin/admin.php:610
 msgid "Change"
 msgstr "Thay đổi"
 
@@ -110,9 +110,9 @@ msgstr ""
 "liệu khi cần."
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:90
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:730
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:752
-#: hocwp/inc/setup-after.php:164
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:732
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:754
+#: hocwp/inc/setup-after.php:160
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
@@ -359,8 +359,8 @@ msgstr "Tiêu đề thư"
 msgid "Mail Message"
 msgstr "Nội dung thư"
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:116
-#: hocwp/inc/setup-after.php:173 hocwp/inc/setup-after.php:209
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:117
+#: hocwp/inc/setup-after.php:169 hocwp/inc/setup-after.php:205
 msgid "Extensions"
 msgstr "Gói mở rộng"
 
@@ -511,6 +511,10 @@ msgid "Image size settings, including width, height and image crop function."
 msgstr ""
 "Cài đặt kích thước hình ảnh, bao gồm chiều rộng, chiều cao và chức năng cắt "
 "ảnh."
+
+#: hocwp/admin/admin-setting-page-mobile.php:6 hocwp/inc/setup-after.php:356
+msgid "Mobile"
+msgstr "Điện thoại"
 
 #: hocwp/admin/admin-setting-page-permalinks.php:8
 msgid "Permalinks"
@@ -784,7 +788,7 @@ msgstr "Biểu tượng"
 msgid "Icon HTML"
 msgstr "Biểu tượng HTML"
 
-#: hocwp/admin/admin-setting-page-reading.php:259 hocwp/inc/setup-after.php:48
+#: hocwp/admin/admin-setting-page-reading.php:259 hocwp/inc/setup-after.php:44
 msgid "Background Color"
 msgstr "Màu nền"
 
@@ -845,7 +849,7 @@ msgid "%s Icon"
 msgstr "Biểu tượng %s"
 
 #: hocwp/admin/admin-setting-page-system-information.php:10
-#: hocwp/inc/setup-after.php:191 hocwp/inc/setup-after.php:227
+#: hocwp/inc/setup-after.php:187 hocwp/inc/setup-after.php:223
 msgid "System Information"
 msgstr "Thông tin hệ thống"
 
@@ -895,25 +899,25 @@ msgstr ""
 msgid "%s posts have been updated!"
 msgstr "%s bài viết đã được cập nhật!"
 
-#: hocwp/admin/admin.php:119 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:120 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr "Danh sách plugin"
 
-#: hocwp/admin/admin.php:122 hocwp/inc/setup-after.php:182
-#: hocwp/inc/setup-after.php:218
+#: hocwp/admin/admin.php:123 hocwp/inc/setup-after.php:178
+#: hocwp/inc/setup-after.php:214
 msgid "PHP Info"
 msgstr "Thông tin PHP"
 
-#: hocwp/admin/admin.php:124 hocwp/admin/views/admin-delete-posts.php:11
+#: hocwp/admin/admin.php:125 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr "Xóa bài viết"
 
-#: hocwp/admin/admin.php:200 hocwp/admin/admin.php:211
+#: hocwp/admin/admin.php:201 hocwp/admin/admin.php:212
 msgctxt "required plugins list"
 msgid "this list"
 msgstr "danh sách này"
 
-#: hocwp/admin/admin.php:204
+#: hocwp/admin/admin.php:205
 #, php-format
 msgid ""
 "You must install required plugins for theme can work properly. Try to "
@@ -922,7 +926,7 @@ msgstr ""
 "Bạn phải cài đặt các plugin bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả plugin trong %s."
 
-#: hocwp/admin/admin.php:215
+#: hocwp/admin/admin.php:216
 #, php-format
 msgid ""
 "You must install all required extensions for theme can work properly. Try to "
@@ -931,12 +935,12 @@ msgstr ""
 "Bạn phải cài đặt các tiện ích bắt buộc để cho giao diện được hoạt động bình "
 "thường. Hãy cài đặt và kích hoạt tất cả tiện ích trong %s."
 
-#: hocwp/admin/admin.php:222
+#: hocwp/admin/admin.php:223
 msgctxt "list extensions link"
 msgid "here"
 msgstr "tại đây"
 
-#: hocwp/admin/admin.php:226
+#: hocwp/admin/admin.php:227
 #, php-format
 msgid ""
 "You must enable WooCommerce extension for this theme. Try to activate it %s."
@@ -944,66 +948,66 @@ msgstr ""
 "Bạn phải kích hoạt gói mở rộng WooCommerce cho giao diện này. Thử kích hoạt "
 "nó %s."
 
-#: hocwp/admin/admin.php:308
+#: hocwp/admin/admin.php:309
 msgid "Title:"
 msgstr "Tiêu đề:"
 
-#: hocwp/admin/admin.php:350 hocwp/inc/template-post.php:344
+#: hocwp/admin/admin.php:351 hocwp/inc/template-post.php:344
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
-#: hocwp/admin/admin.php:388
+#: hocwp/admin/admin.php:389
 msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
-#: hocwp/admin/admin.php:411 hocwp/admin/admin.php:610
+#: hocwp/admin/admin.php:412 hocwp/admin/admin.php:611
 #: hocwp/inc/template-general.php:1141
 msgid "Close"
 msgstr "Đóng"
 
-#: hocwp/admin/admin.php:435
+#: hocwp/admin/admin.php:436
 #, php-format
 msgid "Template %s"
 msgstr "Mẫu %s"
 
-#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:530
+#: hocwp/admin/admin.php:447 hocwp/admin/admin.php:531
 msgid "Change status"
 msgstr "Thay đổi trạng thái"
 
-#: hocwp/admin/admin.php:447
+#: hocwp/admin/admin.php:448
 msgid "Change category"
 msgstr "Thay đổi chuyên mục"
 
-#: hocwp/admin/admin.php:448
+#: hocwp/admin/admin.php:449
 msgid "Change post type"
 msgstr "Thay đổi loại bài viết"
 
-#: hocwp/admin/admin.php:532
+#: hocwp/admin/admin.php:533
 msgid "Close this box"
 msgstr "Đóng hộp này"
 
-#: hocwp/admin/admin.php:542
+#: hocwp/admin/admin.php:543
 msgid "Post status:"
 msgstr "Trạng thái bài viết:"
 
-#: hocwp/admin/admin.php:544
+#: hocwp/admin/admin.php:545
 msgid "Choose post status"
 msgstr "Chọn trạng thái bài viết"
 
-#: hocwp/admin/admin.php:573 hocwp/inc/class-hocwp-theme-html-field.php:772
+#: hocwp/admin/admin.php:574 hocwp/inc/class-hocwp-theme-html-field.php:772
 #: hocwp/inc/class-hocwp-theme-html-field.php:814
-#: hocwp/inc/class-hocwp-theme-html-field.php:1865
-#: hocwp/inc/functions-scripts.php:316
+#: hocwp/inc/class-hocwp-theme-html-field.php:1867
+#: hocwp/inc/functions-scripts.php:317
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
 
-#: hocwp/admin/admin.php:586
+#: hocwp/admin/admin.php:587
 #: hocwp/widgets/class-hocwp-theme-widget-posts.php:527
 msgid "Post type:"
 msgstr "Loại bài viết:"
 
-#: hocwp/admin/admin.php:588 hocwp/admin/views/admin-delete-posts.php:111
+#: hocwp/admin/admin.php:589 hocwp/admin/views/admin-delete-posts.php:111
 msgid "Choose post type"
 msgstr "Chọn loại bài viết"
 
@@ -1148,7 +1152,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:297
-#: hocwp/inc/functions-scripts.php:315
+#: hocwp/inc/functions-scripts.php:316
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -1280,22 +1284,22 @@ msgstr "Thu gọn"
 msgid "Expand"
 msgstr "Mở rộng"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:730
-#: hocwp/inc/setup-after.php:200
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:732
+#: hocwp/inc/setup-after.php:196
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:788
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:790
 #, php-format
 msgid "%s options"
 msgstr "Cài đặt %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:790
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:792
 #, php-format
 msgid "Version %s"
 msgstr "Phiên bản %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:838
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:840
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If "
@@ -1306,12 +1310,12 @@ msgstr ""
 "Nếu bạn có bất kỳ câu hỏi nào bạn có thể <a target=\"_blank\" href=\"%s"
 "\">liên hệ với chúng tôi</a> để biết thêm thông tin."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:841
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:843
 #, php-format
 msgid "Theme core version %s"
 msgstr "Phiên bản nhân giao diện %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:911
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:913
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."
@@ -1894,6 +1898,108 @@ msgstr "Tiếp tục đến url"
 msgid "Go back"
 msgstr "Quay lại"
 
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:44
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:69
+msgid "Intro Image"
+msgstr "Ảnh giới thiệu"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:54
+msgid "Header:"
+msgstr "Phần đầu:"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:58
+msgid "Page:"
+msgstr "Trang:"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:63
+msgid "Contact"
+msgstr "Liên hệ"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:64
+msgid "Hotline"
+msgstr "Hotline"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:65
+msgid "Hotline Icon"
+msgstr "Biểu tượng hỗ trợ"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:66
+msgid "Background Music"
+msgstr "Nhạc nền"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:67
+msgid "Loading Image"
+msgstr "Hình ảnh đang tải"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:68
+msgid "Loading Text"
+msgstr "Văn bản đang tải"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:70
+msgid "Intro Music"
+msgstr "Nhạc giới thiệu"
+
+#: hocwp/ext/vtour/class-hocwp-theme-vr.php:71
+msgid "Right Logo"
+msgstr "Logo bên phải"
+
+#: hocwp/ext/vtour/custom-html.php:84
+msgid "Open menu tools"
+msgstr "Mở trình đơn công cụ"
+
+#: hocwp/ext/vtour/custom-html.php:87
+msgid "Close menu tools"
+msgstr "Đóng trình đơn công cụ"
+
+#: hocwp/ext/vtour/custom-html.php:92
+msgid "Enable sound"
+msgstr "Bật âm thanh"
+
+#: hocwp/ext/vtour/custom-html.php:95
+msgid "Disable sound"
+msgstr "Tắt âm thanh"
+
+#: hocwp/ext/vtour/custom-html.php:100
+msgid "Start auto tour"
+msgstr "Bật tự động xoay"
+
+#: hocwp/ext/vtour/custom-html.php:103
+msgid "Stop auto tour"
+msgstr "Tắt tự động xoay"
+
+#: hocwp/ext/vtour/custom-html.php:108
+msgid "Enter full screen mode"
+msgstr "Bật chế độ toàn màn hình"
+
+#: hocwp/ext/vtour/custom-html.php:111
+msgid "Exit full screen mode"
+msgstr "Thoát chế độ toàn màn hình"
+
+#: hocwp/ext/vtour/custom-html.php:116
+msgid "Show or hide hotspots"
+msgstr "Hiển thị hoặc ẩn các nhãn"
+
+#: hocwp/ext/vtour/custom-html.php:153
+msgid "[ X ] Experience now !!!"
+msgstr "[ X ] Trải nghiệm ngay !!!"
+
+#: hocwp/ext/vtour/custom-html.php:174
+msgid "Enable audio?"
+msgstr "Bật âm thanh?"
+
+#: hocwp/ext/vtour/custom-html.php:177 hocwp/views/module-print-dev-info.php:8
+msgid "Yes"
+msgstr "Có"
+
+#: hocwp/ext/vtour/custom-html.php:178 hocwp/views/module-print-dev-info.php:9
+msgid "No"
+msgstr "Không"
+
+#: hocwp/ext/vtour/setup.php:16
+#, php-format
+msgid "VR Tour requires theme core version %s or later."
+msgstr "VR Tour cần nhân giao diện phiên bản %s hoặc mới hơn."
+
 #: hocwp/inc/class-hocwp-theme-background-process.php:433
 #, php-format
 msgid "Every %d Minutes"
@@ -2162,26 +2268,26 @@ msgstr "Lưu trữ"
 msgid "Page not found"
 msgstr "Trang không được tìm thấy"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1218
+#: hocwp/inc/class-hocwp-theme-frontend.php:1229
 msgctxt "back to top"
 msgid "Top"
 msgstr "Lên trên"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1252
-#: hocwp/inc/class-hocwp-theme-frontend.php:1254
+#: hocwp/inc/class-hocwp-theme-frontend.php:1263
+#: hocwp/inc/class-hocwp-theme-frontend.php:1265
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1420
+#: hocwp/inc/class-hocwp-theme-frontend.php:1431
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr "<a href=\"%s\" class=\"read-more-link\">Xem thêm &rarr;</a>"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1511
+#: hocwp/inc/class-hocwp-theme-frontend.php:1522
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1515
+#: hocwp/inc/class-hocwp-theme-frontend.php:1526
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -2189,11 +2295,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1524
+#: hocwp/inc/class-hocwp-theme-frontend.php:1535
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1540
+#: hocwp/inc/class-hocwp-theme-frontend.php:1551
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
@@ -2309,25 +2415,45 @@ msgstr "Nội dung:"
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1833
+#: hocwp/inc/class-hocwp-theme-html-field.php:1835
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1857
+#: hocwp/inc/class-hocwp-theme-html-field.php:1859
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1924
+#: hocwp/inc/class-hocwp-theme-html-field.php:1926
 msgid "Latitude:"
 msgstr "Vĩ độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1943
+#: hocwp/inc/class-hocwp-theme-html-field.php:1945
 msgid "Longitude:"
 msgstr "Kinh độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1958
+#: hocwp/inc/class-hocwp-theme-html-field.php:1960
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
+
+#: hocwp/inc/class-hocwp-theme-message.php:19
+msgid "<strong>ERROR:</strong> Javascript not activated!"
+msgstr "<strong>Lỗi:</strong> Javascript không được kích hoạt!"
+
+#: hocwp/inc/class-hocwp-theme-message.php:23
+msgid "The website or theme is set up incorrectly."
+msgstr "Trang web hoặc giao diện được thiết lập không đúng."
+
+#: hocwp/inc/class-hocwp-theme-message.php:27
+msgid "Your browser does not support the audio element."
+msgstr "Trình duyệt của bạn không hỗ trợ thẻ audio."
+
+#: hocwp/inc/class-hocwp-theme-message.php:31
+msgid ""
+"Invalid VR Tour theme! Please try to activate VR Tour extension and try "
+"again."
+msgstr ""
+"Giao diện VR Tour được cấu hình không đúng! Vui lòng thử kích hoạt gói mở "
+"rộng VR Tour và thử lại."
 
 #: hocwp/inc/class-hocwp-theme-minify.php:187
 msgid "File can not be compressed!"
@@ -2344,320 +2470,320 @@ msgid ""
 "later."
 msgstr "Đã có lỗi xảy ra, có thể luồng tin không hoạt động. Hãy thử lại sau."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:788
+#: hocwp/inc/class-hocwp-theme-utility.php:801
 msgid "Monday"
 msgstr "Thứ hai"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:789
+#: hocwp/inc/class-hocwp-theme-utility.php:802
 msgid "Tuesday"
 msgstr "Thứ ba"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:790
+#: hocwp/inc/class-hocwp-theme-utility.php:803
 msgid "Wednesday"
 msgstr "Thứ tư"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:791
+#: hocwp/inc/class-hocwp-theme-utility.php:804
 msgid "Thursday"
 msgstr "Thứ năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:792
+#: hocwp/inc/class-hocwp-theme-utility.php:805
 msgid "Friday"
 msgstr "Thứ sáu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:793
+#: hocwp/inc/class-hocwp-theme-utility.php:806
 msgid "Saturday"
 msgstr "Thứ bảy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:794
+#: hocwp/inc/class-hocwp-theme-utility.php:807
 msgid "Sunday"
 msgstr "Chủ nhật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:806
+#: hocwp/inc/class-hocwp-theme-utility.php:819
 msgid "All date"
 msgstr "Tất cả ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:807
+#: hocwp/inc/class-hocwp-theme-utility.php:820
 msgid "Daily"
 msgstr "Hàng ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:808
+#: hocwp/inc/class-hocwp-theme-utility.php:821
 msgid "Weekly"
 msgstr "Hàng tuần"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:809
+#: hocwp/inc/class-hocwp-theme-utility.php:822
 msgid "Monthly"
 msgstr "Hàng tháng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:810
+#: hocwp/inc/class-hocwp-theme-utility.php:823
 msgid "Yearly"
 msgstr "Hàng năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1742
+#: hocwp/inc/class-hocwp-theme-utility.php:1763
 msgctxt "custom post type"
 msgid "Add New"
 msgstr "Thêm mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1743
+#: hocwp/inc/class-hocwp-theme-utility.php:1764
 #, php-format
 msgctxt "cutom-post-type"
 msgid "Add New %s"
 msgstr "Thêm %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1744
+#: hocwp/inc/class-hocwp-theme-utility.php:1765
 #, php-format
 msgctxt "custom post type"
 msgid "Edit %s"
 msgstr "Chỉnh sửa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1745
+#: hocwp/inc/class-hocwp-theme-utility.php:1766
 #, php-format
 msgctxt "custom post type"
 msgid "New %s"
 msgstr "Tạo %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1746
-#: hocwp/inc/class-hocwp-theme-utility.php:1747
+#: hocwp/inc/class-hocwp-theme-utility.php:1767
+#: hocwp/inc/class-hocwp-theme-utility.php:1768
 #, php-format
 msgctxt "custom post type"
 msgid "View %s"
 msgstr "Xem %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1748
+#: hocwp/inc/class-hocwp-theme-utility.php:1769
 #, php-format
 msgctxt "custom post type"
 msgid "Search %s"
 msgstr "Tìm kiếm %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1749
+#: hocwp/inc/class-hocwp-theme-utility.php:1770
 #, php-format
 msgctxt "custom post type"
 msgid "No %s found."
 msgstr "Không tìm thấy %s."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1750
+#: hocwp/inc/class-hocwp-theme-utility.php:1771
 #, php-format
 msgctxt "custom post type"
 msgid "No %s found in Trash."
 msgstr "Không có %s nào trong thùng rác."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1751
+#: hocwp/inc/class-hocwp-theme-utility.php:1772
 #, php-format
 msgctxt "custom post type"
 msgid "Parent %s:"
 msgstr "Cha %s:"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1752
+#: hocwp/inc/class-hocwp-theme-utility.php:1773
 #, php-format
 msgctxt "custom post type"
 msgid "All %s"
 msgstr "Tất cả %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1753
+#: hocwp/inc/class-hocwp-theme-utility.php:1774
 #, php-format
 msgctxt "custom post type"
 msgid "%s Archives"
 msgstr "Lưu trữ %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1754
+#: hocwp/inc/class-hocwp-theme-utility.php:1775
 #, php-format
 msgctxt "custom post type"
 msgid "%s Attributes"
 msgstr "Thuộc tính %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1755
+#: hocwp/inc/class-hocwp-theme-utility.php:1776
 #, php-format
 msgctxt "custom post type"
 msgid "Insert into %s"
 msgstr "Thêm vào %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1756
+#: hocwp/inc/class-hocwp-theme-utility.php:1777
 #, php-format
 msgctxt "custom post type"
 msgid "Uploaded to this %s"
 msgstr "Được tải lên %s này"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1757
+#: hocwp/inc/class-hocwp-theme-utility.php:1778
 msgctxt "custom post type"
 msgid "Featured Image"
 msgstr "Ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1758
+#: hocwp/inc/class-hocwp-theme-utility.php:1779
 msgctxt "custom post type"
 msgid "Set featured image"
 msgstr "Thiết lập ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1759
+#: hocwp/inc/class-hocwp-theme-utility.php:1780
 msgctxt "custom post type"
 msgid "Remove featured image"
 msgstr "Xóa ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1760
+#: hocwp/inc/class-hocwp-theme-utility.php:1781
 msgctxt "custom post type"
 msgid "Use as featured image"
 msgstr "Sử dụng làm ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1761
+#: hocwp/inc/class-hocwp-theme-utility.php:1782
 #, php-format
 msgctxt "custom post type"
 msgid "Filter %s list"
 msgstr "Lọc danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1762
+#: hocwp/inc/class-hocwp-theme-utility.php:1783
 #, php-format
 msgctxt "custom post type"
 msgid "%s list navigation"
 msgstr "%s danh sách điều hướng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1763
+#: hocwp/inc/class-hocwp-theme-utility.php:1784
 #, php-format
 msgctxt "custom post type"
 msgid "%s list"
 msgstr "Danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1764
+#: hocwp/inc/class-hocwp-theme-utility.php:1785
 #, php-format
 msgctxt "custom post type"
 msgid "%s published."
 msgstr "%s đã được đăng."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1765
+#: hocwp/inc/class-hocwp-theme-utility.php:1786
 #, php-format
 msgctxt "custom post type"
 msgid "%s published privately."
 msgstr "%s đã được đăng riêng tư."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1766
+#: hocwp/inc/class-hocwp-theme-utility.php:1787
 #, php-format
 msgctxt "custom post type"
 msgid "%s reverted to draft."
 msgstr "%s đã được khôi phục từ thùng rác."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1767
+#: hocwp/inc/class-hocwp-theme-utility.php:1788
 #, php-format
 msgctxt "custom post type"
 msgid "%s scheduled."
 msgstr "%s đã được lên lịch."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1768
+#: hocwp/inc/class-hocwp-theme-utility.php:1789
 #, php-format
 msgctxt "custom post type"
 msgid "%s updated."
 msgstr "%s đã được cập nhật."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1785
+#: hocwp/inc/class-hocwp-theme-utility.php:1806
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Search %s"
 msgstr "Tìm kiếm %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1786
+#: hocwp/inc/class-hocwp-theme-utility.php:1807
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Popular %s"
 msgstr "%s phổ biến"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1787
+#: hocwp/inc/class-hocwp-theme-utility.php:1808
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "All %s"
 msgstr "Tất cả %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1788
+#: hocwp/inc/class-hocwp-theme-utility.php:1809
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s"
 msgstr "%s cha"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1789
+#: hocwp/inc/class-hocwp-theme-utility.php:1810
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s:"
 msgstr "%s cha:"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1790
+#: hocwp/inc/class-hocwp-theme-utility.php:1811
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Edit %s"
 msgstr "Chỉnh sửa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1791
+#: hocwp/inc/class-hocwp-theme-utility.php:1812
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "View %s"
 msgstr "Xem %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1792
+#: hocwp/inc/class-hocwp-theme-utility.php:1813
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Update %s"
 msgstr "Cập nhật %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1793
+#: hocwp/inc/class-hocwp-theme-utility.php:1814
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add New %s"
 msgstr "Thêm %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1794
+#: hocwp/inc/class-hocwp-theme-utility.php:1815
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "New %s Name"
 msgstr "Tạo tên %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1795
+#: hocwp/inc/class-hocwp-theme-utility.php:1816
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Separate %s with commas"
 msgstr "%s cách nhau bởi dấu phẩy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1796
+#: hocwp/inc/class-hocwp-theme-utility.php:1817
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add or remove %s"
 msgstr "Thêm hoặc xóa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1797
+#: hocwp/inc/class-hocwp-theme-utility.php:1818
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Choose from the most used %s"
 msgstr "Chọn từ danh sách %s được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1798
+#: hocwp/inc/class-hocwp-theme-utility.php:1819
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s found."
 msgstr "Không tìm thấy %s."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1799
+#: hocwp/inc/class-hocwp-theme-utility.php:1820
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s"
 msgstr "Không %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1800
+#: hocwp/inc/class-hocwp-theme-utility.php:1821
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list navigation"
 msgstr "Dach sách phân trang %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1801
+#: hocwp/inc/class-hocwp-theme-utility.php:1822
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list"
 msgstr "Danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1802
+#: hocwp/inc/class-hocwp-theme-utility.php:1823
 msgctxt "custom taxonomy term"
 msgid "Most Used"
 msgstr "Được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1803
+#: hocwp/inc/class-hocwp-theme-utility.php:1824
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr "&larr; Trở lại %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2200
+#: hocwp/inc/class-hocwp-theme-utility.php:2221
 msgid ""
 "The <strong>$sql_column</strong> argument just only contains MySQL query "
 "inside (), it isn't full MySQL query."
@@ -2720,66 +2846,66 @@ msgstr "Những thay đổi bạn đã thực hiện sẽ bị mất nếu bạn
 msgid "Waiting..."
 msgstr "Đang đợi..."
 
-#: hocwp/inc/functions-scripts.php:189
+#: hocwp/inc/functions-scripts.php:190
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:312
+#: hocwp/inc/functions-scripts.php:313
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:313
+#: hocwp/inc/functions-scripts.php:314
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:317
+#: hocwp/inc/functions-scripts.php:318
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:390
+#: hocwp/inc/functions-scripts.php:392
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:391
+#: hocwp/inc/functions-scripts.php:393
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:392
+#: hocwp/inc/functions-scripts.php:394
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:393
+#: hocwp/inc/functions-scripts.php:395
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:394
+#: hocwp/inc/functions-scripts.php:396
 msgctxt "quicktags description"
 msgid "Indentation"
 msgstr "Thụt đầu dòng"
 
-#: hocwp/inc/functions-scripts.php:395
+#: hocwp/inc/functions-scripts.php:397
 msgctxt "quicktags description"
 msgid "Heading 2"
 msgstr "Tiêu đề 2"
 
-#: hocwp/inc/functions-scripts.php:396
+#: hocwp/inc/functions-scripts.php:398
 msgctxt "quicktags description"
 msgid "Heading 3"
 msgstr "Tiêu đề 3"
 
-#: hocwp/inc/functions-scripts.php:397
+#: hocwp/inc/functions-scripts.php:399
 msgctxt "quicktags description"
 msgid "Heading 4"
 msgstr "Tiêu đề 4"
 
-#: hocwp/inc/functions-scripts.php:398
+#: hocwp/inc/functions-scripts.php:400
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."
@@ -2815,70 +2941,66 @@ msgstr ""
 msgid "[%s] Verify your email address"
 msgstr "[%s] Xác thực địa chỉ email của bạn"
 
-#: hocwp/inc/setup-after.php:17
+#: hocwp/inc/setup-after.php:13
 msgid "Accent Color"
 msgstr "Màu nhấn"
 
-#: hocwp/inc/setup-after.php:27
+#: hocwp/inc/setup-after.php:23
 msgid "Secondary"
 msgstr "Thứ hai"
 
-#: hocwp/inc/setup-after.php:32
+#: hocwp/inc/setup-after.php:28
 msgid "Subtle Background"
 msgstr "Màu nền tinh tế"
 
-#: hocwp/inc/setup-after.php:62
+#: hocwp/inc/setup-after.php:58
 msgctxt "Name of the small font size in the block editor"
 msgid "Small"
 msgstr "Nhỏ"
 
-#: hocwp/inc/setup-after.php:63
+#: hocwp/inc/setup-after.php:59
 msgctxt "Short name of the small font size in the block editor."
 msgid "S"
 msgstr "S"
 
-#: hocwp/inc/setup-after.php:68
+#: hocwp/inc/setup-after.php:64
 msgctxt "Name of the regular font size in the block editor"
 msgid "Regular"
 msgstr "Bình thường"
 
-#: hocwp/inc/setup-after.php:69
+#: hocwp/inc/setup-after.php:65
 msgctxt "Short name of the regular font size in the block editor."
 msgid "M"
 msgstr "M"
 
-#: hocwp/inc/setup-after.php:74
+#: hocwp/inc/setup-after.php:70
 msgctxt "Name of the large font size in the block editor"
 msgid "Large"
 msgstr "Lớn"
 
-#: hocwp/inc/setup-after.php:75
+#: hocwp/inc/setup-after.php:71
 msgctxt "Short name of the large font size in the block editor."
 msgid "L"
 msgstr "L"
 
-#: hocwp/inc/setup-after.php:80
+#: hocwp/inc/setup-after.php:76
 msgctxt "Name of the larger font size in the block editor"
 msgid "Larger"
 msgstr "Lớn hơn"
 
-#: hocwp/inc/setup-after.php:81
+#: hocwp/inc/setup-after.php:77
 msgctxt "Short name of the larger font size in the block editor."
 msgid "XL"
 msgstr "XL"
 
-#: hocwp/inc/setup-after.php:360
-msgid "Mobile"
-msgstr "Điện thoại"
-
-#: hocwp/inc/setup-after.php:391
+#: hocwp/inc/setup-after.php:387
 #, php-format
 msgid ""
 "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 "<strong>%s:</strong> Gói mở rộng này cần phiên bản giao diện ít nhất từ %s."
 
-#: hocwp/inc/setup-after.php:400
+#: hocwp/inc/setup-after.php:396
 msgid ""
 "<strong>Error:</strong> One or more extensions are incompatible with the "
 "current theme core version."
@@ -2886,11 +3008,11 @@ msgstr ""
 "<strong>Lỗi:</strong> Một hoặc nhiều gói mở rộng không tương thích với phiên "
 "bản nhân giao diện hiện tại."
 
-#: hocwp/inc/setup-after.php:400
+#: hocwp/inc/setup-after.php:396
 msgid "Theme core version doesn't meet requirements"
 msgstr "Phiên bản nhân giao diện không đúng"
 
-#: hocwp/inc/setup-after.php:475
+#: hocwp/inc/setup-after.php:471
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are "
@@ -2901,7 +3023,7 @@ msgstr ""
 "quản trị trang web này, xin vui lòng cài đặt và kích hoạt plugin %s để giao "
 "diện được hoạt động bình thường."
 
-#: hocwp/inc/setup-after.php:478
+#: hocwp/inc/setup-after.php:474
 #, php-format
 msgid ""
 "<strong>%s:</strong> The site is experiencing technical difficulties. Please "
@@ -2910,7 +3032,7 @@ msgstr ""
 "<strong>%s:</strong> Trang web đang gặp sự cố kỹ thuật. Xin vui lòng liên hệ "
 "với người quản trị để biết thêm chi tiết."
 
-#: hocwp/inc/setup-after.php:480
+#: hocwp/inc/setup-after.php:476
 #, php-format
 msgid ""
 "<strong>%s:</strong> The site is experiencing technical difficulties. Please "
@@ -2921,7 +3043,7 @@ msgstr ""
 "với người quản trị để biết thêm chi tiết. Nếu bạn là chủ của trang web này, "
 "hãy thử <a href=\"%s\">đăng nhập</a> để kiểm tra."
 
-#: hocwp/inc/setup-after.php:484
+#: hocwp/inc/setup-after.php:480
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 
@@ -3092,17 +3214,9 @@ msgstr "Không có bình luận."
 msgid "You can be the first one to leave a comment."
 msgstr "Bạn có thể trở thành người đầu tiên để lại bình luận."
 
-#: hocwp/views/module-header.php:41
+#: hocwp/views/module-header.php:44
 msgid "Skip to content"
 msgstr "Chuyển đến nội dung"
-
-#: hocwp/views/module-print-dev-info.php:8
-msgid "Yes"
-msgstr "Có"
-
-#: hocwp/views/module-print-dev-info.php:9
-msgid "No"
-msgstr "Không"
 
 #: hocwp/views/module-print-dev-info.php:35
 #, php-format

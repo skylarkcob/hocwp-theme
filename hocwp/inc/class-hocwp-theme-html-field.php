@@ -1793,9 +1793,11 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	public static function media_upload( $args = array() ) {
-		$type       = isset( $args['type'] ) ? $args['type'] : '';
-		$value      = isset( $args['value'] ) ? $args['value'] : '';
-		$class      = 'select-media';
+		$type  = isset( $args['type'] ) ? $args['type'] : '';
+		$value = isset( $args['value'] ) ? $args['value'] : '';
+		$value = maybe_unserialize( $value );
+		$class = 'select-media';
+
 		$media_type = isset( $args['media_type'] ) ? $args['media_type'] : 'image';
 
 		if ( 'image' != $media_type ) {
@@ -1838,7 +1840,7 @@ final class HOCWP_Theme_HTML_Field {
 				$rms = '';
 			}
 			?>
-            <div class="media-box">
+            <div class="media-box" data-media-type="<?php echo esc_attr( $media_type ); ?>">
                 <p class="hide-if-no-js">
                     <label>
                         <input class="regular-text media-url" id="<?php echo $args['id']; ?>_url"

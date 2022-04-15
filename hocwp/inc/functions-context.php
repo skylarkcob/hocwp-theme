@@ -173,10 +173,6 @@ function hocwp_theme_body_class_filter( $classes ) {
 		}
 	}
 
-	if ( HT_Util()->is_vr_theme() ) {
-		$classes[] = 'vtour';
-	}
-
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 

@@ -32,15 +32,16 @@ function hocwp_theme_is_image_url( $url ) {
 
 function hocwp_theme_attachment_path_to_postid( $path ) {
 	global $wpdb;
-	$upload = wp_upload_dir();
-	$path   = str_replace( $upload['basedir'], '', $path );
-	$sql    = 'SELECT post_id FROM ';
-	$sql .= $wpdb->postmeta;
-	$sql .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
-	$sql     = $wpdb->prepare( $sql, $path );
-	$post_id = $wpdb->get_var( $sql );
 
-	return $post_id;
+	$upload = wp_upload_dir();
+
+	$path = str_replace( $upload['basedir'], '', $path );
+	$sql  = 'SELECT post_id FROM ';
+	$sql  .= $wpdb->postmeta;
+	$sql  .= " WHERE meta_key = '_wp_attached_file' AND meta_value = %s";
+	$sql  = $wpdb->prepare( $sql, $path );
+
+	return $wpdb->get_var( $sql );
 }
 
 add_filter( 'wp_calculate_image_srcset', '__return_false' );
@@ -96,7 +97,7 @@ function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 		wp_update_attachment_metadata( $media_id, $data );
 	}
 
-	$sizes = isset( $data['sizes'] ) ? $data['sizes'] : '';
+	$sizes = $data['sizes'] ?? '';
 
 	if ( HT()->array_has_value( $sizes ) ) {
 		foreach ( (array) $sizes as $key => $tmp ) {
@@ -170,6 +171,24 @@ class HOCWP_Theme_Media {
 		return $quality;
 	}
 
+	public function sanitize_value( $value ) {
+		if ( is_array( $value ) ) {
+			$id  = $value['id'] ?? '';
+			$url = $value['url'] ?? '';
+		} elseif ( $this->exists( $value ) ) {
+			$id  = $value;
+			$url = wp_get_attachment_url( $id );
+		} else {
+			$url = $value;
+			$id  = 0;
+		}
+
+		return array(
+			'id'   => $id,
+			'url'  => $url,
+			'mime' => get_post_mime_type( $id )
+		);
+	}
 
 	public function exists( $id ) {
 		return hocwp_theme_media_file_exists( $id );
@@ -200,35 +219,35 @@ class HOCWP_Theme_Media {
 			}
 
 			if ( HT()->array_has_value( $sizes ) ) {
-				$w = isset( $size[0] ) ? $size[0] : '';
+				$w = $size[0] ?? '';
 
 				if ( empty( $w ) ) {
-					$w = isset( $size['width'] ) ? $size['width'] : '';
+					$w = $size['width'] ?? '';
 				}
 
-				$h = isset( $size[1] ) ? $size[1] : '';
+				$h = $size[1] ?? '';
 
 				if ( empty( $h ) ) {
-					$h = isset( $size['height'] ) ? $size['height'] : '';
+					$h = $size['height'] ?? '';
 				}
 
-				$c = isset( $size['crop'] ) ? $size['crop'] : '';
+				$c = $size['crop'] ?? '';
 
 				foreach ( $sizes as $key => $data ) {
 					if ( is_array( $data ) ) {
-						$width = isset( $data[0] ) ? $data[0] : '';
+						$width = $data[0] ?? '';
 
 						if ( empty( $width ) ) {
-							$width = isset( $data['width'] ) ? $data['width'] : '';
+							$width = $data['width'] ?? '';
 						}
 
-						$height = isset( $data[1] ) ? $data[1] : '';
+						$height = $data[1] ?? '';
 
 						if ( empty( $height ) ) {
-							$height = isset( $data['height'] ) ? $data['height'] : '';
+							$height = $data['height'] ?? '';
 						}
 
-						$crop = isset( $data['crop'] ) ? $data['crop'] : '';
+						$crop = $data['crop'] ?? '';
 
 						if ( $width == $w && $height == $h && $c == $crop ) {
 							$name = $key;
@@ -243,7 +262,7 @@ class HOCWP_Theme_Media {
 	}
 
 	public function download_image( $url, $name = null, $check_exist = false ) {
-		if ( ! $url || empty ( $url ) ) {
+		if ( empty ( $url ) ) {
 			return false;
 		}
 
@@ -282,7 +301,7 @@ class HOCWP_Theme_Media {
 
 		$info = pathinfo( $url );
 
-		$source_name = isset( $info['filename'] ) ? $info['filename'] : '';
+		$source_name = $info['filename'] ?? '';
 
 		$prefix = 'downloaded-';
 
@@ -311,7 +330,7 @@ class HOCWP_Theme_Media {
 			}
 		}
 
-		$id = media_handle_sideload( $file_array, 0 );
+		$id = media_handle_sideload( $file_array );
 
 		if ( is_wp_error( $id ) ) {
 			@unlink( $file_array['tmp_name'] );

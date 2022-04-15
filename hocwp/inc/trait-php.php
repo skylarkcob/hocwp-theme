@@ -9,9 +9,15 @@ trait HOCWP_Theme_PHP {
 	}
 
 	public function get_params_from_url( $url ) {
-		$parse = parse_url( $url );
-		$parse = $parse['query'] ?? '';
-		parse_str( $parse, $params );
+		$params = array();
+
+		if ( ! empty( $url ) ) {
+			$parse = parse_url( $url );
+
+			if ( isset( $parse['query'] ) ) {
+				parse_str( $parse['query'], $params );
+			}
+		}
 
 		return $params;
 	}

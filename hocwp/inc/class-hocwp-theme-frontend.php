@@ -1169,13 +1169,24 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 	public function addthis_toolbox( $args = array() ) {
 		$post_id = $args['post_id'] ?? get_the_ID();
-		$class   = $args['class'] ?? 'addthis_native_toolbox';
-		$class   = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class );
-		$class   .= ' addthis-tools';
-		$url     = $args['url'] ?? get_the_permalink();
+
+		$class = $args['class'] ?? 'addthis_native_toolbox';
+		$class .= ' addthis_sharing_toolbox';
+		$class = apply_filters( 'hocwp_theme_addthis_toolbox_class', $class, $args );
+		$class .= ' addthis-tools';
+		$url   = $args['url'] ?? get_the_permalink();
+
+		$widget_id = $args['widget_id'] ?? '';
+
+		if ( empty( $widget_id ) ) {
+			$widget_id = HT_Options()->get_tab( 'addthis_widget_id', '', 'social' );
+		}
+
+		$widget_id = apply_filters( 'hocwp_theme_addthis_toolbox_widget_id', $widget_id, $args );
 		?>
         <!-- Go to www.addthis.com/dashboard to customize your tools -->
         <div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
+             data-widget-id="<?php echo esc_attr( $widget_id ); ?>"
              data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
 		<?php
 	}

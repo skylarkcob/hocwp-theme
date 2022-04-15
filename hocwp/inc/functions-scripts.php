@@ -173,7 +173,8 @@ function hocwp_theme_localize_script_l10n() {
 		'loadingGif'                => admin_url( 'images/loading.gif' ),
 		'loadMoreButton'            => hocwp_theme_load_more_button(),
 		'iconRemove'                => HT_HTML_Field()->icon_remove(),
-		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width()
+		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width(),
+		'is_debug'                  => HT()->bool_to_int( HOCWP_THEME_DEVELOPING )
 	);
 
 	if ( is_admin() ) {
@@ -345,6 +346,7 @@ function hocwp_theme_load_google_maps_script( $google_api_key = '' ) {
 
 function hocwp_theme_frontend_and_backend_scripts() {
 	wp_enqueue_script( 'utils' );
+	wp_register_script( 'lozad', HOCWP_THEME_CORE_URL . '/lib/lozad/lozad.js', array(), false, true );
 
 	//hocwp_theme_load_google_maps_script();
 
