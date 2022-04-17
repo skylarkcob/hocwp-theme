@@ -319,6 +319,12 @@ class HOCWP_Theme_Media {
 		}
 
 		if ( $name ) {
+			$ext = pathinfo( $name, PATHINFO_EXTENSION );
+
+			if ( empty( $ext ) ) {
+				$name .= '.jpeg';
+			}
+
 			$file_array['name'] = $name;
 		} else {
 			preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file_array['tmp_name'], $matches );

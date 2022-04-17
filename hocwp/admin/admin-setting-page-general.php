@@ -121,6 +121,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 		'id'      => 'logo_html',
 		'title'   => __( 'Logo HTML', 'hocwp-theme' ),
 		'args'    => array(
+			'type'          => 'html',
 			'label_for'     => true,
 			'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
 			'callback_args' => array(

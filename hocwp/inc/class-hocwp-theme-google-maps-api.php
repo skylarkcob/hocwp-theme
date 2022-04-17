@@ -1,9 +1,9 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-class HOCWP_Theme_Google_Maps_API {
+class HOCWP_Theme_Google_Maps_API extends Abstract_HOCWP_Theme_Google_API {
 	public $base = 'https://maps.googleapis.com/maps/api/';
-	public $key;
+	public $cache_prefix = 'google_maps_api_';
 
 	public $name;
 
@@ -11,13 +11,9 @@ class HOCWP_Theme_Google_Maps_API {
 
 	public $output = 'json';
 
-	public $params;
-
-	public $result;
-
-	public $cache = true;
-
 	public function __construct( $name, $api, $params, $output = '' ) {
+		parent::__construct();
+
 		$this->name   = $name;
 		$this->api    = $api;
 		$this->params = $params;
@@ -28,24 +24,18 @@ class HOCWP_Theme_Google_Maps_API {
 	}
 
 	/**
-	 * @return mixed|object
-	 */
-	public function get_result() {
-		if ( empty( $this->result ) ) {
-			$this->fetch();
-		}
-
-		return $this->result;
-	}
-
-	/**
 	 * @param string $output
 	 */
 	public function set_output( mixed $output ) {
 		$this->output = $output;
 	}
 
-	public function fetch() {
+	public function build_query_url() {
+		// TODO: Implement build_query_url() method.
+		if ( ! empty( $this->query_url ) && ! is_wp_error( $this->query_url ) ) {
+			return $this->query_url;
+		}
+
 		if ( empty( $this->name ) ) {
 			return new WP_Error( 'invalid_name', __( 'API name cannot be empty, can be place, geocode, distancematrix,...', 'hocwp-theme' ) );
 		}
@@ -54,56 +44,15 @@ class HOCWP_Theme_Google_Maps_API {
 			return new WP_Error( 'invalid_params', __( 'Query parameters must be provided in full.', 'hocwp-theme' ) );
 		}
 
-		$url = $this->base . $this->name . '/';
+		$this->query_url = $this->base . $this->name . '/';
 
 		if ( ! empty( $this->api ) ) {
-			$url .= $this->api . '/';
+			$this->query_url .= $this->api . '/';
 		}
 
-		$url .= $this->output . '/';
+		$this->query_url .= $this->output . '/';
 
-		$key = $this->params['key'] ?? '';
-
-		if ( empty( $key ) ) {
-			$key = HT_Options()->get_tab( 'google_api_key', '', 'social' );
-
-			$this->params['key'] = $key;
-		}
-
-		if ( empty( $key ) ) {
-			return new WP_Error( 'invalid_api_key', __( 'The Google API Key has not been provided or is incorrect.', 'hocwp-theme' ) );
-		}
-
-		$url = untrailingslashit( $url );
-		$url = add_query_arg( $this->params, $url );
-
-		$tr_name = 'google_maps_' . md5( $url );
-
-		$res = '';
-
-		if ( $this->cache ) {
-			$res = get_transient( $tr_name );
-		}
-
-		if ( empty( $res ) ) {
-			$res = wp_remote_get( $url );
-
-			$res = wp_remote_retrieve_body( $res );
-
-			if ( ! empty( $res ) ) {
-				$res = json_decode( $res );
-
-				if ( $this->cache ) {
-					set_transient( $tr_name, $res, MONTH_IN_SECONDS );
-				}
-			}
-		}
-
-		if ( ! empty( $res ) ) {
-			$this->result = $res;
-		}
-
-		return $res;
+		return $this->query_url;
 	}
 
 	public function is_valid() {

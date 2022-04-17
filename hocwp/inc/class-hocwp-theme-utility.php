@@ -833,6 +833,10 @@ class HOCWP_Theme_Utility {
 			);
 		}
 
+		if ( ! isset( $args['message'] ) && isset( $args['text'] ) ) {
+			$args['message'] = $args['text'];
+		}
+
 		$defaults = array(
 			'type'        => 'success',
 			'dismissible' => true,
@@ -1258,43 +1262,9 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_youtube_video_id( $url ) {
-		$params = HT()->get_params_from_url( $url );
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__, '6.9.4', 'HOCWP_Theme_YouTube_API::get_video_id' );
 
-		$id = '';
-
-		if ( isset( $params['v'] ) && strlen( $params['v'] ) > 0 ) {
-			$id = $params['v'];
-		}
-
-		if ( empty( $id ) && str_contains( $url, '/embed/' ) ) {
-			$params = explode( '/embed/', $url );
-
-			if ( 2 == count( $params ) ) {
-				$id = $params[1];
-			}
-		}
-
-		if ( empty( $id ) && str_contains( $url, 'youtu.be/' ) ) {
-			$params = explode( 'youtu.be/', $url );
-
-			if ( 2 == count( $params ) ) {
-				$id = $params[1];
-			}
-		}
-
-		if ( str_contains( $id, '/?' ) ) {
-			$params = explode( '/?', $id );
-			$id     = current( $params );
-		}
-
-		if ( str_contains( $id, '?' ) ) {
-			$params = explode( '?', $id );
-			$id     = current( $params );
-		}
-
-		unset( $parse, $params );
-
-		return $id;
+		return HOCWP_Theme_YouTube_API::get_video_id( $url );
 	}
 
 	public function calculate_place_distance( $destinations, $origins, $args = array() ) {
@@ -1372,27 +1342,9 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_youtube_video_info( $url, $api_key = '' ) {
-		if ( ! function_exists( 'hocwp_theme_get_option' ) ) {
-			return null;
-		}
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__, '6.9.4', 'HOCWP_Theme_YouTube_API::fetch' );
 
-		if ( empty( $api_key ) ) {
-			$api_key = hocwp_theme_get_option( 'google_api_key', '', 'social' );
-		}
-
-		$base = 'https://www.googleapis.com/youtube/v3/videos/';
-
-		$params = array(
-			'part' => 'snippet,contentDetails,statistics',
-			'id'   => $this->get_youtube_video_id( $url ),
-			'key'  => $api_key
-		);
-
-		$api_url = add_query_arg( $params, $base );
-
-		$data = HT_Util()->get_contents( $api_url );
-
-		return json_decode( $data );
+		return ( new HOCWP_Theme_YouTube_API( $url ) )->fetch();
 	}
 
 	public function get_user_role_names( $user ) {

@@ -111,7 +111,7 @@ function hocwp_theme_enqueue_scripts_action() {
 	wp_register_script( 'hocwp-theme-pagination', HOCWP_THEME_CORE_URL . '/js/pagination' . HOCWP_THEME_JS_SUFFIX, array( 'jquery' ), false, true );
 
 	if ( function_exists( 'hocwp_theme_get_option' ) ) {
-		$sticky = hocwp_theme_get_option( 'sticky_last_widget', '', 'reading' );
+		$sticky = HT_Options()->get_tab( 'sticky_last_widget', '', 'reading' );
 
 		if ( 1 == $sticky ) {
 			wp_enqueue_script( 'hocwp-theme-sticky-widget', HOCWP_THEME_CORE_URL . '/js/sticky-widget' . HOCWP_THEME_JS_SUFFIX, array(), false, true );

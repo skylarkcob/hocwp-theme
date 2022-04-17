@@ -3668,6 +3668,13 @@
     display: block !important;
 }
 
+.d-flex.equal > *,
+.display-flex.equal > *,
+.dp-f.equal > * {
+    flex: 1 1 0;
+    padding: 5px;
+}
+
 .tt-u {
     text-transform: uppercase;
 }
@@ -3736,4 +3743,15 @@
     display: none;
     opacity: 0;
     visibility: hidden;
+}
+
+.list-unstyled {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list-inline > li {
+    display: inline-block;
+    vertical-align: top;
 }

@@ -25,41 +25,50 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	public function site_logo( $args = array(), $echo = true ) {
 		$logo = get_custom_logo();
 
-		$site_title = get_bloginfo( 'name' );
+		$display = HT_Options()->get_general( 'logo_display' );
 
-		if ( ! display_header_text() ) {
-			$site_title = '';
-		}
+		if ( 'image' == $display ) {
+			$site_title = get_bloginfo( 'name' );
 
-		/** @noinspection HtmlUnknownTarget */
-		$defaults = array(
-			'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',
-			'logo_class'  => 'site-logo',
-			'title'       => '<a href="%1$s" title="%2$s">%2$s</a>',
-			'title_class' => 'site-title',
-			'home_wrap'   => '<h1 class="%1$s">%2$s</h1>',
-			'single_wrap' => '<div class="%1$s faux-heading">%2$s</div>',
-			'condition'   => ( is_front_page() || is_home() ) && ! is_page(),
-		);
+			if ( ! display_header_text() ) {
+				$site_title = '';
+			}
 
-		$args = wp_parse_args( $args, $defaults );
+			/** @noinspection HtmlUnknownTarget */
+			$defaults = array(
+				'logo'        => '%1$s<span class="screen-reader-text">%2$s</span>',
+				'logo_class'  => 'site-logo',
+				'title'       => '<a href="%1$s" title="%2$s">%2$s</a>',
+				'title_class' => 'site-title',
+				'home_wrap'   => '<h1 class="%1$s">%2$s</h1>',
+				'single_wrap' => '<div class="%1$s faux-heading">%2$s</div>',
+				'condition'   => ( is_front_page() || is_home() ) && ! is_page(),
+			);
 
-		$args = apply_filters( 'hocwp_theme_site_logo_args', $args, $defaults );
+			$args = wp_parse_args( $args, $defaults );
 
-		if ( has_custom_logo() ) {
-			$contents  = sprintf( $args['logo'], $logo, esc_html( $site_title ) );
-			$classname = $args['logo_class'];
-		} else {
-			$contents  = sprintf( $args['title'], esc_url( get_home_url( null, '/' ) ), esc_html( $site_title ) );
-			$classname = $args['title_class'];
-		}
+			$args = apply_filters( 'hocwp_theme_site_logo_args', $args, $defaults );
 
-		$wrap = $args['condition'] ? 'home_wrap' : 'single_wrap';
+			if ( has_custom_logo() ) {
+				$contents  = sprintf( $args['logo'], $logo, esc_html( $site_title ) );
+				$classname = $args['logo_class'];
+			} else {
+				$contents  = sprintf( $args['title'], esc_url( get_home_url( null, '/' ) ), esc_html( $site_title ) );
+				$classname = $args['title_class'];
+			}
 
-		if ( ! str_contains( $logo, '<img' ) && ( ! str_contains( $contents, '<h1' ) || ! str_contains( $wrap, '<h1' ) ) ) {
-			$html = sprintf( $args[ $wrap ], $classname, $contents );
+			$wrap = $args['condition'] ? 'home_wrap' : 'single_wrap';
+
+			if ( ! str_contains( $logo, '<img' ) && ( ! str_contains( $contents, '<h1' ) || ! str_contains( $wrap, '<h1' ) ) ) {
+				$html = sprintf( $args[ $wrap ], $classname, $contents );
+			} else {
+				$html = $logo;
+			}
 		} else {
 			$html = $logo;
+
+			$classname = '';
+			$contents  = '';
 		}
 
 		$html = apply_filters( 'hocwp_theme_site_logo', $html, $args, $classname, $contents );
@@ -1344,7 +1353,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 					if ( ! empty( $post_title ) ) {
 						$post_title = sprintf( '<a href="%s" title="%s">%s</a>', esc_url( get_the_permalink() ), esc_attr( get_the_title() ), get_the_title() );
-						$post_title = sprintf( '<h2 class="post-title">%s</h2>', $post_title );
+						$post_title = sprintf( '<div class="post-title">%s</div>', $post_title );
 					}
 
 					$html = str_replace( 'post_title', $post_title, $html );
@@ -1486,7 +1495,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		if ( null !== $post_class ) {
 			?>
             <div <?php post_class( $post_class, $post_id ); ?>>
-				<?php echo $html; ?>
+                <div class="post-container">
+					<?php echo $html; ?>
+                </div>
             </div>
 			<?php
 		} else {

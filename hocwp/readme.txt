@@ -7,6 +7,10 @@
 * 15/04/2022: Update addthis share tool receives specific tool id.
 * 15/04/2022: Add VR Tour extension now theme fully supports 360.
 * 15/04/2022: Add lozad for default lazy load.
+* 17/04/2022: Fix logo type text and custom HTML.
+* 17/04/2022: Add Load More extension.
+* 17/04/2022: Add Google API and YouTube API classes.
+* 17/04/2022: Update Maps API.
 
 = 6.9.3 =
 * 03/04/2022: Remove attribute type="text/javascript".

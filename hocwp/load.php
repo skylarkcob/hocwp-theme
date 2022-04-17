@@ -13,7 +13,7 @@ $theme = wp_get_theme();
 $require_version = $theme->get( 'RequiresPHP' );
 
 if ( empty( $require_version ) ) {
-	$require_version = '8';
+	$require_version = '8.0';
 }
 
 /**
