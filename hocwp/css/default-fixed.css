@@ -644,3 +644,7 @@ button.disabled {
     visibility: hidden;
     opacity: 0;
 }
+
+.fancybox-container {
+    z-index: 999999;
+}

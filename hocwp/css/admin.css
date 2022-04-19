@@ -91,6 +91,23 @@
     margin-left: 20px;
 }
 
+#side-sortables .hocwp-theme .images-box {
+    position: relative;
+    padding-bottom: 40px;
+}
+
+#side-sortables .hocwp-theme .images-box .insert-medias {
+    margin-top: 10px;
+}
+
+#side-sortables .hocwp-theme .images-box .remove-medias {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    margin: 0;
+    top: auto;
+}
+
 .inside .hocwp-theme {
     box-sizing: border-box;
 }
