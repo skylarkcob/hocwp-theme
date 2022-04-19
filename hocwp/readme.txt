@@ -11,6 +11,7 @@
 * 17/04/2022: Add Load More extension.
 * 17/04/2022: Add Google API and YouTube API classes.
 * 17/04/2022: Update Maps API.
+* 19/04/2022: Add CAPTCHA class, update function to display and check CAPTCHA valid.
 
 = 6.9.3 =
 * 03/04/2022: Remove attribute type="text/javascript".

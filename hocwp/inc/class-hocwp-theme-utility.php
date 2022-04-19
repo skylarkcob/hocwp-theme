@@ -2265,6 +2265,48 @@ class HOCWP_Theme_Utility {
 		return $options;
 	}
 
+	public function is_captcha_valid( $url, $params = array() ) {
+		$url = add_query_arg( $params, $url );
+
+		$response = wp_remote_request( $url );
+
+		$response = wp_remote_retrieve_body( $response );
+
+		$response = json_decode( $response );
+
+		if ( $this->is_object_valid( $response ) ) {
+			if ( $response->success || 1 == $response->success ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function captcha() {
+		$obj = HOCWP_Theme()->captcha;
+
+		if ( ! ( $obj instanceof HOCWP_Theme_CAPTCHA ) ) {
+			$obj = new HOCWP_Theme_CAPTCHA( 'auto' );
+
+			HOCWP_Theme()->captcha = $obj;
+		}
+
+		$obj->display_html();
+	}
+
+	public function captcha_valid() {
+		$obj = HOCWP_Theme()->captcha;
+
+		if ( ! ( $obj instanceof HOCWP_Theme_CAPTCHA ) ) {
+			$obj = new HOCWP_Theme_CAPTCHA( 'auto' );
+
+			HOCWP_Theme()->captcha = $obj;
+		}
+
+		return $obj->check_valid();
+	}
+
 	public function hcaptcha( $atts = array(), $script_params = array() ) {
 		$defaults = array(
 			'hl' => get_locale()
@@ -2272,7 +2314,7 @@ class HOCWP_Theme_Utility {
 
 		$script_params = wp_parse_args( $script_params, $defaults );
 
-		$url = 'https://www.hCaptcha.com/1/api.js';
+		$url = 'https://www.hcaptcha.com/1/api.js';
 		$url = add_query_arg( $script_params, $url );
 
 		$this->inline_script( 'hcaptcha', $url );
@@ -2299,15 +2341,8 @@ class HOCWP_Theme_Utility {
 		$params = wp_parse_args( $params, $defaults );
 
 		$url = 'https://hcaptcha.com/siteverify';
-		$url = add_query_arg( $params, $url );
-		$res = wp_remote_get( $url, $params );
-		$res = wp_remote_retrieve_body( $res );
 
-		return json_decode( $res );
-	}
-
-	public function captcha() {
-
+		return $this->is_captcha_valid( $url, $params );
 	}
 
 	public function recaptcha( $version = 'v2' ) {
@@ -2361,21 +2396,7 @@ class HOCWP_Theme_Utility {
 			'remoteip' => HT()->get_IP()
 		);
 
-		$url = add_query_arg( $params, $url );
-
-		$response = wp_remote_post( $url );
-
-		$response = wp_remote_retrieve_body( $response );
-
-		$response = json_decode( $response );
-
-		if ( $this->is_object_valid( $response ) ) {
-			if ( $response->success || 1 == $response->success ) {
-				return true;
-			}
-		}
-
-		return false;
+		return $this->is_captcha_valid( $url, $params );
 	}
 
 	public function get_admin_colors( $color = '' ) {

@@ -51,7 +51,7 @@ function hocwp_theme_settings_page_social_section() {
 	$sections['captcha'] = array(
 		'tab'         => 'social',
 		'id'          => 'captcha',
-		'title'       => 'Captcha',
+		'title'       => __('CAPTCHA', 'hocwp-theme'),
 		'description' => __( 'CAPTCHA helps protect you from spam and password decryption by asking you to complete a simple test that proves you are human and not a computer trying to break into a password protected account.', 'hocwp-theme' )
 	);
 
@@ -264,7 +264,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'captcha',
 		'id'      => 'hcaptcha_site_key',
-		'title'   => 'hCaptcha Site Key',
+		'title'   => 'hCAPTCHA Site Key',
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(
@@ -277,7 +277,7 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'captcha',
 		'id'      => 'hcaptcha_secret_key',
-		'title'   => 'hCaptcha Secret Key',
+		'title'   => 'hCAPTCHA Secret Key',
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(

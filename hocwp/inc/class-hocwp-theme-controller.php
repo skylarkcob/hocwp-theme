@@ -28,6 +28,7 @@ final class HOCWP_Theme_Controller {
 	protected static $instance;
 
 	public $object;
+	public $captcha;
 
 	public $loop_data = array();
 	public $temp_data = array();
@@ -397,7 +398,10 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
 		require $this->core_path . '/inc/class-hocwp-theme-enqueue.php';
 		require $this->core_path . '/inc/class-hocwp-theme-utility.php';
+		require $this->core_path . '/inc/class-hocwp-theme-captcha.php';
 		require $this->core_path . '/inc/class-hocwp-theme-options.php';
+
+		$this->captcha = new HOCWP_Theme_CAPTCHA( 'auto' );
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/class-hocwp-theme-admin.php';

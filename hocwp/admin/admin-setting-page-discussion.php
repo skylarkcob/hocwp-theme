@@ -61,10 +61,10 @@ if ( 'disqus' == $comment_system ) {
 
 $args = array(
 	'type'  => 'checkbox',
-	'label' => __( 'Using captcha for comment form?', 'hocwp-theme' )
+	'label' => __( 'Using CAPTCHA for comment form?', 'hocwp-theme' )
 );
 
-$tab->add_field( 'captcha', __( 'Captcha', 'hocwp-theme' ), 'input', $args, 'boolean' );
+$tab->add_field( 'captcha', __( 'CAPTCHA', 'hocwp-theme' ), 'input', $args, 'boolean' );
 
 if ( HT_extension()->is_active( 'ext/comment-notification.php' ) ) {
 	$tab->add_field_array( array(
