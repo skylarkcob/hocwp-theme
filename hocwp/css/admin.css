@@ -87,6 +87,7 @@
     vertical-align: top;
 }
 
+.hocwp-theme .buttons .button + .button,
 .hocwp-theme .inline-fields .button + .button {
     margin-left: 20px;
 }

@@ -84,6 +84,8 @@ final class HOCWP_Theme_HTML_Field {
 		$buttons = $args['buttons'] ?? '';
 
 		if ( HT()->array_has_value( $buttons ) ) {
+			echo '<div class="buttons">' . PHP_EOL;
+
 			foreach ( $buttons as $id => $button ) {
 				if ( is_array( $button ) ) {
 					$button['name'] = $id;
@@ -92,6 +94,8 @@ final class HOCWP_Theme_HTML_Field {
 					self::button( $button );
 				}
 			}
+
+			echo '</div>' . PHP_EOL;
 		}
 	}
 
