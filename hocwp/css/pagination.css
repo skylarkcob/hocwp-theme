@@ -5,6 +5,10 @@
     line-height: 33px;
 }
 
+.entry-content .hocwp-pagination {
+    margin: 0;
+}
+
 .hocwp-pagination:before,
 .hocwp-pagination:after {
     content: "";
@@ -23,6 +27,7 @@
     margin-left: 5px;
 }
 
+.entry-content .hocwp-pagination .post-page-numbers,
 .hocwp-pagination li .page-numbers {
     background: #ffffff;
     background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
@@ -31,6 +36,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
 }
 
+.entry-content .hocwp-pagination .post-page-numbers,
 .hocwp-pagination li .page-numbers {
     border: 1px solid #ddd;
     padding: 5px 10px;
@@ -40,6 +46,8 @@
     text-decoration: none;
 }
 
+.entry-content .hocwp-pagination .post-page-numbers.current,
+.entry-content .hocwp-pagination .post-page-numbers:hover,
 .hocwp-pagination + a.load-more-button,
 .hocwp-pagination li a:hover,
 .hocwp-pagination li .page-numbers.current {
@@ -50,6 +58,8 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#93cede', endColorstr='#49a5bf', GradientType=0);
 }
 
+.entry-content .hocwp-pagination .post-page-numbers.current,
+.entry-content .hocwp-pagination .post-page-numbers:hover,
 .hocwp-pagination + a.load-more-button,
 .hocwp-pagination li a:hover,
 .hocwp-pagination li .page-numbers.current {

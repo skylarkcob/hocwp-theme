@@ -1805,6 +1805,18 @@ function hocwp_theme_wp_title_filter( $title ) {
 add_filter( 'wp_title', 'hocwp_theme_wp_title_filter' );
 add_filter( 'wpseo_title', 'hocwp_theme_wp_title_filter' );
 
+function hocwp_theme_wp_link_pages_args_filter( $args ) {
+	$before = $args['before'] ?? '';
+	$after  = $args['after'] ?? '';
+
+	$args['before'] = '<div class="hocwp-pagination pagination">' . $before;
+	$args['after']  = $after . '</div>';
+
+	return $args;
+}
+
+add_filter( 'wp_link_pages_args', 'hocwp_theme_wp_link_pages_args_filter' );
+
 function hocwp_theme_check_endpoint() {
 	global $wp_query;
 
