@@ -51,7 +51,7 @@ function hocwp_theme_settings_page_social_section() {
 	$sections['captcha'] = array(
 		'tab'         => 'social',
 		'id'          => 'captcha',
-		'title'       => __('CAPTCHA', 'hocwp-theme'),
+		'title'       => __( 'CAPTCHA', 'hocwp-theme' ),
 		'description' => __( 'CAPTCHA helps protect you from spam and password decryption by asking you to complete a simple test that proves you are human and not a computer trying to break into a password protected account.', 'hocwp-theme' )
 	);
 
@@ -124,7 +124,7 @@ function hocwp_theme_settings_page_social_field() {
 		)
 	);
 
-	$options = HT_Options()->get('social');
+	$options = HT_Options()->get( 'social' );
 
 	if ( is_array( $options ) && isset( $options['list_socials'] ) && ! empty( $options['list_socials'] ) ) {
 		$socials = $options['list_socials'];
@@ -251,7 +251,33 @@ function hocwp_theme_settings_page_social_field() {
 		'tab'     => 'social',
 		'section' => 'captcha',
 		'id'      => 'recaptcha_secret_key',
-		'title'   => 'reCAPTCHA Secret Key',
+		'title'   => __( 'reCAPTCHA Secret Key', 'hocwp-theme' ),
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$args = array(
+		'options' => array(
+			''             => __( '-- Choose version --', 'hocwp-theme' ),
+			'v2'           => _x( 'V2', 'recaptcha', 'hocwp-theme' ),
+			'v2_invisible' => _x( 'V2 Invisilbe', 'recaptcha', 'hocwp-theme' ),
+			'v3'           => _x( 'V3', 'recaptcha', 'hocwp-theme' ),
+			'enterprise'   => _x( 'Enterprise', 'recaptcha', 'hocwp-theme' )
+		),
+		'class'   => 'regular-text'
+	);
+
+	$fields[] = new HOCWP_Theme_Admin_Setting_Field( 'recaptcha_version', __( 'reCAPTCHA Version', 'hocwp-theme' ), 'select', $args, 'string', 'social', 'captcha' );
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'captcha',
+		'id'      => 'recaptcha_project_id',
+		'title'   => __( 'reCAPTCHA Project ID', 'hocwp-theme' ),
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(

@@ -398,10 +398,13 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
 		require $this->core_path . '/inc/class-hocwp-theme-enqueue.php';
 		require $this->core_path . '/inc/class-hocwp-theme-utility.php';
-		require $this->core_path . '/inc/class-hocwp-theme-captcha.php';
 		require $this->core_path . '/inc/class-hocwp-theme-options.php';
+		require $this->core_path . '/inc/abstract-class-hocwp-theme-captcha.php';
+		require $this->core_path . '/inc/class-hocwp-theme-captcha-hcaptcha.php';
+		require $this->core_path . '/inc/class-hocwp-theme-captcha-recaptcha.php';
+		require $this->core_path . '/inc/class-hocwp-theme-captcha.php';
 
-		$this->captcha = new HOCWP_Theme_CAPTCHA( 'auto' );
+		$this->captcha = HT_CAPTCHA();
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/class-hocwp-theme-admin.php';

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-04-22 06:10+0700\n"
+"POT-Creation-Date: 2022-04-25 20:49+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -752,6 +752,42 @@ msgstr ""
 #: hocwp/admin/admin-setting-page-social.php:161
 #, php-format
 msgid "%s Icon"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:254
+msgid "reCAPTCHA Secret Key"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:265
+msgid "-- Choose version --"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:266
+msgctxt "recaptcha"
+msgid "V2"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:267
+msgctxt "recaptcha"
+msgid "V2 Invisilbe"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:268
+msgctxt "recaptcha"
+msgid "V3"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:269
+msgctxt "recaptcha"
+msgid "Enterprise"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:274
+msgid "reCAPTCHA Version"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:280
+msgid "reCAPTCHA Project ID"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-system-information.php:10 hocwp/inc/setup-after.php:187 hocwp/inc/setup-after.php:223
@@ -1775,10 +1811,6 @@ msgstr ""
 msgid "Every %d Minutes"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-captcha.php:76
-msgid "CAPTCHA service does not provide."
-msgstr ""
-
 #: hocwp/inc/class-hocwp-theme-controller.php:40 hocwp/inc/class-hocwp-theme-extension.php:194 hocwp/inc/class-hocwp-theme-requirement.php:19
 #, php-format
 msgid "%s is a singleton class and you cannot create a second instance."
@@ -2515,7 +2547,7 @@ msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2173
+#: hocwp/inc/class-hocwp-theme-utility.php:2172
 msgid "The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn't full MySQL query."
 msgstr ""
 
@@ -2760,11 +2792,11 @@ msgstr ""
 msgid "Please enable JavaScript to view the <a href=\"%s\">comments powered by Disqus</a>."
 msgstr ""
 
-#: hocwp/inc/template-comments.php:240
+#: hocwp/inc/template-comments.php:302
 msgid "Bots are not allowed to submit comments."
 msgstr ""
 
-#: hocwp/inc/template-comments.php:243
+#: hocwp/inc/template-comments.php:305
 msgid "Bots are not allowed to submit comments. If you are not a bot then please enable JavaScript in browser."
 msgstr ""
 
@@ -2863,6 +2895,10 @@ msgstr ""
 #, php-format
 msgctxt "post author"
 msgid "by %s"
+msgstr ""
+
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:88
+msgid "CAPTCHA service does not provide."
 msgstr ""
 
 #: hocwp/load.php:91

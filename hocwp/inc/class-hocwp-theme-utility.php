@@ -2007,11 +2007,19 @@ class HOCWP_Theme_Utility {
 		return $url;
 	}
 
-	public function inline_script( $id, $src, $atts = array(), $async = true, $defer = true ) {
+	public function inline_script( $id, $src, $atts = array(), $async = true, $defer = true, $insert_before = '' ) {
+		$src = add_query_arg( 'hl', get_locale(), $src );
+		$src = add_query_arg( 'language', get_locale(), $src );
 		?>
         <script>
             (function (d, s, id) {
-                let js, gjs = d.getElementsByTagName(s)[0];
+                let js, gjs = d.getElementsByTagName(s)[0],
+                    insertBefore = "<?php echo $insert_before; ?>",
+                    node = null;
+
+                if (insertBefore) {
+                    node = d.getElementById(insertBefore);
+                }
 
                 if (d.getElementById(id)) {
                     return;
@@ -2020,7 +2028,6 @@ class HOCWP_Theme_Utility {
                 js = d.createElement(s);
                 js.id = id;
                 js.src = "<?php echo esc_url( $src ); ?>";
-
 				<?php
 				if ( $async ) {
 					echo 'js.async = "async";';
@@ -2034,8 +2041,11 @@ class HOCWP_Theme_Utility {
 					echo 'js.setAttribute("' . esc_attr( $key ) . '", "' . esc_attr( $value ) . '");';
 				}
 				?>
+                if (!node) {
+                    node = gjs;
+                }
 
-                gjs.parentNode.insertBefore(js, gjs);
+                node.parentNode.insertBefore(js, node);
             }(document, "script", "<?php echo esc_attr( $id ); ?>"));
         </script>
 		<?php
@@ -2064,26 +2074,15 @@ class HOCWP_Theme_Utility {
 		if ( 'vi' == $locale ) {
 			$locale = 'vi_VN';
 		}
-		?>
-        <script>
-            (function (d, s, id) {
-                let js, gjs = d.getElementsByTagName(s)[0];
 
-                if (d.getElementById(id)) {
-                    return;
-                }
+		$src = 'https://apis.google.com/js/api.js';
 
-                js = d.createElement(s);
-                js.id = id;
-                js.async = "async";
-                js.defer = "defer";
-                js.src = "https://apis.google.com/js/api.js?language=<?php echo $locale; ?>";
-                js.setAttribute("onload", "this.onload=function(){};<?php echo $callback; ?>()");
-                js.setAttribute("onreadystatechange", "if (this.readyState === 'complete') this.onload()");
-                gjs.parentNode.insertBefore(js, gjs);
-            }(document, "script", "google-jssdk"));
-        </script>
-		<?php
+		$atts = array(
+			'onload'             => 'this.onload=' . $callback . '()',
+			'onreadystatechange' => 'if (this.readyState === "complete") this.onload()'
+		);
+
+		$this->inline_script( 'google-jssdk', $src, $atts );
 	}
 
 	public function load_facebook_javascript_sdk( $args = array() ) {
@@ -2118,16 +2117,16 @@ class HOCWP_Theme_Utility {
 
 				$version = $args['version'] ?? '2.11';
 				$version = trim( $version, 'v' );
+
+				$src = 'https://connect.facebook.net/';
+				$src .= $locale;
+				$src .= '/sdk.js#xfbml=1&version=v';
+				$src .= $version;
+				$src .= '&appId=';
+				$src .= $app_id;
+				$this->inline_script( 'facebook-jssdk', $src );
 				?>
                 <div id="fb-root"></div>
-                <script>(function (d, s, id) {
-                        let js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "https://connect.facebook.net/<?php echo $locale; ?>/sdk.js#xfbml=1&version=v<?php echo $version; ?>&appId=<?php echo $app_id; ?>";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, "script", "facebook-jssdk"));</script>
 				<?php
 			} else {
 				echo $sdk;
@@ -2263,140 +2262,6 @@ class HOCWP_Theme_Utility {
 		}
 
 		return $options;
-	}
-
-	public function is_captcha_valid( $url, $params = array() ) {
-		$url = add_query_arg( $params, $url );
-
-		$response = wp_remote_request( $url );
-
-		$response = wp_remote_retrieve_body( $response );
-
-		$response = json_decode( $response );
-
-		if ( $this->is_object_valid( $response ) ) {
-			if ( $response->success || 1 == $response->success ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public function captcha() {
-		$obj = HOCWP_Theme()->captcha;
-
-		if ( ! ( $obj instanceof HOCWP_Theme_CAPTCHA ) ) {
-			$obj = new HOCWP_Theme_CAPTCHA( 'auto' );
-
-			HOCWP_Theme()->captcha = $obj;
-		}
-
-		$obj->display_html();
-	}
-
-	public function captcha_valid() {
-		$obj = HOCWP_Theme()->captcha;
-
-		if ( ! ( $obj instanceof HOCWP_Theme_CAPTCHA ) ) {
-			$obj = new HOCWP_Theme_CAPTCHA( 'auto' );
-
-			HOCWP_Theme()->captcha = $obj;
-		}
-
-		return $obj->check_valid();
-	}
-
-	public function hcaptcha( $atts = array(), $script_params = array() ) {
-		$defaults = array(
-			'hl' => get_locale()
-		);
-
-		$script_params = wp_parse_args( $script_params, $defaults );
-
-		$url = 'https://www.hcaptcha.com/1/api.js';
-		$url = add_query_arg( $script_params, $url );
-
-		$this->inline_script( 'hcaptcha', $url );
-
-		$div = new HOCWP_Theme_HTML_Tag( 'div' );
-
-		$defaults = array(
-			'data-sitekey' => HT_Options()->get_tab( 'hcaptcha_site_key', '', 'social' )
-		);
-
-		$atts = wp_parse_args( $atts, $defaults );
-
-		$div->set_attributes( $atts );
-		$div->add_attribute( 'class', 'h-captcha' );
-		$div->output();
-	}
-
-	public function hcaptcha_valid( $params = array() ) {
-		$defaults = array(
-			'secret'   => HT_Options()->get_tab( 'hcaptcha_secret_key', '', 'social' ),
-			'response' => $_POST['h-captcha-response'] ?? ''
-		);
-
-		$params = wp_parse_args( $params, $defaults );
-
-		$url = 'https://hcaptcha.com/siteverify';
-
-		return $this->is_captcha_valid( $url, $params );
-	}
-
-	public function recaptcha( $version = 'v2' ) {
-		$options  = $this->get_theme_options( 'social' );
-		$site_key = $options['recaptcha_site_key'] ?? '';
-
-		if ( empty( $site_key ) ) {
-			return;
-		}
-
-		if ( 'v2' == $version ) {
-			?>
-            <script>
-                (function (d, s, id) {
-                    let js, gjs = d.getElementsByTagName(s)[0];
-
-                    if (d.getElementById(id)) {
-                        return;
-                    }
-
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.async = "async";
-                    js.defer = "defer";
-                    js.src = "https://www.google.com/recaptcha/api.js?hl=<?php echo get_locale(); ?>";
-                    gjs.parentNode.insertBefore(js, gjs);
-                }(document, "script", "recaptcha-jssdk"));
-            </script>
-            <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" style="margin-bottom: 10px;"></div>
-			<?php
-		}
-	}
-
-	public function recaptcha_valid( $response = null ) {
-		if ( null == $response ) {
-			$response = $_POST['g-recaptcha-response'] ?? '';
-		}
-
-		$options    = $this->get_theme_options( 'social' );
-		$secret_key = $options['recaptcha_secret_key'] ?? '';
-
-		if ( empty( $secret_key ) ) {
-			return false;
-		}
-
-		$url = 'https://www.google.com/recaptcha/api/siteverify';
-
-		$params = array(
-			'secret'   => $secret_key,
-			'response' => $response,
-			'remoteip' => HT()->get_IP()
-		);
-
-		return $this->is_captcha_valid( $url, $params );
 	}
 
 	public function get_admin_colors( $color = '' ) {
@@ -2680,6 +2545,45 @@ class HOCWP_Theme_Utility {
 
 	public function shortcut_icon_tag() {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.7.7' );
+	}
+
+	public function is_captcha_valid( $url, $params = array() ) {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->is_captcha_valid()' );
+
+		return HT_CAPTCHA()->is_captcha_valid( $url, $params );
+	}
+
+	public function captcha() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->display_html()' );
+		HT_CAPTCHA()->display_html();
+	}
+
+	public function captcha_valid() {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->check_valid()' );
+
+		return HT_CAPTCHA()->check_valid();
+	}
+
+	public function hcaptcha( $atts = array(), $script_params = array() ) {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->display_html()' );
+		HT_CAPTCHA()->display_html();
+	}
+
+	public function hcaptcha_valid( $params = array() ) {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->check_valid()' );
+
+		return HT_CAPTCHA()->check_valid();
+	}
+
+	public function recaptcha( $version = 'v2' ) {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->display_html()' );
+		HT_CAPTCHA()->display_html();
+	}
+
+	public function recaptcha_valid( $response = null ) {
+		_deprecated_function( __CLASS__ . '::' . __FUNCTION__ . '()', '6.9.4', 'HT_CAPTCHA()->check_valid()' );
+
+		return HT_CAPTCHA()->check_valid();
 	}
 }
 

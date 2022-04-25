@@ -209,12 +209,74 @@ function hocwp_theme_add_captcha_to_comment_form( $submit_field ) {
 		if ( 1 == $captcha ) {
 			$obj = HOCWP_Theme()->captcha;
 
-			if ( $obj instanceof HOCWP_Theme_CAPTCHA ) {
+			if ( $obj instanceof Abstract_HOCWP_Theme_CAPTCHA ) {
 				ob_start();
 				$obj->display_html();
 				$captcha = ob_get_clean();
 
 				$submit_field = $captcha . $submit_field;
+
+				if ( $obj instanceof HOCWP_Theme_RECAPTCHA ) {
+					$version = $obj->version;
+
+					if ( 'v2_invisible' == $version || 'v3' == $version || 'enterprise' == $version ) {
+						$submit_field = str_replace( 'id="submit"', 'id="formSubmit"', $submit_field );
+						$submit_field = str_replace( 'name="submit"', 'name="form_submit"', $submit_field );
+						$site_key     = HT_Options()->get_tab( 'recaptcha_site_key', '', 'social' );
+
+						ob_start();
+						?>
+                        <script>
+                            let form = document.getElementById("commentform");
+
+                            if (form) {
+                                let button = document.getElementById("formSubmit");
+
+                                if (button) {
+                                    let version = "<?php echo $version; ?>";
+
+                                    if ("v3" === version) {
+                                        let interval = setInterval(function () {
+                                            if (window.grecaptcha) {
+                                                grecaptcha.ready(function () {
+                                                    grecaptcha.execute("<?php echo $site_key; ?>", {action: "validate_captcha"}).then(function (token) {
+                                                        document.getElementById("captcha-response").value = token;
+                                                    });
+                                                });
+                                                clearInterval(interval);
+                                            }
+                                        }, 500);
+                                    } else if ("enterprise" === version) {
+                                        let interval = setInterval(function () {
+                                            if (window.grecaptcha) {
+                                                grecaptcha.enterprise.ready(function () {
+                                                    grecaptcha.enterprise.execute("<?php echo $site_key; ?>", {action: "validate_captcha"}).then(function (token) {
+                                                        document.getElementById("captcha-response").value = token;
+                                                    });
+                                                });
+                                                clearInterval(interval);
+                                            }
+                                        }, 500);
+                                    } else {
+                                        button.onclick = function (e) {
+                                            e.preventDefault();
+                                            grecaptcha.execute();
+                                        };
+
+                                        function setResponse(token) {
+                                            document.getElementById("g-recaptcha-response").value = token;
+                                            document.getElementById("commentform").submit();
+                                        }
+                                    }
+                                }
+                            }
+                        </script>
+						<?php
+						$script = ob_get_clean();
+
+						$submit_field .= $script;
+					}
+				}
 			}
 		}
 	}
@@ -232,7 +294,7 @@ function hocwp_theme_preprocess_comment_check_captcha( $commentdata ) {
 
 		$obj = HOCWP_Theme()->captcha;
 
-		if ( 1 == $captcha && $obj instanceof HOCWP_Theme_CAPTCHA ) {
+		if ( 1 == $captcha && $obj instanceof Abstract_HOCWP_Theme_CAPTCHA ) {
 			if ( empty( $obj->post_key ) || isset( $_POST[ $obj->post_key ] ) ) {
 				$response = $obj->check_valid();
 

@@ -13,6 +13,8 @@
 * 17/04/2022: Update Maps API.
 * 19/04/2022: Add CAPTCHA class, update function to display and check CAPTCHA valid.
 * 20/04/2022: Fix admin buttons inline not margin.
+* 22/04/2022: Update inline script function.
+* 22/04/2022: Update CAPTCHA utilities, now supports reCAPTCHA V2, V2 Invisible, V3 and Enterprise version.
 
 = 6.9.3 =
 * 03/04/2022: Remove attribute type="text/javascript".

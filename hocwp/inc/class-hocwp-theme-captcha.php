@@ -1,80 +1,50 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-final class HOCWP_THEME_CAPTCHA_SERVICE {
-	const HCAPTCHA = 'hcaptcha';
-	const RECAPTCHA = 'recaptcha';
+if ( ! trait_exists( 'HOCWP_Theme_CAPTCHA_Utils' ) ) {
+	require_once __DIR__ . '/trait-hocwp-theme-captcha-utils.php';
 }
 
 class HOCWP_Theme_CAPTCHA {
-	public $service = HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA;
-	public $attributes = array();
-	public $script_prams = array();
-	public $version = 'v3';
-	public $post_key = '';
+	use HOCWP_Theme_CAPTCHA_Utils;
 
-	public function __construct( $service = HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA ) {
-		if ( 'auto' == $service ) {
-			$options    = HT_Options()->get_tab( null, null, 'social' );
-			$site_key   = $options['hcaptcha_site_key'] ?? '';
-			$secret_key = $options['hcaptcha_secret_key'] ?? '';
+	protected static $_instance = null;
 
-			if ( ! empty( $site_key ) && ! empty( $secret_key ) ) {
-				$service = HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA;
-			} else {
-				$site_key   = $options['recaptcha_site_key'] ?? '';
-				$secret_key = $options['recaptcha_secret_key'] ?? '';
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
 
-				if ( ! empty( $site_key ) && ! empty( $secret_key ) ) {
-					$service = HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA;
-				}
+		return self::$_instance;
+	}
+
+	public function __construct() {
+
+	}
+
+	public function get_object( $service = '' ) {
+		if ( empty( $service || 'auto' == $service ) ) {
+			$service = $this->detect_service();
+		}
+
+		if ( $service == HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA ) {
+			$version = HT_Options()->get_tab( 'recaptcha_version', '', 'social' );
+
+			if ( empty( $version ) ) {
+				$version = 'v3';
 			}
+
+			$version = apply_filters( 'hocwp_theme_recaptcha_version', $version, $this );
+
+			return new HOCWP_Theme_RECAPTCHA( $version );
 		}
 
-		if ( $service == HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA || $service == HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA ) {
-			$this->service = $service;
-		}
+		return new HOCWP_Theme_HCAPTCHA();
 	}
+}
 
-	public function set_attributes( $atts ) {
-		if ( is_array( $atts ) ) {
-			$this->attributes = $atts;
-		}
-	}
+function HT_CAPTCHA() {
+	$service = apply_filters( 'hocwp_theme_captcha_service', 'recaptcha' );
 
-	public function set_script_params( $params ) {
-		if ( is_array( $params ) ) {
-			$this->script_prams = $params;
-		}
-	}
-
-	public function set_version( $version ) {
-		if ( ! empty( $version ) ) {
-			$version = ltrim( $version, 'v' );
-
-			$this->version = 'v' . $version;
-		}
-	}
-
-	public function display_html() {
-		switch ( $this->service ) {
-			case HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA:
-				$this->post_key = 'g-recaptcha-response';
-				HT_Util()->recaptcha( $this->version );
-				break;
-			case HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA:
-				$this->post_key = 'h-captcha-response';
-				HT_Util()->hcaptcha( $this->attributes, $this->script_prams );
-				break;
-		}
-	}
-
-	public function check_valid() {
-		return match ( $this->service ) {
-			HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA => HT_Util()->recaptcha_valid(),
-			HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA => HT_Util()->hcaptcha_valid(),
-			default => new WP_Error( 'empty_service', __( 'CAPTCHA service does not provide.', 'hocwp-theme' ) ),
-		};
-
-	}
+	return HOCWP_Theme_CAPTCHA::instance()->get_object( $service );
 }
