@@ -1,4 +1,9 @@
 == Changelog ==
+= 6.9.5 =
+* 26/04/2022: Add utilities for user load custom css and js.
+* 26/04/2022: Add floating support tools.
+* 26/04/2022: Add phone-shake and earthquake animation.
+
 = 6.9.4 =
 * 15/04/2022: Add mobile setting tab.
 * 15/04/2022: Add setting for add this inline tool id.

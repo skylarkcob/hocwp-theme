@@ -1021,6 +1021,7 @@ add_action( 'wp_head', 'hocwp_theme_color_meta' );
 add_action( 'login_head', 'hocwp_theme_color_meta' );
 
 function hocwp_theme_wp_head_action() {
+	// Custom inline css
 	$options = HT_Options()->get( 'custom_code' );
 
 	if ( isset( $options['head'] ) ) {
@@ -1143,6 +1144,126 @@ function hocwp_theme_wp_footer_action() {
             </div>
         </div>
 		<?php
+	}
+
+	// Float supports
+	$tab_name   = 'float_support';
+	$sort_order = HT_Options()->get_tab( 'sort_order', '', $tab_name );
+
+	if ( ! empty( $sort_order ) ) {
+		$sort_order = json_decode( $sort_order );
+
+		if ( HT()->array_has_value( $sort_order ) ) {
+			$style = HT_Options()->get_tab( 'style', '', $tab_name );
+			$pos   = HT_Options()->get_tab( 'position', '', $tab_name );
+
+			$css_style = '';
+
+			$margin = HT_Options()->get_tab( 'margin', '', $tab_name );
+
+			if ( ! empty( $margin ) ) {
+				$css_style .= 'margin:' . $margin . ';';
+			}
+
+			$padding = HT_Options()->get_tab( 'padding', '', $tab_name );
+
+			if ( ! empty( $padding ) ) {
+				$css_style .= 'padding:' . $padding . ';';
+			}
+
+			$radius = HT_Options()->get_tab( 'border_radius', '', $tab_name );
+
+			if ( ! empty( $radius ) ) {
+				$css_style .= 'border-radius:' . $radius . ';';
+			}
+
+			$bg_color = HT_Options()->get_tab( 'background_color', '', $tab_name );
+
+			if ( ! empty( $bg_color ) ) {
+				$css_style .= 'background-color:' . $bg_color . ';';
+			}
+
+			$bg_image = HT_Options()->get_tab( 'background_image', '', $tab_name );
+
+			if ( HT_Media()->exists( $bg_image ) ) {
+				$css_style .= sprintf( 'background-image: url("%s");', esc_url( wp_get_attachment_image_url( $bg_image, 'full' ) ) );
+			}
+			?>
+            <div class="float-supports hot-linking hidden-xs" data-style="<?php echo esc_attr( $style ); ?>"
+                 data-position="<?php echo esc_attr( $pos ); ?>" style="<?php echo esc_attr( $css_style ); ?>">
+                <div class="box-container center d-flex">
+					<?php
+					foreach ( $sort_order as $key ) {
+						$value = HT_Options()->get_tab( $key, '', $tab_name );
+
+						$url   = $key . '_url';
+						$url   = $value[ $url ] ?? '';
+						$text  = $key . '_text';
+						$text  = $value[ $text ] ?? '';
+						$icon  = $key . '_icon';
+						$icon  = $value[ $icon ] ?? '';
+						$image = $key . '_icon_image';
+						$image = $value[ $image ] ?? '';
+
+						if ( ! empty( $url ) && ! empty( $text ) && ( ! empty( $icon ) || ! empty( $image ) ) ) {
+							if ( 'phone' == $key && ! str_contains( $url, 'tel:' ) ) {
+								$url = HT()->sanitize_phone_number( $url );
+								$url = 'tel:' . $url;
+							}
+
+							if ( ! empty( $url ) ) {
+								$vibrate    = $value[ $key . '_vibrate' ] ?? '';
+								$vibrate    = HT()->bool_to_int( $vibrate );
+								$earthquake = $value[ $key . '_earthquake' ] ?? '';
+								$earthquake = HT()->bool_to_int( $earthquake );
+								?>
+                                <div class="support-item" data-key="<?php echo esc_attr( $key ); ?>"
+                                     data-vibrate="<?php echo esc_attr( $vibrate ); ?>"
+                                     data-earthquake="<?php echo esc_attr( $earthquake ); ?>">
+                                    <a target="_blank" href="<?php echo esc_url( $url ); ?>" rel="nofollow">
+										<?php
+										if ( 1 == $earthquake ) {
+											?>
+                                            <span class="earthquake-outer"></span>
+                                            <span class="earthquake"></span>
+											<?php
+										}
+
+										if ( HT_Media()->exists( $image ) ) {
+											echo wp_get_attachment_image( $image, 'full' );
+										} else {
+											echo $icon;
+										}
+										?>
+                                        <span class="text"><?php echo esc_html( $text ); ?></span>
+                                    </a>
+                                </div>
+								<?php
+							}
+						}
+					}
+					?>
+                </div>
+                <span class="show_hide"></span>
+            </div>
+			<?php
+		}
+	}
+
+	// Custom inline script
+	$script = HT_Options()->get_tab( 'js', '', 'custom_code' );
+
+	if ( ! empty( $script ) ) {
+		if ( ! class_exists( 'HOCWP_Theme_Minify' ) ) {
+			require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-minify.php';
+		}
+
+		$js = HOCWP_Theme_Minify::js( $script );
+
+		$script = new HOCWP_Theme_HTML_Tag( 'script' );
+
+		$script->set_text( $js );
+		$script->output();
 	}
 }
 
@@ -1790,7 +1911,7 @@ function hocwp_theme_wp_title_filter( $title ) {
 		$add = sprintf( _x( 'Page %d', 'pagination', 'hocwp-theme' ), $paged );
 		$add = $sep . ' ' . $add;
 
-		if ( false == strpos( $title, $add ) ) {
+		if ( ! strpos( $title, $add ) ) {
 			$title .= ' ' . $add;
 		}
 

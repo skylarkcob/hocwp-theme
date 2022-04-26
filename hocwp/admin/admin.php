@@ -101,6 +101,7 @@ add_action( 'admin_menu', function () {
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-media.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-permalinks.php';
 		require HOCWP_THEME_CORE_PATH . '/ext/admin-setting-page-smtp.php';
+		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-float-support.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php';
 		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';

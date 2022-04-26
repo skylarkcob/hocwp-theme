@@ -36,6 +36,20 @@ function hocwp_theme_settings_page_custom_code_field() {
 			)
 		),
 		array(
+			'id'    => 'fonts',
+			'title' => __( 'Fonts', 'hocwp-theme' ),
+			'tab'   => 'custom_code',
+			'args'  => array(
+				'type'          => 'text',
+				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
+				'description'   => __( 'Load fonts or custom Cascading Style Sheets from URL, each URL on new line.', 'hocwp-theme' ),
+				'callback_args' => array(
+					'class' => 'widefat',
+					'rows'  => 6
+				)
+			)
+		),
+		array(
 			'id'    => 'css',
 			'title' => __( 'Cascading Style Sheets', 'hocwp-theme' ),
 			'tab'   => 'custom_code',
@@ -96,6 +110,20 @@ function hocwp_theme_settings_page_custom_code_field() {
 			)
 		),
 		array(
+			'id'    => 'scripts',
+			'title' => __( 'Scripts', 'hocwp-theme' ),
+			'tab'   => 'custom_code',
+			'args'  => array(
+				'type'          => 'text',
+				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
+				'description'   => __( 'Load custom scripts from URL, each URL on new line.', 'hocwp-theme' ),
+				'callback_args' => array(
+					'class' => 'widefat',
+					'rows'  => 6
+				)
+			)
+		),
+		array(
 			'id'    => 'footer',
 			'title' => __( 'Footer Code', 'hocwp-theme' ),
 			'tab'   => 'custom_code',
@@ -106,6 +134,21 @@ function hocwp_theme_settings_page_custom_code_field() {
 				'callback_args' => array(
 					'class'            => 'widefat',
 					'data-code-editor' => 1,
+					'rows'             => 15
+				)
+			)
+		),
+		array(
+			'id'    => 'js',
+			'title' => __( 'Javascript', 'hocwp-theme' ),
+			'tab'   => 'custom_code',
+			'args'  => array(
+				'type'          => 'string',
+				'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
+				'callback_args' => array(
+					'class'            => 'widefat',
+					'data-code-editor' => 1,
+					'data-mode'        => 'javascript',
 					'rows'             => 15
 				)
 			)

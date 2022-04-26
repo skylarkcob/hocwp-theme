@@ -660,6 +660,33 @@
     }
 }
 
+@-moz-keyframes zoom {
+    from {
+        -moz-transform: scale(0)
+    }
+    to {
+        -moz-transform: scale(1)
+    }
+}
+
+@-ms-keyframes zoom {
+    from {
+        -ms-transform: scale(0)
+    }
+    to {
+        -ms-transform: scale(1)
+    }
+}
+
+@-o-keyframes zoom {
+    from {
+        -o-transform: scale(0)
+    }
+    to {
+        -o-transform: scale(1)
+    }
+}
+
 @keyframes zoom {
     from {
         transform: scale(0)

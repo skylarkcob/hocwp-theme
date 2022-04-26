@@ -55,6 +55,81 @@ function hocwp_theme_mobile_menu_media_screen_width() {
 	return $width;
 }
 
+function hocwp_theme_load_custom_style_and_script() {
+	$fonts = HT_Options()->get_tab( 'fonts', '', 'custom_code' );
+
+	if ( ! empty( $fonts ) ) {
+		$fonts = HT()->explode_new_line( $fonts );
+
+		if ( HT()->array_has_value( $fonts ) ) {
+			foreach ( $fonts as $url ) {
+				$url = esc_url( $url );
+
+				if ( ! empty( $url ) ) {
+					if ( str_contains( $url, 'fonts.googleapis.com' ) ) {
+						$name = 'google-fonts';
+					} else {
+						$info = pathinfo( $url );
+						$name = $info['filename'] ?? '';
+
+						if ( empty( $name ) ) {
+							$domain = HT()->get_domain_name( $url );
+							$name   = str_replace( '.', '-', $domain );
+						}
+
+						$name = HT()->trim_string( $name, '.min', 'right' );
+					}
+
+					if ( ! empty( $name ) ) {
+						$name = str_replace( '.', '-', $name );
+						$name .= '-';
+					}
+
+					$name .= md5( $url ) . '-style';
+
+					wp_enqueue_style( $name, $url );
+				}
+			}
+		}
+	}
+
+	$scripts = HT_Options()->get_tab( 'scripts', '', 'custom_code' );
+
+	if ( ! empty( $scripts ) ) {
+		$scripts = HT()->explode_new_line( $scripts );
+
+		if ( HT()->array_has_value( $scripts ) ) {
+			foreach ( $scripts as $url ) {
+				$url = esc_url( $url );
+
+				if ( ! empty( $url ) ) {
+					$info = pathinfo( $url );
+					$name = $info['filename'] ?? '';
+
+					if ( empty( $name ) ) {
+						$domain = HT()->get_domain_name( $url );
+						$name   = str_replace( '.', '-', $domain );
+					}
+
+					$name = HT()->trim_string( $name, '.min', 'right' );
+
+					if ( ! empty( $name ) ) {
+						$name = str_replace( '.', '-', $name );
+						$name .= '-';
+					}
+
+					$name .= md5( $url );
+
+					wp_enqueue_script( $name, $url, array( 'jquery' ), false, true );
+				}
+			}
+		}
+	}
+}
+
+add_action( 'wp_enqueue_scripts', 'hocwp_theme_load_custom_style_and_script', 1 );
+add_action( 'login_enqueue_scripts', 'hocwp_theme_load_custom_style_and_script', 1 );
+
 /**
  * Load styles and scripts for front-end only.
  */

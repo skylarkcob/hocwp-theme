@@ -73,6 +73,10 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu_action' ), 999 );
 	}
 
+	public function get_value( $key, $default = '' ) {
+		return HT_Options()->get_tab( $key, $default, $this->name );
+	}
+
 	public function admin_bar_menu_action( $admin_bar ) {
 		if ( $admin_bar instanceof WP_Admin_Bar ) {
 			if ( ! empty( $this->queried_object ) ) {
