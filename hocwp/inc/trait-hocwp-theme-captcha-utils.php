@@ -169,6 +169,71 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		return $this->is_captcha_valid( $url, $params );
 	}
 
+	public function add_recaptcha_script( $obj, $submit_field = '' ) {
+		if ( $obj instanceof HOCWP_Theme_RECAPTCHA ) {
+			$version = $obj->version;
+
+			if ( 'v2_invisible' == $version || 'v3' == $version || 'enterprise' == $version ) {
+				$site_key = HT_Options()->get_tab( 'recaptcha_site_key', '', 'social' );
+
+				ob_start();
+				?>
+                <script>
+                    let response = document.getElementsByName("recaptcha_version")[0],
+                        form = response.closest("form");
+
+                    function setResponse(token) {
+                        document.getElementById("g-recaptcha-response").value = token;
+                        form.submit();
+                    }
+
+                    if (form) {
+                        let button = form.querySelector("*[type='submit']");
+
+                        if (button) {
+                            let version = "<?php echo $version; ?>";
+
+                            if ("v3" === version) {
+                                let interval = setInterval(function () {
+                                    if (window.grecaptcha) {
+                                        grecaptcha.ready(function () {
+                                            grecaptcha.execute("<?php echo $site_key; ?>", {action: "validate_captcha"}).then(function (token) {
+                                                document.getElementById("captcha-response").value = token;
+                                            });
+                                        });
+                                        clearInterval(interval);
+                                    }
+                                }, 200);
+                            } else if ("enterprise" === version) {
+                                let interval = setInterval(function () {
+                                    if (window.grecaptcha) {
+                                        grecaptcha.enterprise.ready(function () {
+                                            grecaptcha.enterprise.execute("<?php echo $site_key; ?>", {action: "validate_captcha"}).then(function (token) {
+                                                document.getElementById("captcha-response").value = token;
+                                            });
+                                        });
+                                        clearInterval(interval);
+                                    }
+                                }, 200);
+                            } else {
+                                button.onclick = function (e) {
+                                    e.preventDefault();
+                                    grecaptcha.execute();
+                                };
+                            }
+                        }
+                    }
+                </script>
+				<?php
+				$script = ob_get_clean();
+
+				$submit_field .= $script;
+			}
+		}
+
+		return $submit_field;
+	}
+
 	public function recaptcha( $atts = array(), $script_params = array(), $insert_before = '' ) {
 		if ( ! $this->check_recaptcha_config_valid() ) {
 			return;
@@ -195,12 +260,6 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		if ( 'v2' == $version ) {
 			$src = 'https://www.google.com/recaptcha/api.js';
 
-			$params = array(
-				'render' => $site_key,
-				'hl'     => get_locale()
-			);
-
-			$src = add_query_arg( $params, $src );
 			HT_Util()->inline_script( 'recaptcha-jssdk', $src );
 			?>
             <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"
@@ -209,11 +268,6 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		} elseif ( 'v2_invisible' == $version ) {
 			$src = 'https://www.google.com/recaptcha/api.js';
 
-			$params = array(
-				'render' => $site_key
-			);
-
-			$src = add_query_arg( $params, $src );
 			HT_Util()->inline_script( 'recaptcha-jssdk', $src );
 			?>
             <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" data-size="invisible"
