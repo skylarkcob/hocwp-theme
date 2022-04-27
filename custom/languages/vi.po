@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2022-04-26 21:30+0700\n"
-"PO-Revision-Date: 2022-04-26 21:32+0700\n"
+"POT-Creation-Date: 2022-04-27 11:34+0700\n"
+"PO-Revision-Date: 2022-04-27 11:35+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -3364,9 +3364,13 @@ msgctxt "post author"
 msgid "by %s"
 msgstr "bởi %s"
 
-#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:88
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:124
 msgid "CAPTCHA service does not provide."
 msgstr "Dịch vụ CAPTCHA không được cung cấp."
+
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:245
+msgid "<strong>Error:</strong> Please correct the CAPTCHA."
+msgstr "<strong>Lỗi:</strong> Xin vui lòng điền đúng mã bảo mật."
 
 #: hocwp/load.php:91
 #, php-format
@@ -4295,9 +4299,6 @@ msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
 
 #~ msgid "Logout"
 #~ msgstr "Thoát"
-
-#~ msgid "<strong>Error:</strong> Passwords do not match."
-#~ msgstr "<strong>Lỗi:</strong> Mật khẩu không khớp."
 
 #~ msgid "Japanese Name:"
 #~ msgstr "Tên Nhật:"

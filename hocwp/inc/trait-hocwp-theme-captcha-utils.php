@@ -66,7 +66,43 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		return false;
 	}
 
+	public function check_recaptcha_config_valid( $options = array() ) {
+		if ( empty( $options ) ) {
+			$options = HT_Options()->get_tab( null, '', 'social' );
+		}
+
+		$site_key   = $options['recaptcha_site_key'] ?? '';
+		$secret_key = $options['recaptcha_secret_key'] ?? '';
+
+		return ( ! empty( $site_key ) && ! empty( $secret_key ) );
+	}
+
+	public function check_hcaptcha_config_valid( $options = array() ) {
+		if ( empty( $options ) ) {
+			$options = HT_Options()->get_tab( null, '', 'social' );
+		}
+
+		$site_key   = $options['hcaptcha_site_key'] ?? '';
+		$secret_key = $options['hcaptcha_secret_key'] ?? '';
+
+		return ( ! empty( $site_key ) && ! empty( $secret_key ) );
+	}
+
+	public function check_config_valid() {
+		$options = HT_Options()->get_tab( null, '', 'social' );
+
+		return ( $this->check_recaptcha_config_valid( $options ) || $this->check_hcaptcha_config_valid( $options ) );
+	}
+
+	public function show( $atts = array(), $script_params = array(), $insert_before = '' ) {
+		$this->captcha( $atts, $script_params, $insert_before );
+	}
+
 	public function captcha( $atts = array(), $script_params = array(), $insert_before = '' ) {
+		if ( ! $this->check_config_valid() ) {
+			return;
+		}
+
 		$service = $this->detect_service();
 
 		switch ( $service ) {
@@ -91,6 +127,10 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 	}
 
 	public function hcaptcha( $atts = array(), $script_params = array(), $insert_before = '' ) {
+		if ( ! $this->check_hcaptcha_config_valid() ) {
+			return;
+		}
+
 		$defaults = array(
 			'hl' => get_locale()
 		);
@@ -112,6 +152,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 
 		$div->set_attributes( $atts );
 		$div->add_attribute( 'class', 'h-captcha' );
+		$div->add_attribute( 'style', 'margin-bottom: 10px;' );
 		$div->output();
 	}
 
@@ -129,6 +170,10 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 	}
 
 	public function recaptcha( $atts = array(), $script_params = array(), $insert_before = '' ) {
+		if ( ! $this->check_recaptcha_config_valid() ) {
+			return;
+		}
+
 		if ( ! is_array( $atts ) ) {
 			$atts = array(
 				'version' => $atts
@@ -192,6 +237,26 @@ trait HOCWP_Theme_CAPTCHA_Utils {
                    data-version="<?php echo esc_attr( $version ); ?>">
 			<?php
 		}
+	}
+
+	public function control_captcha_errors( $response, $errors = null ) {
+		if ( is_wp_error( $response ) || ! $response ) {
+			$code = 'invalid_captcha';
+			$msg  = __( '<strong>Error:</strong> Please correct the CAPTCHA.', 'hocwp-theme' );
+
+			if ( is_wp_error( $response ) && $response instanceof WP_Error ) {
+				$code = $response->get_error_code();
+				$msg  = $response->get_error_message();
+			}
+
+			if ( ! is_wp_error( $errors ) || ! ( $errors instanceof WP_Error ) ) {
+				$errors = new WP_Error( $code, $msg );
+			} else {
+				$errors->add( $code, $msg );
+			}
+		}
+
+		return $errors;
 	}
 
 	public function recaptcha_valid( $params = array() ) {

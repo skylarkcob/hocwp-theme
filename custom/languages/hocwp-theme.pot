@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-04-26 21:30+0700\n"
+"POT-Creation-Date: 2022-04-27 11:34+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -3029,8 +3029,12 @@ msgctxt "post author"
 msgid "by %s"
 msgstr ""
 
-#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:88
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:124
 msgid "CAPTCHA service does not provide."
+msgstr ""
+
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:245
+msgid "<strong>Error:</strong> Please correct the CAPTCHA."
 msgstr ""
 
 #: hocwp/load.php:91
