@@ -170,6 +170,10 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 	}
 
 	public function add_recaptcha_script( $obj, $submit_field = '' ) {
+		if ( ! $this->check_recaptcha_config_valid() ) {
+			return $submit_field;
+		}
+
 		if ( $obj instanceof HOCWP_Theme_RECAPTCHA ) {
 			$version = $obj->version;
 
@@ -180,7 +184,11 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 				?>
                 <script>
                     let response = document.getElementsByName("recaptcha_version")[0],
+                        form = null;
+
+                    if (response) {
                         form = response.closest("form");
+                    }
 
                     function setResponse(token) {
                         document.getElementById("g-recaptcha-response").value = token;
