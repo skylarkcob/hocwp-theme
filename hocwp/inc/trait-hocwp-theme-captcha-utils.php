@@ -8,21 +8,14 @@ final class HOCWP_THEME_CAPTCHA_SERVICE {
 
 trait HOCWP_Theme_CAPTCHA_Utils {
 	public function detect_service() {
-		$options    = HT_Options()->get_tab( null, null, 'social' );
-		$site_key   = $options['hcaptcha_site_key'] ?? '';
-		$secret_key = $options['hcaptcha_secret_key'] ?? '';
+		$options = HT_Options()->get_tab( null, null, 'social' );
 
 		$service = '';
 
-		if ( ! empty( $site_key ) && ! empty( $secret_key ) ) {
+		if ( $this->check_hcaptcha_config_valid( $options ) ) {
 			$service = HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA;
-		} else {
-			$site_key   = $options['recaptcha_site_key'] ?? '';
-			$secret_key = $options['recaptcha_secret_key'] ?? '';
-
-			if ( ! empty( $site_key ) && ! empty( $secret_key ) ) {
-				$service = HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA;
-			}
+		} elseif ( $this->check_recaptcha_config_valid( $options ) ) {
+			$service = HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA;
 		}
 
 		return $service;

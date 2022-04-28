@@ -23,7 +23,7 @@ class HOCWP_Theme_CAPTCHA {
 	}
 
 	public function get_object( $service = '' ) {
-		if ( empty( $service || 'auto' == $service ) ) {
+		if ( empty( $service ) || 'auto' == $service ) {
 			$service = $this->detect_service();
 		}
 
