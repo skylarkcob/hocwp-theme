@@ -44,7 +44,7 @@ class HOCWP_Theme_CAPTCHA {
 }
 
 function HT_CAPTCHA() {
-	$service = apply_filters( 'hocwp_theme_captcha_service', 'recaptcha' );
+	$service = apply_filters( 'hocwp_theme_captcha_service', 'auto' );
 
 	return HOCWP_Theme_CAPTCHA::instance()->get_object( $service );
 }
