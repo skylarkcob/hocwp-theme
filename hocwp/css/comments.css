@@ -114,6 +114,7 @@
     padding: 0;
 }
 
+li.pingback,
 li.comment {
     clear: both;
     list-style: outside none none;
@@ -122,21 +123,24 @@ li.comment {
     position: relative;
 }
 
+.comment-list > li.pingback,
 .comment-list > li.comment {
     border-bottom: 1px dotted #ccc;
-    padding: 3rem 0 1.5rem;
 }
 
+.comment-list .children li.pingback,
 .comment-list .children li.comment {
     border-top: 1px dotted #ccc;
     margin-top: 1.5rem;
     padding-left: 5%;
 }
 
+.comment-list .children li.pingback:last-child,
 .comment-list .children li.comment:last-child {
     padding-bottom: 0;
 }
 
+.comment-list li.pingback.bypostauthor,
 .comment-list li.comment.bypostauthor {
     border-top: 4px solid;
     top: -1px;
