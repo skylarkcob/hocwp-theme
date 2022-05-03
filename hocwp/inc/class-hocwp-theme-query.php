@@ -17,6 +17,21 @@ final class HOCWP_Theme_Query {
 	private function __construct() {
 	}
 
+	/**
+	 * Get current query before loop. Usually used for custom query in page template.
+	 *
+	 * @return mixed|WP_Query
+	 */
+	public function get_current_query() {
+		$query = HOCWP_Theme()->get_loop_data( 'query' );
+
+		if ( ! is_object( $query ) || ! ( $query instanceof WP_Query ) ) {
+			$query = $GLOBALS['wp_query'];
+		}
+
+		return $query;
+	}
+
 	public function pages_by_template( $template_name, $args = array() ) {
 		$args['meta_key']   = '_wp_page_template';
 		$args['meta_value'] = $template_name;
