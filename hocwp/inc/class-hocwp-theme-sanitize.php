@@ -43,7 +43,7 @@ final class HOCWP_Theme_Sanitize {
 		}
 
 		if ( ! empty( $format ) ) {
-			if ( false === strpos( $format, 'post-format-' ) ) {
+			if ( ! str_contains( $format, 'post-format-' ) ) {
 				$format = 'post-format-' . $format;
 			}
 		}
@@ -94,7 +94,7 @@ final class HOCWP_Theme_Sanitize {
 		if ( HT()->is_positive_number( $media_id ) && HT_Media()->exists( $media_id ) ) {
 			if ( wp_attachment_is_image( $media_id ) ) {
 				$details = wp_get_attachment_image_src( $media_id, 'full' );
-				$url     = isset( $details[0] ) ? $details[0] : '';
+				$url     = $details[0] ?? '';
 			} else {
 				$url = wp_get_attachment_url( $media_id );
 			}
@@ -116,8 +116,8 @@ final class HOCWP_Theme_Sanitize {
 				$url = $value;
 			}
 		} else {
-			$url = isset( $value['url'] ) ? $value['url'] : '';
-			$id  = isset( $value['id'] ) ? $value['id'] : '';
+			$url = $value['url'] ?? '';
+			$id  = $value['id'] ?? '';
 			$id  = absint( $id );
 		}
 
@@ -201,9 +201,8 @@ final class HOCWP_Theme_Sanitize {
 	public function phone( $phone ) {
 		$phone = wp_strip_all_tags( $phone );
 		$phone = HT()->keep_only_number( $phone, '' );
-		$phone = str_replace( array( '.', '-', ' ' ), '', $phone );
 
-		return $phone;
+		return str_replace( array( '.', '-', ' ' ), '', $phone );
 	}
 
 	public function size( $size ) {
@@ -257,9 +256,8 @@ final class HOCWP_Theme_Sanitize {
 		);
 
 		$id = str_replace( $chars, '_', $id );
-		$id = trim( $id, '_' );
 
-		return $id;
+		return trim( $id, '_' );
 	}
 
 	public function tax_query( $tax_item, &$args ) {
@@ -269,7 +267,7 @@ final class HOCWP_Theme_Sanitize {
 			}
 
 			if ( isset( $args['tax_query'] ) ) {
-				array_push( $args['tax_query'], $tax_item );
+				$args['tax_query'][] = $tax_item;
 			} else {
 				$args['tax_query'] = array( $tax_item );
 			}
@@ -283,22 +281,22 @@ final class HOCWP_Theme_Sanitize {
 			$args = (array) $args;
 		}
 
-		$name = isset( $args['name'] ) ? $args['name'] : '';
+		$name = $args['name'] ?? '';
 
 		if ( empty( $name ) ) {
-			$name = isset( $args['labels']['name'] ) ? $args['labels']['name'] : '';
+			$name = $args['labels']['name'] ?? '';
 		}
 
-		$singular_name = isset( $args['singular_name'] ) ? $args['singular_name'] : '';
+		$singular_name = $args['singular_name'] ?? '';
 
 		if ( empty( $singular_name ) ) {
-			$singular_name = isset( $args['labels']['singular_name'] ) ? $args['labels']['singular_name'] : '';
+			$singular_name = $args['labels']['singular_name'] ?? '';
 		}
 
-		$menu_name = isset( $args['menu_name'] ) ? $args['menu_name'] : '';
+		$menu_name = $args['menu_name'] ?? '';
 
 		if ( empty( $menu_name ) ) {
-			$menu_name = isset( $args['labels']['menu_name'] ) ? $args['labels']['menu_name'] : '';
+			$menu_name = $args['labels']['menu_name'] ?? '';
 		}
 
 		if ( empty( $name ) ) {
