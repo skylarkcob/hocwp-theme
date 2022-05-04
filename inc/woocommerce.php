@@ -55,6 +55,7 @@ function hocwp_theme_woocommerce_scripts() {
 				url("' . $font_path . 'star.svg#star") format("svg");
 			font-weight: normal;
 			font-style: normal;
+			font-display: swap;
 		}';
 
 	wp_add_inline_style( 'hocwp-theme-woocommerce-style', $inline_font );
