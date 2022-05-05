@@ -4,6 +4,7 @@
 * 26/04/2022: Add floating support tools.
 * 26/04/2022: Add phone-shake and earthquake animation.
 * 28/04/2022: Add reCAPTCHA inline script, check reCAPTCHA configuration before insert.
+* 05/05/2022: Add user setting for sticky sidebar.
 
 = 6.9.4 =
 * 15/04/2022: Add mobile setting tab.

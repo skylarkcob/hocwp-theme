@@ -114,9 +114,17 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 
 			$mode = get_user_setting( 'theme_settings_view_mode' );
 
+			$sticky = get_user_setting( 'theme_settings_sticky_sidebar' );
+
+			$class = 'nav-tab-wrapper';
+
+			if ( $sticky ) {
+				$class .= ' has-sticky';
+			}
+
 			if ( 'classic' == $mode ) {
 				?>
-                <nav class="nav-tab-wrapper">
+                <nav class="<?php echo esc_attr( $class ); ?>">
 					<?php
 					foreach ( $this->tabs as $key => $tab ) {
 						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {
@@ -142,7 +150,7 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 			}
 			?>
             <div id="nav">
-                <ul class="nav-tab-wrapper">
+                <ul class="<?php echo esc_attr( $class ); ?>">
 					<?php
 					foreach ( $this->tabs as $key => $tab ) {
 						if ( $tab instanceof HOCWP_Theme_Admin_Setting_Tab ) {

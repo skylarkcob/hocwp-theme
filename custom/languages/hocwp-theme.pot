@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-04-27 11:34+0700\n"
+"POT-Creation-Date: 2022-05-05 10:15+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -101,8 +101,8 @@ msgstr ""
 msgid "Copy the setting value and fill in the data entry box to import into the database when needed."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:90 hocwp/admin/class-hocwp-theme-admin-setting-page.php:732
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:754 hocwp/inc/setup-after.php:160
+#: hocwp/admin/admin-setting-page-administration-tools.php:90 hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:743 hocwp/inc/setup-after.php:160
 msgid "Theme Settings"
 msgstr ""
 
@@ -412,7 +412,7 @@ msgstr ""
 msgid "Apply earthquake effect."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-float-support.php:78 hocwp/admin/class-hocwp-theme-admin-setting-page.php:732 hocwp/inc/setup-after.php:196
+#: hocwp/admin/admin-setting-page-float-support.php:78 hocwp/admin/class-hocwp-theme-admin-setting-page.php:721 hocwp/inc/setup-after.php:196
 msgid "Settings"
 msgstr ""
 
@@ -635,7 +635,7 @@ msgid "-- Choose breadcrumb type --"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-reading.php:68 hocwp/admin/admin-setting-page-reading.php:191
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:111 hocwp/admin/meta.php:171 hocwp/inc/class-hocwp-theme-customize.php:70
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:116 hocwp/admin/meta.php:171 hocwp/inc/class-hocwp-theme-customize.php:70
 msgid "Default"
 msgstr ""
 
@@ -1231,15 +1231,19 @@ msgstr ""
 msgid "Enable collapse and expand setting rows."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:112
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:109
+msgid "Sticky setting sidebar while scroll."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:117
 msgid "Classic"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:123
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:128
 msgid "View mode"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:149
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:154
 #, php-format
 msgid ""
 "Each theme has its own customization settings. If you change themes, options may change or disappear, as they are theme-specific. In addition to "
@@ -1247,85 +1251,85 @@ msgid ""
 "strong>, provides the following Theme Options by default:"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:151
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:156
 msgid "<strong>Site Identity</strong>: With this setting, you can change the favicon icon and logo that represent the website."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:152
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:157
 msgid "<strong>Site background</strong>: You can change the background image for the entire page or just use colors."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:153
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:158
 msgid "<strong>Browser color</strong>: You can change the branding colors for mobile browsers."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:155
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:160
 msgid "Remember to click \"<strong>Save Changes</strong>\" to save any changes you have made to the theme options."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:157 hocwp/admin/class-hocwp-theme-admin-setting-page.php:193
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:162 hocwp/admin/class-hocwp-theme-admin-setting-page.php:198
 msgid "For more information:"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:158
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:163
 msgid "<a href=\"https://codewp47.com/huong-dan-su-dung/wordpress-dashboard-toan-tap/\" target=\"_blank\">How to use WordPress Dashboard</a>"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:159
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:164
 msgid "<a href=\"https://codewp47.com/huong-dan-su-dung/cai-dat-giao-dien/\" target=\"_blank\">Documentation on Theme Options</a>"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:160
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:165
 msgid "<a href=\"https://ldcuong.com/lien-he/\" target=\"_blank\">Contact Us</a>"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:166
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:171
 msgid "Overview"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:176
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:181
 msgid "Contact Us"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:181
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:186
 msgid "Documentation on Theme Options"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:186
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:191
 msgid "How to use WordPress Dashboard"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:322
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:330
 msgid "Collapse"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:323
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:331
 msgid "Expand"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:790
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:779
 #, php-format
 msgid "%s options"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:792
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:781
 #, php-format
 msgid "Version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:840
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:829
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If you have any questions please feel free to <a target=\"_blank\" href="
 "\"%s\">contact us</a> for more information."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:843
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:832
 #, php-format
 msgid "Theme core version %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:913
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:901
 msgid "<strong>Notice:</strong> All settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
 msgstr ""
 
@@ -2924,11 +2928,11 @@ msgstr ""
 msgid "Please enable JavaScript to view the <a href=\"%s\">comments powered by Disqus</a>."
 msgstr ""
 
-#: hocwp/inc/template-comments.php:302
+#: hocwp/inc/template-comments.php:241
 msgid "Bots are not allowed to submit comments."
 msgstr ""
 
-#: hocwp/inc/template-comments.php:305
+#: hocwp/inc/template-comments.php:244
 msgid "Bots are not allowed to submit comments. If you are not a bot then please enable JavaScript in browser."
 msgstr ""
 
@@ -3029,11 +3033,11 @@ msgctxt "post author"
 msgid "by %s"
 msgstr ""
 
-#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:124
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:117
 msgid "CAPTCHA service does not provide."
 msgstr ""
 
-#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:245
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:300
 msgid "<strong>Error:</strong> Please correct the CAPTCHA."
 msgstr ""
 
@@ -3737,11 +3741,11 @@ msgstr ""
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr ""
 
-#: inc/woocommerce.php:186
+#: inc/woocommerce.php:187
 msgid "View your shopping cart"
 msgstr ""
 
-#: inc/woocommerce.php:190
+#: inc/woocommerce.php:191
 #, php-format
 msgid "%d item"
 msgid_plural "%d items"

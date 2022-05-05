@@ -14,7 +14,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		return self::$instance;
 	}
 
-	private $menu_slug = '';
+	private $menu_slug;
 
 	public $tabs;
 	public $tab;
@@ -102,6 +102,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
                         <input id="collapse-expand" type="checkbox" name="collapse_expand"
 							<?php checked( 'on', $value ); ?> />
 						<?php _e( 'Enable collapse and expand setting rows.', 'hocwp-theme' ); ?>
+                    </label>
+                    <label for="sticky-sidebar">
+                        <input id="sticky-sidebar" type="checkbox" name="sticky_sidebar"
+							<?php checked( 'on', get_user_setting( 'theme_settings_sticky_sidebar' ) ); ?> />
+						<?php _e( 'Sticky setting sidebar while scroll.', 'hocwp-theme' ); ?>
                     </label>
                 </fieldset>
 				<?php
@@ -225,6 +230,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$value = $_REQUEST['collapse_expand'] ?? '';
 
 			set_user_setting( 'theme_settings_collapse_expand', $value );
+
+			$value = $_REQUEST['sticky_sidebar'] ?? '';
+
+			set_user_setting( 'theme_settings_sticky_sidebar', $value );
 		}
 
 		add_filter( 'screen_settings', array( $this, 'screen_settings_filter' ), 10, 2 );
@@ -245,7 +254,6 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		/**
 		 * Register Setting
 		 */
-		$data = $this->get_option_group_and_name();
 		register_setting( $this->menu_slug, $this->menu_slug, array( $this, 'sanitize' ) );
 
 		/**
@@ -332,7 +340,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$data['id'] = sanitize_title( $data['title'] );
 		}
 
-		$tab = isset( $data['tab'] ) ? $data['tab'] : '';
+		$tab = $data['tab'] ?? '';
 
 		if ( ! empty( $tab ) ) {
 			if ( $tab == $this->tabs->tab_name ) {
@@ -364,9 +372,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	private function get_field_name( $field ) {
-		$name = $field['id'];
-
-		return $name;
+		return $field['id'] ?? '';
 	}
 
 	private function get_field_value( $name, $default = '' ) {
@@ -384,11 +390,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			} else {
 				$options = HOCWP_Theme()->object->options;
 
-				if ( isset( $options[ $this->tabs->tab_name ][ $name ] ) ) {
-					$value = $options[ $this->tabs->tab_name ][ $name ];
-				} else {
-					$value = $default;
-				}
+				$value = $options[ $this->tabs->tab_name ][ $name ] ?? $default;
 			}
 		} else {
 			$count = count( $name );
@@ -399,11 +401,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				} else {
 					$options = HOCWP_Theme()->object->options;
 
-					if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ] ) ) {
-						$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ];
-					} else {
-						$value = $default;
-					}
+					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ] ?? $default;
 				}
 			} elseif ( 3 == $count ) {
 				if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ) ) {
@@ -411,11 +409,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				} else {
 					$options = HOCWP_Theme()->object->options;
 
-					if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ) ) {
-						$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ];
-					} else {
-						$value = $default;
-					}
+					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ?? $default;
 				}
 			}
 		}
@@ -429,25 +423,25 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		}
 
 		$field    = $this->sanitize_section_or_field( $field );
-		$field_id = isset( $field['args']['callback_args']['id'] ) ? $field['args']['callback_args']['id'] : $field['id'];
+		$field_id = $field['args']['callback_args']['id'] ?? $field['id'];
 
 		if ( is_array( $field_id ) ) {
-			$field_id = isset( $field_id['id'] ) ? $field_id['id'] : '';
+			$field_id = $field_id['id'] ?? '';
 		}
 
 		if ( ! empty( $field_id ) ) {
 			$field_id = $this->tabs->tab_name . '_' . $field_id;
 		}
 
-		$label_for = isset( $field['args']['label_for'] ) ? $field['args']['label_for'] : '';
+		$label_for = $field['args']['label_for'] ?? '';
 
-		if ( true === $label_for ) {
+		if ( $label_for ) {
 			$label_for = $field_id;
 
 			$field['args']['label_for'] = $label_for;
 		}
 
-		$tr_class = isset( $field['args']['class'] ) ? $field['args']['class'] : '';
+		$tr_class = $field['args']['class'] ?? '';
 
 		if ( is_array( $tr_class ) ) {
 			$tr_class = implode( ' ', $tr_class );
@@ -596,7 +590,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$field['args']['callback_args']['value'] = $value;
 		}
 
-		$type = isset( $field['args']['callback_args']['type'] ) ? $field['args']['callback_args']['type'] : '';
+		$type = $field['args']['callback_args']['type'] ?? '';
 
 		if ( ! empty( $type ) && ( 'radio' == $type || 'checkbox' == $type ) ) {
 			if ( isset( $field['args']['callback_args']['options'] ) && HT()->array_has_value( $field['args']['callback_args']['options'] ) ) {
@@ -604,18 +598,13 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			}
 		}
 
-		$data_type = isset( $field['args']['type'] ) ? $field['args']['type'] : 'string';
+		$data_type = $field['args']['type'] ?? 'string';
 
-		switch ( $data_type ) {
-			case 'positive_number':
-			case 'positive_integer':
-				$field['args']['callback_args']['min'] = 1;
-				break;
-			case 'non_negative_integer':
-			case 'non_negative_number':
-				$field['args']['callback_args']['min'] = 0;
-				break;
-		}
+		$field['args']['callback_args']['min'] = match ( $data_type ) {
+			'positive_number', 'positive_integer' => 1,
+			'non_negative_integer', 'non_negative_number' => 0,
+			default => ''
+		};
 
 		return $field;
 	}
@@ -626,7 +615,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	 * @param $args
 	 */
 	public function section_callback( $args ) {
-		$callback = isset( $args['callback'][0] ) ? $args['callback'][0] : '';
+		$callback = $args['callback'][0] ?? '';
 
 		if ( $callback instanceof HOCWP_Theme_Admin_Setting_Page && isset( $args['id'] ) ) {
 			$secs = $callback->settings_section;
@@ -651,14 +640,14 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			$args['callback'] = array( 'HOCWP_Theme_HTML_Field', 'input' );
 		}
 
-		$callback_args = isset( $args['callback_args'] ) ? $args['callback_args'] : '';
+		$callback_args = $args['callback_args'] ?? '';
 
 		if ( isset( $args['before'] ) ) {
 			echo $args['before'];
 		}
 
 		call_user_func( $args['callback'], $callback_args );
-		$desc = isset( $args['description'] ) ? $args['description'] : '';
+		$desc = $args['description'] ?? '';
 
 		if ( ! empty( $desc ) ) {
 			$p = new HOCWP_Theme_HTML_Tag( 'p' );
@@ -690,11 +679,11 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				foreach ( $this->settings_field as $field ) {
 					$field = $this->sanitize_field( $field );
 					$name  = $this->get_field_name( $field );
-					$type  = isset( $field['args']['type'] ) ? $field['args']['type'] : '';
+					$type  = $field['args']['type'] ?? '';
 
 					if ( ! empty( $type ) ) {
 						$type  = strtolower( $type );
-						$data  = isset( $input[ $this->tabs->tab_name ] ) ? $input[ $this->tabs->tab_name ] : array();
+						$data  = $input[ $this->tabs->tab_name ] ?? array();
 						$value = HT_Sanitize()->form_post( $name, $type, $data );
 
 						// Remove empty json data value
@@ -873,9 +862,8 @@ final class HOCWP_Theme_Admin_Setting_Page {
         <form id="hocwpOptions" method="post" action="options.php" autocomplete="off"
               data-tab="<?php echo esc_attr( $this->tab ); ?>">
             <input type="hidden" name="tab"
-                   value="<?php echo isset( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : 'general'; ?>">
+                   value="<?php echo esc_attr( $_REQUEST['tab'] ?? 'general' ); ?>">
 			<?php
-			$data = $this->get_option_group_and_name();
 			settings_fields( $this->menu_slug );
 			global $wp_settings_fields;
 
@@ -924,13 +912,13 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		$fields = $this->settings_field;
 
-		// Auto detect and load styles & scripts for setting page
+		// Auto-detect and load styles & scripts for setting page
 		if ( is_array( $fields ) ) {
 			foreach ( $fields as $field ) {
-				$tab = isset( $field['tab'] ) ? $field['tab'] : '';
+				$tab = $field['tab'] ?? '';
 
 				if ( $tab == $this->tabs->tab_name ) {
-					$callback = isset( $field['args']['callback'][1] ) ? $field['args']['callback'][1] : '';
+					$callback = $field['args']['callback'][1] ?? '';
 
 					// Check to load styles and scripts on setting page
 					switch ( $callback ) {

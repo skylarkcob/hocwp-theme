@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2022-04-27 11:34+0700\n"
-"PO-Revision-Date: 2022-04-27 11:35+0700\n"
+"POT-Creation-Date: 2022-05-05 10:15+0700\n"
+"PO-Revision-Date: 2022-05-05 10:16+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -110,8 +110,8 @@ msgstr ""
 "liệu khi cần."
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:90
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:732
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:754
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:743
 #: hocwp/inc/setup-after.php:160
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
@@ -456,7 +456,7 @@ msgid "Apply earthquake effect."
 msgstr "Dùng hiệu ứng động đất."
 
 #: hocwp/admin/admin-setting-page-float-support.php:78
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:732
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
 #: hocwp/inc/setup-after.php:196
 msgid "Settings"
 msgstr "Cài đặt"
@@ -713,7 +713,7 @@ msgstr "-- Chọn  kiểu breadcrumb --"
 
 #: hocwp/admin/admin-setting-page-reading.php:68
 #: hocwp/admin/admin-setting-page-reading.php:191
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:111
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:116
 #: hocwp/admin/meta.php:171 hocwp/inc/class-hocwp-theme-customize.php:70
 msgid "Default"
 msgstr "Mặc định"
@@ -1364,15 +1364,19 @@ msgstr "Chức năng"
 msgid "Enable collapse and expand setting rows."
 msgstr "Cho phép thu gọn và mở rộng hàng cài đặt."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:112
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:109
+msgid "Sticky setting sidebar while scroll."
+msgstr "Dính thanh bên cài đặt khi cuộn."
+
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:117
 msgid "Classic"
 msgstr "Cổ điển"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:123
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:128
 msgid "View mode"
 msgstr "Chế độ xem"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:149
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:154
 #, php-format
 msgid ""
 "Each theme has its own customization settings. If you change themes, options "
@@ -1388,7 +1392,7 @@ msgstr ""
 "diện hiện tại của bạn, <strong>%s</strong>, cung cấp các cài đặt tùy chọn "
 "sau theo mặc định:"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:151
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:156
 msgid ""
 "<strong>Site Identity</strong>: With this setting, you can change the "
 "favicon icon and logo that represent the website."
@@ -1397,7 +1401,7 @@ msgstr ""
 "ảnh logo và biểu tượng thương hiệu trên trình duyệt để người dùng có thể dễ "
 "dàng nhận biết trang web của bạn."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:152
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:157
 msgid ""
 "<strong>Site background</strong>: You can change the background image for "
 "the entire page or just use colors."
@@ -1405,7 +1409,7 @@ msgstr ""
 "<strong>Hình  nền trang</strong>: Bạn có thể sử dụng ảnh làm hình nền cho "
 "toàn trang web hoặc chỉ dùng màu sắc."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:153
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:158
 msgid ""
 "<strong>Browser color</strong>: You can change the branding colors for "
 "mobile browsers."
@@ -1413,7 +1417,7 @@ msgstr ""
 "<strong>Màu sắc trình duyệt</strong>: Bạn có thể thay đổi màu sắc của trình "
 "duyệt theo màu chủ đạo của thương hiệu trên thiết bị di động."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:155
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:160
 msgid ""
 "Remember to click \"<strong>Save Changes</strong>\" to save any changes you "
 "have made to the theme options."
@@ -1421,12 +1425,12 @@ msgstr ""
 "Hãy nhớ nhấn \"<strong>Lưu thay đổi</strong>\" để lưu bất kỳ thay đổi nào "
 "bạn thực hiện đối với các tùy chọn của giao diện."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:157
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:193
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:162
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:198
 msgid "For more information:"
 msgstr "Để biết thêm chi tiết:"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:158
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:163
 msgid ""
 "<a href=\"https://codewp47.com/huong-dan-su-dung/wordpress-dashboard-toan-"
 "tap/\" target=\"_blank\">How to use WordPress Dashboard</a>"
@@ -1434,7 +1438,7 @@ msgstr ""
 "<a href=\"https://codewp47.com/huong-dan-su-dung/wordpress-dashboard-toan-"
 "tap/\" target=\"_blank\">Hướng dẫn sử dụng bảng điều khiển</a>"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:159
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:164
 msgid ""
 "<a href=\"https://codewp47.com/huong-dan-su-dung/cai-dat-giao-dien/\" target="
 "\"_blank\">Documentation on Theme Options</a>"
@@ -1442,48 +1446,48 @@ msgstr ""
 "<a href=\"https://codewp47.com/huong-dan-su-dung/cai-dat-giao-dien/\" target="
 "\"_blank\">Hướng dẫn cài đặt giao diện</a>"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:160
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:165
 msgid ""
 "<a href=\"https://ldcuong.com/lien-he/\" target=\"_blank\">Contact Us</a>"
 msgstr ""
 "<a href=\"https://ldcuong.com/lien-he/\" target=\"_blank\">Liên hệ với chúng "
 "tôi</a>"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:166
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:171
 msgid "Overview"
 msgstr "Tổng quan"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:176
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:181
 msgid "Contact Us"
 msgstr "Liên hệ chúng tôi"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:181
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:186
 msgid "Documentation on Theme Options"
 msgstr "Tài liệu hướng dẫn cài đặt giao diện"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:186
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:191
 msgid "How to use WordPress Dashboard"
 msgstr "Cách sử dụng Bảng điều khiển WordPress"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:322
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:330
 msgid "Collapse"
 msgstr "Thu gọn"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:323
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:331
 msgid "Expand"
 msgstr "Mở rộng"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:790
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:779
 #, php-format
 msgid "%s options"
 msgstr "Cài đặt %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:792
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:781
 #, php-format
 msgid "Version %s"
 msgstr "Phiên bản %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:840
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:829
 #, php-format
 msgid ""
 "This theme is created by <a target=\"_blank\" href=\"%s\">HocWP Team</a>. If "
@@ -1494,12 +1498,12 @@ msgstr ""
 "Nếu bạn có bất kỳ câu hỏi nào bạn có thể <a target=\"_blank\" href=\"%s"
 "\">liên hệ với chúng tôi</a> để biết thêm thông tin."
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:843
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:832
 #, php-format
 msgid "Theme core version %s"
 msgstr "Phiên bản nhân giao diện %s"
 
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:913
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:901
 msgid ""
 "<strong>Notice:</strong> All settings have been changed. In order to save "
 "them please don't forget to click the 'Save Changes' button."
@@ -3246,11 +3250,11 @@ msgstr ""
 "Xin vui lòng kích hoạt Javascript để có thể xem <a href=\"%s\">các bình luận "
 "từ Disqus</a>."
 
-#: hocwp/inc/template-comments.php:302
+#: hocwp/inc/template-comments.php:241
 msgid "Bots are not allowed to submit comments."
 msgstr "Máy không được phép thêm bình luận."
 
-#: hocwp/inc/template-comments.php:305
+#: hocwp/inc/template-comments.php:244
 msgid ""
 "Bots are not allowed to submit comments. If you are not a bot then please "
 "enable JavaScript in browser."
@@ -3364,11 +3368,11 @@ msgctxt "post author"
 msgid "by %s"
 msgstr "bởi %s"
 
-#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:124
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:117
 msgid "CAPTCHA service does not provide."
 msgstr "Dịch vụ CAPTCHA không được cung cấp."
 
-#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:245
+#: hocwp/inc/trait-hocwp-theme-captcha-utils.php:300
 msgid "<strong>Error:</strong> Please correct the CAPTCHA."
 msgstr "<strong>Lỗi:</strong> Xin vui lòng điền đúng mã bảo mật."
 
@@ -4086,11 +4090,11 @@ msgstr "Để lại bình luận<span class=\"screen-reader-text\"> cho %s</span
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr "Chỉnh sửa <span class=\"screen-reader-text\">%s</span>"
 
-#: inc/woocommerce.php:186
+#: inc/woocommerce.php:187
 msgid "View your shopping cart"
 msgstr "Xem giỏ hàng của bạn"
 
-#: inc/woocommerce.php:190
+#: inc/woocommerce.php:191
 #, php-format
 msgid "%d item"
 msgid_plural "%d items"

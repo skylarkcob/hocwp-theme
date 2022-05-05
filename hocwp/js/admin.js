@@ -153,8 +153,10 @@ jQuery(document).ready(function ($) {
             if (!form || !form.length || form.height() > sidebar.height()) {
                 hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
 
-                if (settingsBox.find(".settings-content").height() > sidebar.height()) {
-                    hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                if (sidebar.hasClass("has-sticky")) {
+                    if (settingsBox.find(".settings-content").height() > sidebar.height()) {
+                        hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                    }
                 }
 
                 $(window).scroll(function () {
@@ -162,8 +164,10 @@ jQuery(document).ready(function ($) {
 
                     hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
 
-                    if (settingsBox.find(".settings-content").height() > sidebar.height()) {
-                        hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                    if (sidebar.hasClass("has-sticky")) {
+                        if (settingsBox.find(".settings-content").height() > sidebar.height()) {
+                            hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                        }
                     }
                 });
             }
