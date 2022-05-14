@@ -1312,13 +1312,6 @@ class HOCWP_Theme_Utility {
 			);
 		}
 
-		$defaults = array(
-			'key'      => HT_Options()->get_tab( 'google_api_key', '', 'social' ),
-			'language' => get_locale()
-		);
-
-		$params = wp_parse_args( $params, $defaults );
-
 		if ( ! isset( $params['latlng'] ) ) {
 			$lat = $params['latitude'] ?? '';
 			$lng = $params['longitude'] ?? '';
@@ -1328,17 +1321,9 @@ class HOCWP_Theme_Utility {
 			}
 		}
 
-		$url = 'https://maps.googleapis.com/maps/api/geocode/json';
-		$url = add_query_arg( $params, $url );
+		$code = new HOCWP_Theme_Maps_Geocode( $params );
 
-		$res = wp_remote_get( $url );
-		$res = wp_remote_retrieve_body( $res );
-
-		if ( ! empty( $res ) ) {
-			$res = json_decode( $res );
-		}
-
-		return $res;
+		return $code->get_result();
 	}
 
 	public function get_youtube_video_info( $url, $api_key = '' ) {
