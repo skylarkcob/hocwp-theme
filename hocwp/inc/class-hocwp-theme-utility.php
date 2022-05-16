@@ -1953,7 +1953,7 @@ class HOCWP_Theme_Utility {
 
 	public function get_google_drive_file_url( $url, $api_key = '' ) {
 		if ( empty( $api_key ) ) {
-			$api_key = $this->get_theme_option( 'google_api_key', '', 'social' );
+			$api_key = HT_Options()->get_google_api_key();
 		}
 
 		if ( ! empty( $api_key ) ) {

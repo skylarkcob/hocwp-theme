@@ -21,7 +21,7 @@ abstract class Abstract_HOCWP_Theme_Google_API {
 		}
 
 		if ( empty( $key ) ) {
-			$key = HT_Options()->get_tab( 'google_api_key', '', 'social' );
+			$key = HT_Options()->get_google_api_key();
 		}
 
 		$this->api_key = $key;

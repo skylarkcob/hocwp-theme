@@ -110,6 +110,38 @@ class HOCWP_Theme_Options {
 	public function check_post_valid( $id_or_object, $post_type = null ) {
 		return HT_Util()->check_post_valid( $id_or_object, $post_type );
 	}
+
+	public function get_google_api_key( $restriction = '' ) {
+		$options = $this->get_tab( null, '', 'social' );
+
+		$key  = $options['google_api_key'] ?? '';
+		$http = $options['google_api_key_http'] ?? '';
+		$ip   = $options['google_api_key_ip'] ?? '';
+
+		if ( 'http' == $restriction || 'http_referrer' == $restriction ) {
+			if ( empty( $http ) ) {
+				$http = $key;
+			}
+
+			return $http;
+		} elseif ( 'ip' == $restriction || 'ip_address' == $restriction ) {
+			if ( empty( $ip ) ) {
+				$ip = $key;
+			}
+
+			return $ip;
+		}
+
+		if ( empty( $key ) ) {
+			$key = $http;
+		}
+
+		if ( empty( $key ) ) {
+			$key = $ip;
+		}
+
+		return $key;
+	}
 }
 
 function HT_Options() {

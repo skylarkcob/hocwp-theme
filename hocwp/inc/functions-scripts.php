@@ -399,9 +399,7 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 
 function hocwp_theme_load_google_maps_script( $google_api_key = '' ) {
 	if ( empty( $google_api_key ) ) {
-		$options = HT_Options()->get( 'social' );
-
-		$google_api_key = $options['google_api_key'] ?? '';
+		$google_api_key = HT_Options()->get_google_api_key();
 	}
 
 	if ( ! empty( $google_api_key ) ) {
