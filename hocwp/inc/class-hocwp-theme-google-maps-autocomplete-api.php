@@ -3,20 +3,24 @@ defined( 'ABSPATH' ) || exit;
 
 class HOCWP_Theme_Maps_Autocomplete extends HOCWP_Theme_Google_Maps_API {
 	public function __construct( $params, $output = '' ) {
-		if ( HT()->array_has_value( $params ) ) {
-			/*
-			 * https://developers.google.com/maps/documentation/places/web-service/autocomplete
-			 */
-			$defaults = array(
-				'input'        => '',
-				'location'     => '',
-				'strictbounds' => 'true',
-				'language'     => get_locale(),
-				'types'        => 'establishment'
+		if ( ! is_array( $params ) ) {
+			$params = array(
+				'input' => $params
 			);
-
-			$params = wp_parse_args( $params, $defaults );
 		}
+
+		/*
+		 * https://developers.google.com/maps/documentation/places/web-service/autocomplete
+		 */
+		$defaults = array(
+			'input'        => '',
+			'location'     => '',
+			'strictbounds' => 'true',
+			'language'     => get_locale(),
+			'types'        => 'establishment'
+		);
+
+		$params = wp_parse_args( $params, $defaults );
 
 		parent::__construct( 'place', 'autocomplete', $params, $output );
 	}

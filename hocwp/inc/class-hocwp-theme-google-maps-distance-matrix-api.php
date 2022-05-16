@@ -3,19 +3,21 @@ defined( 'ABSPATH' ) || exit;
 
 class HOCWP_Theme_Maps_Distance_Matrix extends HOCWP_Theme_Google_Maps_API {
 	public function __construct( $params, $output = '' ) {
-		if ( HT()->array_has_value( $params ) ) {
-			/*
-			 * https://developers.google.com/maps/documentation/distance-matrix/overview
-			 */
-			$defaults = array(
-				'destinations' => '',
-				'origins'      => '',
-				'language'     => get_locale(),
-				'mode'         => 'driving'
-			);
-
-			$params = wp_parse_args( $params, $defaults );
+		if ( ! is_array( $params ) ) {
+			$params = array();
 		}
+
+		/*
+		 * https://developers.google.com/maps/documentation/distance-matrix/overview
+		 */
+		$defaults = array(
+			'destinations' => '',
+			'origins'      => '',
+			'language'     => get_locale(),
+			'mode'         => 'driving'
+		);
+
+		$params = wp_parse_args( $params, $defaults );
 
 		parent::__construct( 'distancematrix', '', $params, $output );
 	}
