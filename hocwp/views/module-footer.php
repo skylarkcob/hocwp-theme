@@ -26,9 +26,6 @@ if ( ! HT_Util()->is_vr_theme() ) {
 			do_action( 'hocwp_theme_module_site_footer' );
 		}
 	}
-
-	wp_footer();
 }
 
-hocwp_theme_html_tag_close( 'body' ); // Close body
-hocwp_theme_html_tag_close( 'html' ); // Close html
+hocwp_theme_get_footer();

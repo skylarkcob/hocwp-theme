@@ -16,6 +16,10 @@ abstract class Abstract_HOCWP_Theme_Google_API {
 	}
 
 	public function set_api_key( $key = '' ) {
+		if ( empty( $key ) && isset( $this->params['key'] ) ) {
+			$key = $this->params['key'];
+		}
+
 		if ( empty( $key ) ) {
 			$key = HT_Options()->get_tab( 'google_api_key', '', 'social' );
 		}

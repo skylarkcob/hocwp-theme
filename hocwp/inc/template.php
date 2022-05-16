@@ -3,6 +3,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+function hocwp_theme_get_header() {
+	?>
+    <!DOCTYPE html>
+	<?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>
+    <head>
+        <meta charset="<?php bloginfo( 'charset' ); ?>">
+		<?php
+		$responsive = apply_filters( 'hocwp_theme_enable_responsive', true );
+
+		if ( $responsive ) {
+			echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
+		}
+
+		wp_head();
+		?>
+    </head>
+	<?php
+	hocwp_theme_html_tag( 'body' ); // Open body
+
+	if ( ! HT_Util()->is_vr_theme() ) {
+		wp_body_open();
+	}
+}
+
+function hocwp_theme_get_footer() {
+	if ( ! HT_Util()->is_vr_theme() ) {
+		wp_footer();
+	}
+
+	hocwp_theme_html_tag_close( 'body' ); // Close body
+	hocwp_theme_html_tag_close( 'html' ); // Close html
+}
+
 function hocwp_theme_load_template( $_template_file, $include_once = false ) {
 	if ( HT()->array_has_value( $_template_file ) ) {
 		foreach ( $_template_file as $file ) {

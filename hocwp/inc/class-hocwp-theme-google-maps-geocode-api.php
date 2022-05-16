@@ -3,16 +3,26 @@ defined( 'ABSPATH' ) || exit;
 
 class HOCWP_Theme_Maps_Geocode extends HOCWP_Theme_Google_Maps_API {
 	public function __construct( $params, $output = '' ) {
-		if ( HT()->array_has_value( $params ) ) {
-			/*
-			 * https://developers.google.com/maps/documentation/geocoding/overview
-			 */
-			$defaults = array(
-				'language' => get_locale()
+		if ( ! is_array( $params ) ) {
+			$params = array(
+				'address' => $params
 			);
-
-			$params = wp_parse_args( $params, $defaults );
 		}
+
+		/*
+		 * https://developers.google.com/maps/documentation/geocoding/overview
+		 */
+		$defaults = array(
+			'language' => get_locale()
+		);
+
+		$key = HT_Options()->get_tab( 'google_api_key_ip', '', 'social' );
+
+		if ( ! empty( $key ) ) {
+			$defaults['key'] = $key;
+		}
+
+		$params = wp_parse_args( $params, $defaults );
 
 		parent::__construct( 'geocode', '', $params, $output );
 	}

@@ -187,6 +187,32 @@ function hocwp_theme_settings_page_social_field() {
 	$fields[] = array(
 		'tab'     => 'social',
 		'section' => 'google',
+		'id'      => 'google_api_key_http',
+		'title'   => 'API Key (HTTP Referrer Restriction)',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'google',
+		'id'      => 'google_api_key_ip',
+		'title'   => 'API Key (IP Address Restriction)',
+		'args'    => array(
+			'label_for'     => true,
+			'callback_args' => array(
+				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'     => 'social',
+		'section' => 'google',
 		'id'      => 'google_client_id',
 		'title'   => 'Client ID',
 		'args'    => array(

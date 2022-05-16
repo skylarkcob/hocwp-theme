@@ -12,8 +12,6 @@ class HOCWP_Theme_Google_Maps_API extends Abstract_HOCWP_Theme_Google_API {
 	public $output = 'json';
 
 	public function __construct( $name, $api, $params, $output = '' ) {
-		parent::__construct();
-
 		$this->name   = $name;
 		$this->api    = $api;
 		$this->params = $params;
@@ -21,6 +19,8 @@ class HOCWP_Theme_Google_Maps_API extends Abstract_HOCWP_Theme_Google_API {
 		if ( 'xml' == $output ) {
 			$this->output = $output;
 		}
+
+		parent::__construct();
 	}
 
 	/**

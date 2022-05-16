@@ -8,29 +8,10 @@ if ( HT_Frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
 
 	return;
 } else {
-	?>
-    <!DOCTYPE html>
-	<?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>
-    <head>
-        <meta charset="<?php bloginfo( 'charset' ); ?>">
-		<?php
-		$responsive = apply_filters( 'hocwp_theme_enable_responsive', true );
-
-		if ( $responsive ) {
-			echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-		}
-
-		wp_head();
-		?>
-    </head>
-	<?php
+    hocwp_theme_get_header();
 }
 
-hocwp_theme_html_tag( 'body' ); // Open body
-
 if ( ! HT_Util()->is_vr_theme() ) {
-	wp_body_open();
-
 	$blank_body = apply_filters( 'hocwp_theme_blank_body', false );
 
 	if ( $blank_body ) {
