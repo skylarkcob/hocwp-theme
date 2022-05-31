@@ -237,12 +237,12 @@ trait HOCWP_Theme_PHP {
 			// We will have two since we are not using 'other' argument yet
 			// See if version is before or after the name
 			if ( strripos( $u_agent, 'Version' ) < strripos( $u_agent, $ub ) ) {
-				$version = $matches['version'][0];
+				$version = $matches['version'][0] ?? '';
 			} else {
 				$version = $matches['version'][1] ?? '';
 			}
 		} else {
-			$version = $matches['version'][0];
+			$version = $matches['version'][0] ?? '';
 		}
 
 		// Check if we have a number
