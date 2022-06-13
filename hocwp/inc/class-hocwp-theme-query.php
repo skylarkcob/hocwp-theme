@@ -546,6 +546,17 @@ final class HOCWP_Theme_Query {
 			$ids = $this->popular_post_ids();
 
 			if ( HT()->array_has_value( $ids ) ) {
+				$ppp = $args['posts_per_page'] ?? '';
+
+				if ( empty( $ppp ) ) {
+					$ppp = HT_Frontend()->get_posts_per_page( is_home() );
+				}
+
+				if ( $ppp < count( $ids ) ) {
+					$paged = $args['paged'] ?? HT_Frontend()->get_paged();
+					$ids   = array_slice( $ids, ( $paged - 1 ) * $ppp, $ppp );
+				}
+
 				$args['post__in'] = $ids;
 				$args['orderby']  = 'post__in';
 				unset( $args['meta_key'] );
