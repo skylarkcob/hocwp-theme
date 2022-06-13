@@ -788,6 +788,22 @@ class HOCWP_Theme_Utility {
 		return $path;
 	}
 
+	public function timestamp_to_countdown( $timestamp ) {
+		$now     = current_time( 'timestamp' );
+		$diff    = absint( $timestamp - $now );
+		$days    = floor( $diff / DAY_IN_SECONDS );
+		$hours   = floor( floor( $diff % DAY_IN_SECONDS ) / HOUR_IN_SECONDS );
+		$minutes = floor( floor( $diff % HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS );
+		$seconds = floor( $diff % MINUTE_IN_SECONDS );
+
+		return array(
+			'd' => $days,
+			'h' => $hours,
+			'm' => $minutes,
+			's' => $seconds
+		);
+	}
+
 	public function get_current_weekday( $format = null, $timestamp = '' ) {
 		if ( ! empty( $timestamp ) && HT()->is_positive_number( $timestamp ) ) {
 			$weekday = date( 'l', $timestamp );
@@ -1219,21 +1235,70 @@ class HOCWP_Theme_Utility {
 		return false;
 	}
 
-	public function term_link_html( $term ) {
+	public function loop_terms( $terms, $before = '', $after = '' ) {
+		if ( HT()->array_has_value( $terms ) ) {
+			echo $before . PHP_EOL;
+
+			foreach ( $terms as $term ) {
+				echo $this->term_link_html( $term, true );
+			}
+
+			echo $after . PHP_EOL;
+		}
+	}
+
+	public function term_link_html( $term, $li = false, $format = '' ) {
 		if ( ! ( $term instanceof WP_Term ) ) {
 			return '';
 		}
 
+		if ( empty( $format ) ) {
+			$format = $term->name;
+		} else {
+			$search = array(
+				'%term_name%',
+				'%count%',
+				'%slug%',
+				'%term_id%',
+				'%taxonomy%'
+			);
+
+			$replace = array(
+				$term->name,
+				$term->count,
+				$term->slug,
+				$term->term_id,
+				$term->taxonomy
+			);
+
+			$format = str_replace( $search, $replace, $format );
+		}
+
 		$a = new HOCWP_Theme_HTML_Tag( 'a' );
 		$a->add_attribute( 'href', esc_url( get_term_link( $term ) ) );
-		$a->set_text( $term->name );
+		$a->set_text( $format );
 		$a->add_attribute( 'class', sanitize_html_class( $term->taxonomy ) );
+		$a->add_attribute( 'data-slug', $term->slug );
+		$a->add_attribute( 'data-taxonomy', $term->taxonomy );
+		$a->add_attribute( 'data-id', $term->term_id );
+		$a->add_attribute( 'title', $term->name );
 		$tax = get_taxonomy( $term->taxonomy );
 
 		if ( $tax->hierarchical ) {
 			$a->add_attribute( 'rel', 'category' );
 		} else {
 			$a->add_attribute( 'rel', ' tag' );
+		}
+
+		if ( $li ) {
+			$li = new HOCWP_Theme_HTML_Tag( 'li' );
+			$li->add_attribute( 'class', 'term-item term-' . $term->slug . ' tax-' . sanitize_html_class( $term->taxonomy ) );
+			$li->add_attribute( 'data-slug', $term->slug );
+			$li->add_attribute( 'data-taxonomy', $term->taxonomy );
+			$li->add_attribute( 'data-id', $term->term_id );
+			$li->set_text( $a );
+
+			return $li->build();
 		}
 
 		return $a->build();
@@ -1247,11 +1312,15 @@ class HOCWP_Theme_Utility {
 
 		if ( HT()->array_has_value( $terms ) ) {
 			echo $before;
+
 			$html = '';
+
 			foreach ( $terms as $term ) {
 				$html .= $this->term_link_html( $term ) . $sep;
 			}
+
 			$html = trim( $html, $sep );
+
 			echo $html;
 			echo $after;
 		} else {
@@ -2140,6 +2209,50 @@ class HOCWP_Theme_Utility {
 		}
 
 		return $res;
+	}
+
+	public function loop_select_option( $lists, $current ) {
+		foreach ( $lists as $key => $label ) {
+			if ( empty( $label ) ) {
+				$label = ucfirst( $key );
+			}
+			?>
+            <option value="<?php echo esc_attr( $key ); ?>"<?php selected( $current, $key ); ?>><?php echo $label; ?></option>
+			<?php
+		}
+	}
+
+	public function menu_toggle_button( $args = array() ) {
+		$id               = $args['id'] ?? '';
+		$class            = $args['class'] ?? '';
+		$control          = $args['control'] ?? '';
+		$mobile_menu_icon = $args['icon'] ?? '';
+		?>
+        <button id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
+                aria-controls="<?php echo $control; ?>" data-icon-type="<?php echo esc_attr( $mobile_menu_icon ); ?>"
+                aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
+			<?php
+			if ( 'svg' == $mobile_menu_icon ) {
+				HT_SVG_Icon()->bars();
+				HT_SVG_Icon()->close();
+			} elseif ( 'bars' == $mobile_menu_icon || 'burger-3' == $mobile_menu_icon ) {
+				?>
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+				<?php
+			} elseif ( 'burger' == $mobile_menu_icon ) {
+				?>
+                <span class="line-1"></span>
+                <span class="line-3"></span>
+				<?php
+			} else {
+				echo $mobile_menu_icon;
+			}
+			?>
+            <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hocwp-theme' ); ?></span>
+        </button>
+		<?php
 	}
 
 	public function get_table_prefix() {

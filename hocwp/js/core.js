@@ -232,6 +232,25 @@ function HOCWP_Theme() {
         document.getElementsByTagName("body")[0].setAttribute("data-screen-width", this.screenWidth());
     };
 
+    this.dateToCountdown = function (dateString) {
+        let countDownDate = new Date(dateString).getTime(),
+            date = new Date(),
+            now = date.getTime(),
+            distance = countDownDate - now,
+            days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+            hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        return {
+            "diff": distance,
+            "d": days,
+            "h": hours,
+            "m": minutes,
+            "s": seconds
+        };
+    };
+
     this.init = function () {
         this.showDevLog();
         this.updateBodyAttributes();

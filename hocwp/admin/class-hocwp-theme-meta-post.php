@@ -8,7 +8,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	private $id;
 	private $title;
 	private $context;
-	private $priority;
+	private $priority; // The priority within the context where the box should show. Accepts 'high', 'core', 'default', or 'low'.
 
 	public $form_table = false;
 
@@ -42,7 +42,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 		if ( in_array( $post_type, $this->post_types ) ) {
 			foreach ( $this->fields as $field ) {
-				$sac = isset( $field['show_admin_column'] ) ? $field['show_admin_column'] : '';
+				$sac = $field['show_admin_column'] ?? '';
 
 				if ( $sac ) {
 					$columns[ $field['id'] ] = $field['title'];
@@ -59,7 +59,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 			foreach ( $this->fields as $field ) {
 				if ( $column_name == $field['id'] ) {
-					$siqe = isset( $field['show_in_quick_edit'] ) ? $field['show_in_quick_edit'] : '';
+					$siqe = $field['show_in_quick_edit'] ?? '';
 
 					if ( $siqe ) {
 						ob_start();
@@ -130,10 +130,10 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 	private function meta_row_html( $field, $id = '' ) {
 		if ( empty( $id ) ) {
-			$id = isset( $field['id'] ) ? $field['id'] : '';
+			$id = $field['id'] ?? '';
 		}
 
-		$html = isset( $field['callback_args']['html'] ) ? $field['callback_args']['html'] : '';
+		$html = $field['callback_args']['html'] ?? '';
 
 		unset( $field['callback_args']['html'] );
 
@@ -155,7 +155,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 				}
 
 				call_user_func( $field['callback'], $field['callback_args'] );
-				$desc = isset( $field['description'] ) ? $field['description'] : '';
+				$desc = $field['description'] ?? '';
 
 				if ( ! empty( $desc ) ) {
 					$p = new HOCWP_Theme_HTML_Tag( 'p' );
@@ -172,14 +172,14 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 	private function meta_row( $field, $id = '' ) {
 		if ( empty( $id ) ) {
-			$id = isset( $field['id'] ) ? $field['id'] : '';
+			$id = $field['id'] ?? '';
 		}
 		?>
-		<div class="meta-row">
-			<fieldset>
+        <div class="meta-row">
+            <fieldset>
 				<?php $this->meta_row_html( $field, $id ); ?>
-			</fieldset>
-		</div>
+            </fieldset>
+        </div>
 		<?php
 	}
 
@@ -199,24 +199,28 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			}
 		}
 
+		if ( ! HT()->array_has_value( $this->fields ) ) {
+			return;
+		}
+
 		if ( $this->form_table ) {
 			echo '<table class="form-table">';
 
-			foreach ( (array) $this->fields as $field ) {
+			foreach ( $this->fields as $field ) {
 				$id    = $this->get_field_id( $field );
 				$field = $this->sanitize_value( $post->ID, $field );
 				$title = $field['title'];
 
 				unset( $field['callback_args']['label'] );
 				?>
-				<tr>
-					<th>
-						<label for="<?php echo esc_attr( $id ); ?>"><?php echo $title; ?></label>
-					</th>
-					<td>
+                <tr>
+                    <th>
+                        <label for="<?php echo esc_attr( $id ); ?>"><?php echo $title; ?></label>
+                    </th>
+                    <td>
 						<?php $this->meta_row( $field, $id ); ?>
-					</td>
-				</tr>
+                    </td>
+                </tr>
 				<?php
 			}
 
@@ -224,7 +228,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 			echo '</table>';
 		} else {
-			foreach ( (array) $this->fields as $field ) {
+			foreach ( $this->fields as $field ) {
 				$id    = $this->get_field_id( $field );
 				$field = $this->sanitize_value( $post->ID, $field );
 				$this->meta_row( $field, $id );

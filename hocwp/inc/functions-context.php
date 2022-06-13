@@ -173,6 +173,8 @@ function hocwp_theme_body_class_filter( $classes ) {
 		}
 	}
 
+	$classes[] = 'no-js';
+
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 

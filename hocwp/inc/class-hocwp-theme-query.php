@@ -465,6 +465,68 @@ final class HOCWP_Theme_Query {
 		return HT_Query()->posts_by_meta( 'featured', 1, $args );
 	}
 
+	public function set_orderby_popularity( &$query, $range = 'auto' ) {
+		if ( $query instanceof WP_Query ) {
+			if ( function_exists( 'wpp_get_mostpopular' ) ) {
+				$ids = HT_Query()->popular_post_ids( $range );
+
+				if ( HT()->array_has_value( $ids ) ) {
+					$ppp = $query->get( 'posts_per_page' );
+
+					if ( count( $ids ) > $ppp ) {
+						$paged  = $query->get( 'paged' );
+						$offset = ( $paged - 1 ) * $ppp;
+						$ids    = array_slice( $ids, $offset, $ppp );
+					}
+
+					if ( HT()->array_has_value( $ids ) ) {
+						$query->set( 'post__in', $ids );
+						$query->set( 'orderby', 'post__in' );
+					}
+				}
+			}
+		}
+	}
+
+	public function popular_post_ids( $range = 'auto' ) {
+		if ( class_exists( '\WordPressPopularPosts\Query' ) ) {
+			if ( 'auto' == $range ) {
+				$query = new \WordPressPopularPosts\Query();
+				$lists = $query->get_posts();
+
+				if ( ! HT()->array_has_value( $lists ) ) {
+					$query = new \WordPressPopularPosts\Query( array( 'range' => 'last7days' ) );
+					$lists = $query->get_posts();
+				}
+
+				if ( ! HT()->array_has_value( $lists ) ) {
+					$query = new \WordPressPopularPosts\Query( array( 'range' => 'last30days' ) );
+					$lists = $query->get_posts();
+				}
+
+				if ( ! HT()->array_has_value( $lists ) ) {
+					$query = new \WordPressPopularPosts\Query( array( 'range' => 'all' ) );
+					$lists = $query->get_posts();
+				}
+			} else {
+				$query = new \WordPressPopularPosts\Query( array( 'range' => $range ) );
+				$lists = $query->get_posts();
+			}
+
+			if ( HT()->array_has_value( $lists ) ) {
+				$ids = array();
+
+				foreach ( $lists as $obj ) {
+					$ids[] = $obj->id;
+				}
+
+				return $ids;
+			}
+		}
+
+		return array();
+	}
+
 	public function most_views( $args = array() ) {
 		$defaults = array(
 			'orderby'  => 'meta_value_num',
@@ -481,36 +543,25 @@ final class HOCWP_Theme_Query {
 			$args['orderby'] = 'post_views';
 			$args['order']   = 'DESC';
 		} elseif ( class_exists( '\WordPressPopularPosts\Query' ) ) {
-			$query = new \WordPressPopularPosts\Query();
-			$lists = $query->get_posts();
+			$ids = $this->popular_post_ids();
 
-			if ( ! HT()->array_has_value( $lists ) ) {
-				$query = new \WordPressPopularPosts\Query();
-				$lists = $query->get_posts( 'last7days' );
-			}
-
-			if ( ! HT()->array_has_value( $lists ) ) {
-				$query = new \WordPressPopularPosts\Query();
-				$lists = $query->get_posts( 'last30days' );
-			}
-
-			if ( ! HT()->array_has_value( $lists ) ) {
-				$query = new \WordPressPopularPosts\Query();
-				$lists = $query->get_posts( 'all' );
-			}
-
-			if ( HT()->array_has_value( $lists ) ) {
-				$ids = array();
-
-				foreach ( $lists as $obj ) {
-					$ids[] = $obj->id;
-				}
-
+			if ( HT()->array_has_value( $ids ) ) {
 				$args['post__in'] = $ids;
 				$args['orderby']  = 'post__in';
 				unset( $args['meta_key'] );
 			}
 		}
+
+		return new WP_Query( $args );
+	}
+
+	public function posts_by_term( $term, $args = array() ) {
+		$item = array(
+			'taxonomy' => $term->taxonomy,
+			'terms'    => array( $term->term_id )
+		);
+
+		$this->add_tax_query_item( $item, $args );
 
 		return new WP_Query( $args );
 	}

@@ -758,6 +758,26 @@ final class HOCWP_Theme {
 		return $src;
 	}
 
+	public function get_all_links_from_string( $string ) {
+		$doc = new DOMDocument();
+		@$doc->loadHTML( $string );
+		$results = array();
+		$tags    = $doc->getElementsByTagName( 'a' );
+
+		foreach ( $tags as $tag ) {
+			if ( $tag instanceof DOMElement ) {
+				$results[] = array(
+					'href'  => $tag->getAttribute( 'href' ),
+					'title' => $tag->getAttribute( 'title' ),
+					'class' => $tag->getAttribute( 'class' ),
+					'text'  => $tag->textContent
+				);
+			}
+		}
+
+		return $results;
+	}
+
 	public function get_first_paragraph( $string, $strip_tags = true ) {
 		$string = substr( $string, strpos( $string, '<p' ), strpos( $string, '</p>' ) + 4 );
 

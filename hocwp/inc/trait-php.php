@@ -144,6 +144,32 @@ trait HOCWP_Theme_PHP {
 		return $lists;
 	}
 
+	public function calculate_distance( $base_location, $location, $unit = 'km' ) {
+		$lat1 = deg2rad( (float) $location['lat'] );
+		$lon1 = deg2rad( (float) $location['lng'] );
+		$lat2 = deg2rad( (float) $base_location['lat'] );
+		$lon2 = deg2rad( (float) $base_location['lng'] );
+
+		$delta_lat = $lat2 - $lat1;
+		$delta_lng = $lon2 - $lon1;
+
+		$hav_lat = ( sin( $delta_lat / 2 ) ) ** 2;
+		$hav_lng = ( sin( $delta_lng / 2 ) ) ** 2;
+
+		$distance = 2 * asin( sqrt( $hav_lat + cos( $lat1 ) * cos( $lat2 ) * $hav_lng ) );
+
+		$earth_radius_km = 6371.009;
+		$earth_radius_mi = 3958.761;
+
+		if ( 'km' == $unit ) {
+			$distance *= $earth_radius_km;
+		} else {
+			$distance *= $earth_radius_mi;
+		}
+
+		return $distance;
+	}
+
 	public function add_string_with_char( &$string, $add_text, $char = ' ', $char_position = 'head' ) {
 		if ( ! empty( $add_text ) ) {
 			if ( 'head' == $char_position ) {

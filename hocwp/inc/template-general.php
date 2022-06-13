@@ -794,31 +794,16 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 	ob_start();
 	?>
     <div class="menu-overlay-bg"></div>
-    <button id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
-            aria-controls="<?php echo $control; ?>" data-icon-type="<?php echo esc_attr( $mobile_menu_icon ); ?>"
-            aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
-		<?php
-		if ( 'svg' == $mobile_menu_icon ) {
-			HT_SVG_Icon()->bars();
-			HT_SVG_Icon()->close();
-		} elseif ( 'bars' == $mobile_menu_icon || 'burger-3' == $mobile_menu_icon ) {
-			?>
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-			<?php
-		} elseif ( 'burger' == $mobile_menu_icon ) {
-			?>
-            <span class="line-1"></span>
-            <span class="line-3"></span>
-			<?php
-		} else {
-			echo $mobile_menu_icon;
-		}
-		?>
-        <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hocwp-theme' ); ?></span>
-    </button>
 	<?php
+	$args = array(
+		'id'      => $id,
+		'class'   => $class,
+		'control' => $control,
+		'icon'    => $mobile_menu_icon
+	);
+
+	HT_Util()->menu_toggle_button( $args );
+
 	return ob_get_clean();
 }
 
@@ -1265,6 +1250,11 @@ function hocwp_theme_wp_footer_action() {
 		$script->set_text( $js );
 		$script->output();
 	}
+	?>
+    <script type="text/javascript">
+        document.body.className = document.body.className.replace('no-js', 'js has-js js-enabled');
+    </script>
+	<?php
 }
 
 add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );
@@ -1387,6 +1377,16 @@ function hocwp_theme_get_custom_logo_filter( $html ) {
 		} elseif ( 'custom' == $logo_display ) {
 			if ( isset( $options['logo_html'] ) ) {
 				$html = $options['logo_html'];
+
+				if ( ! str_contains( $html, '<a' ) ) {
+					$link = new HOCWP_Theme_HTML_Tag( 'a' );
+					$link->add_attribute( 'class', 'navbar-brand' );
+					$link->add_attribute( 'href', esc_url( home_url( '/' ) ) );
+					$link->add_attribute( 'rel', 'home' );
+					$link->set_text( $html );
+
+					$html = $link->build();
+				}
 			}
 		}
 	} else {

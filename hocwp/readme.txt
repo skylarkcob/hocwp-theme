@@ -1,4 +1,14 @@
 == Changelog ==
+= 6.9.6 =
+* 13/06/2022: Add function convert date time to countdown.
+* 13/06/2022: Add function calculate distance between two locations.
+* 13/06/2022: Add function sort array by key.
+* 13/06/2022: Update custom HTML logo.
+* 13/06/2022: Add function check browser supports javascript.
+* 13/06/2022: Add function get all links from string.
+* 13/06/2022: Update query posts by popularity.
+* 13/06/2022: Update pagination supports custom list.
+
 = 6.9.5 =
 * 26/04/2022: Add utilities for user load custom css and js.
 * 26/04/2022: Add floating support tools.

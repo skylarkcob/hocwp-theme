@@ -233,19 +233,30 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			'mid_size'      => 2,
 			'first_last'    => 0,
 			'current_total' => 0,
+			'total'         => '',
 			'class'         => 'hocwp-pagination'
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 		$args = apply_filters( 'hocwp_theme_pagination_args', $args );
 
-		$query = $args['query'];
+		$total = $args['total'] ?? '';
 
-		if ( ! ( $query instanceof WP_Query ) ) {
-			return;
+		$query_vars = '';
+
+		if ( empty( $total ) ) {
+			$query = $args['query'];
+
+			if ( ! ( $query instanceof WP_Query ) ) {
+				return;
+			}
+
+			$total = $query->max_num_pages;
+
+			$args['total'] = $total;
+
+			$query_vars = json_encode( $query->query_vars );
 		}
-
-		$total = $query->max_num_pages;
 
 		if ( 2 > $total ) {
 			return;
@@ -352,7 +363,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					}
 				}
 
-				if ( 1 == $first_last || true == $first_last ) {
+				if ( 1 == $first_last || true === $first_last ) {
 					$first_text = $args['first_text'];
 
 					if ( ! empty( $first_text ) ) {
@@ -425,7 +436,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			if ( $bootstrap ) {
 				echo '<nav aria-label="' . esc_attr__( 'Page navigation', 'hocwp-theme' ) . '" class="mt-5">' . PHP_EOL;
 			} elseif ( 'default' == $layout ) {
-				echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( json_encode( $query->query ) ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-load-more="' . HT()->bool_to_int( $load_more ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">' . PHP_EOL;
+				echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( $query_vars ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-load-more="' . HT()->bool_to_int( $load_more ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">' . PHP_EOL;
 			}
 
 			if ( 'only-label' == $layout ) {
@@ -523,7 +534,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 				$replace = array(
 					$paged,
-					$query->max_num_pages
+					$total
 				);
 
 				$current_total = str_replace( $search, $replace, $current_total );

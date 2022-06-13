@@ -30,6 +30,9 @@ function hocwp_theme_default_meta_boxes() {
 		$field = new HOCWP_Theme_Meta_Field( 'different_title', __( 'Different Title', 'hocwp-theme' ) );
 		$meta->add_field( $field );
 
+		$field = new HOCWP_Theme_Meta_Field( 'short_title', __( 'Short Title', 'hocwp-theme' ) );
+		$meta->add_field( $field );
+
 		$field = new HOCWP_Theme_Meta_Field( 'large_thumbnail', __( 'Large Thumbnail', 'hocwp-theme' ), 'media_upload' );
 		$meta->add_field( $field );
 
