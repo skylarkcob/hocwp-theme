@@ -193,7 +193,9 @@ function hocwp_theme_enqueue_scripts_action() {
 		}
 	}
 
-	if ( ! HT()->is_google_pagespeed() ) {
+	$detect = apply_filters( 'hocwp_theme_detect_client_info', true );
+
+	if ( ! HT()->is_google_pagespeed() && $detect ) {
 		$src = HOCWP_THEME_CORE_URL . '/js/detect-client-info' . HOCWP_THEME_JS_SUFFIX;
 		wp_enqueue_script( 'hocwp-theme-detect-client-info', $src, array( 'hocwp-theme' ), false, true );
 	}
