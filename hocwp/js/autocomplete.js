@@ -1,7 +1,8 @@
 jQuery(document).ready(function ($) {
     (function () {
         $(".hocwp-theme .autocomplete").each(function () {
-            var element = $(this);
+            let element = $(this);
+
             element.autocomplete({
                 source: function (request, response) {
                     $.ajax({

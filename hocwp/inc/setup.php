@@ -23,7 +23,7 @@ function hocwp_theme_setup_start_session() {
 		$output   = array();
 
 		if ( HT_Util()->verify_nonce( HOCWP_Theme()->get_textdomain() ) ) {
-			$q = isset( $_REQUEST['term'] ) ? $_REQUEST['term'] : '';
+			$q = $_REQUEST['term'] ?? '';
 
 			$args = array( 'hide_empty' => false );
 
@@ -34,7 +34,7 @@ function hocwp_theme_setup_start_session() {
 			$terms = HT_Util()->get_terms( $taxonomy, $args );
 
 			if ( HT()->array_has_value( $terms ) ) {
-				$return = isset( $_REQUEST['return'] ) ? $_REQUEST['return'] : '';
+				$return = $_REQUEST['return'] ?? '';
 				$return = strtolower( $return );
 
 				foreach ( $terms as $key => $term ) {
@@ -70,9 +70,25 @@ function hocwp_theme_close_session() {
 
 add_action( 'requests-curl.before_request', 'hocwp_theme_close_session' );
 
+// Backup all sidebar widgets
+function hocwp_theme_update_option_sidebars_widgets_action( $widgets ) {
+	update_option( 'hocwp_theme_widgets', $widgets );
+}
+
+add_action( 'update_option_sidebars_widgets', 'hocwp_theme_update_option_sidebars_widgets_action' );
+
 function hocwp_theme_after_switch_theme_action( $old_name, $old_theme ) {
 	if ( ! current_user_can( 'switch_themes' ) ) {
 		return;
+	}
+
+	$widgets = get_option( 'hocwp_theme_widgets' );
+
+	// Restore widgets for this theme
+	if ( ! empty( $widgets ) ) {
+		remove_action( 'update_option_sidebars_widgets', 'hocwp_theme_update_option_sidebars_widgets_action' );
+		update_option( 'sidebars_widgets', $widgets );
+		add_action( 'update_option_sidebars_widgets', 'hocwp_theme_update_option_sidebars_widgets_action' );
 	}
 
 	set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );

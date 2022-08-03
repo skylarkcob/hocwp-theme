@@ -17,6 +17,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 
 		public function __construct() {
 			parent::__construct();
+
 			add_filter( 'nav_menu_submenu_css_class', array( $this, 'submenu_css_class_filter' ), 10, 2 );
 			add_filter( 'nav_menu_css_class', array( $this, 'menu_item_css_class_filter' ), 10, 3 );
 			add_filter( 'nav_menu_link_attributes', array( $this, 'nav_menu_link_attributes_filter' ), 10, 3 );
@@ -43,9 +44,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 			}
 
 			$classes = array_filter( $classes );
-			$classes = array_unique( $classes );
-
-			return $classes;
+			return array_unique( $classes );
 		}
 
 		public function menu_item_css_class_filter( $classes, $item, $args ) {
@@ -64,9 +63,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 			}
 
 			$classes = array_filter( $classes );
-			$classes = array_unique( $classes );
-
-			return $classes;
+			return array_unique( $classes );
 		}
 
 		public function menu_item_title( $title, $item, $args, $depth ) {
@@ -80,7 +77,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 
 			$show_submenu = ( isset( $args->show_submenu ) && $args->show_submenu );
 
-			$classes = isset( $atts['class'] ) ? $atts['class'] : '';
+			$classes = $atts['class'] ?? '';
 
 			if ( ! is_array( $classes ) ) {
 				$classes = explode( ' ', $classes );

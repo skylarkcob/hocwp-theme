@@ -12,11 +12,11 @@ abstract class HOCWP_Theme_Walker_Nav_Menu extends Walker_Nav_Menu {
 	public function submenu_css_classes( $classes ) {
 		$classes[] = 'submenu';
 		$classes[] = 'child-menu';
+		$classes[] = 'shadow';
 
 		$classes = array_filter( $classes );
-		$classes = array_unique( $classes );
 
-		return $classes;
+		return array_unique( $classes );
 	}
 
 	public abstract function menu_item_title( $title, $item, $args, $depth );
