@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-06-13 08:54+0700\n"
+"POT-Creation-Date: 2022-08-20 00:17+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: ../..\n"
@@ -90,137 +90,182 @@ msgid "Please make a backup before you change site URL."
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:74
-msgid "Import & Export"
+msgid "Delete Cache"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:75
-msgid "Import and export theme settings or any options in database."
+msgid "You need to delete site cache and CDN cache to see update."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:82
+msgid "If you enter a API Token, you do not need to provide your API Key and email address below."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:85
+msgid "Cloudflare API Token"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:87
-msgid "Copy the setting value and fill in the data entry box to import into the database when needed."
+msgid "If you are not using API Token then you must provide API Key and email address."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:90 hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:743 hocwp/inc/setup-after.php:160
-msgid "Theme Settings"
+#: hocwp/admin/admin-setting-page-administration-tools.php:89
+msgid "Cloudflare API Key"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:96 hocwp/admin/admin-setting-page-administration-tools.php:143
-msgid "Option name:"
+#: hocwp/admin/admin-setting-page-administration-tools.php:93
+msgid "Cloudflare User Email"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:107
-msgid "Please enter option name to fetch value."
+#: hocwp/admin/admin-setting-page-administration-tools.php:97
+msgid "Cloudflare Account ID"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:108
-msgid "Data has been fetched!"
+#: hocwp/admin/admin-setting-page-administration-tools.php:98
+msgid "Cloudflare Zone ID"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:109 hocwp/admin/admin-setting-page-administration-tools.php:123
-#: hocwp/admin/admin-setting-page-administration-tools.php:162 hocwp/admin/admin-setting-page-administration-tools.php:177
-#: hocwp/admin/admin-setting-page-administration-tools.php:220
-msgid "Please make a backup before you do this action."
+#: hocwp/admin/admin-setting-page-administration-tools.php:99
+msgid "Cloudflare Domain"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:111 hocwp/admin/admin-setting-page-administration-tools.php:114
-msgid "Fetch"
+#: hocwp/admin/admin-setting-page-administration-tools.php:104 hocwp/admin/ajax.php:443 hocwp/admin/ajax.php:452
+msgid "All cache files have been deleted successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:122
-msgid "Settings have been exported!"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:125 hocwp/admin/admin-setting-page-administration-tools.php:128
-#: hocwp/admin/admin-setting-page-administration-tools.php:137
-msgid "Export"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:147
-msgid "Option value:"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:161
-msgid "Settings have been loaded!"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:164
-msgid "Load Settings"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:168
-msgid "Load settings"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:176
-msgid "Settings have been imported!"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:179 hocwp/admin/admin-setting-page-administration-tools.php:182
-#: hocwp/admin/admin-setting-page-administration-tools.php:201 hocwp/admin/admin-setting-page-administration-tools.php:274
-#: hocwp/admin/admin-setting-page-administration-tools.php:277
-msgid "Import"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:204
-msgid "Database Optimize"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:205
-msgid "Update database, remove transients and more."
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:211
-msgid "Enter the transient name you want to delete, all transients will be deleted if this field is empty."
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:214
-msgid "Remove Transients"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:219
-msgid "Transients have been removed!"
-msgstr ""
-
-#: hocwp/admin/admin-setting-page-administration-tools.php:222 hocwp/admin/admin-setting-page-administration-tools.php:225
+#: hocwp/admin/admin-setting-page-administration-tools.php:106 hocwp/admin/admin-setting-page-administration-tools.php:109
+#: hocwp/admin/admin-setting-page-administration-tools.php:263 hocwp/admin/admin-setting-page-administration-tools.php:266
 #: hocwp/admin/views/admin-delete-posts.php:147
 msgid "Delete"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:231
-msgid "Vietnamese Administrative Boundaries"
+#: hocwp/admin/admin-setting-page-administration-tools.php:115
+msgid "Import & Export"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:232
-msgid "Import information about Vietnamese administrative boundaries into the database automatically."
+#: hocwp/admin/admin-setting-page-administration-tools.php:116
+msgid "Import and export theme settings or any options in database."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:239
-msgid "Import the administrative boundary at the district level?"
+#: hocwp/admin/admin-setting-page-administration-tools.php:128
+msgid "Copy the setting value and fill in the data entry box to import into the database when needed."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:242
-msgid "District"
+#: hocwp/admin/admin-setting-page-administration-tools.php:131 hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:743 hocwp/inc/setup-after.php:160
+msgid "Theme Settings"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:137 hocwp/admin/admin-setting-page-administration-tools.php:184
+msgid "Option name:"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:148
+msgid "Please enter option name to fetch value."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:149
+msgid "Data has been fetched!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:150 hocwp/admin/admin-setting-page-administration-tools.php:164
+#: hocwp/admin/admin-setting-page-administration-tools.php:203 hocwp/admin/admin-setting-page-administration-tools.php:218
+#: hocwp/admin/admin-setting-page-administration-tools.php:261
+msgid "Please make a backup before you do this action."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:152 hocwp/admin/admin-setting-page-administration-tools.php:155
+msgid "Fetch"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:163
+msgid "Settings have been exported!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:166 hocwp/admin/admin-setting-page-administration-tools.php:169
+#: hocwp/admin/admin-setting-page-administration-tools.php:178
+msgid "Export"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:188
+msgid "Option value:"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:202
+msgid "Settings have been loaded!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:205
+msgid "Load Settings"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:209
+msgid "Load settings"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:217
+msgid "Settings have been imported!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:220 hocwp/admin/admin-setting-page-administration-tools.php:223
+#: hocwp/admin/admin-setting-page-administration-tools.php:242 hocwp/admin/admin-setting-page-administration-tools.php:315
+#: hocwp/admin/admin-setting-page-administration-tools.php:318
+msgid "Import"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:245
+msgid "Database Optimize"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:246
-msgid "Import the administrative boundary at the commune level?"
+msgid "Update database, remove transients and more."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:249
-msgid "Commune"
+#: hocwp/admin/admin-setting-page-administration-tools.php:252
+msgid "Enter the transient name you want to delete, all transients will be deleted if this field is empty."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:254
-msgid "Choose taxonomy"
+#: hocwp/admin/admin-setting-page-administration-tools.php:255
+msgid "Remove Transients"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:267
-msgid "Taxonomy"
+#: hocwp/admin/admin-setting-page-administration-tools.php:260
+msgid "Transients have been removed!"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:272
+msgid "Vietnamese Administrative Boundaries"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:273
+msgid "Import information about Vietnamese administrative boundaries into the database automatically."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:280
+msgid "Import the administrative boundary at the district level?"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:283
+msgid "District"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:287
+msgid "Import the administrative boundary at the commune level?"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:290
+msgid "Commune"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:295
+msgid "Choose taxonomy"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:308
+msgid "Taxonomy"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:313
 msgid "Data has been imported successfully!"
 msgstr ""
 
@@ -1057,7 +1102,7 @@ msgid "Choose post status"
 msgstr ""
 
 #: hocwp/admin/admin.php:575 hocwp/inc/class-hocwp-theme-html-field.php:776 hocwp/inc/class-hocwp-theme-html-field.php:818
-#: hocwp/inc/class-hocwp-theme-html-field.php:1871 hocwp/inc/functions-scripts.php:392
+#: hocwp/inc/class-hocwp-theme-html-field.php:1871 hocwp/inc/functions-scripts.php:394
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -1070,48 +1115,48 @@ msgstr ""
 msgid "Choose post type"
 msgstr ""
 
-#: hocwp/admin/ajax.php:44
+#: hocwp/admin/ajax.php:47
 msgid "AJAX nonce is invalid."
 msgstr ""
 
-#: hocwp/admin/ajax.php:59
+#: hocwp/admin/ajax.php:62
 msgid "AJAX has been done successfully!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:63
+#: hocwp/admin/ajax.php:66
 msgid "Invalid AJAX callback."
 msgstr ""
 
-#: hocwp/admin/ajax.php:353
+#: hocwp/admin/ajax.php:356
 msgid "Backup failed."
 msgstr ""
 
-#: hocwp/admin/ajax.php:360
+#: hocwp/admin/ajax.php:363
 msgid "Backup done!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:590
+#: hocwp/admin/ajax.php:646
 msgid "Invalid email."
 msgstr ""
 
-#: hocwp/admin/ajax.php:617
+#: hocwp/admin/ajax.php:673
 #, php-format
 msgid "[%s] Testing email"
 msgstr ""
 
-#: hocwp/admin/ajax.php:618
+#: hocwp/admin/ajax.php:674
 msgid "This is a testing email. If you see this message, it means your email setting works normally."
 msgstr ""
 
-#: hocwp/admin/ajax.php:624
+#: hocwp/admin/ajax.php:680
 msgid "The mailing system is not working!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:627
+#: hocwp/admin/ajax.php:683
 msgid "Invalid email address!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:643
+#: hocwp/admin/ajax.php:699
 msgid "Invalid option name or empty option value."
 msgstr ""
 
@@ -1208,7 +1253,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:391
+#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:393
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -1949,6 +1994,10 @@ msgstr ""
 #: hocwp/inc/class-hocwp-theme-background-process.php:433
 #, php-format
 msgid "Every %d Minutes"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:54
+msgid "Missing API Token or API Key!"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-controller.php:40 hocwp/inc/class-hocwp-theme-extension.php:194 hocwp/inc/class-hocwp-theme-requirement.php:19
@@ -2699,7 +2748,7 @@ msgstr ""
 msgid "The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn't full MySQL query."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-walker-nav-menu-amp.php:215 hocwp/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php:205
+#: hocwp/inc/class-hocwp-theme-walker-nav-menu-amp.php:215 hocwp/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php:202
 msgid "Add a menu"
 msgstr ""
 
@@ -2732,91 +2781,91 @@ msgstr ""
 msgid "Notify license"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:239
+#: hocwp/inc/functions-scripts.php:241
 msgid "Are you sure you want to delete?"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:240
+#: hocwp/inc/functions-scripts.php:242
 msgid "Changes you made may not be saved."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:241
+#: hocwp/inc/functions-scripts.php:243
 #, php-format
 msgid "Theme created by %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:242
+#: hocwp/inc/functions-scripts.php:244
 msgid "Save"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:243
+#: hocwp/inc/functions-scripts.php:245
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:244
+#: hocwp/inc/functions-scripts.php:246
 msgid "Waiting..."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:265
+#: hocwp/inc/functions-scripts.php:267
 msgid "Load more"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:388
+#: hocwp/inc/functions-scripts.php:390
 #, php-format
 msgid "Remove %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:389
+#: hocwp/inc/functions-scripts.php:391
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:393
+#: hocwp/inc/functions-scripts.php:395
 #, php-format
 msgid "Change %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:465
+#: hocwp/inc/functions-scripts.php:467
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:466
+#: hocwp/inc/functions-scripts.php:468
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:467
+#: hocwp/inc/functions-scripts.php:469
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:468
+#: hocwp/inc/functions-scripts.php:470
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:469
+#: hocwp/inc/functions-scripts.php:471
 msgctxt "quicktags description"
 msgid "Indentation"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:470
+#: hocwp/inc/functions-scripts.php:472
 msgctxt "quicktags description"
 msgid "Heading 2"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:471
+#: hocwp/inc/functions-scripts.php:473
 msgctxt "quicktags description"
 msgid "Heading 3"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:472
+#: hocwp/inc/functions-scripts.php:474
 msgctxt "quicktags description"
 msgid "Heading 4"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:473
+#: hocwp/inc/functions-scripts.php:475
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""

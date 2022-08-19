@@ -71,6 +71,47 @@ $args = array(
 $tab->add_field( 'submit_change_url', '', 'button', $args, 'string', 'change_url' );
 
 $args = array(
+	'title'       => __( 'Delete Cache', 'hocwp-theme' ),
+	'description' => __( 'You need to delete site cache and CDN cache to see update.', 'hocwp-theme' )
+);
+
+$tab->add_section( 'delete_cache', $args );
+
+$args = array(
+	'class'       => 'regular-text',
+	'description' => __( 'If you enter a API Token, you do not need to provide your API Key and email address below.', 'hocwp-theme' )
+);
+
+$tab->add_field( 'cloudflare_api_token', __( 'Cloudflare API Token', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+
+$args['description'] = __( 'If you are not using API Token then you must provide API Key and email address.', 'hocwp-theme' );
+
+$tab->add_field( 'cloudflare_api_key', __( 'Cloudflare API Key', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+
+$args['type'] = 'email';
+
+$tab->add_field( 'cloudflare_user_email', __( 'Cloudflare User Email', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+
+unset( $args['description'], $args['type'] );
+
+$tab->add_field( 'cloudflare_account_id', __( 'Cloudflare Account ID', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+$tab->add_field( 'cloudflare_zone_id', __( 'Cloudflare Zone ID', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+$tab->add_field( 'cloudflare_domain', __( 'Cloudflare Domain', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+
+$args = array(
+	'attributes'  => array(
+		'data-ajax-button'  => 1,
+		'data-message'      => __( 'All cache files have been deleted successfully!', 'hocwp-theme' ),
+		'data-delete-cache' => 1,
+		'aria-label'        => __( 'Delete', 'hocwp-theme' )
+	),
+	'button_type' => 'button',
+	'text'        => __( 'Delete', 'hocwp-theme' )
+);
+
+$tab->add_field( 'submit_delete_cache', '', 'button', $args, 'string', 'delete_cache' );
+
+$args = array(
 	'title'       => __( 'Import & Export', 'hocwp-theme' ),
 	'description' => __( 'Import and export theme settings or any options in database.', 'hocwp-theme' )
 );

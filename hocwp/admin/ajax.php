@@ -1,4 +1,7 @@
 <?php
+
+use JetBrains\PhpStorm\NoReturn;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -86,7 +89,7 @@ class HOCWP_Theme_AJAX {
 				if ( is_user_logged_in() ) {
 					$values = get_user_meta( get_current_user_id(), $key, true );
 				} else {
-					$values = isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : '';
+					$values = $_SESSION[ $key ] ?? '';
 				}
 
 				$values = maybe_unserialize( $values );
@@ -95,7 +98,7 @@ class HOCWP_Theme_AJAX {
 					$change = - 1;
 				}
 
-				$meta_value = HT()->get_method_value( 'meta_value', 'post' );
+				$meta_value = HT()->get_method_value( 'meta_value' );
 
 				if ( empty( $meta_value ) ) {
 					$meta_value = get_metadata( $meta_type, $object_id, $meta_key, true );
@@ -134,7 +137,7 @@ class HOCWP_Theme_AJAX {
 					wp_send_json_success( $data );
 				}
 			} elseif ( 'add_remove' == $value_type ) {
-				$meta_value = HT()->get_method_value( 'meta_value', 'post' );
+				$meta_value = HT()->get_method_value( 'meta_value' );
 
 				if ( empty( $meta_value ) ) {
 					$meta_value = get_metadata( $meta_type, $object_id, $meta_key, true );
@@ -195,7 +198,7 @@ class HOCWP_Theme_AJAX {
 				if ( isset( $_POST['meta_value'] ) ) {
 					$meta_value = $_POST['meta_value'];
 				} else {
-					$meta_value = isset( $_POST['meta_change'] ) ? $_POST['meta_change'] : 1;
+					$meta_value = $_POST['meta_change'] ?? 1;
 					$old        = null;
 
 					if ( isset( $_POST['old_meta_value'] ) ) {
@@ -234,11 +237,11 @@ class HOCWP_Theme_AJAX {
 
 HOCWP_Theme_AJAX::get_instance();
 
-function hocwp_theme_update_facebook_data_ajax_callback() {
-	$post_id = isset( $_GET['post_id'] ) ? $_GET['post_id'] : '';
+#[NoReturn] function hocwp_theme_update_facebook_data_ajax_callback() {
+	$post_id = $_GET['post_id'] ?? '';
 
 	if ( HT()->is_positive_number( $post_id ) ) {
-		$event = isset( $_GET['event'] ) ? $_GET['event'] : '';
+		$event = $_GET['event'] ?? '';
 
 		if ( 'like' == $event || 'unlike' == $event ) {
 			$likes = get_post_meta( $post_id, 'likes', true );
@@ -260,7 +263,7 @@ function hocwp_theme_update_facebook_data_ajax_callback() {
 add_action( 'wp_ajax_hocwp_theme_update_facebook_data', 'hocwp_theme_update_facebook_data_ajax_callback' );
 add_action( 'wp_ajax_nopriv_hocwp_theme_update_facebook_data', 'hocwp_theme_update_facebook_data_ajax_callback' );
 
-function hocwp_theme_change_post_name_ajax_callback() {
+#[NoReturn] function hocwp_theme_change_post_name_ajax_callback() {
 	$post_id = HT()->get_method_value( 'post_id' );
 
 	if ( HT()->is_positive_number( $post_id ) ) {
@@ -281,8 +284,8 @@ function hocwp_theme_change_post_name_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_change_post_name', 'hocwp_theme_change_post_name_ajax_callback' );
 
-function hocwp_theme_detect_client_info_ajax_callback() {
-	$screen_width = isset( $_GET['screen_width'] ) ? $_GET['screen_width'] : '';
+#[NoReturn] function hocwp_theme_detect_client_info_ajax_callback() {
+	$screen_width = $_GET['screen_width'] ?? '';
 
 	if ( HT()->is_positive_number( $screen_width ) ) {
 		$client_info = HT_Util()->get_client_info( true );
@@ -302,7 +305,7 @@ add_action( 'wp_ajax_hocwp_theme_detect_client_info', 'hocwp_theme_detect_client
 add_action( 'wp_ajax_nopriv_hocwp_theme_detect_client_info', 'hocwp_theme_detect_client_info_ajax_callback' );
 
 function hocwp_theme_boolean_meta_ajax_callback() {
-	$nonce = isset( $_POST['nonce'] ) ? $_POST['nonce'] : '';
+	$nonce = $_POST['nonce'] ?? '';
 
 	if ( HOCWP_Theme()->verify_nonce( $nonce ) ) {
 		$meta_type  = HT()->get_method_value( 'meta_type' );
@@ -406,6 +409,59 @@ function hocwp_theme_change_site_url_ajax_callback() {
 }
 
 add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_ajax_callback' );
+
+function hocwp_theme_delete_cache_ajax_callback() {
+	$data = array();
+
+	$api_key    = $_POST['cloudflare_api_key'] ?? '';
+	$api_token  = $_POST['cloudflare_api_token'] ?? '';
+	$user_email = $_POST['cloudflare_user_email'] ?? '';
+	$account_id = $_POST['cloudflare_account_id'] ?? '';
+	$zone_id    = $_POST['cloudflare_zone_id'] ?? '';
+	$domain     = $_POST['cloudflare_domain'] ?? '';
+
+	if ( ! empty( $api_token ) || ! empty( $api_key ) ) {
+		if ( ! class_exists( 'HOCWP_Theme_Cloudflare_API' ) ) {
+			require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php';
+		}
+
+		$params = array(
+			'api_key'    => $api_key,
+			'api_token'  => $api_token,
+			'user_email' => $user_email,
+			'account_id' => $account_id,
+			'zone_id'    => $zone_id,
+			'domain'     => $domain
+		);
+
+		$api    = new HOCWP_Theme_Cloudflare_API( 'zones', $params );
+		$result = $api->purge_cache();
+
+		if ( is_wp_error( $result ) ) {
+			$data['message'] = $result->get_error_message();
+		} elseif ( $result->success ) {
+			$data['message'] = __( 'All cache files have been deleted successfully!', 'hocwp-theme' );
+
+			if ( defined( 'LSCWP_V' ) ) {
+				do_action( 'litespeed_purge_all' );
+			}
+
+			wp_send_json_success( $data );
+		}
+	} else {
+		$data['message'] = __( 'All cache files have been deleted successfully!', 'hocwp-theme' );
+
+		if ( defined( 'LSCWP_V' ) ) {
+			do_action( 'litespeed_purge_all' );
+		}
+
+		wp_send_json_success( $data );
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_delete_cache', 'hocwp_theme_delete_cache_ajax_callback' );
 
 function hocwp_theme_delete_transient_ajax_callback() {
 	$data = array();
@@ -523,7 +579,7 @@ function hocwp_theme_fetch_administrative_boundaries_ajax_callback() {
 add_action( 'wp_ajax_fetch_administrative_boundaries', 'hocwp_theme_fetch_administrative_boundaries_ajax_callback' );
 add_action( 'wp_ajax_nopriv_fetch_administrative_boundaries', 'hocwp_theme_fetch_administrative_boundaries_ajax_callback' );
 
-function hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback() {
+#[NoReturn] function hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback() {
 	$results = array();
 
 	$term = $_GET['term'] ?? '';

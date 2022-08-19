@@ -1,4 +1,7 @@
 == Changelog ==
+= 6.9.7 =
+* 19/08/2022: Add utilities to delete site cache and Cloudflare cache.
+
 = 6.9.6 =
 * 13/06/2022: Add function convert date time to countdown.
 * 13/06/2022: Add function calculate distance between two locations.

@@ -4,8 +4,8 @@ jQuery(document).ready(function ($) {
     const body = $("body");
 
     function _hocwp_theme_update_button_waiting_text(element, loading) {
-        var tagName = element.prop("tagName"),
-            text = "",
+        let tagName = element.prop("tagName"),
+            text,
             waiting = hocwpTheme.l10n.waiting,
             normalText = element.attr("data-normal-text");
 
@@ -45,7 +45,7 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-change-email='1'], form[data-tab='administration_tools'] input[data-change-email='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 newEmail = form.find(".new_email input");
@@ -94,7 +94,7 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-send-test-email='1'], form[data-tab='administration_tools'] input[data-send-test-email='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 newEmail = form.find(".new_email input");
@@ -137,7 +137,7 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-change-url='1'], form[data-tab='administration_tools'] input[data-change-url='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 oldUrl = form.find(".old_url input"),
@@ -183,12 +183,62 @@ jQuery(document).ready(function ($) {
         });
     })();
 
+    // Delete cache
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-delete-cache='1'], form[data-tab='administration_tools'] input[data-delete-cache='1']", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that),
+                form = element.closest("form"),
+                accountId = form.find(".cloudflare_account_id input"),
+                apiToken = form.find(".cloudflare_api_token input"),
+                apiKey = form.find(".cloudflare_api_key input"),
+                zoneId = form.find(".cloudflare_zone_id input"),
+                userEmail = form.find(".cloudflare_user_email input"),
+                domain = form.find(".cloudflare_domain input"),
+                msgConfirm = element.attr("data-confirm-message");
+
+            if (!$.trim(msgConfirm) || confirm(msgConfirm)) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_delete_cache",
+                        cloudflare_api_token: apiToken.val(),
+                        cloudflare_user_email: userEmail.val(),
+                        cloudflare_api_key: apiKey.val(),
+                        cloudflare_account_id: accountId.val(),
+                        cloudflare_zone_id: zoneId.val(),
+                        cloudflare_domain: domain.val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(element.attr("data-message"));
+                        }
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                    }
+                });
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
+    })();
+
     // Fetch option value
     (function () {
         body.on("click", "form[data-tab='administration_tools'] button[data-fetch='1'], form[data-tab='administration_tools'] input[data-fetch='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 option = form.find("#hocwp_theme_administration_tools_exports_option_name");
@@ -239,13 +289,13 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-export='1'], form[data-tab='administration_tools'] input[data-export='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 option = form.find("#hocwp_theme_administration_tools_exports_option_name");
 
             if (confirm(element.attr("data-confirm-message"))) {
-                var file_name = "theme-settings";
+                let file_name = "theme-settings";
 
                 if ($.trim(option.val())) {
                     file_name = option.val()
@@ -266,7 +316,7 @@ jQuery(document).ready(function ($) {
 
     // Import option value
     (function () {
-        var inputFile = $("#choose-setting-file");
+        let inputFile = $("#choose-setting-file");
 
         // Open file dialog
         body.on("click", "form[data-tab='administration_tools'] button[data-load-settings='1'], form[data-tab='administration_tools'] input[data-load-settings='1']", function (e) {
@@ -281,7 +331,7 @@ jQuery(document).ready(function ($) {
 
         // Load setting file to textarea
         inputFile.on("change", function () {
-            var files = inputFile.prop("files"),
+            let files = inputFile.prop("files"),
                 fileReader = new FileReader(),
                 td = inputFile.closest("td"),
                 button = td.find("button[data-load-settings='1'], input[data-load-settings='1']");
@@ -301,7 +351,7 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-import='1'], form[data-tab='administration_tools'] input[data-import='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 option = form.find("#hocwp_theme_administration_tools_imports_option_name"),
@@ -344,7 +394,7 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-delete-transient='1'], form[data-tab='administration_tools'] input[data-delete-transient='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 transient = form.find(".remove_transient input");
@@ -383,7 +433,7 @@ jQuery(document).ready(function ($) {
         body.on("click", "form[data-tab='administration_tools'] button[data-import-ab='1'], form[data-tab='administration_tools'] input[data-import-ab='1']", function (e) {
             e.preventDefault();
 
-            var that = this,
+            let that = this,
                 element = $(that),
                 form = element.closest("form"),
                 district = form.find(".district input"),
@@ -424,7 +474,7 @@ jQuery(document).ready(function ($) {
 
     // Search and delete posts
     (function () {
-        var cache = {};
+        let cache = {};
 
         function _split(val) {
             return val.split(/,\s*/);
@@ -442,7 +492,7 @@ jQuery(document).ready(function ($) {
                 }
             }).autocomplete({
                 source: function (request, response) {
-                    var term = _extract_last(request.term),
+                    let term = _extract_last(request.term),
                         postType = $("#delete_post_type").val(),
                         cacheKey = "";
 
@@ -472,7 +522,7 @@ jQuery(document).ready(function ($) {
                     });
                 },
                 search: function () {
-                    var term = _extract_last(this.value);
+                    let term = _extract_last(this.value);
 
                     if (term.length < 2) {
                         return false;
@@ -482,7 +532,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 },
                 select: function (event, ui) {
-                    var terms = _split(this.value);
+                    let terms = _split(this.value);
 
                     terms.pop();
                     terms.push(ui.item.value);
