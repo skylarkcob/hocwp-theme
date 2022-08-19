@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 class HOCWP_Theme_Cloudflare_API {
-	protected $base = 'https://api.cloudflare.com/client/v4/';
+	protected $base;
 
 	protected $headers;
 
@@ -15,6 +15,12 @@ class HOCWP_Theme_Cloudflare_API {
 	public $domain;
 
 	public function __construct( $resource, $api_token ) {
+		$this->base = join( '.', array(
+			'https://api',
+			'cloudflare',
+			'com/client/v4/'
+		) );
+		
 		$this->resource = $resource;
 
 		if ( is_array( $api_token ) ) {
