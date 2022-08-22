@@ -3807,3 +3807,537 @@
     border-right: 4px solid transparent;
     border-left: 4px solid transparent;
 }
+
+/* ================= Float supports ================= */
+
+.float-supports {
+    position: fixed;
+    z-index: 499;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.float-supports[data-position="left"],
+.float-supports[data-position="middle_left"],
+.float-supports[data-position="top_left"] {
+    left: 0;
+}
+
+.float-supports[data-position="right"],
+.float-supports[data-position="middle_right"],
+.float-supports[data-position="top_right"] {
+    right: 0;
+}
+
+.float-supports[data-position="left"],
+.float-supports[data-position="middle_bottom"],
+.float-supports[data-position="right"] {
+    bottom: 0;
+}
+
+.float-supports[data-position="top_left"],
+.float-supports[data-position="middle_top"],
+.float-supports[data-position="top_right"] {
+    top: 0;
+}
+
+@media screen and (min-width: 783px) {
+    .admin-bar .float-supports[data-position="top_left"],
+    .admin-bar .float-supports[data-position="middle_top"],
+    .admin-bar .float-supports[data-position="top_right"] {
+        top: 32px;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 782px) {
+    .admin-bar .float-supports[data-position="top_left"],
+    .admin-bar .float-supports[data-position="middle_top"],
+    .admin-bar .float-supports[data-position="top_right"] {
+        top: 46px;
+    }
+}
+
+.float-supports[data-position="middle_left"],
+.float-supports[data-position="middle_right"] {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.float-supports[data-position="middle_top"],
+.float-supports[data-position="middle_bottom"] {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.float-supports a {
+    text-decoration: none;
+    border-radius: 20px;
+    display: block;
+    height: 40px;
+    font-size: 14px;
+    text-align: center;
+    width: 40px;
+    background: #fff none no-repeat scroll center;
+    transition: width 300ms ease-in 0ms;
+    cursor: pointer;
+    position: relative;
+    font-weight: 700;
+    line-height: 40px;
+}
+
+.float-supports a:hover {
+    width: auto;
+    display: inline-block;
+    align-items: center;
+    white-space: nowrap;
+    background-position: left 15px center;
+    padding-left: 52px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .3);
+    padding-right: 22px;
+    animation: none;
+    z-index: 9999;
+}
+
+.float-supports[data-position="right"] a:hover {
+    position: absolute;
+    right: 0;
+}
+
+.float-supports a > img,
+.float-supports a > i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 399;
+    font-size: 23px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.float-supports a:hover > img,
+.float-supports a:hover > i {
+    left: 5px;
+    transform: translateY(-50%);
+}
+
+.float-supports a {
+    transition: all 300ms;
+}
+
+.float-supports .support-item a:hover .earthquake-outer,
+.float-supports .support-item a:hover .earthquake {
+    display: none;
+}
+
+.float-supports .text {
+    visibility: hidden;
+}
+
+.float-supports[data-style="vertical"] .box-container {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.float-supports .support-item {
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.float-supports[data-style="vertical"] .support-item ~ .support-item {
+    margin-top: 10px;
+}
+
+.float-supports[data-style="horizontal"] .support-item ~ .support-item {
+    margin-left: 10px;
+}
+
+.float-supports[data-style="vertical"] .support-item[data-earthquake="1"] {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.float-supports[data-style="vertical"] .support-item[data-earthquake="1"] + .support-item[data-earthquake="0"] {
+    margin-top: 0;
+}
+
+.float-supports[data-style="horizontal"] .support-item[data-earthquake="1"] {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.float-supports .support-item a:hover .text {
+    visibility: visible;
+}
+
+.float-supports[data-style="vertical"] .box-container {
+    width: 52px;
+    padding: 8px 5px !important;
+}
+
+.float-supports[data-style="horizontal"] .box-container {
+    height: 52px;
+    padding: 5px 8px !important;
+}
+
+.float-supports .support-item[data-vibrate="1"] a:not(:hover),
+.phone-shake {
+    -webkit-animation: phone-shake 1.5s ease infinite;
+    -moz-animation: phone-shake 1.5s ease infinite;
+    -ms-animation: phone-shake 1.5s ease infinite;
+    -o-animation: phone-shake 1.5s ease infinite;
+    animation: phone-shake 1.5s ease infinite;
+}
+
+.float-supports .support-item a:hover *,
+.float-supports .support-item[data-vibrate="1"] span.text,
+.phone-shake span.text {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -ms-animation: none;
+    -o-animation: none;
+    animation: none;
+}
+
+.earthquake {
+    -webkit-animation: earthquake 2.3s ease-in-out infinite;
+    -moz-animation: earthquake 2.3s ease-in-out infinite;
+    -ms-animation: earthquake 2.3s ease-in-out infinite;
+    -o-animation: earthquake 2.3s ease-in-out infinite;
+    animation: earthquake 2.3s ease-in-out infinite;
+}
+
+.earthquake-outer {
+    -webkit-animation: earthquake-outer 1.5s ease-in-out infinite;
+    -moz-animation: earthquake-outer 1.5s ease-in-out infinite;
+    -ms-animation: earthquake-outer 1.5s ease-in-out infinite;
+    -o-animation: earthquake-outer 1.5s ease-in-out infinite;
+    animation: earthquake-outer 1.5s ease-in-out infinite;
+}
+
+.earthquake {
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    background-color: currentColor;
+    left: -10px;
+    top: -10px;
+}
+
+.earthquake-outer {
+    border: 2px solid currentColor;
+    width: 80px;
+    height: 80px;
+    left: -20px;
+    top: -20px;
+}
+
+.earthquake,
+.earthquake-outer {
+    border-radius: 100%;
+    transition: all .5s;
+    transform-origin: 50% 50%;
+    position: absolute;
+    z-index: 99;
+}
+
+/* ================= Spinner loader ================= */
+
+.loader {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.loader:after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    margin: 0;
+    border: 2px solid rgba(155, 155, 155, 0.15);
+    border-left-color: #296da9;
+    border-radius: 100%;
+    animation: spinner .65s infinite linear;
+    transform-origin: center;
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn)
+    }
+}
+
+@keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn)
+    }
+}
+
+@-webkit-keyframes phone-shake {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    10% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    20% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    30% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    40% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    50% {
+        -webkit-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    100% {
+        -webkit-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+}
+
+@-moz-keyframes phone-shake {
+    0% {
+        -moz-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    10% {
+        -moz-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    20% {
+        -moz-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    30% {
+        -moz-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    40% {
+        -moz-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    50% {
+        -moz-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    100% {
+        -moz-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+}
+
+@-ms-keyframes phone-shake {
+    0% {
+        -ms-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    10% {
+        -ms-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    20% {
+        -ms-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    30% {
+        -ms-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    40% {
+        -ms-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    50% {
+        -ms-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    100% {
+        -ms-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+}
+
+@-o-keyframes phone-shake {
+    0% {
+        -o-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    10% {
+        -o-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    20% {
+        -o-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    30% {
+        -o-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    40% {
+        -o-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    50% {
+        -o-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    100% {
+        -o-transform: rotate(0deg) scale(1) skew(1deg)
+    }
+}
+
+@keyframes phone-shake {
+    0% {
+        transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    10% {
+        transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    20% {
+        transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    30% {
+        transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    40% {
+        transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    50% {
+        transform: rotate(0deg) scale(1) skew(1deg)
+    }
+    100% {
+        transform: rotate(0deg) scale(1) skew(1deg)
+    }
+}
+
+@-webkit-keyframes earthquake-outer {
+    0% {
+        -webkit-transform: rotate(0) scale(.5) skew(1deg);
+        -webkit-opacity: .1
+    }
+    30% {
+        -webkit-transform: rotate(0) scale(.7) skew(1deg);
+        -webkit-opacity: .5
+    }
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+        -webkit-opacity: .1
+    }
+}
+
+@-moz-keyframes earthquake-outer {
+    0% {
+        -moz-transform: rotate(0) scale(.5) skew(1deg);
+        -moz-opacity: .1
+    }
+    30% {
+        -moz-transform: rotate(0) scale(.7) skew(1deg);
+        -moz-opacity: .5
+    }
+    100% {
+        -moz-transform: rotate(0) scale(1) skew(1deg);
+        -moz-opacity: .1
+    }
+}
+
+@-ms-keyframes earthquake-outer {
+    0% {
+        -ms-transform: rotate(0) scale(.5) skew(1deg);
+        -ms-opacity: .1
+    }
+    30% {
+        -ms-transform: rotate(0) scale(.7) skew(1deg);
+        -ms-opacity: .5
+    }
+    100% {
+        -ms-transform: rotate(0) scale(1) skew(1deg);
+        -ms-opacity: .1
+    }
+}
+
+@-o-keyframes earthquake-outer {
+    0% {
+        -o-transform: rotate(0) scale(.5) skew(1deg);
+        -o-opacity: .1
+    }
+    30% {
+        -o-transform: rotate(0) scale(.7) skew(1deg);
+        -o-opacity: .5
+    }
+    100% {
+        -o-transform: rotate(0) scale(1) skew(1deg);
+        -o-opacity: .1
+    }
+}
+
+@keyframes earthquake-outer {
+    0% {
+        transform: rotate(0) scale(.5) skew(1deg);
+        opacity: .1
+    }
+    30% {
+        transform: rotate(0) scale(.7) skew(1deg);
+        opacity: .5
+    }
+    100% {
+        transform: rotate(0) scale(1) skew(1deg);
+        opacity: .1
+    }
+}
+
+@-webkit-keyframes earthquake {
+    0%, 100% {
+        -webkit-transform: rotate(0) scale(.7) skew(1deg);
+        -webkit-opacity: .2
+    }
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+        -webkit-opacity: .2
+    }
+}
+
+@-moz-keyframes earthquake {
+    0%, 100% {
+        -moz-transform: rotate(0) scale(.7) skew(1deg);
+        -moz-opacity: .2
+    }
+    50% {
+        -moz-transform: rotate(0) -moz-scale(1) skew(1deg);
+        -moz-opacity: .2
+    }
+}
+
+@-ms-keyframes earthquake {
+    0%, 100% {
+        -ms-transform: rotate(0) scale(.7) skew(1deg);
+        -ms-opacity: .2
+    }
+    50% {
+        -moz-transform: rotate(0) -moz-scale(1) skew(1deg);
+        -ms-opacity: .2
+    }
+}
+
+@-o-keyframes earthquake {
+    0%, 100% {
+        -o-transform: rotate(0) scale(.7) skew(1deg);
+        -o-opacity: .2
+    }
+    50% {
+        -o-transform: rotate(0) scale(1) skew(1deg);
+        -o-opacity: .2
+    }
+}
+
+@keyframes earthquake {
+    0%, 100% {
+        transform: rotate(0) scale(.7) skew(1deg);
+        opacity: .2
+    }
+    50% {
+        transform: rotate(0) scale(1) skew(1deg);
+        opacity: .2
+    }
+}

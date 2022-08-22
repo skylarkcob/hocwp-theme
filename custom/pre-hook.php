@@ -61,7 +61,7 @@ const HOCWP_THEME_OVERTIME = true;
  * You should take a short break every 25 minutes. You can increase this number to work more longer. Define this
  * number to zero to skip this function.
  */
-const HOCWP_THEME_BREAK_MINUTES = 25;
+const HOCWP_THEME_BREAK_MINUTES = 0;
 
 /*
  * Custom theme supports using for add_theme_support function. You can apply default site background color, default

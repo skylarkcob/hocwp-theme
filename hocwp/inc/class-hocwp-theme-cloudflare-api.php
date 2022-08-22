@@ -20,7 +20,7 @@ class HOCWP_Theme_Cloudflare_API {
 			'cloudflare',
 			'com/client/v4/'
 		) );
-		
+
 		$this->resource = $resource;
 
 		if ( is_array( $api_token ) ) {
