@@ -413,49 +413,64 @@ add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_
 function hocwp_theme_delete_cache_ajax_callback() {
 	$data = array();
 
-	$api_key    = $_POST['cloudflare_api_key'] ?? '';
-	$api_token  = $_POST['cloudflare_api_token'] ?? '';
-	$user_email = $_POST['cloudflare_user_email'] ?? '';
-	$account_id = $_POST['cloudflare_account_id'] ?? '';
-	$zone_id    = $_POST['cloudflare_zone_id'] ?? '';
-	$domain     = $_POST['cloudflare_domain'] ?? '';
+	if ( current_user_can( 'manage_options' ) ) {
+		$api_key    = $_REQUEST['cloudflare_api_key'] ?? '';
+		$api_token  = $_REQUEST['cloudflare_api_token'] ?? '';
+		$user_email = $_REQUEST['cloudflare_user_email'] ?? '';
+		$account_id = $_REQUEST['cloudflare_account_id'] ?? '';
+		$zone_id    = $_REQUEST['cloudflare_zone_id'] ?? '';
+		$domain     = $_REQUEST['cloudflare_domain'] ?? '';
 
-	if ( ! empty( $api_token ) || ! empty( $api_key ) ) {
-		if ( ! class_exists( 'HOCWP_Theme_Cloudflare_API' ) ) {
-			require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php';
-		}
+		$clear_pc = false;
 
-		$params = array(
-			'api_key'    => $api_key,
-			'api_token'  => $api_token,
-			'user_email' => $user_email,
-			'account_id' => $account_id,
-			'zone_id'    => $zone_id,
-			'domain'     => $domain
-		);
-
-		$api    = new HOCWP_Theme_Cloudflare_API( 'zones', $params );
-		$result = $api->purge_cache();
-
-		if ( is_wp_error( $result ) ) {
-			$data['message'] = $result->get_error_message();
-		} elseif ( $result->success ) {
-			$data['message'] = __( 'All cache files have been deleted successfully!', 'hocwp-theme' );
-
-			if ( defined( 'LSCWP_V' ) ) {
-				do_action( 'litespeed_purge_all' );
+		if ( ! empty( $api_token ) || ! empty( $api_key ) ) {
+			if ( ! class_exists( 'HOCWP_Theme_Cloudflare_API' ) ) {
+				require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php';
 			}
 
-			wp_send_json_success( $data );
-		}
-	} else {
-		$data['message'] = __( 'All cache files have been deleted successfully!', 'hocwp-theme' );
+			$params = array(
+				'api_key'    => $api_key,
+				'api_token'  => $api_token,
+				'user_email' => $user_email,
+				'account_id' => $account_id,
+				'zone_id'    => $zone_id,
+				'domain'     => $domain
+			);
 
-		if ( defined( 'LSCWP_V' ) ) {
-			do_action( 'litespeed_purge_all' );
+			$api    = new HOCWP_Theme_Cloudflare_API( 'zones', $params );
+			$result = $api->purge_cache();
+
+			if ( is_wp_error( $result ) ) {
+				$data['message'] = $result->get_error_message();
+			} elseif ( $result->success ) {
+				$clear_pc = true;
+			}
+		} else {
+			$clear_pc = true;
 		}
 
-		wp_send_json_success( $data );
+		if ( $clear_pc ) {
+			$domain = $_REQUEST['domain'] ?? '';
+
+			if ( empty( $domain ) || str_contains( home_url(), $domain ) ) {
+				$data['message'] = __( 'All cache files have been deleted successfully!', 'hocwp-theme' );
+
+				if ( defined( 'LSCWP_V' ) ) {
+					do_action( 'litespeed_purge_all' );
+				}
+
+				wp_send_json_success( $data );
+			} else {
+				$domain = esc_url( $domain );
+				$domain = add_query_arg( 'do_action', 'delete_cache', $domain );
+
+				$result = wp_remote_get( $domain );
+
+				if ( is_wp_error( $result ) ) {
+					$data['message'] = $result->get_error_message();
+				}
+			}
+		}
 	}
 
 	wp_send_json_error( $data );
