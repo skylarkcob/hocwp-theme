@@ -70,13 +70,6 @@ function hocwp_theme_close_session() {
 
 add_action( 'requests-curl.before_request', 'hocwp_theme_close_session' );
 
-// Backup all sidebar widgets
-function hocwp_theme_update_option_sidebars_widgets_action( $widgets ) {
-	update_option( 'hocwp_theme_widgets', $widgets );
-}
-
-add_action( 'update_option_sidebars_widgets', 'hocwp_theme_update_option_sidebars_widgets_action' );
-
 function hocwp_theme_after_switch_theme_action( $old_name, $old_theme ) {
 	if ( ! current_user_can( 'switch_themes' ) ) {
 		return;
@@ -87,6 +80,13 @@ function hocwp_theme_after_switch_theme_action( $old_name, $old_theme ) {
 }
 
 add_action( 'after_switch_theme', 'hocwp_theme_after_switch_theme_action', 10, 2 );
+
+// Backup all sidebar widgets
+function hocwp_theme_update_option_sidebars_widgets_action( $widgets ) {
+	update_option( 'hocwp_theme_widgets', $widgets );
+}
+
+add_action( 'update_option_sidebars_widgets', 'hocwp_theme_update_option_sidebars_widgets_action' );
 
 function hocwp_theme_restore_all_widgets() {
 	$widgets = get_option( 'hocwp_theme_widgets' );
