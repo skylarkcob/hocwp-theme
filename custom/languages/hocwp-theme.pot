@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-08-20 00:17+0700\n"
+"POT-Creation-Date: 2022-08-26 00:01+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Admin email has been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:611
+#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:618
 msgid "Change"
 msgstr ""
 
@@ -129,7 +129,7 @@ msgstr ""
 msgid "Cloudflare Domain"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:104 hocwp/admin/ajax.php:443 hocwp/admin/ajax.php:452
+#: hocwp/admin/admin-setting-page-administration-tools.php:104 hocwp/admin/ajax.php:456
 msgid "All cache files have been deleted successfully!"
 msgstr ""
 
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:118 hocwp/inc/setup-after.php:169 hocwp/inc/setup-after.php:205
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:125 hocwp/inc/setup-after.php:169 hocwp/inc/setup-after.php:205
 msgid "Extensions"
 msgstr ""
 
@@ -1019,99 +1019,99 @@ msgstr ""
 msgid "%s posts have been updated!"
 msgstr ""
 
-#: hocwp/admin/admin.php:121 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:128 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:124 hocwp/inc/setup-after.php:178 hocwp/inc/setup-after.php:214
+#: hocwp/admin/admin.php:131 hocwp/inc/setup-after.php:178 hocwp/inc/setup-after.php:214
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:126 hocwp/admin/views/admin-delete-posts.php:11
+#: hocwp/admin/admin.php:133 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:202 hocwp/admin/admin.php:213
+#: hocwp/admin/admin.php:209 hocwp/admin/admin.php:220
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:206
+#: hocwp/admin/admin.php:213
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:217
+#: hocwp/admin/admin.php:224
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:224
+#: hocwp/admin/admin.php:231
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:228
+#: hocwp/admin/admin.php:235
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:310
+#: hocwp/admin/admin.php:317
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:352 hocwp/inc/template-post.php:344
+#: hocwp/admin/admin.php:359 hocwp/inc/template-post.php:344
 msgid "Related posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:390
+#: hocwp/admin/admin.php:397
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:413 hocwp/admin/admin.php:612 hocwp/inc/template-general.php:1127
+#: hocwp/admin/admin.php:420 hocwp/admin/admin.php:619 hocwp/inc/template-general.php:1127
 msgid "Close"
 msgstr ""
 
-#: hocwp/admin/admin.php:437
+#: hocwp/admin/admin.php:444
 #, php-format
 msgid "Template %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:448 hocwp/admin/admin.php:532
+#: hocwp/admin/admin.php:455 hocwp/admin/admin.php:539
 msgid "Change status"
 msgstr ""
 
-#: hocwp/admin/admin.php:449
+#: hocwp/admin/admin.php:456
 msgid "Change category"
 msgstr ""
 
-#: hocwp/admin/admin.php:450
+#: hocwp/admin/admin.php:457
 msgid "Change post type"
 msgstr ""
 
-#: hocwp/admin/admin.php:534
+#: hocwp/admin/admin.php:541
 msgid "Close this box"
 msgstr ""
 
-#: hocwp/admin/admin.php:544
+#: hocwp/admin/admin.php:551
 msgid "Post status:"
 msgstr ""
 
-#: hocwp/admin/admin.php:546
+#: hocwp/admin/admin.php:553
 msgid "Choose post status"
 msgstr ""
 
-#: hocwp/admin/admin.php:575 hocwp/inc/class-hocwp-theme-html-field.php:776 hocwp/inc/class-hocwp-theme-html-field.php:818
+#: hocwp/admin/admin.php:582 hocwp/inc/class-hocwp-theme-html-field.php:776 hocwp/inc/class-hocwp-theme-html-field.php:818
 #: hocwp/inc/class-hocwp-theme-html-field.php:1871 hocwp/inc/functions-scripts.php:394
 #, php-format
 msgid "Choose %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:588 hocwp/widgets/class-hocwp-theme-widget-posts.php:527
+#: hocwp/admin/admin.php:595 hocwp/widgets/class-hocwp-theme-widget-posts.php:527
 msgid "Post type:"
 msgstr ""
 
-#: hocwp/admin/admin.php:590 hocwp/admin/views/admin-delete-posts.php:111
+#: hocwp/admin/admin.php:597 hocwp/admin/views/admin-delete-posts.php:111
 msgid "Choose post type"
 msgstr ""
 
@@ -1135,28 +1135,28 @@ msgstr ""
 msgid "Backup done!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:646
+#: hocwp/admin/ajax.php:661
 msgid "Invalid email."
 msgstr ""
 
-#: hocwp/admin/ajax.php:673
+#: hocwp/admin/ajax.php:688
 #, php-format
 msgid "[%s] Testing email"
 msgstr ""
 
-#: hocwp/admin/ajax.php:674
+#: hocwp/admin/ajax.php:689
 msgid "This is a testing email. If you see this message, it means your email setting works normally."
 msgstr ""
 
-#: hocwp/admin/ajax.php:680
+#: hocwp/admin/ajax.php:695
 msgid "The mailing system is not working!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:683
+#: hocwp/admin/ajax.php:698
 msgid "Invalid email address!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:699
+#: hocwp/admin/ajax.php:714
 msgid "Invalid option name or empty option value."
 msgstr ""
 
@@ -1431,7 +1431,7 @@ msgstr ""
 msgid "%1$sThis was reported by %2$s.%3$s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta-bookmark.php:22 hocwp/admin/class-hocwp-theme-meta-post.php:21 hocwp/admin/meta.php:27
+#: hocwp/admin/class-hocwp-theme-meta-bookmark.php:22 hocwp/admin/class-hocwp-theme-meta-post.php:22 hocwp/admin/meta.php:27
 msgid "Extra Information"
 msgstr ""
 
@@ -1455,15 +1455,15 @@ msgstr ""
 msgid "Add to Menu"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:200
+#: hocwp/admin/class-hocwp-theme-meta.php:197
 msgid "Please set get_value_callback."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:329
+#: hocwp/admin/class-hocwp-theme-meta.php:326
 msgid "Please set update_value_callback."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:445
+#: hocwp/admin/class-hocwp-theme-meta.php:442
 msgid "You must call this class in callback of <strong>load-{$pagenow}</strong> action."
 msgstr ""
 
@@ -1996,7 +1996,7 @@ msgstr ""
 msgid "Every %d Minutes"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:54
+#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:60
 msgid "Missing API Token or API Key!"
 msgstr ""
 

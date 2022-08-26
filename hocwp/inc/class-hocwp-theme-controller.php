@@ -37,7 +37,7 @@ final class HOCWP_Theme_Controller {
 
 	public function __construct() {
 		if ( self::$instance ) {
-			_doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
+			HT_Util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
 
 			return;
 		}

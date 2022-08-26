@@ -53,17 +53,20 @@ add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
 
-$post_meta = ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'edit.php' == $pagenow );
+$attachment_meta = ( 'post.php' == $pagenow || 'upload.php' == $pagenow || 'admin-ajax.php' );
+
+$post_meta = ( 'post-new.php' == $pagenow || 'edit.php' == $pagenow || $attachment_meta );
 $term_meta = ( 'term.php' == $pagenow || 'edit-tags.php' == $pagenow );
 $link_meta = ( 'link.php' == $pagenow || 'link-add.php' == $pagenow );
 $menu_meta = ( 'nav-menus.php' == $pagenow || 'admin-ajax.php' == $pagenow );
 
-if ( $post_meta || $term_meta || $link_meta || $menu_meta ) {
+
+if ( $post_meta || $term_meta || $link_meta || $menu_meta || $attachment_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php';
 }
 
-if ( $post_meta ) {
+if ( $post_meta || $attachment_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-post.php';
 }
 
@@ -77,6 +80,10 @@ if ( $term_meta ) {
 
 if ( $menu_meta ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-menu.php';
+}
+
+if ( $attachment_meta ) {
+	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-attachment.php';
 }
 
 require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php';
@@ -164,7 +171,7 @@ function hocwp_theme_admin_init_action() {
 	global $pagenow;
 
 	if ( 'post.php' == $pagenow ) {
-		$post_id = isset( $_GET['post'] ) ? $_GET['post'] : '';
+		$post_id = $_GET['post'] ?? '';
 
 		if ( HT()->is_positive_number( $post_id ) ) {
 			$obj = get_post( $post_id );
@@ -386,7 +393,7 @@ function hocwp_theme_admin_footer_action() {
             // Backup current theme and database.
             (function () {
                 $(document).keydown(function (e) {
-                    if (e.ctrlKey && e.keyCode == 66) {
+                    if (e.ctrlKey && e.keyCode === 66) {
                         console.log("<?php _e( 'Running backup...', 'hocwp-theme' ); ?>");
 
                         setTimeout(function () {

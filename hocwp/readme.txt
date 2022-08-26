@@ -2,6 +2,8 @@
 = 6.9.7 =
 * 19/08/2022: Add utilities to delete site cache and Cloudflare cache.
 * 21/08/2022: Define spinner and some CSS animations.
+* 26/08/2022: Add class meta attachment.
+* 26/08/2022: Add function util doing it wrong, now only call after wp_loaded action to use translated language.
 
 = 6.9.6 =
 * 13/06/2022: Add function convert date time to countdown.

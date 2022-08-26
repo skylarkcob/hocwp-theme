@@ -10,13 +10,18 @@ abstract class HOCWP_Theme_Meta {
 	protected $styles;
 	protected $scripts;
 
+	protected $check_call_action = 'admin_init';
+
 	protected $get_value_callback;
 	protected $update_value_callback;
 
 	public $single_value = true;
 
 	public function __construct() {
-		$this->doing_it_wrong();
+		if ( ! empty( $this->check_call_action ) && ! did_action( $this->check_call_action ) ) {
+			$this->doing_it_wrong();
+		}
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 20 );
 	}
 
@@ -134,11 +139,11 @@ abstract class HOCWP_Theme_Meta {
 				break;
 		}
 
-		$id   = isset( $field['id'] ) ? $field['id'] : '';
-		$name = isset( $field['name'] ) ? $field['name'] : '';
+		$id   = $field['id'] ?? '';
+		$name = $field['name'] ?? '';
 		HT()->transmit( $id, $name );
-		$title = isset( $field['title'] ) ? $field['title'] : '';
-		$label = isset( $field['label'] ) ? $field['label'] : '';
+		$title = $field['title'] ?? '';
+		$label = $field['label'] ?? '';
 		HT()->transmit( $title, $label );
 		$field['callback_args']['id']    = $id;
 		$field['callback_args']['name']  = $name;
@@ -150,12 +155,10 @@ abstract class HOCWP_Theme_Meta {
 	protected function sanitize_data( $field ) {
 		$id = $this->get_name( $field, true );
 
-		$value = isset( $_POST[ $id ] ) ? $_POST[ $id ] : '';
+		$value = $_POST[ $id ] ?? '';
 		$type  = $field['type'];
 
-		$value = HT_Sanitize()->data( $value, $type );
-
-		return $value;
+		return HT_Sanitize()->data( $value, $type );
 	}
 
 	public function get_base_name( $name ) {
@@ -169,10 +172,10 @@ abstract class HOCWP_Theme_Meta {
 
 	public function get_name( $field, $base = false ) {
 		$id   = $field['id'];
-		$name = isset( $field['name'] ) ? $field['name'] : '';
+		$name = $field['name'] ?? '';
 
 		if ( empty( $name ) ) {
-			$name = isset( $field['callback_args']['name'] ) ? $field['callback_args']['name'] : '';
+			$name = $field['callback_args']['name'] ?? '';
 		}
 
 		HT()->transmit( $id, $name );
@@ -187,17 +190,16 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	public function get_field_id( $field ) {
-		$id = isset( $field['id'] ) ? $field['id'] : $this->get_name( $field );
+		$id = $field['id'] ?? $this->get_name( $field );
 		$id = str_replace( '[', '-', $id );
-		$id = str_replace( ']', '-', $id );
 
-		return $id;
+		return str_replace( ']', '-', $id );
 	}
 
 	protected function sanitize_value( $obj_id, $field ) {
 		if ( ! isset( $field['callback_args']['value'] ) ) {
 			if ( ! is_callable( $this->get_value_callback ) ) {
-				_doing_it_wrong( __FUNCTION__, __( 'Please set get_value_callback.', 'hocwp-theme' ), '6.3.2' );
+				HT_Util()->doing_it_wrong( __FUNCTION__, __( 'Please set get_value_callback.', 'hocwp-theme' ), '6.3.2' );
 
 				return $field;
 			}
@@ -263,7 +265,7 @@ abstract class HOCWP_Theme_Meta {
 			$type = $field['type'];
 
 			if ( 'timestamp' == $type ) {
-				$format = isset( $field['callback_args']['data-date-format'] ) ? $field['callback_args']['data-date-format'] : '';
+				$format = $field['callback_args']['data-date-format'] ?? '';
 
 				if ( empty( $format ) ) {
 					global $hocwp_theme;
@@ -305,11 +307,11 @@ abstract class HOCWP_Theme_Meta {
 
 		if ( is_array( $field ) ) {
 			if ( isset( $field['callback'][1] ) && 'input' == $field['callback'][1] ) {
-				$input_type = isset( $field['callback_args']['type'] ) ? $field['callback_args']['type'] : '';
+				$input_type = $field['callback_args']['type'] ?? '';
 
 				if ( 'checkbox' == $input_type ) {
 					if ( $check_multi ) {
-						$options = isset( $field['callback_args']['options'] ) ? $field['callback_args']['options'] : '';
+						$options = $field['callback_args']['options'] ?? '';
 
 						if ( HT()->array_has_value( $options ) ) {
 							$checkbox = true;
@@ -326,7 +328,7 @@ abstract class HOCWP_Theme_Meta {
 
 	protected function save( $obj_id ) {
 		if ( ! is_callable( $this->update_value_callback ) ) {
-			_doing_it_wrong( __FUNCTION__, __( 'Please set update_value_callback.', 'hocwp-theme' ), '6.3.2' );
+			HT_Util()->doing_it_wrong( __FUNCTION__, __( 'Please set update_value_callback.', 'hocwp-theme' ), '6.3.2' );
 
 			return;
 		}
@@ -441,9 +443,7 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	public function doing_it_wrong() {
-		if ( ! did_action( 'admin_init' ) ) {
-			$msg = __( 'You must call this class in callback of <strong>load-{$pagenow}</strong> action.', 'hocwp-theme' );
-			_doing_it_wrong( __CLASS__, $msg, '4.8.1' );
-		}
+		$msg = __( 'You must call this class in callback of <strong>load-{$pagenow}</strong> action.', 'hocwp-theme' );
+		HT_Util()->doing_it_wrong( __CLASS__, $msg, '4.8.1' );
 	}
 }

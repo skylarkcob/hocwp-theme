@@ -25,7 +25,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 
 	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10 ) {
 		if ( empty( $name ) ) {
-			_doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
+			HT_Util()->doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
 		}
 
 		if ( empty( $icon ) ) {

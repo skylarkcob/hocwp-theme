@@ -45,3 +45,12 @@ function hocwp_theme_custom_menu_meta() {
 
 add_action( 'load-nav-menus.php', 'hocwp_theme_custom_menu_meta' );
 add_action( 'load-admin-ajax.php', 'hocwp_theme_custom_menu_meta' );
+
+/**
+ * Add meta fields to media file edit.
+ */
+function hocwp_theme_custom_attachment_meta() {
+	
+}
+
+add_action( 'admin_init', 'hocwp_theme_custom_attachment_meta' );

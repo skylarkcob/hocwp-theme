@@ -2267,7 +2267,7 @@ class HOCWP_Theme_Utility {
 
 	public function create_database_table( $table_name, $sql_column ) {
 		if ( str_contains( $sql_column, 'CREATE TABLE' ) || str_contains( $sql_column, 'create table' ) ) {
-			_doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );
+			HT_Util()->doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );
 
 			return;
 		}
@@ -2530,6 +2530,18 @@ class HOCWP_Theme_Utility {
 		}
 
 		return trim( $style );
+	}
+
+	public function doing_it_wrong( $function, $message, $version ) {
+		if ( is_admin() ) {
+			add_action( 'admin_menu', function () use ( $function, $message, $version ) {
+				_doing_it_wrong( $function, $message, $version );
+			} );
+		} else {
+			add_action( 'wp', function () use ( $function, $message, $version ) {
+				_doing_it_wrong( $function, $message, $version );
+			} );
+		}
 	}
 
 	/*

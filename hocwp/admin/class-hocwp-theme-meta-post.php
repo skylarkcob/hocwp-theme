@@ -9,13 +9,14 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	private $title;
 	private $context;
 	private $priority; // The priority within the context where the box should show. Accepts 'high', 'core', 'default', or 'low'.
+	protected $allow_pagenow = array( 'post.php', 'post-new.php', 'edit.php' );
 
 	public $form_table = false;
 
 	public function __construct() {
 		global $pagenow;
 
-		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow || 'edit.php' == $pagenow ) {
+		if ( empty( $this->allow_pagenow ) || in_array( $pagenow, $this->allow_pagenow ) ) {
 			parent::__construct();
 			$this->set_id( 'extra-information' );
 			$this->set_title( __( 'Extra Information', 'hocwp-theme' ) );
@@ -25,7 +26,15 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			$this->set_get_value_callback( 'get_post_meta' );
 			$this->set_update_value_callback( 'update_post_meta' );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_action' ) );
-			add_action( 'save_post', array( $this, 'save_post_action' ) );
+
+			$pt = HT_Admin()->get_current_post_type();
+
+			if ( 'attachment' == $pt ) {
+				add_action( 'edit_attachment', array( $this, 'save_post_action' ) );
+			} else {
+				add_action( 'save_post', array( $this, 'save_post_action' ) );
+			}
+
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 20 );
 		}
 

@@ -40,7 +40,7 @@ class HOCWP_Theme_Extension {
 
 			$this->description = $this->data['Description'];
 		} else {
-			_doing_it_wrong( __CLASS__, __( 'Please declare extension with Name and Description in header.', 'hocwp-theme' ), '6.4.2' );
+			HT_Util()->doing_it_wrong( __CLASS__, __( 'Please declare extension with Name and Description in header.', 'hocwp-theme' ), '6.4.2' );
 
 			return;
 		}
@@ -191,7 +191,7 @@ class HOCWP_Theme_Extension_Controller {
 
 	public function __construct() {
 		if ( self::$instance ) {
-			_doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
+			HT_Util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
 
 			return;
 		}
