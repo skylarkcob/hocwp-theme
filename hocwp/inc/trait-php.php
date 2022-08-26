@@ -4,6 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 trait HOCWP_Theme_PHP {
+	public $same_value_atts = array( 'required', 'readonly', 'disabled', 'multiple' );
+
 	public function get_user_agent() {
 		return $_SERVER['HTTP_USER_AGENT'] ?? '';
 	}

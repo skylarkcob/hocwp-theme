@@ -635,6 +635,17 @@
     margin-top: 20px;
 }
 
+.compat-item .form-required .label span {
+    display: inline-block;
+    width: auto;
+    float: none;
+}
+
+.compat-item .form-required .label span + .required {
+    margin-left: 4px;
+    color: #b32d2e;
+}
+
 .hocwp-theme .lat-long label {
     display: block;
 }

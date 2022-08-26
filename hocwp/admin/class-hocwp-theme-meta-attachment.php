@@ -108,6 +108,12 @@ class HOCWP_Theme_Meta_Attachment extends HOCWP_Theme_Meta_Post {
 			return;
 		}
 
+		$id   = $field['id'] ?? '';
+		$name = $field['name'] ?? '';
+		HT()->transmit( $id, $name );
+
+		$field['callback_args']['id'] = 'attachments-' . $attachment->ID . '-' . HT_Sanitize()->html_id( $id );
+
 		if ( empty( $field['value'] ) ) {
 			if ( $attachment instanceof WP_Post ) {
 				$name = $this->get_field_name( $field );

@@ -174,6 +174,10 @@ final class HOCWP_Theme_HTML_Tag {
 		}
 
 		foreach ( (array) $this->attributes as $key => $value ) {
+			if ( in_array( $key, HT()->same_value_atts ) ) {
+				$value = $key;
+			}
+
 			$result .= sprintf( ' %1$s="%2$s"', $key, trim( esc_attr( maybe_serialize( $value ) ) ) );
 		}
 

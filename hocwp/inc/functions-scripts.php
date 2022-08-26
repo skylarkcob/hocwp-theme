@@ -307,7 +307,7 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		$load = ( class_exists( 'Mega_Menu' ) && 'nav-menus.php' == $pagenow );
 	}
 
-	if ( $load || 'index.php' == $pagenow ) {
+	if ( $load || 'index.php' == $pagenow || 'upload.php' == $pagenow ) {
 		wp_enqueue_style( 'hocwp-theme-admin-style' );
 	}
 
