@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-08-26 00:01+0700\n"
+"POT-Creation-Date: 2022-08-27 01:10+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -65,207 +65,221 @@ msgstr ""
 msgid "Send Test Email"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:51 hocwp/admin/admin-setting-page-administration-tools.php:66
+#: hocwp/admin/admin-setting-page-administration-tools.php:48
+msgid "New admin user and email has been changed successfully!"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:49
+msgid ""
+"A new admin account will be created to replace the old one, and the site's admin email address will be updated. Please make a backup before doing "
+"this."
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:51 hocwp/admin/admin-setting-page-administration-tools.php:55
+msgid "Create New Admin"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:63 hocwp/admin/admin-setting-page-administration-tools.php:78
 msgid "Change URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:52
+#: hocwp/admin/admin-setting-page-administration-tools.php:64
 msgid "Change all old URLs in database into new URL."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:57
+#: hocwp/admin/admin-setting-page-administration-tools.php:69
 msgid "Old URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:58
+#: hocwp/admin/admin-setting-page-administration-tools.php:70
 msgid "New URL"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:63
+#: hocwp/admin/admin-setting-page-administration-tools.php:75
 msgid "All URLs have been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:64
+#: hocwp/admin/admin-setting-page-administration-tools.php:76
 msgid "Please make a backup before you change site URL."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:74
+#: hocwp/admin/admin-setting-page-administration-tools.php:86
 msgid "Delete Cache"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:75
+#: hocwp/admin/admin-setting-page-administration-tools.php:87
 msgid "You need to delete site cache and CDN cache to see update."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:82
+#: hocwp/admin/admin-setting-page-administration-tools.php:94
 msgid "If you enter a API Token, you do not need to provide your API Key and email address below."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:85
+#: hocwp/admin/admin-setting-page-administration-tools.php:97
 msgid "Cloudflare API Token"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:87
+#: hocwp/admin/admin-setting-page-administration-tools.php:99
 msgid "If you are not using API Token then you must provide API Key and email address."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:89
+#: hocwp/admin/admin-setting-page-administration-tools.php:101
 msgid "Cloudflare API Key"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:93
+#: hocwp/admin/admin-setting-page-administration-tools.php:105
 msgid "Cloudflare User Email"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:97
+#: hocwp/admin/admin-setting-page-administration-tools.php:109
 msgid "Cloudflare Account ID"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:98
+#: hocwp/admin/admin-setting-page-administration-tools.php:110
 msgid "Cloudflare Zone ID"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:99
+#: hocwp/admin/admin-setting-page-administration-tools.php:111
 msgid "Cloudflare Domain"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:104 hocwp/admin/ajax.php:456
+#: hocwp/admin/admin-setting-page-administration-tools.php:116 hocwp/admin/ajax-administration-tools.php:231
 msgid "All cache files have been deleted successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:106 hocwp/admin/admin-setting-page-administration-tools.php:109
-#: hocwp/admin/admin-setting-page-administration-tools.php:263 hocwp/admin/admin-setting-page-administration-tools.php:266
+#: hocwp/admin/admin-setting-page-administration-tools.php:118 hocwp/admin/admin-setting-page-administration-tools.php:121
+#: hocwp/admin/admin-setting-page-administration-tools.php:275 hocwp/admin/admin-setting-page-administration-tools.php:278
 #: hocwp/admin/views/admin-delete-posts.php:147
 msgid "Delete"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:115
+#: hocwp/admin/admin-setting-page-administration-tools.php:127
 msgid "Import & Export"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:116
+#: hocwp/admin/admin-setting-page-administration-tools.php:128
 msgid "Import and export theme settings or any options in database."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:128
+#: hocwp/admin/admin-setting-page-administration-tools.php:140
 msgid "Copy the setting value and fill in the data entry box to import into the database when needed."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:131 hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
+#: hocwp/admin/admin-setting-page-administration-tools.php:143 hocwp/admin/class-hocwp-theme-admin-setting-page.php:721
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:743 hocwp/inc/setup-after.php:160
 msgid "Theme Settings"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:137 hocwp/admin/admin-setting-page-administration-tools.php:184
+#: hocwp/admin/admin-setting-page-administration-tools.php:149 hocwp/admin/admin-setting-page-administration-tools.php:196
 msgid "Option name:"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:148
+#: hocwp/admin/admin-setting-page-administration-tools.php:160
 msgid "Please enter option name to fetch value."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:149
+#: hocwp/admin/admin-setting-page-administration-tools.php:161
 msgid "Data has been fetched!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:150 hocwp/admin/admin-setting-page-administration-tools.php:164
-#: hocwp/admin/admin-setting-page-administration-tools.php:203 hocwp/admin/admin-setting-page-administration-tools.php:218
-#: hocwp/admin/admin-setting-page-administration-tools.php:261
+#: hocwp/admin/admin-setting-page-administration-tools.php:162 hocwp/admin/admin-setting-page-administration-tools.php:176
+#: hocwp/admin/admin-setting-page-administration-tools.php:215 hocwp/admin/admin-setting-page-administration-tools.php:230
+#: hocwp/admin/admin-setting-page-administration-tools.php:273
 msgid "Please make a backup before you do this action."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:152 hocwp/admin/admin-setting-page-administration-tools.php:155
+#: hocwp/admin/admin-setting-page-administration-tools.php:164 hocwp/admin/admin-setting-page-administration-tools.php:167
 msgid "Fetch"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:163
+#: hocwp/admin/admin-setting-page-administration-tools.php:175
 msgid "Settings have been exported!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:166 hocwp/admin/admin-setting-page-administration-tools.php:169
-#: hocwp/admin/admin-setting-page-administration-tools.php:178
+#: hocwp/admin/admin-setting-page-administration-tools.php:178 hocwp/admin/admin-setting-page-administration-tools.php:181
+#: hocwp/admin/admin-setting-page-administration-tools.php:190
 msgid "Export"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:188
+#: hocwp/admin/admin-setting-page-administration-tools.php:200
 msgid "Option value:"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:202
+#: hocwp/admin/admin-setting-page-administration-tools.php:214
 msgid "Settings have been loaded!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:205
+#: hocwp/admin/admin-setting-page-administration-tools.php:217
 msgid "Load Settings"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:209
+#: hocwp/admin/admin-setting-page-administration-tools.php:221
 msgid "Load settings"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:217
+#: hocwp/admin/admin-setting-page-administration-tools.php:229
 msgid "Settings have been imported!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:220 hocwp/admin/admin-setting-page-administration-tools.php:223
-#: hocwp/admin/admin-setting-page-administration-tools.php:242 hocwp/admin/admin-setting-page-administration-tools.php:315
-#: hocwp/admin/admin-setting-page-administration-tools.php:318
+#: hocwp/admin/admin-setting-page-administration-tools.php:232 hocwp/admin/admin-setting-page-administration-tools.php:235
+#: hocwp/admin/admin-setting-page-administration-tools.php:254 hocwp/admin/admin-setting-page-administration-tools.php:327
+#: hocwp/admin/admin-setting-page-administration-tools.php:330
 msgid "Import"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:245
+#: hocwp/admin/admin-setting-page-administration-tools.php:257
 msgid "Database Optimize"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:246
+#: hocwp/admin/admin-setting-page-administration-tools.php:258
 msgid "Update database, remove transients and more."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:252
+#: hocwp/admin/admin-setting-page-administration-tools.php:264
 msgid "Enter the transient name you want to delete, all transients will be deleted if this field is empty."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:255
+#: hocwp/admin/admin-setting-page-administration-tools.php:267
 msgid "Remove Transients"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:260
+#: hocwp/admin/admin-setting-page-administration-tools.php:272
 msgid "Transients have been removed!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:272
+#: hocwp/admin/admin-setting-page-administration-tools.php:284
 msgid "Vietnamese Administrative Boundaries"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:273
+#: hocwp/admin/admin-setting-page-administration-tools.php:285
 msgid "Import information about Vietnamese administrative boundaries into the database automatically."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:280
+#: hocwp/admin/admin-setting-page-administration-tools.php:292
 msgid "Import the administrative boundary at the district level?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:283
+#: hocwp/admin/admin-setting-page-administration-tools.php:295
 msgid "District"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:287
+#: hocwp/admin/admin-setting-page-administration-tools.php:299
 msgid "Import the administrative boundary at the commune level?"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:290
+#: hocwp/admin/admin-setting-page-administration-tools.php:302
 msgid "Commune"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:295
+#: hocwp/admin/admin-setting-page-administration-tools.php:307
 msgid "Choose taxonomy"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:308
+#: hocwp/admin/admin-setting-page-administration-tools.php:320
 msgid "Taxonomy"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:313
+#: hocwp/admin/admin-setting-page-administration-tools.php:325
 msgid "Data has been imported successfully!"
 msgstr ""
 
@@ -1115,49 +1129,54 @@ msgstr ""
 msgid "Choose post type"
 msgstr ""
 
-#: hocwp/admin/ajax.php:47
-msgid "AJAX nonce is invalid."
-msgstr ""
-
-#: hocwp/admin/ajax.php:62
-msgid "AJAX has been done successfully!"
-msgstr ""
-
-#: hocwp/admin/ajax.php:66
-msgid "Invalid AJAX callback."
-msgstr ""
-
-#: hocwp/admin/ajax.php:356
-msgid "Backup failed."
-msgstr ""
-
-#: hocwp/admin/ajax.php:363
-msgid "Backup done!"
-msgstr ""
-
-#: hocwp/admin/ajax.php:661
+#: hocwp/admin/ajax-administration-tools.php:10
 msgid "Invalid email."
 msgstr ""
 
-#: hocwp/admin/ajax.php:688
+#: hocwp/admin/ajax-administration-tools.php:34
+#, php-format
+msgid "Your new password: %s"
+msgstr ""
+
+#: hocwp/admin/ajax-administration-tools.php:92
 #, php-format
 msgid "[%s] Testing email"
 msgstr ""
 
-#: hocwp/admin/ajax.php:689
+#: hocwp/admin/ajax-administration-tools.php:93
 msgid "This is a testing email. If you see this message, it means your email setting works normally."
 msgstr ""
 
-#: hocwp/admin/ajax.php:695
+#: hocwp/admin/ajax-administration-tools.php:99
 msgid "The mailing system is not working!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:698
+#: hocwp/admin/ajax-administration-tools.php:102
 msgid "Invalid email address!"
 msgstr ""
 
-#: hocwp/admin/ajax.php:714
+#: hocwp/admin/ajax-administration-tools.php:118
 msgid "Invalid option name or empty option value."
+msgstr ""
+
+#: hocwp/admin/ajax.php:44
+msgid "AJAX nonce is invalid."
+msgstr ""
+
+#: hocwp/admin/ajax.php:59
+msgid "AJAX has been done successfully!"
+msgstr ""
+
+#: hocwp/admin/ajax.php:63
+msgid "Invalid AJAX callback."
+msgstr ""
+
+#: hocwp/admin/ajax.php:353
+msgid "Backup failed."
+msgstr ""
+
+#: hocwp/admin/ajax.php:360
+msgid "Backup done!"
 msgstr ""
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:21
@@ -1455,15 +1474,15 @@ msgstr ""
 msgid "Add to Menu"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:197
+#: hocwp/admin/class-hocwp-theme-meta.php:202
 msgid "Please set get_value_callback."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:326
+#: hocwp/admin/class-hocwp-theme-meta.php:331
 msgid "Please set update_value_callback."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:442
+#: hocwp/admin/class-hocwp-theme-meta.php:446
 msgid "You must call this class in callback of <strong>load-{$pagenow}</strong> action."
 msgstr ""
 

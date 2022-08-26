@@ -55,36 +55,48 @@ jQuery(document).ready(function ($) {
                 element.removeClass("disabled");
                 element.blur();
             } else {
-                _hocwp_theme_update_button_waiting_text(element);
+                if (confirm(element.attr("data-confirm-message"))) {
+                    _hocwp_theme_update_button_waiting_text(element);
 
-                $.ajax({
-                    type: "POST",
-                    dataType: "JSON",
-                    url: hocwpTheme.ajaxUrl,
-                    cache: true,
-                    data: {
-                        action: "hocwp_theme_change_administrative_email",
-                        email: newEmail.val()
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            alert(element.attr("data-message"));
-                            newEmail.val("");
-                            element.blur();
-                        } else if (response.data && response.data.message && $.trim(response.data.message)) {
-                            alert(response.data.message);
+                    $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        url: hocwpTheme.ajaxUrl,
+                        cache: true,
+                        data: {
+                            action: "hocwp_theme_change_administrative_email",
+                            email: newEmail.val(),
+                            do_action: element.attr("name")
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                if (response.data && response.data.new_password && $.trim(response.data.new_password)) {
+                                    alert(element.attr("data-message") + " " + response.data.new_password);
+                                    newEmail.val(response.data.new_password);
+                                } else {
+                                    alert(element.attr("data-message"));
+                                    newEmail.val("");
+                                }
+
+                                element.blur();
+                            } else if (response.data && response.data.message && $.trim(response.data.message)) {
+                                alert(response.data.message);
+                            }
+
+                            _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                        },
+                        complete: function (response) {
+                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            _hocwp_theme_update_button_waiting_text(element, "FALSE");
+                        },
+                        error: function (jqXHR, exception) {
+                            alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
                         }
-
-                        _hocwp_theme_update_button_waiting_text(element, "FALSE");
-                    },
-                    complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
-                        _hocwp_theme_update_button_waiting_text(element, "FALSE");
-                    },
-                    error: function (jqXHR, exception) {
-                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
-                    }
-                });
+                    });
+                } else {
+                    element.removeClass("disabled");
+                    element.blur();
+                }
             }
         });
     })();

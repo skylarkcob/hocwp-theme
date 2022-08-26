@@ -41,6 +41,18 @@ $args = array(
 			),
 			'button_type' => 'button',
 			'text'        => __( 'Send Test Email', 'hocwp-theme' )
+		),
+		'create_new_admin'   => array(
+			'attributes'  => array(
+				'data-ajax-button'     => 1,
+				'data-message'         => __( 'New admin user and email has been changed successfully!', 'hocwp-theme' ),
+				'data-confirm-message' => __( 'A new admin account will be created to replace the old one, and the site\'s admin email address will be updated. Please make a backup before doing this.', 'hocwp-theme' ),
+				'data-change-email'    => 1,
+				'aria-label'           => __( 'Create New Admin', 'hocwp-theme' ),
+				'type'                 => 'button'
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Create New Admin', 'hocwp-theme' )
 		)
 	)
 );
