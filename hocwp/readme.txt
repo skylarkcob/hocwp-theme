@@ -5,6 +5,7 @@
 * 26/08/2022: Add class meta attachment.
 * 26/08/2022: Add function util doing it wrong, now only call after wp_loaded action to use translated language.
 * 27/08/2022: Add administration tool to create new user admin, change first admin to subscriber role and update site admin email.
+* 27/08/2022: Supports pagination for custom array instead of using WP_Query only.
 
 = 6.9.6 =
 * 13/06/2022: Add function convert date time to countdown.
