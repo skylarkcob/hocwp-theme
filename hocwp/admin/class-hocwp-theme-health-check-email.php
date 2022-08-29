@@ -10,7 +10,7 @@ class HOCWP_Theme_Health_Check_Email extends HOCWP_Theme_Health_Check {
 	 *
 	 * @var string
 	 */
-	protected $test = 'hocwp-theme-health-check-email';
+	protected $test = 'email';
 
 	/**
 	 * Runs the test.

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-08-27 01:10+0700\n"
+"POT-Creation-Date: 2022-08-29 10:38+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -609,7 +609,7 @@ msgstr ""
 msgid "Mobile Logo"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-home.php:6 hocwp/inc/class-hocwp-theme-frontend.php:931 hocwp/inc/class-hocwp-theme-frontend.php:933
+#: hocwp/admin/admin-setting-page-home.php:6 hocwp/inc/class-hocwp-theme-frontend.php:938 hocwp/inc/class-hocwp-theme-frontend.php:940
 msgid "Home"
 msgstr ""
 
@@ -1441,11 +1441,58 @@ msgstr ""
 msgid "%1$sYou can change the admin email address in the site general setting page.%2$s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-health-check.php:168
+#: hocwp/admin/class-hocwp-theme-health-check-password.php:18
+msgid "Weak password not found"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-password.php:21
+msgid "All admin accounts seem to use strong passwords."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-password.php:26
+msgid "Weak password found"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-password.php:30
+msgid "One of the administrator accounts is using a weak password, try to replace all user passwords with strong passwords."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-password.php:33
+#, php-format
+msgid "<p>Manage <a href=\"%s\">all administrator accounts</a> here.</p>"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-user.php:18
+msgid "The default admin account has been changed"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-user.php:21
+msgid ""
+"The default admin account contains developer information, simple passwords that are easy to remember, which can make your site accessible and "
+"unauthorized use."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-user.php:26
+msgid "You should change the default admin user"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-user.php:30
+msgid ""
+"You are still using the default admin account. Let's create another admin account and decentralize this default admin account to a read-only group."
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check-user.php:33
+#, php-format
+msgid ""
+"<p>You can <a href=\"%s\">create new administrator user</a> account, or go to the <a href=\"%s\">administrator tools page</a> of the theme, enter "
+"the email address and click create a new admin account.</p>"
+msgstr ""
+
+#: hocwp/admin/class-hocwp-theme-health-check.php:169
 msgid "Theme"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-health-check.php:201
+#: hocwp/admin/class-hocwp-theme-health-check.php:206
 #, php-format
 msgid "%1$sThis was reported by %2$s.%3$s"
 msgstr ""
@@ -2118,183 +2165,183 @@ msgstr ""
 msgid "Extension %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:437
+#: hocwp/inc/class-hocwp-theme-frontend.php:444
 msgid "Page navigation"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:444
+#: hocwp/inc/class-hocwp-theme-frontend.php:451
 msgid "Posts navigation"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:480
+#: hocwp/inc/class-hocwp-theme-frontend.php:487
 msgid "First"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:515
+#: hocwp/inc/class-hocwp-theme-frontend.php:522
 msgid "Last"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:527
+#: hocwp/inc/class-hocwp-theme-frontend.php:534
 msgid "Page [CURRENT]/[TOTAL]"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:624
+#: hocwp/inc/class-hocwp-theme-frontend.php:631
 #, php-format
 msgid "Check this out: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:703
+#: hocwp/inc/class-hocwp-theme-frontend.php:710
 #, php-format
 msgid "Category: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:709
+#: hocwp/inc/class-hocwp-theme-frontend.php:716
 #, php-format
 msgid "Tag: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:715
+#: hocwp/inc/class-hocwp-theme-frontend.php:722
 #, php-format
 msgid "Author: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:719
+#: hocwp/inc/class-hocwp-theme-frontend.php:726
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:722
+#: hocwp/inc/class-hocwp-theme-frontend.php:729
 #, php-format
 msgctxt "yearly archives"
 msgid "Year: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:725
+#: hocwp/inc/class-hocwp-theme-frontend.php:732
 msgctxt "monthly archives date format"
 msgid "F Y"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:728
+#: hocwp/inc/class-hocwp-theme-frontend.php:735
 #, php-format
 msgctxt "monthly archives"
 msgid "Month: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:731
+#: hocwp/inc/class-hocwp-theme-frontend.php:738
 msgctxt "daily archives date format"
 msgid "F j, Y"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:734
+#: hocwp/inc/class-hocwp-theme-frontend.php:741
 #, php-format
 msgctxt "daily archives"
 msgid "Day: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:739
+#: hocwp/inc/class-hocwp-theme-frontend.php:746
 msgctxt "post format archive title"
 msgid "Asides"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:741
+#: hocwp/inc/class-hocwp-theme-frontend.php:748
 msgctxt "post format archive title"
 msgid "Galleries"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:743
+#: hocwp/inc/class-hocwp-theme-frontend.php:750
 msgctxt "post format archive title"
 msgid "Images"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:745
+#: hocwp/inc/class-hocwp-theme-frontend.php:752
 msgctxt "post format archive title"
 msgid "Videos"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:747
+#: hocwp/inc/class-hocwp-theme-frontend.php:754
 msgctxt "post format archive title"
 msgid "Quotes"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:749
+#: hocwp/inc/class-hocwp-theme-frontend.php:756
 msgctxt "post format archive title"
 msgid "Links"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:751
+#: hocwp/inc/class-hocwp-theme-frontend.php:758
 msgctxt "post format archive title"
 msgid "Statuses"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:753
+#: hocwp/inc/class-hocwp-theme-frontend.php:760
 msgctxt "post format archive title"
 msgid "Audio"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:755
+#: hocwp/inc/class-hocwp-theme-frontend.php:762
 msgctxt "post format archive title"
 msgid "Chats"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:759
+#: hocwp/inc/class-hocwp-theme-frontend.php:766
 #, php-format
 msgctxt "post format archives"
 msgid "Post Format: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:765
+#: hocwp/inc/class-hocwp-theme-frontend.php:772
 #, php-format
 msgid "Archives: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:779
+#: hocwp/inc/class-hocwp-theme-frontend.php:786
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:781
+#: hocwp/inc/class-hocwp-theme-frontend.php:788
 msgid "Search results"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:788
+#: hocwp/inc/class-hocwp-theme-frontend.php:795
 msgid "Recent posts"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:791
+#: hocwp/inc/class-hocwp-theme-frontend.php:798
 msgid "Archives"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1044
+#: hocwp/inc/class-hocwp-theme-frontend.php:1051
 msgid "Page not found"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1249
+#: hocwp/inc/class-hocwp-theme-frontend.php:1256
 msgctxt "back to top"
 msgid "Top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1283 hocwp/inc/class-hocwp-theme-frontend.php:1285
+#: hocwp/inc/class-hocwp-theme-frontend.php:1290 hocwp/inc/class-hocwp-theme-frontend.php:1292
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1451
+#: hocwp/inc/class-hocwp-theme-frontend.php:1458
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1544
+#: hocwp/inc/class-hocwp-theme-frontend.php:1551
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1548
+#: hocwp/inc/class-hocwp-theme-frontend.php:1555
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1557
+#: hocwp/inc/class-hocwp-theme-frontend.php:1564
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1573
+#: hocwp/inc/class-hocwp-theme-frontend.php:1580
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""

@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 abstract class HOCWP_Theme_Health_Check {
+	protected $base_id = 'hocwp-theme-health-check';
 
 	/**
 	 * The health check section in which 'good' results should be shown.
@@ -143,7 +144,7 @@ abstract class HOCWP_Theme_Health_Check {
 			'badge'       => $this->get_badge(),
 			'description' => $this->description,
 			'actions'     => $this->actions,
-			'test'        => $this->test,
+			'test'        => $this->get_test_name(),
 		];
 	}
 
@@ -161,7 +162,7 @@ abstract class HOCWP_Theme_Health_Check {
 	 */
 	protected function get_badge() {
 		if ( ! is_array( $this->badge ) ) {
-			$this->badge = [ ];
+			$this->badge = [];
 		}
 
 		if ( empty( $this->badge['label'] ) ) {
@@ -182,6 +183,10 @@ abstract class HOCWP_Theme_Health_Check {
 	 * @return string The formatted testname.
 	 */
 	protected function get_test_name() {
+		if ( ! str_contains( $this->test, $this->base_id ) ) {
+			$this->test = $this->base_id . '-' . $this->test;
+		}
+
 		return str_replace( '_', '-', $this->test );
 	}
 
@@ -202,11 +207,16 @@ abstract class HOCWP_Theme_Health_Check {
 	}
 }
 
+// Add site health check items
 function hocwp_theme_admin_health_check_init() {
 	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-email.php';
+	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-user.php';
+	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-password.php';
 
 	$heal_checks = array(
-		new HOCWP_Theme_Health_Check_Email()
+		new HOCWP_Theme_Health_Check_Email(),
+		new HOCWP_Theme_Health_Check_User(),
+		new HOCWP_Theme_Health_Check_Password()
 	);
 
 	foreach ( $heal_checks as $checker ) {
