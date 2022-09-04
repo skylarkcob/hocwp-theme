@@ -617,9 +617,9 @@ final class HOCWP_Theme {
 		$result = '';
 
 		for ( $i = 0; $i < strlen( $php_format ); $i ++ ) {
-			$char = $php_format[ $i ];
-
-			$result = $result . $matched_symbols[ $char ] ?? $result . $char;
+			$char   = $php_format[ $i ];
+			$char   = $matched_symbols[ $char ] ?? $char;
+			$result = $result . $char;
 		}
 
 		if ( $escaping ) {

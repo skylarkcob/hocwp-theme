@@ -1,4 +1,12 @@
 == Changelog ==
+= 6.9.8 =
+* 04/09/2022: Add default query to related posts.
+* 04/09/2022: Add Forminator data sanitize function.
+* 04/09/2022: Fix WP_Filesystem_FTPext bugs.
+* 04/09/2022: Add tipsy as default title tooltips.
+* 04/09/2022: Add trait HOCWP_Theme_Utils.
+* 04/09/2022: Add view more for widget post.
+
 = 6.9.7 =
 * 19/08/2022: Add utilities to delete site cache and Cloudflare cache.
 * 21/08/2022: Define spinner and some CSS animations.

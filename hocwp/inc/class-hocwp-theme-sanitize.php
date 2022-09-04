@@ -147,6 +147,60 @@ final class HOCWP_Theme_Sanitize {
 		return apply_filters( 'hocwp_theme_sanitize_media_data', $result );
 	}
 
+	public function form_forminator_data( $data ) {
+		if ( HT()->array_has_value( $data ) ) {
+			$fields = array();
+
+			foreach ( $data as $field ) {
+				$name = $field['name'] ?? '';
+
+				if ( ! empty( $name ) ) {
+					$value = $field['value'] ?? '';
+
+					if ( is_array( $value ) ) {
+						$value = current( $value );
+					}
+
+					$label = $field['field_array']['fname_label'] ?? '';
+
+					if ( empty( $label ) ) {
+						$label = $field['field_array']['field_label'] ?? '';
+					}
+
+					$field_type = $field['field_type'] ?? '';
+
+					if ( empty( $field_type ) || empty( $label ) && 'checked' == $value ) {
+						continue;
+					}
+
+					$value = str_replace( '---', ' - ', $value );
+
+					$value_type = '';
+
+					if ( 'hidden' == $field_type && ( str_contains( $label, 'id' ) || str_contains( $label, 'ID' ) ) && HT()->is_positive_number( $value ) ) {
+						$tmp = get_post( $value );
+
+						if ( $tmp instanceof WP_Post ) {
+							$value_type = $tmp->post_type;
+						}
+					}
+
+					$fields[ $name ] = array(
+						'label'      => $label,
+						'value'      => $value,
+						'data'       => $field['value'] ?? '',
+						'field_type' => $field_type,
+						'value_type' => $value_type
+					);
+				}
+			}
+
+			return $fields;
+		}
+
+		return new WP_Error( 'invalid_form', __( 'Invalid Forminator form data!', 'hocwp-theme' ) );
+	}
+
 	public function form_post( $key, $type, $data = null ) {
 		if ( null == $data ) {
 			$data = $_POST;

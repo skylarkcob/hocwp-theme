@@ -82,7 +82,8 @@ abstract class HOCWP_Theme_Meta {
 				}
 			} elseif ( array( $class, 'google_maps' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-google-maps' );
-			} elseif ( array( $class, 'datetime_picker' ) === $callback ) {
+			} elseif ( array( $class, 'datetime_picker' ) === $callback
+			           || array( $class, 'datepicker' ) === $callback ) {
 				$this->load_script( 'hocwp-theme-datepicker' );
 				$this->load_style( 'jquery-ui-style' );
 			} elseif ( array( $class, 'color_picker' ) === $callback ) {
@@ -262,6 +263,8 @@ abstract class HOCWP_Theme_Meta {
 				$value = call_user_func( $this->get_value_callback, $obj_id, $meta_key, $this->single_value );
 			}
 
+			$bk_value = $value;
+
 			$type = $field['type'];
 
 			if ( 'timestamp' == $type ) {
@@ -297,6 +300,16 @@ abstract class HOCWP_Theme_Meta {
 			}
 
 			$field['callback_args']['value'] = $value;
+
+			$atts = $field['callback_args']['attributes'] ?? '';
+
+			if ( ! is_array( $atts ) && empty( $atts ) ) {
+				$atts = array(
+					'data-original-value' => $bk_value
+				);
+
+				$field['callback_args']['attributes'] = $atts;
+			}
 		}
 
 		return $field;

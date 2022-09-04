@@ -3,7 +3,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! trait_exists( 'HOCWP_Theme_Utils' ) ) {
+	require_once dirname( __FILE__ ) . '/trail-utils.php';
+}
+
 class HOCWP_Theme_Utility {
+	use HOCWP_Theme_Utils;
+
 	protected static $_instance = null;
 
 	public static function instance() {
@@ -747,6 +753,10 @@ class HOCWP_Theme_Utility {
 			if ( $filesystem instanceof WP_Filesystem_Direct ) {
 				$result = $filesystem->get_contents( $url );
 			} elseif ( $filesystem instanceof WP_Filesystem_Base ) {
+				if ( $filesystem instanceof WP_Filesystem_FTPext && empty( $filesystem->link ) ) {
+					return $result;
+				}
+
 				$result = $filesystem->get_contents( $url );
 			}
 		}

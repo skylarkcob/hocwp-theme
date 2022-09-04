@@ -160,12 +160,20 @@ function hocwp_theme_update_blocked_license_file( $block = true ) {
 			$system = HT_Util()->filesystem();
 
 			if ( $system instanceof WP_Filesystem_Base ) {
+				if ( $system instanceof WP_Filesystem_FTPext && empty( $system->link ) ) {
+					return;
+				}
+
 				$system->put_contents( $file, '' );
 			}
 		} elseif ( ! $block && file_exists( $file ) ) {
 			$system = HT_Util()->filesystem();
 
 			if ( $system instanceof WP_Filesystem_Base ) {
+				if ( $system instanceof WP_Filesystem_FTPext && empty( $system->link ) ) {
+					return;
+				}
+
 				$system->delete( $file );
 			}
 		}

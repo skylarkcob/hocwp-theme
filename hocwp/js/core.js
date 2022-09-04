@@ -178,7 +178,7 @@ function HOCWP_Theme() {
 
     this.sticky = function ($, element, top, htmlClass, bottom) {
         if ("number" === typeof top) {
-            var scroll = $(window).scrollTop();
+            let scroll = $(window).scrollTop();
 
             bottom = bottom || 0;
 

@@ -133,7 +133,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		global $post_type;
 
 		if ( is_array( $this->post_types ) && in_array( $post_type, $this->post_types ) ) {
-			add_meta_box( $this->id, $this->title, $this->callback, $this->post_types, $this->context, $this->priority, $this->callback_args );
+			add_meta_box( $this->get_id(), $this->title, $this->callback, $this->post_types, $this->context, $this->priority, $this->callback_args );
 		}
 	}
 
@@ -176,7 +176,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		}
 
 		echo $html;
-		do_action( 'hocwp_theme_meta_post_' . $this->id . '_' . $id );
+		do_action( 'hocwp_theme_meta_post_' . $this->get_id() . '_' . $id );
 	}
 
 	private function meta_row( $field, $id = '' ) {
@@ -198,10 +198,10 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		}
 
 		echo '<div class="hocwp-theme">';
-		wp_nonce_field( $this->id, $this->id . '_nonce' );
+		wp_nonce_field( $this->get_id(), $this->get_id() . '_nonce' );
 
 		if ( ! is_array( $this->fields ) || 1 == count( $this->fields ) ) {
-			$field = $this->fields[0];
+			$field = $this->fields[0] ?? '';
 
 			if ( empty( $field['id'] ) ) {
 				$this->form_table = false;
@@ -250,7 +250,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function save_post_action( $post_id ) {
-		if ( ! HT_Util()->can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
+		if ( ! HT_Util()->can_save_post( $post_id, $this->get_id(), $this->get_id() . '_nonce' ) ) {
 			return;
 		}
 

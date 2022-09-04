@@ -146,6 +146,23 @@ trait HOCWP_Theme_PHP {
 		return $lists;
 	}
 
+	public function calculate_discount( $original_price, $discounted_price, $precision = 2, $output = 'percentage' ) {
+		$output = strtolower( $output );
+		$result = $original_price;
+
+		if ( 'discount' == $output || 'sale' == $output ) {
+			// Now $discounted_price as percentage discount
+			$result = $original_price - ( $original_price * $discounted_price / 100 );
+		} elseif ( 'percentage' == $output || 'percent' == $output ) {
+			$result = 100 * ( $original_price - $discounted_price ) / $original_price;
+		} elseif ( 'original' == $output || 'regular' == $output ) {
+			// Now $original_price as percentage discount
+			$result = $discounted_price / ( 1 - $original_price / 100 );
+		}
+
+		return round( $result, $precision );
+	}
+
 	public function calculate_distance( $base_location, $location, $unit = 'km' ) {
 		$lat1 = deg2rad( (float) $location['lat'] );
 		$lon1 = deg2rad( (float) $location['lng'] );

@@ -20,14 +20,14 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	private static function field_label( &$args, &$tag = '' ) {
-		$label = isset( $args['label'] ) ? $args['label'] : '';
+		$label = $args['label'] ?? '';
 
 		if ( ! empty( $label ) ) {
 			$lb  = new HOCWP_Theme_HTML_Tag( 'label' );
-			$for = isset( $args['for'] ) ? $args['for'] : '';
+			$for = $args['for'] ?? '';
 
 			if ( empty( $for ) ) {
-				$for = isset( $args['label_for'] ) ? $args['label_for'] : '';
+				$for = $args['label_for'] ?? '';
 			}
 
 			if ( empty( $for ) ) {
@@ -53,7 +53,7 @@ final class HOCWP_Theme_HTML_Field {
 	}
 
 	public static function layout( $args = array() ) {
-		$options = isset( $args['options'] ) ? $args['options'] : '';
+		$options = $args['options'] ?? '';
 
 		if ( HT()->array_has_value( $options ) ) {
 			$lists = array();
@@ -170,8 +170,8 @@ final class HOCWP_Theme_HTML_Field {
 			$args['value'] = 1;
 		}
 
-		$value   = isset( $args['value'] ) ? $args['value'] : '';
-		$default = isset( $args['default'] ) ? $args['default'] : '';
+		$value   = $args['value'] ?? '';
+		$default = $args['default'] ?? '';
 
 		if ( ! isset( $args['value'] ) || '' === $value ) {
 			$value = $default;
@@ -180,7 +180,7 @@ final class HOCWP_Theme_HTML_Field {
 		unset( $args['default'] );
 
 		if ( 'radio' == $args['type'] || 'checkbox' == $args['type'] ) {
-			$options = isset( $args['options'] ) ? $args['options'] : '';
+			$options = $args['options'] ?? '';
 
 			if ( is_array( $options ) && count( $options ) > 0 ) {
 				unset( $args['options'] );
@@ -195,7 +195,7 @@ final class HOCWP_Theme_HTML_Field {
 					$atts  = $args;
 					$lb    = new HOCWP_Theme_HTML_Tag( 'label' );
 					$input = new HOCWP_Theme_HTML_Tag( 'input' );
-					$id    = isset( $atts['id'] ) ? $atts['id'] : '';
+					$id    = $atts['id'] ?? '';
 					$id    .= '_' . $key;
 
 					if ( empty( $label ) ) {
@@ -205,7 +205,7 @@ final class HOCWP_Theme_HTML_Field {
 					$lb->add_attribute( 'for', $id );
 
 					if ( empty( $label ) ) {
-						$label = isset( $data['text'] ) ? $data['text'] : '';
+						$label = $data['text'] ?? '';
 					}
 
 					if ( ! empty( $label ) ) {
@@ -249,13 +249,13 @@ final class HOCWP_Theme_HTML_Field {
 
 		$input = new HOCWP_Theme_HTML_Tag( 'input' );
 
-		if ( ( ! isset( $args['label'] ) || empty( $args['label'] ) ) && isset( $args['text'] ) && ! empty( $args['text'] ) ) {
+		if ( empty( $args['label'] ) && ! empty( $args['text'] ) ) {
 			$args['label'] = $args['text'];
 		}
 
-		$right_label = isset( $args['right_label'] ) ? $args['right_label'] : '';
+		$right_label = $args['right_label'] ?? '';
 
-		if ( 1 != $right_label && true != $right_label ) {
+		if ( 1 != $right_label && true !== $right_label ) {
 			self::field_label( $args, $input );
 		}
 
@@ -268,7 +268,7 @@ final class HOCWP_Theme_HTML_Field {
 
 		$input->output();
 
-		if ( 1 == $right_label || true == $right_label ) {
+		if ( 1 == $right_label || $right_label ) {
 			self::field_label( $args, $input );
 		}
 	}
@@ -286,6 +286,10 @@ final class HOCWP_Theme_HTML_Field {
 	public static function input_email( $args = array() ) {
 		$args['type'] = 'email';
 		self::input( $args );
+	}
+
+	public static function datepicker( $args = array() ) {
+		self::datetime_picker( $args );
 	}
 
 	public static function datetime_picker( $args = array() ) {
@@ -311,7 +315,7 @@ final class HOCWP_Theme_HTML_Field {
 
 		$args     = wp_parse_args( $args, $defaults );
 		$textarea = new HOCWP_Theme_HTML_Tag( 'textarea' );
-		$value    = isset( $args['value'] ) ? $args['value'] : '';
+		$value    = $args['value'] ?? '';
 
 		unset( $args['value'] );
 

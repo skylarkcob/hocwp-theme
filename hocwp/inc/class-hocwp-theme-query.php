@@ -386,6 +386,15 @@ final class HOCWP_Theme_Query {
 			}
 		}
 
+		if ( ! $query->have_posts() ) {
+			$default = $args['none_default'] ?? '';
+
+			if ( $default ) {
+				unset( $args['tax_query'], $args['meta_query'] );
+				$query = new WP_Query( $args );
+			}
+		}
+
 		return $query;
 	}
 

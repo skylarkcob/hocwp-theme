@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '6.9.7';
+const HOCWP_THEME_CORE_VERSION = '6.9.8';
 
 $theme = wp_get_theme();
 

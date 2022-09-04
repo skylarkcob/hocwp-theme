@@ -1,24 +1,24 @@
 (function () {
-    var windowWidth = window.innerWidth || window.screen.width;
+    let windowWidth = window.innerWidth || window.screen.width;
 
     if (windowWidth < 1240) {
         return;
     }
 
-    var siteContent = document.getElementsByClassName("site-content")[0],
+    let siteContent = document.getElementsByClassName("site-content")[0],
         contentArea;
 
     if (siteContent) {
         contentArea = siteContent.getElementsByClassName("content-area")[0];
     }
 
-    var sidebars = document.getElementsByClassName("sidebar");
+    let sidebars = document.getElementsByClassName("sidebar");
 
     function hocwpLoopSidebarWidget(sidebars, scrollPos, top, footer, scroll) {
         scroll = scroll || false;
 
-        for (var i = 0; i < sidebars.length; i++) {
-            var sidebar = sidebars[i],
+        for (let i = 0; i < sidebars.length; i++) {
+            let sidebar = sidebars[i],
                 widgets = sidebar.getElementsByClassName("widget");
 
             if (widgets) {
@@ -26,7 +26,7 @@
                     continue;
                 }
 
-                var widget = widgets[widgets.length - 1],
+                let widget = widgets[widgets.length - 1],
                     offsetTop = widget.offsetTop;
 
                 widget.style.width = widget.offsetWidth + "px";
@@ -45,7 +45,7 @@
                     }
 
                     if (footer) {
-                        var footerHeight = footer.offsetHeight,
+                        let footerHeight = footer.offsetHeight,
                             totalHeight = scrollPos + widget.offsetHeight;
                         if (totalHeight > footer.offsetTop) {
                             widget.style.top = "auto";
@@ -70,7 +70,7 @@
     }
 
     if (sidebars) {
-        var scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop,
+        let scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop,
             wpadminbar = document.getElementById("wpadminbar"),
             top = 0,
             footer = document.getElementById("colophon");
