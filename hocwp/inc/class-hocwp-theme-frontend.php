@@ -235,34 +235,54 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			'first_last'    => 0,
 			'current_total' => 0,
 			'total'         => '',
-			'class'         => 'hocwp-pagination'
+			'class'         => 'hocwp-pagination',
+			'layout'        => '', // Accepts: default, only-label, bootstrap
+			'items'         => '', // Array items to loop pagination
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 		$args = apply_filters( 'hocwp_theme_pagination_args', $args );
 
-		$query = $args['query'];
+		$output = apply_filters( 'hocwp_theme_pagination', '', $args );
+
+		if ( ! empty( $output ) ) {
+			echo $output;
+
+			return;
+		}
+
+		$query = $args['items'] ?? '';
+
+		if ( empty( $query ) ) {
+			$query = $args['query'];
+		}
 
 		$total = $args['total'] ?? '';
 
 		$query_vars = '';
 
+		$ppp = $args['posts_per_page'];
+
+		if ( ! is_numeric( $ppp ) ) {
+			$ppp = HT_Frontend()->get_posts_per_page( is_home() );
+		}
+
 		if ( empty( $total ) ) {
 			if ( $query instanceof WP_Query ) {
 				$total      = $query->max_num_pages;
-				$query_vars = json_encode( $query->query_vars );
+				$query_vars = $query->query_vars;
 			} elseif ( is_array( $query ) ) {
 				// Show pagination for custom array
-				$ppp = $args['posts_per_page'];
-
-				if ( ! is_numeric( $ppp ) ) {
-					$ppp = HT_Frontend()->get_posts_per_page( is_home() );
-				}
-
 				$total = ceil( count( $query ) / $ppp );
+
+				$query_vars = $args['query_vars'] ?? '';
 			}
 
 			$args['total'] = $total;
+		}
+
+		if ( is_array( $query_vars ) ) {
+			$query_vars = json_encode( $query_vars );
 		}
 
 		if ( 2 > $total ) {
@@ -410,14 +430,18 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			$layout = $args['layout'] ?? '';
 
+			$layout = sanitize_title( $layout );
+			$layout = strtolower( $layout );
+
+			if ( 'only-label' == $layout ) {
+				$bootstrap = false;
+			}
+
 			if ( empty( $layout ) && $bootstrap ) {
 				$layout = 'bootstrap';
 			} elseif ( empty( $layout ) ) {
 				$layout = 'default';
 			}
-
-			$layout = sanitize_title( $layout );
-			$layout = strtolower( $layout );
 
 			$class = $args['class'];
 			$class = sanitize_html_class( $class );
@@ -437,17 +461,45 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				}
 			}
 
-			$root_url = get_pagenum_link();
+			$root_url = $args['root_url'] ?? '';
+
+			if ( empty( $root_url ) ) {
+				$root_url = get_pagenum_link();
+			}
+
 			$root_url = apply_filters( 'hocwp_theme_pagination_first_item_url', $root_url, $args );
 
 			if ( $bootstrap ) {
-				echo '<nav aria-label="' . esc_attr__( 'Page navigation', 'hocwp-theme' ) . '" class="mt-5">' . PHP_EOL;
-			} elseif ( 'default' == $layout ) {
-				echo '<ul class="' . $class . '" data-query-vars="' . esc_attr( $query_vars ) . '" data-ajax="' . HT()->bool_to_int( $ajax ) . '" data-load-more="' . HT()->bool_to_int( $load_more ) . '" data-list="' . $list_id . '" data-root-url="' . $root_url . '">' . PHP_EOL;
+				$class .= ' mt-5';
+			}
+
+			$atts = array(
+				'class'               => $class,
+				'data-query-vars'     => $query_vars,
+				'data-ajax'           => HT()->bool_to_int( $ajax ),
+				'data-load-more'      => HT()->bool_to_int( $load_more ),
+				'data-list'           => $list_id,
+				'data-root-url'       => $root_url,
+				'data-posts-per-page' => $ppp,
+				'data-total-page'     => $total,
+				'aria-label'          => __( 'Page navigation', 'hocwp-theme' )
+			);
+
+			$atts = apply_filters( 'hocwp_theme_pagination_attributes', $atts, $args );
+
+			$atts = array_map( 'esc_attr', $atts );
+			$atts = HT()->attributes_to_string( $atts );
+
+			if ( $bootstrap ) {
+				echo '<nav class="bootstrap-pagination">' . PHP_EOL;
+			}
+
+			if ( 'default' == $layout || 'bootstrap' == $layout || $bootstrap ) {
+				echo '<ul ' . $atts . '>' . PHP_EOL;
 			}
 
 			if ( 'only-label' == $layout ) {
-				printf( '<nav class="%s">', esc_attr( $class ) );
+				printf( '<nav %s>', $atts );
 				printf( '<h2 class="screen-reader-text">%s</h2>', esc_html__( 'Posts navigation', 'hocwp-theme' ) );
 				echo '<div class="nav-links">' . PHP_EOL;
 			}
@@ -548,7 +600,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				printf( $current_total_format, $current_total );
 			}
 
-			if ( 'default' == $layout ) {
+			if ( 'default' == $layout || 'bootstrap' == $layout || $bootstrap ) {
 				echo '</ul>' . PHP_EOL;
 			}
 

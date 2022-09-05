@@ -65,7 +65,8 @@ class HOCWP_Theme_Custom {
 	 */
 	public function ajax_callback() {
 		$data   = array();
-		$action = HT()->get_method_value( 'do_action' );
+		$method = HT()->get_method_value( 'method', 'request', 'post' );
+		$action = HT()->get_method_value( 'do_action', $method );
 
 		switch ( $action ) {
 			default:
@@ -79,7 +80,8 @@ class HOCWP_Theme_Custom {
 	 */
 	public function ajax_private_callback() {
 		$data   = array();
-		$action = HT()->get_method_value( 'do_action' );
+		$method = HT()->get_method_value( 'method', 'request', 'post' );
+		$action = HT()->get_method_value( 'do_action', $method );
 
 		switch ( $action ) {
 			default:
