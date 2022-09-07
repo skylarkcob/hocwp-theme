@@ -189,7 +189,7 @@ add_action( 'wp_ajax_hocwp_theme_featured_post_ajax', 'hocwp_theme_hocwp_theme_f
 
 function hocwp_theme_manage_column_pre_get_posts( $query ) {
 	if ( $query instanceof WP_Query ) {
-		$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
+		$orderby = $_GET['orderby'] ?? '';
 
 		if ( 'featured' == $orderby ) {
 			$query->set( 'orderby', 'meta_value_num' );

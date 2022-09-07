@@ -54,6 +54,7 @@ class HOCWP_Theme_Meta_Field extends HOCWP_Theme_Admin_Field {
 class HOCWP_Theme_Meta_Quick_Edit_Field extends HOCWP_Theme_Meta_Field {
 	public $show_admin_column = true;
 	public $show_in_quick_edit = true;
+	public $sortable;
 
 	public function __construct( $id, $title, $callback = 'input', $callback_args = array(), $data_type = 'string' ) {
 		parent::__construct( $id, $title, $callback, $callback_args, $data_type );
@@ -64,6 +65,7 @@ class HOCWP_Theme_Meta_Quick_Edit_Field extends HOCWP_Theme_Meta_Field {
 
 		$field['show_admin_column']  = $this->show_admin_column;
 		$field['show_in_quick_edit'] = $this->show_in_quick_edit;
+		$field['sortable_column']    = $this->sortable;
 
 		return $field;
 	}

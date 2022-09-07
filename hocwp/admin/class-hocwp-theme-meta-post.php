@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	private $post_types;
+	private $post_type;
+	private $nonce_added;
 	private $id;
 	private $title;
 	private $context;
@@ -18,6 +20,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 		if ( empty( $this->allow_pagenow ) || in_array( $pagenow, $this->allow_pagenow ) ) {
 			parent::__construct();
+			$this->post_type = HT_Admin()->get_current_post_type();
 			$this->set_id( 'extra-information' );
 			$this->set_title( __( 'Extra Information', 'hocwp-theme' ) );
 			$this->set_callback( array( $this, 'callback' ) );
@@ -46,7 +49,55 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			add_action( 'manage_pages_custom_column', array( $this, 'manage_posts_custom_column_action' ) );
 
 			add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+
+			add_action( 'admin_footer', array( $this, 'admin_footer_action' ) );
 		}
+	}
+
+	public function admin_footer_action() {
+		// Set value for input from column value
+		?>
+        <script>
+            jQuery(function ($) {
+                const wp_inline_edit_function = inlineEditPost.edit;
+
+                inlineEditPost.edit = function (post_id) {
+                    wp_inline_edit_function.apply(this, arguments);
+
+                    if (typeof (post_id) == "object") {
+                        post_id = parseInt(this.getId(post_id));
+                    }
+
+                    const edit_row = $("#edit-" + post_id);
+                    const post_row = $("#post-" + post_id);
+
+					<?php
+					foreach ( $this->fields as $field ) {
+						$siqe = $field['show_in_quick_edit'] ?? '';
+
+						if ( $siqe ) {
+							echo '$("*[name=\'' . $field['id'] . '\']", edit_row).val($(".column-' . $field['id'] . '", post_row).text());';
+						}
+					}
+					?>
+                }
+            });
+        </script>
+		<?php
+	}
+
+	public function manage_edit_post_sortable_columns_filter( $columns ) {
+		if ( $this->apply_for_post_type( $this->post_type ) ) {
+			foreach ( $this->fields as $field ) {
+				$sc = $field['sortable_column'] ?? '';
+
+				if ( $sc ) {
+					$columns[ $field['id'] ] = $field['id'];
+				}
+			}
+		}
+
+		return $columns;
 	}
 
 	public function manage_posts_custom_column_action( $column ) {
@@ -66,9 +117,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function posts_columns_filter( $columns ) {
-		$pt  = HT_Admin()->get_current_post_type();
-
-		if ( in_array( $pt, $this->post_types ) ) {
+		if ( $this->apply_for_post_type() ) {
 			foreach ( $this->fields as $field ) {
 				$sac = $field['show_admin_column'] ?? '';
 
@@ -82,7 +131,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function quick_edit_custom_box( $column_name, $post_type ) {
-		if ( in_array( $post_type, $this->post_types ) ) {
+		if ( $this->apply_for_post_type( $post_type ) ) {
 			$html = '';
 
 			foreach ( $this->fields as $field ) {
@@ -90,7 +139,6 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 					$siqe = $field['show_in_quick_edit'] ?? '';
 
 					if ( $siqe ) {
-						$field = $this->sanitize_value( get_the_ID(), $field );
 						ob_start();
 						echo '<fieldset class="inline-edit-col-center" style="margin-bottom: 10px;">' . PHP_EOL;
 						echo '<div class="inline-edit-col">' . PHP_EOL;
@@ -103,11 +151,13 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			}
 
 			if ( ! empty( $html ) ) {
-				$html = '<div class="clearfix"></div>' . $html;
+				if ( ! $this->nonce_added ) {
+					ob_start();
+					wp_nonce_field( $this->get_id(), $this->get_id() . '_nonce' );
+					$html = ob_get_clean() . $html;
 
-				ob_start();
-				wp_nonce_field( $this->get_id(), $this->get_id() . '_nonce' );
-				$html .= ob_get_clean();
+					$this->nonce_added = true;
+				}
 
 				echo $html;
 			}
@@ -154,10 +204,22 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		$this->priority = $priority;
 	}
 
-	public function add_meta_boxes_action() {
-		global $post_type;
+	public function apply_for_post_type( $post_type = '' ) {
+		if ( empty( $post_type ) ) {
+			if ( ! empty( $this->post_type ) ) {
+				$post_type = $this->post_type;
+			} else {
+				$post_type = HT_Admin()->get_current_post_type();
 
-		if ( is_array( $this->post_types ) && in_array( $post_type, $this->post_types ) ) {
+				$this->post_type = $post_type;
+			}
+		}
+
+		return in_array( $post_type, $this->post_types );
+	}
+
+	public function add_meta_boxes_action() {
+		if ( $this->apply_for_post_type() ) {
 			add_meta_box( $this->get_id(), $this->title, $this->callback, $this->post_types, $this->context, $this->priority, $this->callback_args );
 		}
 	}
@@ -283,6 +345,13 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function admin_enqueue_scripts_action() {
+		foreach ( (array) $this->post_types as $pt ) {
+			add_filter( 'manage_edit-' . $pt . '_sortable_columns', array(
+				$this,
+				'manage_edit_post_sortable_columns_filter'
+			) );
+		}
+
 		wp_enqueue_style( 'hocwp-theme-admin-post-style', HOCWP_THEME_CORE_URL . '/css/admin-post' . HOCWP_THEME_CSS_SUFFIX );
 	}
 }
