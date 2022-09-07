@@ -7,6 +7,7 @@
 * 04/09/2022: Add trait HOCWP_Theme_Utils.
 * 04/09/2022: Add view more for widget post.
 * 05/09/2022: Update pagination function to accept custom array items.
+* 07/09/2022: Update quick edit meta fields.
 
 = 6.9.7 =
 * 19/08/2022: Add utilities to delete site cache and Cloudflare cache.

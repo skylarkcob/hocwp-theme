@@ -14,6 +14,11 @@ add_action( 'load-post.php', 'hocwp_theme_custom_post_meta' );
 add_action( 'load-post-new.php', 'hocwp_theme_custom_post_meta' );
 add_action( 'load-edit.php', 'hocwp_theme_custom_post_meta' );
 
+// Apply for quick edit fields and bulk actions
+if ( HOCWP_THEME_DOING_AJAX ) {
+	add_action( 'init', 'hocwp_theme_custom_post_meta' );
+}
+
 /**
  * Add custom meta fields for Extra Information meta box.
  *

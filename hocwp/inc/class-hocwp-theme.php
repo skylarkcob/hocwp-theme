@@ -232,6 +232,22 @@ final class HOCWP_Theme {
 				$index = $count;
 			} elseif ( 'rand' == $index || 'random' == $index ) {
 				$index = rand( 1, $count );
+			} elseif ( ! empty( $index ) ) {
+				// Add item to before item key
+				if ( $n = array_search( $index, array_keys( $array ) ) ) {
+					$end   = array_slice( $array, $n );
+					$array = array_slice( $array, 0, $n );
+
+					if ( is_numeric( $key ) ) {
+						$array[] = $item;
+					} else {
+						$array[ $key ] = $item;
+					}
+
+					$array = array_merge( $array, $end );
+
+					return $array;
+				}
 			}
 
 			if ( is_numeric( $index ) ) {
@@ -242,6 +258,7 @@ final class HOCWP_Theme {
 					$tmp   = array();
 
 					foreach ( $array as $i => $value ) {
+						// Add to last
 						if ( $count == ( $index - 1 ) ) {
 							if ( is_numeric( $key ) ) {
 								$tmp[] = $item;

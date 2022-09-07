@@ -9,7 +9,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	private $title;
 	private $context;
 	private $priority; // The priority within the context where the box should show. Accepts 'high', 'core', 'default', or 'low'.
-	protected $allow_pagenow = array( 'post.php', 'post-new.php', 'edit.php' );
+	protected $allow_pagenow = array( 'post.php', 'post-new.php', 'edit.php', 'admin-ajax.php' );
 
 	public $form_table = false;
 
@@ -38,23 +38,42 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 20 );
 		}
 
-		if ( 'edit.php' == $pagenow ) {
-			add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
-
+		if ( 'edit.php' == $pagenow || 'admin-ajax.php' == $pagenow ) {
 			add_filter( 'manage_posts_columns', array( $this, 'posts_columns_filter' ) );
 			add_filter( 'manage_pages_columns', array( $this, 'posts_columns_filter' ) );
+
+			add_action( 'manage_posts_custom_column', array( $this, 'manage_posts_custom_column_action' ) );
+			add_action( 'manage_pages_custom_column', array( $this, 'manage_posts_custom_column_action' ) );
+
+			add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+		}
+	}
+
+	public function manage_posts_custom_column_action( $column ) {
+		foreach ( $this->fields as $field ) {
+			$sac = $field['show_admin_column'] ?? '';
+
+			if ( $sac && $field['id'] == $column ) {
+				$field = $this->sanitize_value( get_the_ID(), $field );
+
+				if ( isset( $field['callback_args']['value'] ) ) {
+					echo $field['callback_args']['value'];
+				} else {
+					print_r( get_post_meta( get_the_ID(), $field['id'], true ) );
+				}
+			}
 		}
 	}
 
 	public function posts_columns_filter( $columns ) {
-		global $post_type;
+		$pt  = HT_Admin()->get_current_post_type();
 
-		if ( in_array( $post_type, $this->post_types ) ) {
+		if ( in_array( $pt, $this->post_types ) ) {
 			foreach ( $this->fields as $field ) {
 				$sac = $field['show_admin_column'] ?? '';
 
 				if ( $sac ) {
-					$columns[ $field['id'] ] = $field['title'];
+					HT()->insert_to_array( $columns, $field['title'], 'date', $field['id'] );
 				}
 			}
 		}
@@ -64,13 +83,14 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 	public function quick_edit_custom_box( $column_name, $post_type ) {
 		if ( in_array( $post_type, $this->post_types ) ) {
-			$html = '<div class="clear"></div>';
+			$html = '';
 
 			foreach ( $this->fields as $field ) {
 				if ( $column_name == $field['id'] ) {
 					$siqe = $field['show_in_quick_edit'] ?? '';
 
 					if ( $siqe ) {
+						$field = $this->sanitize_value( get_the_ID(), $field );
 						ob_start();
 						echo '<fieldset class="inline-edit-col-center" style="margin-bottom: 10px;">' . PHP_EOL;
 						echo '<div class="inline-edit-col">' . PHP_EOL;
@@ -84,6 +104,11 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 			if ( ! empty( $html ) ) {
 				$html = '<div class="clearfix"></div>' . $html;
+
+				ob_start();
+				wp_nonce_field( $this->get_id(), $this->get_id() . '_nonce' );
+				$html .= ob_get_clean();
+
 				echo $html;
 			}
 		}

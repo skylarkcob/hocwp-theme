@@ -89,9 +89,11 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 		if ( empty( $result ) ) {
 			if ( isset( $_GET['post_type'] ) ) {
 				$result = $_GET['post_type'];
+			} elseif ( isset( $_POST['post_type'] ) ) {
+				$result = $_POST['post_type'];
 			} else {
-				$action  = isset( $_GET['action'] ) ? $_GET['action'] : '';
-				$post_id = isset( $_GET['post'] ) ? $_GET['post'] : 0;
+				$action  = $_GET['action'] ?? '';
+				$post_id = $_GET['post'] ?? 0;
 
 				if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
 					$obj    = get_post( $post_id );
