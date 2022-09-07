@@ -261,7 +261,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$query_vars = '';
 
-		$ppp = $args['posts_per_page'];
+		$ppp = $args['posts_per_page'] ?? '';
 
 		if ( ! is_numeric( $ppp ) ) {
 			$ppp = HT_Frontend()->get_posts_per_page( is_home() );
