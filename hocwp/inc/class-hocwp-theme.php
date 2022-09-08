@@ -376,11 +376,22 @@ final class HOCWP_Theme {
 	public function get_method_value( $key, $method = 'post', $default = '' ) {
 		$method = strtoupper( $method );
 
-		return match ( $method ) {
-			'POST' => $this->get_value_in_array( $_POST, $key, $default ),
-			'GET' => $this->get_value_in_array( $_GET, $key, $default ),
-			default => $this->get_value_in_array( $_REQUEST, $key, $default ),
-		};
+		if(HOCWP_THEME_PHP8) {
+			return HT_PHP8()->get_method_value( $method, array(
+				'POST'    => $this->get_value_in_array( $_POST, $key, $default ),
+				'GET'     => $this->get_value_in_array( $_GET, $key, $default ),
+				'default' => $this->get_value_in_array( $_REQUEST, $key, $default )
+			) );
+		} else {
+			switch ($method) {
+				case 'POST':
+					return $this->get_value_in_array( $_POST, $key, $default );
+				case 'GET':
+					return $this->get_value_in_array( $_GET, $key, $default );
+				case 'default':
+					return $this->get_value_in_array( $_REQUEST, $key, $default );
+			}
+		}
 	}
 
 	public function array_merge_recursive( array $array1, array $array2 ) {

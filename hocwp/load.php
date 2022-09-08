@@ -13,7 +13,7 @@ $theme = wp_get_theme();
 $require_version = $theme->get( 'RequiresPHP' );
 
 if ( empty( $require_version ) ) {
-	$require_version = '8.0';
+	$require_version = '7.4';
 }
 
 /**
@@ -25,6 +25,8 @@ define( 'HOCWP_THEME_REQUIRE_PHP_VERSION', $require_version );
  * Theme developing mode.
  */
 define( 'HOCWP_THEME_DEVELOPING', ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) );
+
+define( 'HOCWP_THEME_PHP8', version_compare( phpversion(), '8.0', '>=' ) );
 
 /**
  * Theme root path.

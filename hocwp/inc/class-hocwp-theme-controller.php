@@ -387,6 +387,11 @@ final class HOCWP_Theme_Controller {
 		}
 
 		require $this->core_path . '/inc/functions-deprecated.php';
+
+		if ( HOCWP_THEME_PHP8 ) {
+			require $this->core_path . '/inc/class-hocwp-theme-php8.php';
+		}
+
 		require $this->core_path . '/inc/class-hocwp-theme-message.php';
 		require $this->core_path . '/inc/class-hocwp-theme.php';
 		require $this->core_path . '/inc/abstract-class-hocwp-theme-google-api.php';

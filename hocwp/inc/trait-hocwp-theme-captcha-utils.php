@@ -111,12 +111,22 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 	public function captcha_valid( $params = array() ) {
 		$service = $this->detect_service();
 
-		return match ( $service ) {
-			HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA => $this->recaptcha_valid( $params ),
-			HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA => $this->hcaptcha_valid( $params ),
-			default => new WP_Error( 'empty_service', __( 'CAPTCHA service does not provide.', 'hocwp-theme' ) )
-		};
-
+		if ( HOCWP_THEME_PHP8 ) {
+			return HT_PHP8()->captcha_valid( $service, array(
+				HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA => $this->recaptcha_valid( $params ),
+				HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA  => $this->hcaptcha_valid( $params ),
+				'default'                              => new WP_Error( 'empty_service', __( 'CAPTCHA service does not provide.', 'hocwp-theme' ) )
+			) );
+		} else {
+			switch ( $service ) {
+				case HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA:
+					return $this->recaptcha_valid( $params );
+				case HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA:
+					return $this->hcaptcha_valid( $params );
+				default:
+					return new WP_Error( 'empty_service', __( 'CAPTCHA service does not provide.', 'hocwp-theme' ) );
+			}
+		}
 	}
 
 	public function hcaptcha( $atts = array(), $script_params = array(), $insert_before = '' ) {

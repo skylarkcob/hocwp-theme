@@ -600,11 +600,35 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		$data_type = $field['args']['type'] ?? 'string';
 
-		$field['args']['callback_args']['min'] = match ( $data_type ) {
-			'positive_number', 'positive_integer' => 1,
-			'non_negative_integer', 'non_negative_number' => 0,
-			default => ''
-		};
+		if ( HOCWP_THEME_PHP8 ) {
+			$field['args']['callback_args']['min'] = HT_PHP8()->match( $data_type, array(
+				array(
+					array(
+						'positive_number',
+						'positive_integer'
+					),
+					1
+				),
+				array(
+					array(
+						'non_negative_integer',
+						'non_negative_number'
+					),
+					0
+				)
+			) );
+		} else {
+			switch ( $data_type ) {
+				case 'positive_number':
+				case 'positive_integer':
+					$field['args']['callback_args']['min'] = 1;
+					break;
+				case 'non_negative_integer':
+				case 'non_negative_number':
+					$field['args']['callback_args']['min'] = 0;
+					break;
+			}
+		}
 
 		return $field;
 	}

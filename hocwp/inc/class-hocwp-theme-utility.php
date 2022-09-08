@@ -823,15 +823,40 @@ class HOCWP_Theme_Utility {
 
 		$weekday = strtolower( $weekday );
 
-		$weekday = match ( $weekday ) {
-			'monday' => __( 'Monday', 'hocwp-theme' ),
-			'tuesday' => __( 'Tuesday', 'hocwp-theme' ),
-			'wednesday' => __( 'Wednesday', 'hocwp-theme' ),
-			'thursday' => __( 'Thursday', 'hocwp-theme' ),
-			'friday' => __( 'Friday', 'hocwp-theme' ),
-			'saturday' => __( 'Saturday', 'hocwp-theme' ),
-			default => __( 'Sunday', 'hocwp-theme' ),
-		};
+		if ( HOCWP_THEME_PHP8 ) {
+			$weekday = HT_PHP8()->get_current_weekday( $weekday, array(
+				'monday'    => __( 'Monday', 'hocwp-theme' ),
+				'tuesday'   => __( 'Tuesday', 'hocwp-theme' ),
+				'wednesday' => __( 'Wednesday', 'hocwp-theme' ),
+				'thursday'  => __( 'Thursday', 'hocwp-theme' ),
+				'friday'    => __( 'Friday', 'hocwp-theme' ),
+				'saturday'  => __( 'Saturday', 'hocwp-theme' ),
+				'default'   => __( 'Sunday', 'hocwp-theme' )
+			) );
+		} else {
+			switch ( $weekday ) {
+				case 'monday':
+					$weekday = __( 'Monday', 'hocwp-theme' );
+					break;
+				case 'tuesday':
+					$weekday = __( 'Tuesday', 'hocwp-theme' );
+					break;
+				case 'wednesday':
+					$weekday = __( 'Wednesday', 'hocwp-theme' );
+					break;
+				case 'thursday':
+					$weekday = __( 'Thursday', 'hocwp-theme' );
+					break;
+				case 'friday':
+					$weekday = __( 'Friday', 'hocwp-theme' );
+					break;
+				case 'saturday':
+					$weekday = __( 'Saturday', 'hocwp-theme' );
+					break;
+				default:
+					$weekday = __( 'Sunday', 'hocwp-theme' );
+			}
+		}
 
 		if ( ! empty( $format ) ) {
 			$weekday = sprintf( '%s, %s', $weekday, current_time( $format ) );
@@ -2212,10 +2237,27 @@ class HOCWP_Theme_Utility {
 		}
 
 		if ( HT()->array_has_value( $res ) && ! empty( $key ) ) {
-			$res = match ( $key ) {
-				'share_count', 'comment_count' => $res['share'][ $key ] ?? '',
-				default => $res['og_object']['likes']['summary']['total_count'] ?? '',
-			};
+			if ( HOCWP_THEME_PHP8 ) {
+				$res = HT_PHP8()->get_facebook_data_for_url( $key, array(
+					array(
+						array(
+							'share_count',
+							'comment_count'
+						),
+						$res['share'][ $key ] ?? ''
+					),
+					'default' => $res['og_object']['likes']['summary']['total_count'] ?? ''
+				) );
+			} else {
+				switch ( $key ) {
+					case 'share_count':
+					case 'comment_count':
+						$res = $res['share'][ $key ] ?? '';
+						break;
+					default:
+						$res = $res['og_object']['likes']['summary']['total_count'] ?? '';
+				}
+			}
 		}
 
 		return $res;
