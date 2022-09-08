@@ -823,8 +823,8 @@ class HOCWP_Theme_Utility {
 
 		$weekday = strtolower( $weekday );
 
-		if ( HOCWP_THEME_PHP8 ) {
-			$weekday = HT_PHP8()->get_current_weekday( $weekday, array(
+		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
+			$weekday = HT_PHP8()->match( $weekday, array(
 				'monday'    => __( 'Monday', 'hocwp-theme' ),
 				'tuesday'   => __( 'Tuesday', 'hocwp-theme' ),
 				'wednesday' => __( 'Wednesday', 'hocwp-theme' ),
@@ -2237,8 +2237,8 @@ class HOCWP_Theme_Utility {
 		}
 
 		if ( HT()->array_has_value( $res ) && ! empty( $key ) ) {
-			if ( HOCWP_THEME_PHP8 ) {
-				$res = HT_PHP8()->get_facebook_data_for_url( $key, array(
+			if ( HOCWP_THEME_SUPPORT_PHP8 ) {
+				$res = HT_PHP8()->match( $key, array(
 					array(
 						array(
 							'share_count',

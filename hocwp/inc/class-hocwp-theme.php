@@ -376,14 +376,14 @@ final class HOCWP_Theme {
 	public function get_method_value( $key, $method = 'post', $default = '' ) {
 		$method = strtoupper( $method );
 
-		if(HOCWP_THEME_PHP8) {
-			return HT_PHP8()->get_method_value( $method, array(
+		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
+			return HT_PHP8()->match( $method, array(
 				'POST'    => $this->get_value_in_array( $_POST, $key, $default ),
 				'GET'     => $this->get_value_in_array( $_GET, $key, $default ),
 				'default' => $this->get_value_in_array( $_REQUEST, $key, $default )
 			) );
 		} else {
-			switch ($method) {
+			switch ( $method ) {
 				case 'POST':
 					return $this->get_value_in_array( $_POST, $key, $default );
 				case 'GET':

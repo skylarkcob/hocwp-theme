@@ -600,7 +600,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		$data_type = $field['args']['type'] ?? 'string';
 
-		if ( HOCWP_THEME_PHP8 ) {
+		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
 			$field['args']['callback_args']['min'] = HT_PHP8()->match( $data_type, array(
 				array(
 					array(

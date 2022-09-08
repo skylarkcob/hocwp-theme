@@ -26,7 +26,7 @@ define( 'HOCWP_THEME_REQUIRE_PHP_VERSION', $require_version );
  */
 define( 'HOCWP_THEME_DEVELOPING', ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) );
 
-define( 'HOCWP_THEME_PHP8', version_compare( phpversion(), '8.0', '>=' ) );
+define( 'HOCWP_THEME_SUPPORT_PHP8', version_compare( phpversion(), '8.0', '>=' ) );
 
 /**
  * Theme root path.

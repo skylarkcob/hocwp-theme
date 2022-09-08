@@ -1,7 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-if ( HOCWP_THEME_PHP8 ) {
+if ( HOCWP_THEME_SUPPORT_PHP8 ) {
 	class HOCWP_Theme_PHP8 {
 		protected static $_instance = null;
 

@@ -388,7 +388,7 @@ final class HOCWP_Theme_Controller {
 
 		require $this->core_path . '/inc/functions-deprecated.php';
 
-		if ( HOCWP_THEME_PHP8 ) {
+		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
 			require $this->core_path . '/inc/class-hocwp-theme-php8.php';
 		}
 
