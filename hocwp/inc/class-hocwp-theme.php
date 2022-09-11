@@ -388,7 +388,7 @@ final class HOCWP_Theme {
 					return $this->get_value_in_array( $_POST, $key, $default );
 				case 'GET':
 					return $this->get_value_in_array( $_GET, $key, $default );
-				case 'default':
+				default:
 					return $this->get_value_in_array( $_REQUEST, $key, $default );
 			}
 		}
