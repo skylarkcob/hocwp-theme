@@ -474,6 +474,7 @@
 .hocwp-theme .multiple-fields .field-row label {
     display: block;
     clear: both;
+    margin-bottom: 10px;
 }
 
 .hocwp-theme .multiple-fields[data-columns="2"] .field-row:not(.full-row) {

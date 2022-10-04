@@ -9,6 +9,7 @@
 * 05/09/2022: Update pagination function to accept custom array items.
 * 07/09/2022: Update quick edit meta fields.
 * 08/09/2022: Downgrade supports for PHP 7.4 version.
+* 04/10/2022: Margin label in admin setting multiple fields.
 
 = 6.9.7 =
 * 19/08/2022: Add utilities to delete site cache and Cloudflare cache.
