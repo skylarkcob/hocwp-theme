@@ -39,7 +39,7 @@ function hocwp_theme_setup_start_session() {
 
 				foreach ( $terms as $key => $term ) {
 					if ( $term instanceof WP_Term ) {
-						if ( empty( $q ) || false !== strpos( $term->name, $q ) ) {
+						if ( empty( $q ) || str_contains( $term->name, $q ) ) {
 							if ( 'name' == $return ) {
 								$output[ $key ]['value'] = $term->name;
 							} else {
@@ -216,5 +216,18 @@ function hocwp_theme_required_plugins( $plugins ) {
 }
 
 add_filter( 'hocwp_theme_required_plugins', 'hocwp_theme_required_plugins' );
+
+function hocwp_theme_check_and_fix_site_url( $url ) {
+	// Prevent space in tail
+	$url = trim( $url );
+
+	// Prevent duplicate slash
+	return str_replace( array( 'http:///', 'https:///' ), array( 'http://', 'https://' ), $url );
+}
+
+add_filter( 'site_url', 'hocwp_theme_check_and_fix_site_url', 99 );
+add_filter( 'home_url', 'hocwp_theme_check_and_fix_site_url', 99 );
+add_filter( 'option_home', 'hocwp_theme_check_and_fix_site_url', 99 );
+add_filter( 'option_siteurl', 'hocwp_theme_check_and_fix_site_url', 99 );
 
 do_action( 'hocwp_theme_setup' );
