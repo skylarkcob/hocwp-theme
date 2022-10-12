@@ -221,7 +221,7 @@ function hocwp_theme_delete_cache_ajax_callback() {
 			} else {
 				$result = $api->purge_cache();
 			}
-			HT()->debug( $result );
+
 			if ( is_wp_error( $result ) ) {
 				$data['message'] = $result->get_error_message();
 			} elseif ( is_object( $result ) && $result->success ) {
