@@ -195,9 +195,9 @@ jQuery(document).ready(function ($) {
         });
     })();
 
-    // Delete cache
+    // Cloudflare API
     (function () {
-        body.on("click", "form[data-tab='administration_tools'] button[data-delete-cache='1'], form[data-tab='administration_tools'] input[data-delete-cache='1']", function (e) {
+        body.on("click", "form[data-tab='administration_tools'] button[data-delete-cache='1'], form[data-tab='administration_tools'] input[data-delete-cache='1'], form[data-tab='administration_tools'] button[data-development-mode='1'], form[data-tab='administration_tools'] input[data-development-mode='1']", function (e) {
             e.preventDefault();
 
             let that = this,
@@ -209,7 +209,13 @@ jQuery(document).ready(function ($) {
                 zoneId = form.find(".cloudflare_zone_id input"),
                 userEmail = form.find(".cloudflare_user_email input"),
                 domain = form.find(".cloudflare_domain input"),
-                msgConfirm = element.attr("data-confirm-message");
+                msgConfirm = element.attr("data-confirm-message"),
+                doAction = "delete_cache";
+
+            // Enable development mode
+            if (element.attr("data-development-mode")) {
+                doAction = "development_mode";
+            }
 
             if (!$.trim(msgConfirm) || confirm(msgConfirm)) {
                 $.ajax({
@@ -219,6 +225,7 @@ jQuery(document).ready(function ($) {
                     cache: true,
                     data: {
                         action: "hocwp_theme_delete_cache",
+                        do_action: doAction,
                         cloudflare_api_token: apiToken.val(),
                         cloudflare_user_email: userEmail.val(),
                         cloudflare_api_key: apiKey.val(),

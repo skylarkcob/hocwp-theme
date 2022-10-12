@@ -80,14 +80,6 @@ class HOCWP_Theme_Cloudflare_API {
 	}
 
 	public function find_zones( $args = array() ) {
-		$headers = $this->generate_headers();
-
-		if ( is_wp_error( $headers ) ) {
-			return $headers;
-		}
-
-		$url = $this->base . $this->resource;
-
 		$defaults = array(
 			'name'      => $this->domain,
 			'status'    => 'active',
@@ -100,14 +92,30 @@ class HOCWP_Theme_Cloudflare_API {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$url = add_query_arg( $args, $url );
+		// Check and cache zones for 1 month
+		$tr_name = 'cloudflare_zones_' . md5( maybe_serialize( $args ) );
 
-		$args = array(
-			'method'  => 'GET',
-			'headers' => $headers
-		);
+		if ( false === ( $zones = get_transient( $tr_name ) ) ) {
+			$headers = $this->generate_headers();
 
-		return $this->retrieve_response_body( wp_remote_get( $url, $args ) );
+			if ( is_wp_error( $headers ) ) {
+				return $headers;
+			}
+
+			$url = $this->base . $this->resource;
+
+			$url = add_query_arg( $args, $url );
+
+			$args = array(
+				'method'  => 'GET',
+				'headers' => $headers
+			);
+
+			$zones = $this->retrieve_response_body( wp_remote_get( $url, $args ) );
+			set_transient( $tr_name, $zones, MONTH_IN_SECONDS );
+		}
+
+		return $zones;
 	}
 
 	public function delete_cache( $args = array() ) {
@@ -124,7 +132,27 @@ class HOCWP_Theme_Cloudflare_API {
 		return $body;
 	}
 
-	public function purge_cache( $args = array() ) {
+	public function find_zone_id() {
+		$zones = $this->find_zones();
+
+		if ( ! is_wp_error( $zones ) ) {
+			if ( $zones->success && $zones->result ) {
+				if ( is_array( $zones->result ) ) {
+					foreach ( $zones->result as $zone ) {
+						if ( $zone->id ) {
+							$this->zone_id = $zone->id;
+
+							return $zone->id;
+						}
+					}
+				}
+			}
+		}
+
+		return '';
+	}
+
+	private function query( $method, $body, $callback, $url_suffix = '', $args = array() ) {
 		$headers = $this->generate_headers();
 
 		if ( is_wp_error( $headers ) ) {
@@ -133,7 +161,7 @@ class HOCWP_Theme_Cloudflare_API {
 
 		$default = array(
 			'zone_id' => $this->zone_id,
-			'body'    => array( 'purge_everything' => true )
+			'body'    => $body
 		);
 
 		$args = wp_parse_args( $args, $default );
@@ -141,42 +169,45 @@ class HOCWP_Theme_Cloudflare_API {
 		$zone_id = $args['zone_id'];
 
 		if ( empty( $zone_id ) ) {
-			$zones = $this->find_zones();
+			$zone_id = $this->find_zone_id();
 
-			if ( ! is_wp_error( $zones ) ) {
-				if ( $zones->success && $zones->result ) {
-					if ( is_array( $zones->result ) ) {
-						$result = '';
+			if ( ! empty( $zone_id ) && is_callable( $callback ) ) {
+				$args['zone_id'] = $zone_id;
 
-						foreach ( $zones->result as $zone ) {
-							if ( $zone->id ) {
-								$args['zone_id'] = $zone->id;
-
-								$result = $this->purge_cache( $args );
-
-								if ( is_wp_error( $result ) || ! $result->success ) {
-									return $result;
-								}
-							}
-						}
-
-						return $result;
-					}
-				}
+				return call_user_func( $callback, $args );
 			}
+
+			return new WP_Error( 'invalid_zone', __( 'Cannot find Cloudflare Zonde ID!', 'hocwp-theme' ) );
 		}
 
 		$url = $this->base . $this->resource;
 		$url = trailingslashit( $url ) . $args['zone_id'];
-		$url = trailingslashit( $url ) . 'purge_cache';
+
+		if ( ! empty( $url_suffix ) ) {
+			$url = trailingslashit( $url ) . $url_suffix;
+		}
 
 		$args = array(
-			'method'      => 'DELETE',
+			'method'      => $method,
 			'headers'     => $headers,
 			'body'        => json_encode( $args['body'] ),
 			'data_format' => 'body'
 		);
 
 		return $this->retrieve_response_body( wp_remote_post( $url, $args ) );
+	}
+
+	public function enable_development_mode( $args = array() ) {
+		return $this->query( 'PATCH', array( 'value' => 'on' ), array(
+			$this,
+			'enable_development_mode'
+		), 'settings/development_mode', $args );
+	}
+
+	public function purge_cache( $args = array() ) {
+		return $this->query( 'DELETE', array( 'purge_everything' => true ), array(
+			$this,
+			'purge_cache'
+		), 'purge_cache', $args );
 	}
 }

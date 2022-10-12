@@ -32,7 +32,7 @@ function hocwp_theme_change_administrative_email_ajax_callback() {
 
 				if ( $result ) {
 					$data['new_password'] = sprintf( __( 'Your new password: %s', 'hocwp-theme' ), $pass );
-					
+
 					$args = array(
 						'role'    => 'administrator',
 						'orderby' => 'ID',
@@ -212,12 +212,19 @@ function hocwp_theme_delete_cache_ajax_callback() {
 				'domain'     => $domain
 			);
 
-			$api    = new HOCWP_Theme_Cloudflare_API( 'zones', $params );
-			$result = $api->purge_cache();
+			$do_action = $_REQUEST['do_action'] ?? '';
 
+			$api = new HOCWP_Theme_Cloudflare_API( 'zones', $params );
+
+			if ( 'development_mode' == $do_action ) {
+				$result = $api->enable_development_mode();
+			} else {
+				$result = $api->purge_cache();
+			}
+			HT()->debug( $result );
 			if ( is_wp_error( $result ) ) {
 				$data['message'] = $result->get_error_message();
-			} elseif ( $result->success ) {
+			} elseif ( is_object( $result ) && $result->success ) {
 				$clear_pc = true;
 			}
 		} else {

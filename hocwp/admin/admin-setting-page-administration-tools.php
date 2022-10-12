@@ -111,17 +111,31 @@ $tab->add_field( 'cloudflare_zone_id', __( 'Cloudflare Zone ID', 'hocwp-theme' )
 $tab->add_field( 'cloudflare_domain', __( 'Cloudflare Domain', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
 
 $args = array(
-	'attributes'  => array(
-		'data-ajax-button'  => 1,
-		'data-message'      => __( 'All cache files have been deleted successfully!', 'hocwp-theme' ),
-		'data-delete-cache' => 1,
-		'aria-label'        => __( 'Delete', 'hocwp-theme' )
-	),
-	'button_type' => 'button',
-	'text'        => __( 'Delete', 'hocwp-theme' )
+	'buttons' => array(
+		'submit_delete_cache'     => array(
+			'attributes'  => array(
+				'data-ajax-button'  => 1,
+				'data-message'      => __( 'All cache files have been deleted successfully!', 'hocwp-theme' ),
+				'data-delete-cache' => 1,
+				'aria-label'        => __( 'Delete', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Delete', 'hocwp-theme' )
+		),
+		'enable_development_mode' => array(
+			'attributes'  => array(
+				'data-ajax-button'      => 1,
+				'data-message'          => __( 'Development Mode has been enabled successfully!', 'hocwp-theme' ),
+				'data-development-mode' => 1,
+				'aria-label'            => __( 'Enable Development Mode', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Enable Development Mode', 'hocwp-theme' )
+		)
+	)
 );
 
-$tab->add_field( 'submit_delete_cache', '', 'button', $args, 'string', 'delete_cache' );
+$tab->add_field( 'manage_cache_buttons', '', 'buttons', $args, 'string', 'delete_cache' );
 
 $args = array(
 	'title'       => __( 'Import & Export', 'hocwp-theme' ),
