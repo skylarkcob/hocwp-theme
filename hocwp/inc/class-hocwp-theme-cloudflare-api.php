@@ -29,16 +29,24 @@ class HOCWP_Theme_Cloudflare_API {
 			$this->user_email = $api_token['user_email'] ?? '';
 			$this->zone_id    = $api_token['zone_id'] ?? '';
 			$this->account_id = $api_token['account_id'] ?? '';
-			$this->domain     = $api_token['domain'] ?? '';
+			$this->set_domain( $api_token['domain'] ?? '' );
 		} else {
 			$this->set_api_token( $api_token );
 		}
 
-		if ( empty( $this->domain ) ) {
-			$this->domain = HT()->get_domain_name( home_url() );
+		if ( empty( $this->get_domain() ) ) {
+			$this->set_domain( HT()->get_domain_name( home_url() ) );
 		} else {
-			$this->domain = HT()->get_domain_name( $this->domain );
+			$this->set_domain( HT()->get_domain_name( $this->get_domain() ) );
 		}
+	}
+
+	public function get_domain() {
+		return $this->domain;
+	}
+
+	public function set_domain( $domain ) {
+		$this->domain = $domain;
 	}
 
 	public function set_api_token( $api_token ) {
@@ -81,7 +89,7 @@ class HOCWP_Theme_Cloudflare_API {
 
 	public function find_zones( $args = array() ) {
 		$defaults = array(
-			'name'      => $this->domain,
+			'name'      => $this->get_domain(),
 			'status'    => 'active',
 			'page'      => 1,
 			'per_page'  => 20,
@@ -180,8 +188,41 @@ class HOCWP_Theme_Cloudflare_API {
 		return $this->query( 'GET', '', '', $url_suffix, $args );
 	}
 
+	public function get_settings( &$settings = array() ) {
+		foreach ( $settings as $key => $item ) {
+			$value = $this->get_setting( $item['suffix'] );
+
+			if ( is_object( $value ) && ! is_wp_error( $value ) ) {
+				if ( $value->result ) {
+					if ( $value->result->value ) {
+						$value = $value->result->value;
+					} else {
+						$value = $value->result;
+					}
+				}
+			}
+
+			$item['value']    = $value;
+			$settings[ $key ] = $item;
+		}
+	}
+
 	public function update_setting( $body, $url_suffix = '', $args = array() ) {
 		return $this->query( 'PATCH', $body, '', $url_suffix, $args );
+	}
+
+	public function update_settings( $settings = array() ) {
+		foreach ( $settings as $item ) {
+			if ( $item['current_value'] != $item['value'] ) {
+				$result = $this->update_setting( array( 'value' => $item['value'] ), $item['suffix'] );
+
+				if ( is_wp_error( $valid = $this->is_response_valid( $result ) ) ) {
+					return $valid;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public function query( $method, $body, $callback, $url_suffix = '', $args = array() ) {
