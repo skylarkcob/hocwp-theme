@@ -339,3 +339,8 @@
 .hocwp-theme .settings-box td .image-size input[type="checkbox"] {
     margin-top: 0;
 }
+
+th label[for="administration_tools_cloudflare_settings"] {
+    text-transform: uppercase;
+    font-size: 1.1em;
+}

@@ -83,32 +83,32 @@ $args = array(
 $tab->add_field( 'submit_change_url', '', 'button', $args, 'string', 'change_url' );
 
 $args = array(
-	'title'       => __( 'Delete Cache', 'hocwp-theme' ),
-	'description' => __( 'You need to delete site cache and CDN cache to see update.', 'hocwp-theme' )
+	'title'       => __( 'Cloudflare API', 'hocwp-theme' ),
+	'description' => __( 'Cloudflare\'s API exposes the entire Cloudflare infrastructure via a standardized programmatic interface. Using Cloudflare\'s API, you can do just about anything you can do on cloudflare.com via the customer dashboard.', 'hocwp-theme' )
 );
 
-$tab->add_section( 'delete_cache', $args );
+$tab->add_section( 'cloudflare_api', $args );
 
 $args = array(
 	'class'       => 'regular-text',
 	'description' => __( 'If you enter a API Token, you do not need to provide your API Key and email address below.', 'hocwp-theme' )
 );
 
-$tab->add_field( 'cloudflare_api_token', __( 'Cloudflare API Token', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+$tab->add_field( 'cloudflare_api_token', __( 'Cloudflare API Token', 'hocwp-theme' ), 'input', $args, 'string', 'cloudflare_api' );
 
 $args['description'] = __( 'If you are not using API Token then you must provide API Key and email address.', 'hocwp-theme' );
 
-$tab->add_field( 'cloudflare_api_key', __( 'Cloudflare API Key', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+$tab->add_field( 'cloudflare_api_key', __( 'Cloudflare API Key', 'hocwp-theme' ), 'input', $args, 'string', 'cloudflare_api' );
 
 $args['type'] = 'email';
 
-$tab->add_field( 'cloudflare_user_email', __( 'Cloudflare User Email', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+$tab->add_field( 'cloudflare_user_email', __( 'Cloudflare User Email', 'hocwp-theme' ), 'input', $args, 'string', 'cloudflare_api' );
 
 unset( $args['description'], $args['type'] );
 
-$tab->add_field( 'cloudflare_account_id', __( 'Cloudflare Account ID', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
-$tab->add_field( 'cloudflare_zone_id', __( 'Cloudflare Zone ID', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
-$tab->add_field( 'cloudflare_domain', __( 'Cloudflare Domain', 'hocwp-theme' ), 'input', $args, 'string', 'delete_cache' );
+$tab->add_field( 'cloudflare_account_id', __( 'Cloudflare Account ID', 'hocwp-theme' ), 'input', $args, 'string', 'cloudflare_api' );
+$tab->add_field( 'cloudflare_zone_id', __( 'Cloudflare Zone ID', 'hocwp-theme' ), 'input', $args, 'string', 'cloudflare_api' );
+$tab->add_field( 'cloudflare_domain', __( 'Cloudflare Domain', 'hocwp-theme' ), 'input', $args, 'string', 'cloudflare_api' );
 
 $args = array(
 	'buttons' => array(
@@ -120,7 +120,7 @@ $args = array(
 				'aria-label'        => __( 'Delete', 'hocwp-theme' )
 			),
 			'button_type' => 'button',
-			'text'        => __( 'Delete', 'hocwp-theme' )
+			'text'        => __( 'Purge Cache', 'hocwp-theme' )
 		),
 		'enable_development_mode' => array(
 			'attributes'  => array(
@@ -135,7 +135,115 @@ $args = array(
 	)
 );
 
-$tab->add_field( 'manage_cache_buttons', '', 'buttons', $args, 'string', 'delete_cache' );
+$tab->add_field( 'manage_cache_buttons', '', 'buttons', $args, 'string', 'cloudflare_api' );
+
+$args = array(
+	'html' => wpautop( '<em>' . __( 'Install and set up the popular useful options on Cloudflare.', 'hocwp-theme' ) . '</em>' )
+);
+
+$tab->add_field( 'cloudflare_settings', __( 'Cloudflare Settings', 'hocwp-theme' ), 'html', $args, 'html', 'cloudflare_api' );
+
+$args = array(
+	'options'    => array(
+		'off'      => _x( 'Off (not secure)', 'cloudflare ssl', 'hocwp-theme' ),
+		'flexible' => _x( 'Flexible', 'cloudflare ssl', 'hocwp-theme' ),
+		'full'     => _x( 'Full', 'cloudflare ssl', 'hocwp-theme' ),
+		'strict'   => _x( 'Full (strict)', 'cloudflare ssl', 'hocwp-theme' ),
+	),
+	'attributes' => array(
+		'data-cs-settings' => '1',
+		'data-suffix'      => 'settings/ssl'
+	)
+);
+
+$tab->add_field( 'cs_ssl', __( 'SSL/TLS', 'hocwp-theme' ), 'select', $args, 'string', 'cloudflare_api' );
+
+$args = array(
+	'type'       => 'checkbox',
+	'text'       => __( 'Redirect all requests with scheme "http" to "https".', 'hocwp-theme' ),
+	'attributes' => array(
+		'data-cs-settings' => '1',
+		'data-suffix'      => 'settings/always_use_https'
+	)
+);
+
+$tab->add_field( 'cs_always_use_https', __( 'Always Use HTTPS', 'hocwp-theme' ), 'input', $args, 'boolean', 'cloudflare_api' );
+
+$args = array(
+	'type'       => 'checkbox',
+	'text'       => __( 'Automatic HTTPS Rewrites helps fix mixed content by changing "http" to "https" for all resources or links on your web site that can be served with HTTPS.', 'hocwp-theme' ),
+	'attributes' => array(
+		'data-cs-settings' => '1',
+		'data-suffix'      => 'settings/automatic_https_rewrites'
+	)
+);
+
+$tab->add_field( 'cs_automatic_https_rewrites', __( 'Automatic HTTPS Rewrites', 'hocwp-theme' ), 'input', $args, 'boolean', 'cloudflare_api' );
+
+$args = array(
+	'type'       => 'checkbox',
+	'text'       => __( 'Early Hints allows browsers to preload linked assets before they see a 200 OK or other final response from the origin.', 'hocwp-theme' ),
+	'attributes' => array(
+		'data-cs-settings' => '1',
+		'data-suffix'      => 'settings/early_hints'
+	)
+);
+
+$tab->add_field( 'cs_early_hints', __( 'Early Hints', 'hocwp-theme' ), 'input', $args, 'boolean', 'cloudflare_api' );
+
+$args = array(
+	'type'       => 'checkbox',
+	'text'       => __( 'Improve the paint time for pages which include JavaScript.', 'hocwp-theme' ),
+	'attributes' => array(
+		'data-cs-settings' => '1',
+		'data-suffix'      => 'settings/rocket_loader'
+	)
+);
+
+$tab->add_field( 'cs_rocket_loader', __( 'Rocket Loader', 'hocwp-theme' ), 'input', $args, 'boolean', 'cloudflare_api' );
+
+$args = array(
+	'type'       => 'checkbox',
+	'text'       => __( 'Keep your website online for visitors when your origin server is unavailable.', 'hocwp-theme' ),
+	'attributes' => array(
+		'data-cs-settings' => '1',
+		'data-suffix'      => 'settings/always_online'
+	)
+);
+
+$tab->add_field( 'cs_always_online', __( 'Always Online', 'hocwp-theme' ), 'input', $args, 'boolean', 'cloudflare_api' );
+
+$args = array(
+	'buttons' => array(
+		'fetch_settings'  => array(
+			'attributes'  => array(
+				'data-ajax-button'    => 1,
+				'data-message'        => __( 'All settings have been fetched successfully!', 'hocwp-theme' ),
+				'data-fetch-settings' => 1,
+				'data-admin-tools'    => 1,
+				'data-do-action'      => 'fetch_cloudflare_settings',
+				'aria-label'          => __( 'Fetch Settings', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Fetch Settings', 'hocwp-theme' )
+		),
+		'update_settings' => array(
+			'attributes'  => array(
+				'data-ajax-button'     => 1,
+				'data-message'         => __( 'All settings have been updated successfully!', 'hocwp-theme' ),
+				'data-update-settings' => 1,
+				'data-admin-tools'     => 1,
+				'data-do-action'       => 'update_cloudflare_settings',
+				'aria-label'           => __( 'Update Settings', 'hocwp-theme' ),
+				'disabled'             => 'disabled'
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Update Settings', 'hocwp-theme' )
+		)
+	)
+);
+
+$tab->add_field( 'settings_buttons', '', 'buttons', $args, 'string', 'cloudflare_api' );
 
 $args = array(
 	'title'       => __( 'Import & Export', 'hocwp-theme' ),

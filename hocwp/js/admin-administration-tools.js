@@ -195,6 +195,132 @@ jQuery(document).ready(function ($) {
         });
     })();
 
+    // All administration tools buttons
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-admin-tools='1'], form[data-tab='administration_tools'] input[data-admin-tools='1']", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that),
+                form = element.closest("form"),
+                msgConfirm = element.attr("data-confirm-message"),
+                doAction = element.attr("data-do-action");
+
+            switch (doAction) {
+                case "update_cloudflare_settings":
+                case "fetch_cloudflare_settings":
+                    let accountId = form.find(".cloudflare_account_id input"),
+                        apiToken = form.find(".cloudflare_api_token input"),
+                        apiKey = form.find(".cloudflare_api_key input"),
+                        zoneId = form.find(".cloudflare_zone_id input"),
+                        userEmail = form.find(".cloudflare_user_email input"),
+                        domain = form.find(".cloudflare_domain input"),
+                        settingsBefore = form.find("tr.cloudflare_settings"),
+                        settings = [],
+                        setting = settingsBefore.next("tr");
+
+                    while (setting && setting.length && "settings_buttons" !== setting.attr("class")) {
+                        let option = setting.find("*[data-cs-settings='1']"),
+                            value = "";
+
+                        if (option && option.length) {
+                            if ("INPUT" === option.prop("tagName") && "checkbox" === option.attr("type")) {
+                                if (option.is(":checked")) {
+                                    value = "on";
+                                } else {
+                                    value = "off";
+                                }
+                            } else {
+                                value = option.val();
+                            }
+
+                            settings.push({
+                                tag: option.prop("tagName"),
+                                id: option.attr("id"),
+                                suffix: option.attr("data-suffix"),
+                                current_value: option.attr("data-current-value"),
+                                value: value
+                            });
+                        }
+
+                        setting = setting.next("tr")
+                    }
+
+                    if (!$.trim(msgConfirm) || confirm(msgConfirm)) {
+                        if ("fetch_cloudflare_settings" === doAction) {
+                            element.next().prop("disabled", true);
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            dataType: "JSON",
+                            url: hocwpTheme.ajaxUrl,
+                            cache: true,
+                            data: {
+                                action: "hocwp_theme_admin_tools",
+                                do_action: doAction,
+                                cloudflare_api_token: apiToken.val(),
+                                cloudflare_user_email: userEmail.val(),
+                                cloudflare_api_key: apiKey.val(),
+                                cloudflare_account_id: accountId.val(),
+                                cloudflare_zone_id: zoneId.val(),
+                                cloudflare_domain: domain.val(),
+                                settings: settings
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    if ("fetch_cloudflare_settings" === doAction) {
+                                        $.each(response.data.settings, function (index, value) {
+                                            let item = form.find("#" + value.id);
+
+                                            if (value.value.result && value.value.result.value) {
+                                                item.val(value.value.result.value);
+                                            } else {
+                                                if ("INPUT" === value.tag) {
+                                                    if ("on" === value.value) {
+                                                        item.prop("checked", true);
+                                                    } else {
+                                                        item.prop("checked", false);
+                                                    }
+                                                } else {
+                                                    item.val(value.value);
+                                                }
+
+                                                item.attr("data-current-value", value.value);
+                                            }
+                                        });
+
+                                        element.next().prop("disabled", false);
+                                    }
+
+                                    if (element.attr("data-message")) {
+                                        setTimeout(function () {
+                                            alert(element.attr("data-message"));
+                                        }, 300);
+                                    }
+                                }
+
+                                if (response.data && response.data.message) {
+                                    alert(response.data.message);
+                                }
+                            },
+                            complete: function (response) {
+                                body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            },
+                            error: function (jqXHR, exception) {
+                                alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                            }
+                        });
+                    } else {
+                        element.removeClass("disabled");
+                        element.blur();
+                    }
+
+                    break;
+            }
+        });
+    })();
+
     // Cloudflare API
     (function () {
         body.on("click", "form[data-tab='administration_tools'] button[data-delete-cache='1'], form[data-tab='administration_tools'] input[data-delete-cache='1'], form[data-tab='administration_tools'] button[data-development-mode='1'], form[data-tab='administration_tools'] input[data-development-mode='1']", function (e) {

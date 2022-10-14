@@ -153,6 +153,11 @@ final class HOCWP_Theme_HTML_Field {
 		echo $html;
 	}
 
+	public static function html( $args = array() ) {
+		$html = $args['html'] ?? '';
+		echo $html;
+	}
+
 	public static function input( $args = array() ) {
 		$defaults = array(
 			'type' => 'text'

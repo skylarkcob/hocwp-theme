@@ -185,6 +185,103 @@ function hocwp_theme_change_site_url_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_change_site_url', 'hocwp_theme_change_site_url_ajax_callback' );
 
+function hocwp_theme_admin_tools_ajax_callback() {
+	$data = array();
+
+	if ( current_user_can( 'manage_options' ) ) {
+		$do_action = $_REQUEST['do_action'] ?? '';
+
+		switch ( $do_action ) {
+			case 'update_cloudflare_settings':
+			case 'fetch_cloudflare_settings':
+				$api_key    = $_REQUEST['cloudflare_api_key'] ?? '';
+				$api_token  = $_REQUEST['cloudflare_api_token'] ?? '';
+				$user_email = $_REQUEST['cloudflare_user_email'] ?? '';
+				$account_id = $_REQUEST['cloudflare_account_id'] ?? '';
+				$zone_id    = $_REQUEST['cloudflare_zone_id'] ?? '';
+				$domain     = $_REQUEST['cloudflare_domain'] ?? '';
+
+				if ( ! empty( $api_token ) || ! empty( $api_key ) ) {
+					if ( ! class_exists( 'HOCWP_Theme_Cloudflare_API' ) ) {
+						require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php';
+					}
+
+					$params = array(
+						'api_key'    => $api_key,
+						'api_token'  => $api_token,
+						'user_email' => $user_email,
+						'account_id' => $account_id,
+						'zone_id'    => $zone_id,
+						'domain'     => $domain
+					);
+
+					$api = new HOCWP_Theme_Cloudflare_API( 'zones', $params );
+
+					$settings = $_REQUEST['settings'] ?? '';
+
+					if ( HT()->array_has_value( $settings ) ) {
+						if ( 'fetch_cloudflare_settings' == $do_action ) {
+							$value = '';
+
+							foreach ( $settings as $key => $item ) {
+								$value = $api->get_setting( $item['suffix'] );
+
+								if ( is_wp_error( $value ) ) {
+									$data['message'] = $value->get_error_message();
+									break;
+								}
+
+								if ( is_object( $value ) ) {
+									if ( $value->result ) {
+										if ( $value->result->value ) {
+											$value = $value->result->value;
+										} else {
+											$value = $value->result;
+										}
+									}
+								}
+
+								$item['value']    = $value;
+								$settings[ $key ] = $item;
+							}
+
+							if ( ! is_wp_error( $value ) ) {
+								$data['settings'] = $settings;
+
+								wp_send_json_success( $data );
+							}
+						} elseif ( 'update_cloudflare_settings' == $do_action ) {
+							$result = '';
+
+							foreach ( $settings as $item ) {
+								if ( $item['current_value'] != $item['value'] ) {
+									$result = $api->update_setting( array( 'value' => $item['value'] ), $item['suffix'] );
+
+									if ( is_wp_error( $valid = $api->is_response_valid( $result ) ) ) {
+										$data['message'] = $valid->get_error_message();
+										break;
+									}
+								}
+							}
+
+							if ( $result && ! is_wp_error( $result ) ) {
+								wp_send_json_success( $data );
+							}
+						}
+					}
+				} else {
+					$data['message'] = __( 'Please fill the required fields above.', 'hocwp-theme' );
+				}
+
+				break;
+		}
+	}
+
+	wp_send_json_error( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_admin_tools', 'hocwp_theme_admin_tools_ajax_callback' );
+
 function hocwp_theme_delete_cache_ajax_callback() {
 	$data = array();
 

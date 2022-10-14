@@ -37,6 +37,28 @@ final class HOCWP_Theme_HTML_Tag {
 		}
 	}
 
+	public function sanitize_html_class( $class ) {
+		if ( empty( $class ) ) {
+			return '';
+		}
+
+		$classes = $this->get_attribute( 'class' );
+
+		if ( ! is_array( $classes ) ) {
+			$classes = explode( ' ', $classes );
+		}
+
+		if ( ! is_array( $class ) ) {
+			$class = explode( ' ', $class );
+		}
+
+		$classes = array_merge( $classes, $class );
+		$classes = array_unique( $classes );
+		$classes = array_filter( $classes );
+
+		return implode( ' ', $classes );
+	}
+
 	public function add_attribute( $attribute_name, $value = null ) {
 		if ( ! is_array( $this->attributes ) ) {
 			$this->attributes = array();
@@ -55,6 +77,10 @@ final class HOCWP_Theme_HTML_Tag {
 		} else {
 			if ( is_bool( $value ) ) {
 				$value = HT()->bool_to_string( $value );
+			}
+
+			if ( 'class' == $attribute_name ) {
+				$value = $this->sanitize_html_class( $value );
 			}
 
 			$this->attributes[ $attribute_name ] = $value;
