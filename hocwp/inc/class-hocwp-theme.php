@@ -852,12 +852,20 @@ final class HOCWP_Theme {
 		return null;
 	}
 
+	public function get_images_from_string( $data, $output = 'img' ) {
+		return $this->get_all_image_from_string( $data, $output );
+	}
+
 	public function get_all_image_from_string( $data, $output = 'img' ) {
+		if ( empty( $data ) ) {
+			return '';
+		}
+
 		$output = trim( $output );
 		preg_match_all( '/<img[^>]+>/i', $data, $matches );
 		$matches = $matches[0] ?? array();
 
-		if ( ! self::array_has_value( $matches ) && ! empty( $data ) ) {
+		if ( ! self::array_has_value( $matches ) ) {
 			if ( false !== HT()->string_contain( $data, '//' ) ) {
 				if ( HT()->has_image( $data ) ) {
 					$sources = explode( PHP_EOL, $data );
