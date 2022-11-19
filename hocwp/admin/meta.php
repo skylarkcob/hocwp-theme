@@ -37,6 +37,17 @@ function hocwp_theme_default_meta_boxes() {
 		$meta->add_field( $field );
 
 		do_action_ref_array( 'hocwp_theme_extra_information_meta_fields', array( &$meta ) );
+
+		$meta = new HOCWP_Theme_Meta_Post();
+		$meta->set_post_types( $post_types );
+		$meta->set_id( 'custom-post-code' );
+		$meta->set_title( __( 'Custom Code', 'hocwp-theme' ) );
+
+		$args = array(
+			'description' => __( 'Add any custom HTML code after post content.', 'hocwp-theme' )
+		);
+
+		$meta->add_field( new HOCWP_Theme_Meta_Field( 'custom_code', '', 'code_editor', $args, 'html' ) );
 	}
 }
 

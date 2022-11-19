@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2022-10-14 12:31+0700\n"
-"PO-Revision-Date: 2022-10-14 12:31+0700\n"
+"POT-Creation-Date: 2022-11-19 19:23+0700\n"
+"PO-Revision-Date: 2022-11-19 19:23+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: functions.php:112 hocwp/admin/meta.php:169
+#: functions.php:112 hocwp/admin/meta.php:180
 msgid "Sidebar"
 msgstr ""
 
@@ -422,7 +422,7 @@ msgstr ""
 msgid "Data has been imported successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-custom-code.php:8
+#: hocwp/admin/admin-setting-page-custom-code.php:8 hocwp/admin/meta.php:44
 msgid "Custom Code"
 msgstr ""
 
@@ -589,7 +589,7 @@ msgstr ""
 msgid "Facebook"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-float-support.php:10 hocwp/admin/meta.php:56
+#: hocwp/admin/admin-setting-page-float-support.php:10 hocwp/admin/meta.php:67
 msgid "Maps"
 msgstr ""
 
@@ -866,7 +866,7 @@ msgstr ""
 #: hocwp/admin/admin-setting-page-reading.php:68
 #: hocwp/admin/admin-setting-page-reading.php:191
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:116
-#: hocwp/admin/meta.php:174 hocwp/inc/class-hocwp-theme-customize.php:70
+#: hocwp/admin/meta.php:185 hocwp/inc/class-hocwp-theme-customize.php:70
 msgid "Default"
 msgstr ""
 
@@ -1023,17 +1023,17 @@ msgstr ""
 msgid "Float Post Nav"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:192 hocwp/admin/meta.php:175
+#: hocwp/admin/admin-setting-page-reading.php:192 hocwp/admin/meta.php:186
 msgctxt "sidebar position"
 msgid "Right"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:193 hocwp/admin/meta.php:176
+#: hocwp/admin/admin-setting-page-reading.php:193 hocwp/admin/meta.php:187
 msgctxt "sidebar position"
 msgid "Left"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-reading.php:197 hocwp/admin/meta.php:180
+#: hocwp/admin/admin-setting-page-reading.php:197 hocwp/admin/meta.php:191
 msgid "Sidebar Position"
 msgstr ""
 
@@ -1267,7 +1267,7 @@ msgstr ""
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:359 hocwp/inc/template-post.php:344
+#: hocwp/admin/admin.php:359 hocwp/inc/template-post.php:356
 msgid "Related posts"
 msgstr ""
 
@@ -1855,23 +1855,27 @@ msgstr ""
 msgid "Large Thumbnail"
 msgstr ""
 
-#: hocwp/admin/meta.php:65
+#: hocwp/admin/meta.php:47
+msgid "Add any custom HTML code after post content."
+msgstr ""
+
+#: hocwp/admin/meta.php:76
 msgid "Additional Information"
 msgstr ""
 
-#: hocwp/admin/meta.php:121
+#: hocwp/admin/meta.php:132
 msgid "Gallery"
 msgstr ""
 
-#: hocwp/admin/meta.php:146
+#: hocwp/admin/meta.php:157
 msgid "Advanced Settings"
 msgstr ""
 
-#: hocwp/admin/meta.php:149
+#: hocwp/admin/meta.php:160
 msgid "Default Sidebar"
 msgstr ""
 
-#: hocwp/admin/meta.php:185
+#: hocwp/admin/meta.php:196
 msgid "Display content box as full width."
 msgstr ""
 
@@ -2326,11 +2330,11 @@ msgstr ""
 msgid "Every %d Minutes"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:60
+#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:68
 msgid "Missing API Token or API Key!"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:219
+#: hocwp/inc/class-hocwp-theme-cloudflare-api.php:260
 msgid "Cannot find Cloudflare Zone ID!"
 msgstr ""
 
@@ -3461,19 +3465,19 @@ msgstr ""
 msgid "Pages:"
 msgstr ""
 
-#: hocwp/inc/template-post.php:379 inc/template-tags.php:30
+#: hocwp/inc/template-post.php:391 inc/template-tags.php:30
 #, php-format
 msgctxt "post date"
 msgid "Posted on %s"
 msgstr ""
 
-#: hocwp/inc/template-post.php:395
+#: hocwp/inc/template-post.php:407
 #, php-format
 msgctxt "post date"
 msgid "Last updated on %s"
 msgstr ""
 
-#: hocwp/inc/template-post.php:404 inc/template-tags.php:46
+#: hocwp/inc/template-post.php:416 inc/template-tags.php:46
 #, php-format
 msgctxt "post author"
 msgid "by %s"

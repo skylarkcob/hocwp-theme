@@ -310,7 +310,19 @@ function hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content( $content 
 	// Remove empty paragraph in post content.
 	$content = force_balance_tags( $content );
 
-	return preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content );
+	$content = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content );
+
+	$code = get_post_meta( get_the_ID(), 'custom_code', true );
+
+	if ( ! empty( $code ) ) {
+		$content .= PHP_EOL;
+		$content .= '<div class="custom-code">' . PHP_EOL;
+		$content .= $code;
+		$content .= PHP_EOL;
+		$content .= '</div>' . PHP_EOL;
+	}
+
+	return $content;
 }
 
 add_filter( 'the_content', 'hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content' );
