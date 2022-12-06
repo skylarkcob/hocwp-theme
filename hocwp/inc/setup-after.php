@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$do_action = $_GET['do_action'] ?? '';
+
 function hocwp_theme_after_setup_theme() {
 	$editor_color_palette = array();
 
@@ -593,6 +595,10 @@ $disable_lazy_loading = HT_Options()->get_tab( 'disable_lazy_loading', '', 'read
 
 if ( $disable_lazy_loading ) {
 	add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+}
+
+if ( 'DISABLE_PLUGINS' == $do_action ) {
+	add_filter( 'option_active_plugins', '__return_empty_array', 99 );
 }
 
 do_action( 'hocwp_theme_setup_after' );

@@ -17,6 +17,7 @@
 * 14/10/2022: Add more HTML Field callbacks.
 * 14/10/2022: Update HTML Tag class.
 * 19/11/2022: Add custom code meta to add custom HTML into post content.
+* 06/12/2022: Allow to disable plugins by pass do_action param.
 
 = 6.9.7 =
 * 19/08/2022: Add utilities to delete site cache and Cloudflare cache.
