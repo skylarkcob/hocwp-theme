@@ -1805,6 +1805,11 @@ final class HOCWP_Theme_HTML_Field {
 		self::media_upload( $args );
 	}
 
+	public static function file_upload( $args = array() ) {
+		$args['media_type'] = 'file';
+		self::media_upload( $args );
+	}
+
 	public static function media_upload( $args = array() ) {
 		$type  = isset( $args['type'] ) ? $args['type'] : '';
 		$value = isset( $args['value'] ) ? $args['value'] : '';
