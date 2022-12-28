@@ -350,6 +350,7 @@ class HOCWP_Theme_Utility {
 		$content = prepend_attachment( $content );
 		$content = wp_filter_content_tags( $content );
 		$content = wp_replace_insecure_home_url( $content );
+		$content = wp_oembed_get( $content );
 
 		return apply_filters( 'hocwp_theme_the_content_filter', $content );
 	}
