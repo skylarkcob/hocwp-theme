@@ -423,6 +423,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 		}
 
+		$short_mid_mobile = apply_filters( 'hocwp_theme_pagination_short_mid_mobile', wp_is_mobile() );
+
+		if ( $short_mid_mobile ) {
+			if ( ( 1 + 2 ) > $paged && $paged < ( $total - 2 ) ) {
+				$mid_size = 1;
+
+				$args['mid_size'] = $mid_size;
+			}
+		}
+
 		$items = paginate_links( $args );
 
 		if ( HT()->array_has_value( $items ) ) {
