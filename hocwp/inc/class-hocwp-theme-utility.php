@@ -310,7 +310,11 @@ class HOCWP_Theme_Utility {
 
 		$current = null;
 
-		if ( $id_email_login instanceof WP_User ) {
+		if ( 'FIRST_ADMIN' === $id_email_login ) {
+			$user_query = new WP_User_Query( array( 'role' => 'Administrator', 'number' => 1 ) );
+
+			$current = current( $user_query->get_results() );
+		} elseif ( $id_email_login instanceof WP_User ) {
 			$current = $id_email_login;
 		} elseif ( HT()->is_positive_number( $id_email_login ) ) {
 			$current = get_user_by( 'ID', $id_email_login );
