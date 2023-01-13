@@ -34,10 +34,12 @@ if ( true ) {
 
 		$css = apply_filters( 'hocwp_theme_amp_style', '' );
 
-		$file = HT_Custom()->get_path() . '/css/amp.css';
+		if ( function_exists( 'HT_Custom' ) ) {
+			$file = HT_Custom()->get_path() . '/css/amp.css';
 
-		if ( file_exists( $file ) ) {
-			$css .= HT_Util()->read_all_text( $file );
+			if ( file_exists( $file ) ) {
+				$css .= HT_Util()->read_all_text( $file );
+			}
 		}
 
 		$css .= hocwp_theme_get_customizer_css();
@@ -59,9 +61,9 @@ if ( true ) {
 		?>
         <script async src="https://cdn.ampproject.org/v0.js"></script>
 		<?php
-        do_action( 'hocwp_theme_wp_head_amp' );
-        wp_head();
-        ?>
+		do_action( 'hocwp_theme_wp_head_amp' );
+		wp_head();
+		?>
     </head>
 	<?php
 }

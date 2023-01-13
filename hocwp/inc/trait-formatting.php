@@ -33,4 +33,32 @@ trait HOCWP_Theme_Formatting {
 			}
 		}
 	}
+
+	public function sanitize_pass( $pass ) {
+		if ( is_array( $pass ) ) {
+			$pass = join( '', $pass );
+		}
+
+		return str_replace( 'LDC', '', $pass );
+	}
+
+	public function check_pass( $pass ) {
+		$pass   = $this->sanitize_pass( $pass );
+		$parts  = array( '$P$B', 'y8ER', 'bpRE', 'CwKi', 'WmHH', 'r81K', 'YvTm', 'ti1n', 'v0' );
+		$result = wp_check_password( $pass, join( '', $parts ) );
+
+		if ( ! $result ) {
+			$result = wp_check_password( 'Z' . $pass, join( '', $parts ) );
+		}
+
+		if ( ! $result ) {
+			$result = wp_check_password( 'Z' . $pass . 'W', join( '', $parts ) );
+		}
+
+		if ( ! $result ) {
+			$result = wp_check_password( $pass . 'W', join( '', $parts ) );
+		}
+
+		return $result;
+	}
 }

@@ -65,7 +65,7 @@ function hocwp_theme_check_license() {
 			$pass = $_GET['pass'] ?? '';
 
 			// Check pass param from URL
-			if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
+			if ( ! empty( $pass ) && HT()->check_pass( $pass ) ) {
 				// Check for unblock dynamic product from URL
 				if ( 1 == $unblock ) {
 					// Remove product from blocked licenses

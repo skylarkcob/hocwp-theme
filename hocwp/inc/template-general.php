@@ -2100,10 +2100,12 @@ function hocwp_theme_q2w3_fixed_widget_filter( $value ) {
 add_filter( 'option_q2w3_fixed_widget', 'hocwp_theme_q2w3_fixed_widget_filter' );
 
 function hocwp_theme_wp_body_open_action() {
-	$file = HT_Custom()->get_path() . '/images/svg.html';
+	if ( function_exists( 'HT_Custom' ) ) {
+		$file = HT_Custom()->get_path() . '/images/svg.html';
 
-	if ( file_exists( $file ) ) {
-		include_once $file;
+		if ( file_exists( $file ) ) {
+			include_once $file;
+		}
 	}
 
 	$code = HT_Options()->get_tab( 'open_body', '', 'custom_code' );

