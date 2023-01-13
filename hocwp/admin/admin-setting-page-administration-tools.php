@@ -84,7 +84,7 @@ $tab->add_field( 'submit_change_url', '', 'button', $args, 'string', 'change_url
 
 $args = array(
 	'title'       => __( 'Cloudflare API', 'hocwp-theme' ),
-	'description' => __( 'Cloudflare\'s API exposes the entire Cloudflare infrastructure via a standardized programmatic interface. Using Cloudflare\'s API, you can do just about anything you can do on cloudflare.com via the customer dashboard.', 'hocwp-theme' )
+	'description' => __( 'Cloudflare\'s API exposes the entire Cloudflare infrastructure via a standardized programmatic interface. Using Cloudflare\'s API, you can do just about anything you can do on Cloudflare via the customer dashboard.', 'hocwp-theme' )
 );
 
 $tab->add_section( 'cloudflare_api', $args );
