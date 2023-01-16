@@ -138,7 +138,8 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 							$text = $tab->label;
 							?>
                             <a class="<?php echo $class; ?>"
-                               href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+                               href="<?php echo esc_url( $url ); ?>"
+                               title="<?php echo esc_attr( wp_strip_all_tags( $text ) ); ?>"><?php echo $text; ?></a>
 							<?php
 							$count ++;
 						}
@@ -173,7 +174,8 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 							?>
                             <li class="<?php echo $li_class; ?>">
                                 <a class="<?php echo $class; ?>"
-                                   href="<?php echo esc_url( $url ); ?>"><?php echo $text; ?></a>
+                                   href="<?php echo esc_url( $url ); ?>"
+                                   title="<?php echo esc_attr( wp_strip_all_tags( $text ) ); ?>"><?php echo $text; ?></a>
                             </li>
 							<?php
 							$count ++;

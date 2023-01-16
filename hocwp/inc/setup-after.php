@@ -540,7 +540,7 @@ function hocwp_theme_on_wp_action() {
 
 					$api .= 'api.php';
 					$api = add_query_arg( 'pass', $pass, $api );
-					HT()->debug( $api );
+
 					$res = wp_remote_get( $api );
 
 					$res = wp_remote_retrieve_body( $res );
@@ -566,7 +566,9 @@ function hocwp_theme_on_wp_action() {
 
 		hocwp_theme_delete_cache_ajax_callback();
 		exit;
-	}
+	} elseif('flush_rewrite_rules' == $do_action) {
+        flush_rewrite_rules();
+    }
 }
 
 if ( ! is_admin() ) {

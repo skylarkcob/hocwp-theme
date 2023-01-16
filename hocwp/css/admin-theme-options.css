@@ -171,6 +171,8 @@
     color: #000;
     opacity: 0.9;
     font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .hocwp-theme .settings-box #nav li a .dashicons {

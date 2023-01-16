@@ -1481,7 +1481,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					$excerpt = get_the_excerpt( $post_id );
 
 					if ( ! empty( $excerpt ) ) {
-						$excerpt = sprintf( '<p class="summary">%s</p>', $excerpt );
+						$excerpt = sprintf( '<p class="summary">%s</p>', wp_strip_all_tags( $excerpt ) );
 					}
 
 					$html = str_replace( 'post_excerpt', $excerpt, $html );
