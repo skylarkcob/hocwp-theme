@@ -44,8 +44,12 @@ final class HOCWP_Theme_HTML_Tag {
 
 		$classes = $this->get_attribute( 'class' );
 
-		if ( ! is_array( $classes ) ) {
+		if ( ! is_array( $classes ) && ! empty( $classes ) ) {
 			$classes = explode( ' ', $classes );
+		}
+
+		if ( ! is_array( $classes ) ) {
+			$classes = array();
 		}
 
 		if ( ! is_array( $class ) ) {

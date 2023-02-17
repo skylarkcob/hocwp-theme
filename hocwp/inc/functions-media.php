@@ -71,8 +71,6 @@ function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file ) {
 	return $types;
 }
 
-add_filter( 'wp_check_filetype_and_ext', 'hocwp_theme_wp_check_filetype_and_ext_filter', 10, 2 );
-
 // Mark WEBP image as real image
 function hocwp_theme_file_is_displayable_image_filter( $result, $path ) {
 	if ( ! $result && HT_Media()->is_webp_image( $path ) ) {
@@ -81,8 +79,6 @@ function hocwp_theme_file_is_displayable_image_filter( $result, $path ) {
 
 	return $result;
 }
-
-add_filter( 'file_is_displayable_image', 'hocwp_theme_file_is_displayable_image_filter', 10, 2 );
 
 // Re-update WEBP image metadata
 function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
@@ -113,7 +109,13 @@ function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 	return $data;
 }
 
-add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_wp_get_attachment_metadata_filter', 10, 2 );
+global $wp_version;
+
+if ( version_compare( $wp_version, '5.8', '<' ) ) {
+	add_filter( 'wp_check_filetype_and_ext', 'hocwp_theme_wp_check_filetype_and_ext_filter', 10, 2 );
+	add_filter( 'file_is_displayable_image', 'hocwp_theme_file_is_displayable_image_filter', 10, 2 );
+	add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_wp_get_attachment_metadata_filter', 10, 2 );
+}
 
 class HOCWP_Theme_Media {
 	protected static $instance;

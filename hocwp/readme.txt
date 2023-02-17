@@ -3,6 +3,7 @@
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.
 * 14/01/2023: Fix setting tab long label.
 * 17/01/2023: Add custom URL to update rewrite rules.
+* 17/02/2023: Only add Webp supports for WordPress 5.7 or earlier.
 
 = 6.9.8 =
 * 04/09/2022: Add default query to related posts.
