@@ -134,7 +134,8 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 	public function human_time_diff( $ago = false ) {
 		if ( $this->post instanceof WP_Post ) {
 			$timestamp = strtotime( $this->post->post_date );
-			$diff      = human_time_diff( $timestamp );
+
+			$diff = human_time_diff( $timestamp, current_time( 'timestamp' ) );
 
 			if ( $ago ) {
 				$diff = sprintf( __( '%s ago', 'hocwp-theme' ), $diff );

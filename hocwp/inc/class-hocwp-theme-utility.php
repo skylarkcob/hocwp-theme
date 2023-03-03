@@ -780,6 +780,10 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function write_all_text( $path, $text ) {
+		if ( empty( $path ) ) {
+			return '';
+		}
+
 		$filesystem = self::filesystem();
 
 		if ( $filesystem instanceof WP_Filesystem_Base ) {

@@ -772,7 +772,18 @@ final class HOCWP_Theme {
 			return '';
 		}
 
+		if ( $this->is_image_url( $content ) ) {
+			return $content;
+		}
+
+		if ( ! str_contains( $content, '="' ) ) {
+			return '';
+		}
+
 		$doc = new DOMDocument();
+
+		libxml_use_internal_errors(true);
+
 		@$doc->loadHTML( $content );
 		$xpath = new DOMXPath( $doc );
 		$src   = $xpath->evaluate( 'string(//img/@src)' );
