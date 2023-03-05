@@ -486,6 +486,7 @@ function hocwp_theme_frontend_and_backend_scripts() {
 }
 
 function hocwp_theme_register_global_scripts() {
+	wp_register_script( 'js-cookie', HOCWP_THEME_CORE_URL . '/lib/js.cookie.min.js', array(), false, true );
 	wp_enqueue_style( 'tipsy-style', HOCWP_THEME_CORE_URL . '/lib/tipsy/css/jquery.tipsy.css' );
 	wp_enqueue_script( 'tipsy', HOCWP_THEME_CORE_URL . '/lib/tipsy/js/jquery.tipsy.js', array( 'jquery' ), false, true );
 	wp_register_style( 'hocwp-theme-define-style', HOCWP_THEME_CORE_URL . '/css/define' . HOCWP_THEME_CSS_SUFFIX );
