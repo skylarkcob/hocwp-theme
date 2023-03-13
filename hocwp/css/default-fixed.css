@@ -565,7 +565,7 @@ div.menu li a {
     display: table;
 }
 
-.table > * {
+.table > *:not(tbody) {
     display: table-cell;
     vertical-align: middle;
     margin: 0;

@@ -1,9 +1,13 @@
 == Changelog ==
+= 7.0.0 =
+* 08/03/2023: Add default lazy image source constant.
+
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.
 * 14/01/2023: Fix setting tab long label.
 * 17/01/2023: Add custom URL to update rewrite rules.
 * 17/02/2023: Only add Webp supports for WordPress 5.7 or earlier.
+* 06/03/2023: Remove all default style, just keep normalize style.
 
 = 6.9.8 =
 * 04/09/2022: Add default query to related posts.
