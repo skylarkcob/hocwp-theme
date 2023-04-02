@@ -147,6 +147,10 @@ trait HOCWP_Theme_PHP {
 	}
 
 	public function calculate_discount( $original_price, $discounted_price, $precision = 2, $output = 'percentage' ) {
+		if ( ! is_numeric( $original_price ) || ! is_numeric( $discounted_price ) ) {
+			return 0;
+		}
+
 		$output = strtolower( $output );
 		$result = $original_price;
 

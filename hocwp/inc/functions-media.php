@@ -117,6 +117,40 @@ if ( version_compare( $wp_version, '5.8', '<' ) ) {
 	add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_wp_get_attachment_metadata_filter', 10, 2 );
 }
 
+// Fix Trying to access array offset on value of type bool on media.php
+function hocwp_theme_fix_attachment_metadata( $data, $attachment_id ) {
+	$sizes = $data['sizes'] ?? '';
+
+	if ( HT()->array_has_value( $sizes ) ) {
+		foreach ( $sizes as $_size => $data ) {
+			$change = false;
+
+			if ( empty( $data ) ) {
+				$data   = array();
+				$change = true;
+			}
+
+			if ( ! isset( $data['width'] ) ) {
+				$data['width'] = 0;
+				$change        = true;
+			}
+
+			if ( ! isset( $data['height'] ) ) {
+				$data['height'] = 0;
+				$change         = true;
+			}
+
+			if ( $change ) {
+				$data['sizes'][ $_size ] = $data;
+			}
+		}
+	}
+
+	return $data;
+}
+
+add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_fix_attachment_metadata', 999, 2 );
+
 class HOCWP_Theme_Media {
 	protected static $instance;
 
@@ -135,6 +169,74 @@ class HOCWP_Theme_Media {
 
 		add_filter( 'jpeg_quality', array( $this, 'jpeg_quality_filter' ) );
 		add_filter( 'big_image_size_threshold', array( $this, 'big_image_size_threshold_filter' ) );
+	}
+
+	public function extract_image_colors( $id_or_url, $args = array() ) {
+		if ( ! function_exists( 'imagecreatefromjpeg' ) ) {
+			return null;
+		}
+
+		if ( $this->exists( $id_or_url ) ) {
+			$id_or_url = get_attached_file( $id_or_url );
+		}
+
+		$defaults = array(
+			'granularity' => 5,
+			'number'      => 5,
+			'resize'      => 100
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$img = @imagecreatefromstring( @file_get_contents( $id_or_url ) );
+
+		if ( ! $img ) {
+			return false;
+		}
+
+		$resize = max( 50, absint( $args['resize'] ) );
+
+		$width  = imagesx( $img );
+		$height = imagesy( $img );
+
+		$resize = max( $resize, $width );
+
+		$img = imagescale( $img, $resize );
+
+		$granularity = max( 1, absint( $args['granularity'] ) );
+
+		$colors = array();
+
+		for ( $x = 0; $x < $width; $x += $granularity ) {
+			for ( $y = 0; $y < $height; $y += $granularity ) {
+				$pixel = imagecolorat( $img, $x, $y );
+				$rgb   = imagecolorsforindex( $img, $pixel );
+
+				$red   = round( round( ( $rgb['red'] / 0x33 ) ) * 0x33 );
+				$green = round( round( ( $rgb['green'] / 0x33 ) ) * 0x33 );
+				$blue  = round( round( ( $rgb['blue'] / 0x33 ) ) * 0x33 );
+
+				$rgb = sprintf( '%02X%02X%02X', $red, $green, $blue );
+
+				if ( array_key_exists( $rgb, $colors ) ) {
+					$colors[ $rgb ] ++;
+				} else {
+					$colors[ $rgb ] = 1;
+				}
+			}
+		}
+
+		arsort( $colors );
+
+		$number = $args['number'];
+
+		if ( HT()->is_positive_number( $number ) ) {
+			$colors = array_slice( array_keys( $colors ), 0, $number );
+		} elseif ( ! empty( $number ) && is_string( $number ) ) {
+			$colors = array_slice( array_keys( $colors ), 0, ceil( count( $colors ) / 2 ) );
+		}
+
+		return $colors;
 	}
 
 	public function big_image_size_threshold_filter( $threshold ) {

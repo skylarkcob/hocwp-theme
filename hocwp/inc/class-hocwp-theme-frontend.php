@@ -1303,7 +1303,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		$class = trim( $class );
 		?>
         <img class="<?php echo esc_attr( $class ); ?>"
-             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2880 1398'%3E%3C/svg%3E"
+             src="<?php echo esc_attr( HOCWP_THEME_DOT_IMAGE_SRC ); ?>"
              data-src="<?php echo $src; ?>"
              alt="<?php echo esc_attr( $title ); ?>" width="<?php echo esc_attr( $width ); ?>"
              height="<?php echo esc_attr( $height ); ?>">

@@ -1,6 +1,10 @@
 == Changelog ==
 = 7.0.0 =
 * 08/03/2023: Add default lazy image source constant.
+* 28/03/2023: Fix Trying to access array offset on value of type bool on media.php.
+* 02/04/2023: Add function to detect hex color is light or dark.
+* 02/04/2023: Fix Trying to access array offset on value of type bool.
+* 02/04/2023: Check valid number before calculate discount.
 
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.

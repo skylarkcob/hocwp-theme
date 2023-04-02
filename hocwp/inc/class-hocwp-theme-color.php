@@ -195,6 +195,26 @@ class HOCWP_Theme_Color {
 
 		return $return;
 	}
+
+	public function is_light( $color ) {
+		if ( ! $this->is_hex( $color ) ) {
+			return null;
+		}
+
+		// Remove the '#' from the beginning of the color string, if present
+		$color = ltrim( $color, '#' );
+
+		// Convert the color string to its RGB components
+		$r = hexdec( substr( $color, 0, 2 ) );
+		$g = hexdec( substr( $color, 2, 2 ) );
+		$b = hexdec( substr( $color, 4, 2 ) );
+
+		// Calculate the luminance of the color using the formula: 0.299 * R + 0.587 * G + 0.114 * B
+		$luminance = ( 0.299 * $r + 0.587 * $g + 0.114 * $b ) / 255;
+
+		// If the luminance is greater than or equal to 0.5, the color is considered light, otherwise it's considered dark
+		return $luminance >= 0.5;
+	}
 }
 
 function HT_Color() {
