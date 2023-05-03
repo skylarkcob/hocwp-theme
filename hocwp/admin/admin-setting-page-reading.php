@@ -57,6 +57,15 @@ function hocwp_theme_settings_page_reading_field() {
 	$args = array(
 		'class' => 'medium-text',
 		'type'  => 'checkbox',
+		'label' => __( 'Show loading effect while page rendering.', 'hocwp-theme' )
+	);
+
+	$field    = hocwp_theme_create_setting_field( 'loading', __( 'Loading', 'hocwp-theme' ), '', $args, 'boolean', 'reading' );
+	$fields[] = $field;
+
+	$args = array(
+		'class' => 'medium-text',
+		'type'  => 'checkbox',
 		'label' => __( 'Show popup to notify visitor website is using cookie.', 'hocwp-theme' )
 	);
 

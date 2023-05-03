@@ -251,7 +251,31 @@ function HOCWP_Theme() {
         };
     };
 
+    this.loader = function () {
+        function fadeOut(element) {
+            let opacity = 1,
+                timer = setInterval(function () {
+                    if (opacity <= 0.2) {
+                        clearInterval(timer);
+                        element.style.display = "none";
+                        let body = document.getElementsByTagName("body")[0];
+                        body.classList.remove("loading");
+                    }
+
+                    element.style.opacity = opacity;
+                    element.style.filter = "alpha(opacity=" + opacity * 100 + ")";
+                    opacity -= opacity * 0.1;
+                }, 100);
+        }
+
+        window.onload = function () {
+            let div = document.getElementById("loaderIcon");
+            fadeOut(div);
+        };
+    };
+
     this.init = function () {
+        this.loader();
         this.showDevLog();
         this.updateBodyAttributes();
         this.popup(document.getElementById("sc-gdpr-box"));

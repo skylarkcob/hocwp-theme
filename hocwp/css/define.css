@@ -4070,6 +4070,27 @@
     transform-origin: center;
 }
 
+.loader.center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loader.fixed {
+    position: fixed;
+    z-index: 9999999;
+}
+
+.loader.large:after {
+    width: 60px;
+    height: 60px;
+}
+
+body.loading > *:not(.loader) {
+    opacity: 0;
+    pointer-events: none;
+}
+
 @-webkit-keyframes spinner {
     0% {
         -webkit-transform: rotate(0);

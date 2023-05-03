@@ -175,6 +175,12 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	$classes[] = 'no-js';
 
+	$loading = HT_Options()->get_tab( 'loading', '', 'reading' );
+
+	if ( $loading ) {
+		$classes[] = 'loading';
+	}
+
 	$classes = array_unique( $classes );
 	$classes = array_map( 'esc_attr', $classes );
 
