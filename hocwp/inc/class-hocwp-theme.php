@@ -180,6 +180,13 @@ final class HOCWP_Theme {
 		return ( is_array( $arr ) && count( $arr ) > ( $count - 1 ) );
 	}
 
+	public function unique_filter( &$arr ) {
+		if ( is_array( $arr ) ) {
+			$arr = array_unique( $arr );
+			$arr = array_filter( $arr );
+		}
+	}
+
 	public function is_array_has_value( $arr, $count = 1 ) {
 		return self::array_has_value( $arr, $count );
 	}
@@ -782,7 +789,7 @@ final class HOCWP_Theme {
 
 		$doc = new DOMDocument();
 
-		libxml_use_internal_errors(true);
+		libxml_use_internal_errors( true );
 
 		@$doc->loadHTML( $content );
 		$xpath = new DOMXPath( $doc );

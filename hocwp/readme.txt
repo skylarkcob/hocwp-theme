@@ -5,6 +5,7 @@
 * 02/04/2023: Add function to detect hex color is light or dark.
 * 02/04/2023: Fix Trying to access array offset on value of type bool.
 * 02/04/2023: Check valid number before calculate discount.
+* 29/04/2023: Update filter wp_get_attachment_metadata for variable bugs.
 
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.

@@ -43,6 +43,8 @@ define( 'HOCWP_THEME_URL', get_template_directory_uri() );
  */
 define( 'HOCWP_THEME_CORE_PATH', untrailingslashit( dirname( __FILE__ ) ) );
 
+const HOCWP_THEME_INC_PATH = HOCWP_THEME_CORE_PATH . '/inc';
+
 /**
  * Theme core base url.
  */

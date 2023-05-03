@@ -297,13 +297,13 @@ function hocwp_theme_settings_page_social_field() {
 		'class'   => 'regular-text'
 	);
 
-	$fields[] = new HOCWP_Theme_Admin_Setting_Field( 'recaptcha_version', __( 'reCAPTCHA Version', 'hocwp-theme' ), 'select', $args, 'string', 'social', 'captcha' );
+	$fields[] = new HOCWP_Theme_Admin_Setting_Field( 'recaptcha_version', __( 'ReCAPTCHA Version', 'hocwp-theme' ), 'select', $args, 'string', 'social', 'captcha' );
 
 	$fields[] = array(
 		'tab'     => 'social',
 		'section' => 'captcha',
 		'id'      => 'recaptcha_project_id',
-		'title'   => __( 'reCAPTCHA Project ID', 'hocwp-theme' ),
+		'title'   => __( 'ReCAPTCHA Project ID', 'hocwp-theme' ),
 		'args'    => array(
 			'label_for'     => true,
 			'callback_args' => array(

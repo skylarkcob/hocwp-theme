@@ -118,10 +118,12 @@ if ( version_compare( $wp_version, '5.8', '<' ) ) {
 }
 
 // Fix Trying to access array offset on value of type bool on media.php
-function hocwp_theme_fix_attachment_metadata( $data, $attachment_id ) {
-	$sizes = $data['sizes'] ?? '';
+function hocwp_theme_fix_attachment_metadata( $meta ) {
+	$sizes = $meta['sizes'] ?? '';
 
 	if ( HT()->array_has_value( $sizes ) ) {
+		$update = false;
+
 		foreach ( $sizes as $_size => $data ) {
 			$change = false;
 
@@ -141,15 +143,23 @@ function hocwp_theme_fix_attachment_metadata( $data, $attachment_id ) {
 			}
 
 			if ( $change ) {
-				$data['sizes'][ $_size ] = $data;
+				$sizes[ $_size ] = $data;
 			}
+
+			if ( $change ) {
+				$update = true;
+			}
+		}
+
+		if ( $update ) {
+			$meta['sizes'] = $sizes;
 		}
 	}
 
-	return $data;
+	return $meta;
 }
 
-add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_fix_attachment_metadata', 999, 2 );
+add_filter( 'wp_get_attachment_metadata', 'hocwp_theme_fix_attachment_metadata', 999 );
 
 class HOCWP_Theme_Media {
 	protected static $instance;
@@ -176,6 +186,10 @@ class HOCWP_Theme_Media {
 			return null;
 		}
 
+		if ( empty( $id_or_url ) ) {
+			return 0;
+		}
+
 		if ( $this->exists( $id_or_url ) ) {
 			$id_or_url = get_attached_file( $id_or_url );
 		}
@@ -194,14 +208,18 @@ class HOCWP_Theme_Media {
 			return false;
 		}
 
-		$resize = max( 50, absint( $args['resize'] ) );
+		$resize = $args['resize'] ?? '';
 
 		$width  = imagesx( $img );
 		$height = imagesy( $img );
 
-		$resize = max( $resize, $width );
+		if ( false !== $resize ) {
+			$resize = max( 50, absint( $resize ) );
 
-		$img = imagescale( $img, $resize );
+			$resize = max( $resize, $width );
+
+			$img = imagescale( $img, $resize );
+		}
 
 		$granularity = max( 1, absint( $args['granularity'] ) );
 
@@ -229,6 +247,10 @@ class HOCWP_Theme_Media {
 		arsort( $colors );
 
 		$number = $args['number'];
+
+		if ( 'full' == $number || 'all' == $number ) {
+			return $colors;
+		}
 
 		if ( HT()->is_positive_number( $number ) ) {
 			$colors = array_slice( array_keys( $colors ), 0, $number );

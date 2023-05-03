@@ -144,7 +144,7 @@ function HOCWP_Theme() {
         }, params);
 
         $.ajax(params);
-    }
+    };
 
     this.screenWidth = function () {
         return window.innerWidth || window.screen.width;

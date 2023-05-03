@@ -2,12 +2,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-$colors = HT_Util()->read_all_text( HOCWP_THEME_CORE_PATH . '/inc/colors.txt' );
-$colors = json_decode( $colors, true );
+
+$file_colors = HT_Util()->read_all_text( HOCWP_THEME_CORE_PATH . '/inc/colors.txt' );
+$file_colors = json_decode( $file_colors, true );
 
 $lists = array();
 
-foreach ( $colors as $name => $rgb ) {
+foreach ( $file_colors as $name => $rgb ) {
 	$key = str_replace( ' ', '-', $name );
 
 	$lists[ sanitize_key( $key ) ] = array(
@@ -102,6 +103,24 @@ class HOCWP_Theme_Color {
 		return false;
 	}
 
+	public function sanitize_hex_color( $color ) {
+		if ( empty( $color ) ) {
+			return $color;
+		}
+
+		if ( is_array( $color ) ) {
+			return array_map( array( $this, 'sanitize_hex_color' ), $color );
+		}
+
+		$first = substr( $color, 0, 1 );
+
+		if ( '#' !== $first ) {
+			$color = '#' . $color;
+		}
+
+		return $color;
+	}
+
 	public function name_to_rgb( $color ) {
 		$colors = HOCWP_THEME_COLOR_NAMES;
 
@@ -129,6 +148,55 @@ class HOCWP_Theme_Color {
 		}
 
 		return $result;
+	}
+
+	function sort_colors( $list_colors ) {
+		// Define a custom comparison function to sort the colors by their brightness
+		$compare = function ( $a, $b ) {
+			// Convert the hex color values to RGB values
+			list( $r1, $g1, $b1 ) = sscanf( $a, "#%02x%02x%02x" );
+			list( $r2, $g2, $b2 ) = sscanf( $b, "#%02x%02x%02x" );
+
+			// Calculate the brightness of each color
+			$brightness1 = ( $r1 * 299 + $g1 * 587 + $b1 * 114 ) / 1000;
+			$brightness2 = ( $r2 * 299 + $g2 * 587 + $b2 * 114 ) / 1000;
+
+			// Compare the brightness of the colors
+			return $brightness2 - $brightness1;
+		};
+
+		// Sort the array of colors using the custom comparison function
+		usort( $list_colors, $compare );
+
+		return $list_colors;
+	}
+
+	public function find_related_color( $color ) {
+		$color = ltrim( $color, '#' );
+
+		$related_colors = array();
+
+		for ( $i = 0; $i < 255; $i += 5 ) {
+			$r = hexdec( substr( $color, 0, 2 ) );
+			$g = hexdec( substr( $color, 2, 2 ) );
+			$b = hexdec( substr( $color, 4, 2 ) );
+
+			$new_r = max( 0, min( 255, $r + $i ) );
+			$new_g = max( 0, min( 255, $g + $i ) );
+			$new_b = max( 0, min( 255, $b + $i ) );
+
+			$new_color = sprintf( "%02x%02x%02x", $new_r, $new_g, $new_b );
+
+			$distance = sqrt( pow( $r - $new_r, 2 ) + pow( $g - $new_g, 2 ) + pow( $b - $new_b, 2 ) );
+
+			$related_colors[] = array( 'color' => $new_color, 'distance' => $distance );
+		}
+
+		usort( $related_colors, function ( $a, $b ) {
+			return $a['distance'] - $b['distance'];
+		} );
+
+		return $related_colors;
 	}
 
 	public function hex_to_rgb( $color, $opacity = false ) {
@@ -188,8 +256,8 @@ class HOCWP_Theme_Color {
 		$return = '#';
 
 		foreach ( $color_parts as $color ) {
-			$color = hexdec( $color );
-			$color = max( 0, min( 255, $color + $steps ) );
+			$color  = hexdec( $color );
+			$color  = max( 0, min( 255, $color + $steps ) );
 			$return .= str_pad( dechex( $color ), 2, '0', STR_PAD_LEFT );
 		}
 
