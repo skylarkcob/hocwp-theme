@@ -253,6 +253,10 @@ function HOCWP_Theme() {
 
     this.loader = function () {
         function fadeOut(element) {
+            if (!element) {
+                return false;
+            }
+
             let opacity = 1,
                 timer = setInterval(function () {
                     if (opacity <= 0.2) {
@@ -269,8 +273,7 @@ function HOCWP_Theme() {
         }
 
         window.onload = function () {
-            let div = document.getElementById("loaderIcon");
-            fadeOut(div);
+            fadeOut(document.getElementById("loaderIcon"));
         };
     };
 
