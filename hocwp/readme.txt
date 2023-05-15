@@ -7,6 +7,8 @@
 * 02/04/2023: Check valid number before calculate discount.
 * 29/04/2023: Update filter wp_get_attachment_metadata for variable bugs.
 * 03/05/2023: Add loading effect.
+* 15/05/2023: Fix missing key file in media size data.
+* 15/05/2023: Update WooCommerce extension to find template part from theme first.
 
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.

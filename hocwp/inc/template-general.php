@@ -220,6 +220,52 @@ function hocwp_theme_template_archive() {
 
 add_action( 'hocwp_theme_template_archive', 'hocwp_theme_template_archive', 99 );
 
+// Find woocommerce template in theme
+function hocwp_theme_find_woocommerce_template( $template ) {
+	$is_wc = ( str_contains( $template, 'woocommerce/templates' ) );
+
+	if ( $is_wc ) {
+		$parts = explode( 'woocommerce/templates', $template );
+
+		$last = array_pop( $parts );
+		$last = ltrim( $last, '/' );
+		$last = ltrim( $last, '\\' );
+
+		$bases = array(
+			'custom/views/woocommerce/', // Check woocommerce folder in theme custom views folder
+			'custom/woocommerce/', // Check woocommerce folder in theme custom folder
+			'woocommerce/' // Check woocommerce folder in theme root folder
+		);
+
+		$dir = get_template_directory();
+		$dir = trailingslashit( $dir );
+
+		foreach ( $bases as $base ) {
+			$file = $dir . $base . $last;
+
+			if ( file_exists( $file ) ) {
+				return $file;
+			}
+		}
+
+		$file = $dir . 'custom/views/template-' . $last;
+
+		// Check each file template in custom views folder
+		if ( file_exists( $file ) ) {
+			return $file;
+		}
+
+		$file = $dir . 'custom/views/module-' . $last;
+
+		// Check each file template in custom views folder
+		if ( file_exists( $file ) ) {
+			return $file;
+		}
+	}
+
+	return $template;
+}
+
 /**
  * Filter template path for using default template in theme.
  *
@@ -240,10 +286,11 @@ function hocwp_theme_template_include_filter( $template ) {
 
 	// If not use plugin templates or template dir not contain plugins directory just use default theme template.
 	if ( ! $plugin_template ) {
-		$dir = get_template_directory();
-		$dir = trailingslashit( $dir );
+		$is_wc = hocwp_theme_find_woocommerce_template( $template );
 
-		$is_wc = ( str_contains( $template, $dir . 'woocommerce' ) );
+		if ( ! empty( $is_wc ) && $is_wc != $template ) {
+			return $is_wc;
+		}
 
 		// Check back for WooCommerce and other plugin templates.
 		if ( ! $is_wc || ! file_exists( $template ) ) {
@@ -253,6 +300,7 @@ function hocwp_theme_template_include_filter( $template ) {
 				$template = HOCWP_Theme()->theme_path . '/single.php';
 			}
 		}
+
 	}
 
 	return $template;

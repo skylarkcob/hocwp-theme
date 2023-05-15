@@ -142,6 +142,11 @@ function hocwp_theme_fix_attachment_metadata( $meta ) {
 				$change         = true;
 			}
 
+			if ( ! isset( $data['file'] ) ) {
+				$data['file'] = '';
+				$change       = true;
+			}
+
 			if ( $change ) {
 				$sizes[ $_size ] = $data;
 			}

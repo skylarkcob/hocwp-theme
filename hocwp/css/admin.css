@@ -341,10 +341,13 @@
     opacity: 0.75;
     float: left;
     border: 1px solid #ddd;
+    transition: background-color .2s ease-in-out;
 }
 
 .hocwp-theme .images-box .list-images li img:hover {
-
+    border: none;
+    background: #f0f0f1;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, .1), inset 0 0 0 1px rgba(0, 0, 0, .05);
 }
 
 .hocwp-theme .images-box[data-column="3"] .list-images li img {
