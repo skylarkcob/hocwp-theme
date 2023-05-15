@@ -49,6 +49,34 @@ class HOCWP_Theme_Options {
 	}
 
 	/**
+	 * Get theme options for page template.
+	 *
+	 * @param mixed $tab_name Default type name
+	 * @param mixed $post_id The page ID or current page ID in loop
+	 *
+	 * @return array|mixed|string
+	 */
+	public function get_page_options( $tab_name, $post_id = '' ) {
+		if ( empty( $post_id ) ) {
+			$post_id = get_the_ID();
+		}
+
+		$obj = get_post( $post_id );
+
+		if ( empty( $tab_name ) ) {
+			return HT_Options()->get( $obj->post_name );
+		}
+
+		$options = HT_Options()->get( $tab_name );
+
+		if ( $obj->post_name != $tab_name ) {
+			$options = HT_Options()->get( $obj->post_name );
+		}
+
+		return $options;
+	}
+
+	/**
 	 * Get theme options or any key value in options with default fallback.
 	 *
 	 * @param mixed $key Key name or index.
