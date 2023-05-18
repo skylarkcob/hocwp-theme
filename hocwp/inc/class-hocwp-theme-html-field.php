@@ -293,6 +293,11 @@ final class HOCWP_Theme_HTML_Field {
 		self::input( $args );
 	}
 
+	public static function input_checkbox( $args = array() ) {
+		$args['type'] = 'checkbox';
+		self::input( $args );
+	}
+
 	public static function datepicker( $args = array() ) {
 		self::datetime_picker( $args );
 	}

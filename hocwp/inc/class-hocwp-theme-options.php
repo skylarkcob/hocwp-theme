@@ -56,24 +56,30 @@ class HOCWP_Theme_Options {
 	 *
 	 * @return array|mixed|string
 	 */
-	public function get_page_options( $tab_name, $post_id = '' ) {
-		if ( empty( $post_id ) ) {
+	public function get_page_options( $tab_name = '', $post_id = '', $option_base = '' ) {
+		if ( ! is_null( $post_id ) && empty( $post_id ) ) {
 			$post_id = get_the_ID();
 		}
 
 		$obj = get_post( $post_id );
 
-		if ( empty( $tab_name ) ) {
-			return HT_Options()->get( $obj->post_name );
+		if ( empty( $tab_name ) && $obj instanceof WP_Post ) {
+			if ( empty( $option_base ) ) {
+				$option_base = 'page_' . $post_id;
+			} else {
+				$option_base = str_replace( array(
+					'post_name',
+					'ID'
+				), array(
+					$obj->post_name,
+					$obj->ID
+				), $option_base );
+			}
+
+			return HT_Options()->get( $option_base );
 		}
 
-		$options = HT_Options()->get( $tab_name );
-
-		if ( $obj->post_name != $tab_name ) {
-			$options = HT_Options()->get( $obj->post_name );
-		}
-
-		return $options;
+		return HT_Options()->get( $tab_name );
 	}
 
 	/**
