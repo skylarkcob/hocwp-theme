@@ -170,6 +170,40 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 		HOCWP_EXT_Language()->generate_setting_with_language( $field, $fields );
 	}
 
+	/**
+	 * Add setting page for a page object.
+	 *
+	 * @param string $template Page template name without extension in custom folder.
+	 * @param string $title Setting tab title.
+	 * @param callable $callback Callback function to add setting fields, must have 3 arguments in function declare.
+	 * @param bool $add_default If true, first page by template will be used.
+	 *
+	 * @return void
+	 */
+	public function add_admin_page_setting_tabs( $template, $title, $callback, $add_default = false ) {
+		if ( ! is_callable( $callback ) ) {
+			return;
+		}
+
+		$tab_name = sanitize_title( $template );
+
+		$pages = HT_Query()->pages_by_template( 'custom/page-templates/' . $template . '.php', array( 'hierarchical' => false ) );
+
+		if ( $add_default ) {
+			$page = array_shift( $pages );
+
+			call_user_func( $callback, $tab_name, $title, $page );
+		} else {
+			call_user_func( $callback, $tab_name, $title, '' );
+		}
+
+		foreach ( $pages as $page ) {
+			if ( $page instanceof WP_Post && $page->post_name != $tab_name ) {
+				call_user_func( $callback, 'page_' . $page->ID, $page->post_title, $page );
+			}
+		}
+	}
+
 	public function skip_admin_notices() {
 		global $pagenow;
 

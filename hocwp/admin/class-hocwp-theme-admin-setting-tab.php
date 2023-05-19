@@ -23,9 +23,13 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public $link;
 	public $link_text;
 
-	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10 ) {
+	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10, $page = '' ) {
 		if ( empty( $name ) ) {
 			HT_Util()->doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
+		}
+
+		if ( ! HT()->is_positive_number( $priority ) ) {
+			$priority = 10;
 		}
 
 		if ( empty( $icon ) ) {
@@ -55,7 +59,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 			'sections_filter'
 		) );
 
-		$esc = isset( $args['enqueue_scripts_callback'] ) ? $args['enqueue_scripts_callback'] : '';
+		$esc = $args['enqueue_scripts_callback'] ?? '';
 
 		if ( ! is_callable( $esc ) ) {
 			$esc = array( $this, 'enqueue_scripts' );
@@ -63,7 +67,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 
 		add_action( 'hocwp_theme_admin_setting_page_' . $this->name . '_scripts', $esc );
 
-		$cff = isset( $args['custom_fields_filter'] ) ? $args['custom_fields_filter'] : '';
+		$cff = $args['custom_fields_filter'] ?? '';
 
 		if ( ! empty( $cff ) ) {
 			$this->fields = apply_filters( $cff, $this->fields, HT_Options()->get( $this->name ) );
@@ -71,6 +75,10 @@ class HOCWP_Theme_Admin_Setting_Tab {
 
 		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_field', array( $this, 'fields_filter' ) );
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu_action' ), 999 );
+
+		if ( $page instanceof WP_Post ) {
+			$this->add_queried_object( $page );
+		}
 	}
 
 	public function get_value( $key, $default = '' ) {
