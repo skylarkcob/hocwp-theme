@@ -1033,7 +1033,7 @@ final class HOCWP_Theme {
 		return ltrim( $result, '/' );
 	}
 
-	public function transmit( &$value, &$another, $filter = FILTER_SANITIZE_STRING ) {
+	public function transmit( &$value, &$another, $filter = FILTER_UNSAFE_RAW ) {
 		if ( $filter == FILTER_SANITIZE_NUMBER_INT || $filter == FILTER_SANITIZE_NUMBER_FLOAT ) {
 			if ( ( is_numeric( $value ) && ! is_numeric( $another ) ) || ( ! is_numeric( $value ) && is_numeric( $another ) ) ) {
 				if ( is_numeric( $value ) && ! is_numeric( $another ) ) {
