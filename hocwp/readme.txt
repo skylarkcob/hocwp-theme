@@ -10,6 +10,7 @@
 * 15/05/2023: Fix missing key file in media size data.
 * 15/05/2023: Update WooCommerce extension to find template part from theme first.
 * 19/05/2023: Remove deprecated constant FILTER_SANITIZE_STRING.
+* 01/06/2023: Add explode string by characters helper function.
 
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.

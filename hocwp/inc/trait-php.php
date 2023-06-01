@@ -56,6 +56,10 @@ trait HOCWP_Theme_PHP {
 		return $str;
 	}
 
+	public function explode_by_chars( $string, $char = '-', $repeat = 9 ) {
+		return explode( str_repeat( $char, $repeat ), $string );
+	}
+
 	public function explode_empty_line( $string ) {
 		return preg_split( "#\n\s*\n#Uis", $string );
 	}
