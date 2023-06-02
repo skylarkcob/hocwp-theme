@@ -373,10 +373,11 @@ final class HOCWP_Theme_HTML_Field {
 		unset( $label );
 
 		wp_editor( $args['value'], $args['id'], $args );
+		self::description( $args );
 	}
 
 	public static function description( $args = array() ) {
-		if ( isset( $args['description'] ) && ! empty( $args['description'] ) ) {
+		if ( ! empty( $args['description'] ) ) {
 			$tag = $args['description_tag'] ?? 'p';
 			printf( '<%s class="description">%s</%s>', $tag, $args['description'], $tag );
 		}
@@ -986,7 +987,7 @@ final class HOCWP_Theme_HTML_Field {
 		<div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
 		     data-column="<?php echo esc_attr( $column ); ?>">
 			<?php
-			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
+			if ( ! empty( $args['label'] ) ) {
 				?>
 				<p class="label"><?php self::label( $args ); ?></p>
 				<?php
@@ -1050,7 +1051,7 @@ final class HOCWP_Theme_HTML_Field {
 		}
 
 		// Skip label if title exists
-		if ( isset( $args['title'] ) && ! empty( $args['title'] ) && isset( $args['label'] ) ) {
+		if ( ! empty( $args['title'] ) && isset( $args['label'] ) ) {
 			unset( $args['label'] );
 		}
 
@@ -1829,7 +1830,7 @@ final class HOCWP_Theme_HTML_Field {
 			$type = 'button';
 		}
 
-		if ( HT()->is_positive_number( $value ) || ( 'file' == $media_type && isset( $value['url'] ) ) && ! empty( $value['url'] ) ) {
+		if ( HT()->is_positive_number( $value ) || ( 'file' == $media_type ) && ! empty( $value['url'] ) ) {
 			$class .= ' has-media';
 		}
 
@@ -2002,11 +2003,11 @@ final class HOCWP_Theme_HTML_Field {
 		if ( ! empty( $value ) ) {
 			$value = json_decode( $value, true );
 
-			if ( isset( $value['lat'] ) && ! empty( $value['lat'] ) ) {
+			if ( ! empty( $value['lat'] ) ) {
 				$latitude = $value['lat'];
 			}
 
-			if ( isset( $value['lng'] ) && ! empty( $value['lng'] ) ) {
+			if ( ! empty( $value['lng'] ) ) {
 				$longitude = $value['lng'];
 			}
 
@@ -2028,7 +2029,7 @@ final class HOCWP_Theme_HTML_Field {
 		$div->add_attribute( 'style', 'width: 100 %; height: 350px; position: relative; background-color: rgb( 229, 227, 223 ); overflow: hidden;' );
 		$div->output();
 
-		if ( isset( $args['name'] ) && ! empty( $args['name'] ) ) {
+		if ( ! empty( $args['name'] ) ) {
 			$input_args = array(
 				'type'  => 'hidden',
 				'id'    => $args['id'],
