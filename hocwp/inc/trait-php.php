@@ -78,8 +78,12 @@ trait HOCWP_Theme_PHP {
 		return preg_replace( $pattern, '', $string );
 	}
 
-	public function remove_html_tag( $tag, $string, $replace = '' ) {
-		return preg_replace( "/<" . $tag . "[^>]+\>/i", $replace, $string );
+	public function remove_html_tag( $tag, $string, $replace = '$1' ) {
+		return $this->remove_html_tags( $tag, $string, $replace, 1 );
+	}
+
+	public function remove_html_tags( $tag, $string, $replace = '$1', $limit = - 1 ) {
+		return preg_replace( '/<' . $tag . '\b[^>]*>(.*?)<\/' . $tag . '>/i', $replace, $string, $limit );
 	}
 
 	public function memory_size_convert( $size ) {

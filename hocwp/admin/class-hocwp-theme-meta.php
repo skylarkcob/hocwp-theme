@@ -74,6 +74,7 @@ abstract class HOCWP_Theme_Meta {
 			     || $callback === array( $class, 'image_upload' )
 			     || $callback === array( $class, 'content_with_image' )
 			) {
+				$this->load_script( 'hocwp-theme' );
 				$this->load_script( 'hocwp-theme-media-upload' );
 				$this->load_style( 'hocwp-theme-admin-style' );
 
@@ -95,6 +96,7 @@ abstract class HOCWP_Theme_Meta {
 				$this->load_script( 'hocwp-theme' );
 				$this->load_script( 'hocwp-theme-admin' );
 			} elseif ( array( $class, 'sortable' ) === $callback || array( $class, 'sortable_term' ) === $callback ) {
+				$this->load_script( 'hocwp-theme' );
 				$this->load_style( 'hocwp-theme-admin-style' );
 				$this->load_style( 'hocwp-theme-sortable-style' );
 				$this->load_script( 'hocwp-theme-sortable' );
