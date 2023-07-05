@@ -384,11 +384,11 @@ function hocwp_theme_check_environment() {
 				if ( HT()->array_has_value( $invalid_exts ) ) {
 					foreach ( $invalid_exts as $data ) {
 						?>
-                        <div class="error notice is-dismissible">
-                            <p>
+						<div class="error notice is-dismissible">
+							<p>
 								<?php printf( __( '<strong>%s:</strong> This extension requires theme core version at least %s.', 'hocwp-theme' ), $data['name'], $data['requires_core'] ); ?>
-                            </p>
-                        </div>
+							</p>
+						</div>
 						<?php
 					}
 				}
@@ -492,6 +492,16 @@ function hocwp_theme_check_environment() {
 
 add_action( 'init', 'hocwp_theme_check_environment' );
 
+add_filter( 'install_theme_overwrite_actions', function ( $install_actions ) {
+	$url = admin_url( 'themes.php?page=hocwp_theme' );
+
+	$text = sprintf( __( '%s Settings', 'hocwp-theme' ), HOCWP_THEME_NAME );
+
+	$install_actions['go_to_theme_settings'] = '<a class="button" href="' . esc_url( $url ) . '" target="_blank">' . $text . '</a>';
+
+	return $install_actions;
+} );
+
 function hocwp_theme_on_wp_action() {
 	$do_action = $_GET['do_action'] ?? '';
 
@@ -566,9 +576,9 @@ function hocwp_theme_on_wp_action() {
 
 		hocwp_theme_delete_cache_ajax_callback();
 		exit;
-	} elseif('flush_rewrite_rules' == $do_action) {
-        flush_rewrite_rules();
-    }
+	} elseif ( 'flush_rewrite_rules' == $do_action ) {
+		flush_rewrite_rules();
+	}
 }
 
 if ( ! is_admin() ) {

@@ -1146,35 +1146,34 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			$span = new HOCWP_Theme_HTML_Tag( 'span' );
 
-			ob_start();
-			?>
-			<span>
-				<?php
-				if ( empty( $separator ) ) {
-					echo $home_item;
-				} else {
-					echo $home_item . '&nbsp;' . $separator;
-				}
-				?>
-				<span>
-					<?php
-					foreach ( $items as $index => $item ) {
-						echo $item;
+			$items_html = '';
 
-						if ( $index < ( $count - 1 ) && ! empty( $separator ) ) {
-							echo '&nbsp;' . $separator . '&nbsp;';
-						}
-					}
-					?>
-				</span>
-			</span>
-			<?php
-			$span->set_text( ob_get_clean() );
+			foreach ( $items as $index => $item ) {
+				$items_html .= $item;
+
+				if ( $index < ( $count - 1 ) && ! empty( $separator ) ) {
+					$items_html .= '&nbsp;' . $separator . '&nbsp;';
+				}
+			}
+
+			if ( ! empty( $items_html ) ) {
+				$items_html = HT()->wrap_text( $items_html, '<span>', '</span>' );
+			}
+
+			if ( empty( $separator ) ) {
+				$items_html = $home_item . $items_html;
+			} else {
+				$items_html = $home_item . '&nbsp;' . $separator . $items_html;
+			}
+
+			$items_html = HT()->wrap_text( $items_html, '<span>', '</span>' );
+
+			$span->set_text( $items_html );
 
 			$nav->set_text( $span );
 			$nav->output();
 
-			unset( $nav, $span, $index, $item );
+			unset( $nav, $span, $index, $item, $items_html );
 		}
 
 		unset( $home_item, $items, $count, $separator );

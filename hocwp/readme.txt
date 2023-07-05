@@ -14,6 +14,10 @@
 * 02/06/2023: Update class html field, add description for editor field.
 * 23/06/2023: Load hocwp-theme core script for dependencies meta fields.
 * 23/06/2023: Update function to remove HTML tags from string.
+* 05/07/2023: Add theme settings link button for theme installer.
+* 05/07/2023: Update breadcrumb function.
+* 05/07/2023: Remove default editor style.
+* 05/07/2023: Add function to detect different title in post meta.
 
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.
