@@ -492,6 +492,53 @@ function hocwp_theme_check_environment() {
 
 add_action( 'init', 'hocwp_theme_check_environment' );
 
+add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
+	if ( false !== ( $source_info = get_transient( 'hocwp_theme_upgrader_source_info' ) ) ) {
+		// Give more theme comparison between active theme and uploaded theme
+		$headers = array(
+			'real_theme_name' => 'Real Theme Name',
+			'created_date'    => 'Created Date',
+			'last_updated'    => 'Last Updated',
+			'coder'           => 'Coder',
+			'text_domain'     => 'Text Domain'
+		);
+
+		$info = get_file_data( trailingslashit( get_template_directory() ) . 'style.css', $headers );
+
+		$html = '';
+
+		foreach ( $source_info as $key => $value ) {
+			$html .= sprintf( '<tr><td class="name-label">%s</td><td>%s</td><td>%s</td></tr>', $headers[ $key ], $info[ $key ], $value );
+		}
+
+		$table = str_replace( '</tbody>', $html . '</tbody>', $table );
+		delete_transient( 'hocwp_theme_upgrader_source_info' );
+	}
+
+	return $table;
+} );
+
+add_filter( 'upgrader_source_selection', function ( $source, $remote_source, $upgrader ) {
+	if ( $upgrader instanceof Theme_Upgrader && ! empty( $remote_source ) ) {
+		// Get more header info of uploaded theme
+		$headers = array(
+			'real_theme_name' => 'Real Theme Name',
+			'created_date'    => 'Created Date',
+			'last_updated'    => 'Last Updated',
+			'coder'           => 'Coder',
+			'text_domain'     => 'Text Domain'
+		);
+
+		$info = get_file_data( trailingslashit( $source ) . 'style.css', $headers );
+
+		if ( HT()->array_has_value( $info ) ) {
+			set_transient( 'hocwp_theme_upgrader_source_info', $info );
+		}
+	}
+
+	return $source;
+}, 10, 3 );
+
 add_filter( 'install_theme_overwrite_actions', function ( $install_actions ) {
 	$url = admin_url( 'themes.php?page=hocwp_theme' );
 

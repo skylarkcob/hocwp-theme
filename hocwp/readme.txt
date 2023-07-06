@@ -18,6 +18,7 @@
 * 05/07/2023: Update breadcrumb function.
 * 05/07/2023: Remove default editor style.
 * 05/07/2023: Add function to detect different title in post meta.
+* 06/07/2023: Add more comparison info for exists theme upgrader.
 
 = 6.9.9 =
 * 14/01/2023: Strip all HTML tags in excerpt for custom loop function.
