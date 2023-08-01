@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2023-07-06 00:00+0700\n"
+"POT-Creation-Date: 2023-08-01 22:03+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Admin email has been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:618
+#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:645
 msgid "Change"
 msgstr ""
 
@@ -506,7 +506,7 @@ msgstr ""
 msgid "Mail Message"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:125 hocwp/inc/setup-after.php:171 hocwp/inc/setup-after.php:207
+#: hocwp/admin/admin-setting-page-extension.php:8 hocwp/admin/admin.php:151 hocwp/inc/setup-after.php:171 hocwp/inc/setup-after.php:207
 msgid "Extensions"
 msgstr ""
 
@@ -1124,119 +1124,129 @@ msgstr ""
 msgid "Term HTML Description"
 msgstr ""
 
-#: hocwp/admin/admin.php:20
+#: hocwp/admin/admin.php:22
 #, php-format
 msgid "Current theme is not compatible with WordPress 5.8 or later, please active %s extension for theme works normally."
 msgstr ""
 
-#: hocwp/admin/admin.php:30
+#: hocwp/admin/admin.php:32
 msgctxt "setting page"
 msgid "general settings page"
 msgstr ""
 
-#: hocwp/admin/admin.php:34
+#: hocwp/admin/admin.php:36
 #, php-format
 msgid "You must change administrator's email address for site working, please go to %s and update it."
 msgstr ""
 
-#: hocwp/admin/admin.php:45
+#: hocwp/admin/admin.php:47
 #, php-format
 msgid "%s posts have been updated!"
 msgstr ""
 
-#: hocwp/admin/admin.php:128 hocwp/admin/views/admin-theme-plugins.php:12
+#: hocwp/admin/admin.php:59
+#, php-format
+msgid "%s plugins have been disabled upgrade functional!"
+msgstr ""
+
+#: hocwp/admin/admin.php:69
+#, php-format
+msgid "%s plugins have been enabled upgrade functional!"
+msgstr ""
+
+#: hocwp/admin/admin.php:154 hocwp/admin/views/admin-theme-plugins.php:12
 msgid "Theme Plugins"
 msgstr ""
 
-#: hocwp/admin/admin.php:131 hocwp/inc/setup-after.php:180 hocwp/inc/setup-after.php:216
+#: hocwp/admin/admin.php:157 hocwp/inc/setup-after.php:180 hocwp/inc/setup-after.php:216
 msgid "PHP Info"
 msgstr ""
 
-#: hocwp/admin/admin.php:133 hocwp/admin/views/admin-delete-posts.php:11
+#: hocwp/admin/admin.php:159 hocwp/admin/views/admin-delete-posts.php:11
 msgid "Delete Posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:209 hocwp/admin/admin.php:220
+#: hocwp/admin/admin.php:235 hocwp/admin/admin.php:246
 msgctxt "required plugins list"
 msgid "this list"
 msgstr ""
 
-#: hocwp/admin/admin.php:213
+#: hocwp/admin/admin.php:239
 #, php-format
 msgid "You must install required plugins for theme can work properly. Try to install and activate all plugins in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:224
+#: hocwp/admin/admin.php:250
 #, php-format
 msgid "You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:231
+#: hocwp/admin/admin.php:257
 msgctxt "list extensions link"
 msgid "here"
 msgstr ""
 
-#: hocwp/admin/admin.php:235
+#: hocwp/admin/admin.php:261
 #, php-format
 msgid "You must enable WooCommerce extension for this theme. Try to activate it %s."
 msgstr ""
 
-#: hocwp/admin/admin.php:317
+#: hocwp/admin/admin.php:343
 msgid "Title:"
 msgstr ""
 
-#: hocwp/admin/admin.php:359 hocwp/inc/template-post.php:356
+#: hocwp/admin/admin.php:385 hocwp/inc/template-post.php:356
 msgid "Related posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:397
+#: hocwp/admin/admin.php:423
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:420 hocwp/admin/admin.php:619 hocwp/inc/template-general.php:1175
+#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:646 hocwp/inc/template-general.php:1175
 msgid "Close"
 msgstr ""
 
-#: hocwp/admin/admin.php:444
+#: hocwp/admin/admin.php:470
 #, php-format
 msgid "Template %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:455 hocwp/admin/admin.php:539
+#: hocwp/admin/admin.php:481 hocwp/admin/admin.php:565
 msgid "Change status"
 msgstr ""
 
-#: hocwp/admin/admin.php:456
+#: hocwp/admin/admin.php:482
 msgid "Change category"
 msgstr ""
 
-#: hocwp/admin/admin.php:457
+#: hocwp/admin/admin.php:483
 msgid "Change post type"
 msgstr ""
 
-#: hocwp/admin/admin.php:541
+#: hocwp/admin/admin.php:567
 msgid "Close this box"
 msgstr ""
 
-#: hocwp/admin/admin.php:551
+#: hocwp/admin/admin.php:577
 msgid "Post status:"
 msgstr ""
 
-#: hocwp/admin/admin.php:553
+#: hocwp/admin/admin.php:579
 msgid "Choose post status"
 msgstr ""
 
-#: hocwp/admin/admin.php:582 hocwp/inc/class-hocwp-theme-html-field.php:792 hocwp/inc/class-hocwp-theme-html-field.php:834
+#: hocwp/admin/admin.php:608 hocwp/inc/class-hocwp-theme-html-field.php:792 hocwp/inc/class-hocwp-theme-html-field.php:834
 #: hocwp/inc/class-hocwp-theme-html-field.php:1893 hocwp/inc/functions-scripts.php:394
 #, php-format
 msgid "Choose %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:595 hocwp/widgets/class-hocwp-theme-widget-posts.php:553
+#: hocwp/admin/admin.php:621 hocwp/widgets/class-hocwp-theme-widget-posts.php:553
 msgid "Post type:"
 msgstr ""
 
-#: hocwp/admin/admin.php:597 hocwp/admin/views/admin-delete-posts.php:111
+#: hocwp/admin/admin.php:623 hocwp/admin/views/admin-delete-posts.php:111
 msgid "Choose post type"
 msgstr ""
 
@@ -3178,9 +3188,21 @@ msgstr ""
 msgid "Missing Required Plugins"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:498
+#: hocwp/inc/setup-after.php:545
 #, php-format
 msgid "%s Settings"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:662
+msgid "Disable Upgrade"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:663
+msgid "Enable Upgrade"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:703
+msgid "Upgrade Disabled"
 msgstr ""
 
 #: hocwp/inc/template-comments.php:200

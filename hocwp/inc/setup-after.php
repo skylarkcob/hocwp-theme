@@ -642,6 +642,77 @@ function hocwp_theme_add_url_endpoint() {
 
 add_action( 'init', 'hocwp_theme_add_url_endpoint' );
 
+function hocwp_theme_site_transient_update_plugins_filter( $value ) {
+	if ( is_object( $value ) && isset( $value->response ) && is_array( $value->response ) ) {
+		$options = get_option( 'disable_upgrade_plugins' );
+
+		if ( ! empty( $options ) ) {
+			foreach ( $value->response as $file => $obj ) {
+				if ( in_array( $file, $options ) ) {
+					unset( $value->response[ $file ] );
+				}
+			}
+		}
+	}
+
+	return $value;
+}
+
+function hocwp_theme_plugin_bulk_actions_filter( $actions ) {
+	$actions['disable-upgrade'] = __( 'Disable Upgrade', 'hocwp-theme' );
+	$actions['enable-upgrade']  = __( 'Enable Upgrade', 'hocwp-theme' );
+
+	return $actions;
+}
+
+function hocwp_theme_handle_plugin_bulk_action( $sendback, $action, $plugins ) {
+	if ( 'disable-upgrade' == $action || 'enable-upgrade' == $action ) {
+		$options = get_option( 'disable_upgrade_plugins' );
+
+		if ( ! is_array( $options ) ) {
+			$options = array();
+		}
+
+		$count = 0;
+
+		foreach ( $plugins as $file ) {
+			if ( 'disable-upgrade' == $action && ! in_array( $file, $options ) ) {
+				$options[] = $file;
+				$count ++;
+			} elseif ( 'enable-upgrade' == $action ) {
+				unset( $options[ array_search( $file, $options ) ] );
+				$count ++;
+			}
+		}
+
+		$sendback = admin_url( 'plugins.php' );
+
+		if ( 0 < $count ) {
+			update_option( 'disable_upgrade_plugins', $options );
+			$sendback = add_query_arg( 'count_' . $action, $count, $sendback );
+		}
+	}
+
+	return $sendback;
+}
+
+function hocwp_theme_plugin_action_links_filter( $actions, $plugin_file ) {
+	$options = get_option( 'disable_upgrade_plugins' );
+
+	if ( ! empty( $options ) && in_array( $plugin_file, $options ) ) {
+		$actions['disable_upgrade_status'] = '<span class="disable-upgrade-status">' . __( 'Upgrade Disabled', 'hocwp-theme' ) . '</span>';
+	}
+
+	return $actions;
+}
+
+if ( current_user_can( 'manage_options' ) ) {
+	add_filter( 'site_transient_update_plugins', 'hocwp_theme_site_transient_update_plugins_filter' );
+	add_filter( 'bulk_actions-plugins', 'hocwp_theme_plugin_bulk_actions_filter' );
+	add_filter( 'handle_bulk_actions-plugins', 'hocwp_theme_handle_plugin_bulk_action', 10, 3 );
+	add_filter( 'plugin_action_links', 'hocwp_theme_plugin_action_links_filter', 10, 2 );
+}
+
 function hocwp_theme_custom_get_ancestors_filter( $ancestors, $object_id, $object_type, $resource_type ) {
 	if ( HT()->array_has_value( $ancestors ) ) {
 		if ( 'taxonomy' == $resource_type ) {

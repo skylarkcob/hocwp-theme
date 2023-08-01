@@ -1,4 +1,7 @@
 == Changelog ==
+= 7.0.1 =
+* 01/08/2023: Add utility function to enable or disable plugin upgrade.
+
 = 7.0.0 =
 * 08/03/2023: Add default lazy image source constant.
 * 28/03/2023: Fix Trying to access array offset on value of type bool on media.php.

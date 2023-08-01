@@ -12,7 +12,9 @@ function hocwp_theme_setup_start_session() {
 		}
 	}
 
-	if ( ! session_id() ) {
+	$session = apply_filters( 'hocwp_theme_session_start', false );
+
+	if ( $session && ! session_id() ) {
 		session_start( [
 			'read_and_close' => true
 		] );
