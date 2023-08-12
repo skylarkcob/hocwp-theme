@@ -1,6 +1,7 @@
 == Changelog ==
 = 7.0.1 =
 * 01/08/2023: Add utility function to enable or disable plugin upgrade.
+* 12/08/2023: Update list sidebar select options.
 
 = 7.0.0 =
 * 08/03/2023: Add default lazy image source constant.

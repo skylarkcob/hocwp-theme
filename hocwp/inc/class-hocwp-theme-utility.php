@@ -662,9 +662,9 @@ class HOCWP_Theme_Utility {
 
 	public function ajax_overlay() {
 		?>
-		<div class="hocwp-theme ajax-overlay">
-			<img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
-		</div>
+        <div class="hocwp-theme ajax-overlay">
+            <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
+        </div>
 		<?php
 	}
 
@@ -929,14 +929,14 @@ class HOCWP_Theme_Utility {
 				$class .= ' auto-hide';
 				ob_start();
 				?>
-				<script>
+                <script>
                     jQuery(document).ready(function ($) {
                         setTimeout(function () {
                             const notices = $(".hocwp-theme.notice.auto-hide");
                             notices.fadeOut(1000);
                         }, <?php echo $hidden_interval; ?>);
                     });
-				</script>
+                </script>
 				<?php
 				$message .= ob_get_clean();
 			}
@@ -1192,6 +1192,55 @@ class HOCWP_Theme_Utility {
 
 	public function get_sidebars() {
 		return $GLOBALS['wp_registered_sidebars'];
+	}
+
+	public function add_sidebar_to_list_options( &$options, $post_type = '' ) {
+		if ( is_array( $options ) ) {
+			if ( ! empty( $post_type ) ) {
+				$args = array(
+					'post_type'      => $post_type,
+					'posts_per_page' => - 1
+				);
+
+				$query = new WP_Query( $args );
+
+				if ( $query->have_posts() ) {
+					foreach ( $query->posts as $post ) {
+						$options[ $post->post_name ] = $post->post_title;
+					}
+				}
+			}
+
+			$sidebars = $this->get_sidebars();
+
+			foreach ( $sidebars as $sidebar_id => $sidebar ) {
+				if ( is_array( $sidebar ) ) {
+					$name = $sidebar['name'] ?? '';
+
+					if ( ! empty( $name ) ) {
+						$name = sprintf( '%s (%s)', $name, $sidebar_id );
+					}
+
+					if ( empty( $name ) ) {
+						$name = $sidebar_id;
+					}
+
+					$name = trim( $name );
+
+					$options[ $sidebar_id ] = $name;
+				}
+			}
+		}
+	}
+
+	public function choose_sidebar_select_options( $post_type = '' ) {
+		$options = array(
+			'' => __( '-- Choose sidebar --', 'hocwp-theme' )
+		);
+
+		$this->add_sidebar_to_list_options( $options, $post_type );
+
+		return $options;
 	}
 
 	public function get_sidebar_by( $key, $value ) {
@@ -2135,7 +2184,7 @@ class HOCWP_Theme_Utility {
 		$src = add_query_arg( 'hl', get_locale(), $src );
 		$src = add_query_arg( 'language', get_locale(), $src );
 		?>
-		<script>
+        <script>
             (function (d, s, id) {
                 let js, gjs = d.getElementsByTagName(s)[0],
                     insertBefore = "<?php echo $insert_before; ?>",
@@ -2171,7 +2220,7 @@ class HOCWP_Theme_Utility {
 
                 node.parentNode.insertBefore(js, node);
             }(document, "script", "<?php echo esc_attr( $id ); ?>"));
-		</script>
+        </script>
 		<?php
 	}
 
@@ -2250,7 +2299,7 @@ class HOCWP_Theme_Utility {
 				$src .= $app_id;
 				$this->inline_script( 'facebook-jssdk', $src );
 				?>
-				<div id="fb-root"></div>
+                <div id="fb-root"></div>
 				<?php
 			} else {
 				echo $sdk;
@@ -2304,8 +2353,8 @@ class HOCWP_Theme_Utility {
 				$label = ucfirst( $key );
 			}
 			?>
-			<option
-				value="<?php echo esc_attr( $key ); ?>"<?php selected( $current, $key ); ?>><?php echo $label; ?></option>
+            <option
+                    value="<?php echo esc_attr( $key ); ?>"<?php selected( $current, $key ); ?>><?php echo $label; ?></option>
 			<?php
 		}
 	}
@@ -2316,30 +2365,30 @@ class HOCWP_Theme_Utility {
 		$control          = $args['control'] ?? '';
 		$mobile_menu_icon = $args['icon'] ?? '';
 		?>
-		<button id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
-		        aria-controls="<?php echo $control; ?>" data-icon-type="<?php echo esc_attr( $mobile_menu_icon ); ?>"
-		        aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
+        <button id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
+                aria-controls="<?php echo $control; ?>" data-icon-type="<?php echo esc_attr( $mobile_menu_icon ); ?>"
+                aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle menu', 'hocwp-theme' ); ?>">
 			<?php
 			if ( 'svg' == $mobile_menu_icon ) {
 				HT_SVG_Icon()->bars();
 				HT_SVG_Icon()->close();
 			} elseif ( 'bars' == $mobile_menu_icon || 'burger-3' == $mobile_menu_icon ) {
 				?>
-				<span class="line-1"></span>
-				<span class="line-2"></span>
-				<span class="line-3"></span>
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
 				<?php
 			} elseif ( 'burger' == $mobile_menu_icon ) {
 				?>
-				<span class="line-1"></span>
-				<span class="line-3"></span>
+                <span class="line-1"></span>
+                <span class="line-3"></span>
 				<?php
 			} else {
 				echo $mobile_menu_icon;
 			}
 			?>
-			<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hocwp-theme' ); ?></span>
-		</button>
+            <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'hocwp-theme' ); ?></span>
+        </button>
 		<?php
 	}
 

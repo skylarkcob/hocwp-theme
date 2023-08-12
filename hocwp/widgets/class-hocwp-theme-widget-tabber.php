@@ -102,21 +102,11 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 
 		$instance = wp_parse_args( $instance, $this->defaults );
 
-		global $wp_registered_sidebars;
-
-		$options = array(
-			'' => __( '-- Choose sidebar --', 'hocwp-theme' )
-		);
-
-		foreach ( $wp_registered_sidebars as $sidebar ) {
-			$options[ $sidebar['id'] ] = $sidebar['name'];
-		}
-
 		$name  = 'sidebar';
-		$value = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+		$value = $instance[ $name ] ?? '';
 
 		$args = array(
-			'options'     => $options,
+			'options'     => HT_Util()->choose_sidebar_select_options(),
 			'description' => __( 'Please do not select Sidebar that contains this widget.', 'hocwp-theme' )
 		);
 

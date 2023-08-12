@@ -148,33 +148,17 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		$meta->set_priority( 'low' );
 		$meta->set_id( 'hocwp-post-advanced-settings' );
 
-		$args  = array(
+		$args = array(
 			'public' => true
 		);
+
 		$types = get_post_types( $args );
 
 		$meta->set_post_types( $types );
 		$meta->set_title( __( 'Advanced Settings', 'hocwp-theme' ) );
 
-		$sidebars = array(
-			'' => __( 'Default Sidebar', 'hocwp-theme' )
-		);
-
 		$args = array(
-			'post_type'      => 'hocwp_sidebar',
-			'posts_per_page' => - 1
-		);
-
-		$query = new WP_Query( $args );
-
-		if ( $query->have_posts() ) {
-			foreach ( $query->posts as $post ) {
-				$sidebars[ $post->post_name ] = $post->post_title;
-			}
-		}
-
-		$args = array(
-			'options' => $sidebars
+			'options' => HT_Util()->choose_sidebar_select_options( 'hocwp_sidebar' )
 		);
 
 		$field = hocwp_theme_create_meta_field( 'sidebar', __( 'Sidebar', 'hocwp-theme' ), 'select', $args );
