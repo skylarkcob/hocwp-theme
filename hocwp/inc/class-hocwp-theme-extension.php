@@ -211,13 +211,23 @@ class HOCWP_Theme_Extension_Controller {
 		}
 	}
 
+	public function register( $extension ) {
+		global $hocwp_theme;
+
+		if ( ! isset( $hocwp_theme->extensions ) || ! is_array( $hocwp_theme->extensions ) ) {
+			$hocwp_theme->extensions = array();
+		}
+
+		$hocwp_theme->extensions[ $extension->basename ] = $extension;
+	}
+
 	public function deprecated_extension_run_action( $extension, $replacement, $version ) {
 		$message = $this->get_deprecated_message( $extension, $version, $replacement );
 
 		$tr_name = 'deprecated_extension_notices';
 		$notices = get_transient( $tr_name );
 
-		if ( ! is_array( $tr_name ) ) {
+		if ( ! is_array( $notices ) ) {
 			$notices = array();
 		}
 
@@ -235,9 +245,9 @@ class HOCWP_Theme_Extension_Controller {
 			if ( HT()->array_has_value( $notices ) ) {
 				foreach ( $notices as $notice ) {
 					?>
-					<div class="notice notice-warning is-dismissible">
+                    <div class="notice notice-warning is-dismissible">
 						<?php echo wpautop( $notice ); ?>
-					</div>
+                    </div>
 					<?php
 				}
 			}
@@ -271,20 +281,22 @@ class HOCWP_Theme_Extension_Controller {
 		/**
 		 * Fires when a deprecated extension is called.
 		 *
-		 * @since 6.4.2
-		 *
 		 * @param string $extension The extension that was called.
 		 * @param string $replacement The extension that should have been called.
 		 * @param string $version The version of Theme Core that deprecated the extension.
+		 *
+		 * @since 6.4.2
+		 *
 		 */
 		do_action( 'deprecated_extension_run', $extension, $replacement, $version );
 
 		/**
 		 * Filters whether to trigger an error for deprecated extensions.
 		 *
+		 * @param bool $trigger Whether to trigger the error for deprecated extensions. Default true.
+		 *
 		 * @since 6.4.2
 		 *
-		 * @param bool $trigger Whether to trigger the error for deprecated extensions. Default true.
 		 */
 		if ( WP_DEBUG && apply_filters( 'deprecated_extension_trigger_error', true ) ) {
 			trigger_error( $this->get_deprecated_message( $extension, $version, $replacement ) );
@@ -384,11 +396,11 @@ class HOCWP_Theme_Extension_Controller {
 	}
 
 	public function sanitize_basename( $basename ) {
-		if ( false === strpos( $basename, 'ext/' ) ) {
+		if ( ! str_contains( $basename, 'ext/' ) ) {
 			$basename = 'ext/' . $basename;
 		}
 
-		if ( false === strpos( $basename, '.php' ) ) {
+		if ( ! str_contains( $basename, '.php' ) ) {
 			$basename .= '.php';
 		}
 

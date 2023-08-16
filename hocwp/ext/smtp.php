@@ -25,7 +25,7 @@ if ( ! $load ) {
 function hocwp_theme_wp_mail_from_name_filter( $name ) {
 	$options = HT_Options()->get( 'smtp' );
 
-	if ( isset( $options['from_name'] ) && ! empty( $options['from_name'] ) ) {
+	if ( ! empty( $options['from_name'] ) ) {
 		$name = $options['from_name'];
 	}
 
