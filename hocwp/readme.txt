@@ -1,4 +1,8 @@
 == Changelog ==
+= 7.0.2 =
+* 17/08/2023: Since version 7.0.2, this theme is only used as parent theme only.
+* 17/08/2023: If user want to use this theme instead of child theme, try to define HOCWP_THEME_FORCE_PARENT.
+
 = 7.0.1 =
 * 01/08/2023: Add utility function to enable or disable plugin upgrade.
 * 12/08/2023: Update list sidebar select options.

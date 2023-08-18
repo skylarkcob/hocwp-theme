@@ -196,7 +196,7 @@ if ( ! is_admin() ) {
 	$number = - 1;
 }
 
-$files = HT()->get_last_modified_files( get_template_directory(), $number );
+$files = HT()->get_last_modified_files( get_stylesheet_directory(), $number );
 
 if ( HT()->array_has_value( $files ) ) {
 	hocwp_theme_dev_info_section_open( __( 'Recent Modified Theme Files', 'hocwp-theme' ) );
@@ -212,7 +212,7 @@ if ( HT()->array_has_value( $files ) ) {
 }
 
 if ( ! is_admin() ) {
-	$path = get_template_directory() . '/style.css';
+	$path = get_stylesheet_directory() . '/style.css';
 
 	if ( file_exists( $path ) ) {
 		$style = HT_Util()->read_all_text( $path );
@@ -223,7 +223,7 @@ if ( ! is_admin() ) {
 	}
 }
 
-$path = HOCWP_THEME_CUSTOM_PATH . '/readme.txt';
+$path = HT_Custom()->get_path( 'readme.txt', true );
 
 if ( file_exists( $path ) ) {
 	$data = HT_Util()->read_all_text( $path );
@@ -289,12 +289,12 @@ if ( ! is_admin() ) {
 	hocwp_theme_dev_info_section_close();
 
 	hocwp_theme_dev_info_section_open( __( 'Theme Statistics', 'hocwp-theme' ) );
-	$stats = lstat( get_template_directory() );
+	$stats = lstat( get_stylesheet_directory() );
 	hocwp_theme_dev_info_stats( $stats );
 	hocwp_theme_dev_info_section_close();
 
 	hocwp_theme_dev_info_section_open( __( 'Theme Custom Statistics', 'hocwp-theme' ) );
-	$stats = lstat( HOCWP_THEME_CUSTOM_PATH );
+	$stats = lstat( HT_Custom()->get_path( '', true ) );
 	hocwp_theme_dev_info_stats( $stats );
 	hocwp_theme_dev_info_section_close();
 }

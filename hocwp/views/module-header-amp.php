@@ -54,7 +54,7 @@ if ( true ) {
 			'../images/'
 		), array(
 			get_template_directory_uri() . '/hocwp/',
-			get_template_directory_uri() . '/custom/images/'
+			HT_Custom()->get_url( 'images/' )
 		), $css );
 
 		HT()->wrap_text( $css, '<style amp-custom>', '</style>', true );

@@ -1,14 +1,14 @@
 === HocWP Theme ===
 Contributors: HocWP
-Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
-Requires at least: 5.6
-Tested up to: 5.8
+Tags: one-column, two-columns, left-sidebar, right-sidebar, flexible-header, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
+Requires at least: 6.3
+Tested up to: 6.3
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This theme is created by HocWP Theme.
+This theme is created by HocWP Team, please create a child theme to use this theme.
 
 == Installation ==
 

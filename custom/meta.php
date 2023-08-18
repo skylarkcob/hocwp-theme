@@ -6,8 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Add meta boxes to post types.
  */
-function hocwp_theme_custom_post_meta() {
+if ( ! function_exists( 'hocwp_theme_custom_post_meta' ) ) {
+	function hocwp_theme_custom_post_meta() {
 
+	}
 }
 
 add_action( 'load-post.php', 'hocwp_theme_custom_post_meta' );
@@ -24,9 +26,11 @@ if ( HOCWP_THEME_DOING_AJAX ) {
  *
  * @param HOCWP_Theme_Meta_Post $meta Meta object for post, page or custom post types.
  */
-function hocwp_theme_custom_extra_information_meta_fields( $meta ) {
-	if ( $meta instanceof HOCWP_Theme_Meta_Post ) {
+if ( ! function_exists( 'hocwp_theme_custom_extra_information_meta_fields' ) ) {
+	function hocwp_theme_custom_extra_information_meta_fields( $meta ) {
+		if ( $meta instanceof HOCWP_Theme_Meta_Post ) {
 
+		}
 	}
 }
 
@@ -35,17 +39,21 @@ add_action( 'hocwp_theme_extra_information_meta_fields', 'hocwp_theme_custom_ext
 /**
  * Add custom meta fields for term.
  */
-function hocwp_theme_custom_term_meta() {
+if ( ! function_exists( 'hocwp_theme_custom_term_meta' ) ) {
+	function hocwp_theme_custom_term_meta() {
 
+	}
+
+	add_action( 'load-edit-tags.php', 'hocwp_theme_custom_term_meta' );
 }
-
-add_action( 'load-edit-tags.php', 'hocwp_theme_custom_term_meta' );
 
 /**
  * Add custom meta fields for menu.
  */
-function hocwp_theme_custom_menu_meta() {
+if ( ! function_exists( 'hocwp_theme_custom_menu_meta' ) ) {
+	function hocwp_theme_custom_menu_meta() {
 
+	}
 }
 
 add_action( 'load-nav-menus.php', 'hocwp_theme_custom_menu_meta' );
@@ -54,8 +62,10 @@ add_action( 'load-admin-ajax.php', 'hocwp_theme_custom_menu_meta' );
 /**
  * Add meta fields to media file edit.
  */
-function hocwp_theme_custom_attachment_meta() {
+if ( ! function_exists( 'hocwp_theme_custom_attachment_meta' ) ) {
+	function hocwp_theme_custom_attachment_meta() {
 
+	}
 }
 
 add_action( 'admin_init', 'hocwp_theme_custom_attachment_meta' );

@@ -75,7 +75,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 			if ( file_exists( $tmp ) ) {
 				$tmp = get_file_data( $tmp, array( 'name' => 'Template Name' ) );
 
-				if ( isset( $tmp['name'] ) && ! empty( $tmp['name'] ) ) {
+				if ( ! empty( $tmp['name'] ) ) {
 					$tmp = sanitize_title( $tmp['name'] );
 					$tmp = strtolower( $tmp );
 

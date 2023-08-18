@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '7.0.1';
+const HOCWP_THEME_CORE_VERSION = '7.0.2';
 
 $theme = wp_get_theme();
 
@@ -34,9 +34,19 @@ define( 'HOCWP_THEME_SUPPORT_PHP8', version_compare( phpversion(), '8.0', '>=' )
 define( 'HOCWP_THEME_PATH', get_template_directory() );
 
 /**
+ * Theme child root path
+ */
+define( 'HOCWP_THEME_CURRENT_PATH', get_stylesheet_directory() );
+
+/**
  * Theme base url.
  */
 define( 'HOCWP_THEME_URL', get_template_directory_uri() );
+
+/**
+ * Theme child base url
+ */
+define( 'HOCWP_THEME_CURRENT_URL', get_stylesheet_directory_uri() );
 
 /**
  * Theme core path.
@@ -65,10 +75,14 @@ const HOCWP_THEME_JS_SUFFIX = '.js';
  */
 const HOCWP_THEME_CUSTOM_PATH = HOCWP_THEME_PATH . '/custom';
 
+const HOCWP_THEME_CUSTOM_CURRENT_PATH = HOCWP_THEME_CURRENT_PATH . '/custom';
+
 /**
  * Theme custom base url.
  */
 const HOCWP_THEME_CUSTOM_URL = HOCWP_THEME_URL . '/custom';
+
+const HOCWP_THEME_CUSTOM_CURRENT_URL = HOCWP_THEME_CURRENT_URL . '/custom';
 
 /**
  * Detect doing ajax or not.
@@ -88,7 +102,7 @@ const HOCWP_THEME_DOT_IMAGE_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA
 $php_version = phpversion();
 
 if ( version_compare( $php_version, $require_version, '<' ) ) {
-	$dir = get_template_directory();
+	$dir = HOCWP_THEME_PATH;
 	$dir = dirname( $dir );
 
 	$dirs = array_filter( glob( $dir . '/*' ), 'is_dir' );
@@ -106,7 +120,8 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 		foreach ( $dirs as $dir ) {
 			$folder = basename( $dir );
 
-			if ( $folder == get_option( 'stylesheet' ) ) {
+			// Skip current theme and HocWP Theme
+			if ( $folder == get_option( 'stylesheet' ) || 'hocwp-theme' == get_option( 'template' ) ) {
 				continue;
 			}
 

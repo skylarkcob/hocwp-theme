@@ -25,11 +25,13 @@ if ( ! defined( 'HOCWP_THEME_BLANK_STYLE' ) ) {
  * Data type: string
  */
 if ( ! defined( 'HOCWP_THEME_NAME' ) ) {
-	$path = get_template_directory();
+	$path = get_stylesheet_directory();
 	$path .= '/style.css';
+
 	$data = get_file_data( $path, array( 'real_theme_name' => 'Real Theme Name' ) );
 
 	$theme_name = ( is_array( $data ) && isset( $data['real_theme_name'] ) ) ? $data['real_theme_name'] : '';
+	$theme_name = apply_filters( 'hocwp_theme_current_theme_name', $theme_name );
 
 	define( 'HOCWP_THEME_NAME', $theme_name );
 }

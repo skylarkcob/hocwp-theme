@@ -12,9 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return array
  */
-function hocwp_theme_custom_setting_fields( $fields, $options ) {
+if ( ! function_exists( 'hocwp_theme_custom_setting_fields' ) ) {
+	function hocwp_theme_custom_setting_fields( $fields, $options ) {
 
-	return $fields;
+		return $fields;
+	}
 }
 
 add_filter( 'hocwp_theme_setting_fields', 'hocwp_theme_custom_setting_fields', 99, 2 );
@@ -27,9 +29,11 @@ add_filter( 'hocwp_theme_setting_fields', 'hocwp_theme_custom_setting_fields', 9
  *
  * @return array
  */
-function hocwp_theme_custom_setting_page_home_fields( $fields, $options ) {
+if ( ! function_exists( 'hocwp_theme_custom_setting_page_home_fields' ) ) {
+	function hocwp_theme_custom_setting_page_home_fields( $fields, $options ) {
 
-	return $fields;
+		return $fields;
+	}
 }
 
 add_filter( 'hocwp_theme_setting_page_home_fields', 'hocwp_theme_custom_setting_page_home_fields', 99, 2 );
@@ -41,9 +45,11 @@ add_filter( 'hocwp_theme_setting_page_home_fields', 'hocwp_theme_custom_setting_
  *
  * @return array
  */
-function hocwp_theme_custom_setting_sections( $sections ) {
+if ( ! function_exists( 'hocwp_theme_custom_setting_sections' ) ) {
+	function hocwp_theme_custom_setting_sections( $sections ) {
 
-	return $sections;
+		return $sections;
+	}
 }
 
 add_filter( 'hocwp_theme_setting_sections', 'hocwp_theme_custom_setting_sections' );
@@ -55,9 +61,11 @@ add_filter( 'hocwp_theme_setting_sections', 'hocwp_theme_custom_setting_sections
  *
  * @return array
  */
-function hocwp_theme_custom_setting_page_home_sections( $sections ) {
+if ( ! function_exists( 'hocwp_theme_custom_setting_page_home_sections' ) ) {
+	function hocwp_theme_custom_setting_page_home_sections( $sections ) {
 
-	return $sections;
+		return $sections;
+	}
 }
 
 add_filter( 'hocwp_theme_setting_page_home_sections', 'hocwp_theme_custom_setting_page_home_sections' );

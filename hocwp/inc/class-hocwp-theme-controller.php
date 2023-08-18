@@ -16,8 +16,16 @@ final class HOCWP_Theme_Controller {
 	public $core_url = HOCWP_THEME_CORE_URL;
 	public $css_suffix = HOCWP_THEME_CSS_SUFFIX;
 	public $js_suffix = HOCWP_THEME_JS_SUFFIX;
+
+	public $template;
+	public $stylesheet;
+	public $is_child_theme;
+
 	public $custom_path = HOCWP_THEME_CUSTOM_PATH;
 	public $custom_url = HOCWP_THEME_CUSTOM_URL;
+	public $custom_current_path = HOCWP_THEME_CUSTOM_CURRENT_PATH;
+	public $custom_current_url = HOCWP_THEME_CUSTOM_CURRENT_URL;
+
 	public $doing_ajax = HOCWP_THEME_DOING_AJAX;
 	public $doing_cron = HOCWP_THEME_DOING_CRON;
 
@@ -368,6 +376,34 @@ final class HOCWP_Theme_Controller {
 	}
 
 	/**
+	 * Detect file in child theme first.
+	 *
+	 * @param $path
+	 *
+	 * @return string
+	 */
+	private function load_child_first( $path ) {
+		if ( ! $this->is_child_theme ) {
+			$this->template   = get_option( 'template' );
+			$this->stylesheet = get_option( 'stylesheet' );
+
+			$this->is_child_theme = ( $this->stylesheet != $this->template && $this->template = $this->textdomain );
+		}
+
+		if ( is_string( $path ) && ! empty( $path ) ) {
+			$path = ltrim( $path, '/' );
+
+			if ( $this->is_child_theme ) {
+				$path = trailingslashit( $this->custom_current_path ) . $path;
+			} else {
+				$path = trailingslashit( $this->custom_path ) . $path;
+			}
+		}
+
+		return $path;
+	}
+
+	/**
 	 * Theme load
 	 */
 	public function load() {
@@ -380,10 +416,44 @@ final class HOCWP_Theme_Controller {
 			return;
 		}
 
-		$pre_hook = $this->custom_path . '/pre-hook.php';
+		$pre_hook = $this->load_child_first( 'pre-hook.php' );
 
 		if ( ( is_file( $pre_hook ) && file_exists( $pre_hook ) ) ) {
 			require $pre_hook;
+		}
+
+		if ( ! defined( 'HOCWP_THEME_FORCE_PARENT' ) || HOCWP_THEME_FORCE_PARENT ) {
+			$theme = wp_get_theme();
+
+			if ( empty( $theme->parent() ) ) {
+				if ( is_admin() ) {
+					global $pagenow;
+
+					if ( 'themes.php' != $pagenow ) {
+						wp_redirect( admin_url( 'themes.php' ) );
+						exit;
+					}
+
+					add_action( 'admin_notices', function () {
+						?>
+                        <div class="notice notice-error is-dismissible">
+                            <p><?php _e( '<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it.', 'hocwp-theme' ); ?></p>
+                        </div>
+						<?php
+					} );
+				} else {
+					$args = array(
+						'link_url'  => admin_url( 'themes.php' ),
+						'link_text' => __( 'Change Theme', 'hocwp-theme' ),
+						'back_link' => false,
+						'code'      => 'missing_child_theme'
+					);
+
+					wp_die( __( '<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it.', 'hocwp-theme' ), __( 'Missing Child Theme', 'hocwp-theme' ), $args );
+				}
+
+				return;
+			}
 		}
 
 		require $this->core_path . '/inc/functions-deprecated.php';
@@ -462,6 +532,7 @@ final class HOCWP_Theme_Controller {
 		 */
 		$this->load_extensions( $this->core_path );
 		$this->load_extensions( $this->custom_path );
+		$this->load_extensions( $this->custom_current_path );
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/admin.php';
@@ -497,11 +568,15 @@ final class HOCWP_Theme_Controller {
 			require $this->core_path . '/admin/meta.php';
 		}
 
-		HT()->require_if_exists( $this->custom_path . '/functions.php' );
-		HT()->require_if_exists( $this->custom_path . '/register.php' );
+		HT()->require_if_exists( $this->load_child_first( 'functions.php' ) );
+		HT()->require_if_exists( $this->load_child_first( 'register.php' ) );
 
 		// Autoload all PHP files in custom inc folder
-		$inc = $this->custom_path . '/inc';
+		if ( $this->is_child_theme ) {
+			$inc = $this->custom_current_path . '/inc';
+		} else {
+			$inc = $this->custom_path . '/inc';
+		}
 
 		if ( is_dir( $inc ) ) {
 			$path  = $inc;
@@ -513,26 +588,26 @@ final class HOCWP_Theme_Controller {
 			}
 		}
 
-		HT()->require_if_exists( $this->custom_path . '/hook.php' );
+		HT()->require_if_exists( $this->load_child_first( 'hook.php' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', function () {
-				HT()->require_if_exists( $this->custom_path . '/admin.php' );
+				HT()->require_if_exists( $this->load_child_first( 'admin.php' ) );
 			} );
 		}
 
-		HT()->require_if_exists( $this->custom_path . '/extensions.php' );
+		HT()->require_if_exists( $this->load_child_first( 'extensions.php' ) );
 
 		if ( is_admin() ) {
 			require $this->core_path . '/admin/load-custom-meta.php';
-			HT()->require_if_exists( $this->custom_path . '/meta.php' );
+			HT()->require_if_exists( $this->load_child_first( 'meta.php' ) );
 
 			if ( $this->doing_ajax ) {
-				HT()->require_if_exists( $this->custom_path . '/ajax.php' );
+				HT()->require_if_exists( $this->load_child_first( 'ajax.php' ) );
 			}
 		} else {
-			HT()->require_if_exists( $this->custom_path . '/front-end.php' );
-			HT()->require_if_exists( $this->custom_path . '/template.php' );
+			HT()->require_if_exists( $this->load_child_first( 'front-end.php' ) );
+			HT()->require_if_exists( $this->load_child_first( 'template.php' ) );
 		}
 
 		require_once $this->core_path . '/inc/customizer.php';
@@ -570,3 +645,7 @@ function HOCWP_Theme() {
 }
 
 HOCWP_Theme();
+
+function HT_Control() {
+	return HOCWP_Theme();
+}

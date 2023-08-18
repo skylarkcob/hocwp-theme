@@ -235,7 +235,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 add_action( 'admin_bar_menu', 'hocwp_theme_admin_bar_menu_action' );
 
 function hocwp_theme_page_templates( $post_templates ) {
-	$dir = HOCWP_THEME_CUSTOM_PATH . '/page-templates';
+	$dir = HT_Custom()->get_path( 'page-templates' );
 
 	if ( HT()->is_dir( $dir ) ) {
 		$files = scandir( $dir );
@@ -384,11 +384,11 @@ function hocwp_theme_check_environment() {
 				if ( HT()->array_has_value( $invalid_exts ) ) {
 					foreach ( $invalid_exts as $data ) {
 						?>
-						<div class="error notice is-dismissible">
-							<p>
+                        <div class="error notice is-dismissible">
+                            <p>
 								<?php printf( __( '<strong>%s:</strong> This extension requires theme core version at least %s.', 'hocwp-theme' ), $data['name'], $data['requires_core'] ); ?>
-							</p>
-						</div>
+                            </p>
+                        </div>
 						<?php
 					}
 				}
@@ -631,6 +631,37 @@ function hocwp_theme_on_wp_action() {
 if ( ! is_admin() ) {
 	add_action( 'wp', 'hocwp_theme_on_wp_action' );
 }
+
+// Update theme detail before showing
+add_filter( 'wp_prepare_themes_for_js', function ( $themes ) {
+	$theme = wp_get_theme();
+
+	if ( $theme->parent() ) {
+		$file = $theme->get_stylesheet_directory() . '/screenshot.png';
+
+		if ( ! file_exists( $file ) ) {
+			$data = $themes[ $theme->get_stylesheet() ] ?? '';
+
+			if ( is_array( $data ) && isset( $data['screenshot'] ) ) {
+				$screenshot = $data['screenshot'];
+
+				if ( is_array( $screenshot ) ) {
+					$screenshot = array_filter( $screenshot );
+				}
+
+				if ( empty( $screenshot ) ) {
+					$url = HT_Util()->take_screenshot( home_url(), array(
+						'w' => 1200
+					) );
+
+					$themes[ $theme->get_stylesheet() ]['screenshot'][0] = $url;
+				}
+			}
+		}
+	}
+
+	return $themes;
+}, 99 );
 
 function hocwp_theme_add_url_endpoint() {
 	$random = HT_Util()->get_theme_option( 'random', '', 'reading' );

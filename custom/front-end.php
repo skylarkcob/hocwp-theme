@@ -6,8 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Load theme styles and scripts on front-end.
  */
-function hocwp_theme_custom_enqueue_scripts() {
+if ( ! function_exists( 'hocwp_theme_custom_enqueue_scripts' ) ) {
+	function hocwp_theme_custom_enqueue_scripts() {
 
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'hocwp_theme_custom_enqueue_scripts' );

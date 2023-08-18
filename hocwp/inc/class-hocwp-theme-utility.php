@@ -211,9 +211,9 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_custom_image_url( $name ) {
-		$name = $this->detect_webp_image_instead( $name, HOCWP_THEME_CUSTOM_PATH . '/images/' );
+		$name = $this->detect_webp_image_instead( $name, HT_Custom()->get_path( 'images/' ) );
 
-		return HOCWP_THEME_CUSTOM_URL . '/images/' . $name;
+		return HT_Custom()->get_url( 'images/' . $name );
 	}
 
 	public function get_current_url( $with_param = false ) {
@@ -462,6 +462,13 @@ class HOCWP_Theme_Utility {
 		return null;
 	}
 
+	public function take_screenshot( $url, $params = array() ) {
+		$base = 'http://s.wordpress.com/mshots/v1/';
+		$base .= urlencode( $url );
+
+		return add_query_arg( $params, $base );
+	}
+
 	public function get_term_link( $term ) {
 		return '<a href="' . esc_url( get_term_link( $term ) ) . '" rel="category ' . HT_Sanitize()->html_class( $term->taxonomy ) . ' tag">' . $term->name . '</a>';
 	}
@@ -524,6 +531,24 @@ class HOCWP_Theme_Utility {
 		return $select;
 	}
 
+	public function get_path_or_url( $parent, $suffix = '' ) {
+		$path = $parent;
+
+		if ( is_string( $suffix ) && ! empty( $suffix ) ) {
+			$path = trailingslashit( $path );
+			$path .= ltrim( $suffix, '/' );
+		}
+
+		return $path;
+	}
+
+	/**
+	 * Get URL from wp-includes folder.
+	 *
+	 * @param $path
+	 *
+	 * @return string
+	 */
 	public function get_include_url( $path ) {
 		$path = ltrim( $path, '/' );
 
@@ -1090,8 +1115,8 @@ class HOCWP_Theme_Utility {
 		$defaults = $hocwp_theme->defaults;
 
 		if ( null == $format ) {
-			$df = ( isset( $defaults['date_format'] ) && ! empty( $defaults['date_format'] ) ) ? $defaults['date_format'] : 'Y-m-d';
-			$tf = ( isset( $defaults['time_format'] ) && ! empty( $defaults['time_format'] ) ) ? $defaults['time_format'] : 'H:i:s';
+			$df = ( ! empty( $defaults['date_format'] ) ) ? $defaults['date_format'] : 'Y-m-d';
+			$tf = ( ! empty( $defaults['time_format'] ) ) ? $defaults['time_format'] : 'H:i:s';
 
 			$format = "$df $tf";
 		}
@@ -1100,7 +1125,7 @@ class HOCWP_Theme_Utility {
 		$date->setTimestamp( $timestamp );
 
 		if ( null == $timezone ) {
-			if ( isset( $defaults['timezone_string'] ) && ! empty( $defaults['timezone_string'] ) ) {
+			if ( ! empty( $defaults['timezone_string'] ) ) {
 				$ts = new DateTimeZone( $defaults['timezone_string'] );
 				$date->setTimezone( $ts );
 			}
@@ -1511,7 +1536,7 @@ class HOCWP_Theme_Utility {
 
 				if ( is_array( $all_roles ) ) {
 					foreach ( $roles as $key => $role ) {
-						if ( isset( $all_roles[ $role ] ) && isset( $all_roles[ $role ]['name'] ) ) {
+						if ( isset( $all_roles[ $role ]['name'] ) ) {
 							$roles[ $key ] = translate_user_role( $all_roles[ $role ]['name'] );
 						}
 					}
@@ -2544,7 +2569,7 @@ class HOCWP_Theme_Utility {
 					if ( is_file( $file ) ) {
 						$data = get_file_data( $file, array( 'Name' => 'Plugin Name' ) );
 
-						if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) ) {
+						if ( ! empty( $data['Name'] ) ) {
 							$data = HT_Util()->get_plugin_info( $data['Name'] );
 
 							if ( empty( $data ) || ! isset( $data['basename'] ) ) {
@@ -2619,7 +2644,7 @@ class HOCWP_Theme_Utility {
 
 							$data = get_file_data( $file, $headers );
 
-							if ( isset( $data['Name'] ) && ! empty( $data['Name'] ) ) {
+							if ( ! empty( $data['Name'] ) ) {
 								return HT_Util()->get_plugin_info( $data['Name'] );
 							}
 						}

@@ -150,18 +150,38 @@ class HOCWP_Theme_Custom {
 		return self::$instance;
 	}
 
+	private function get_path_or_url( $suffix = '', $in_child = false, $url = false ) {
+		if ( ! $in_child && HT_Control()->is_child_theme && defined( 'HOCWP_THEME_FORCE_PARENT' ) && HOCWP_THEME_FORCE_PARENT ) {
+			$in_child = true;
+		}
+
+		if ( $url ) {
+			$current = HOCWP_THEME_CUSTOM_CURRENT_URL;
+			$base    = HOCWP_THEME_CUSTOM_URL;
+		} else {
+			$current = HOCWP_THEME_CUSTOM_CURRENT_PATH;
+			$base    = HOCWP_THEME_CUSTOM_PATH;
+		}
+
+		if ( $in_child ) {
+			return HT_Util()->get_path_or_url( $current, $suffix );
+		}
+
+		return HT_Util()->get_path_or_url( $base, $suffix );
+	}
+
 	/*
 	 * Default function to Get theme custom folder url. Do not remove or change it.
 	 */
-	public function get_url() {
-		return HOCWP_THEME_CUSTOM_URL;
+	public function get_url( $suffix = '', $in_child = false ) {
+		return $this->get_path_or_url( $suffix, $in_child, true );
 	}
 
 	/*
 	 * Default function to Get theme custom folder path. Do not remove or change it.
 	 */
-	public function get_path() {
-		return HOCWP_THEME_CUSTOM_PATH;
+	public function get_path( $suffix = '', $in_child = false ) {
+		return $this->get_path_or_url( $suffix, $in_child );
 	}
 
 	/*
@@ -213,7 +233,7 @@ class HOCWP_Theme_Custom {
 				add_action( 'wp_ajax_hocwp_theme_ajax_private', array( $this, 'ajax_private_callback' ) );
 			}
 		} else {
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_early' ), 10 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_early' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 99 );
 		}
 

@@ -3,6 +3,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( defined( 'HOCWP_THEME_MOBILE_SCREEN_WIDTH' ) ) {
+	return;
+}
+
+/**
+ * Define if allowing this theme to be used without child theme.
+ *
+ * Data type: boolean
+ */
+const HOCWP_THEME_FORCE_PARENT = true;
+
 /**
  * Define theme load default styles and scripts or not.
  *
@@ -185,4 +196,4 @@ const HOCWP_THEME_CSS_ELEMENT_SELECTORS = array(
 	)
 );
 
-define( 'HOCWP_THEME_MOBILE_SCREEN_WIDTH', 980 );
+const HOCWP_THEME_MOBILE_SCREEN_WIDTH = 980;

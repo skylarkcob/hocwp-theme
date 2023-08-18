@@ -3,14 +3,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class HT_Constants {
-	// Custom post type
+if ( ! class_exists( 'HT_Constants' ) ) {
+	class HT_Constants {
+		// Custom post type
 
-	// Custom taxonomy
+		// Custom taxonomy
 
-	// Rewrite slug
+		// Rewrite slug
 
-	// Post meta
+		// Post meta
 
-	// Term meta
+		// Term meta
+	}
 }

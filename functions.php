@@ -7,12 +7,14 @@
  * @package HocWP_Theme
  */
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! defined( '_S_VERSION' ) ) {
-	$theme = new WP_Theme( basename( dirname( __FILE__ ) ), dirname( dirname( __FILE__ ) ) );
+	$theme = new WP_Theme( basename( dirname( __FILE__ ) ), dirname( __FILE__, 2 ) );
 
 	$version = '1.0.0';
 
-	if ( $theme instanceof WP_Theme && $theme->exists() ) {
+	if ( $theme->exists() ) {
 		$version = $theme->get( 'Version' );
 	}
 
@@ -155,13 +157,6 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
-}
-
-/**
- * Load WooCommerce compatibility file.
- */
-if ( class_exists( 'WooCommerce' ) ) {
-	//require get_template_directory() . '/inc/woocommerce.php';
 }
 
 if ( file_exists( get_template_directory() . '/hocwp/load.php' ) ) {
