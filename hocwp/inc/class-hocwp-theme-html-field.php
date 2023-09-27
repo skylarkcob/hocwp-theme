@@ -691,19 +691,22 @@ final class HOCWP_Theme_HTML_Field {
 			$query = new WP_Query( array( 'post_type' => $post_type, 'post_status' => 'publish' ) );
 
 			if ( $query->have_posts() ) {
-				if ( isset( $args['value'] ) ) {
-					$value = $args['value'];
-					$obj   = get_post( $value );
+				$lists = $query->get_posts();
+
+				if ( ! empty( $args['value'] ) ) {
+					$obj = get_post( $args['value'] );
 
 					if ( $obj instanceof WP_Post ) {
-						array_unshift( $query->posts, $obj );
+						array_unshift( $lists, $obj );
 					}
 				}
 
-				foreach ( $query->posts as $obj ) {
+				foreach ( $lists as $obj ) {
 					$options[ $obj->ID ] = $obj->post_title;
 				}
 			}
+
+			unset( $query );
 
 			if ( ! isset( $args['option_all'] ) && 'widgets.php' != $pagenow ) {
 				$default_text = __( '-- Choose post --', 'hocwp-theme' );

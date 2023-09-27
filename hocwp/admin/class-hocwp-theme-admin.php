@@ -78,31 +78,33 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	}
 
 	public function get_current_post_type() {
-		global $post_type, $typenow;
+		$result = '';
 
-		$result = $post_type;
+		if ( isset( $_GET['post_type'] ) ) {
+			$result = $_GET['post_type'];
+		} elseif ( isset( $_POST['post_type'] ) ) {
+			$result = $_POST['post_type'];
+		} else {
+			$action  = $_GET['action'] ?? '';
+			$post_id = $_GET['post'] ?? 0;
 
-		if ( empty( $result ) ) {
-			$result = $typenow;
+			if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
+				$obj    = get_post( $post_id );
+				$result = $obj->post_type;
+
+				unset( $obj );
+			}
+
+			unset( $action, $post_id );
 		}
 
 		if ( empty( $result ) ) {
-			if ( isset( $_GET['post_type'] ) ) {
-				$result = $_GET['post_type'];
-			} elseif ( isset( $_POST['post_type'] ) ) {
-				$result = $_POST['post_type'];
-			} else {
-				$action  = $_GET['action'] ?? '';
-				$post_id = $_GET['post'] ?? 0;
+			global $post_type, $typenow;
 
-				if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
-					$obj    = get_post( $post_id );
-					$result = $obj->post_type;
+			$result = $typenow;
 
-					unset( $obj );
-				}
-
-				unset( $action, $post_id );
+			if ( empty( $result ) ) {
+				$result = $post_type;
 			}
 		}
 

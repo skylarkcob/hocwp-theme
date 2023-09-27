@@ -2,6 +2,8 @@
 = 7.0.2 =
 * 17/08/2023: Since version 7.0.2, this theme is only used as parent theme only.
 * 17/08/2023: If user want to use this theme instead of child theme, try to define HOCWP_THEME_FORCE_PARENT.
+* 19/08/2023: Fix select_post add default empty value post id.
+* 21/08/2023: Fix get current post type admin screen.
 
 = 7.0.1 =
 * 01/08/2023: Add utility function to enable or disable plugin upgrade.
