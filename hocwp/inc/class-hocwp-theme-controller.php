@@ -426,6 +426,8 @@ final class HOCWP_Theme_Controller {
 			$theme = wp_get_theme();
 
 			if ( empty( $theme->parent() ) ) {
+				$msg = __( '<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it.', 'hocwp-theme' );
+
 				if ( is_admin() ) {
 					global $pagenow;
 
@@ -434,10 +436,10 @@ final class HOCWP_Theme_Controller {
 						exit;
 					}
 
-					add_action( 'admin_notices', function () {
+					add_action( 'admin_notices', function () use ( $msg ) {
 						?>
                         <div class="notice notice-error is-dismissible">
-                            <p><?php _e( '<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it.', 'hocwp-theme' ); ?></p>
+                            <p><?php echo $msg; ?></p>
                         </div>
 						<?php
 					} );
@@ -449,7 +451,7 @@ final class HOCWP_Theme_Controller {
 						'code'      => 'missing_child_theme'
 					);
 
-					wp_die( __( '<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it.', 'hocwp-theme' ), __( 'Missing Child Theme', 'hocwp-theme' ), $args );
+					wp_die( $msg, __( 'Missing Child Theme', 'hocwp-theme' ), $args );
 				}
 
 				return;

@@ -12,7 +12,7 @@ if ( defined( 'HOCWP_THEME_MOBILE_SCREEN_WIDTH' ) ) {
  *
  * Data type: boolean
  */
-const HOCWP_THEME_FORCE_PARENT = true;
+const HOCWP_THEME_FORCE_PARENT = false;
 
 /**
  * Define theme load default styles and scripts or not.
