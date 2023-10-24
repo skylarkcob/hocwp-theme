@@ -23,10 +23,20 @@ class HOCWP_Theme_Enqueue {
 		}
 
 		$this->custom_lib_dir = HOCWP_Theme()->custom_path;
+
+		if ( HOCWP_Theme()->is_child_theme ) {
+			$this->custom_lib_dir = HOCWP_Theme()->custom_current_path;
+		}
+
 		$this->custom_lib_dir = trailingslashit( $this->custom_lib_dir );
 		$this->custom_lib_dir .= 'lib/';
 
 		$this->custom_lib_url = HOCWP_Theme()->custom_url;
+
+		if ( HOCWP_Theme()->is_child_theme ) {
+			$this->custom_lib_url = HOCWP_Theme()->custom_current_url;
+		}
+
 		$this->custom_lib_url = trailingslashit( $this->custom_lib_url );
 		$this->custom_lib_url .= 'lib/';
 	}

@@ -371,6 +371,22 @@ function hocwp_theme_wp_calculate_image_srcset( $sources, $size_array, $image_sr
 
 add_filter( 'wp_calculate_image_srcset', 'hocwp_theme_wp_calculate_image_srcset', 99, 5 );
 
+// Fix title end with separator
+add_filter( 'wpseo_title', function ( $title ) {
+	$last = substr( $title, - 1 );
+
+	if ( ! ctype_alpha( $last ) && ! ctype_digit( $last ) ) {
+		$sep = HT_Util()->get_yoast_seo_title_separator();
+
+		if ( $sep == $last ) {
+			$title = rtrim( $title, $last );
+			$title = trim( $title );
+		}
+	}
+
+	return $title;
+} );
+
 function hocwp_theme_check_environment() {
 	global $pagenow;
 
@@ -503,7 +519,7 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 			'text_domain'     => 'Text Domain'
 		);
 
-		$info = get_file_data( trailingslashit( get_template_directory() ) . 'style.css', $headers );
+		$info = get_file_data( trailingslashit( get_stylesheet_directory() ) . 'style.css', $headers );
 
 		$html = '';
 

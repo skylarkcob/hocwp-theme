@@ -458,10 +458,10 @@ function hocwp_theme_display_post_states_filter( $post_states, $post ) {
 		$slug = get_page_template_slug( $post->ID );
 
 		if ( ! empty( $slug ) ) {
-			$file = trailingslashit( get_template_directory() ) . $slug;
+			$file = trailingslashit( get_stylesheet_directory() ) . $slug;
 
 			if ( file_exists( $file ) ) {
-				$name = get_file_data( trailingslashit( get_template_directory() ) . $slug, array( 'name' => 'Template Name' ) );
+				$name = get_file_data( trailingslashit( get_stylesheet_directory() ) . $slug, array( 'name' => 'Template Name' ) );
 
 				if ( ! empty( $name ) && ! empty( $name['name'] ) ) {
 					$slug = $name['name'];

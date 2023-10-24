@@ -237,7 +237,7 @@ function hocwp_theme_find_woocommerce_template( $template ) {
 			'woocommerce/' // Check woocommerce folder in theme root folder
 		);
 
-		$dir = get_template_directory();
+		$dir = get_stylesheet_directory();
 		$dir = trailingslashit( $dir );
 
 		foreach ( $bases as $base ) {
@@ -2084,10 +2084,22 @@ function hocwp_theme_fix_not_found_paged() {
 			foreach ( $post_types as $post_type ) {
 				if ( $post_type instanceof WP_Post_Type ) {
 					if ( is_post_type_archive( $post_type->name ) || ( HT()->array_has_value( $post_type->taxonomies ) && is_tax( $post_type->taxonomies ) ) ) {
-						include get_template_directory() . '/archive.php';
+						$file = get_stylesheet_directory() . '/archive.php';
+
+						if ( ! file_exists( $file ) ) {
+							$file = get_template_directory() . '/archive.php';
+						}
+
+						include $file;
 						exit;
 					} elseif ( is_singular( $post_type->name ) ) {
-						include get_template_directory() . '/single.php';
+						$file = get_stylesheet_directory() . '/single.php';
+
+						if ( ! file_exists( $file ) ) {
+							$file = get_template_directory() . '/single.php';
+						}
+
+						include $file;
 						exit;
 					}
 				}

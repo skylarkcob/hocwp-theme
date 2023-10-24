@@ -49,6 +49,12 @@ final class HOCWP_Theme {
 	}
 
 	public function debug( $value ) {
+		if ( is_null( $value ) ) {
+			$this->debug( 'NULL' );
+
+			return;
+		}
+
 		if ( function_exists( 'hocwp_theme_debug' ) ) {
 			hocwp_theme_debug( $value );
 		} else {
@@ -141,8 +147,37 @@ final class HOCWP_Theme {
 	}
 
 	public function string_chunk( $string, $size, $delimiter = ' ' ) {
-		$size  = absint( $size );
 		$parts = explode( $delimiter, $string );
+
+		$round_up = true;
+
+		if ( is_array( $size ) ) {
+			$round_up = array_pop( $size );
+			$size     = array_shift( $size );
+		}
+
+		if ( 'equal' == $size || '=' == $size ) {
+			if ( $round_up ) {
+				$size = ceil( count( $parts ) / 2 );
+			} else {
+				$size = floor( count( $parts ) / 2 );
+			}
+			
+			$chunks = array_chunk( $parts, $size );
+
+			$string = '';
+
+			$last = array_pop( $chunks );
+
+			foreach ( $chunks as $items ) {
+				$string .= join( $delimiter, $items );
+				$string .= $delimiter;
+			}
+
+			return array( trim( $string ), trim( join( $delimiter, $last ) ) );
+		}
+
+		$size = absint( $size );
 
 		if ( 1 == $size ) {
 			return $parts;

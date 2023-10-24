@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2023-10-17 11:18+0700\n"
-"PO-Revision-Date: 2023-10-17 11:18+0700\n"
+"POT-Creation-Date: 2023-10-24 13:01+0700\n"
+"PO-Revision-Date: 2023-10-24 13:01+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -750,11 +750,11 @@ msgid "Provides logo and favicon so visitors can identify your site."
 msgstr ""
 "Cung cấp logo và favicon để khách truy cập có thể nhận diện trang của bạn."
 
-#: hocwp/admin/admin-setting-page-general.php:63
+#: hocwp/admin/admin-setting-page-general.php:73
 msgid "Site Icon"
 msgstr "Biểu tượng trang"
 
-#: hocwp/admin/admin-setting-page-general.php:66
+#: hocwp/admin/admin-setting-page-general.php:76
 msgid ""
 "The Site Icon is used as a browser and app icon for your site. Icons must be "
 "square, and at least <strong>32</strong> pixels wide and tall."
@@ -763,15 +763,15 @@ msgstr ""
 "tượng phải là hình vuông và có kích thước ít nhất <strong>32</strong> cho "
 "chiều rộng và chiều cao."
 
-#: hocwp/admin/admin-setting-page-general.php:77
+#: hocwp/admin/admin-setting-page-general.php:87
 msgid "Logo Display"
 msgstr "Kiểu hiển thị logo"
 
-#: hocwp/admin/admin-setting-page-general.php:84
+#: hocwp/admin/admin-setting-page-general.php:94
 msgid "Image"
 msgstr "Hình ảnh"
 
-#: hocwp/admin/admin-setting-page-general.php:88
+#: hocwp/admin/admin-setting-page-general.php:98
 #: hocwp/admin/class-hocwp-theme-meta-menu.php:169
 #: hocwp/inc/class-hocwp-theme-html-field.php:885
 #: hocwp/inc/class-hocwp-theme-html-field.php:910
@@ -779,15 +779,15 @@ msgstr "Hình ảnh"
 msgid "Text"
 msgstr "Văn bản"
 
-#: hocwp/admin/admin-setting-page-general.php:92
+#: hocwp/admin/admin-setting-page-general.php:102
 msgid "Custom HTML"
 msgstr "Mã tùy chỉnh"
 
-#: hocwp/admin/admin-setting-page-general.php:111
+#: hocwp/admin/admin-setting-page-general.php:121
 msgid "Logo Text"
 msgstr "Văn bản"
 
-#: hocwp/admin/admin-setting-page-general.php:114
+#: hocwp/admin/admin-setting-page-general.php:124
 msgid ""
 "If empty, site name will be used. You can use <code>[DOMAIN]</code> for "
 "dynamic displaying."
@@ -795,15 +795,15 @@ msgstr ""
 "Nếu để trống, tên trang web sẽ được sử dụng. Bạn có thể sử dụng "
 "<code>[DOMAIN]</code> để hiển thị tự động."
 
-#: hocwp/admin/admin-setting-page-general.php:122
+#: hocwp/admin/admin-setting-page-general.php:132
 msgid "Logo HTML"
 msgstr "Mã HTML"
 
-#: hocwp/admin/admin-setting-page-general.php:144
+#: hocwp/admin/admin-setting-page-general.php:154
 msgid "Logo Image"
 msgstr "Hình ảnh"
 
-#: hocwp/admin/admin-setting-page-general.php:193
+#: hocwp/admin/admin-setting-page-general.php:203
 msgid "Mobile Logo"
 msgstr "Logo cho điện thoại"
 
@@ -1399,7 +1399,7 @@ msgstr "Chọn trạng thái bài viết"
 
 #: hocwp/admin/admin.php:608 hocwp/inc/class-hocwp-theme-html-field.php:771
 #: hocwp/inc/class-hocwp-theme-html-field.php:813
-#: hocwp/inc/class-hocwp-theme-html-field.php:1872
+#: hocwp/inc/class-hocwp-theme-html-field.php:1885
 #: hocwp/inc/functions-scripts.php:394
 #, php-format
 msgid "Choose %s"
@@ -2545,8 +2545,7 @@ msgstr "Thanh bên trang 404"
 msgid "Display widgets on 404 page."
 msgstr "Hiển thị widget trên trang 404."
 
-#: hocwp/inc/class-hocwp-theme-controller.php:440
-#: hocwp/inc/class-hocwp-theme-controller.php:452
+#: hocwp/inc/class-hocwp-theme-controller.php:429
 msgid ""
 "<strong>HocWP Theme:</strong> Your current theme is a parent theme developed "
 "by HocWP Team, please create a child theme to use it."
@@ -2555,11 +2554,11 @@ msgstr ""
 "gốc được phát triển bởi HocWP Team, vui lòng tạo một giao diện con để sử "
 "dụng nó."
 
-#: hocwp/inc/class-hocwp-theme-controller.php:447
+#: hocwp/inc/class-hocwp-theme-controller.php:449
 msgid "Change Theme"
 msgstr "Thay đổi giao diện"
 
-#: hocwp/inc/class-hocwp-theme-controller.php:452
+#: hocwp/inc/class-hocwp-theme-controller.php:454
 msgid "Missing Child Theme"
 msgstr "Thiếu giao diện con"
 
@@ -2589,10 +2588,10 @@ msgstr "Màu nền (%s)"
 msgid "Theme Custom Color (%s)"
 msgstr "Màu giao diện tùy chỉnh (%s)"
 
-#: hocwp/inc/class-hocwp-theme-enqueue.php:170
-#: hocwp/inc/class-hocwp-theme-enqueue.php:224
-#: hocwp/inc/class-hocwp-theme-enqueue.php:405
-#: hocwp/inc/class-hocwp-theme-enqueue.php:412
+#: hocwp/inc/class-hocwp-theme-enqueue.php:180
+#: hocwp/inc/class-hocwp-theme-enqueue.php:234
+#: hocwp/inc/class-hocwp-theme-enqueue.php:415
+#: hocwp/inc/class-hocwp-theme-enqueue.php:422
 #, php-format
 msgid "Stop using %s param from %s for loading resource from CDN."
 msgstr "Ngừng sử dụng %s trong tham số %s để nạp tài nguyên từ CDN."
@@ -2902,31 +2901,31 @@ msgid "Scale the image to the correct size (the thumbnail will keep the scale)"
 msgstr ""
 "Thu nhỏ ảnh theo kích thước chính xác (ảnh thu nhỏ sẽ được giữ nguyên tỉ lệ)"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1733
+#: hocwp/inc/class-hocwp-theme-html-field.php:1746
 msgid "Content:"
 msgstr "Nội dung:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1779
+#: hocwp/inc/class-hocwp-theme-html-field.php:1792
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1840
+#: hocwp/inc/class-hocwp-theme-html-field.php:1853
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1864
+#: hocwp/inc/class-hocwp-theme-html-field.php:1877
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1931
+#: hocwp/inc/class-hocwp-theme-html-field.php:1944
 msgid "Latitude:"
 msgstr "Vĩ độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1950
+#: hocwp/inc/class-hocwp-theme-html-field.php:1963
 msgid "Longitude:"
 msgstr "Kinh độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1965
+#: hocwp/inc/class-hocwp-theme-html-field.php:1978
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -3293,16 +3292,16 @@ msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr "&larr; Trở lại %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2395
+#: hocwp/inc/class-hocwp-theme-utility.php:2399
 msgid "Toggle menu"
 msgstr "Chuyển đổi menu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2415
+#: hocwp/inc/class-hocwp-theme-utility.php:2419
 #: hocwp/inc/template-general.php:927
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2432
+#: hocwp/inc/class-hocwp-theme-utility.php:2436
 msgid ""
 "The <strong>$sql_column</strong> argument just only contains MySQL query "
 "inside (), it isn't full MySQL query."
@@ -3516,14 +3515,14 @@ msgctxt "Short name of the larger font size in the block editor."
 msgid "XL"
 msgstr "XL"
 
-#: hocwp/inc/setup-after.php:389
+#: hocwp/inc/setup-after.php:405
 #, php-format
 msgid ""
 "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 "<strong>%s:</strong> Gói mở rộng này cần phiên bản giao diện ít nhất từ %s."
 
-#: hocwp/inc/setup-after.php:398
+#: hocwp/inc/setup-after.php:414
 msgid ""
 "<strong>Error:</strong> One or more extensions are incompatible with the "
 "current theme core version."
@@ -3531,11 +3530,11 @@ msgstr ""
 "<strong>Lỗi:</strong> Một hoặc nhiều gói mở rộng không tương thích với phiên "
 "bản nhân giao diện hiện tại."
 
-#: hocwp/inc/setup-after.php:398
+#: hocwp/inc/setup-after.php:414
 msgid "Theme core version doesn't meet requirements"
 msgstr "Phiên bản nhân giao diện không đúng"
 
-#: hocwp/inc/setup-after.php:473
+#: hocwp/inc/setup-after.php:489
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are "
@@ -3546,7 +3545,7 @@ msgstr ""
 "quản trị trang web này, xin vui lòng cài đặt và kích hoạt plugin %s để giao "
 "diện được hoạt động bình thường."
 
-#: hocwp/inc/setup-after.php:476
+#: hocwp/inc/setup-after.php:492
 #, php-format
 msgid ""
 "<strong>%s:</strong> The site is experiencing technical difficulties. Please "
@@ -3555,7 +3554,7 @@ msgstr ""
 "<strong>%s:</strong> Trang web đang gặp sự cố kỹ thuật. Xin vui lòng liên hệ "
 "với người quản trị để biết thêm chi tiết."
 
-#: hocwp/inc/setup-after.php:478
+#: hocwp/inc/setup-after.php:494
 #, php-format
 msgid ""
 "<strong>%s:</strong> The site is experiencing technical difficulties. Please "
@@ -3566,24 +3565,24 @@ msgstr ""
 "với người quản trị để biết thêm chi tiết. Nếu bạn là chủ của trang web này, "
 "hãy thử <a href=\"%s\">đăng nhập</a> để kiểm tra."
 
-#: hocwp/inc/setup-after.php:482
+#: hocwp/inc/setup-after.php:498
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 
-#: hocwp/inc/setup-after.php:545
+#: hocwp/inc/setup-after.php:561
 #, php-format
 msgid "%s Settings"
 msgstr "Cài đặt %s"
 
-#: hocwp/inc/setup-after.php:693
+#: hocwp/inc/setup-after.php:709
 msgid "Disable Upgrade"
 msgstr "Vô hiệu hóa nâng cấp"
 
-#: hocwp/inc/setup-after.php:694
+#: hocwp/inc/setup-after.php:710
 msgid "Enable Upgrade"
 msgstr "Bật nâng cấp"
 
-#: hocwp/inc/setup-after.php:734
+#: hocwp/inc/setup-after.php:750
 msgid "Upgrade Disabled"
 msgstr "Nâng cấp đã được vô hiệu hóa"
 

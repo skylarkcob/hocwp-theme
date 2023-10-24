@@ -37,6 +37,16 @@ function hocwp_theme_settings_page_general_section() {
 			if ( ! isset( $data['tab'] ) ) {
 				$sections[ $key ]['tab'] = 'general';
 			}
+
+			// Re-assign section id
+			if ( ! isset( $data['id'] ) ) {
+				$sections[ $key ]['id'] = $key;
+			}
+
+			// Allow section has description with these keys
+			if ( empty( $data['description'] ) ) {
+				$sections[ $key ]['description'] = $data['desc'] ?? $data['text'] ?? '';
+			}
 		}
 	}
 

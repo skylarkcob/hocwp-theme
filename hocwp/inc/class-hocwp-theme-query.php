@@ -46,7 +46,7 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function pages_by_custom_template( $file, $args = array() ) {
-		$file = HT()->trim_string( $file, '.php' );
+		$file = HT()->trim_string( $file, '.php', 'right' );
 
 		return $this->pages_by_template( 'custom/page-templates/' . $file . '.php', $args );
 	}

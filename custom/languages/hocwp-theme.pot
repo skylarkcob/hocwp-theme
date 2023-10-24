@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2023-10-17 11:17+0700\n"
+"POT-Creation-Date: 2023-10-24 13:00+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -667,48 +667,48 @@ msgstr ""
 msgid "Provides logo and favicon so visitors can identify your site."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:63
+#: hocwp/admin/admin-setting-page-general.php:73
 msgid "Site Icon"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:66
+#: hocwp/admin/admin-setting-page-general.php:76
 msgid "The Site Icon is used as a browser and app icon for your site. Icons must be square, and at least <strong>32</strong> pixels wide and tall."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:77
+#: hocwp/admin/admin-setting-page-general.php:87
 msgid "Logo Display"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:84
+#: hocwp/admin/admin-setting-page-general.php:94
 msgid "Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:88 hocwp/admin/class-hocwp-theme-meta-menu.php:169 hocwp/inc/class-hocwp-theme-html-field.php:885
+#: hocwp/admin/admin-setting-page-general.php:98 hocwp/admin/class-hocwp-theme-meta-menu.php:169 hocwp/inc/class-hocwp-theme-html-field.php:885
 #: hocwp/inc/class-hocwp-theme-html-field.php:910 hocwp/widgets/class-hocwp-theme-widget-icon.php:24
 msgid "Text"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:92
+#: hocwp/admin/admin-setting-page-general.php:102
 msgid "Custom HTML"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:111
+#: hocwp/admin/admin-setting-page-general.php:121
 msgid "Logo Text"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:114
+#: hocwp/admin/admin-setting-page-general.php:124
 msgid "If empty, site name will be used. You can use <code>[DOMAIN]</code> for dynamic displaying."
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:122
+#: hocwp/admin/admin-setting-page-general.php:132
 msgid "Logo HTML"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:144
+#: hocwp/admin/admin-setting-page-general.php:154
 msgid "Logo Image"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-general.php:193
+#: hocwp/admin/admin-setting-page-general.php:203
 msgid "Mobile Logo"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgid "Choose post status"
 msgstr ""
 
 #: hocwp/admin/admin.php:608 hocwp/inc/class-hocwp-theme-html-field.php:771 hocwp/inc/class-hocwp-theme-html-field.php:813
-#: hocwp/inc/class-hocwp-theme-html-field.php:1872 hocwp/inc/functions-scripts.php:394
+#: hocwp/inc/class-hocwp-theme-html-field.php:1885 hocwp/inc/functions-scripts.php:394
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -2252,15 +2252,15 @@ msgstr ""
 msgid "Display widgets on 404 page."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-controller.php:440 hocwp/inc/class-hocwp-theme-controller.php:452
+#: hocwp/inc/class-hocwp-theme-controller.php:429
 msgid "<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-controller.php:447
+#: hocwp/inc/class-hocwp-theme-controller.php:449
 msgid "Change Theme"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-controller.php:452
+#: hocwp/inc/class-hocwp-theme-controller.php:454
 msgid "Missing Child Theme"
 msgstr ""
 
@@ -2290,8 +2290,8 @@ msgstr ""
 msgid "Theme Custom Color (%s)"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-enqueue.php:170 hocwp/inc/class-hocwp-theme-enqueue.php:224 hocwp/inc/class-hocwp-theme-enqueue.php:405
-#: hocwp/inc/class-hocwp-theme-enqueue.php:412
+#: hocwp/inc/class-hocwp-theme-enqueue.php:180 hocwp/inc/class-hocwp-theme-enqueue.php:234 hocwp/inc/class-hocwp-theme-enqueue.php:415
+#: hocwp/inc/class-hocwp-theme-enqueue.php:422
 #, php-format
 msgid "Stop using %s param from %s for loading resource from CDN."
 msgstr ""
@@ -2574,31 +2574,31 @@ msgstr ""
 msgid "Scale the image to the correct size (the thumbnail will keep the scale)"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1733
+#: hocwp/inc/class-hocwp-theme-html-field.php:1746
 msgid "Content:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1779
+#: hocwp/inc/class-hocwp-theme-html-field.php:1792
 msgid "Image Link:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1840
+#: hocwp/inc/class-hocwp-theme-html-field.php:1853
 msgid "Add media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1864
+#: hocwp/inc/class-hocwp-theme-html-field.php:1877
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1931
+#: hocwp/inc/class-hocwp-theme-html-field.php:1944
 msgid "Latitude:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1950
+#: hocwp/inc/class-hocwp-theme-html-field.php:1963
 msgid "Longitude:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1965
+#: hocwp/inc/class-hocwp-theme-html-field.php:1978
 msgid "Drag to find address!"
 msgstr ""
 
@@ -2951,15 +2951,15 @@ msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2395
+#: hocwp/inc/class-hocwp-theme-utility.php:2399
 msgid "Toggle menu"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2415 hocwp/inc/template-general.php:927
+#: hocwp/inc/class-hocwp-theme-utility.php:2419 hocwp/inc/template-general.php:927
 msgid "Menu"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2432
+#: hocwp/inc/class-hocwp-theme-utility.php:2436
 msgid "The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn't full MySQL query."
 msgstr ""
 
@@ -3163,56 +3163,56 @@ msgctxt "Short name of the larger font size in the block editor."
 msgid "XL"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:389
+#: hocwp/inc/setup-after.php:405
 #, php-format
 msgid "<strong>%s:</strong> This extension requires theme core version at least %s."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:398
+#: hocwp/inc/setup-after.php:414
 msgid "<strong>Error:</strong> One or more extensions are incompatible with the current theme core version."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:398
+#: hocwp/inc/setup-after.php:414
 msgid "Theme core version doesn't meet requirements"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:473
+#: hocwp/inc/setup-after.php:489
 #, php-format
 msgid ""
 "Sorry! Theme gets error because of missing required plugins. If you are admin of this site, please install and activate plugin %s for theme "
 "working normally."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:476
+#: hocwp/inc/setup-after.php:492
 #, php-format
 msgid "<strong>%s:</strong> The site is experiencing technical difficulties. Please contact administrator for more details."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:478
+#: hocwp/inc/setup-after.php:494
 #, php-format
 msgid ""
 "<strong>%s:</strong> The site is experiencing technical difficulties. Please contact administrator for more details. If you are owner of this "
 "site, try to <a href=\"%s\">login here</a> to check it."
 msgstr ""
 
-#: hocwp/inc/setup-after.php:482
+#: hocwp/inc/setup-after.php:498
 msgid "Missing Required Plugins"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:545
+#: hocwp/inc/setup-after.php:561
 #, php-format
 msgid "%s Settings"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:693
+#: hocwp/inc/setup-after.php:709
 msgid "Disable Upgrade"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:694
+#: hocwp/inc/setup-after.php:710
 msgid "Enable Upgrade"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:734
+#: hocwp/inc/setup-after.php:750
 msgid "Upgrade Disabled"
 msgstr ""
 

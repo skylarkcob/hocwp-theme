@@ -1747,7 +1747,7 @@ class HOCWP_Theme_Utility {
 
 		$page_template = get_post_meta( $page->ID, '_wp_page_template', true );
 
-		if ( ! empty( $page->post_content ) || ( 'default' != $page_template && file_exists( get_template_directory() . '/' . $page_template ) ) ) {
+		if ( ! empty( $page->post_content ) || ( 'default' != $page_template && file_exists( get_stylesheet_directory() . '/' . $page_template ) ) ) {
 			if ( $check_current_page ) {
 				if ( is_page( $page->ID ) ) {
 					return true;
@@ -2148,6 +2148,16 @@ class HOCWP_Theme_Utility {
 		return $p->build();
 	}
 
+	public function get_menu_items( $menu, $args = array() ) {
+		$object = wp_get_nav_menu_object( $menu );
+
+		if ( ! ( $object instanceof WP_Term ) ) {
+			return null;
+		}
+
+		return wp_get_nav_menu_items( $object->name, $args );
+	}
+
 	public function get_nav_menu_items_by_location( $location, $args = array() ) {
 		$locations = get_nav_menu_locations();
 
@@ -2155,13 +2165,7 @@ class HOCWP_Theme_Utility {
 			return null;
 		}
 
-		$object = wp_get_nav_menu_object( $locations[ $location ] );
-
-		if ( ! ( $object instanceof WP_Term ) ) {
-			return null;
-		}
-
-		return wp_get_nav_menu_items( $object->name, $args );
+		return $this->get_menu_items( $locations[ $location ], $args );
 	}
 
 	public function get_google_drive_file_url( $url, $api_key = '' ) {

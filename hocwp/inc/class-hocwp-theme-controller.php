@@ -630,6 +630,11 @@ final class HOCWP_Theme_Controller {
 	}
 
 	public function add_loop_data( $key, $value ) {
+		if ( $key instanceof WP_Query ) {
+			$value = $key;
+			$key   = 'query';
+		}
+
 		$GLOBALS['hocwp_theme']->loop_data[ $key ] = $value;
 	}
 

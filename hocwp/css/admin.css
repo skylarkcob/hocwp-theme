@@ -740,3 +740,13 @@
         width: 100%;
     }
 }
+
+/* Limit height term description */
+td.column-description > p {
+    max-height: 78px;
+    overflow: hidden;
+}
+
+td.column-description > *:not(:first-child):not(:nth-child(2)) {
+    display: none;
+}

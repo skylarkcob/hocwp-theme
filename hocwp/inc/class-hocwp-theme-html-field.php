@@ -1673,7 +1673,20 @@ final class HOCWP_Theme_HTML_Field {
 					$class = trim( $class );
 					?>
                     <div class="<?php echo esc_attr( $class ); ?>">
-						<?php call_user_func( $cb, $args ); ?>
+						<?php
+						$callback = is_string( $cb ) ? $cb : ( is_array( $cb ) ? end( $cb ) : '' );
+
+						if ( str_contains( $callback, 'sortable' ) ) {
+							HT()->debug( $args );
+						}
+
+						if ( ! empty( $args['label'] ) ) {
+							self::label( $args );
+							unset( $args['label'] );
+						}
+
+						call_user_func( $cb, $args );
+						?>
                     </div>
 					<?php
 				}

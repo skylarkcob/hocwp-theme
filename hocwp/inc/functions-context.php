@@ -70,7 +70,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 		$tmp = get_post_meta( get_the_ID(), '_wp_page_template', true );
 
 		if ( $tmp ) {
-			$tmp = trailingslashit( get_template_directory() ) . $tmp;
+			$tmp = trailingslashit( get_stylesheet_directory() ) . $tmp;
 
 			if ( file_exists( $tmp ) ) {
 				$tmp = get_file_data( $tmp, array( 'name' => 'Template Name' ) );
