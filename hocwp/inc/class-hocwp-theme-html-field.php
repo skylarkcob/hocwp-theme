@@ -1677,12 +1677,10 @@ final class HOCWP_Theme_HTML_Field {
 						$callback = is_string( $cb ) ? $cb : ( is_array( $cb ) ? end( $cb ) : '' );
 
 						if ( str_contains( $callback, 'sortable' ) ) {
-							HT()->debug( $args );
-						}
-
-						if ( ! empty( $args['label'] ) ) {
-							self::label( $args );
-							unset( $args['label'] );
+							if ( ! empty( $args['label'] ) ) {
+								self::label( $args );
+								unset( $args['label'] );
+							}
 						}
 
 						call_user_func( $cb, $args );

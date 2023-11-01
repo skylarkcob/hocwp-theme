@@ -135,7 +135,11 @@ final class HOCWP_Theme_HTML_Tag {
 		return $this->text;
 	}
 
-	public function set_break_line( $break_line ) {
+	public function set_break_line( $break_line = '' ) {
+		if ( empty( $break_line ) ) {
+			$break_line = PHP_EOL;
+		}
+
 		$this->break_line = $break_line;
 	}
 

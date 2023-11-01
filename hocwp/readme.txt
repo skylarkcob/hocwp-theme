@@ -1,4 +1,12 @@
 == Changelog ==
+= 7.0.3 =
+* 01/11/2023: Add JS redirect function.
+* 01/11/2023: Add upload files multiple function.
+* 01/11/2023: Add class Mail for sending specific email template.
+* 01/11/2023: Update break line for HTML Tag.
+* 01/11/2023: Fix sortable label below field in fields.
+* 01/11/2023: Update float supports.
+
 = 7.0.2 =
 * 17/08/2023: Since version 7.0.2, this theme is only used as parent theme only.
 * 17/08/2023: If user want to use this theme instead of child theme, try to define HOCWP_THEME_FORCE_PARENT.

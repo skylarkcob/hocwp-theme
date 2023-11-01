@@ -1601,6 +1601,37 @@ class HOCWP_Theme_Utility {
 		return apply_filters( 'hocwp_theme_posts_per_page', $ppp, $home );
 	}
 
+	// List file bits
+	public function upload_files( $files, $name_format = '' ) {
+		$tmp = $files['name'] ?? '';
+
+		$result = array();
+
+		if ( ! empty( $tmp ) ) {
+			$count = 0;
+			$has   = count( $tmp );
+
+			if ( empty( $name_format ) ) {
+				$name_format = uniqid( 'upload-' ) . '-%s';
+			}
+
+			while ( $count < $has ) {
+				$tmp  = $files['tmp_name'][ $count ];
+				$name = $files['name'][ $count ];
+
+				$up = $this->upload_file( sprintf( $name_format, $name ), $tmp );
+
+				if ( ! empty( $up['id'] ) ) {
+					$result[] = $up;
+				}
+
+				$count ++;
+			}
+		}
+
+		return $result;
+	}
+
 	public function upload_file( $file_name, $bits, $check_bytes = 100 ) {
 		$upload = wp_upload_bits( $file_name, null, $bits );
 

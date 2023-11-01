@@ -8,7 +8,8 @@ $supports = array(
 	'zalo'     => __( 'Zalo', 'hocwp-theme' ),
 	'facebook' => __( 'Facebook', 'hocwp-theme' ),
 	'maps'     => __( 'Maps', 'hocwp-theme' ),
-	'twitter'  => __( 'Twitter', 'hocwp-theme' )
+	'twitter'  => __( 'Twitter', 'hocwp-theme' ),
+	'email'    => __( 'Email', 'hocwp-theme' )
 );
 
 $supports = apply_filters( 'hocwp_theme_float_supports', $supports );

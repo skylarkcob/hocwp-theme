@@ -1221,61 +1221,72 @@ function hocwp_theme_wp_footer_action() {
 			if ( HT_Media()->exists( $bg_image ) ) {
 				$css_style .= sprintf( 'background-image: url("%s");', esc_url( wp_get_attachment_image_url( $bg_image, 'full' ) ) );
 			}
+
+            ob_start();
+
+			foreach ( $sort_order as $key ) {
+				$value = HT_Options()->get_tab( $key, '', $tab_name );
+
+				$url   = $key . '_url';
+				$url   = $value[ $url ] ?? '';
+				$text  = $key . '_text';
+				$text  = $value[ $text ] ?? '';
+				$icon  = $key . '_icon';
+				$icon  = $value[ $icon ] ?? '';
+				$image = $key . '_icon_image';
+				$image = $value[ $image ] ?? '';
+
+				if ( ! empty( $url ) && ! empty( $text ) && ( ! empty( $icon ) || ! empty( $image ) ) ) {
+					if ( 'phone' == $key && ! str_contains( $url, 'tel:' ) ) {
+						$url = HT()->sanitize_phone_number( $url );
+						$url = 'tel:' . $url;
+					}
+
+					if ( ! empty( $url ) ) {
+						$vibrate    = $value[ $key . '_vibrate' ] ?? '';
+						$vibrate    = HT()->bool_to_int( $vibrate );
+						$earthquake = $value[ $key . '_earthquake' ] ?? '';
+						$earthquake = HT()->bool_to_int( $earthquake );
+						?>
+                        <div class="support-item" data-key="<?php echo esc_attr( $key ); ?>"
+                             data-vibrate="<?php echo esc_attr( $vibrate ); ?>"
+                             data-earthquake="<?php echo esc_attr( $earthquake ); ?>">
+                            <a target="_blank" href="<?php echo esc_url( $url ); ?>" rel="nofollow">
+								<?php
+								if ( 1 == $earthquake ) {
+									?>
+                                    <span class="earthquake-outer"></span>
+                                    <span class="earthquake"></span>
+									<?php
+								}
+
+								if ( HT_Media()->exists( $image ) ) {
+									echo wp_get_attachment_image( $image, 'full' );
+								} else {
+									echo $icon;
+								}
+								?>
+                                <span class="text"><?php echo esc_html( $text ); ?></span>
+                            </a>
+                        </div>
+						<?php
+					}
+				}
+			}
+
+            $items = ob_get_clean();
 			?>
             <div class="float-supports hot-linking hidden-xs" data-style="<?php echo esc_attr( $style ); ?>"
                  data-position="<?php echo esc_attr( $pos ); ?>" style="<?php echo esc_attr( $css_style ); ?>">
                 <div class="box-container center d-flex">
-					<?php
-					foreach ( $sort_order as $key ) {
-						$value = HT_Options()->get_tab( $key, '', $tab_name );
-
-						$url   = $key . '_url';
-						$url   = $value[ $url ] ?? '';
-						$text  = $key . '_text';
-						$text  = $value[ $text ] ?? '';
-						$icon  = $key . '_icon';
-						$icon  = $value[ $icon ] ?? '';
-						$image = $key . '_icon_image';
-						$image = $value[ $image ] ?? '';
-
-						if ( ! empty( $url ) && ! empty( $text ) && ( ! empty( $icon ) || ! empty( $image ) ) ) {
-							if ( 'phone' == $key && ! str_contains( $url, 'tel:' ) ) {
-								$url = HT()->sanitize_phone_number( $url );
-								$url = 'tel:' . $url;
-							}
-
-							if ( ! empty( $url ) ) {
-								$vibrate    = $value[ $key . '_vibrate' ] ?? '';
-								$vibrate    = HT()->bool_to_int( $vibrate );
-								$earthquake = $value[ $key . '_earthquake' ] ?? '';
-								$earthquake = HT()->bool_to_int( $earthquake );
-								?>
-                                <div class="support-item" data-key="<?php echo esc_attr( $key ); ?>"
-                                     data-vibrate="<?php echo esc_attr( $vibrate ); ?>"
-                                     data-earthquake="<?php echo esc_attr( $earthquake ); ?>">
-                                    <a target="_blank" href="<?php echo esc_url( $url ); ?>" rel="nofollow">
-										<?php
-										if ( 1 == $earthquake ) {
-											?>
-                                            <span class="earthquake-outer"></span>
-                                            <span class="earthquake"></span>
-											<?php
-										}
-
-										if ( HT_Media()->exists( $image ) ) {
-											echo wp_get_attachment_image( $image, 'full' );
-										} else {
-											echo $icon;
-										}
-										?>
-                                        <span class="text"><?php echo esc_html( $text ); ?></span>
-                                    </a>
-                                </div>
-								<?php
-							}
-						}
-					}
-					?>
+					<?php echo $items; ?>
+                </div>
+                <span class="show_hide"></span>
+            </div>
+            <div class="float-supports hot-linking visible-xs for-mobile" data-style="horizontal"
+                 data-position="bottom">
+                <div class="box-container center d-flex">
+					<?php echo $items; ?>
                 </div>
                 <span class="show_hide"></span>
             </div>

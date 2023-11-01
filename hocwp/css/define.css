@@ -3782,12 +3782,29 @@
     object-fit: scale-down;
 }
 
+.d-none,
+.for-mobile,
+.visible-xs,
 .hide,
 .display-none,
 .display-mobile {
     display: none;
     opacity: 0;
     visibility: hidden;
+}
+
+@media screen and (max-width: 566px) {
+    .visible-xs {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .hidden-xs {
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+    }
 }
 
 .list-unstyled {
@@ -4043,6 +4060,33 @@
     transform-origin: 50% 50%;
     position: absolute;
     z-index: 99;
+}
+
+.float-supports.for-mobile {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+}
+
+.float-supports.for-mobile .earthquake,
+.float-supports.for-mobile .earthquake-outer {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.float-supports.for-mobile .box-container {
+    background: #eee;
+    border-top: 1px solid #ececec;
+}
+
+.float-supports.for-mobile .box-container .support-item {
+    flex: 1;
+    flex-flow: column;
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 /* ================= Spinner loader ================= */

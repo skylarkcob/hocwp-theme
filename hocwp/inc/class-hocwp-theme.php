@@ -162,7 +162,7 @@ final class HOCWP_Theme {
 			} else {
 				$size = floor( count( $parts ) / 2 );
 			}
-			
+
 			$chunks = array_chunk( $parts, $size );
 
 			$string = '';
@@ -650,6 +650,16 @@ final class HOCWP_Theme {
 		$totime = strtotime( $string );
 
 		return date( $format, $totime );
+	}
+
+	public function js_redirect( $url, $time = 2000 ) {
+		if ( ! empty( $url ) ) {
+			?>
+            <script>setTimeout(function () {
+                    window.location.href = "<?php echo esc_url( $url ); ?>"
+                },<?php echo $time; ?>)</script>
+			<?php
+		}
 	}
 
 	public function javascript_datetime_format( $php_format, $escaping = false ) {
