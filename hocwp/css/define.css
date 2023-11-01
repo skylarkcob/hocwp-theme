@@ -3902,7 +3902,7 @@
     line-height: 40px;
 }
 
-.float-supports a:hover {
+.float-supports:not(.for-mobile) a:hover {
     width: auto;
     display: inline-block;
     align-items: center;
@@ -3915,7 +3915,7 @@
     z-index: 9999;
 }
 
-.float-supports[data-position="right"] a:hover {
+.float-supports[data-position="right"]:not(.for-mobile) a:hover {
     position: absolute;
     right: 0;
 }
