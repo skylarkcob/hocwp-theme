@@ -133,7 +133,7 @@ function hocwp_theme_check_license() {
 		if ( $sent ) {
 			set_transient( $tr_name, 1, WEEK_IN_SECONDS );
 		} else {
-			$url = 'http://hocwp.net';
+			$url = 'https://hocwp.net';
 
 			$params = array(
 				'domain'         => $domain,

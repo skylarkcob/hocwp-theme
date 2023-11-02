@@ -4,7 +4,7 @@
  * Version: 1.0 (18-11-2014)
  * Requires: jQuery v1.7.1 or later
  * Fixed and updated by: laidinhcuongvn@gmail.com
- * Website: http://ldcuong.com/
+ * Website: https://ldcuong.com/
  * Latest updated: 2022-08-29
  */
 (function (e) {

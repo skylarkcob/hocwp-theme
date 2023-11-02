@@ -240,7 +240,7 @@ function hocwp_theme_localize_script_l10n() {
 		'l10n'                      => array(
 			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
 			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),
-			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - http://hocwp.net' ),
+			'themeCreatedBy'             => sprintf( __( 'Theme created by %s', 'hocwp-theme' ), 'HocWP Team - https://hocwp.net' ),
 			'save'                       => __( 'Save', 'hocwp-theme' ),
 			'saveAlert'                  => __( 'The changes you made will be lost if you navigate away from this page.', 'hocwp-theme' ),
 			'waiting'                    => __( 'Waiting...', 'hocwp-theme' )
