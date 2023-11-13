@@ -237,6 +237,8 @@ function hocwp_theme_localize_script_l10n() {
 		'customAjaxCallback'        => 'hocwp_theme_custom_ajax_callback',
 		'customAjaxPrivateCallback' => 'hocwp_theme_custom_ajax_private_callback',
 		'loginUrl'                  => wp_login_url( $redirect ),
+		'isLoggedIn'                => is_user_logged_in(),
+		'editProfileUrl'            => get_edit_profile_url(),
 		'l10n'                      => array(
 			'confirmDeleteMessage'       => __( 'Are you sure you want to delete?', 'hocwp-theme' ),
 			'beforeUnloadConfirmMessage' => __( 'Changes you made may not be saved.', 'hocwp-theme' ),

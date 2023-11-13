@@ -988,7 +988,9 @@ final class HOCWP_Theme_HTML_Field {
             <ul class="list-images clearfix" data-list-type="image" data-sortable="1">
 				<?php
 				if ( ! empty( $images ) ) {
-					$images = json_decode( $images );
+					if ( ! is_array( $images ) ) {
+						$images = json_decode( $images );
+					}
 
 					if ( HT()->array_has_value( $images ) ) {
 						foreach ( $images as $id ) {

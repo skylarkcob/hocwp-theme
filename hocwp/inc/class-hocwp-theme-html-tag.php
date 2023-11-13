@@ -68,6 +68,13 @@ final class HOCWP_Theme_HTML_Tag {
 			$this->attributes = array();
 		}
 
+		// Used for same attribute name and value
+		if ( is_null( $value ) && is_string( $attribute_name ) ) {
+			$this->attributes[ $attribute_name ] = $attribute_name;
+
+			return;
+		}
+
 		if ( null === $value || is_array( $attribute_name ) ) {
 			if ( is_array( $attribute_name ) ) {
 				$atts = $attribute_name;

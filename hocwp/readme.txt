@@ -6,6 +6,9 @@
 * 01/11/2023: Update break line for HTML Tag.
 * 01/11/2023: Fix sortable label below field in fields.
 * 01/11/2023: Update float supports.
+* 13/11/2023: Move deprecated functions to trait deprecated file.
+* 13/11/2023: Update default localized script object.
+* 13/11/2023: Only load required plugin when running development mode on localhost.
 
 = 7.0.2 =
 * 17/08/2023: Since version 7.0.2, this theme is only used as parent theme only.
