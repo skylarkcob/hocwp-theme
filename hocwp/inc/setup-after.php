@@ -789,4 +789,20 @@ if ( 'DISABLE_PLUGINS' == $do_action ) {
 	add_filter( 'option_active_plugins', '__return_empty_array', 99 );
 }
 
+add_action( 'template_redirect', function () {
+	$do_action = $_GET['do_action'] ?? '';
+
+	if ( 'delay_load' == $do_action ) {
+		$module = $_GET['module'] ?? '';
+
+		if ( 'site_footer_tools' == $module ) {
+			HT_Frontend()->site_footer_tools();
+			exit;
+		} elseif ( ! empty( $module ) && function_exists( 'HT_Custom' ) ) {
+			HT_Custom()->load_module( 'delay-' . $module );
+			exit;
+		}
+	}
+} );
+
 do_action( 'hocwp_theme_setup_after' );

@@ -20,7 +20,7 @@ function HOCWP_Theme() {
     };
 
     this.remove_param = function (key, sourceURL) {
-        var rtn = sourceURL.split("?")[0],
+        let rtn = sourceURL.split("?")[0],
             param,
             params_arr = [],
             queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
@@ -28,7 +28,7 @@ function HOCWP_Theme() {
         if (queryString !== "") {
             params_arr = queryString.split("&");
 
-            for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+            for (let i = params_arr.length - 1; i >= 0; i -= 1) {
                 param = params_arr[i].split("=")[0];
 
                 if (param === key) {
@@ -39,7 +39,7 @@ function HOCWP_Theme() {
             rtn = rtn + "?" + params_arr.join("&");
         }
 
-        var lastChar = rtn.substr(rtn.length - 2);
+        let lastChar = rtn.substr(rtn.length - 2);
 
         if ("/?" === lastChar) {
             rtn = rtn.substr(0, rtn.length - 1);
@@ -53,8 +53,8 @@ function HOCWP_Theme() {
     };
 
     this.add_param = function (key, value, url) {
-        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-        var separator = url.indexOf("?") !== -1 ? "&" : "?";
+        let re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        let separator = url.indexOf("?") !== -1 ? "&" : "?";
 
         if (url.match(re)) {
             return url.replace(re, "$1" + key + "=" + value + "$2");
@@ -64,7 +64,7 @@ function HOCWP_Theme() {
     };
 
     this.filter_list = function (input) {
-        var filter, ul, li, a, i, txtValue;
+        let filter, ul, li, a, i, txtValue;
 
         if ("object" != typeof input) {
             input = document.getElementById(input);
@@ -99,7 +99,7 @@ function HOCWP_Theme() {
 
     this.popup = function (popup) {
         if (popup) {
-            var close = document.getElementById("sc-gdpr-close"),
+            let close = document.getElementById("sc-gdpr-close"),
                 accept = document.getElementById("sc-gdpr-accept");
 
             if (localStorage.getItem("popState") !== "shown") {
@@ -295,7 +295,7 @@ function HOCWP_Theme() {
 hocwpTheme.object = new HOCWP_Theme();
 hocwpTheme.object.init();
 
-var log = console.log.bind(document);
+let log = console.log.bind(document);
 
 hocwpTheme.getParamByName = function (url, name) {
     return hocwpTheme.object.get_param_by_name(url, name);
@@ -336,3 +336,54 @@ hocwpTheme.screenWidth = function () {
 hocwpTheme.ajax = function ($, element, data, callback, params) {
     hocwpTheme.object.ajax($, element, data, callback, params);
 };
+
+jQuery(document).ready(function ($) {
+    const BODY = $("body");
+
+    hocwpTheme.GLOBAL = {
+        init: function () {
+            this.delayLoad();
+        },
+        delayLoad: function () {
+            $(".delay-load").each(function () {
+                let that = this,
+                    element = $(that),
+                    module = element.attr("data-module"),
+                    delay = element.attr("data-delay"),
+                    url = window.location.href;
+
+                url = hocwpTheme.GLOBAL.addParamToURL("do_action", "delay_load", url);
+                url = hocwpTheme.GLOBAL.addParamToURL("module", module, url);
+
+                if ("number" === typeof delay) {
+                    if (1 > delay) {
+                        delay = 100;
+                    }
+
+                    setTimeout(function () {
+                        $.get(url, function (response) {
+                            element.html(response);
+                            BODY.trigger("hocwpTheme:delayLoaded", [element, response]);
+                        });
+                    }, delay);
+                } else {
+                    $.get(url, function (response) {
+                        element.html(response);
+                        element.addClass("data-loaded");
+
+                        if (element.children().length) {
+                            element.addClass("has-data");
+                        }
+
+                        BODY.trigger("hocwpTheme:delayLoaded", [element, response]);
+                    });
+                }
+            });
+        },
+        addParamToURL: function (key, value, url) {
+            return hocwpTheme.object.add_param(key, value, url);
+        }
+    };
+
+    hocwpTheme.GLOBAL.init();
+});

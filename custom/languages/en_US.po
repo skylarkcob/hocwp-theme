@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2023-11-16 12:13+0700\n"
-"PO-Revision-Date: 2023-11-16 12:13+0700\n"
+"POT-Creation-Date: 2023-11-16 13:10+0700\n"
+"PO-Revision-Date: 2023-11-16 13:10+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: en_US\n"
@@ -778,8 +778,8 @@ msgid "Mobile Logo"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-home.php:6
-#: hocwp/inc/class-hocwp-theme-frontend.php:1004
-#: hocwp/inc/class-hocwp-theme-frontend.php:1006
+#: hocwp/inc/class-hocwp-theme-frontend.php:1011
+#: hocwp/inc/class-hocwp-theme-frontend.php:1013
 msgid "Home"
 msgstr ""
 
@@ -2629,40 +2629,40 @@ msgstr ""
 msgid "Archives"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1117
+#: hocwp/inc/class-hocwp-theme-frontend.php:1124
 msgid "Page not found"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1328
+#: hocwp/inc/class-hocwp-theme-frontend.php:1335
 msgctxt "back to top"
 msgid "Top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1362
-#: hocwp/inc/class-hocwp-theme-frontend.php:1364
+#: hocwp/inc/class-hocwp-theme-frontend.php:1369
+#: hocwp/inc/class-hocwp-theme-frontend.php:1371
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1530
+#: hocwp/inc/class-hocwp-theme-frontend.php:1537
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1623
+#: hocwp/inc/class-hocwp-theme-frontend.php:1630
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1627
+#: hocwp/inc/class-hocwp-theme-frontend.php:1634
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1636
+#: hocwp/inc/class-hocwp-theme-frontend.php:1643
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1652
+#: hocwp/inc/class-hocwp-theme-frontend.php:1659
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
