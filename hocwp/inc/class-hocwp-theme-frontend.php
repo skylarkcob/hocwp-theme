@@ -636,7 +636,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$list_class   .= ' list-socials';
 			$list_class   = trim( $list_class );
 			?>
-			<ul class="<?php echo esc_attr( $list_class ); ?>">
+            <ul class="<?php echo esc_attr( $list_class ); ?>">
 				<?php
 				foreach ( $list_socials as $social ) {
 					$url = HT_Options()->get_tab( $social . '_url', '', 'social' );
@@ -648,16 +648,16 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 							$icon = ucfirst( $social );
 						}
 						?>
-						<li class="social-item">
-							<a href="<?php echo esc_url( $url ); ?>"
-							   title="<?php echo esc_attr( ucfirst( $social ) ); ?>"
-							   target="_blank" rel="nofollow"><?php echo $icon ?></a>
-						</li>
+                        <li class="social-item">
+                            <a href="<?php echo esc_url( $url ); ?>"
+                               title="<?php echo esc_attr( ucfirst( $social ) ); ?>"
+                               target="_blank" rel="nofollow"><?php echo $icon ?></a>
+                        </li>
 						<?php
 					}
 				}
 				?>
-			</ul>
+            </ul>
 			<?php
 		}
 	}
@@ -724,8 +724,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$url = $data['url'];
 			$url = add_query_arg( $data['params'], $url );
 			?>
-			<a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
-			   class="icon button circle is-outline tooltip <?php echo esc_attr( $social ); ?> show-for-medium tooltipstered"><?php echo $data['icon']; ?></a>
+            <a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
+               class="icon button circle is-outline tooltip <?php echo esc_attr( $social ); ?> show-for-medium tooltipstered"><?php echo $data['icon']; ?></a>
 			<?php
 		}
 	}
@@ -1219,23 +1219,23 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$ajax_url = add_query_arg( $params, $ajax_url );
 		?>
-		<div class="fb-like-buttons like-share clearfix">
-			<div class="item">
-				<div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
-				     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
-				     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
+        <div class="fb-like-buttons like-share clearfix">
+            <div class="item">
+                <div class="fb-like" data-href="<?php echo $url; ?>" data-layout="<?php echo $layout; ?>"
+                     data-action="<?php echo $action; ?>" data-show-faces="<?php echo $show_faces; ?>"
+                     data-share="<?php echo $share; ?>" data-post-id="<?php echo $post_id; ?>"></div>
 				<?php
 				if ( $recommend ) {
 					?>
-					<div data-share="true" data-show-faces="false" data-action="recommend" data-layout="button_count"
-					     data-href="<?php echo $url; ?>" class="fb-like fb_iframe_widget"></div>
+                    <div data-share="true" data-show-faces="false" data-action="recommend" data-layout="button_count"
+                         data-href="<?php echo $url; ?>" class="fb-like fb_iframe_widget"></div>
 					<?php
 				}
 				?>
-			</div>
+            </div>
 			<?php do_action( 'hocwp_theme_facebook_share_button', $args ); ?>
-		</div>
-		<script>
+        </div>
+        <script>
             function updateFacebookData(event) {
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", "<?php echo $ajax_url; ?>&event=" + event, true);
@@ -1251,7 +1251,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
                     updateFacebookData('unlike');
                 });
             };
-		</script>
+        </script>
 		<?php
 		$after = HT()->get_value_in_array( $args, 'after' );
 
@@ -1275,10 +1275,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$widget_id = apply_filters( 'hocwp_theme_addthis_toolbox_widget_id', $widget_id, $args );
 		?>
-		<!-- Go to www.addthis.com/dashboard to customize your tools -->
-		<div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
-		     data-widget-id="<?php echo esc_attr( $widget_id ); ?>"
-		     data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <div class="<?php echo $class; ?>" data-url="<?php echo $url; ?>"
+             data-widget-id="<?php echo esc_attr( $widget_id ); ?>"
+             data-title="<?php echo $this->get_wpseo_post_title( $post_id ); ?>"></div>
 		<?php
 	}
 
@@ -1303,13 +1303,20 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$class .= ' lozad';
 		$class = trim( $class );
-		?>
-		<img class="<?php echo esc_attr( $class ); ?>"
-		     src="<?php echo esc_attr( HOCWP_THEME_DOT_IMAGE_SRC ); ?>"
-		     data-src="<?php echo $src; ?>"
-		     alt="<?php echo esc_attr( $title ); ?>" width="<?php echo esc_attr( $width ); ?>"
-		     height="<?php echo esc_attr( $height ); ?>">
-		<?php
+
+		$atts = array(
+			'class'         => $class,
+			'src'           => HOCWP_THEME_DOT_IMAGE_SRC,
+			'data-src'      => $src,
+			'data-original' => $src,
+			'alt'           => $title,
+			'width'         => $width,
+			'height'        => $height
+		);
+
+		$img = new HOCWP_Theme_HTML_Tag( 'img' );
+		$img->set_attributes( $atts );
+		$img->output();
 	}
 
 	public function back_to_top_button() {
@@ -1349,13 +1356,13 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$style = trim( $style );
 		?>
-		<button id="backToTop" class="back-to-top"
-		        onclick="scrollToTop(1000);"
-		        title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
-		        style="<?php echo $style; ?>"
-		        aria-label="<?php esc_attr_e( 'Go to top', 'hocwp-theme' ); ?>"><?php echo $text; ?></button>
-		<!--suppress JSUnresolvedVariable -->
-		<script>
+        <button id="backToTop" class="back-to-top"
+                onclick="scrollToTop(1000);"
+                title="<?php _e( 'Go to top', 'hocwp-theme' ); ?>"
+                style="<?php echo $style; ?>"
+                aria-label="<?php esc_attr_e( 'Go to top', 'hocwp-theme' ); ?>"><?php echo $text; ?></button>
+        <!--suppress JSUnresolvedVariable -->
+        <script>
             window.onscroll = function () {
                 scrollFunction()
             };
@@ -1384,7 +1391,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
                 window.requestAnimationFrame(step);
             }
-		</script>
+        </script>
 		<?php
 	}
 
@@ -1576,11 +1583,11 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		if ( null !== $post_class ) {
 			?>
-			<div <?php post_class( $post_class, $post_id ); ?>>
-				<div class="post-container">
+            <div <?php post_class( $post_class, $post_id ); ?>>
+                <div class="post-container">
 					<?php echo $html; ?>
-				</div>
-			</div>
+                </div>
+            </div>
 			<?php
 		} else {
 			echo $html;
@@ -1598,25 +1605,25 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 			if ( $page instanceof WP_Post && 'page' == $page->post_type ) {
 				?>
-				<header class="page-header">
-					<h2 class="page-title"><?php echo get_the_title( $page ); ?></h2>
-				</header>
-				<!-- .page-header -->
-				<div class="page-content entry-content">
+                <header class="page-header">
+                    <h2 class="page-title"><?php echo get_the_title( $page ); ?></h2>
+                </header>
+                <!-- .page-header -->
+                <div class="page-content entry-content">
 					<?php
 					$content = HT_Util()->apply_the_content( $page->post_content );
 					echo $content;
 					?>
-				</div>
+                </div>
 				<?php
 			} else {
 				?>
-				<header class="page-header">
-					<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h2>
-				</header>
-				<!-- .page-header -->
-				<div class="page-content entry-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
+                <header class="page-header">
+                    <h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'hocwp-theme' ); ?></h2>
+                </header>
+                <!-- .page-header -->
+                <div class="page-content entry-content">
+                    <p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'hocwp-theme' ); ?></p>
 					<?php
 					get_search_form();
 
@@ -1624,9 +1631,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						the_widget( 'WP_Widget_Recent_Posts' );
 					}
 					?>
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
-						<ul>
+                    <div class="widget widget_categories">
+                        <h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'hocwp-theme' ); ?></h2>
+                        <ul>
 							<?php
 							wp_list_categories( array(
 								'orderby'    => 'count',
@@ -1636,9 +1643,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 								'number'     => 10,
 							) );
 							?>
-						</ul>
-					</div>
-					<!-- .widget -->
+                        </ul>
+                    </div>
+                    <!-- .widget -->
 					<?php
 					/* translators: %1$s: smiley */
 					$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'hocwp-theme' ), convert_smilies( ':)' ) ) . '</p>';
@@ -1653,8 +1660,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						the_widget( 'WP_Widget_Tag_Cloud' );
 					}
 					?>
-				</div>
-				<!-- .page-content -->
+                </div>
+                <!-- .page-content -->
 				<?php
 			}
 		}

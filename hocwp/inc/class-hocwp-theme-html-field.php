@@ -335,7 +335,14 @@ final class HOCWP_Theme_HTML_Field {
 		$attributes = $args['attributes'] ?? '';
 		unset( $args['attributes'] );
 
-		$textarea->set_attributes( $args );
+		$defaults = array(
+			'class' => $args['class'] ?? '',
+			'rows'  => $args['rows'] ?? 10,
+			'id'    => $args['id'] ?? '',
+			'name'  => $args['name'] ?? ''
+		);
+
+		$textarea->set_attributes( $defaults );
 
 		$textarea->add_attributes( $attributes );
 

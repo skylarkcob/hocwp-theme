@@ -9,6 +9,7 @@
 * 13/11/2023: Move deprecated functions to trait deprecated file.
 * 13/11/2023: Update default localized script object.
 * 13/11/2023: Only load required plugin when running development mode on localhost.
+* 16/11/2023: Hide duplicated field description.
 
 = 7.0.2 =
 * 17/08/2023: Since version 7.0.2, this theme is only used as parent theme only.

@@ -844,6 +844,10 @@ final class HOCWP_Theme {
 			$src = $xpath->evaluate( 'string(//img/@data-src)' );
 		}
 
+		if ( empty( $src ) ) {
+			$src = $xpath->evaluate( 'string(//img/@data-original)' );
+		}
+
 		unset( $doc, $xpath );
 
 		return $src;

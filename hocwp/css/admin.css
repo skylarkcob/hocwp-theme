@@ -750,3 +750,7 @@ td.column-description > p {
 td.column-description > *:not(:first-child):not(:nth-child(2)) {
     display: none;
 }
+
+.form-table td .description ~ .description {
+    display: none;
+}

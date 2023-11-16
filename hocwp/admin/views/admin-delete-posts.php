@@ -15,7 +15,7 @@ $search_post = '';
     <form id="delete-posts-form" method="post" class="delete-posts-form" action="">
 		<?php
 		if ( isset( $_POST['submit_form'] ) ) {
-			$post_ids    = isset( $_POST['post_ids'] ) ? $_POST['post_ids'] : '';
+			$post_ids    = $_POST['post_ids'] ?? '';
 			$post_type   = $_POST['delete_post_type'] ?? '';
 			$search_post = $_POST['search_post'] ?? '';
 
@@ -30,7 +30,7 @@ $search_post = '';
 				$dels = array_unique( $dels );
 				$dels = array_filter( $dels );
 
-				$confirm_delete = isset( $_POST['confirm_delete'] ) ? $_POST['confirm_delete'] : '';
+				$confirm_delete = $_POST['confirm_delete'] ?? '';
 
 				if ( empty( $confirm_delete ) ) {
 					$msg = '';
