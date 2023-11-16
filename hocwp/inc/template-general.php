@@ -373,7 +373,7 @@ function hocwp_theme_widget_title( $args, $instance, $widget ) {
 						}
 
 						if ( $title_term_link && ! empty( $title ) ) {
-							$title = '<a href="' . get_term_link( $term ) . '">' . $title . '</a>';
+							$title = '<a href="' . get_term_link( $term ) . '" title="' . esc_attr( $title ) . '">' . $title . '</a>';
 						}
 					}
 				}
@@ -1222,7 +1222,7 @@ function hocwp_theme_wp_footer_action() {
 				$css_style .= sprintf( 'background-image: url("%s");', esc_url( wp_get_attachment_image_url( $bg_image, 'full' ) ) );
 			}
 
-            ob_start();
+			ob_start();
 
 			foreach ( $sort_order as $key ) {
 				$value = HT_Options()->get_tab( $key, '', $tab_name );
@@ -1251,7 +1251,8 @@ function hocwp_theme_wp_footer_action() {
                         <div class="support-item" data-key="<?php echo esc_attr( $key ); ?>"
                              data-vibrate="<?php echo esc_attr( $vibrate ); ?>"
                              data-earthquake="<?php echo esc_attr( $earthquake ); ?>">
-                            <a target="_blank" href="<?php echo esc_url( $url ); ?>" rel="nofollow">
+                            <a target="_blank" href="<?php echo esc_url( $url ); ?>" rel="nofollow"
+                               title="<?php echo esc_attr( $text ); ?>">
 								<?php
 								if ( 1 == $earthquake ) {
 									?>
@@ -1274,7 +1275,7 @@ function hocwp_theme_wp_footer_action() {
 				}
 			}
 
-            $items = ob_get_clean();
+			$items = ob_get_clean();
 			?>
             <div class="float-supports hot-linking hidden-xs" data-style="<?php echo esc_attr( $style ); ?>"
                  data-position="<?php echo esc_attr( $pos ); ?>" style="<?php echo esc_attr( $css_style ); ?>">

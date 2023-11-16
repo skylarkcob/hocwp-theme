@@ -22,7 +22,7 @@ if ( ! HT_Util()->is_vr_theme() ) {
 		hocwp_theme_html_tag( 'div', 'site_container' ); // Open .site
 		?>
         <a class="skip-link screen-reader-text"
-           href="#content"><?php esc_html_e( 'Skip to content', 'hocwp-theme' ); ?></a>
+           href="#content" title="<?php esc_attr_e( 'Skip to content', 'hocwp-theme' ); ?>"><?php esc_html_e( 'Skip to content', 'hocwp-theme' ); ?></a>
 		<?php
 		do_action( 'hocwp_theme_site_header_before' );
 		hocwp_theme_html_tag( 'header', 'site_header', array(

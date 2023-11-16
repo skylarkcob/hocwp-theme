@@ -314,7 +314,8 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 								ob_start();
 								?>
                                 <li>
-                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                    <a href="<?php the_permalink(); ?>"
+                                       title="<?php the_title(); ?>"><?php the_title(); ?></a>
                                 </li>
 								<?php
 								$tmp .= ob_get_clean();

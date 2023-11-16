@@ -536,7 +536,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 					break;
 			}
 
-			if ( isset( $args['label'] ) && ! empty( $args['label'] ) ) {
+			if ( ! empty( $args['label'] ) ) {
 				printf( $label_format, $args['label'] );
 			}
 
@@ -725,6 +725,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			$url = add_query_arg( $data['params'], $url );
 			?>
             <a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
+               title="<?php echo esc_attr( sprintf( __( 'Share on %s', 'rentinsingapore' ), $social ) ); ?>"
                class="icon button circle is-outline tooltip <?php echo esc_attr( $social ); ?> show-for-medium tooltipstered"><?php echo $data['icon']; ?></a>
 			<?php
 		}

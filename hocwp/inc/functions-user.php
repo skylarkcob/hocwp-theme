@@ -87,7 +87,7 @@ function hocwp_theme_wp_new_user_notification_email_filter( $data, $user, $blog_
 			$message = str_replace( $matches[1], $url, $message );
 		}
 
-		if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
+		if ( ! empty( $matches[0] ) ) {
 			if ( ! empty( $message ) ) {
 				$message .= PHP_EOL;
 			}

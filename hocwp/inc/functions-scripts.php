@@ -266,7 +266,8 @@ function hocwp_theme_localize_script_l10n() {
 function hocwp_theme_load_more_button() {
 	ob_start();
 	?>
-    <a class="load-more-button btn" href="#"><?php _e( 'Load more', 'hocwp-theme' ); ?></a>
+    <a class="load-more-button btn" href="#"
+       title="<?php esc_attr_e( 'Load more', 'hocwp-theme' ); ?>"><?php _e( 'Load more', 'hocwp-theme' ); ?></a>
 	<?php
 	$html = ob_get_clean();
 

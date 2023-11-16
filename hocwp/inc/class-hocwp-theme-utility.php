@@ -470,7 +470,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_term_link( $term ) {
-		return '<a href="' . esc_url( get_term_link( $term ) ) . '" rel="category ' . HT_Sanitize()->html_class( $term->taxonomy ) . ' tag">' . $term->name . '</a>';
+		return '<a href="' . esc_url( get_term_link( $term ) ) . '" rel="category ' . HT_Sanitize()->html_class( $term->taxonomy ) . ' tag" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
 	}
 
 	public function get_term_drop_down( $args = array() ) {
@@ -2155,10 +2155,10 @@ class HOCWP_Theme_Utility {
 
 		if ( empty( $title ) ) {
 			/** @noinspection HtmlUnknownTarget */
-			the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ), '</a>' );
+			the_title( sprintf( '<a href="%s" rel="bookmark" title="%s">', esc_url( $permalink ), esc_attr( $title ) ), '</a>' );
 		} else {
 			/** @noinspection HtmlUnknownTarget */
-			$title = sprintf( '<a href="%s" rel="bookmark">', esc_url( $permalink ) ) . $title . '</a>';
+			$title = sprintf( '<a href="%s" rel="bookmark" title="%s">', esc_url( $permalink ), esc_attr( $title ) ) . $title . '</a>';
 			echo $title;
 		}
 	}
