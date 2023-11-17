@@ -177,11 +177,11 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		$class = trim( $class );
 	}
 
-	if ( false === strpos( $class, 'wp-post-image' ) ) {
+	if ( ! str_contains( $class, 'wp-post-image' ) ) {
 		$class .= ' wp-post-image';
 	}
 
-	$lazyload = isset( $attr['lazyload'] ) ? $attr['lazyload'] : false;
+	$lazyload = $attr['lazyload'] ?? false;
 
 	$url = get_post_meta( $post_id, '_thumbnail_url', true );
 
@@ -191,17 +191,15 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		$url = HT()->get_first_image_source( $obj->post_content );
 	}
 
-	remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
+	remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail' );
 
 	if ( ! has_post_thumbnail( $post_id ) && HT()->is_image_url( $url ) ) {
-		$id = HT_Media()->download_image( $url );
+		$id = HT_Media()->download_image( $url, null, true );
 
 		if ( HT()->is_positive_number( $id ) ) {
 			set_post_thumbnail( $post_id, $id );
 
-			$image = wp_get_attachment_image( $id, $size, false, $attr );
-
-			return $image;
+			return wp_get_attachment_image( $id, $size, false, $attr );
 		}
 	}
 
@@ -210,7 +208,7 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 	$src = $url;
 
 	$width  = ( is_array( $sizes ) && isset( $sizes['width'] ) ) ? $sizes['width'] : '';
-	$height = isset( $sizes['height'] ) ? $sizes['height'] : '';
+	$height = $sizes['height'] ?? '';
 
 	$external = false;
 
@@ -256,8 +254,6 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 				$file_path = ABSPATH . $sub;
 
 				if ( file_exists( $file_path ) ) {
-					$external = false;
-
 					$url = home_url( $sub );
 				}
 			}
@@ -269,8 +265,8 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 				$params = array(
 					'src'     => $url,
 					'crop'    => 0,
-					'cache'   => isset( $attr['cache'] ) ? $attr['cache'] : 1,
-					'quality' => isset( $attr['quality'] ) ? $attr['quality'] : 100
+					'cache'   => $attr['cache'] ?? 1,
+					'quality' => $attr['quality'] ?? 100
 				);
 
 				$src = add_query_arg( $params, $src );
@@ -295,7 +291,6 @@ function hocwp_theme_post_thumbnail_html_filter( $html, $post_id, $post_thumbnai
 		$regen = false;
 
 		if ( HT()->is_file( $file_path ) && ! file_exists( $new_path ) ) {
-			$crop    = (bool) $crop;
 			$resized = image_make_intermediate_size( $file_path, $width, $height, $crop );
 
 			if ( ! $external && HT()->is_positive_number( $post_thumbnail_id ) && isset( $resized['file'] ) ) {
@@ -385,12 +380,12 @@ function hocwp_theme_check_post_has_thumbnail( $check, $post_id, $meta_key ) {
 		global $pagenow;
 
 		if ( 'link.php' != $pagenow ) {
-			remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
+			remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail' );
 			$result = get_post_meta( $post_id, $meta_key, true );
 			add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
 
 			if ( empty( $result ) ) {
-				remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10 );
+				remove_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail' );
 				$result = get_post_meta( $post_id, '_thumbnail_url', true );
 				add_filter( 'get_post_metadata', 'hocwp_theme_check_post_has_thumbnail', 10, 3 );
 
@@ -453,7 +448,7 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 		$size = HT_Util()->get_image_size( 'thumbnail' );
 	}
 
-	$class = isset( $attr['class'] ) ? $attr['class'] : '';
+	$class = $attr['class'] ?? '';
 	$class = trim( $class );
 
 	if ( is_array( $size ) ) {
@@ -476,7 +471,7 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 
 	unset( $classes, $key, $part );
 
-	if ( false !== strpos( $class, 'attachment- size-' ) ) {
+	if ( str_contains( $class, 'attachment- size-' ) ) {
 		$class = str_replace( 'attachment- size-', 'attachment-' . $replace . ' size-' . $replace, $class );
 	} elseif ( 'attachment- size-' == $class ) {
 		$class = 'attachment-' . $replace . ' size-' . $replace;
@@ -510,21 +505,23 @@ function hocwp_theme_get_attachment_image_attributes_filter( $attr, $attachment,
 
 	unset( $name );
 
-	if ( false === strpos( $class, 'wp-post-image' ) ) {
+	if ( ! str_contains( $class, 'wp-post-image' ) ) {
 		$class .= ' wp-post-image';
 	}
 
 	$class = str_replace( 'x wp-post-image', ' wp-post-image', $class );
 
 	if ( $attachment instanceof WP_Post ) {
-		$class                 .= ' attachment-id-' . $attachment->ID;
+		$class .= ' attachment-id-' . $attachment->ID;
+
 		$attr['data-media-id'] = $attachment->ID;
 	}
 
 	$object = get_post( $post_id );
 
 	if ( $object instanceof WP_Post ) {
-		$class                .= ' post-type-' . $object->post_type;
+		$class .= ' post-type-' . $object->post_type;
+
 		$attr['data-post-id'] = $object->ID;
 	}
 

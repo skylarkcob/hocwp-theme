@@ -397,6 +397,19 @@ class HOCWP_Theme_Media {
 			return false;
 		}
 
+		$downloading = get_option( 'downloading_images' );
+
+		if ( ! is_array( $downloading ) ) {
+			$downloading = array();
+		}
+
+		if ( in_array( $url, $downloading ) ) {
+			return 'downloading';
+		}
+
+		$downloading[] = $url;
+		update_option( 'downloading_images', $downloading );
+
 		if ( $check_exist ) {
 			$args = array(
 				'post_type'      => 'attachment',
@@ -479,6 +492,9 @@ class HOCWP_Theme_Media {
 
 		update_post_meta( $id, 'source_url', $url );
 
+		unset( $downloading[ array_search( $url, $downloading ) ] );
+		update_option( 'downloading_images', $downloading );
+
 		return $id;
 	}
 
@@ -511,7 +527,7 @@ class HOCWP_Theme_Media {
 
 		$size = HT_Media()->get_image_size( $thumbnail_size );
 
-		if ( isset( $size['width'] ) && ! empty( $size['width'] ) && isset( $size['height'] ) && ! empty( $size['height'] ) ) {
+		if ( ! empty( $size['width'] ) && ! empty( $size['height'] ) ) {
 			$thumbnail_size = array( $size['width'], $size['height'], $crop );
 		}
 
