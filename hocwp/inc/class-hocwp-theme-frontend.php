@@ -1130,13 +1130,6 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				<?php
 			}
 		}
-
-		if ( HT_Options()->get_tab( 'loading', '', 'reading' ) ) {
-			?>
-            <div id="loaderIcon" class="loader fixed center large"
-                 title="<?php esc_attr_e( 'Loading...', 'hocwp-theme' ); ?>"></div>
-			<?php
-		}
 	}
 
 	public function breadcrumb( $args = array() ) {

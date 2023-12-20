@@ -1134,6 +1134,13 @@ function hocwp_theme_wp_footer_action() {
     </script>
 	<?php
 	HT_Frontend()->delay_load( 'site_footer_tools', 2000 );
+
+	if ( HT_Options()->get_tab( 'loading', '', 'reading' ) ) {
+		?>
+        <div id="loaderIcon" class="loader fixed center large"
+             title="<?php esc_attr_e( 'Loading...', 'hocwp-theme' ); ?>"></div>
+		<?php
+	}
 }
 
 add_action( 'wp_footer', 'hocwp_theme_wp_footer_action' );

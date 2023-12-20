@@ -251,7 +251,7 @@ function HOCWP_Theme() {
         };
     };
 
-    this.loader = function () {
+    this.loader = function (fade = false) {
         function fadeOut(element) {
             if (!element) {
                 return false;
@@ -270,6 +270,10 @@ function HOCWP_Theme() {
                     element.style.filter = "alpha(opacity=" + opacity * 100 + ")";
                     opacity -= opacity * 0.1;
                 }, 100);
+        }
+
+        if (fade) {
+            fadeOut(document.getElementById("loaderIcon"));
         }
 
         window.onload = function () {
@@ -377,6 +381,12 @@ jQuery(document).ready(function ($) {
 
                         BODY.trigger("hocwpTheme:delayLoaded", [element, response]);
                     });
+                }
+            });
+
+            BODY.on("hocwpTheme:delayLoaded", function () {
+                if (document.readyState === "complete") {
+                    hocwpTheme.object.loader(true);
                 }
             });
         },

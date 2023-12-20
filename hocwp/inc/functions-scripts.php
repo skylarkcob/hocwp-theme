@@ -547,3 +547,39 @@ function hocwp_theme_script_loader_tag_async_filter( $tag, $handle ) {
 
 	return $tag;
 }
+
+add_action( 'hocwp_theme_frontend_scripts', function () {
+	$accounts = HT_Options()->get_tab( 'fix_zalo_me', '', 'social' );
+
+	if ( ! empty( $accounts ) ) {
+		$accounts = HT()->explode_new_line( $accounts );
+
+		$l10n = array(
+			'text' => array(
+				'not_support' => __( 'Link is not supported.', 'hocwp-theme' ),
+				'can_open'    => __( 'Link can be opened.', 'hocwp-theme' )
+			)
+		);
+
+		$zalo = array();
+
+		foreach ( $accounts as $item ) {
+			$item  = explode( ':', $item );
+			$phone = $item[0] ?? '';
+			$qr    = $item[1] ?? '';
+			$phone = str_replace( '"', '', $phone );
+			$phone = trim( $phone );
+			$qr    = str_replace( '"', '', $qr );
+			$qr    = trim( $qr );
+
+			if ( ! empty( $phone ) && ! empty( $qr ) ) {
+				$zalo[ $phone ] = $qr;
+			}
+		}
+
+		$l10n['zaloAccounts'] = $zalo;
+
+		wp_enqueue_script( 'hocwp-theme-fix-zalo-me', HOCWP_THEME_CORE_URL . '/js/fix-zalo-me.js', array( 'jquery' ), false, true );
+		wp_localize_script( 'hocwp-theme-fix-zalo-me', 'fixZaloMe', $l10n );
+	}
+} );

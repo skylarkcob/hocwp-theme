@@ -627,6 +627,10 @@ final class HOCWP_Theme {
 	}
 
 	public function json_string_to_array( $json_string ) {
+		if ( empty( $json_string ) ) {
+			return array();
+		}
+
 		if ( ! is_array( $json_string ) ) {
 			$json_string = stripslashes( $json_string );
 			$json_string = json_decode( $json_string, true );
@@ -656,7 +660,7 @@ final class HOCWP_Theme {
 		if ( ! empty( $url ) ) {
 			?>
             <script>setTimeout(function () {
-                    window.location.href = "<?php echo esc_url( $url ); ?>"
+                    window.location.href = "<?php echo $url; ?>"
                 },<?php echo $time; ?>)</script>
 			<?php
 		}

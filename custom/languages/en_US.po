@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2023-11-16 13:10+0700\n"
-"PO-Revision-Date: 2023-11-16 13:10+0700\n"
+"POT-Creation-Date: 2023-12-20 14:50+0700\n"
+"PO-Revision-Date: 2023-12-20 14:50+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: en_US\n"
@@ -778,8 +778,8 @@ msgid "Mobile Logo"
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-home.php:6
-#: hocwp/inc/class-hocwp-theme-frontend.php:1011
-#: hocwp/inc/class-hocwp-theme-frontend.php:1013
+#: hocwp/inc/class-hocwp-theme-frontend.php:1198
+#: hocwp/inc/class-hocwp-theme-frontend.php:1200
 msgid "Home"
 msgstr ""
 
@@ -1151,39 +1151,50 @@ msgstr ""
 msgid "%s Icon"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:280
+#: hocwp/admin/admin-setting-page-social.php:266
+msgid "Fix Zalo Me"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:270
+msgid ""
+"List zalo account phone number with QR code. Each account contains phone "
+"number and QR code separated by colon \":\" then put in new line if you have "
+"more than one account. Example: 0987654321:ktewgb7i3ixe"
+msgstr ""
+
+#: hocwp/admin/admin-setting-page-social.php:295
 msgid "reCAPTCHA Secret Key"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:291
+#: hocwp/admin/admin-setting-page-social.php:306
 msgid "-- Choose version --"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:292
+#: hocwp/admin/admin-setting-page-social.php:307
 msgctxt "recaptcha"
 msgid "V2"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:293
+#: hocwp/admin/admin-setting-page-social.php:308
 msgctxt "recaptcha"
 msgid "V2 Invisilbe"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:294
+#: hocwp/admin/admin-setting-page-social.php:309
 msgctxt "recaptcha"
 msgid "V3"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:295
+#: hocwp/admin/admin-setting-page-social.php:310
 msgctxt "recaptcha"
 msgid "Enterprise"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:300
+#: hocwp/admin/admin-setting-page-social.php:315
 msgid "ReCAPTCHA Version"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-social.php:306
+#: hocwp/admin/admin-setting-page-social.php:321
 msgid "ReCAPTCHA Project ID"
 msgstr ""
 
@@ -1298,7 +1309,7 @@ msgid "Running backup..."
 msgstr ""
 
 #: hocwp/admin/admin.php:446 hocwp/admin/admin.php:646
-#: hocwp/inc/template-general.php:1175
+#: hocwp/inc/class-hocwp-theme-frontend.php:1011
 msgid "Close"
 msgstr ""
 
@@ -2229,7 +2240,7 @@ msgstr ""
 
 #: hocwp/ext/load-more.php:50 hocwp/inc/template-comments.php:94
 #: hocwp/inc/template-comments.php:141 hocwp/inc/template-comments.php:186
-#: hocwp/inc/template-general.php:1321
+#: hocwp/inc/template-general.php:1141
 msgid "Loading..."
 msgstr ""
 
@@ -2503,7 +2514,7 @@ msgid "Check this out: %s"
 msgstr ""
 
 #: hocwp/inc/class-hocwp-theme-frontend.php:728
-#: hocwp/inc/template-general.php:1855
+#: hocwp/inc/template-general.php:1675
 #, php-format
 msgid "Share on %s"
 msgstr ""
@@ -2629,40 +2640,58 @@ msgstr ""
 msgid "Archives"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1124
+#: hocwp/inc/class-hocwp-theme-frontend.php:995
+msgid ""
+"This website uses cookies to ensure you get the best experience on our "
+"website. By continuing to browse on this website, you accept the use of "
+"cookies for the above purposes."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-frontend.php:998
+#, php-format
+msgid ""
+"We use cookies to give you the best possible website experience. <span>By "
+"using %s, you agree to our <a href=\"%s\">%s</a></span>."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-frontend.php:1002
+msgid "Accept"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-frontend.php:1311
 msgid "Page not found"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1335
+#: hocwp/inc/class-hocwp-theme-frontend.php:1522
 msgctxt "back to top"
 msgid "Top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1369
-#: hocwp/inc/class-hocwp-theme-frontend.php:1371
+#: hocwp/inc/class-hocwp-theme-frontend.php:1556
+#: hocwp/inc/class-hocwp-theme-frontend.php:1558
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1537
+#: hocwp/inc/class-hocwp-theme-frontend.php:1724
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1630
+#: hocwp/inc/class-hocwp-theme-frontend.php:1817
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1634
+#: hocwp/inc/class-hocwp-theme-frontend.php:1821
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1643
+#: hocwp/inc/class-hocwp-theme-frontend.php:1830
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1659
+#: hocwp/inc/class-hocwp-theme-frontend.php:1846
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
@@ -3315,6 +3344,14 @@ msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""
 
+#: hocwp/inc/functions-scripts.php:559
+msgid "Link is not supported."
+msgstr ""
+
+#: hocwp/inc/functions-scripts.php:560
+msgid "Link can be opened."
+msgstr ""
+
 #: hocwp/inc/functions-user.php:26
 msgid "Last login"
 msgstr ""
@@ -3500,33 +3537,15 @@ msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/inc/template-general.php:1160
-msgid ""
-"This website uses cookies to ensure you get the best experience on our "
-"website. By continuing to browse on this website, you accept the use of "
-"cookies for the above purposes."
-msgstr ""
-
-#: hocwp/inc/template-general.php:1163
-#, php-format
-msgid ""
-"We use cookies to give you the best possible website experience. <span>By "
-"using %s, you agree to our <a href=\"%s\">%s</a></span>."
-msgstr ""
-
-#: hocwp/inc/template-general.php:1167
-msgid "Accept"
-msgstr ""
-
-#: hocwp/inc/template-general.php:1867
+#: hocwp/inc/template-general.php:1687
 msgid "Submit URL"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1868
+#: hocwp/inc/template-general.php:1688
 msgid "Submit URL to Google Search Console"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1977
+#: hocwp/inc/template-general.php:1797
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"

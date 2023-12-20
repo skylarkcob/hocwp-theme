@@ -25,7 +25,7 @@ function hocwp_theme_settings_page_social_section() {
 
 	$options = HT_Options()->get( 'social' );
 
-	if ( is_array( $options ) && isset( $options['list_socials'] ) && ! empty( $options['list_socials'] ) ) {
+	if ( is_array( $options ) && ! empty( $options['list_socials'] ) ) {
 		$sections['social_url'] = array(
 			'tab'         => 'social',
 			'id'          => 'social_url',
@@ -126,7 +126,7 @@ function hocwp_theme_settings_page_social_field() {
 
 	$options = HT_Options()->get( 'social' );
 
-	if ( is_array( $options ) && isset( $options['list_socials'] ) && ! empty( $options['list_socials'] ) ) {
+	if ( is_array( $options ) && ! empty( $options['list_socials'] ) ) {
 		$socials = $options['list_socials'];
 		$socials = explode( ',', $socials );
 		$socials = array_map( 'trim', $socials );
@@ -256,6 +256,21 @@ function hocwp_theme_settings_page_social_field() {
 			'label_for'     => true,
 			'callback_args' => array(
 				'class' => 'regular-text'
+			)
+		)
+	);
+
+	$fields[] = array(
+		'tab'   => 'social',
+		'id'    => 'fix_zalo_me',
+		'title' => __( 'Fix Zalo Me', 'hocwp-theme' ),
+		'args'  => array(
+			'label_for'     => true,
+			'callback'      => array( 'HOCWP_Theme_HTML_Field', 'textarea' ),
+			'description'   => __( 'List zalo account phone number with QR code. Each account contains phone number and QR code separated by colon ":" then put in new line if you have more than one account. Example: 0987654321:ktewgb7i3ixe', 'hocwp-theme' ),
+			'callback_args' => array(
+				'class' => 'widefat',
+				'rows'  => 8
 			)
 		)
 	);
