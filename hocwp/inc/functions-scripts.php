@@ -569,10 +569,14 @@ add_action( 'hocwp_theme_frontend_scripts', function () {
 			$item  = explode( ':', $item );
 			$phone = $item[0] ?? '';
 			$qr    = $item[1] ?? '';
+
 			$phone = str_replace( '"', '', $phone );
 			$phone = trim( $phone );
-			$qr    = str_replace( '"', '', $qr );
-			$qr    = trim( $qr );
+
+			$qr = explode( '//', $qr );
+			$qr = current( $qr );
+			$qr = str_replace( '"', '', $qr );
+			$qr = trim( $qr );
 
 			if ( ! empty( $phone ) && ! empty( $qr ) ) {
 				$zalo[ $phone ] = $qr;
