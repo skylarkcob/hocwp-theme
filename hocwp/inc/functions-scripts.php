@@ -555,10 +555,12 @@ add_action( 'hocwp_theme_frontend_scripts', function () {
 		$accounts = HT()->explode_new_line( $accounts );
 
 		$l10n = array(
-			'text' => array(
+			'text'       => array(
 				'not_support' => __( 'Link is not supported.', 'hocwp-theme' ),
 				'can_open'    => __( 'Link can be opened.', 'hocwp-theme' )
-			)
+			),
+			'focusDelay' => 500,
+			'blurDelay'  => 500
 		);
 
 		$zalo = array();

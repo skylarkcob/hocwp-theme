@@ -15,6 +15,7 @@
 * 17/11/2023: Update download image function.
 * 11/12/2023: Fix loading function conflict with delay load.
 * 20/12/2023: Add fix Zalo Me link.
+* 20/12/2023: Fix float support hover lag.
 
 = 7.0.2 =
 * 17/08/2023: Since version 7.0.2, this theme is only used as parent theme only.

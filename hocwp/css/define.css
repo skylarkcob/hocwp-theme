@@ -3900,6 +3900,7 @@
     position: relative;
     font-weight: 700;
     line-height: 40px;
+    min-width: 40px;
 }
 
 .float-supports:not(.for-mobile) a:hover {
@@ -3915,7 +3916,7 @@
     z-index: 9999;
 }
 
-.float-supports[data-position="right"]:not(.for-mobile) a:hover {
+.float-supports[data-position*="right"]:not(.for-mobile) a:hover {
     position: absolute;
     right: 0;
 }
@@ -3932,6 +3933,7 @@
     height: 30px;
     text-align: center;
     line-height: 30px;
+    border-radius: 50%;
 }
 
 .float-supports a:hover > img,

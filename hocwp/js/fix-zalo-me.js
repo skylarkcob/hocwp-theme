@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
         let timeout = setTimeout(function () {
             errorCallback(fixZaloMe.text.not_support);
             window.removeEventListener("blur", handleBlur);
-        }, 2000);
+        }, fixZaloMe.blurDelay);
 
         let result = {};
 
@@ -75,7 +75,7 @@ jQuery(document).ready(function ($) {
                     window.removeEventListener("focus", onFocus);
                     window.removeEventListener("blur", handleBlur);
                     window.removeEventListener("mousemove", handleMouseMove);
-                }, 500);
+                }, fixZaloMe.focusDelay);
             },
             {once: true}
         );
