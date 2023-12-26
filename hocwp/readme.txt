@@ -1,4 +1,7 @@
 == Changelog ==
+= 7.0.4 =
+* 21/12/2023: Add backward compatible if upgrade theme core on old theme.
+
 = 7.0.3 =
 * 01/11/2023: Add JS redirect function.
 * 01/11/2023: Add upload files multiple function.

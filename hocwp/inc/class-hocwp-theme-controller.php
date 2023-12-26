@@ -570,7 +570,9 @@ final class HOCWP_Theme_Controller {
 			require $this->core_path . '/admin/meta.php';
 		}
 
+		require $this->core_path . '/inc/abstract-class-hocwp-theme-custom.php';
 		HT()->require_if_exists( $this->load_child_first( 'functions.php' ) );
+		require $this->core_path . '/inc/back-compat.php';
 		HT()->require_if_exists( $this->load_child_first( 'register.php' ) );
 
 		// Autoload all PHP files in custom inc folder
