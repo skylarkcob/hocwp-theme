@@ -2260,7 +2260,7 @@ class HOCWP_Theme_Utility {
 
                 js = d.createElement(s);
                 js.id = id;
-                js.src = "<?php echo esc_url( $src ); ?>";
+                js.src = "<?php echo esc_url_raw( $src ); ?>";
 				<?php
 				if ( $async ) {
 					echo 'js.async = "async";';
@@ -2348,7 +2348,7 @@ class HOCWP_Theme_Utility {
 					$locale = 'vi_VN';
 				}
 
-				$version = $args['version'] ?? '2.11';
+				$version = $args['version'] ?? '18.0';
 				$version = trim( $version, 'v' );
 
 				$src = 'https://connect.facebook.net/';
