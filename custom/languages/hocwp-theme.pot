@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2023-12-26 19:56+0700\n"
+"POT-Creation-Date: 2023-12-29 15:39+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Admin email has been changed successfully!"
 msgstr ""
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:645
+#: hocwp/admin/admin-setting-page-administration-tools.php:30 hocwp/admin/admin-setting-page-administration-tools.php:33 hocwp/admin/admin.php:652
 msgid "Change"
 msgstr ""
 
@@ -1213,54 +1213,54 @@ msgstr ""
 msgid "Related posts"
 msgstr ""
 
-#: hocwp/admin/admin.php:423
+#: hocwp/admin/admin.php:424
 msgid "Running backup..."
 msgstr ""
 
-#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:646 hocwp/inc/class-hocwp-theme-frontend.php:1011
+#: hocwp/admin/admin.php:453 hocwp/admin/admin.php:653 hocwp/inc/class-hocwp-theme-frontend.php:1011
 msgid "Close"
 msgstr ""
 
-#: hocwp/admin/admin.php:470
+#: hocwp/admin/admin.php:477
 #, php-format
 msgid "Template %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:481 hocwp/admin/admin.php:565
+#: hocwp/admin/admin.php:488 hocwp/admin/admin.php:572
 msgid "Change status"
 msgstr ""
 
-#: hocwp/admin/admin.php:482
+#: hocwp/admin/admin.php:489
 msgid "Change category"
 msgstr ""
 
-#: hocwp/admin/admin.php:483
+#: hocwp/admin/admin.php:490
 msgid "Change post type"
 msgstr ""
 
-#: hocwp/admin/admin.php:567
+#: hocwp/admin/admin.php:574
 msgid "Close this box"
 msgstr ""
 
-#: hocwp/admin/admin.php:577
+#: hocwp/admin/admin.php:584
 msgid "Post status:"
 msgstr ""
 
-#: hocwp/admin/admin.php:579
+#: hocwp/admin/admin.php:586
 msgid "Choose post status"
 msgstr ""
 
-#: hocwp/admin/admin.php:608 hocwp/inc/class-hocwp-theme-html-field.php:778 hocwp/inc/class-hocwp-theme-html-field.php:820
+#: hocwp/admin/admin.php:615 hocwp/inc/class-hocwp-theme-html-field.php:778 hocwp/inc/class-hocwp-theme-html-field.php:820
 #: hocwp/inc/class-hocwp-theme-html-field.php:1892 hocwp/inc/functions-scripts.php:397
 #, php-format
 msgid "Choose %s"
 msgstr ""
 
-#: hocwp/admin/admin.php:621 hocwp/widgets/class-hocwp-theme-widget-posts.php:554
+#: hocwp/admin/admin.php:628 hocwp/widgets/class-hocwp-theme-widget-posts.php:554
 msgid "Post type:"
 msgstr ""
 
-#: hocwp/admin/admin.php:623 hocwp/admin/views/admin-delete-posts.php:111
+#: hocwp/admin/admin.php:630 hocwp/admin/views/admin-delete-posts.php:111
 msgid "Choose post type"
 msgstr ""
 
@@ -1832,6 +1832,18 @@ msgstr ""
 
 #: hocwp/admin/views/admin-system-information.php:16
 msgid "Copy all"
+msgstr ""
+
+#: hocwp/admin/views/admin-system-information.php:41
+msgid "Website Errors"
+msgstr ""
+
+#: hocwp/admin/views/admin-system-information.php:42
+msgid "Read recent website errors on your server."
+msgstr ""
+
+#: hocwp/admin/views/admin-system-information.php:76
+msgid "Great! No recent error found on your server."
 msgstr ""
 
 #: hocwp/admin/views/admin-theme-plugins.php:14

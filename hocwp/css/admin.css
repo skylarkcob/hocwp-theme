@@ -666,6 +666,10 @@
     margin-right: 2%;
 }
 
+#copySystemInfo {
+    margin-bottom: 20px;
+}
+
 @-webkit-keyframes zoom {
     from {
         -webkit-transform: scale(0)

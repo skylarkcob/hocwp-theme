@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2023-12-26 19:56+0700\n"
-"PO-Revision-Date: 2023-12-26 19:57+0700\n"
+"POT-Creation-Date: 2023-12-29 15:40+0700\n"
+"PO-Revision-Date: 2023-12-29 15:40+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -53,7 +53,7 @@ msgstr "Địa chỉ email quản trị đã được cập nhật thành công!
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:30
 #: hocwp/admin/admin-setting-page-administration-tools.php:33
-#: hocwp/admin/admin.php:645
+#: hocwp/admin/admin.php:652
 msgid "Change"
 msgstr "Thay đổi"
 
@@ -1377,45 +1377,45 @@ msgstr "Tiêu đề:"
 msgid "Related posts"
 msgstr "Bài viết liên quan"
 
-#: hocwp/admin/admin.php:423
+#: hocwp/admin/admin.php:424
 msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
-#: hocwp/admin/admin.php:446 hocwp/admin/admin.php:646
+#: hocwp/admin/admin.php:453 hocwp/admin/admin.php:653
 #: hocwp/inc/class-hocwp-theme-frontend.php:1011
 msgid "Close"
 msgstr "Đóng"
 
-#: hocwp/admin/admin.php:470
+#: hocwp/admin/admin.php:477
 #, php-format
 msgid "Template %s"
 msgstr "Mẫu %s"
 
-#: hocwp/admin/admin.php:481 hocwp/admin/admin.php:565
+#: hocwp/admin/admin.php:488 hocwp/admin/admin.php:572
 msgid "Change status"
 msgstr "Thay đổi trạng thái"
 
-#: hocwp/admin/admin.php:482
+#: hocwp/admin/admin.php:489
 msgid "Change category"
 msgstr "Thay đổi chuyên mục"
 
-#: hocwp/admin/admin.php:483
+#: hocwp/admin/admin.php:490
 msgid "Change post type"
 msgstr "Thay đổi loại bài viết"
 
-#: hocwp/admin/admin.php:567
+#: hocwp/admin/admin.php:574
 msgid "Close this box"
 msgstr "Đóng hộp này"
 
-#: hocwp/admin/admin.php:577
+#: hocwp/admin/admin.php:584
 msgid "Post status:"
 msgstr "Trạng thái bài viết:"
 
-#: hocwp/admin/admin.php:579
+#: hocwp/admin/admin.php:586
 msgid "Choose post status"
 msgstr "Chọn trạng thái bài viết"
 
-#: hocwp/admin/admin.php:608 hocwp/inc/class-hocwp-theme-html-field.php:778
+#: hocwp/admin/admin.php:615 hocwp/inc/class-hocwp-theme-html-field.php:778
 #: hocwp/inc/class-hocwp-theme-html-field.php:820
 #: hocwp/inc/class-hocwp-theme-html-field.php:1892
 #: hocwp/inc/functions-scripts.php:397
@@ -1423,12 +1423,12 @@ msgstr "Chọn trạng thái bài viết"
 msgid "Choose %s"
 msgstr "Chọn %s"
 
-#: hocwp/admin/admin.php:621
+#: hocwp/admin/admin.php:628
 #: hocwp/widgets/class-hocwp-theme-widget-posts.php:554
 msgid "Post type:"
 msgstr "Loại bài viết:"
 
-#: hocwp/admin/admin.php:623 hocwp/admin/views/admin-delete-posts.php:111
+#: hocwp/admin/admin.php:630 hocwp/admin/views/admin-delete-posts.php:111
 msgid "Choose post type"
 msgstr "Chọn loại bài viết"
 
@@ -2091,6 +2091,18 @@ msgstr "Đã được sao chép!"
 #: hocwp/admin/views/admin-system-information.php:16
 msgid "Copy all"
 msgstr "Sao chép tất cả"
+
+#: hocwp/admin/views/admin-system-information.php:41
+msgid "Website Errors"
+msgstr "Các lỗi trang web"
+
+#: hocwp/admin/views/admin-system-information.php:42
+msgid "Read recent website errors on your server."
+msgstr "Xem các lỗi trang web gần đây trên máy chủ của bạn."
+
+#: hocwp/admin/views/admin-system-information.php:76
+msgid "Great! No recent error found on your server."
+msgstr "Tuyệt vời! Không tìm thấy lỗi gần đây trên máy chủ của bạn."
 
 #: hocwp/admin/views/admin-theme-plugins.php:14
 msgid "Filter plugins list"
