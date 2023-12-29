@@ -71,7 +71,7 @@ foreach ( $files as $file ) {
 	}
 }
 
-if ( ! $has_error ||1) {
+if ( ! $has_error ) {
 	?>
     <p><em><?php _e( 'Great! No recent error found on your server.', 'hocwp-theme' ); ?></em></p>
 	<?php
