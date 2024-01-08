@@ -647,8 +647,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 						if ( empty( $icon ) ) {
 							$icon = ucfirst( $social );
 						}
+
+						$class = 'social-item ' . sanitize_html_class( $social );
 						?>
-                        <li class="social-item">
+                        <li class="<?php echo esc_attr( $class ); ?>" data-social="<?php echo esc_attr( $social ); ?>">
                             <a href="<?php echo esc_url( $url ); ?>"
                                title="<?php echo esc_attr( ucfirst( $social ) ); ?>"
                                target="_blank" rel="nofollow"><?php echo $icon ?></a>

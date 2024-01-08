@@ -2,6 +2,7 @@
 = 7.0.4 =
 * 21/12/2023: Add backward compatible if upgrade theme core on old theme.
 * 29/12/2023: Embed error log files data in theme setting information tab.
+* 08/01/2023: Add social name to class for list social item.
 
 = 7.0.3 =
 * 01/11/2023: Add JS redirect function.
