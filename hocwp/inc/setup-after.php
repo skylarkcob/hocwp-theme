@@ -559,6 +559,8 @@ function hocwp_theme_add_more_theme_comparison_info( &$info, $theme_path ) {
 				$info['core_version'] = $theme_core_version;
 			}
 		}
+
+		$info['total_files'] = HT()->count_files( $theme_path );
 	}
 }
 
@@ -598,7 +600,8 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 
 		$custom_headers = array(
 			'custom_readme' => __( 'Custom Readme', 'hocwp-theme' ),
-			'core_version'  => __( 'Core Version', 'hocwp-theme' )
+			'core_version'  => __( 'Core Version', 'hocwp-theme' ),
+			'total_files'   => __( 'Total Files', 'hocwp-theme' )
 		);
 
 		// Info Columns: Label / Active / Uploaded
@@ -755,7 +758,13 @@ add_filter( 'wp_prepare_themes_for_js', function ( $themes ) {
 				}
 
 				if ( empty( $screenshot ) ) {
-					$url = HT_Util()->take_screenshot( home_url(), array(
+					$home = home_url();
+
+					if ( HT_Util()->is_localhost() ) {
+						$home = 'https://ldcuong.com';
+					}
+
+					$url = HT_Util()->take_screenshot( $home, array(
 						'w' => 1200
 					) );
 

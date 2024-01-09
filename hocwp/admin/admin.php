@@ -441,6 +441,25 @@ function hocwp_theme_admin_footer_backup_script() {
                     }
                 })
             })();
+
+            // Fix theme screenshot
+            (function () {
+                setTimeout(function () {
+                    $(".wp-admin.themes-php .theme-browser .theme .theme-screenshot img").each(function () {
+                        let that = this,
+                            element = $(that),
+                            src = that.src;
+
+                        if (src.includes("s.wordpress.com")) {
+                            src = src.replace(/\?ver=[^&]*/, "");
+
+                            setTimeout(function () {
+                                element.attr("src", src);
+                            }, 100);
+                        }
+                    });
+                }, 500);
+            })();
         });
     </script>
 	<?php
@@ -713,3 +732,13 @@ if ( 'admin-ajax.php' == $pagenow ) {
 if ( 'index.php' == $pagenow ) {
 	require HOCWP_THEME_CORE_PATH . '/admin/dashboard-widgets.php';
 }
+
+add_filter( 'clean_url', function ( $url, $original_url ) {
+	// Fix shot image has version
+	if ( str_contains( $url, 's.wordpress.com' ) || str_contains( $original_url, '/mshots/' ) ) {
+		$parts = explode( '?ver=', $url );
+		$url   = array_shift( $parts );
+	}
+
+	return $url;
+}, 10, 2 );

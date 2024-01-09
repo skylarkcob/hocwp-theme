@@ -239,6 +239,34 @@ trait HOCWP_Theme_PHP {
 		return null;
 	}
 
+	public function count_files( $dir, $recursive = true ) {
+		$file_count = 0;
+
+		// Get the list of items in the directory
+		$items = scandir( $dir );
+
+		if ( ! $recursive ) {
+			return count( array_diff( $items, array( '.', '..' ) ) );
+		}
+
+		foreach ( $items as $item ) {
+			// Skip "." and ".." entries
+			if ( $item != "." && $item != ".." ) {
+				$path = $dir . '/' . $item;
+
+				// If it's a directory, recursively count files in the subdirectory
+				if ( is_dir( $path ) ) {
+					$file_count += $this->count_files( $path, $recursive );
+				} else {
+					// It's a file, increment the file count
+					$file_count ++;
+				}
+			}
+		}
+
+		return $file_count;
+	}
+
 	public function get_browser() {
 		$u_agent  = $this->get_user_agent();
 		$bname    = 'Unknown';
