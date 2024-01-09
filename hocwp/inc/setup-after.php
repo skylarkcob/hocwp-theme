@@ -508,27 +508,123 @@ function hocwp_theme_check_environment() {
 
 add_action( 'init', 'hocwp_theme_check_environment' );
 
+function hocwp_theme_read_last_readme_info( $file, $top = true ) {
+	$text = '';
+
+	if ( file_exists( $file ) ) {
+		$text = HT_Util()->filesystem()->get_contents( $file );
+
+		if ( ! empty( $text ) ) {
+			$parts = HT()->explode_empty_line( $text );
+
+			if ( $top ) {
+				$text = array_shift( $parts );
+			} else {
+				$text = array_pop( $parts );
+			}
+
+			if ( ! empty( $text ) ) {
+				$parts = HT()->explode_new_line( $text );
+
+				$text = '';
+
+				foreach ( $parts as $line ) {
+					if ( str_starts_with( $line, '*' ) ) {
+						$text .= $line . PHP_EOL;
+					}
+				}
+			}
+		}
+	}
+
+	return wpautop( $text );
+}
+
+function hocwp_theme_add_more_theme_comparison_info( &$info, $theme_path ) {
+	if ( is_array( $info ) ) {
+		$info['custom_readme'] = hocwp_theme_read_last_readme_info( trailingslashit( $theme_path ) . 'custom/readme.txt' );
+
+		$file_path = trailingslashit( $theme_path ) . 'hocwp/load.php';
+
+		if ( file_exists( $file_path ) ) {
+			// Read the file content
+			$file_content = HT_util()->filesystem()->get_contents( $file_path );
+
+			// Use regular expression to find the constant value
+			preg_match( "/const HOCWP_THEME_CORE_VERSION = '(.*?)'/", $file_content, $matches );
+
+			// Check if the constant value is found
+			if ( ! empty( $matches[1] ) ) {
+				$theme_core_version   = $matches[1];
+				$info['core_version'] = $theme_core_version;
+			}
+		}
+	}
+}
+
+function hocwp_theme_read_style_header_info( $theme_path ) {
+	// Get more header info from theme
+	$headers = array(
+		'real_theme_name' => 'Real Theme Name',
+		'created_date'    => 'Created Date',
+		'last_updated'    => 'Last Updated',
+		'coder'           => 'Coder',
+		'text_domain'     => 'Text Domain'
+	);
+
+	// Get file header data
+	return array(
+		'headers' => $headers,
+		'data'    => get_file_data( trailingslashit( $theme_path ) . 'style.css', $headers )
+	);
+}
+
 add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
+	$html = '';
+
+	// Get uploaded information
 	if ( false !== ( $source_info = get_transient( 'hocwp_theme_upgrader_source_info' ) ) ) {
-		// Give more theme comparison between active theme and uploaded theme
-		$headers = array(
-			'real_theme_name' => 'Real Theme Name',
-			'created_date'    => 'Created Date',
-			'last_updated'    => 'Last Updated',
-			'coder'           => 'Coder',
-			'text_domain'     => 'Text Domain'
-		);
+		// Get current information
+		$data = hocwp_theme_read_style_header_info( get_stylesheet_directory() );
+		$info = $data['data'] ?? '';
 
-		$info = get_file_data( trailingslashit( get_stylesheet_directory() ) . 'style.css', $headers );
-
-		$html = '';
-
-		foreach ( $source_info as $key => $value ) {
-			$html .= sprintf( '<tr><td class="name-label">%s</td><td>%s</td><td>%s</td></tr>', $headers[ $key ], $info[ $key ], $value );
+		if ( ! is_array( $info ) ) {
+			$info = array();
 		}
 
-		$table = str_replace( '</tbody>', $html . '</tbody>', $table );
+		hocwp_theme_add_more_theme_comparison_info( $info, get_stylesheet_directory() );
+
+		$headers = $data['headers'] ?? '';
+
+		$custom_headers = array(
+			'custom_readme' => __( 'Custom Readme', 'hocwp-theme' ),
+			'core_version'  => __( 'Core Version', 'hocwp-theme' )
+		);
+
+		// Info Columns: Label / Active / Uploaded
+		foreach ( $source_info as $key => $value ) {
+			$label = $headers[ $key ] ?? ( $custom_headers[ $key ] ?? '' );
+
+			if ( ! empty( $label ) ) {
+				$current = $info[ $key ] ?? '';
+
+				if ( empty( $current ) ) {
+					switch ( $key ) {
+						case 'core_version':
+							$current = HOCWP_THEME_CORE_VERSION;
+							break;
+					}
+				}
+
+				$html .= sprintf( '<tr><td class="name-label">%s</td><td>%s</td><td>%s</td></tr>', $label, $current, $value );
+			}
+		}
+
 		delete_transient( 'hocwp_theme_upgrader_source_info' );
+	}
+
+	if ( ! empty( $html ) ) {
+		$table = str_replace( '</tbody>', $html . '</tbody>', $table );
 	}
 
 	return $table;
@@ -536,18 +632,11 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 
 add_filter( 'upgrader_source_selection', function ( $source, $remote_source, $upgrader ) {
 	if ( $upgrader instanceof Theme_Upgrader && ! empty( $remote_source ) ) {
-		// Get more header info of uploaded theme
-		$headers = array(
-			'real_theme_name' => 'Real Theme Name',
-			'created_date'    => 'Created Date',
-			'last_updated'    => 'Last Updated',
-			'coder'           => 'Coder',
-			'text_domain'     => 'Text Domain'
-		);
-
-		$info = get_file_data( trailingslashit( $source ) . 'style.css', $headers );
+		$data = hocwp_theme_read_style_header_info( $source );
+		$info = $data['data'] ?? '';
 
 		if ( HT()->array_has_value( $info ) ) {
+			hocwp_theme_add_more_theme_comparison_info( $info, $source );
 			set_transient( 'hocwp_theme_upgrader_source_info', $info );
 		}
 	}
