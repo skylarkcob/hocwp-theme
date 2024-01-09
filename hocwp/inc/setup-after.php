@@ -581,6 +581,7 @@ function hocwp_theme_read_style_header_info( $theme_path ) {
 	);
 }
 
+// Theme upload comparison table
 add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 	$html = '';
 
