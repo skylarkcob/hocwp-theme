@@ -653,7 +653,13 @@ add_filter( 'install_theme_overwrite_actions', function ( $install_actions ) {
 
 	$text = sprintf( __( '%s Settings', 'hocwp-theme' ), HOCWP_THEME_NAME );
 
-	$install_actions['go_to_theme_settings'] = '<a class="button" href="' . esc_url( $url ) . '" target="_blank">' . $text . '</a>';
+	$install_actions['go_to_theme_settings'] = '<a class="button" href="' . esc_url( $url ) . '" target="_blank" title="' . esc_attr( $text ) . '">' . __( 'Theme Settings', 'hocwp-theme' ) . '</a>';
+
+	$url = 'https://ldcuong.com/lien-he/';
+
+	$text = __( 'Contact Author', 'hocwp-theme' );
+
+	$install_actions['contact_author'] = '<a class="button" href="' . esc_url( $url ) . '" target="_blank">' . $text . '</a>';
 
 	return $install_actions;
 } );

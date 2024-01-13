@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2024-01-09 21:23+0700\n"
-"PO-Revision-Date: 2024-01-09 21:23+0700\n"
+"POT-Creation-Date: 2024-01-13 14:53+0700\n"
+"PO-Revision-Date: 2024-01-13 14:53+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
@@ -314,7 +314,7 @@ msgstr ""
 #: hocwp/admin/admin-setting-page-administration-tools.php:265
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:749
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:771
-#: hocwp/inc/setup-after.php:162
+#: hocwp/inc/setup-after.php:162 hocwp/inc/setup-after.php:656
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
@@ -3669,32 +3669,36 @@ msgstr ""
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 
-#: hocwp/inc/setup-after.php:602
+#: hocwp/inc/setup-after.php:603
 msgid "Custom Readme"
 msgstr "Readme tùy chỉnh"
 
-#: hocwp/inc/setup-after.php:603
+#: hocwp/inc/setup-after.php:604
 msgid "Core Version"
 msgstr "Phiên bản nhân"
 
-#: hocwp/inc/setup-after.php:604
+#: hocwp/inc/setup-after.php:605
 msgid "Total Files"
 msgstr "Tổng số tệp"
 
-#: hocwp/inc/setup-after.php:653
+#: hocwp/inc/setup-after.php:654
 #, php-format
 msgid "%s Settings"
 msgstr "Cài đặt %s"
 
-#: hocwp/inc/setup-after.php:807
+#: hocwp/inc/setup-after.php:660
+msgid "Contact Author"
+msgstr "Liên hệ tác giả"
+
+#: hocwp/inc/setup-after.php:814
 msgid "Disable Upgrade"
 msgstr "Vô hiệu hóa nâng cấp"
 
-#: hocwp/inc/setup-after.php:808
+#: hocwp/inc/setup-after.php:815
 msgid "Enable Upgrade"
 msgstr "Bật nâng cấp"
 
-#: hocwp/inc/setup-after.php:848
+#: hocwp/inc/setup-after.php:855
 msgid "Upgrade Disabled"
 msgstr "Nâng cấp đã được vô hiệu hóa"
 
