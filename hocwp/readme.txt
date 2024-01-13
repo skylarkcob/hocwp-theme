@@ -4,6 +4,7 @@
 * 29/12/2023: Embed error log files data in theme setting information tab.
 * 08/01/2023: Add social name to class for list social item.
 * 09/01/2023: Add more comparison information when upload theme.
+* 13/01/2023: Auto find and load custom styles and scripts from directory.
 
 = 7.0.3 =
 * 01/11/2023: Add JS redirect function.

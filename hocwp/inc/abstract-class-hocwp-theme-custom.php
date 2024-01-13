@@ -78,6 +78,7 @@ abstract class Abstract_HT_Custom {
 		} else {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_early' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 99 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'load_user_custom_styles_scripts' ), 999 );
 		}
 
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
@@ -89,6 +90,41 @@ abstract class Abstract_HT_Custom {
 		if ( method_exists( $this, 'load_custom_hook' ) ) {
 			$this->load_custom_hook();
 		}
+	}
+
+	/**
+	 * Load custom styles and scripts from specific directory
+	 *
+	 * @param $directory
+	 *
+	 * @return void
+	 */
+	private function load_custom_styles_scripts( $directory ) {
+		if ( ! is_dir( $directory ) ) {
+			mkdir( $directory, 0777, true );
+		}
+
+		$css_files = glob( $directory . '/*.css' );
+
+		foreach ( $css_files as $css_file ) {
+			$name = basename( $css_file );
+			$url  = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $css_file );
+			wp_enqueue_style( 'theme-custom-' . sanitize_title( str_replace( '.css', '', $name ) ), $url );
+		}
+
+		$js_files = glob( $directory . '/*.js' );
+
+		foreach ( $js_files as $js_file ) {
+			$name = basename( $js_file );
+			$url  = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $js_file );
+			wp_enqueue_script( 'theme-custom-' . sanitize_title( str_replace( '.js', '', $name ) ), $url, array( 'jquery' ), false, true );
+		}
+	}
+
+	public function load_user_custom_styles_scripts() {
+		$directory = trailingslashit( WP_CONTENT_DIR ) . 'assets/' . basename( get_stylesheet_directory() );
+
+		$this->load_custom_styles_scripts( $directory );
 	}
 
 	/**
