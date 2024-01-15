@@ -466,6 +466,8 @@ function hocwp_theme_admin_footer_backup_script() {
 }
 
 function hocwp_theme_admin_footer_action() {
+	global $pagenow;
+
 	hocwp_theme_admin_footer_backup_script();
 	?>
     <div id="hocwpThemeModal" class="modal">
@@ -475,6 +477,17 @@ function hocwp_theme_admin_footer_action() {
         <div id="hocwpThemeModalCaption" class="modal-caption"></div>
     </div>
 	<?php
+	if ( 'update.php' == $pagenow ) {
+		?>
+        <style>
+            @media screen and (min-width: 1000px) {
+                .update-php .wrap {
+                    max-width: 60rem;
+                }
+            }
+        </style>
+		<?php
+	}
 }
 
 add_action( 'admin_footer', 'hocwp_theme_admin_footer_action' );
