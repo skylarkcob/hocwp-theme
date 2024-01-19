@@ -99,6 +99,85 @@ final class HOCWP_Theme_HTML_Field {
 		}
 	}
 
+	public static function themes( $args = array() ) {
+		$themes = wp_get_themes( array(
+			'errors' => null
+		) );
+
+		$options = array(
+			'' => __( '-- Choose theme --', 'hocwp-theme' )
+		);
+
+		foreach ( $themes as $key => $theme ) {
+			$text = $theme->get( 'Name' );
+
+			if ( $theme->get_stylesheet() == get_stylesheet() ) {
+				$text .= ' (' . __( 'Active Theme', 'hocwp-theme' ) . ')';
+				$text = '--- ' . $text;
+			}
+
+			$options[ $key ] = $text;
+		}
+
+		$args['options'] = $options;
+		self::select( $args );
+	}
+
+	public static function plugins( $args = array() ) {
+		$plugins = get_plugins();
+
+		$options = array(
+			'' => __( '-- Choose plugin --', 'hocwp-theme' )
+		);
+
+		foreach ( $plugins as $key => $data ) {
+			$text = $data['Name'];
+
+			if ( is_plugin_active( $key ) ) {
+				$text .= ' (' . __( 'Active', 'hocwp-theme' ) . ')';
+				$text = '--- ' . $text;
+			}
+
+			$options[ $key ] = $text;
+		}
+
+		$args['options'] = $options;
+		self::select( $args );
+	}
+
+	public static function databases( $args = array() ) {
+		$options = array(
+			'' => __( '-- Choose database --', 'hocwp-theme' )
+		);
+
+		$host     = DB_HOST;
+		$username = DB_USER;
+		$password = DB_PASSWORD;
+
+		$pdo = new PDO( "mysql:host=$host;", $username, $password );
+
+		// Get a list of databases
+		$databases = $pdo->query( 'SHOW DATABASES' )->fetchAll( PDO::FETCH_ASSOC );
+
+		foreach ( $databases as $data ) {
+			$text = $data['Database'] ?? '';
+
+			if ( ! empty( $text ) ) {
+				$database = $text;
+
+				if ( DB_NAME == $text ) {
+					$text .= ' (' . __( 'Current', 'hocwp-theme' ) . ')';
+					$text = '--- ' . $text;
+				}
+
+				$options[ $database ] = $text;
+			}
+		}
+
+		$args['options'] = $options;
+		self::select( $args );
+	}
+
 	public static function button( $args = array() ) {
 		$defaults = array(
 			'text'        => null,

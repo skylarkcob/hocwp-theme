@@ -444,7 +444,7 @@ class HOCWP_Theme_Utility {
 	 * @param $hook string Hook name.
 	 * @param $type string Hook type.
 	 *
-	 * @return mixed|null Array of functions or null.
+	 * @return int|WP_Hook|null Array of functions or null.
 	 */
 	public function get_hook_functions_for( string $hook, string $type = 'filter' ) {
 		if ( empty( $hook ) ) {
@@ -691,6 +691,95 @@ class HOCWP_Theme_Utility {
             <img src="<?php echo esc_url( self::get_my_image_url( 'loading-circle.gif' ) ); ?>" alt="">
         </div>
 		<?php
+	}
+
+	public function export_database( $db_name = '', $destination = '' ) {
+		if ( ! function_exists( 'exec' ) ) {
+			return false;
+		}
+
+		if ( empty( $db_name ) ) {
+			$db_name = DB_NAME;
+		}
+
+		$name = $db_name;
+		$user = DB_USER;
+		$pass = DB_PASSWORD;
+
+		if ( stripos( PHP_OS, 'WIN' ) !== false ) {
+			$root = dirname( $_SERVER['DOCUMENT_ROOT'] );
+			$root = trailingslashit( $root ) . 'mysql/bin/mysqldump';
+		} else {
+			$root = 'mysqldump';
+		}
+
+		if ( empty( $destination ) ) {
+			$destination = trailingslashit( ABSPATH ) . $db_name . '.sql';
+		}
+
+		$cmd = $root . " -u$user -p$pass $name > $destination";
+
+		$res = exec( $cmd, $output, $result_code );
+
+		if ( empty( $res ) && empty( $output ) && empty( $result_code ) ) {
+			return true;
+		}
+
+		return $res;
+	}
+
+	public function zip_folder( $source, $destination ) {
+		if ( ! extension_loaded( 'zip' ) || ! file_exists( $source ) ) {
+			return false;
+		}
+
+		if ( ! class_exists( 'ZipArchive' ) ) {
+			return false;
+		}
+
+		$zip = new ZipArchive();
+
+		if ( $zip->open( $destination, ZipArchive::CREATE ) === true ) {
+			$source = wp_normalize_path( $source );
+
+			if ( is_dir( $source ) ) {
+				$replace = trailingslashit( dirname( $source ) );
+
+				$files = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $source ), RecursiveIteratorIterator::SELF_FIRST );
+
+				foreach ( $files as $file ) {
+					$file = wp_normalize_path( $file );
+
+					$file_name = basename( $file );
+
+					if ( is_dir( $file ) && $file_name === '.git' ) {
+						continue;
+					}
+
+					if ( '.' == $file_name || '..' == $file_name || '.git' == $file_name || str_contains( $file, '.git/' ) || str_contains( $file, '.git\\' ) ) {
+						continue;
+					}
+
+					if ( in_array( substr( $file, strrpos( $file, '/' ) + 1 ), array( '.', '..' ) ) ) {
+						continue;
+					}
+
+					$relative = str_replace( $replace, '', $file );
+
+					if ( is_dir( $file ) ) {
+						$zip->addEmptyDir( $relative );
+					} elseif ( is_file( $file ) ) {
+						$zip->addFile( $file, $relative );
+					}
+				}
+			} else if ( is_file( $source ) ) {
+				$zip->addFile( $source, basename( $source ) );
+			}
+
+			return $zip->close();
+		}
+
+		return false;
 	}
 
 	public function filesystem() {

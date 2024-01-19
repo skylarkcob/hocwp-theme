@@ -361,12 +361,121 @@ function hocwp_theme_delete_transient_ajax_callback() {
 	$data = array();
 
 	$transient = $_POST['transient'] ?? '';
-	HT_Util()->delete_transient( $transient );
+	$expired   = $_POST['expired'] ?? '';
+
+	if ( $expired ) {
+		delete_expired_transients();
+	} else {
+		HT_Util()->delete_transient( $transient );
+	}
 
 	wp_send_json_success( $data );
 }
 
 add_action( 'wp_ajax_hocwp_theme_delete_transient', 'hocwp_theme_delete_transient_ajax_callback' );
+
+function _hocwp_theme_build_zip_file_name( $dir, $url, $folder, $name, $version = '', $extension = 'zip' ) {
+	if ( ! empty( $version ) ) {
+		$name .= '_v' . $version;
+	}
+
+	$ts = current_time( 'timestamp' );
+
+	$name   .= sprintf( '_%s_%s_%s.' . $extension, date( 'Ymd', $ts ), date( 'Hi', $ts ), date( 's', $ts ) );
+	$folder = 'backups/' . $folder . '/';
+	$dest   = $dir . $folder;
+	$uri    = $url . $folder;
+
+	if ( ! is_dir( $dest ) ) {
+		mkdir( $dest, 0777, true );
+	}
+
+	$name = sanitize_file_name( $name );
+
+	$result = array(
+		'path' => wp_normalize_path( $dest . $name ),
+		'url'  => wp_normalize_path( $uri . $name ),
+		'size' => 'N/A'
+	);
+
+	$result['file_name'] = basename( $result['path'] );
+
+	return $result;
+}
+
+function hocwp_theme_download_theme_plugin_ajax_callback() {
+	$data = array();
+
+	$theme    = $_POST['theme'] ?? '';
+	$plugin   = $_POST['plugin'] ?? '';
+	$database = $_POST['database'] ?? '';
+
+	if ( empty( $theme ) && empty( $plugin ) && empty( $database ) ) {
+		$theme    = get_stylesheet();
+		$database = DB_NAME;
+	}
+
+	$dir = trailingslashit( WP_CONTENT_DIR );
+	$url = trailingslashit( WP_CONTENT_URL );
+
+	if ( ! empty( $theme ) ) {
+		$obj  = wp_get_theme( $theme );
+		$file = _hocwp_theme_build_zip_file_name( $dir, $url, 'themes', $theme, $obj->get( 'Version' ) );
+		$zip  = HT_Util()->zip_folder( $obj->get_stylesheet_directory(), $file['path'] );
+
+		if ( $zip ) {
+			if ( file_exists( $file['path'] ) ) {
+				$file['name']  = $obj->get( 'Name' );
+				$file['size']  = size_format( filesize( $file['path'] ), 2 );
+				$data['theme'] = $file;
+			} else {
+				$data['message'] = sprintf( __( 'Cannot generate download link for theme "%s".', 'hocwp-theme' ), $theme );
+				wp_send_json_error( $data );
+			}
+		}
+	}
+
+	if ( ! empty( $plugin ) ) {
+		$info = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $plugin );
+		$file = _hocwp_theme_build_zip_file_name( $dir, $url, 'plugins', dirname( $plugin ), $info['Version'] ?? '' );
+
+		$zip = HT_Util()->zip_folder( trailingslashit( WP_PLUGIN_DIR ) . dirname( $plugin ), $file['path'] );
+
+		if ( $zip ) {
+			if ( file_exists( $file['path'] ) ) {
+				$file['name']   = $info['Name'] ?? '';
+				$file['size']   = size_format( filesize( $file['path'] ), 2 );
+				$data['plugin'] = $file;
+			} else {
+				$data['message'] = sprintf( __( 'Cannot generate download link for plugin "%s".', 'hocwp-theme' ), $plugin );
+				wp_send_json_error( $data );
+			}
+		}
+	}
+
+	if ( ! empty( $database ) ) {
+		global $wp_db_version;
+
+		$file = _hocwp_theme_build_zip_file_name( $dir, $url, 'databases', $database, $wp_db_version, 'sql' );
+
+		$zip = HT_Util()->export_database( $database, $file['path'] );
+
+		if ( $zip ) {
+			if ( file_exists( $file['path'] ) ) {
+				$file['name']     = $database;
+				$file['size']     = size_format( filesize( $file['path'] ), 2 );
+				$data['database'] = $file;
+			} else {
+				$data['message'] = sprintf( __( 'Cannot generate download link for database "%s".', 'hocwp-theme' ), $database );
+				wp_send_json_error( $data );
+			}
+		}
+	}
+
+	wp_send_json_success( $data );
+}
+
+add_action( 'wp_ajax_hocwp_theme_download_theme_plugin', 'hocwp_theme_download_theme_plugin_ajax_callback' );
 
 global $hocwp_theme_import_administrative_boundaries;
 

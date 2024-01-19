@@ -12,6 +12,39 @@ $tab = new HOCWP_Theme_Admin_Setting_Tab( 'administration_tools', __( 'Administr
 $tab->submit_button = false;
 
 $args = array(
+	'fields' => array(
+		'themes'    => array(
+			'callback' => 'themes',
+			'title'    => __( 'Themes:', 'hocwp-theme' )
+		),
+		'plugins'   => array(
+			'callback' => 'plugins',
+			'title'    => __( 'Plugins:', 'hocwp-theme' )
+		),
+		'databases' => array(
+			'callback' => 'databases',
+			'title'    => __( 'Databases:', 'hocwp-theme' )
+		),
+		'download'  => array(
+			'callback' => 'button',
+			'args'     => array(
+				'attributes'  => array(
+					'data-ajax-button'           => 1,
+					'data-message'               => '',
+					'data-confirm-message'       => __( 'Are you sure?', 'hocwp-theme' ),
+					'data-download-theme-plugin' => 1,
+					'aria-label'                 => __( 'Download', 'hocwp-theme' )
+				),
+				'button_type' => 'button',
+				'text'        => __( 'Download', 'hocwp-theme' )
+			)
+		)
+	)
+);
+
+$tab->add_field( 'download_theme_plugin', __( 'Download Theme & Plugin', 'hocwp-theme' ), 'fields', $args );
+
+$args = array(
 	'title'       => __( 'Update Administrative Email', 'hocwp-theme' ),
 	'description' => __( 'Changing admin email address does not require confirmation.', 'hocwp-theme' )
 );
@@ -389,18 +422,34 @@ $args = array(
 $tab->add_field( 'remove_transient', __( 'Remove Transients', 'hocwp-theme' ), 'input', $args, 'string', 'database_optimize' );
 
 $args = array(
-	'attributes'  => array(
-		'data-ajax-button'      => 1,
-		'data-message'          => __( 'Transients have been removed!', 'hocwp-theme' ),
-		'data-confirm-message'  => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
-		'data-delete-transient' => 1,
-		'aria-label'            => __( 'Delete', 'hocwp-theme' )
-	),
-	'button_type' => 'button',
-	'text'        => __( 'Delete', 'hocwp-theme' )
+	'buttons' => array(
+		'delete_transient' => array(
+			'attributes'  => array(
+				'data-ajax-button'      => 1,
+				'data-message'          => __( 'Transients have been removed!', 'hocwp-theme' ),
+				'data-confirm-message'  => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+				'data-delete-transient' => 1,
+				'aria-label'            => __( 'Delete', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Delete', 'hocwp-theme' )
+		),
+		'delete_expired'   => array(
+			'attributes'  => array(
+				'data-ajax-button'      => 1,
+				'data-message'          => __( 'Expired transients have been removed!', 'hocwp-theme' ),
+				'data-confirm-message'  => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+				'data-delete-transient' => 1,
+				'data-delete-expired'   => 1,
+				'aria-label'            => __( 'Delete Expired', 'hocwp-theme' )
+			),
+			'button_type' => 'button',
+			'text'        => __( 'Delete Expired', 'hocwp-theme' )
+		)
+	)
 );
 
-$tab->add_field( 'delete_transient', '', 'button', $args, 'string', 'database_optimize' );
+$tab->add_field( 'delete_transient', '', 'buttons', $args, 'string', 'database_optimize' );
 
 $args = array(
 	'title'       => __( 'Vietnamese Administrative Boundaries', 'hocwp-theme' ),

@@ -552,11 +552,77 @@ jQuery(document).ready(function ($) {
                     cache: true,
                     data: {
                         action: "hocwp_theme_delete_transient",
-                        transient: transient.val()
+                        transient: transient.val(),
+                        expired: element.attr("data-delete-expired")
                     },
                     success: function (response) {
                         if (response.success) {
                             alert(element.attr("data-message"));
+                        }
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                    }
+                });
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
+    })();
+
+    // Download Theme, Plugin & Database
+    (function () {
+        body.on("click", "form[data-tab='administration_tools'] button[data-download-theme-plugin='1'], form[data-tab='administration_tools'] input[data-download-theme-plugin='1']", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that),
+                form = element.closest("form"),
+                themes = form.find("#hocwp_theme_administration_tools_download_theme_plugin_themes"),
+                plugins = form.find("#hocwp_theme_administration_tools_download_theme_plugin_plugins"),
+                databases = form.find("#hocwp_theme_administration_tools_download_theme_plugin_databases");
+
+            if (confirm(element.attr("data-confirm-message"))) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_download_theme_plugin",
+                        theme: themes.val(),
+                        plugin: plugins.val(),
+                        database: databases.val()
+                    },
+                    success: function (response) {
+                        if (response.data.message && $.trim(response.data.message)) {
+                            alert(response.data.message);
+                        }
+
+                        if (response.success) {
+                            function _create_link(name, size, url) {
+                                element.closest("div").append("<p><strong>" + name + " (" + size + "):</strong> <a href='" + url + "' target='_blank'>" + url + "</a></p>");
+                            }
+
+                            if (response.data.theme) {
+                                _create_link(response.data.theme.name, response.data.theme.size, response.data.theme.url);
+                            }
+
+                            if (response.data.plugin) {
+                                _create_link(response.data.plugin.name, response.data.plugin.size, response.data.plugin.url);
+                            }
+
+                            if (response.data.database) {
+                                _create_link(response.data.database.name, response.data.database.size, response.data.database.url);
+                            }
+
+                            themes.val("");
+                            plugins.val("");
+                            databases.val("");
                         }
                     },
                     complete: function (response) {

@@ -5,6 +5,8 @@
 * 08/01/2023: Add social name to class for list social item.
 * 09/01/2023: Add more comparison information when upload theme.
 * 13/01/2023: Auto find and load custom styles and scripts from directory.
+* 19/01/2023: Update dev tools. Allow download theme, plugin and database from admin tools.
+* 19/01/2023: Add function to zip folder and export database.
 
 = 7.0.3 =
 * 01/11/2023: Add JS redirect function.

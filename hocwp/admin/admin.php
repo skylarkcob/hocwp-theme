@@ -445,7 +445,7 @@ function hocwp_theme_admin_footer_backup_script() {
             // Fix theme screenshot
             (function () {
                 setTimeout(function () {
-                    $(".wp-admin.themes-php .theme-browser .theme .theme-screenshot img").each(function () {
+                    $(".wp-admin.themes-php .theme-browser .theme .theme-screenshot img, .theme-overlay .screenshot img").each(function () {
                         let that = this,
                             element = $(that),
                             src = that.src;

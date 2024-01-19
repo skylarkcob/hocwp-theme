@@ -1154,3 +1154,11 @@ final class HOCWP_Theme {
 function HT() {
 	return HOCWP_Theme::instance();
 }
+
+if ( ! function_exists( 'CAD_DEBUG' ) ) {
+	function CAD_DEBUG( $item ) {
+		if ( method_exists( HT(), 'debug' ) ) {
+			HT()->debug( $item );
+		}
+	}
+}
