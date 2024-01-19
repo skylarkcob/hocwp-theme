@@ -752,11 +752,19 @@ class HOCWP_Theme_Utility {
 
 					$file_name = basename( $file );
 
-					if ( is_dir( $file ) && $file_name === '.git' ) {
+					if ( is_dir( $file ) && ( $file_name === '.git' || $file_name === '.svn' ) ) {
 						continue;
 					}
 
-					if ( '.' == $file_name || '..' == $file_name || '.git' == $file_name || str_contains( $file, '.git/' ) || str_contains( $file, '.git\\' ) ) {
+					if ( '.git' == $file_name || str_contains( $file, '.git/' ) || str_contains( $file, '.git\\' ) ) {
+						continue;
+					}
+
+					if ( '.svn' == $file_name || str_contains( $file, '.svn/' ) || str_contains( $file, '.svn\\' ) ) {
+						continue;
+					}
+
+					if ( '.' == $file_name || '..' == $file_name ) {
 						continue;
 					}
 
