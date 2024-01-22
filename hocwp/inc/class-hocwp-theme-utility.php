@@ -719,13 +719,13 @@ class HOCWP_Theme_Utility {
 
 		$cmd = $root . " -u$user -p$pass $name > $destination";
 
-		$res = exec( $cmd, $output, $result_code );
+		$res = call_user_func( 'exec', $cmd );
 
-		if ( empty( $res ) && empty( $output ) && empty( $result_code ) ) {
+		if ( '' == $res ) {
 			return true;
 		}
 
-		return $res;
+		return false;
 	}
 
 	public function zip_folder( $source, $destination ) {
