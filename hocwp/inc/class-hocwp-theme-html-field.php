@@ -1723,6 +1723,7 @@ final class HOCWP_Theme_HTML_Field {
 	 */
 	public static function fields( $args = array() ) {
 		$fields = $args['fields'] ?? '';
+		$id     = $args['id'] ?? '';
 
 		if ( HT()->array_has_value( $fields ) ) {
 			$columns = $args['columns'] ?? 1;
@@ -1756,8 +1757,21 @@ final class HOCWP_Theme_HTML_Field {
 						$args['label'] = $field['label'];
 					}
 
-					if ( ! isset( $args['name'] ) ) {
+					if ( empty( $args['name'] ) ) {
 						$args['name'] = $base;
+					}
+
+					// Add new id for field base on root id
+					if ( empty( $args['id'] ) ) {
+						$new_id = $id;
+
+						if ( ! empty( $new_id ) ) {
+							$new_id .= '_';
+						}
+
+						$new_id .= $args['name'];
+
+						$args['id'] = $new_id;
 					}
 
 					$class = $field['class'] ?? '';
