@@ -693,6 +693,35 @@ class HOCWP_Theme_Utility {
 		<?php
 	}
 
+	public function generate_file_path( $dir, $url, $folder, $name, $version = '', $extension = 'zip' ) {
+		if ( ! empty( $version ) ) {
+			$name .= '_v' . $version;
+		}
+
+		$ts = current_time( 'timestamp' );
+
+		$name .= sprintf( '_%s_%s_%s.' . $extension, date( 'Ymd', $ts ), date( 'Hi', $ts ), date( 's', $ts ) );
+
+		$dest = trailingslashit( $dir ) . $folder;
+		$uri  = trailingslashit( $url ) . $folder;
+
+		if ( ! is_dir( $dest ) ) {
+			mkdir( $dest, 0777, true );
+		}
+
+		$name = sanitize_file_name( $name );
+
+		$result = array(
+			'path' => wp_normalize_path( trailingslashit( $dest ) . $name ),
+			'url'  => wp_normalize_path( trailingslashit( $uri ) . $name ),
+			'size' => 'N/A'
+		);
+
+		$result['file_name'] = basename( $result['path'] );
+
+		return $result;
+	}
+
 	public function export_database( $db_name = '', $destination = '' ) {
 		if ( ! function_exists( 'exec' ) ) {
 			return false;

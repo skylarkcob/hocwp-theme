@@ -375,32 +375,7 @@ function hocwp_theme_delete_transient_ajax_callback() {
 add_action( 'wp_ajax_hocwp_theme_delete_transient', 'hocwp_theme_delete_transient_ajax_callback' );
 
 function _hocwp_theme_build_zip_file_name( $dir, $url, $folder, $name, $version = '', $extension = 'zip' ) {
-	if ( ! empty( $version ) ) {
-		$name .= '_v' . $version;
-	}
-
-	$ts = current_time( 'timestamp' );
-
-	$name   .= sprintf( '_%s_%s_%s.' . $extension, date( 'Ymd', $ts ), date( 'Hi', $ts ), date( 's', $ts ) );
-	$folder = 'backups/' . $folder . '/';
-	$dest   = $dir . $folder;
-	$uri    = $url . $folder;
-
-	if ( ! is_dir( $dest ) ) {
-		mkdir( $dest, 0777, true );
-	}
-
-	$name = sanitize_file_name( $name );
-
-	$result = array(
-		'path' => wp_normalize_path( $dest . $name ),
-		'url'  => wp_normalize_path( $uri . $name ),
-		'size' => 'N/A'
-	);
-
-	$result['file_name'] = basename( $result['path'] );
-
-	return $result;
+	return HT_Util()->generate_file_path( $dir, $url, trailingslashit( 'backups/' . $folder ), $name, $version, $extension );
 }
 
 function hocwp_theme_download_theme_plugin_ajax_callback() {
