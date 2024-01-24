@@ -130,6 +130,55 @@ abstract class HOCWP_Theme_Meta {
 		$field = wp_parse_args( $field, $defaults );
 		$type  = $field['type'];
 
+		$cb = $field['callback'];
+
+		// Sanitize field fields
+		if ( $this->is_fields_field( $cb ) ) {
+			$fields = $field['callback_args']['fields'] ?? '';
+
+			if ( HT()->array_has_value( $fields ) ) {
+				$id = $field['id'] ?? '';
+
+				foreach ( $fields as $key => $data ) {
+					$data = $this->sanitize_field( $data );
+
+					if ( ! empty( $data['args'] ) && ! empty( $data['callback_args'] ) ) {
+						$data['callback_args'] = wp_parse_args( $data['args'], $data['callback_args'] );
+						unset( $data['args'] );
+					}
+
+					if ( empty( $data['name'] ) ) {
+						$data['name'] = $key;
+					}
+
+					// Add new id for field base on root id
+					if ( empty( $data['id'] ) ) {
+						$new_id = $id;
+
+						if ( ! empty( $new_id ) ) {
+							$new_id .= '_';
+						}
+
+						$new_id .= $data['name'];
+
+						$data['id'] = $new_id;
+					}
+
+					if ( empty( $data['callback_args']['id'] ) ) {
+						$data['callback_args']['id'] = $data['id'];
+					}
+
+					if ( empty( $data['callback_args']['name'] ) ) {
+						$data['callback_args']['name'] = $data['name'];
+					}
+
+					$fields[ $key ] = $data;
+				}
+			}
+
+			$field['callback_args']['fields'] = $fields;
+		}
+
 		switch ( $type ) {
 			case 'ID':
 			case 'positive_number':
@@ -290,7 +339,7 @@ abstract class HOCWP_Theme_Meta {
 
 			$cb = $field['callback'] ?? '';
 
-			if ( array( 'HOCWP_Theme_HTML_Field', 'latitude_longitude' ) == $cb || 'latitude_longitude' == $cb ) {
+			if ( $this->is_lat_long_field( $cb ) ) {
 				$type = $field['callback_args']['type'] ?? '';
 
 				if ( 'array' != $type ) {
@@ -299,6 +348,21 @@ abstract class HOCWP_Theme_Meta {
 					$field['callback_args'][ $name . '_latitude' ]  = call_user_func( $this->get_value_callback, $obj_id, $name . '_latitude', $this->single_value );
 					$field['callback_args'][ $name . '_longitude' ] = call_user_func( $this->get_value_callback, $obj_id, $name . '_longitude', $this->single_value );
 				}
+			} elseif ( $this->is_fields_field( $cb ) ) {
+				// Sanitize field fields value
+				$fields = $field['callback_args']['fields'] ?? '';
+
+				if ( HT()->array_has_value( $fields ) ) {
+					foreach ( $fields as $key => $data ) {
+						$data['callback_args']['value'] = call_user_func( $this->get_value_callback, $obj_id, $key, $this->single_value );
+
+						$data['value'] = $data['callback_args']['value'];
+
+						$fields[ $key ] = $data;
+					}
+				}
+
+				$field['callback_args']['fields'] = $fields;
 			}
 
 			$field['callback_args']['value'] = $value;
@@ -315,6 +379,23 @@ abstract class HOCWP_Theme_Meta {
 		}
 
 		return $field;
+	}
+
+	public function is_fields_field( $cb ) {
+		return ( array(
+			         'HOCWP_Theme_HTML_Field',
+			         'inline_fields'
+		         ) == $cb
+		         || 'inline_fields' == $cb
+		         || array(
+			            'HOCWP_Theme_HTML_Field',
+			            'fields'
+		            ) == $cb
+		         || 'fields' == $cb );
+	}
+
+	public function is_lat_long_field( $cb ) {
+		return ( array( 'HOCWP_Theme_HTML_Field', 'latitude_longitude' ) == $cb || 'latitude_longitude' == $cb );
 	}
 
 	public function is_checkbox_field( $field, $check_multi = false ) {
@@ -367,7 +448,11 @@ abstract class HOCWP_Theme_Meta {
 
 			$id = $this->get_name( $field, true );
 
-			if ( array( 'HOCWP_Theme_HTML_Field', 'latitude_longitude' ) == $cb || 'latitude_longitude' == $cb ) {
+			if ( empty( $id ) ) {
+				continue;
+			}
+
+			if ( $this->is_lat_long_field( $cb ) ) {
 				$type = $field['callback_args']['type'] ?? '';
 
 				if ( 'array' != $type ) {
@@ -379,6 +464,18 @@ abstract class HOCWP_Theme_Meta {
 					call_user_func( $this->update_value_callback, $obj_id, $key, $value );
 					continue;
 				}
+			} elseif ( $this->is_fields_field( $cb ) ) {
+				$fields = $field['callback_args']['fields'] ?? '';
+
+				if ( HT()->array_has_value( $fields ) ) {
+					foreach ( $fields as $key => $data ) {
+						$value = $this->sanitize_data( $data );
+						call_user_func( $this->update_value_callback, $obj_id, $key, $value );
+					}
+				}
+
+				// Skip update root key meta
+				continue;
 			}
 
 			if ( $this->is_checkbox_field( $field, true ) ) {
