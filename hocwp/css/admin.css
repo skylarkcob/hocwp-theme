@@ -474,10 +474,19 @@
     padding-top: 15px;
 }
 
+.hocwp-theme .multiple-fields[data-columns="2"] .field-row:nth-child(2) {
+    border-top: none;
+    padding-top: 0;
+}
+
 .hocwp-theme .multiple-fields .field-row label {
-    display: block;
+    display: inline-block;
     clear: both;
     margin-bottom: 10px;
+}
+
+.hocwp-theme .multiple-fields .field-row label + * {
+    display: block;
 }
 
 .hocwp-theme .multiple-fields[data-columns="2"] .field-row:not(.full-row) {

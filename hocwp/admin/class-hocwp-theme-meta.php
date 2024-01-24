@@ -233,7 +233,7 @@ abstract class HOCWP_Theme_Meta {
 				return $field;
 			}
 
-			if ( isset( $field['meta_key'] ) && ! empty( $field['meta_key'] ) ) {
+			if ( ! empty( $field['meta_key'] ) ) {
 				$meta_key = $field['meta_key'];
 			} else {
 				$meta_key = $this->get_name( $field );

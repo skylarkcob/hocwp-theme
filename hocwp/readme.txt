@@ -1,6 +1,7 @@
 == Changelog ==
 = 7.0.5 =
 * 24/01/2024: Update some dev functions before coding Fapas Clothes Store theme.
+* 24/01/2024: Change label display from block to inline-block for multiple fields settings.
 
 = 7.0.4 =
 * 21/12/2023: Add backward compatible if upgrade theme core on old theme.

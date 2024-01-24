@@ -1752,6 +1752,10 @@ final class HOCWP_Theme_HTML_Field {
 						$args = array();
 					}
 
+					if ( ! isset( $args['label'] ) && isset( $field['label'] ) ) {
+						$args['label'] = $field['label'];
+					}
+
 					if ( ! isset( $args['name'] ) ) {
 						$args['name'] = $base;
 					}
@@ -1759,8 +1763,9 @@ final class HOCWP_Theme_HTML_Field {
 					$class = $field['class'] ?? '';
 					$class .= ' field-row';
 					$class = trim( $class );
+					$class .= ' ' . sanitize_html_class( 'field-' . $base );
 					?>
-                    <div class="<?php echo esc_attr( $class ); ?>">
+                    <div class="<?php echo esc_attr( $class ); ?>" data-base="<?php echo esc_attr( $base ); ?>">
 						<?php
 						$callback = is_string( $cb ) ? $cb : ( is_array( $cb ) ? end( $cb ) : '' );
 
