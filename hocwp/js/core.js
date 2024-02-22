@@ -354,7 +354,7 @@ jQuery(document).ready(function ($) {
                     element = $(that),
                     module = element.attr("data-module"),
                     delay = element.attr("data-delay"),
-                    url = window.location.href;
+                    url = window.location.href.split("#")[0];
 
                 url = hocwpTheme.GLOBAL.addParamToURL("do_action", "delay_load", url);
                 url = hocwpTheme.GLOBAL.addParamToURL("module", module, url);
