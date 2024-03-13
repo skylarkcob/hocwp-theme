@@ -1,11 +1,16 @@
 window.hocwpTheme = window.hocwpTheme || {};
 
 (function () {
-    var body, container, button, menu, items, link, subMenu, i, len, siteNavigation, mobileWidth, windowWidth;
+    let body, container, button, menu, items, link, subMenu, i, len, siteNavigation, mobileWidth, windowWidth;
 
     body = document.getElementsByTagName("body")[0];
 
     mobileWidth = parseInt(body.getAttribute("data-mobile-width"));
+
+    if ("number" !== typeof mobileWidth && hocwpTheme.mobileScreenWidth) {
+        mobileWidth = parseInt(hocwpTheme.mobileScreenWidth);
+    }
+
     windowWidth = window.innerWidth || window.screen.width;
 
     // Find primary menu container
@@ -13,6 +18,10 @@ window.hocwpTheme = window.hocwpTheme || {};
 
     // Find mobile menu container
     container = document.getElementById("mobile-navigation");
+
+    if (!siteNavigation) {
+        siteNavigation = container;
+    }
 
     if (!container) {
         // Find main menu container
@@ -23,7 +32,7 @@ window.hocwpTheme = window.hocwpTheme || {};
             siteNavigation.style.display = "none";
         }
     } else {
-        // If has mobile navigation then hide site navigation
+        // If site has mobile navigation then hide site navigation
         if (siteNavigation && windowWidth <= mobileWidth) {
             siteNavigation.style.display = "none";
         }
@@ -31,11 +40,11 @@ window.hocwpTheme = window.hocwpTheme || {};
 
     if (!container) {
         // Find site header container
-        var masthead = document.getElementById("masthead");
+        let masthead = document.getElementById("masthead");
 
         if (masthead) {
             // Find any menu on site header
-            var tmp = masthead.getElementsByClassName("hocwp-menu")[0];
+            let tmp = masthead.getElementsByClassName("hocwp-menu")[0];
 
             if (tmp && "div" === tmp.tagName) {
                 container = tmp;
@@ -43,12 +52,12 @@ window.hocwpTheme = window.hocwpTheme || {};
         }
     }
 
-    // Stop function if has no menu
+    // Stop function if site has no menu
     if (!container) {
         return;
     }
 
-    var mobileMenuID = "mobile-menu",
+    let mobileMenuID = "mobile-menu",
         mobileMenu = document.getElementById(mobileMenuID);
 
     if (mobileMenu) {
@@ -65,18 +74,14 @@ window.hocwpTheme = window.hocwpTheme || {};
 
     menu = container.getElementsByTagName("ul")[0];
 
-    var mobileMenuClass = " " + mobileMenuID,
+    let mobileMenuClass = " " + mobileMenuID,
         parent = container.parentNode;
-
-    if ("number" !== typeof mobileWidth && hocwpTheme.mobileScreenWidth) {
-        mobileWidth = parseInt(hocwpTheme.mobileScreenWidth);
-    }
 
     if (null === mobileWidth || 'number' !== typeof mobileWidth || isNaN(mobileWidth) || 1 > mobileWidth) {
         return;
     }
 
-    var siteHeader = document.getElementsByClassName("site-header")[0];
+    let siteHeader = document.getElementsByClassName("site-header")[0];
 
     if (siteHeader) {
         // Make site header position relative prevent menu absolute out of header
@@ -151,7 +156,7 @@ window.hocwpTheme = window.hocwpTheme || {};
     let closeButton = menu.getElementsByClassName("close-menu")[0];
 
     if (closeButton) {
-        closeButton.addEventListener("click", function (e) {
+        closeButton.addEventListener("click", function () {
             button.click();
         });
     }
@@ -203,7 +208,7 @@ window.hocwpTheme = window.hocwpTheme || {};
         link = items[i].getElementsByTagName("a")[0];
 
         if ("undefined" !== typeof link) {
-            var span = link.getElementsByTagName("span")[0];
+            let span = link.getElementsByTagName("span")[0];
 
             if (!span) {
                 span = document.createElement("span");
@@ -220,7 +225,7 @@ window.hocwpTheme = window.hocwpTheme || {};
         e.preventDefault();
         e.stopPropagation();
 
-        var link = this.parentNode;
+        let link = this.parentNode;
         subMenu = link.parentNode.getElementsByTagName("ul")[0];
 
         if ("undefined" !== typeof subMenu) {

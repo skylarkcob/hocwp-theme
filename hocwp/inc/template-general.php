@@ -908,7 +908,8 @@ function hocwp_theme_mobile_menu( $args ) {
 		'menu_id'         => 'mobile-menu',
 		'container_class' => $container_class,
 		'button_control'  => 'mobile-menu',
-		'fallback_cb'     => false
+		'fallback_cb'     => false,
+		'mobile_control'  => true
 	);
 
 	$args = wp_parse_args( $args, $defaults );

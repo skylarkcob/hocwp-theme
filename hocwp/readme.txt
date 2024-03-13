@@ -3,6 +3,7 @@
 * 24/01/2024: Update some dev functions before coding Fapas Clothes Store theme.
 * 24/01/2024: Change label display from block to inline-block for multiple fields settings.
 * 22/02/2024: Fix delay load duplicate content for url has # character.
+* 22/02/2024: Fix mobile menu not working when call mobile location, add mobile control for mobile menu.
 
 = 7.0.4 =
 * 21/12/2023: Add backward compatible if upgrade theme core on old theme.
