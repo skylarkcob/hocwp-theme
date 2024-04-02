@@ -4,6 +4,7 @@
 * 24/01/2024: Change label display from block to inline-block for multiple fields settings.
 * 22/02/2024: Fix delay load duplicate content for url has # character.
 * 22/02/2024: Fix mobile menu not working when call mobile location, add mobile control for mobile menu.
+* 02/04/2024: Add function to display all setting fields from array and support sortable field.
 
 = 7.0.4 =
 * 21/12/2023: Add backward compatible if upgrade theme core on old theme.

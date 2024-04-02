@@ -1801,6 +1801,83 @@ final class HOCWP_Theme_HTML_Field {
 		}
 	}
 
+	/**
+	 * Display all theme setting fields on current tab with sortable supports.
+	 *
+	 * @param array $settings List theme settings for current tab.
+	 * @param array $fields Existing setting fields.
+	 * @param string $class Class name to create setting field object for current tab.
+	 *
+	 * @return void
+	 */
+	public static function theme_setting_fields( $settings = array(), &$fields = array(), $class = '' ) {
+		$keys = array_keys( $settings );
+
+		$lists = array();
+
+		$tabs = array();
+
+		foreach ( $keys as $key ) {
+			$title = $settings[ $key ]['title'] ?? '';
+
+			if ( empty( $title ) ) {
+				$title = $key;
+			}
+
+			$lists[ $key ] = $title;
+
+
+			$tab = $settings[ $key ]['tab'] ?? 'general';
+
+			if ( ! in_array( $tab, $tabs ) ) {
+				$tabs[] = $tab;
+			}
+		}
+
+		$key      = 'sort_fields';
+		$title    = __( 'Sort Fields', 'hocwp-theme' );
+		$callback = 'sortable';
+
+		$args = array(
+			'lists'       => $lists,
+			'description' => __( 'Drag and drop setting field to right panel for active it.', 'hocwp-theme' )
+		);
+
+		$type = 'array';
+
+		foreach ( $tabs as $tab ) {
+			if ( class_exists( $class ) ) {
+				$field = new $class( $key, $title, $callback, $args, $type );
+			} else {
+				$field = new HOCWP_Theme_Admin_Setting_Field( $key, $title, $callback, $args, $type, $tab );
+			}
+
+			$fields[] = $field;
+		}
+
+		foreach ( $settings as $key => $data ) {
+			$title = $data['title'] ?? '';
+
+			if ( empty( $title ) ) {
+				$title = $key;
+			}
+
+			$callback = $data['callback'] ?? 'input';
+			$args     = $data['args'] ?? array();
+			$type     = $data['data_type'] ?? 'default';
+			$tab      = $data['tab'] ?? 'general';
+			$section  = $data['section'] ?? 'default';
+
+			if ( class_exists( $class ) ) {
+				$field = new $class( $key, $title, $callback, $args, $type, $section );
+			} else {
+				$field = new HOCWP_Theme_Admin_Setting_Field( $key, $title, $callback, $args, $type, $tab, $section );
+			}
+
+			$fields[] = $field;
+		}
+	}
+
 	public static function content_image( $args = array() ) {
 		self::content_with_image( $args );
 	}

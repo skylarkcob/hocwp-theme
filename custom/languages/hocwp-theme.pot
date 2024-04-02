@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2024-01-24 09:40+0700\n"
+"POT-Creation-Date: 2024-04-02 23:29+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -1283,7 +1283,7 @@ msgid "Choose post status"
 msgstr ""
 
 #: hocwp/admin/admin.php:647 hocwp/inc/class-hocwp-theme-html-field.php:857 hocwp/inc/class-hocwp-theme-html-field.php:899
-#: hocwp/inc/class-hocwp-theme-html-field.php:1971 hocwp/inc/functions-scripts.php:397
+#: hocwp/inc/class-hocwp-theme-html-field.php:2067 hocwp/inc/functions-scripts.php:397
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -1710,15 +1710,15 @@ msgstr ""
 msgid "Add to Menu"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:205
+#: hocwp/admin/class-hocwp-theme-meta.php:254
 msgid "Please set get_value_callback."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:346
+#: hocwp/admin/class-hocwp-theme-meta.php:427
 msgid "Please set update_value_callback."
 msgstr ""
 
-#: hocwp/admin/class-hocwp-theme-meta.php:461
+#: hocwp/admin/class-hocwp-theme-meta.php:558
 msgid "You must call this class in callback of <strong>load-{$pagenow}</strong> action."
 msgstr ""
 
@@ -2146,7 +2146,7 @@ msgid "Go back"
 msgstr ""
 
 #: hocwp/ext/load-more.php:50 hocwp/inc/template-comments.php:94 hocwp/inc/template-comments.php:141 hocwp/inc/template-comments.php:186
-#: hocwp/inc/template-general.php:1141
+#: hocwp/inc/template-general.php:1142
 msgid "Loading..."
 msgstr ""
 
@@ -2408,7 +2408,7 @@ msgstr ""
 msgid "Check this out: %s"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:730 hocwp/inc/template-general.php:1675
+#: hocwp/inc/class-hocwp-theme-frontend.php:730 hocwp/inc/template-general.php:1676
 #, php-format
 msgid "Share on %s"
 msgstr ""
@@ -2687,31 +2687,39 @@ msgstr ""
 msgid "Scale the image to the correct size (the thumbnail will keep the scale)"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1832
+#: hocwp/inc/class-hocwp-theme-html-field.php:1838
+msgid "Sort Fields"
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:1843
+msgid "Drag and drop setting field to right panel for active it."
+msgstr ""
+
+#: hocwp/inc/class-hocwp-theme-html-field.php:1928
 msgid "Content:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1878
+#: hocwp/inc/class-hocwp-theme-html-field.php:1974
 msgid "Image Link:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1939
+#: hocwp/inc/class-hocwp-theme-html-field.php:2035
 msgid "Add media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1963
+#: hocwp/inc/class-hocwp-theme-html-field.php:2059
 msgid "Remove media"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2030
+#: hocwp/inc/class-hocwp-theme-html-field.php:2126
 msgid "Latitude:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2049
+#: hocwp/inc/class-hocwp-theme-html-field.php:2145
 msgid "Longitude:"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2064
+#: hocwp/inc/class-hocwp-theme-html-field.php:2160
 msgid "Drag to find address!"
 msgstr ""
 
@@ -3095,7 +3103,7 @@ msgstr ""
 msgid "Toggle menu"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2576 hocwp/inc/template-general.php:927
+#: hocwp/inc/class-hocwp-theme-utility.php:2576 hocwp/inc/template-general.php:928
 msgid "Menu"
 msgstr ""
 
@@ -3410,26 +3418,26 @@ msgstr ""
 msgid "Previous Posts"
 msgstr ""
 
-#: hocwp/inc/template-general.php:930
+#: hocwp/inc/template-general.php:931
 msgid "Close menu"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1023
+#: hocwp/inc/template-general.php:1024
 #, php-format
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hocwp/inc/template-general.php:1687
+#: hocwp/inc/template-general.php:1688
 msgid "Submit URL"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1688
+#: hocwp/inc/template-general.php:1689
 msgid "Submit URL to Google Search Console"
 msgstr ""
 
-#: hocwp/inc/template-general.php:1797
+#: hocwp/inc/template-general.php:1798
 #, php-format
 msgctxt "pagination"
 msgid "Page %d"
