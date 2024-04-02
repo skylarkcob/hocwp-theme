@@ -1807,10 +1807,11 @@ final class HOCWP_Theme_HTML_Field {
 	 * @param array $settings List theme settings for current tab.
 	 * @param array $fields Existing setting fields.
 	 * @param string $class Class name to create setting field object for current tab.
+	 * @param array $extra_fields Custom modules or templates which do not have setting field.
 	 *
 	 * @return void
 	 */
-	public static function theme_setting_fields( $settings = array(), &$fields = array(), $class = '' ) {
+	public static function theme_setting_fields( $settings = array(), &$fields = array(), $class = '', $extra_fields = array() ) {
 		$keys = array_keys( $settings );
 
 		$lists = array();
@@ -1826,7 +1827,6 @@ final class HOCWP_Theme_HTML_Field {
 
 			$lists[ $key ] = $title;
 
-
 			$tab = $settings[ $key ]['tab'] ?? 'general';
 
 			if ( ! in_array( $tab, $tabs ) ) {
@@ -1834,9 +1834,11 @@ final class HOCWP_Theme_HTML_Field {
 			}
 		}
 
-		$key      = 'sort_fields';
-		$title    = __( 'Sort Fields', 'hocwp-theme' );
-		$callback = 'sortable';
+		if ( HT()->array_has_value( $extra_fields ) ) {
+			foreach ( $extra_fields as $key => $title ) {
+				$lists[ $key ] = $title;
+			}
+		}
 
 		$args = array(
 			'lists'       => $lists,
@@ -1844,6 +1846,10 @@ final class HOCWP_Theme_HTML_Field {
 		);
 
 		$type = 'array';
+
+		$key      = 'sort_fields';
+		$title    = __( 'Sort Fields', 'hocwp-theme' );
+		$callback = 'sortable';
 
 		foreach ( $tabs as $tab ) {
 			if ( class_exists( $class ) ) {
