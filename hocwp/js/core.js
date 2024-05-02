@@ -347,6 +347,7 @@ jQuery(document).ready(function ($) {
     hocwpTheme.GLOBAL = {
         init: function () {
             this.delayLoad();
+            this.carousel();
         },
         delayLoad: function () {
             $(".delay-load").each(function () {
@@ -392,6 +393,67 @@ jQuery(document).ready(function ($) {
         },
         addParamToURL: function (key, value, url) {
             return hocwpTheme.object.add_param(key, value, url);
+        },
+        carousel: function () {
+            if ("function" === typeof Swiper) {
+                $(".hocwp-slider").each(function () {
+                    let element = $(this),
+                        params = {},
+                        slidesPerView = parseInt(element.attr("data-slides-per-view")),
+                        settings = element.attr("data-settings"),
+                        advancedSettings = element.attr("data-advanced-settings");
+
+                    if ("number" !== typeof slidesPerView || isNaN(slidesPerView)) {
+                        slidesPerView = 1;
+                    }
+
+                    params.slidesPerView = slidesPerView;
+
+                    if ($.trim(settings)) {
+                        settings = JSON.parse(settings);
+
+                        if (settings.arrows) {
+                            params.navigation = {
+                                nextEl: ".swiper-button-next",
+                                prevEl: ".swiper-button-prev",
+                            }
+                        }
+
+                        if (settings.navigation && "dots" === settings.navigation) {
+                            params.pagination = {
+                                el: ".swiper-pagination",
+                                type: "bullets",
+                                clickable: true
+                            };
+                        }
+
+                        if (settings.autoplay) {
+                            let speed = parseInt(settings.autoplay_speed);
+
+                            if ("number" === typeof speed && !isNaN(speed)) {
+                                params.autoplay = {
+                                    delay: speed
+                                };
+                            } else {
+                                params.autoplay = settings.autoplay;
+                            }
+                        }
+
+                        params.loop = settings.infinity;
+                        params.autoHeight = settings.adaptive_height;
+                    }
+
+                    if ($.trim(advancedSettings)) {
+                        advancedSettings = JSON.parse(advancedSettings);
+
+                        if ("object" === typeof advancedSettings) {
+                            params = $.extend(params, advancedSettings);
+                        }
+                    }
+
+                    new Swiper("#" + element.attr("id"), params);
+                });
+            }
         }
     };
 
