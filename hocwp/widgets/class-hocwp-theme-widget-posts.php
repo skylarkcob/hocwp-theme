@@ -16,6 +16,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			'order'              => 'DESC',
 			'related'            => false,
 			'show_date'          => false,
+			'show_date_diff'     => false,
 			'show_excerpt'       => false,
 			'show_author'        => false,
 			'show_comment_count' => false,
@@ -513,6 +514,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$meta_key        = $instance['meta_key'] ?? '';
 		$meta_value      = $instance['meta_value'] ?? '';
 		$show_date       = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : $this->defaults['show_date'];
+		$show_date_diff  = isset( $instance['show_date_diff'] ) ? (bool) $instance['show_date_diff'] : $this->defaults['show_date_diff'];
 		$related         = isset( $instance['related'] ) ? (bool) $instance['related'] : $this->defaults['related'];
 		$term_as_title   = isset( $instance['term_as_title'] ) ? (bool) $instance['term_as_title'] : $this->defaults['term_as_title'];
 		$title_term_link = isset( $instance['title_term_link'] ) ? (bool) $instance['title_term_link'] : $this->defaults['title_term_link'];
@@ -687,6 +689,13 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
                                 for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'hocwp-theme' ); ?></label>
                     </p>
                     <p>
+                        <input class="checkbox" type="checkbox"<?php checked( $show_date_diff ); ?>
+                               id="<?php echo $this->get_field_id( 'show_date_diff' ); ?>"
+                               name="<?php echo $this->get_field_name( 'show_date_diff' ); ?>"/>
+                        <label
+                                for="<?php echo $this->get_field_id( 'show_date_diff' ); ?>"><?php _e( 'Display post date human time diff?', 'hocwp-theme' ); ?></label>
+                    </p>
+                    <p>
                         <input class="checkbox" type="checkbox"<?php checked( $show_author ); ?>
                                id="<?php echo $this->get_field_id( 'show_author' ); ?>"
                                name="<?php echo $this->get_field_name( 'show_author' ); ?>"/>
@@ -775,11 +784,13 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'id'      => $this->get_field_id( 'display_type' ),
 						'name'    => $this->get_field_name( 'display_type' ),
 						'options' => array(
-							''           => __( '-- Choose style --', 'hocwp-theme' ),
-							'full_first' => __( 'First post with full width thumbnail', 'hocwp-theme' ),
-							'full_last'  => __( 'Last post with full width thumbnail', 'hocwp-theme' ),
-							'full_odd'   => __( 'Display full width thumbnail for odd posts', 'hocwp-theme' ),
-							'full_even'  => __( 'Display full width thumbnail for even posts', 'hocwp-theme' ),
+							''                => __( '-- Choose style --', 'hocwp-theme' ),
+							'full_first'      => __( 'First post with full width thumbnail', 'hocwp-theme' ),
+							'full_last'       => __( 'Last post with full width thumbnail', 'hocwp-theme' ),
+							'full_odd'        => __( 'Display full width thumbnail for odd posts', 'hocwp-theme' ),
+							'full_even'       => __( 'Display full width thumbnail for even posts', 'hocwp-theme' ),
+							'full_first_last' => __( 'First and last post with full width thumbnail', 'hocwp-theme' ),
+							'full'            => __( 'Display all posts with full width thumbnail', 'hocwp-theme' ),
 						),
 						'class'   => 'widefat',
 						'value'   => $instance['display_type'] ?? $this->defaults['display_type']
@@ -838,6 +849,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$instance['number']             = isset( $new_instance['number'] ) ? absint( $new_instance['number'] ) : $this->defaults['number'];
 		$instance['title_length']       = isset( $new_instance['title_length'] ) ? absint( $new_instance['title_length'] ) : $this->defaults['title_length'];
 		$instance['show_date']          = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : $this->defaults['show_date'];
+		$instance['show_date_diff']          = isset( $new_instance['show_date_diff'] ) ? (bool) $new_instance['show_date_diff'] : $this->defaults['show_date_diff'];
 		$instance['related']            = isset( $new_instance['related'] ) ? (bool) $new_instance['related'] : $this->defaults['related'];
 		$instance['term_as_title']      = isset( $new_instance['term_as_title'] ) ? (bool) $new_instance['term_as_title'] : $this->defaults['term_as_title'];
 		$instance['title_term_link']    = isset( $new_instance['title_term_link'] ) ? (bool) $new_instance['title_term_link'] : $this->defaults['title_term_link'];

@@ -48,11 +48,11 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 	/**
 	 * Set post object.
 	 *
-	 * @param WP_Post $post The post object.
+	 * @param WP_Post $object The post object.
 	 */
-	public function set( $post ) {
-		if ( $post instanceof WP_Post ) {
-			$this->post = $post;
+	public function set( $object ) {
+		if ( $object instanceof WP_Post ) {
+			$this->post = $object;
 
 			// Set meta keys as post object properties.
 			if ( HT()->array_has_value( $this->get_meta_keys() ) ) {
@@ -68,11 +68,11 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 	 *
 	 * @return bool True if is post else false.
 	 */
-	public function is( $post_type = null ) {
+	public function is( $post_type_or_taxonomy = null ) {
 		$result = ( $this->get() instanceof WP_Post );
 
-		if ( $result && ! empty( $post_type ) ) {
-			$result = ( $post_type = $this->get()->post_type );
+		if ( $result && ! empty( $post_type_or_taxonomy ) ) {
+			$result = ( $post_type_or_taxonomy == $this->get()->post_type );
 		}
 
 		return $result;
@@ -131,17 +131,85 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 		echo get_the_date( $format );
 	}
 
-	public function human_time_diff( $ago = false ) {
+	public function the_date_time( $format = '', $gmt = false ) {
+		$ts = get_the_time( 'G', $this->get() );
+
+		$timezone_string = get_option( 'timezone_string' );
+
+		if ( empty( $timezone_string ) ) {
+			$timezone_string = wp_timezone_string();
+			$timezone_string = 'GMT' . $timezone_string;
+		} elseif ( 'Asia/Ho_Chi_Minh' == $timezone_string ) {
+			$timezone_string = 'GMT+7';
+		}
+
+		if ( empty( $format ) ) {
+			$format = 'd/m/Y H:i';
+		}
+
+		$date = date( $format, $ts );
+
+		if ( $gmt ) {
+			$date .= ' ' . $timezone_string;
+		}
+		?>
+        <time class="entry-date published updated"
+              datetime="<?php echo esc_attr( date( 'c', $ts ) ); ?>"><?php echo $date; ?></time>
+		<?php
+	}
+
+	/**
+	 * Get post star ratings base on plugin kk Star Ratings.
+	 *
+	 * @return string
+	 */
+	public function get_ratings() {
+		if ( function_exists( 'kk_star_ratings' ) ) {
+			$avg = $this->get_meta( '_kksr_avg' );
+
+			if ( empty( $avg ) ) {
+				return '';
+			}
+
+			$stars = get_option( 'kksr_stars' );
+
+			if ( 5 != $stars ) {
+				$avg = ( $avg * $stars ) / 5;
+			}
+
+			$total = $this->get_meta( '_kksr_casts' );
+			$total = sprintf( _x( '%s ratings', 'total ratings', 'hocwp-theme' ), '<span class="blg-hits-total-rating total">' . $total . '</span>' );
+
+			return '<span>' . sprintf( '<span class="blg-hits-rating avg">%s</span>/%s (%s)', $avg, $stars, $total ) . '</span>';
+		}
+
+		return '';
+	}
+
+	public function human_time_diff( $ago = false, $modified = false, $gmt = false ) {
 		if ( $this->post instanceof WP_Post ) {
-			$timestamp = strtotime( $this->post->post_date );
+			if ( $gmt ) {
+				if ( $modified ) {
+					$timestamp = strtotime( $this->post->post_modified_gmt );
+				} else {
+					$timestamp = strtotime( $this->post->post_date_gmt );
+				}
+			} else {
+				if ( $modified ) {
+					$timestamp = strtotime( $this->post->post_modified );
+				} else {
+					$timestamp = strtotime( $this->post->post_date );
+				}
+			}
 
 			$diff = human_time_diff( $timestamp, current_time( 'timestamp' ) );
 
 			if ( $ago ) {
 				$diff = sprintf( __( '%s ago', 'hocwp-theme' ), $diff );
 			}
-
-			echo $diff;
+			?>
+            <time datetime="<?php echo esc_attr( get_the_time( 'c' ) ); ?>"><?php echo $diff; ?></time>
+			<?php
 		}
 	}
 
@@ -185,16 +253,14 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 			$more = '&hellip;';
 		}
 
-		$excerpt = wp_trim_words( $excerpt, $length, $more );
-
-		return $excerpt;
+		return wp_trim_words( $excerpt, $length, $more );
 	}
 
 	public function get_views() {
 		if ( function_exists( 'pvc_get_post_views' ) ) {
 			$views = pvc_get_post_views( $this->get_id() );
 		} else {
-			$views = get_post_meta( $this->get_id(), 'views', true );
+			$views = $this->get_meta( 'views' );
 		}
 
 		return absint( $views );

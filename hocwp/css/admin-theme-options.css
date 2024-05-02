@@ -67,14 +67,25 @@
     float: right;
 }
 
+.hocwp-theme .settings-box .header .save-changes .submit {
+    margin-top: 0;
+}
+
 .hocwp-theme .settings-box .header input[type="submit"] {
     border: 1px solid #fff;
     border-radius: 0;
     text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
+    font-weight: 500;
+    font-size: 14px;
     padding: 5px 20px;
     line-height: 1;
+}
+
+.hocwp-theme .settings-box .header input[type="submit"]:not(.fixed) {
+    border-radius: 5px;
+    line-height: 30px;
+    transition: all .5s;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
 }
 
 .hocwp-theme .settings-box .header input[type="submit"].reached-bottom {

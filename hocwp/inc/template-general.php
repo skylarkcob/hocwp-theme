@@ -1310,6 +1310,8 @@ function hocwp_theme_widget_posts_loop_html( $args = 0 ) {
 		return;
 	}
 
+	$object = new HOCWP_Theme_Post();
+
 	if ( is_numeric( $args ) ) {
 		$count = $args;
 	} else {
@@ -1331,6 +1333,7 @@ function hocwp_theme_widget_posts_loop_html( $args = 0 ) {
 	$crop_thumbnail     = $instance['crop_thumbnail'] ?? $widget->defaults['crop_thumbnail'];
 	$show_excerpt       = isset( $instance['show_excerpt'] ) ? (bool) $instance['show_excerpt'] : $widget->defaults['show_excerpt'];
 	$show_date          = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : $widget->defaults['show_date'];
+	$show_date_diff     = isset( $instance['show_date_diff'] ) ? (bool) $instance['show_date_diff'] : $widget->defaults['show_date_diff'];
 	$show_author        = isset( $instance['show_author'] ) ? (bool) $instance['show_author'] : $widget->defaults['show_author'];
 	$show_comment_count = isset( $instance['show_comment_count'] ) ? (bool) $instance['show_comment_count'] : $widget->defaults['show_comment_count'];
 	$display_type       = $instance['display_type'] ?? $widget->defaults['display_type'];
@@ -1343,11 +1346,11 @@ function hocwp_theme_widget_posts_loop_html( $args = 0 ) {
 		$container_tag = 'li';
 	}
 
-	$full_width = false;
+	$full_width = 'full' == $display_type;
 
-	if ( 0 == $count && 'full_first' == $display_type ) {
+	if ( 0 == $count && ( 'full_first' == $display_type || 'full_first_last' == $display_type ) ) {
 		$full_width = true;
-	} elseif ( $query instanceof WP_Query && 'full_last' == $display_type && $count == ( $query->post_count - 1 ) ) {
+	} elseif ( $query instanceof WP_Query && ( 'full_last' == $display_type || 'full_first_last' == $display_type ) && $count == ( $query->post_count - 1 ) ) {
 		$full_width = true;
 	} elseif ( 'full_odd' == $display_type && ( ( $count + 1 ) % 2 != 0 ) ) {
 		$full_width = true;
@@ -1400,12 +1403,19 @@ function hocwp_theme_widget_posts_loop_html( $args = 0 ) {
 
 	HT()->wrap_text( $title, $before, '</a>', true );
 
-	if ( $show_date || $show_author || $show_comment_count ) {
+	if ( $show_date || $show_author || $show_comment_count || $show_date_diff ) {
 		?>
         <div class="entry-meta meta entry-byline">
 			<?php
-			if ( $show_date ) {
+			if ( $show_date && ! $show_date_diff ) {
 				hocwp_theme_post_date();
+			}
+
+			if ( $show_date_diff ) {
+				?>
+                <span class="posted-on"
+                      title="<?php echo esc_attr( get_the_time( 'd/m/Y H:i:s' ) ); ?>"><?php $object->human_time_diff( true ); ?></span>
+				<?php
 			}
 
 			if ( $show_author ) {
@@ -1873,7 +1883,7 @@ function hocwp_theme_fix_paginate_links( $link ) {
 			parse_str( $parts['query'], $query );
 
 			if ( HT()->array_has_value( $query ) ) {
-				$link = strtok( $link, '?' );
+				$link = HT()->get_url_without_param( $link );
 				$link = add_query_arg( $query, $link );
 			}
 
@@ -1888,26 +1898,19 @@ function hocwp_theme_fix_paginate_links( $link ) {
 
 add_filter( 'paginate_links', 'hocwp_theme_fix_paginate_links' );
 
+/**
+ * Show all current params from URL as hidden fields.
+ *
+ * @param $excludes array|string Skip these params
+ *
+ * @return void
+ */
 function hocwp_theme_print_url_params_as_hidden( $excludes ) {
-	if ( ! is_array( $excludes ) ) {
-		$excludes = array();
-	}
-
-	$url   = HT_Util()->get_current_url( true );
-	$query = HT()->get_params_from_url( $url );
-
-	if ( HT()->array_has_value( $query ) ) {
-		foreach ( $query as $key => $value ) {
-			if ( in_array( $key, $excludes ) ) {
-				continue;
-			}
-
-			echo '<input type="hidden" value="' . esc_attr( $value ) . '" name="' . esc_attr( $key ) . '">' . PHP_EOL;
-		}
-	}
+	HT()->add_form_hidden_params_from_url( $excludes );
 }
 
 add_action( 'hocwp_theme_print_url_params_as_hidden', 'hocwp_theme_print_url_params_as_hidden' );
+add_action( 'hocwp_theme_hidden_url_params', 'hocwp_theme_print_url_params_as_hidden' );
 
 function hocwp_theme_fix_not_found_paged() {
 	if ( defined( 'HOCWP_THEME_USE_DEFAULT_TEMPLATE' ) && HOCWP_THEME_USE_DEFAULT_TEMPLATE ) {

@@ -220,25 +220,8 @@ class HOCWP_Theme_Utility {
 		global $hocwp_theme_protocol;
 		$current_url = $hocwp_theme_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-		if ( $with_param ) {
-			$params = $_SERVER['QUERY_STRING'] ?? '';
-
-			if ( ! empty( $params ) ) {
-				$params = explode( '&', $params );
-				$parts  = array();
-
-				foreach ( $params as $param ) {
-					$param = explode( '=', $param );
-
-					if ( 2 == count( $param ) ) {
-						$parts[ $param[0] ] = $param[1];
-					}
-				}
-
-				$current_url = add_query_arg( $parts, $current_url );
-			}
-		} else {
-			$current_url = strtok( $current_url, '?' );
+		if ( ! $with_param ) {
+			$current_url = HT()->get_url_without_param( $current_url );
 		}
 
 		return apply_filters( 'hocwp_theme_current_url', $current_url );
@@ -402,6 +385,15 @@ class HOCWP_Theme_Utility {
 	 */
 	public function convert_administrative_boundaries_to_array( $csv, $district, $commune ) {
 		$abs = array();
+
+		if ( is_string( $csv ) && file_exists( $csv ) ) {
+			$csv = HT_Util()->read_all_text( $csv );
+			$csv = HT()->explode_new_line( $csv );
+
+			// Remove heading text
+			array_shift( $csv );
+			$csv = array_filter( $csv );
+		}
 
 		foreach ( (array) $csv as $ab ) {
 			$ab = explode( ',', $ab );
@@ -960,6 +952,26 @@ class HOCWP_Theme_Utility {
 		return $path;
 	}
 
+	public function get_min_max_meta( $meta_key, $type = 'min' ) {
+		$type = strtolower( $type );
+
+		global $wpdb;
+
+		$sql = "SELECT ";
+
+		if ( 'min' == $type ) {
+			$sql .= 'MIN';
+		} else {
+			$sql .= 'MAX';
+		}
+
+		$sql .= "(CAST(meta_value AS UNSIGNED)) FROM $wpdb->postmeta WHERE meta_key = '" . $meta_key . "'";
+
+		$number = absint( $wpdb->get_var( $sql ) );
+
+		return apply_filters( 'hocwp_theme_min_max_value', $number, $meta_key, $type );
+	}
+
 	public function timestamp_to_countdown( $timestamp ) {
 		$now     = current_time( 'timestamp' );
 		$diff    = absint( $timestamp - $now );
@@ -1278,7 +1290,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function verify_nonce( $nonce_action = - 1, $nonce_name = '_wpnonce' ) {
-		if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+		if ( '_wpnonce' == $nonce_name || ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
 			$nonce = $_REQUEST[ $nonce_name ] ?? '';
 
 			return wp_verify_nonce( $nonce, $nonce_action );

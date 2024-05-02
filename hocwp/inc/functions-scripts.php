@@ -248,13 +248,21 @@ function hocwp_theme_localize_script_l10n() {
 			'waiting'                    => __( 'Waiting...', 'hocwp-theme' )
 		),
 		'ajaxOverlay'               => $ajax_overlay,
-		'nonce'                     => wp_create_nonce( HOCWP_Theme()->get_textdomain() ),
+		'nonce'                     => wp_create_nonce( is_child_theme() ? get_stylesheet() : HOCWP_Theme()->get_textdomain() ),
 		'loadingGif'                => admin_url( 'images/loading.gif' ),
 		'loadMoreButton'            => hocwp_theme_load_more_button(),
 		'iconRemove'                => HT_HTML_Field()->icon_remove(),
 		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width(),
 		'is_debug'                  => HT()->bool_to_int( HOCWP_THEME_DEVELOPING )
 	);
+
+	$custom_ajax_data = array(
+		'callback' => $args['customAjaxCallback'],
+		'nonce'    => $args['nonce'],
+		'action'   => $args['ajaxAction']
+	);
+
+	$args['customAjaxData'] = $custom_ajax_data;
 
 	if ( is_admin() ) {
 		$args = apply_filters( 'hocwp_theme_localize_script_l10n_admin', $args );

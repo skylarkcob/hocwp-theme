@@ -2,6 +2,9 @@
 defined( 'ABSPATH' ) || exit;
 
 abstract class Abstract_HT_Custom {
+	public $post_meta_keys;
+	public $term_meta_keys;
+
 	private function get_path_or_url( $suffix = '', $in_child = false, $url = false ) {
 		if ( ! $in_child && HT_Control()->is_child_theme && defined( 'HOCWP_THEME_FORCE_PARENT' ) && HOCWP_THEME_FORCE_PARENT ) {
 			$in_child = true;

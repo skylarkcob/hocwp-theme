@@ -376,7 +376,7 @@ add_action( 'hocwp_theme_related_posts', 'hocwp_theme_related_posts' );
 function hocwp_theme_post_date() {
 	$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
-	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+	if ( get_the_time( 'G' ) !== get_the_modified_time( 'G' ) ) {
 		$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 	}
 
@@ -396,7 +396,7 @@ function hocwp_theme_post_date() {
 }
 
 function hocwp_theme_post_modified_date() {
-	$time_string = '<time datetime="%1$s">%2$s</time>';
+	$time_string = '<time datetime="%1$s" class="updated">%2$s</time>';
 
 	$time_string = sprintf( $time_string,
 		esc_attr( get_the_modified_date( DATE_W3C ) ),

@@ -342,6 +342,7 @@
     float: left;
     border: 1px solid #ddd;
     transition: background-color .2s ease-in-out;
+    object-fit: cover;
 }
 
 .hocwp-theme .images-box .list-images li img:hover {

@@ -10,6 +10,54 @@ trait HOCWP_Theme_PHP {
 		return $_SERVER['HTTP_USER_AGENT'] ?? '';
 	}
 
+	public function get_current_url() {
+		$protocol = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+
+		return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	}
+
+	public function get_url_without_param( $url = '' ) {
+		if ( empty( $url ) ) {
+			$url = $this->get_current_url();
+		}
+
+		return trim( strtok( $url, '?' ) );
+	}
+
+	public function add_form_hidden_params_from_url( $exclude, $hide_empty = true ) {
+		$params = $this->get_params_from_url( $this->get_current_url() );
+
+		if ( ! is_array( $exclude ) ) {
+			$exclude = array( $exclude );
+		}
+
+		if ( ! empty( $params ) ) {
+			foreach ( $params as $key => $value ) {
+				if ( in_array( $key, $exclude ) ) {
+					continue;
+				}
+
+				if ( $hide_empty && empty( $value ) ) {
+					continue;
+				}
+
+				if ( is_array( $value ) ) {
+					foreach ( $value as $sub ) {
+						?>
+                        <input type="hidden" name="<?php echo esc_attr( $key ); ?>[]"
+                               value="<?php echo esc_attr( $sub ); ?>">
+						<?php
+					}
+				} else {
+					?>
+                    <input type="hidden" name="<?php echo esc_attr( $key ); ?>"
+                           value="<?php echo esc_attr( $value ); ?>">
+					<?php
+				}
+			}
+		}
+	}
+
 	public function get_params_from_url( $url ) {
 		$params = array();
 

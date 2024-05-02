@@ -104,7 +104,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$menu_class = $args['menu_class'] ?? '';
 
-		$menu_class .= ' navbar-nav mr-auto';
+		$menu_class .= ' navbar-nav mr-auto flex-row';
 
 		$args['menu_class'] = trim( $menu_class );
 

@@ -325,6 +325,12 @@ class HOCWP_Theme_Media {
 		return hocwp_theme_media_file_exists( $id );
 	}
 
+	public function image( $id, $size = 'full' ) {
+		if ( $this->exists( $id ) ) {
+			echo wp_get_attachment_image( $id, $size );
+		}
+	}
+
 	public function is_image( $url, $id = null ) {
 		return hocwp_theme_is_image( $url, $id );
 	}

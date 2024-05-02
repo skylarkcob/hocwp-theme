@@ -1081,7 +1081,8 @@ final class HOCWP_Theme_HTML_Field {
 					if ( HT()->array_has_value( $images ) ) {
 						foreach ( $images as $id ) {
 							?>
-                            <li class="ui-state-default" data-id="<?php echo esc_attr( $id ); ?>">
+                            <li class="ui-state-default" data-id="<?php echo esc_attr( $id ); ?>"
+                                data-edit-url="<?php echo esc_attr( get_edit_post_link( $id ) ); ?>">
 								<?php
 								echo wp_get_attachment_image( $id, 'full', false, array( 'title' => get_the_title( $id ) ) );
 								echo self::icon_remove();
@@ -1811,54 +1812,56 @@ final class HOCWP_Theme_HTML_Field {
 	 *
 	 * @return void
 	 */
-	public static function theme_setting_fields( $settings = array(), &$fields = array(), $class = '', $extra_fields = array() ) {
-		$keys = array_keys( $settings );
+	public static function theme_setting_fields( $settings = array(), &$fields = array(), $class = '', $extra_fields = array(), $sortable = true ) {
+		if ( $sortable ) {
+			$keys = array_keys( $settings );
 
-		$lists = array();
+			$lists = array();
 
-		$tabs = array();
+			$tabs = array();
 
-		foreach ( $keys as $key ) {
-			$title = $settings[ $key ]['title'] ?? '';
+			foreach ( $keys as $key ) {
+				$title = $settings[ $key ]['title'] ?? '';
 
-			if ( empty( $title ) ) {
-				$title = $key;
-			}
+				if ( empty( $title ) ) {
+					$title = $key;
+				}
 
-			$lists[ $key ] = $title;
-
-			$tab = $settings[ $key ]['tab'] ?? 'general';
-
-			if ( ! in_array( $tab, $tabs ) ) {
-				$tabs[] = $tab;
-			}
-		}
-
-		if ( HT()->array_has_value( $extra_fields ) ) {
-			foreach ( $extra_fields as $key => $title ) {
 				$lists[ $key ] = $title;
-			}
-		}
 
-		$args = array(
-			'lists'       => $lists,
-			'description' => __( 'Drag and drop setting field to right panel for active it.', 'hocwp-theme' )
-		);
+				$tab = $settings[ $key ]['tab'] ?? 'general';
 
-		$type = 'array';
-
-		$key      = 'sort_fields';
-		$title    = __( 'Sort Fields', 'hocwp-theme' );
-		$callback = 'sortable';
-
-		foreach ( $tabs as $tab ) {
-			if ( class_exists( $class ) ) {
-				$field = new $class( $key, $title, $callback, $args, $type );
-			} else {
-				$field = new HOCWP_Theme_Admin_Setting_Field( $key, $title, $callback, $args, $type, $tab );
+				if ( ! in_array( $tab, $tabs ) ) {
+					$tabs[] = $tab;
+				}
 			}
 
-			$fields[] = $field;
+			if ( HT()->array_has_value( $extra_fields ) ) {
+				foreach ( $extra_fields as $key => $title ) {
+					$lists[ $key ] = $title;
+				}
+			}
+
+			$args = array(
+				'lists'       => $lists,
+				'description' => __( 'Drag and drop setting field to right panel for active it.', 'hocwp-theme' )
+			);
+
+			$type = 'array';
+
+			$key      = 'sort_fields';
+			$title    = __( 'Sort Fields', 'hocwp-theme' );
+			$callback = 'sortable';
+
+			foreach ( $tabs as $tab ) {
+				if ( class_exists( $class ) ) {
+					$field = new $class( $key, $title, $callback, $args, $type );
+				} else {
+					$field = new HOCWP_Theme_Admin_Setting_Field( $key, $title, $callback, $args, $type, $tab );
+				}
+
+				$fields[] = $field;
+			}
 		}
 
 		foreach ( $settings as $key => $data ) {

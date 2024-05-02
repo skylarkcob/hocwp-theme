@@ -201,6 +201,17 @@ final class HOCWP_Theme_Sanitize {
 		return new WP_Error( 'invalid_form', __( 'Invalid Forminator form data!', 'hocwp-theme' ) );
 	}
 
+	public function min_max( $number, $min, $max ) {
+		// Value from $min to $max
+		if ( $min > $number ) {
+			$number = $min;
+		} elseif ( $max < $number ) {
+			$number = $max;
+		}
+
+		return $number;
+	}
+
 	public function form_post( $key, $type, $data = null ) {
 		if ( null == $data ) {
 			$data = $_POST;

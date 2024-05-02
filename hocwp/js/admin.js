@@ -159,16 +159,22 @@ jQuery(document).ready(function ($) {
                     }
                 }
 
+                let isScrolling;
+
                 $(window).scroll(function () {
-                    sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
+                    clearTimeout(isScrolling);
 
-                    hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
+                    isScrolling = setTimeout(() => {
+                        sBottom = settingsBox.find(".module-footer").offset().top - hocwpTheme.object.screenHeight() - 120;
 
-                    if (sidebar.hasClass("has-sticky")) {
-                        if (settingsBox.find(".settings-content").height() > sidebar.height()) {
-                            hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                        hocwpTheme.object.sticky($, sticky, sTop, "", sBottom);
+
+                        if (sidebar.hasClass("has-sticky")) {
+                            if (settingsBox.find(".settings-content").height() > sidebar.height()) {
+                                hocwpTheme.object.sticky($, sidebar, sideTop, "", sBottom);
+                            }
                         }
-                    }
+                    }, 500);
                 });
             }
         }

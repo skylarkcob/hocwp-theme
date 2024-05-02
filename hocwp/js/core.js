@@ -193,7 +193,7 @@ function HOCWP_Theme() {
             htmlClass = htmlClass || "is-sticky fixed";
 
             if (scroll >= top) {
-                var scrollHeight = $(document).height(),
+                let scrollHeight = $(document).height(),
                     scrollPosition = $(window).height() + scroll,
                     percent = (scrollHeight - scrollPosition) / scrollHeight;
 

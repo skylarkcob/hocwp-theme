@@ -247,7 +247,7 @@ final class HOCWP_Theme_Controller {
 	}
 
 	public function verify_nonce( $nonce_name ) {
-		return HT_Util()->verify_nonce( $this->textdomain, $nonce_name );
+		return HT_Util()->verify_nonce( is_child_theme() ? get_stylesheet() : $this->textdomain, $nonce_name );
 	}
 
 	public function get_date_format() {
