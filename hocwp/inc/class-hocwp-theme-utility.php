@@ -1694,6 +1694,8 @@ class HOCWP_Theme_Utility {
 			$paged = get_query_var( 'page' );
 		}
 
+		$paged = apply_filters( 'hocwp_theme_current_paged', $paged );
+
 		return ( HT()->is_positive_number( $paged ) ) ? $paged : 1;
 	}
 

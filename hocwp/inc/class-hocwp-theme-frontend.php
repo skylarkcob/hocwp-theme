@@ -436,6 +436,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 		}
 
+		$args = apply_filters( 'hocwp_theme_paginate_links_args', $args );
+
 		$items = paginate_links( $args );
 
 		if ( HT()->array_has_value( $items ) ) {
