@@ -53,7 +53,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 				foreach ( $commenters as $commenter ) {
 					$email = $commenter->comment_author_email;
 
-					if ( ! is_email( $email ) ) {
+					if ( ! HT_Util()->is_email( $email ) ) {
 						continue;
 					}
 

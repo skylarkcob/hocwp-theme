@@ -98,9 +98,9 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 			$outer_url = apply_filters( 'hocwp_theme_widget_icon_outer_url', false );
 
 			$name     = 'icon_url';
-			$icon_url = isset( $instance[ $name ] ) ? $instance[ $name ] : '';
+			$icon_url = $instance[ $name ] ?? '';
 
-			if ( is_email( $icon_url ) ) {
+			if ( HT_Util()->is_email( $icon_url ) ) {
 				$icon_url = sprintf( 'mailto:%s?subject=%s', $icon_url, $title );
 			}
 

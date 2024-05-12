@@ -227,11 +227,11 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 		if ( HT_Util()->verify_nonce( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ) ) {
 			$to_email = isset( $_POST['hocwp_theme_test_smtp_to'] ) ? $_POST['hocwp_theme_test_smtp_to'] : '';
 
-			if ( ! is_email( $to_email ) ) {
+			if ( ! HT_Util()->is_email( $to_email ) ) {
 				$to_email = get_option( 'admin_email' );
 			}
 
-			if ( is_email( $to_email ) ) {
+			if ( HT_Util()->is_email( $to_email ) ) {
 				global $phpmailer;
 				$tmp = $phpmailer;
 

@@ -76,7 +76,7 @@ class HOCWP_Theme_Cloudflare_API {
 		if ( ! empty( $this->api_token ) ) {
 			$headers['Authorization'] = $this->api_token;
 		} else {
-			if ( ! empty( $this->api_key ) && is_email( $this->user_email ) ) {
+			if ( ! empty( $this->api_key ) && HT_Util()->is_email( $this->user_email ) ) {
 				$headers['X-Auth-Key']   = $this->api_key;
 				$headers['X-Auth-Email'] = $this->user_email;
 			}

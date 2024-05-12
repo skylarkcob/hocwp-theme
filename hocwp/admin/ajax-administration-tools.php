@@ -6,7 +6,7 @@ function hocwp_theme_change_administrative_email_ajax_callback() {
 
 	$email = $_POST['email'] ?? '';
 
-	if ( ! is_email( $email ) ) {
+	if ( ! HT_Util()->is_email( $email ) ) {
 		$data['message'] = __( 'Invalid email.', 'hocwp-theme' );
 	} else {
 		$old_email = get_bloginfo( 'admin_email' );
@@ -84,11 +84,11 @@ function hocwp_theme_send_test_email_ajax_callback() {
 
 	$email = $_POST['email'] ?? '';
 
-	if ( ! is_email( $email ) ) {
+	if ( ! HT_Util()->is_email( $email ) ) {
 		$email = get_bloginfo( 'admin_email' );
 	}
 
-	if ( is_email( $email ) ) {
+	if ( HT_Util()->is_email( $email ) ) {
 		$subject = sprintf( __( '[%s] Testing email', 'hocwp-theme' ), get_bloginfo( 'name' ) );
 		$message = __( 'This is a testing email. If you see this message, it means your email setting works normally.', 'hocwp-theme' );
 		$sent    = HT_Util()->html_mail( $email, $subject, $message );

@@ -37,7 +37,7 @@ add_filter( 'wp_mail_from_name', 'hocwp_theme_wp_mail_from_name_filter' );
 function hocwp_theme_wp_mail_from_filter( $email ) {
 	$options = HT_Options()->get( 'smtp' );
 
-	if ( isset( $options['from_email'] ) && is_email( $options['from_email'] ) ) {
+	if ( isset( $options['from_email'] ) && HT_Util()->is_email( $options['from_email'] ) ) {
 		$email = sanitize_email( $options['from_email'] );
 	}
 

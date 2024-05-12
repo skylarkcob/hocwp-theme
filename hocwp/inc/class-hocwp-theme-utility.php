@@ -288,6 +288,10 @@ class HOCWP_Theme_Utility {
 		wp_set_auth_cookie( $user_id, $remember );
 	}
 
+	public function is_email( $email ) {
+		return ( ! empty( $email ) && is_string( $email ) && is_email( $email ) );
+	}
+
 	public function return_user( $id_email_login = null, $output = OBJECT ) {
 		$output = strtoupper( $output );
 
@@ -301,7 +305,7 @@ class HOCWP_Theme_Utility {
 			$current = $id_email_login;
 		} elseif ( HT()->is_positive_number( $id_email_login ) ) {
 			$current = get_user_by( 'ID', $id_email_login );
-		} elseif ( is_email( $id_email_login ) ) {
+		} elseif ( $this->is_email( $id_email_login ) ) {
 			$current = get_user_by( 'email', $id_email_login );
 		} else {
 			if ( ! empty( $id_email_login ) ) {

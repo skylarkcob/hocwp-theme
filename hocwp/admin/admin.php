@@ -28,7 +28,7 @@ function hocwp_theme_admin_notices_action() {
 	if ( ! HOCWP_THEME_DEVELOPING && ! HT_Admin()->skip_admin_notices() ) {
 		$email = get_bloginfo( 'admin_email' );
 
-		if ( is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
+		if ( HT_Util()->is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
 			$link = '<a href="' . admin_url( 'options-general.php' ) . '">' . _x( 'general settings page', 'setting page', 'hocwp-theme' ) . '</a>';
 
 			$args = array(

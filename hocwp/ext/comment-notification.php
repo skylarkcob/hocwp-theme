@@ -46,7 +46,7 @@ function hocwp_theme_comment_reply_notification( $comment ) {
 		if ( HT()->is_positive_number( $comment->comment_parent ) ) {
 			$parent = get_comment( $comment->comment_parent );
 
-			if ( is_email( $parent->comment_author_email ) && $parent->comment_author_email != $comment->comment_author_email ) {
+			if ( HT_Util()->is_email( $parent->comment_author_email ) && $parent->comment_author_email != $comment->comment_author_email ) {
 				$options = HT_Options()->get( 'discussion' );
 
 				$obj = get_post( $parent->comment_post_ID );
