@@ -289,7 +289,7 @@ function HOCWP_Theme() {
 
         setTimeout(function () {
             if ("function" === typeof lozad) {
-                var observer = lozad();
+                let observer = lozad();
                 observer.observe();
             }
         }, 500);
@@ -458,4 +458,5 @@ jQuery(document).ready(function ($) {
     };
 
     hocwpTheme.GLOBAL.init();
+    window.HOCWP_THEME = hocwpTheme;
 });
