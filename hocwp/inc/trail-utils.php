@@ -49,4 +49,14 @@ trait HOCWP_Theme_Utils {
 
 		return ( 'localhost' == $domain || str_contains( $domain, 'localhost' ) || str_contains( $domain, '127.0.0.1' ) || str_contains( $domain, '192.168.1.249' ) || str_contains( $domain, '192.168.1.213' ) || str_contains( $domain, '192.168.1.69' ) );
 	}
+
+	public function get_site_name() {
+		$name = HT_Options()->get_general( 'site_short_name' );
+
+		if ( empty( $name ) ) {
+			$name = get_bloginfo( 'name' );
+		}
+
+		return apply_filters( 'hocwp_theme_site_name', $name );
+	}
 }

@@ -203,6 +203,15 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 	$field    = new HOCWP_Theme_Admin_Setting_Field( 'mobile_logo', __( 'Mobile Logo', 'hocwp-theme' ), 'media_upload', '', 'id', 'general', 'site_identity' );
 	$fields[] = $field;
 
+	$url = admin_url( 'options-general.php#blogname' );
+
+	$args = array(
+		'description' => sprintf( __( 'Sometimes your <a href="%s" target="_blank">website name</a> is too long, use your website\'s short name setting as an alternative in some cases.', 'hocwp-theme' ), $url ),
+		'class'       => 'regular-text'
+	);
+
+	$fields[] = new HOCWP_Theme_Admin_Setting_Field( 'site_short_name', __( 'Site Short Name', 'hocwp-theme' ), 'input', $args, 'string', 'general', 'site_identity' );
+
 	return $fields;
 }
 

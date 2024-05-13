@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2024-05-02 21:06+0700\n"
-"PO-Revision-Date: 2024-05-02 21:06+0700\n"
+"POT-Creation-Date: 2024-05-13 07:10+0700\n"
+"PO-Revision-Date: 2024-05-13 07:11+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -27,7 +27,7 @@ msgstr "Chính"
 msgid "Sidebar"
 msgstr "Thanh bên"
 
-#: functions.php:116 hocwp/inc/class-hocwp-theme-utility.php:2232
+#: functions.php:116 hocwp/inc/class-hocwp-theme-utility.php:2238
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
@@ -846,9 +846,22 @@ msgstr "Hình ảnh"
 msgid "Mobile Logo"
 msgstr "Logo cho điện thoại"
 
+#: hocwp/admin/admin-setting-page-general.php:209
+#, php-format
+msgid ""
+"Sometimes your <a href=\"%s\" target=\"_blank\">website name</a> is too "
+"long, use your website's short name setting as an alternative in some cases."
+msgstr ""
+"Đôi khi <a href=\"%s\" target=\"_blank\">tên trang web</a> của bạn quá dài, "
+"sử dụng cài đặt tên trang web ngắn để thay thế cho một vài trường hợp."
+
+#: hocwp/admin/admin-setting-page-general.php:213
+msgid "Site Short Name"
+msgstr "Tên trang ngắn"
+
 #: hocwp/admin/admin-setting-page-home.php:6
-#: hocwp/inc/class-hocwp-theme-frontend.php:1200
 #: hocwp/inc/class-hocwp-theme-frontend.php:1202
+#: hocwp/inc/class-hocwp-theme-frontend.php:1204
 msgid "Home"
 msgstr "Trang chủ"
 
@@ -1418,7 +1431,7 @@ msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
 #: hocwp/admin/admin.php:474 hocwp/admin/admin.php:685
-#: hocwp/inc/class-hocwp-theme-frontend.php:1013
+#: hocwp/inc/class-hocwp-theme-frontend.php:1015
 msgid "Close"
 msgstr "Đóng"
 
@@ -2702,159 +2715,159 @@ msgstr ""
 "Gói mở rộng %1$s đã <strong>không còn được dùng nữa</strong> kể từ phiên bản "
 "%2$s và không có lựa chọn thay thế nào."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:498
+#: hocwp/inc/class-hocwp-theme-frontend.php:500
 msgid "Page navigation"
 msgstr "Điều hướng trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:516
+#: hocwp/inc/class-hocwp-theme-frontend.php:518
 msgid "Posts navigation"
 msgstr "Điều hướng bài viết"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:552
+#: hocwp/inc/class-hocwp-theme-frontend.php:554
 msgid "First"
 msgstr "Đầu"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:587
+#: hocwp/inc/class-hocwp-theme-frontend.php:589
 msgid "Last"
 msgstr "Cuối"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:599
+#: hocwp/inc/class-hocwp-theme-frontend.php:601
 msgid "Page [CURRENT]/[TOTAL]"
 msgstr "Trang [CURRENT]/[TOTAL]"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:698
+#: hocwp/inc/class-hocwp-theme-frontend.php:700
 #, php-format
 msgid "Check this out: %s"
 msgstr "Kiểm tra điều này: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:730
+#: hocwp/inc/class-hocwp-theme-frontend.php:732
 #: hocwp/inc/template-general.php:1686
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:778
+#: hocwp/inc/class-hocwp-theme-frontend.php:780
 #, php-format
 msgid "Category: %s"
 msgstr "Chuyên mục: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:784
+#: hocwp/inc/class-hocwp-theme-frontend.php:786
 #, php-format
 msgid "Tag: %s"
 msgstr "Thẻ: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:790
+#: hocwp/inc/class-hocwp-theme-frontend.php:792
 #, php-format
 msgid "Author: %s"
 msgstr "Tác giả: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:794
+#: hocwp/inc/class-hocwp-theme-frontend.php:796
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr "Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:797
+#: hocwp/inc/class-hocwp-theme-frontend.php:799
 #, php-format
 msgctxt "yearly archives"
 msgid "Year: %s"
 msgstr "Năm: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:800
+#: hocwp/inc/class-hocwp-theme-frontend.php:802
 msgctxt "monthly archives date format"
 msgid "F Y"
 msgstr "F Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:803
+#: hocwp/inc/class-hocwp-theme-frontend.php:805
 #, php-format
 msgctxt "monthly archives"
 msgid "Month: %s"
 msgstr "Tháng: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:806
+#: hocwp/inc/class-hocwp-theme-frontend.php:808
 msgctxt "daily archives date format"
 msgid "F j, Y"
 msgstr "F j, Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:809
+#: hocwp/inc/class-hocwp-theme-frontend.php:811
 #, php-format
 msgctxt "daily archives"
 msgid "Day: %s"
 msgstr "Ngày: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:814
+#: hocwp/inc/class-hocwp-theme-frontend.php:816
 msgctxt "post format archive title"
 msgid "Asides"
 msgstr "Bên lề"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:816
+#: hocwp/inc/class-hocwp-theme-frontend.php:818
 msgctxt "post format archive title"
 msgid "Galleries"
 msgstr "Bộ sưu tập"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:818
+#: hocwp/inc/class-hocwp-theme-frontend.php:820
 msgctxt "post format archive title"
 msgid "Images"
 msgstr "Hình ảnh"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:820
+#: hocwp/inc/class-hocwp-theme-frontend.php:822
 msgctxt "post format archive title"
 msgid "Videos"
 msgstr "Video"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:822
+#: hocwp/inc/class-hocwp-theme-frontend.php:824
 msgctxt "post format archive title"
 msgid "Quotes"
 msgstr "Trích dẫn"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:824
+#: hocwp/inc/class-hocwp-theme-frontend.php:826
 msgctxt "post format archive title"
 msgid "Links"
 msgstr "Liên kết"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:826
+#: hocwp/inc/class-hocwp-theme-frontend.php:828
 msgctxt "post format archive title"
 msgid "Statuses"
 msgstr "Trạng thái"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:828
+#: hocwp/inc/class-hocwp-theme-frontend.php:830
 msgctxt "post format archive title"
 msgid "Audio"
 msgstr "Âm thanh"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:830
+#: hocwp/inc/class-hocwp-theme-frontend.php:832
 msgctxt "post format archive title"
 msgid "Chats"
 msgstr "Trò chuyện"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:834
+#: hocwp/inc/class-hocwp-theme-frontend.php:836
 #, php-format
 msgctxt "post format archives"
 msgid "Post Format: %s"
 msgstr "Định dạng bài viết: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:840
+#: hocwp/inc/class-hocwp-theme-frontend.php:842
 #, php-format
 msgid "Archives: %s"
 msgstr "Lưu trữ: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:854
+#: hocwp/inc/class-hocwp-theme-frontend.php:856
 #, php-format
 msgid "Search results for: %s"
 msgstr "Kết quả tìm kiếm: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:856
+#: hocwp/inc/class-hocwp-theme-frontend.php:858
 msgid "Search results"
 msgstr "Kết quả tìm kiếm"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:863
+#: hocwp/inc/class-hocwp-theme-frontend.php:865
 msgid "Recent posts"
 msgstr "Bài viết gần đây"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:866
+#: hocwp/inc/class-hocwp-theme-frontend.php:868
 msgid "Archives"
 msgstr "Lưu trữ"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:997
+#: hocwp/inc/class-hocwp-theme-frontend.php:999
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website. By continuing to browse on this website, you accept the use of "
@@ -2864,7 +2877,7 @@ msgstr ""
 "truy cập trang web. Bằng cách tiếp tục truy cập trang web này, bạn chấp nhận "
 "cách sử dụng cookie cho các mục đích trên."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1000
+#: hocwp/inc/class-hocwp-theme-frontend.php:1002
 #, php-format
 msgid ""
 "We use cookies to give you the best possible website experience. <span>By "
@@ -2874,34 +2887,34 @@ msgstr ""
 "cập trang web. <span>Bằng cách sử dụng %s, bạn đồng ý với <a href=\"%s\">%s</"
 "a> của chúng tôi</span>."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1004
+#: hocwp/inc/class-hocwp-theme-frontend.php:1006
 msgid "Accept"
 msgstr "Chấp nhận"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1313
+#: hocwp/inc/class-hocwp-theme-frontend.php:1315
 msgid "Page not found"
 msgstr "Trang không được tìm thấy"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1524
+#: hocwp/inc/class-hocwp-theme-frontend.php:1526
 msgctxt "back to top"
 msgid "Top"
 msgstr "Lên trên"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1558
 #: hocwp/inc/class-hocwp-theme-frontend.php:1560
+#: hocwp/inc/class-hocwp-theme-frontend.php:1562
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1726
+#: hocwp/inc/class-hocwp-theme-frontend.php:1728
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr "<a href=\"%s\" class=\"read-more-link\">Xem thêm &rarr;</a>"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1819
+#: hocwp/inc/class-hocwp-theme-frontend.php:1821
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1823
+#: hocwp/inc/class-hocwp-theme-frontend.php:1825
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -2909,11 +2922,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1832
+#: hocwp/inc/class-hocwp-theme-frontend.php:1834
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1848
+#: hocwp/inc/class-hocwp-theme-frontend.php:1850
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
@@ -3139,346 +3152,346 @@ msgstr "%s trước"
 msgid "Invalid Forminator form data!"
 msgstr "Dữ liệu Forminator không đúng!"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:585
+#: hocwp/inc/class-hocwp-theme-utility.php:589
 msgid ""
 "An error has occurred, which probably means the feed is down. Try again "
 "later."
 msgstr "Đã có lỗi xảy ra, có thể luồng tin không hoạt động. Hãy thử lại sau."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1002
-#: hocwp/inc/class-hocwp-theme-utility.php:1013
+#: hocwp/inc/class-hocwp-theme-utility.php:1006
+#: hocwp/inc/class-hocwp-theme-utility.php:1017
 msgid "Monday"
 msgstr "Thứ hai"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1003
-#: hocwp/inc/class-hocwp-theme-utility.php:1016
+#: hocwp/inc/class-hocwp-theme-utility.php:1007
+#: hocwp/inc/class-hocwp-theme-utility.php:1020
 msgid "Tuesday"
 msgstr "Thứ ba"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1004
-#: hocwp/inc/class-hocwp-theme-utility.php:1019
+#: hocwp/inc/class-hocwp-theme-utility.php:1008
+#: hocwp/inc/class-hocwp-theme-utility.php:1023
 msgid "Wednesday"
 msgstr "Thứ tư"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1005
-#: hocwp/inc/class-hocwp-theme-utility.php:1022
+#: hocwp/inc/class-hocwp-theme-utility.php:1009
+#: hocwp/inc/class-hocwp-theme-utility.php:1026
 msgid "Thursday"
 msgstr "Thứ năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1006
-#: hocwp/inc/class-hocwp-theme-utility.php:1025
+#: hocwp/inc/class-hocwp-theme-utility.php:1010
+#: hocwp/inc/class-hocwp-theme-utility.php:1029
 msgid "Friday"
 msgstr "Thứ sáu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1007
-#: hocwp/inc/class-hocwp-theme-utility.php:1028
+#: hocwp/inc/class-hocwp-theme-utility.php:1011
+#: hocwp/inc/class-hocwp-theme-utility.php:1032
 msgid "Saturday"
 msgstr "Thứ bảy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1008
-#: hocwp/inc/class-hocwp-theme-utility.php:1031
+#: hocwp/inc/class-hocwp-theme-utility.php:1012
+#: hocwp/inc/class-hocwp-theme-utility.php:1035
 msgid "Sunday"
 msgstr "Chủ nhật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1044
+#: hocwp/inc/class-hocwp-theme-utility.php:1048
 msgid "All date"
 msgstr "Tất cả ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1045
+#: hocwp/inc/class-hocwp-theme-utility.php:1049
 msgid "Daily"
 msgstr "Hàng ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1046
+#: hocwp/inc/class-hocwp-theme-utility.php:1050
 msgid "Weekly"
 msgstr "Hàng tuần"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1047
+#: hocwp/inc/class-hocwp-theme-utility.php:1051
 msgid "Monthly"
 msgstr "Hàng tháng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1048
+#: hocwp/inc/class-hocwp-theme-utility.php:1052
 msgid "Yearly"
 msgstr "Hàng năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1401
+#: hocwp/inc/class-hocwp-theme-utility.php:1405
 msgid "-- Choose sidebar --"
 msgstr "-- Chọn sidebar --"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2058
+#: hocwp/inc/class-hocwp-theme-utility.php:2064
 msgctxt "custom post type"
 msgid "Add New"
 msgstr "Thêm mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2059
+#: hocwp/inc/class-hocwp-theme-utility.php:2065
 #, php-format
 msgctxt "cutom-post-type"
 msgid "Add New %s"
 msgstr "Thêm %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2060
+#: hocwp/inc/class-hocwp-theme-utility.php:2066
 #, php-format
 msgctxt "custom post type"
 msgid "Edit %s"
 msgstr "Chỉnh sửa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2061
+#: hocwp/inc/class-hocwp-theme-utility.php:2067
 #, php-format
 msgctxt "custom post type"
 msgid "New %s"
 msgstr "Tạo %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2062
-#: hocwp/inc/class-hocwp-theme-utility.php:2063
+#: hocwp/inc/class-hocwp-theme-utility.php:2068
+#: hocwp/inc/class-hocwp-theme-utility.php:2069
 #, php-format
 msgctxt "custom post type"
 msgid "View %s"
 msgstr "Xem %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2064
+#: hocwp/inc/class-hocwp-theme-utility.php:2070
 #, php-format
 msgctxt "custom post type"
 msgid "Search %s"
 msgstr "Tìm kiếm %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2065
+#: hocwp/inc/class-hocwp-theme-utility.php:2071
 #, php-format
 msgctxt "custom post type"
 msgid "No %s found."
 msgstr "Không tìm thấy %s."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2066
+#: hocwp/inc/class-hocwp-theme-utility.php:2072
 #, php-format
 msgctxt "custom post type"
 msgid "No %s found in Trash."
 msgstr "Không có %s nào trong thùng rác."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2067
+#: hocwp/inc/class-hocwp-theme-utility.php:2073
 #, php-format
 msgctxt "custom post type"
 msgid "Parent %s:"
 msgstr "Cha %s:"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2068
+#: hocwp/inc/class-hocwp-theme-utility.php:2074
 #, php-format
 msgctxt "custom post type"
 msgid "All %s"
 msgstr "Tất cả %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2069
+#: hocwp/inc/class-hocwp-theme-utility.php:2075
 #, php-format
 msgctxt "custom post type"
 msgid "%s Archives"
 msgstr "Lưu trữ %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2070
+#: hocwp/inc/class-hocwp-theme-utility.php:2076
 #, php-format
 msgctxt "custom post type"
 msgid "%s Attributes"
 msgstr "Thuộc tính %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2071
+#: hocwp/inc/class-hocwp-theme-utility.php:2077
 #, php-format
 msgctxt "custom post type"
 msgid "Insert into %s"
 msgstr "Thêm vào %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2072
+#: hocwp/inc/class-hocwp-theme-utility.php:2078
 #, php-format
 msgctxt "custom post type"
 msgid "Uploaded to this %s"
 msgstr "Được tải lên %s này"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2073
+#: hocwp/inc/class-hocwp-theme-utility.php:2079
 msgctxt "custom post type"
 msgid "Featured Image"
 msgstr "Ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2074
+#: hocwp/inc/class-hocwp-theme-utility.php:2080
 msgctxt "custom post type"
 msgid "Set featured image"
 msgstr "Thiết lập ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2075
+#: hocwp/inc/class-hocwp-theme-utility.php:2081
 msgctxt "custom post type"
 msgid "Remove featured image"
 msgstr "Xóa ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2076
+#: hocwp/inc/class-hocwp-theme-utility.php:2082
 msgctxt "custom post type"
 msgid "Use as featured image"
 msgstr "Sử dụng làm ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2077
+#: hocwp/inc/class-hocwp-theme-utility.php:2083
 #, php-format
 msgctxt "custom post type"
 msgid "Filter %s list"
 msgstr "Lọc danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2078
+#: hocwp/inc/class-hocwp-theme-utility.php:2084
 #, php-format
 msgctxt "custom post type"
 msgid "%s list navigation"
 msgstr "%s danh sách điều hướng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2079
+#: hocwp/inc/class-hocwp-theme-utility.php:2085
 #, php-format
 msgctxt "custom post type"
 msgid "%s list"
 msgstr "Danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2080
+#: hocwp/inc/class-hocwp-theme-utility.php:2086
 #, php-format
 msgctxt "custom post type"
 msgid "%s published."
 msgstr "%s đã được đăng."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2081
+#: hocwp/inc/class-hocwp-theme-utility.php:2087
 #, php-format
 msgctxt "custom post type"
 msgid "%s published privately."
 msgstr "%s đã được đăng riêng tư."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2082
+#: hocwp/inc/class-hocwp-theme-utility.php:2088
 #, php-format
 msgctxt "custom post type"
 msgid "%s reverted to draft."
 msgstr "%s đã được khôi phục từ thùng rác."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2083
+#: hocwp/inc/class-hocwp-theme-utility.php:2089
 #, php-format
 msgctxt "custom post type"
 msgid "%s scheduled."
 msgstr "%s đã được lên lịch."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2084
+#: hocwp/inc/class-hocwp-theme-utility.php:2090
 #, php-format
 msgctxt "custom post type"
 msgid "%s updated."
 msgstr "%s đã được cập nhật."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2101
+#: hocwp/inc/class-hocwp-theme-utility.php:2107
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Search %s"
 msgstr "Tìm kiếm %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2102
+#: hocwp/inc/class-hocwp-theme-utility.php:2108
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Popular %s"
 msgstr "%s phổ biến"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2103
+#: hocwp/inc/class-hocwp-theme-utility.php:2109
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "All %s"
 msgstr "Tất cả %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2104
+#: hocwp/inc/class-hocwp-theme-utility.php:2110
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s"
 msgstr "%s cha"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2105
+#: hocwp/inc/class-hocwp-theme-utility.php:2111
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s:"
 msgstr "%s cha:"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2106
+#: hocwp/inc/class-hocwp-theme-utility.php:2112
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Edit %s"
 msgstr "Chỉnh sửa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2107
+#: hocwp/inc/class-hocwp-theme-utility.php:2113
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "View %s"
 msgstr "Xem %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2108
+#: hocwp/inc/class-hocwp-theme-utility.php:2114
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Update %s"
 msgstr "Cập nhật %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2109
+#: hocwp/inc/class-hocwp-theme-utility.php:2115
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add New %s"
 msgstr "Thêm %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2110
+#: hocwp/inc/class-hocwp-theme-utility.php:2116
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "New %s Name"
 msgstr "Tạo tên %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2111
+#: hocwp/inc/class-hocwp-theme-utility.php:2117
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Separate %s with commas"
 msgstr "%s cách nhau bởi dấu phẩy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2112
+#: hocwp/inc/class-hocwp-theme-utility.php:2118
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add or remove %s"
 msgstr "Thêm hoặc xóa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2113
+#: hocwp/inc/class-hocwp-theme-utility.php:2119
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Choose from the most used %s"
 msgstr "Chọn từ danh sách %s được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2114
+#: hocwp/inc/class-hocwp-theme-utility.php:2120
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s found."
 msgstr "Không tìm thấy %s."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2115
+#: hocwp/inc/class-hocwp-theme-utility.php:2121
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s"
 msgstr "Không %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2116
+#: hocwp/inc/class-hocwp-theme-utility.php:2122
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list navigation"
 msgstr "Dach sách phân trang %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2117
+#: hocwp/inc/class-hocwp-theme-utility.php:2123
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list"
 msgstr "Danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2118
+#: hocwp/inc/class-hocwp-theme-utility.php:2124
 msgctxt "custom taxonomy term"
 msgid "Most Used"
 msgstr "Được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2119
+#: hocwp/inc/class-hocwp-theme-utility.php:2125
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr "&larr; Trở lại %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2568
+#: hocwp/inc/class-hocwp-theme-utility.php:2574
 msgid "Toggle menu"
 msgstr "Chuyển đổi menu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2588
+#: hocwp/inc/class-hocwp-theme-utility.php:2594
 #: hocwp/inc/template-general.php:928
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2605
+#: hocwp/inc/class-hocwp-theme-utility.php:2611
 msgid ""
 "The <strong>$sql_column</strong> argument just only contains MySQL query "
 "inside (), it isn't full MySQL query."
