@@ -396,7 +396,7 @@ jQuery(document).ready(function ($) {
         },
         carousel: function () {
             if ("function" === typeof Swiper) {
-                $(".hocwp-slider").each(function () {
+                $(".hocwp-slider").not(".custom-slider").each(function () {
                     let element = $(this),
                         params = {},
                         slidesPerView = parseInt(element.attr("data-slides-per-view")),
@@ -416,6 +416,13 @@ jQuery(document).ready(function ($) {
                             params.navigation = {
                                 nextEl: ".swiper-button-next",
                                 prevEl: ".swiper-button-prev",
+                            }
+                        }
+
+                        if (settings.scrollbar) {
+                            params.scrollbar = {
+                                el: ".swiper-scrollbar",
+                                draggable: true
                             }
                         }
 
