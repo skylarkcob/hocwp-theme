@@ -415,7 +415,7 @@ jQuery(document).ready(function ($) {
                         if (settings.arrows) {
                             params.navigation = {
                                 nextEl: ".swiper-button-next",
-                                prevEl: ".swiper-button-prev",
+                                prevEl: ".swiper-button-prev"
                             }
                         }
 
