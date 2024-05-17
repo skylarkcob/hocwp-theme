@@ -602,6 +602,16 @@ class HOCWP_Theme_Utility {
 		return $result;
 	}
 
+	private function sanitize_feed_item_category( $cat ) {
+		if ( is_object( $cat ) && isset( $cat->term ) ) {
+			$cat = $cat->term;
+		} elseif ( is_array( $cat ) && isset( $cat['term'] ) ) {
+			$cat = $cat['term'];
+		}
+
+		return $cat;
+	}
+
 	public function get_feed_items( $args = array() ) {
 		$items = $this->fetch_feed( $args );
 
@@ -624,6 +634,15 @@ class HOCWP_Theme_Utility {
 					$thumbnail = HT()->get_first_image_source( $content );
 				}
 
+				$cat = $item->get_category();
+				$cat = $this->sanitize_feed_item_category( $cat );
+
+				$cats = $item->get_categories();
+
+				if ( HT()->array_has_value( $cats ) ) {
+					$cats = array_map( array( $this, 'sanitize_feed_item_category' ), $cats );
+				}
+
 				/** @noinspection PhpUndefinedMethodInspection */
 				$value = array(
 					'permalink'   => $item->get_permalink(),
@@ -631,8 +650,13 @@ class HOCWP_Theme_Utility {
 					'date'        => $item->get_date(),
 					'image_url'   => $thumbnail,
 					'description' => $description,
-					'content'     => $content
+					'content'     => $content,
+					'modified'    => $item->get_updated_date(),
+					'category'    => $cat,
+					'categories'  => $cats
 				);
+
+				$value = apply_filters( 'hocwp_theme_feed_item_data', $value, $item, $args );
 
 				$result[] = $value;
 			}

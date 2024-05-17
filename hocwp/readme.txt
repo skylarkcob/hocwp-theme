@@ -10,6 +10,7 @@
 * 12/05/2024: Add util function to detect is_email prevent error by using default function.
 * 13/05/2024: Add site short name in general theme settings for some cases.
 * 17/05/2024: Update slider extension scrollbar, allow to exclude custom slider from default Swiper init.
+* 17/05/2024: Update function fetch feed item from WordPress RSS Feed URL.
 
 = 7.0.4 =
 * 21/12/2023: Add backward compatible if upgrade theme core on old theme.
