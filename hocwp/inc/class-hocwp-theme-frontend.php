@@ -213,6 +213,27 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		self::pagination( $args );
 	}
 
+	/**
+	 * Display pagination for custom list items.
+	 *
+	 * @param int $ppp Number of item per page.
+	 * @param int $paged Current paged.
+	 * @param array $lists List items to have pagination.
+	 * @param array $args Pagination arguments.
+	 *
+	 * @return void
+	 */
+	public function custom_pagination( $ppp, $paged, $lists = array(), $args = array() ) {
+		$defaults = array(
+			'posts_per_page' => $ppp,
+			'paged'          => $paged,
+			'query'          => $lists
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+		$this->pagination( $args );
+	}
+
 	public function pagination( $args = array() ) {
 		// Pass total page number to use for custom items array
 		if ( HT()->is_positive_number( $args ) ) {
