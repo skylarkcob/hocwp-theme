@@ -4,11 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! trait_exists( 'HOCWP_Theme_Utils' ) ) {
-	require_once dirname( __FILE__ ) . '/trail-utils.php';
+	require_once dirname( __FILE__ ) . '/trait-utils.php';
+}
+
+if ( ! trait_exists( 'HOCWP_Theme_Database' ) ) {
+	require_once dirname( __FILE__ ) . '/trait-database.php';
 }
 
 class HOCWP_Theme_Utility {
-	use HOCWP_Theme_Utils;
+	use HOCWP_Theme_Utils, HOCWP_Theme_Database;
 
 	protected static $_instance = null;
 
@@ -742,41 +746,6 @@ class HOCWP_Theme_Utility {
 		return $result;
 	}
 
-	public function export_database( $db_name = '', $destination = '' ) {
-		if ( ! function_exists( 'exec' ) ) {
-			return false;
-		}
-
-		if ( empty( $db_name ) ) {
-			$db_name = DB_NAME;
-		}
-
-		$name = $db_name;
-		$user = DB_USER;
-		$pass = DB_PASSWORD;
-
-		if ( stripos( PHP_OS, 'WIN' ) !== false ) {
-			$root = dirname( $_SERVER['DOCUMENT_ROOT'] );
-			$root = trailingslashit( $root ) . 'mysql/bin/mysqldump';
-		} else {
-			$root = 'mysqldump';
-		}
-
-		if ( empty( $destination ) ) {
-			$destination = trailingslashit( ABSPATH ) . $db_name . '.sql';
-		}
-
-		$cmd = $root . " -u$user -p$pass $name > $destination";
-
-		$res = call_user_func( 'exec', $cmd );
-
-		if ( '' == $res ) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public function zip_folder( $source, $destination ) {
 		if ( ! extension_loaded( 'zip' ) || ! file_exists( $source ) ) {
 			return false;
@@ -978,26 +947,6 @@ class HOCWP_Theme_Utility {
 		}
 
 		return $path;
-	}
-
-	public function get_min_max_meta( $meta_key, $type = 'min' ) {
-		$type = strtolower( $type );
-
-		global $wpdb;
-
-		$sql = "SELECT ";
-
-		if ( 'min' == $type ) {
-			$sql .= 'MIN';
-		} else {
-			$sql .= 'MAX';
-		}
-
-		$sql .= "(CAST(meta_value AS UNSIGNED)) FROM $wpdb->postmeta WHERE meta_key = '" . $meta_key . "'";
-
-		$number = absint( $wpdb->get_var( $sql ) );
-
-		return apply_filters( 'hocwp_theme_min_max_value', $number, $meta_key, $type );
 	}
 
 	public function timestamp_to_countdown( $timestamp ) {
@@ -1223,29 +1172,13 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_user_activation_key( $key, $user ) {
-		global $wp_hasher, $wpdb;
-
 		$user = $this->return_user( $user );
 
 		if ( ! ( $user instanceof WP_User ) ) {
 			return false;
 		}
 
-		if ( empty( $wp_hasher ) ) {
-			require_once ABSPATH . WPINC . '/class-phpass.php';
-			$wp_hasher = new PasswordHash( 8, true );
-		}
-
-		$hashed = time() . ':' . $wp_hasher->HashPassword( $key );
-
-		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array(
-			'user_login' => $user->user_login,
-			'ID'         => $user->ID
-		) );
-
-		$_SESSION['user_activation_key'] = $hashed;
-
-		return $hashed;
+		return $this->update_user_activation_key( $user, $key );
 	}
 
 	public function get_timezone() {
@@ -2620,87 +2553,6 @@ class HOCWP_Theme_Utility {
 		<?php
 	}
 
-	public function get_table_prefix() {
-		global $wpdb;
-
-		if ( is_multisite() ) {
-			return $wpdb->base_prefix;
-		} else {
-			return $wpdb->get_blog_prefix( 0 );
-		}
-	}
-
-	public function create_database_table( $table_name, $sql_column ) {
-		if ( str_contains( $sql_column, 'CREATE TABLE' ) || str_contains( $sql_column, 'create table' ) ) {
-			HT_Util()->doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );
-
-			return;
-		}
-
-		global $wpdb;
-
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
-			$charset_collate = '';
-
-			if ( ! empty( $wpdb->charset ) ) {
-				$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-			}
-
-			if ( ! empty( $wpdb->collate ) ) {
-				$charset_collate .= " COLLATE $wpdb->collate";
-			}
-
-			/** @noinspection SqlNoDataSourceInspection */
-			$sql = "CREATE TABLE ";
-			$sql .= "$table_name ( $sql_column ) $charset_collate;\n";
-
-			if ( ! function_exists( 'dbDelta' ) ) {
-				load_template( ABSPATH . 'wp-admin/includes/upgrade.php' );
-			}
-
-			dbDelta( $sql );
-		}
-	}
-
-	public function is_database_table_exists( $table_name ) {
-		global $wpdb;
-
-		if ( ! HT()->string_contain( $table_name, $wpdb->prefix ) ) {
-			$table_name = $wpdb->prefix . $table_name;
-		}
-
-		$result = $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" );
-
-		if ( empty( $result ) ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public function delete_transient( $transient_name = '' ) {
-		global $wpdb;
-
-		/** @noinspection SqlNoDataSourceInspection */
-		$query_root = "DELETE FROM $wpdb->options";
-		$query_root .= " WHERE option_name like %s";
-		$key_1      = '_transient_';
-		$key_2      = '_transient_timeout_';
-
-		if ( ! empty( $transient_name ) ) {
-			$transient_name = '%' . $transient_name . '%';
-
-			$key_1 .= $transient_name;
-			$key_2 .= $transient_name;
-		}
-
-		$key_1 = $wpdb->prepare( $query_root, $key_1 );
-		$key_2 = $wpdb->prepare( $query_root, $key_2 );
-
-		$wpdb->query( $key_1 );
-		$wpdb->query( $key_2 );
-	}
-
 	public function clear_div( $class = 'clearfix' ) {
 		printf( '<div class="clear %s"></div>', esc_attr( $class ) );
 	}
@@ -2763,7 +2615,7 @@ class HOCWP_Theme_Utility {
 		if ( ! is_dir( $plugin_dir ) ) {
 			return false;
 		} else {
-			$files = scandir( $plugin_dir );
+			$files = HT()->scandir( $plugin_dir );
 
 			foreach ( $files as $file ) {
 				if ( '.' !== $file && '..' !== $file ) {
@@ -2834,7 +2686,7 @@ class HOCWP_Theme_Utility {
 			}
 
 			if ( is_dir( $plugin_dir ) ) {
-				$files = scandir( $plugin_dir );
+				$files = HT()->scandir( $plugin_dir );
 
 				foreach ( $files as $file ) {
 					if ( '.' !== $file && '..' !== $file ) {

@@ -1796,6 +1796,8 @@ final class HOCWP_Theme_HTML_Field {
                     </div>
 					<?php
 				}
+
+				do_action( 'hocwp_theme_field_fields', $args );
 				?>
             </div>
 			<?php

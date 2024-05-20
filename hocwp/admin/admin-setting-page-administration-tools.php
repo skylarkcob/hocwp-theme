@@ -7,6 +7,8 @@ if ( ! current_user_can( 'manage_options' ) ) {
 	return;
 }
 
+global $wpdb;
+
 $tab = new HOCWP_Theme_Admin_Setting_Tab( 'administration_tools', __( 'Administration Tools', 'hocwp-theme' ), '<span class="dashicons dashicons-admin-tools"></span>', array(), 99999 );
 
 $tab->submit_button = false;
@@ -407,6 +409,69 @@ $args = array(
 );
 
 $tab->add_field( 'imports', __( 'Import', 'hocwp-theme' ), 'fields', $args, 'string', 'import_export' );
+
+$results = $wpdb->get_col( "SHOW DATABASES" );
+
+$results = array_combine( $results, $results );
+
+$args = array(
+	'fields' => array(
+		'db_name'       => array(
+			'callback' => 'select',
+			'title'    => __( 'Choose Database:', 'hocwp-theme' ),
+			'args'     => array(
+				'options' => $results
+			)
+		),
+		'db_file'       => array(
+			'callback' => 'file_upload',
+			'title'    => __( 'Database File:', 'hocwp-theme' ),
+			'args'     => array(
+				'class' => 'widefat'
+			)
+		),
+		'inlines_field' => array(
+			'callback' => 'inline_fields',
+			'args'     => array(
+				'fields' => array(
+					'export' => array(
+						'callback' => 'button',
+						'args'     => array(
+							'attributes'  => array(
+								'data-ajax-button'     => 1,
+								'data-message'         => __( 'Database has been exported!', 'hocwp-theme' ),
+								'data-confirm-message' => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+								'data-export-database' => 1,
+								'aria-label'           => __( 'Export', 'hocwp-theme' )
+							),
+							'button_type' => 'button',
+							'type'        => 'default',
+							'text'        => __( 'Export', 'hocwp-theme' )
+						)
+					),
+					'import' => array(
+						'callback' => 'button',
+						'args'     => array(
+							'attributes'  => array(
+								'data-ajax-button'     => 1,
+								'data-message'         => __( 'Database has been imported!', 'hocwp-theme' ),
+								'data-confirm-message' => __( 'Please make a backup before you do this action.', 'hocwp-theme' ),
+								'data-import-database' => 1,
+								'aria-label'           => __( 'Import', 'hocwp-theme' ),
+								'data-db-name'         => DB_NAME,
+								'data-same-db-text'    => __( 'You are about to import data into an active database, are you sure you want to continue?', 'hocwp-theme' )
+							),
+							'button_type' => 'button',
+							'text'        => __( 'Import', 'hocwp-theme' )
+						)
+					)
+				)
+			)
+		)
+	)
+);
+
+$tab->add_field( 'ie_database', __( 'Databases', 'hocwp-theme' ), 'fields', $args, 'string', 'import_export' );
 
 $args = array(
 	'title'       => __( 'Database Optimize', 'hocwp-theme' ),

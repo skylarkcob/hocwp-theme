@@ -312,7 +312,7 @@ class HOCWP_Theme_Extension_Controller {
 
 		foreach ( $paths as $path ) {
 			if ( is_dir( $path ) ) {
-				$tmp = scandir( $path );
+				$tmp = HT()->scandir( $path );
 
 				foreach ( $tmp as $key => $file ) {
 					if ( '.' != $file && '..' != $file ) {

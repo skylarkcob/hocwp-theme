@@ -238,7 +238,7 @@ function hocwp_theme_page_templates( $post_templates ) {
 	$dir = HT_Custom()->get_path( 'page-templates' );
 
 	if ( HT()->is_dir( $dir ) ) {
-		$files = scandir( $dir );
+		$files = HT()->scandir( $dir );
 
 		foreach ( $files as $file ) {
 			$info = pathinfo( $file );

@@ -556,3 +556,61 @@ function hocwp_theme_fetch_administrative_boundaries_ajax_callback() {
 
 add_action( 'wp_ajax_fetch_administrative_boundaries', 'hocwp_theme_fetch_administrative_boundaries_ajax_callback' );
 add_action( 'wp_ajax_nopriv_fetch_administrative_boundaries', 'hocwp_theme_fetch_administrative_boundaries_ajax_callback' );
+
+// Export database
+add_action( 'wp_ajax_hocwp_theme_export_database', function () {
+	$data = array();
+
+	$database = $_POST['database'] ?? '';
+
+	if ( ! empty( $database ) ) {
+		$dir = trailingslashit( WP_CONTENT_DIR ) . 'backups/databases/';
+
+		if ( ! is_dir( $dir ) ) {
+			$dir = mkdir( $dir, 0777, true );
+		}
+
+		$dir .= $database . '_' . date( 'Ymd_Hi', current_time( 'timestamp' ) ) . '.sql';
+		HT_Util()->export_database( $database, $dir );
+
+		if ( file_exists( $dir ) ) {
+			$data['message'] = sprintf( __( 'Database "%s" has been exported successfully.', 'hocwp-theme' ), $database );
+			wp_send_json_success( $data );
+		} else {
+			$data['message'] = __( 'Cannot export database, please try again later.', 'hocwp-theme' );
+		}
+	} else {
+		$data['message'] = __( 'Please select a database name first.', 'hocwp-theme' );
+	}
+
+	wp_send_json_error( $data );
+} );
+
+// Import database
+add_action( 'wp_ajax_hocwp_theme_import_database', function () {
+	$data = array();
+
+	$file = $_POST['file'] ?? '';
+
+	if ( HT_Media()->exists( $file ) ) {
+		$database = $_POST['database'] ?? '';
+
+		if ( ! empty( $database ) ) {
+			$res = HT_Util()->import_database( get_attached_file( $file ), $database );
+
+			if ( $res instanceof WP_Error ) {
+				$data['message'] = $res->get_error_message();
+			} elseif ( $res ) {
+				wp_send_json_success( $data );
+			} else {
+				$data['message'] = __( 'Cannot import database, please try again later.', 'hocwp-theme' );
+			}
+		} else {
+			$data['message'] = __( 'Please select a database name first.', 'hocwp-theme' );
+		}
+	} else {
+		$data['message'] = __( 'Invalid database file.', 'hocwp-theme' );
+	}
+
+	wp_send_json_error( $data );
+} );

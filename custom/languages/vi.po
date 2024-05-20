@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2024-05-13 07:10+0700\n"
-"PO-Revision-Date: 2024-05-13 07:11+0700\n"
+"POT-Creation-Date: 2024-05-21 04:55+0700\n"
+"PO-Revision-Date: 2024-05-21 05:01+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -27,76 +27,76 @@ msgstr "Chính"
 msgid "Sidebar"
 msgstr "Thanh bên"
 
-#: functions.php:116 hocwp/inc/class-hocwp-theme-utility.php:2238
+#: functions.php:116 hocwp/inc/class-hocwp-theme-utility.php:2195
 msgid "Add widgets here."
 msgstr "Thêm widget vào chỗ này."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:10
+#: hocwp/admin/admin-setting-page-administration-tools.php:12
 msgid "Administration Tools"
 msgstr "Công cụ quản trị"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:18
+#: hocwp/admin/admin-setting-page-administration-tools.php:20
 msgid "Themes:"
 msgstr "Giao diện:"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:22
+#: hocwp/admin/admin-setting-page-administration-tools.php:24
 msgid "Plugins:"
 msgstr "Plugin:"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:26
+#: hocwp/admin/admin-setting-page-administration-tools.php:28
 msgid "Databases:"
 msgstr "Cơ sở dữ liệu:"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:34
+#: hocwp/admin/admin-setting-page-administration-tools.php:36
 msgid "Are you sure?"
 msgstr "Bạn chắc chứ?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:36
-#: hocwp/admin/admin-setting-page-administration-tools.php:39
+#: hocwp/admin/admin-setting-page-administration-tools.php:38
+#: hocwp/admin/admin-setting-page-administration-tools.php:41
 msgid "Download"
 msgstr "Tải về"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:45
+#: hocwp/admin/admin-setting-page-administration-tools.php:47
 msgid "Download Theme & Plugin"
 msgstr "Tải giao diện & plugin"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:48
+#: hocwp/admin/admin-setting-page-administration-tools.php:50
 msgid "Update Administrative Email"
 msgstr "Cập nhật email quản trị"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:49
+#: hocwp/admin/admin-setting-page-administration-tools.php:51
 msgid "Changing admin email address does not require confirmation."
 msgstr "Thay đổi địa chỉ email quản trị không cần xác nhận."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:54
+#: hocwp/admin/admin-setting-page-administration-tools.php:56
 msgid "New Email"
 msgstr "Địa chỉ email mới"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:61
+#: hocwp/admin/admin-setting-page-administration-tools.php:63
 msgid "Admin email has been changed successfully!"
 msgstr "Địa chỉ email quản trị đã được cập nhật thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:63
-#: hocwp/admin/admin-setting-page-administration-tools.php:66
+#: hocwp/admin/admin-setting-page-administration-tools.php:65
+#: hocwp/admin/admin-setting-page-administration-tools.php:68
 #: hocwp/admin/admin.php:684
 msgid "Change"
 msgstr "Thay đổi"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:71
+#: hocwp/admin/admin-setting-page-administration-tools.php:73
 msgid "Testing email has been sent successfully!"
 msgstr "Email thử đã được gửi đi thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:73
-#: hocwp/admin/admin-setting-page-administration-tools.php:76
+#: hocwp/admin/admin-setting-page-administration-tools.php:75
+#: hocwp/admin/admin-setting-page-administration-tools.php:78
 msgid "Send Test Email"
 msgstr "Gửi email thử"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:81
+#: hocwp/admin/admin-setting-page-administration-tools.php:83
 msgid "New admin user and email has been changed successfully!"
 msgstr ""
 "Tài khoản quản trị viên mới và địa chỉ email quản trị đã được đổi thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:82
+#: hocwp/admin/admin-setting-page-administration-tools.php:84
 msgid ""
 "A new admin account will be created to replace the old one, and the site's "
 "admin email address will be updated. Please make a backup before doing this."
@@ -105,42 +105,42 @@ msgstr ""
 "nhật địa chỉ email quản trị của trang. Xin vui lòng thực hiện sao lưu trước "
 "khi thực hiện thao tác này."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:84
-#: hocwp/admin/admin-setting-page-administration-tools.php:88
+#: hocwp/admin/admin-setting-page-administration-tools.php:86
+#: hocwp/admin/admin-setting-page-administration-tools.php:90
 msgid "Create New Admin"
 msgstr "Tạo quản trị viên mới"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:96
-#: hocwp/admin/admin-setting-page-administration-tools.php:111
+#: hocwp/admin/admin-setting-page-administration-tools.php:98
+#: hocwp/admin/admin-setting-page-administration-tools.php:113
 msgid "Change URL"
 msgstr "Thay đổi đường dẫn"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:97
+#: hocwp/admin/admin-setting-page-administration-tools.php:99
 msgid "Change all old URLs in database into new URL."
 msgstr "Thay đổi tất cả đường dẫn cũ trong cơ sở dữ liệu thành đường dẫn mới."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:102
+#: hocwp/admin/admin-setting-page-administration-tools.php:104
 msgid "Old URL"
 msgstr "Đường dẫn cũ"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:103
+#: hocwp/admin/admin-setting-page-administration-tools.php:105
 msgid "New URL"
 msgstr "Đường dẫn mới"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:108
+#: hocwp/admin/admin-setting-page-administration-tools.php:110
 msgid "All URLs have been changed successfully!"
 msgstr "Tất cả đường dẫn đã được thay đổi thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:109
+#: hocwp/admin/admin-setting-page-administration-tools.php:111
 msgid "Please make a backup before you change site URL."
 msgstr ""
 "Vui lòng thực hiện sao lưu trước khi tiến hành thay đổi đường dẫn trang web."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:119
+#: hocwp/admin/admin-setting-page-administration-tools.php:121
 msgid "Cloudflare API"
 msgstr "Cloudflare API Key"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:120
+#: hocwp/admin/admin-setting-page-administration-tools.php:122
 msgid ""
 "Cloudflare's API exposes the entire Cloudflare infrastructure via a "
 "standardized programmatic interface. Using Cloudflare's API, you can do just "
@@ -151,7 +151,7 @@ msgstr ""
 "làm bất cứ điều gì bạn có thể làm trên Cloudflare thông qua bảng điều khiển "
 "khách hàng."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:127
+#: hocwp/admin/admin-setting-page-administration-tools.php:129
 msgid ""
 "If you enter a API Token, you do not need to provide your API Key and email "
 "address below."
@@ -159,11 +159,11 @@ msgstr ""
 "Nếu bạn nhập mã API Token, bạn không cần phải cung cấp API Key và địa chỉ "
 "email bên dưới."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:130
+#: hocwp/admin/admin-setting-page-administration-tools.php:132
 msgid "Cloudflare API Token"
 msgstr "Cloudflare API Token"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:132
+#: hocwp/admin/admin-setting-page-administration-tools.php:134
 msgid ""
 "If you are not using API Token then you must provide API Key and email "
 "address."
@@ -171,92 +171,92 @@ msgstr ""
 "Nếu bạn không sử dụng API Token thì bạn phải cung cấp cả API Key và địa chỉ "
 "email."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:134
+#: hocwp/admin/admin-setting-page-administration-tools.php:136
 msgid "Cloudflare API Key"
 msgstr "Cloudflare API Key"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:138
+#: hocwp/admin/admin-setting-page-administration-tools.php:140
 msgid "Cloudflare User Email"
 msgstr "Cloudflare User Email"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:142
+#: hocwp/admin/admin-setting-page-administration-tools.php:144
 msgid "Cloudflare Account ID"
 msgstr "Cloudflare Account ID"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:143
+#: hocwp/admin/admin-setting-page-administration-tools.php:145
 msgid "Cloudflare Zone ID"
 msgstr "Cloudflare Zone ID"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:144
+#: hocwp/admin/admin-setting-page-administration-tools.php:146
 msgid "Cloudflare Domain"
 msgstr "Tên miền Cloudflare"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:151
+#: hocwp/admin/admin-setting-page-administration-tools.php:153
 #: hocwp/admin/ajax-administration-tools.php:335
 msgid "All cache files have been deleted successfully!"
 msgstr "Tất cả các tập tin cache đã được xóa thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:153
-#: hocwp/admin/admin-setting-page-administration-tools.php:432
-#: hocwp/admin/admin-setting-page-administration-tools.php:435
+#: hocwp/admin/admin-setting-page-administration-tools.php:155
+#: hocwp/admin/admin-setting-page-administration-tools.php:497
+#: hocwp/admin/admin-setting-page-administration-tools.php:500
 #: hocwp/admin/views/admin-delete-posts.php:147
 msgid "Delete"
 msgstr "Xóa"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:156
+#: hocwp/admin/admin-setting-page-administration-tools.php:158
 msgid "Purge Cache"
 msgstr "Xóa cache"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:161
+#: hocwp/admin/admin-setting-page-administration-tools.php:163
 msgid "Development Mode has been enabled successfully!"
 msgstr "Chế độ đang phát triển đã được bật thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:163
-#: hocwp/admin/admin-setting-page-administration-tools.php:166
+#: hocwp/admin/admin-setting-page-administration-tools.php:165
+#: hocwp/admin/admin-setting-page-administration-tools.php:168
 msgid "Enable Development Mode"
 msgstr "Bật chế độ phát triển"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:174
+#: hocwp/admin/admin-setting-page-administration-tools.php:176
 msgid "Install and set up the popular useful options on Cloudflare."
 msgstr "Cài đặt và thiết lập các tùy chọn hữu ích phổ biến trên Cloudflare."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:177
+#: hocwp/admin/admin-setting-page-administration-tools.php:179
 msgid "Cloudflare Settings"
 msgstr "Cài đặt Cloudflare"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:181
+#: hocwp/admin/admin-setting-page-administration-tools.php:183
 msgctxt "cloudflare ssl"
 msgid "Off (not secure)"
 msgstr "Tắt (không an toàn)"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:182
+#: hocwp/admin/admin-setting-page-administration-tools.php:184
 msgctxt "cloudflare ssl"
 msgid "Flexible"
 msgstr "Linh hoạt"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:183
+#: hocwp/admin/admin-setting-page-administration-tools.php:185
 msgctxt "cloudflare ssl"
 msgid "Full"
 msgstr "Đầy đủ"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:184
+#: hocwp/admin/admin-setting-page-administration-tools.php:186
 msgctxt "cloudflare ssl"
 msgid "Full (strict)"
 msgstr "Đầy đủ (nghiêm ngặt)"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:192
+#: hocwp/admin/admin-setting-page-administration-tools.php:194
 msgid "SSL/TLS"
 msgstr "SSL/TLS"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:196
+#: hocwp/admin/admin-setting-page-administration-tools.php:198
 msgid "Redirect all requests with scheme \"http\" to \"https\"."
 msgstr "Chuyển hướng tất cả các yêu cầu với lược đồ \"http\" thành \"https\"."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:203
+#: hocwp/admin/admin-setting-page-administration-tools.php:205
 msgid "Always Use HTTPS"
 msgstr "Luôn luôn dùng HTTPS"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:207
+#: hocwp/admin/admin-setting-page-administration-tools.php:209
 msgid ""
 "Automatic HTTPS Rewrites helps fix mixed content by changing \"http\" to "
 "\"https\" for all resources or links on your web site that can be served "
@@ -266,11 +266,11 @@ msgstr ""
 "thành \"https\" cho tất cả các tài nguyên hoặc liên kết trên trang web của "
 "bạn có thể được phân phát với HTTPS."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:214
+#: hocwp/admin/admin-setting-page-administration-tools.php:216
 msgid "Automatic HTTPS Rewrites"
 msgstr "Ghi lại HTTPS tự động"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:218
+#: hocwp/admin/admin-setting-page-administration-tools.php:220
 msgid ""
 "Early Hints allows browsers to preload linked assets before they see a 200 "
 "OK or other final response from the origin."
@@ -278,57 +278,57 @@ msgstr ""
 "Gợi ý sớm cho phép trình duyệt tải trước nội dung được liên kết trước khi họ "
 "thấy trạng thái 200 OK hoặc phản hồi cuối cùng khác từ nguồn gốc."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:225
+#: hocwp/admin/admin-setting-page-administration-tools.php:227
 msgid "Early Hints"
 msgstr "Gợi ý sớm"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:229
+#: hocwp/admin/admin-setting-page-administration-tools.php:231
 msgid "Improve the paint time for pages which include JavaScript."
 msgstr "Cải thiện thời gian tải cho các trang bao gồm JavaScript."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:236
+#: hocwp/admin/admin-setting-page-administration-tools.php:238
 msgid "Rocket Loader"
 msgstr "Tải tên lửa"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:240
+#: hocwp/admin/admin-setting-page-administration-tools.php:242
 msgid ""
 "Keep your website online for visitors when your origin server is unavailable."
 msgstr ""
 "Giữ cho trang web của bạn luôn trực tuyến đối với khách truy cập ngay cả khi "
 "server không hoạt động."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:247
+#: hocwp/admin/admin-setting-page-administration-tools.php:249
 msgid "Always Online"
 msgstr "Luôn luôn trực tuyến"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:254
+#: hocwp/admin/admin-setting-page-administration-tools.php:256
 msgid "All settings have been fetched successfully!"
 msgstr "Tất cả các cài đặt đã được lấy thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:258
-#: hocwp/admin/admin-setting-page-administration-tools.php:261
+#: hocwp/admin/admin-setting-page-administration-tools.php:260
+#: hocwp/admin/admin-setting-page-administration-tools.php:263
 msgid "Fetch Settings"
 msgstr "Lấy cài đặt"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:266
+#: hocwp/admin/admin-setting-page-administration-tools.php:268
 msgid "All settings have been updated successfully!"
 msgstr "Tất cả cài đặt đã được cập nhật thành công!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:270
-#: hocwp/admin/admin-setting-page-administration-tools.php:274
+#: hocwp/admin/admin-setting-page-administration-tools.php:272
+#: hocwp/admin/admin-setting-page-administration-tools.php:276
 msgid "Update Settings"
 msgstr "Cập nhật cài đặt"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:282
+#: hocwp/admin/admin-setting-page-administration-tools.php:284
 msgid "Import & Export"
 msgstr "Nhập & Xuất"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:283
+#: hocwp/admin/admin-setting-page-administration-tools.php:285
 msgid "Import and export theme settings or any options in database."
 msgstr ""
 "Nhập và xuất cài đặt giao diện hoặc bất kỳ option nào trong cơ sở dữ liệu."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:295
+#: hocwp/admin/admin-setting-page-administration-tools.php:297
 msgid ""
 "Copy the setting value and fill in the data entry box to import into the "
 "database when needed."
@@ -336,87 +336,121 @@ msgstr ""
 "Sao chép lại giá trị cài đặt và điền vào ô nhập dữ liệu để nhập vào cơ sở dữ "
 "liệu khi cần."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:298
+#: hocwp/admin/admin-setting-page-administration-tools.php:300
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:749
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:771
 #: hocwp/inc/setup-after.php:162 hocwp/inc/setup-after.php:656
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:304
-#: hocwp/admin/admin-setting-page-administration-tools.php:351
+#: hocwp/admin/admin-setting-page-administration-tools.php:306
+#: hocwp/admin/admin-setting-page-administration-tools.php:353
 msgid "Option name:"
 msgstr "Tên option:"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:315
+#: hocwp/admin/admin-setting-page-administration-tools.php:317
 msgid "Please enter option name to fetch value."
 msgstr "Vui lòng nhập tên option để lấy giá trị."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:316
+#: hocwp/admin/admin-setting-page-administration-tools.php:318
 msgid "Data has been fetched!"
 msgstr "Dữ liệu đã được lấy!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:317
-#: hocwp/admin/admin-setting-page-administration-tools.php:331
-#: hocwp/admin/admin-setting-page-administration-tools.php:370
-#: hocwp/admin/admin-setting-page-administration-tools.php:385
-#: hocwp/admin/admin-setting-page-administration-tools.php:430
-#: hocwp/admin/admin-setting-page-administration-tools.php:441
+#: hocwp/admin/admin-setting-page-administration-tools.php:319
+#: hocwp/admin/admin-setting-page-administration-tools.php:333
+#: hocwp/admin/admin-setting-page-administration-tools.php:372
+#: hocwp/admin/admin-setting-page-administration-tools.php:387
+#: hocwp/admin/admin-setting-page-administration-tools.php:443
+#: hocwp/admin/admin-setting-page-administration-tools.php:458
+#: hocwp/admin/admin-setting-page-administration-tools.php:495
+#: hocwp/admin/admin-setting-page-administration-tools.php:506
 msgid "Please make a backup before you do this action."
 msgstr "Vui lòng tạo bản sao lưu trước khi thực hiện hành động này."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:319
-#: hocwp/admin/admin-setting-page-administration-tools.php:322
+#: hocwp/admin/admin-setting-page-administration-tools.php:321
+#: hocwp/admin/admin-setting-page-administration-tools.php:324
 msgid "Fetch"
 msgstr "Lấy"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:330
+#: hocwp/admin/admin-setting-page-administration-tools.php:332
 msgid "Settings have been exported!"
 msgstr "Cài đặt đã được xuất!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:333
-#: hocwp/admin/admin-setting-page-administration-tools.php:336
-#: hocwp/admin/admin-setting-page-administration-tools.php:345
+#: hocwp/admin/admin-setting-page-administration-tools.php:335
+#: hocwp/admin/admin-setting-page-administration-tools.php:338
+#: hocwp/admin/admin-setting-page-administration-tools.php:347
+#: hocwp/admin/admin-setting-page-administration-tools.php:445
+#: hocwp/admin/admin-setting-page-administration-tools.php:449
 msgid "Export"
 msgstr "Xuất"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:355
+#: hocwp/admin/admin-setting-page-administration-tools.php:357
 msgid "Option value:"
 msgstr "Giá trị option:"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:369
+#: hocwp/admin/admin-setting-page-administration-tools.php:371
 msgid "Settings have been loaded!"
 msgstr "Cài đặt đã được tải!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:372
+#: hocwp/admin/admin-setting-page-administration-tools.php:374
 msgid "Load Settings"
 msgstr "Tải cài đặt"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:376
+#: hocwp/admin/admin-setting-page-administration-tools.php:378
 msgid "Load settings"
 msgstr "Tải cài đặt"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:384
+#: hocwp/admin/admin-setting-page-administration-tools.php:386
 msgid "Settings have been imported!"
 msgstr "Cài đặt đã được nhập!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:387
-#: hocwp/admin/admin-setting-page-administration-tools.php:390
-#: hocwp/admin/admin-setting-page-administration-tools.php:409
-#: hocwp/admin/admin-setting-page-administration-tools.php:498
-#: hocwp/admin/admin-setting-page-administration-tools.php:501
+#: hocwp/admin/admin-setting-page-administration-tools.php:389
+#: hocwp/admin/admin-setting-page-administration-tools.php:392
+#: hocwp/admin/admin-setting-page-administration-tools.php:411
+#: hocwp/admin/admin-setting-page-administration-tools.php:460
+#: hocwp/admin/admin-setting-page-administration-tools.php:465
+#: hocwp/admin/admin-setting-page-administration-tools.php:563
+#: hocwp/admin/admin-setting-page-administration-tools.php:566
 msgid "Import"
 msgstr "Nhập"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:412
+#: hocwp/admin/admin-setting-page-administration-tools.php:421
+msgid "Choose Database:"
+msgstr "Chọn cơ sở dữ liệu:"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:428
+msgid "Database File:"
+msgstr "Tập tin cơ sở dữ liệu:"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:442
+msgid "Database has been exported!"
+msgstr "Cơ sở dữ liệu đã được xuất xong!"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:457
+msgid "Database has been imported!"
+msgstr "Cơ sở dữ liệu đã được nhập xong!"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:462
+msgid ""
+"You are about to import data into an active database, are you sure you want "
+"to continue?"
+msgstr ""
+"Bạn đang chuẩn bị nhập dữ liệu vào cơ sở dữ liệu đang hoạt động, bạn có chắc "
+"là mình muốn tiếp tục chứ?"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:474
+msgid "Databases"
+msgstr "Cơ sở dữ liệu"
+
+#: hocwp/admin/admin-setting-page-administration-tools.php:477
 msgid "Database Optimize"
 msgstr "Tối ưu cơ sở dữ liệu"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:413
+#: hocwp/admin/admin-setting-page-administration-tools.php:478
 msgid "Update database, remove transients and more."
 msgstr "Cập nhật cơ sở dữ liệu, xóa transient và nhiều hơn thế nữa."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:419
+#: hocwp/admin/admin-setting-page-administration-tools.php:484
 msgid ""
 "Enter the transient name you want to delete, all transients will be deleted "
 "if this field is empty."
@@ -424,58 +458,58 @@ msgstr ""
 "Nhập vào tên transient mà bạn muốn xóa, tất cả các transient sẽ được xóa nếu "
 "bạn để trống mục này."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:422
+#: hocwp/admin/admin-setting-page-administration-tools.php:487
 msgid "Remove Transients"
 msgstr "Xóa transient"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:429
+#: hocwp/admin/admin-setting-page-administration-tools.php:494
 msgid "Transients have been removed!"
 msgstr "Tất cả transient đã được xóa!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:440
+#: hocwp/admin/admin-setting-page-administration-tools.php:505
 msgid "Expired transients have been removed!"
 msgstr "Tất cả transient hết hạn đã được xóa!"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:444
-#: hocwp/admin/admin-setting-page-administration-tools.php:447
+#: hocwp/admin/admin-setting-page-administration-tools.php:509
+#: hocwp/admin/admin-setting-page-administration-tools.php:512
 msgid "Delete Expired"
 msgstr "Xóa hết hạn"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:455
+#: hocwp/admin/admin-setting-page-administration-tools.php:520
 msgid "Vietnamese Administrative Boundaries"
 msgstr "Địa giới hành chính Việt Nam"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:456
+#: hocwp/admin/admin-setting-page-administration-tools.php:521
 msgid ""
 "Import information about Vietnamese administrative boundaries into the "
 "database automatically."
 msgstr "Nhập dữ liệu địa giới hành chính Việt Nam vào cơ sở dữ liệu."
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:463
+#: hocwp/admin/admin-setting-page-administration-tools.php:528
 msgid "Import the administrative boundary at the district level?"
 msgstr "Nhập dữ liệu địa giới hành chính cấp quận huyện?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:466
+#: hocwp/admin/admin-setting-page-administration-tools.php:531
 msgid "District"
 msgstr "Quận huyện"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:470
+#: hocwp/admin/admin-setting-page-administration-tools.php:535
 msgid "Import the administrative boundary at the commune level?"
 msgstr "Nhập dữ liệu địa giới hành chính cấp phường xã?"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:473
+#: hocwp/admin/admin-setting-page-administration-tools.php:538
 msgid "Commune"
 msgstr "Phường xã"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:478
+#: hocwp/admin/admin-setting-page-administration-tools.php:543
 msgid "Choose taxonomy"
 msgstr "Chọn loại chuyên mục"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:491
+#: hocwp/admin/admin-setting-page-administration-tools.php:556
 msgid "Taxonomy"
 msgstr "Loại chuyên mục"
 
-#: hocwp/admin/admin-setting-page-administration-tools.php:496
+#: hocwp/admin/admin-setting-page-administration-tools.php:561
 msgid "Data has been imported successfully!"
 msgstr "Dữ liệu đã được nhập thành công!"
 
@@ -860,8 +894,8 @@ msgid "Site Short Name"
 msgstr "Tên trang ngắn"
 
 #: hocwp/admin/admin-setting-page-home.php:6
-#: hocwp/inc/class-hocwp-theme-frontend.php:1202
-#: hocwp/inc/class-hocwp-theme-frontend.php:1204
+#: hocwp/inc/class-hocwp-theme-frontend.php:1223
+#: hocwp/inc/class-hocwp-theme-frontend.php:1225
 msgid "Home"
 msgstr "Trang chủ"
 
@@ -1431,7 +1465,7 @@ msgid "Running backup..."
 msgstr "Đang chạy sao lưu..."
 
 #: hocwp/admin/admin.php:474 hocwp/admin/admin.php:685
-#: hocwp/inc/class-hocwp-theme-frontend.php:1015
+#: hocwp/inc/class-hocwp-theme-frontend.php:1036
 msgid "Close"
 msgstr "Đóng"
 
@@ -1466,7 +1500,7 @@ msgstr "Chọn trạng thái bài viết"
 
 #: hocwp/admin/admin.php:647 hocwp/inc/class-hocwp-theme-html-field.php:857
 #: hocwp/inc/class-hocwp-theme-html-field.php:899
-#: hocwp/inc/class-hocwp-theme-html-field.php:2076
+#: hocwp/inc/class-hocwp-theme-html-field.php:2078
 #: hocwp/inc/functions-scripts.php:405
 #, php-format
 msgid "Choose %s"
@@ -1533,6 +1567,28 @@ msgstr "Không thể tạo đường dẫn tải về cho plugin \"%s\"."
 #, php-format
 msgid "Cannot generate download link for database \"%s\"."
 msgstr "Không thể tạo đường dẫn tải về cho cơ sở dữ liệu \"%s\"."
+
+#: hocwp/admin/ajax-administration-tools.php:577
+#, php-format
+msgid "Database \"%s\" has been exported successfully."
+msgstr "Cơ sở dữ liệu \"%s\" đã được xuất thành công."
+
+#: hocwp/admin/ajax-administration-tools.php:580
+msgid "Cannot export database, please try again later."
+msgstr "Không thể xuất cơ sở dữ liệu, vui lòng thử lại sau."
+
+#: hocwp/admin/ajax-administration-tools.php:583
+#: hocwp/admin/ajax-administration-tools.php:609
+msgid "Please select a database name first."
+msgstr "Vui lòng chọn tên cơ sở dữ liệu trước."
+
+#: hocwp/admin/ajax-administration-tools.php:606
+msgid "Cannot import database, please try again later."
+msgstr "Không thể nhập cơ sở dữ liệu, vui lòng thử lại sau."
+
+#: hocwp/admin/ajax-administration-tools.php:612
+msgid "Invalid database file."
+msgstr "Tập tin cơ sở dữ liệu không đúng."
 
 #: hocwp/admin/ajax.php:44
 msgid "AJAX nonce is invalid."
@@ -2715,159 +2771,159 @@ msgstr ""
 "Gói mở rộng %1$s đã <strong>không còn được dùng nữa</strong> kể từ phiên bản "
 "%2$s và không có lựa chọn thay thế nào."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:500
+#: hocwp/inc/class-hocwp-theme-frontend.php:521
 msgid "Page navigation"
 msgstr "Điều hướng trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:518
+#: hocwp/inc/class-hocwp-theme-frontend.php:539
 msgid "Posts navigation"
 msgstr "Điều hướng bài viết"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:554
+#: hocwp/inc/class-hocwp-theme-frontend.php:575
 msgid "First"
 msgstr "Đầu"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:589
+#: hocwp/inc/class-hocwp-theme-frontend.php:610
 msgid "Last"
 msgstr "Cuối"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:601
+#: hocwp/inc/class-hocwp-theme-frontend.php:622
 msgid "Page [CURRENT]/[TOTAL]"
 msgstr "Trang [CURRENT]/[TOTAL]"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:700
+#: hocwp/inc/class-hocwp-theme-frontend.php:721
 #, php-format
 msgid "Check this out: %s"
 msgstr "Kiểm tra điều này: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:732
+#: hocwp/inc/class-hocwp-theme-frontend.php:753
 #: hocwp/inc/template-general.php:1686
 #, php-format
 msgid "Share on %s"
 msgstr "Chia sẻ trên %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:780
+#: hocwp/inc/class-hocwp-theme-frontend.php:801
 #, php-format
 msgid "Category: %s"
 msgstr "Chuyên mục: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:786
+#: hocwp/inc/class-hocwp-theme-frontend.php:807
 #, php-format
 msgid "Tag: %s"
 msgstr "Thẻ: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:792
+#: hocwp/inc/class-hocwp-theme-frontend.php:813
 #, php-format
 msgid "Author: %s"
 msgstr "Tác giả: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:796
+#: hocwp/inc/class-hocwp-theme-frontend.php:817
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr "Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:799
+#: hocwp/inc/class-hocwp-theme-frontend.php:820
 #, php-format
 msgctxt "yearly archives"
 msgid "Year: %s"
 msgstr "Năm: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:802
+#: hocwp/inc/class-hocwp-theme-frontend.php:823
 msgctxt "monthly archives date format"
 msgid "F Y"
 msgstr "F Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:805
+#: hocwp/inc/class-hocwp-theme-frontend.php:826
 #, php-format
 msgctxt "monthly archives"
 msgid "Month: %s"
 msgstr "Tháng: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:808
+#: hocwp/inc/class-hocwp-theme-frontend.php:829
 msgctxt "daily archives date format"
 msgid "F j, Y"
 msgstr "F j, Y"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:811
+#: hocwp/inc/class-hocwp-theme-frontend.php:832
 #, php-format
 msgctxt "daily archives"
 msgid "Day: %s"
 msgstr "Ngày: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:816
+#: hocwp/inc/class-hocwp-theme-frontend.php:837
 msgctxt "post format archive title"
 msgid "Asides"
 msgstr "Bên lề"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:818
+#: hocwp/inc/class-hocwp-theme-frontend.php:839
 msgctxt "post format archive title"
 msgid "Galleries"
 msgstr "Bộ sưu tập"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:820
+#: hocwp/inc/class-hocwp-theme-frontend.php:841
 msgctxt "post format archive title"
 msgid "Images"
 msgstr "Hình ảnh"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:822
+#: hocwp/inc/class-hocwp-theme-frontend.php:843
 msgctxt "post format archive title"
 msgid "Videos"
 msgstr "Video"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:824
+#: hocwp/inc/class-hocwp-theme-frontend.php:845
 msgctxt "post format archive title"
 msgid "Quotes"
 msgstr "Trích dẫn"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:826
+#: hocwp/inc/class-hocwp-theme-frontend.php:847
 msgctxt "post format archive title"
 msgid "Links"
 msgstr "Liên kết"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:828
+#: hocwp/inc/class-hocwp-theme-frontend.php:849
 msgctxt "post format archive title"
 msgid "Statuses"
 msgstr "Trạng thái"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:830
+#: hocwp/inc/class-hocwp-theme-frontend.php:851
 msgctxt "post format archive title"
 msgid "Audio"
 msgstr "Âm thanh"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:832
+#: hocwp/inc/class-hocwp-theme-frontend.php:853
 msgctxt "post format archive title"
 msgid "Chats"
 msgstr "Trò chuyện"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:836
+#: hocwp/inc/class-hocwp-theme-frontend.php:857
 #, php-format
 msgctxt "post format archives"
 msgid "Post Format: %s"
 msgstr "Định dạng bài viết: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:842
+#: hocwp/inc/class-hocwp-theme-frontend.php:863
 #, php-format
 msgid "Archives: %s"
 msgstr "Lưu trữ: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:856
+#: hocwp/inc/class-hocwp-theme-frontend.php:877
 #, php-format
 msgid "Search results for: %s"
 msgstr "Kết quả tìm kiếm: %s"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:858
+#: hocwp/inc/class-hocwp-theme-frontend.php:879
 msgid "Search results"
 msgstr "Kết quả tìm kiếm"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:865
+#: hocwp/inc/class-hocwp-theme-frontend.php:886
 msgid "Recent posts"
 msgstr "Bài viết gần đây"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:868
+#: hocwp/inc/class-hocwp-theme-frontend.php:889
 msgid "Archives"
 msgstr "Lưu trữ"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:999
+#: hocwp/inc/class-hocwp-theme-frontend.php:1020
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website. By continuing to browse on this website, you accept the use of "
@@ -2877,7 +2933,7 @@ msgstr ""
 "truy cập trang web. Bằng cách tiếp tục truy cập trang web này, bạn chấp nhận "
 "cách sử dụng cookie cho các mục đích trên."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1002
+#: hocwp/inc/class-hocwp-theme-frontend.php:1023
 #, php-format
 msgid ""
 "We use cookies to give you the best possible website experience. <span>By "
@@ -2887,34 +2943,34 @@ msgstr ""
 "cập trang web. <span>Bằng cách sử dụng %s, bạn đồng ý với <a href=\"%s\">%s</"
 "a> của chúng tôi</span>."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1006
+#: hocwp/inc/class-hocwp-theme-frontend.php:1027
 msgid "Accept"
 msgstr "Chấp nhận"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1315
+#: hocwp/inc/class-hocwp-theme-frontend.php:1336
 msgid "Page not found"
 msgstr "Trang không được tìm thấy"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1526
+#: hocwp/inc/class-hocwp-theme-frontend.php:1547
 msgctxt "back to top"
 msgid "Top"
 msgstr "Lên trên"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1560
-#: hocwp/inc/class-hocwp-theme-frontend.php:1562
+#: hocwp/inc/class-hocwp-theme-frontend.php:1581
+#: hocwp/inc/class-hocwp-theme-frontend.php:1583
 msgid "Go to top"
 msgstr "Về đầu trang"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1728
+#: hocwp/inc/class-hocwp-theme-frontend.php:1749
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr "<a href=\"%s\" class=\"read-more-link\">Xem thêm &rarr;</a>"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1821
+#: hocwp/inc/class-hocwp-theme-frontend.php:1842
 msgid "Oops! That page can&rsquo;t be found."
 msgstr "Rất tiếc! Trang bạn đang xem không thể tìm thấy."
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1825
+#: hocwp/inc/class-hocwp-theme-frontend.php:1846
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
@@ -2922,11 +2978,11 @@ msgstr ""
 "Có vẻ như không có gì được tìm thấy tại vị trí này. Có thể thử một trong "
 "những link bên dưới hoặc tìm kiếm?"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1834
+#: hocwp/inc/class-hocwp-theme-frontend.php:1855
 msgid "Most Used Categories"
 msgstr "Chuyên mục được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1850
+#: hocwp/inc/class-hocwp-theme-frontend.php:1871
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr "Hãy thử tìm kiếm trong lưu trữ hàng tháng. %1$s"
@@ -3046,39 +3102,39 @@ msgid "Scale the image to the correct size (the thumbnail will keep the scale)"
 msgstr ""
 "Thu nhỏ ảnh theo kích thước chính xác (ảnh thu nhỏ sẽ được giữ nguyên tỉ lệ)"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1847
+#: hocwp/inc/class-hocwp-theme-html-field.php:1849
 msgid "Drag and drop setting field to right panel for active it."
 msgstr "Kéo và thả mục cài đặt sang khung bên phải để kích hoạt."
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1853
+#: hocwp/inc/class-hocwp-theme-html-field.php:1855
 msgid "Sort Fields"
 msgstr "Sắp xếp các mục"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1937
+#: hocwp/inc/class-hocwp-theme-html-field.php:1939
 msgid "Content:"
 msgstr "Nội dung:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:1983
+#: hocwp/inc/class-hocwp-theme-html-field.php:1985
 msgid "Image Link:"
 msgstr "Đường dẫn hình ảnh:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2044
+#: hocwp/inc/class-hocwp-theme-html-field.php:2046
 msgid "Add media"
 msgstr "Thêm tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2068
+#: hocwp/inc/class-hocwp-theme-html-field.php:2070
 msgid "Remove media"
 msgstr "Xóa tập tin"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2135
+#: hocwp/inc/class-hocwp-theme-html-field.php:2137
 msgid "Latitude:"
 msgstr "Vĩ độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2154
+#: hocwp/inc/class-hocwp-theme-html-field.php:2156
 msgid "Longitude:"
 msgstr "Kinh độ:"
 
-#: hocwp/inc/class-hocwp-theme-html-field.php:2169
+#: hocwp/inc/class-hocwp-theme-html-field.php:2171
 msgid "Drag to find address!"
 msgstr "Kéo để tìm địa chỉ!"
 
@@ -3152,352 +3208,344 @@ msgstr "%s trước"
 msgid "Invalid Forminator form data!"
 msgstr "Dữ liệu Forminator không đúng!"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:589
+#: hocwp/inc/class-hocwp-theme-utility.php:593
 msgid ""
 "An error has occurred, which probably means the feed is down. Try again "
 "later."
 msgstr "Đã có lỗi xảy ra, có thể luồng tin không hoạt động. Hãy thử lại sau."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1006
-#: hocwp/inc/class-hocwp-theme-utility.php:1017
+#: hocwp/inc/class-hocwp-theme-utility.php:979
+#: hocwp/inc/class-hocwp-theme-utility.php:990
 msgid "Monday"
 msgstr "Thứ hai"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1007
-#: hocwp/inc/class-hocwp-theme-utility.php:1020
+#: hocwp/inc/class-hocwp-theme-utility.php:980
+#: hocwp/inc/class-hocwp-theme-utility.php:993
 msgid "Tuesday"
 msgstr "Thứ ba"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1008
-#: hocwp/inc/class-hocwp-theme-utility.php:1023
+#: hocwp/inc/class-hocwp-theme-utility.php:981
+#: hocwp/inc/class-hocwp-theme-utility.php:996
 msgid "Wednesday"
 msgstr "Thứ tư"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1009
-#: hocwp/inc/class-hocwp-theme-utility.php:1026
+#: hocwp/inc/class-hocwp-theme-utility.php:982
+#: hocwp/inc/class-hocwp-theme-utility.php:999
 msgid "Thursday"
 msgstr "Thứ năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1010
-#: hocwp/inc/class-hocwp-theme-utility.php:1029
+#: hocwp/inc/class-hocwp-theme-utility.php:983
+#: hocwp/inc/class-hocwp-theme-utility.php:1002
 msgid "Friday"
 msgstr "Thứ sáu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1011
-#: hocwp/inc/class-hocwp-theme-utility.php:1032
+#: hocwp/inc/class-hocwp-theme-utility.php:984
+#: hocwp/inc/class-hocwp-theme-utility.php:1005
 msgid "Saturday"
 msgstr "Thứ bảy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1012
-#: hocwp/inc/class-hocwp-theme-utility.php:1035
+#: hocwp/inc/class-hocwp-theme-utility.php:985
+#: hocwp/inc/class-hocwp-theme-utility.php:1008
 msgid "Sunday"
 msgstr "Chủ nhật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1048
+#: hocwp/inc/class-hocwp-theme-utility.php:1021
 msgid "All date"
 msgstr "Tất cả ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1049
+#: hocwp/inc/class-hocwp-theme-utility.php:1022
 msgid "Daily"
 msgstr "Hàng ngày"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1050
+#: hocwp/inc/class-hocwp-theme-utility.php:1023
 msgid "Weekly"
 msgstr "Hàng tuần"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1051
+#: hocwp/inc/class-hocwp-theme-utility.php:1024
 msgid "Monthly"
 msgstr "Hàng tháng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1052
+#: hocwp/inc/class-hocwp-theme-utility.php:1025
 msgid "Yearly"
 msgstr "Hàng năm"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:1405
+#: hocwp/inc/class-hocwp-theme-utility.php:1362
 msgid "-- Choose sidebar --"
 msgstr "-- Chọn sidebar --"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2064
+#: hocwp/inc/class-hocwp-theme-utility.php:2021
 msgctxt "custom post type"
 msgid "Add New"
 msgstr "Thêm mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2065
+#: hocwp/inc/class-hocwp-theme-utility.php:2022
 #, php-format
 msgctxt "cutom-post-type"
 msgid "Add New %s"
 msgstr "Thêm %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2066
+#: hocwp/inc/class-hocwp-theme-utility.php:2023
 #, php-format
 msgctxt "custom post type"
 msgid "Edit %s"
 msgstr "Chỉnh sửa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2067
+#: hocwp/inc/class-hocwp-theme-utility.php:2024
 #, php-format
 msgctxt "custom post type"
 msgid "New %s"
 msgstr "Tạo %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2068
-#: hocwp/inc/class-hocwp-theme-utility.php:2069
+#: hocwp/inc/class-hocwp-theme-utility.php:2025
+#: hocwp/inc/class-hocwp-theme-utility.php:2026
 #, php-format
 msgctxt "custom post type"
 msgid "View %s"
 msgstr "Xem %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2070
+#: hocwp/inc/class-hocwp-theme-utility.php:2027
 #, php-format
 msgctxt "custom post type"
 msgid "Search %s"
 msgstr "Tìm kiếm %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2071
+#: hocwp/inc/class-hocwp-theme-utility.php:2028
 #, php-format
 msgctxt "custom post type"
 msgid "No %s found."
 msgstr "Không tìm thấy %s."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2072
+#: hocwp/inc/class-hocwp-theme-utility.php:2029
 #, php-format
 msgctxt "custom post type"
 msgid "No %s found in Trash."
 msgstr "Không có %s nào trong thùng rác."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2073
+#: hocwp/inc/class-hocwp-theme-utility.php:2030
 #, php-format
 msgctxt "custom post type"
 msgid "Parent %s:"
 msgstr "Cha %s:"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2074
+#: hocwp/inc/class-hocwp-theme-utility.php:2031
 #, php-format
 msgctxt "custom post type"
 msgid "All %s"
 msgstr "Tất cả %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2075
+#: hocwp/inc/class-hocwp-theme-utility.php:2032
 #, php-format
 msgctxt "custom post type"
 msgid "%s Archives"
 msgstr "Lưu trữ %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2076
+#: hocwp/inc/class-hocwp-theme-utility.php:2033
 #, php-format
 msgctxt "custom post type"
 msgid "%s Attributes"
 msgstr "Thuộc tính %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2077
+#: hocwp/inc/class-hocwp-theme-utility.php:2034
 #, php-format
 msgctxt "custom post type"
 msgid "Insert into %s"
 msgstr "Thêm vào %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2078
+#: hocwp/inc/class-hocwp-theme-utility.php:2035
 #, php-format
 msgctxt "custom post type"
 msgid "Uploaded to this %s"
 msgstr "Được tải lên %s này"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2079
+#: hocwp/inc/class-hocwp-theme-utility.php:2036
 msgctxt "custom post type"
 msgid "Featured Image"
 msgstr "Ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2080
+#: hocwp/inc/class-hocwp-theme-utility.php:2037
 msgctxt "custom post type"
 msgid "Set featured image"
 msgstr "Thiết lập ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2081
+#: hocwp/inc/class-hocwp-theme-utility.php:2038
 msgctxt "custom post type"
 msgid "Remove featured image"
 msgstr "Xóa ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2082
+#: hocwp/inc/class-hocwp-theme-utility.php:2039
 msgctxt "custom post type"
 msgid "Use as featured image"
 msgstr "Sử dụng làm ảnh nổi bật"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2083
+#: hocwp/inc/class-hocwp-theme-utility.php:2040
 #, php-format
 msgctxt "custom post type"
 msgid "Filter %s list"
 msgstr "Lọc danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2084
+#: hocwp/inc/class-hocwp-theme-utility.php:2041
 #, php-format
 msgctxt "custom post type"
 msgid "%s list navigation"
 msgstr "%s danh sách điều hướng"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2085
+#: hocwp/inc/class-hocwp-theme-utility.php:2042
 #, php-format
 msgctxt "custom post type"
 msgid "%s list"
 msgstr "Danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2086
+#: hocwp/inc/class-hocwp-theme-utility.php:2043
 #, php-format
 msgctxt "custom post type"
 msgid "%s published."
 msgstr "%s đã được đăng."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2087
+#: hocwp/inc/class-hocwp-theme-utility.php:2044
 #, php-format
 msgctxt "custom post type"
 msgid "%s published privately."
 msgstr "%s đã được đăng riêng tư."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2088
+#: hocwp/inc/class-hocwp-theme-utility.php:2045
 #, php-format
 msgctxt "custom post type"
 msgid "%s reverted to draft."
 msgstr "%s đã được khôi phục từ thùng rác."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2089
+#: hocwp/inc/class-hocwp-theme-utility.php:2046
 #, php-format
 msgctxt "custom post type"
 msgid "%s scheduled."
 msgstr "%s đã được lên lịch."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2090
+#: hocwp/inc/class-hocwp-theme-utility.php:2047
 #, php-format
 msgctxt "custom post type"
 msgid "%s updated."
 msgstr "%s đã được cập nhật."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2107
+#: hocwp/inc/class-hocwp-theme-utility.php:2064
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Search %s"
 msgstr "Tìm kiếm %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2108
+#: hocwp/inc/class-hocwp-theme-utility.php:2065
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Popular %s"
 msgstr "%s phổ biến"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2109
+#: hocwp/inc/class-hocwp-theme-utility.php:2066
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "All %s"
 msgstr "Tất cả %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2110
+#: hocwp/inc/class-hocwp-theme-utility.php:2067
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s"
 msgstr "%s cha"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2111
+#: hocwp/inc/class-hocwp-theme-utility.php:2068
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Parent %s:"
 msgstr "%s cha:"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2112
+#: hocwp/inc/class-hocwp-theme-utility.php:2069
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Edit %s"
 msgstr "Chỉnh sửa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2113
+#: hocwp/inc/class-hocwp-theme-utility.php:2070
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "View %s"
 msgstr "Xem %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2114
+#: hocwp/inc/class-hocwp-theme-utility.php:2071
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Update %s"
 msgstr "Cập nhật %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2115
+#: hocwp/inc/class-hocwp-theme-utility.php:2072
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add New %s"
 msgstr "Thêm %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2116
+#: hocwp/inc/class-hocwp-theme-utility.php:2073
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "New %s Name"
 msgstr "Tạo tên %s mới"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2117
+#: hocwp/inc/class-hocwp-theme-utility.php:2074
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Separate %s with commas"
 msgstr "%s cách nhau bởi dấu phẩy"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2118
+#: hocwp/inc/class-hocwp-theme-utility.php:2075
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Add or remove %s"
 msgstr "Thêm hoặc xóa %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2119
+#: hocwp/inc/class-hocwp-theme-utility.php:2076
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "Choose from the most used %s"
 msgstr "Chọn từ danh sách %s được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2120
+#: hocwp/inc/class-hocwp-theme-utility.php:2077
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s found."
 msgstr "Không tìm thấy %s."
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2121
+#: hocwp/inc/class-hocwp-theme-utility.php:2078
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "No %s"
 msgstr "Không %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2122
+#: hocwp/inc/class-hocwp-theme-utility.php:2079
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list navigation"
 msgstr "Dach sách phân trang %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2123
+#: hocwp/inc/class-hocwp-theme-utility.php:2080
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "%s list"
 msgstr "Danh sách %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2124
+#: hocwp/inc/class-hocwp-theme-utility.php:2081
 msgctxt "custom taxonomy term"
 msgid "Most Used"
 msgstr "Được dùng nhiều"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2125
+#: hocwp/inc/class-hocwp-theme-utility.php:2082
 #, php-format
 msgctxt "custom taxonomy term"
 msgid "&larr; Back to %s"
 msgstr "&larr; Trở lại %s"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2574
+#: hocwp/inc/class-hocwp-theme-utility.php:2531
 msgid "Toggle menu"
 msgstr "Chuyển đổi menu"
 
-#: hocwp/inc/class-hocwp-theme-utility.php:2594
+#: hocwp/inc/class-hocwp-theme-utility.php:2551
 #: hocwp/inc/template-general.php:928
 msgid "Menu"
 msgstr "Trình đơn"
-
-#: hocwp/inc/class-hocwp-theme-utility.php:2611
-msgid ""
-"The <strong>$sql_column</strong> argument just only contains MySQL query "
-"inside (), it isn't full MySQL query."
-msgstr ""
-"Tham số <strong>$sql_column</strong> chỉ chứa truy vấn MySQL bên trong ngoặc "
-"đơn (), chứ không phải chứa câu truy vấn MySQL đầy đủ."
 
 #: hocwp/inc/class-hocwp-theme-walker-nav-menu-amp.php:215
 #: hocwp/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php:202
@@ -3890,11 +3938,65 @@ msgctxt "post author"
 msgid "by %s"
 msgstr "bởi %s"
 
-#: hocwp/inc/trail-utils.php:38
+#: hocwp/inc/trait-database.php:27
 #, php-format
-msgctxt "price format"
-msgid "$%s"
-msgstr "%sđ"
+msgid "Failed to get database size: %s"
+msgstr "Lấy kích thước cơ sở dữ liệu thất bại: %s"
+
+#: hocwp/inc/trait-database.php:37
+#, php-format
+msgid "File not found: %s"
+msgstr "Tập tin không được tìm thấy: %s"
+
+#: hocwp/inc/trait-database.php:47
+msgid "Cannot open zip file."
+msgstr "Không thể mở tập tin zip."
+
+#: hocwp/inc/trait-database.php:94
+msgid "SQL file not found in the ZIP archive."
+msgstr "Tập tin SQL không được tìm thấy trong thư mục nén."
+
+#: hocwp/inc/trait-database.php:101
+#, php-format
+msgid "Failed to open ZIP archive: %s"
+msgstr "Mở tập tin nén zip thất bại: %s"
+
+#: hocwp/inc/trait-database.php:107
+msgid "Cannot open gzip file."
+msgstr "Không thể mở tập tin gzip."
+
+#: hocwp/inc/trait-database.php:121
+#, php-format
+msgid "Failed to open .gz file: %s"
+msgstr "Mở tập tin .gz thất bại: %s"
+
+#: hocwp/inc/trait-database.php:136
+#, php-format
+msgid "Failed to read from .gz file: %s"
+msgstr "Đọc tập tin .gz thất bại: %s"
+
+#: hocwp/inc/trait-database.php:151
+#, php-format
+msgid "Unsupported file extension: %s"
+msgstr "Đuôi tập tin không được hỗ trợ: %s"
+
+#: hocwp/inc/trait-database.php:160
+#, php-format
+msgid "Failed to open file: %s"
+msgstr "Không mở được tập tin: %s"
+
+#: hocwp/inc/trait-database.php:225
+#, php-format
+msgid "Error executing query: %s"
+msgstr "Lỗi thực thi truy vấn: %s"
+
+#: hocwp/inc/trait-database.php:328
+msgid ""
+"The <strong>$sql_column</strong> argument just only contains MySQL query "
+"inside (), it isn't full MySQL query."
+msgstr ""
+"Tham số <strong>$sql_column</strong> chỉ chứa truy vấn MySQL bên trong ngoặc "
+"đơn (), chứ không phải chứa câu truy vấn MySQL đầy đủ."
 
 #: hocwp/inc/trait-hocwp-theme-captcha-utils.php:118
 #: hocwp/inc/trait-hocwp-theme-captcha-utils.php:127
@@ -3904,6 +4006,12 @@ msgstr "Dịch vụ CAPTCHA không được cung cấp."
 #: hocwp/inc/trait-hocwp-theme-captcha-utils.php:310
 msgid "<strong>Error:</strong> Please correct the CAPTCHA."
 msgstr "<strong>Lỗi:</strong> Xin vui lòng điền đúng mã bảo mật."
+
+#: hocwp/inc/trait-utils.php:38
+#, php-format
+msgctxt "price format"
+msgid "$%s"
+msgstr "%sđ"
 
 #: hocwp/load.php:111
 #, php-format
@@ -4835,9 +4943,6 @@ msgstr "Đọc tiếp<span class=\"screen-reader-text\"> \"%s\"</span>"
 
 #~ msgid "All files compressed..."
 #~ msgstr "Tất cả các tập tin đã được nén..."
-
-#~ msgid "Creating zip file..."
-#~ msgstr "Đang tạo tập tin zip..."
 
 #~ msgid "The theme can not be compressed."
 #~ msgstr "Giao diện không thể nén."

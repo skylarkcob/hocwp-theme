@@ -532,6 +532,102 @@ jQuery(document).ready(function ($) {
                 element.blur();
             }
         });
+
+        // Export database
+        body.on("click", "form[data-tab='administration_tools'] button[data-export-database='1'], form[data-tab='administration_tools'] input[data-export-database='1']", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that),
+                form = element.closest("form"),
+                database = form.find("#hocwp_theme_administration_tools_ie_database_db_name");
+
+            if (confirm(element.attr("data-confirm-message"))) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_export_database",
+                        database: database.val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            if (response.data.message) {
+                                alert(response.data.message);
+                            } else {
+                                alert(element.attr("data-message"));
+                            }
+                        } else if (response.data.message) {
+                            alert(response.data.message);
+                        }
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                    }
+                });
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
+
+        // Import database
+        body.on("click", "form[data-tab='administration_tools'] button[data-import-database='1'], form[data-tab='administration_tools'] input[data-import-database='1']", function (e) {
+            e.preventDefault();
+
+            let that = this,
+                element = $(that),
+                form = element.closest("form"),
+                dbName = element.attr("data-db-name"),
+                database = form.find("#hocwp_theme_administration_tools_ie_database_db_name"),
+                file = form.find("#hocwp_theme_administration_tools_ie_database_db_file_id"),
+                fileID = parseInt(file.val());
+
+            if (isNaN(fileID) || 0 === fileID) {
+                file.closest(".media-box").find(".select-media").trigger("click");
+                element.removeClass("disabled");
+                element.blur();
+            } else if (confirm(element.attr("data-confirm-message"))) {
+                if (dbName !== database.val() || confirm(element.attr("data-same-db-text"))) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "JSON",
+                        url: hocwpTheme.ajaxUrl,
+                        cache: true,
+                        data: {
+                            action: "hocwp_theme_import_database",
+                            database: database.val(),
+                            file: fileID
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                if (response.data.message) {
+                                    alert(response.data.message);
+                                } else {
+                                    alert(element.attr("data-message"));
+                                }
+                            } else if (response.data.message) {
+                                alert(response.data.message);
+                            }
+                        },
+                        complete: function (response) {
+                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        },
+                        error: function (jqXHR, exception) {
+                            alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                        }
+                    });
+                }
+            } else {
+                element.removeClass("disabled");
+                element.blur();
+            }
+        });
     })();
 
     // Delete transient

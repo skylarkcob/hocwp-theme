@@ -340,7 +340,7 @@ final class HOCWP_Theme_Controller {
 		$result = array();
 
 		if ( is_dir( $base_path ) ) {
-			$files = scandir( $base_path );
+			$files = HT()->scandir( $base_path );
 
 			foreach ( $files as $file ) {
 				$path = trailingslashit( $base_path ) . $file;
@@ -584,8 +584,8 @@ final class HOCWP_Theme_Controller {
 
 		if ( is_dir( $inc ) ) {
 			$path  = $inc;
-			$files = scandir( $path );
-			$files = array_diff( scandir( $path ), array( '.', '..', 'index.php' ) );
+			$files = HT()->scandir( $path );
+			$files = array_diff( $files, array( '.', '..', 'index.php' ) );
 
 			foreach ( $files as $file ) {
 				HT()->require_if_exists( $inc . '/' . $file );

@@ -490,6 +490,14 @@
     display: block;
 }
 
+.hocwp-theme .multiple-fields .field-row label + div {
+    margin-top: 0;
+}
+
+.hocwp-theme .multiple-fields .field-row label + .button {
+    display: inline-block;
+}
+
 .hocwp-theme .multiple-fields[data-columns="2"] .field-row:not(.full-row) {
     float: left;
     width: 48%;

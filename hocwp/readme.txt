@@ -1,4 +1,8 @@
 == Changelog ==
+= 7.0.6 =
+* 20/05/2024: Add admin tools to import and export database.
+* 21/05/2024: Big update with more change in core.
+
 = 7.0.5 =
 * 24/01/2024: Update some dev functions before coding Fapas Clothes Store theme.
 * 24/01/2024: Change label display from block to inline-block for multiple fields settings.

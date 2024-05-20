@@ -287,15 +287,15 @@ trait HOCWP_Theme_PHP {
 		return null;
 	}
 
-	public function count_files( $dir, $recursive = true ) {
-		$file_count = 0;
-
+	public function scandir( $dir, $recursive = false ) {
 		// Get the list of items in the directory
 		$items = scandir( $dir );
 
 		if ( ! $recursive ) {
-			return count( array_diff( $items, array( '.', '..' ) ) );
+			return $items;
 		}
+
+		$files = array();
 
 		foreach ( $items as $item ) {
 			// Skip "." and ".." entries
@@ -304,15 +304,30 @@ trait HOCWP_Theme_PHP {
 
 				// If it's a directory, recursively count files in the subdirectory
 				if ( is_dir( $path ) ) {
-					$file_count += $this->count_files( $path, $recursive );
+					$tmp = $this->scandir( $path, $recursive );
+
+					foreach ( $tmp as $a_file ) {
+						if ( str_contains( $a_file, $path ) ) {
+							$files[] = $a_file;
+						} else {
+							$files[] = $path . '/' . $a_file;
+						}
+					}
 				} else {
 					// It's a file, increment the file count
-					$file_count ++;
+					$files[] = $path;
 				}
 			}
 		}
 
-		return $file_count;
+		return $files;
+	}
+
+	public function count_files( $dir, $recursive = true ) {
+		// Get the list of items in the directory
+		$items = $this->scandir( $dir, $recursive );
+
+		return count( $items );
 	}
 
 	public function get_browser() {
