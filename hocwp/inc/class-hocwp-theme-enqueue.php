@@ -392,17 +392,25 @@ class HOCWP_Theme_Enqueue {
 		$url_lib = trailingslashit( $url_lib );
 
 		if ( null === $args || false === $args ) {
-			$base_dir = $dir_lib . 'css/font-awesome.min.css';
+			$exts = array(
+				'font-awesome.min.css', // Old Fontawesome version
+				'all.min.css' // New Fontawesome version
+			);
 
-			if ( file_exists( $base_dir ) ) {
-				wp_enqueue_style( $folder_name, $url_lib . 'css/font-awesome.min.css' );
+			foreach ( $exts as $ext ) {
+				$base_dir = $dir_lib . 'css/' . $ext;
+
+				if ( file_exists( $base_dir ) ) {
+					wp_enqueue_style( $folder_name, $url_lib . 'css/' . $ext );
+					break;
+				}
 			}
 
 			return;
 		}
 
 		$defaults = array(
-			'version' => '5.11.2',
+			'version' => '6.5.2',
 			'kit'     => null,
 			'cdn'     => null
 		);
