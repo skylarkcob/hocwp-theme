@@ -49,20 +49,21 @@ class HOCWP_Theme_Widget_Icon extends WP_Widget {
 	 */
 	public function before_widget_filter( $before_widget, $args, $instance, $widget ) {
 		if ( $widget instanceof HOCWP_Theme_Widget_Icon ) {
-			$background = isset( $instance['background_image'] ) ? $instance['background_image'] : '';
+			$background = $instance['background_image'] ?? '';
 
-			if ( HT()->is_positive_number( $background ) && HT_Media()->exists( $background ) ) {
-				$style = 'background-image: url("' . wp_get_attachment_image_url( $background, 'full' ) . '");';
-				$style = esc_attr( $style );
+			if ( HT()->is_positive_number( $background ) ) {
+				$style = HT_Util()->background_image_css( $background );
 
-				if ( false === strpos( $before_widget, 'style="' ) ) {
-					$before_widget = preg_replace( '/class="/', 'style="' . $style . '" class="', $before_widget, 1 );
-				} else {
-					$before_widget = preg_replace( '/style="/', 'style="' . $style, $before_widget, 1 );
+				if ( ! empty( $style ) ) {
+					if ( ! str_contains( $before_widget, 'style="' ) ) {
+						$before_widget = preg_replace( '/class="/', 'style="' . $style . '" class="', $before_widget, 1 );
+					} else {
+						$before_widget = preg_replace( '/style="/', 'style="' . $style, $before_widget, 1 );
+					}
 				}
 			}
 
-			$html_class = isset( $instance['html_class'] ) ? $instance['html_class'] : '';
+			$html_class = $instance['html_class'] ?? '';
 
 			if ( ! empty( $html_class ) ) {
 				$html_class    = trim( $html_class );

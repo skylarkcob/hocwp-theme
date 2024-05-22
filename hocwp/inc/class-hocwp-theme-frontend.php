@@ -1073,15 +1073,9 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 				$bg_color = HT_Options()->get_tab( 'background_color', '', $tab_name );
 
-				if ( ! empty( $bg_color ) ) {
-					$css_style .= 'background-color:' . $bg_color . ';';
-				}
-
 				$bg_image = HT_Options()->get_tab( 'background_image', '', $tab_name );
 
-				if ( HT_Media()->exists( $bg_image ) ) {
-					$css_style .= sprintf( 'background-image: url("%s");', esc_url( wp_get_attachment_image_url( $bg_image, 'full' ) ) );
-				}
+				$css_style .= HT_Util()->background_image_css( $bg_image, $bg_color );
 
 				ob_start();
 

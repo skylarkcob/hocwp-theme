@@ -2743,7 +2743,11 @@ class HOCWP_Theme_Utility {
 		}
 
 		if ( HT_Media()->exists( $image ) ) {
-			$style .= sprintf( 'background-image: url("%s");', wp_get_original_image_url( $image ) );
+			$image = wp_get_original_image_url( $image );
+		}
+
+		if ( ! empty( $image ) ) {
+			$style .= sprintf( 'background-image: url("%s");', esc_attr( $image ) );
 		}
 
 		return trim( $style );

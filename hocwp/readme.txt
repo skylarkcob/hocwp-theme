@@ -2,6 +2,7 @@
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.
 * 21/05/2024: Big update with more change in core.
+* 22/05/2024: Update function to add background image style.
 
 = 7.0.5 =
 * 24/01/2024: Update some dev functions before coding Fapas Clothes Store theme.
