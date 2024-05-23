@@ -15,7 +15,6 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		public $github_username = 'skylarkcob';
 
 		public function __construct() {
-			$this->refresh_themes_transient();
 			// Append update information to transient.
 			add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'modify_plugins_transient' ) );
 
@@ -289,77 +288,27 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 				$url = 'http://localhost/api/' . $endpoint;
 			}
 
-			$raw_response = '';
+			// Make request.
+			$raw_response = wp_remote_post(
+				$url,
+				array(
+					'timeout' => 10,
+					'body'    => $body,
+				)
+			);
 
-			$error = new WP_Error();
+			// Handle response error.
+			if ( is_wp_error( $raw_response ) ) {
+				return $raw_response;
 
-			if ( str_contains( $url, 'github.com' ) || empty( $this->api_url ) ) {
-				$results = array();
-
-				if ( 'theme' == $endpoint ) {
-					foreach ( $this->themes as $slug => $info ) {
-						if ( ! empty( $slug ) ) {
-							$data = $this->get_github_release( $slug );
-
-							if ( is_object( $data ) && isset( $data->tag_name ) ) {
-								$cv = $info['version'] ?? '';
-
-								$remote = $this->get_github_data_header( $slug, 'style.css' );
-
-								$version = $remote['version'] ?? '';
-
-								if ( version_compare( $version, $cv, '>' ) ) {
-									$download = 'https://github.com/' . $this->build_github_endpoint( $slug ) . '/archive/refs/tags/' . $data->tag_name . '.zip';
-
-									$results[ $slug ] = array(
-										'theme'        => $slug,
-										'new_version'  => $version,
-										'url'          => 'https://github.com/' . $this->build_github_endpoint( $slug ) . '/compare/' . $data->tag_name . '...master',
-										'tested'       => $remote['tested'] ?? '',
-										'requires'     => $remote['requires'] ?? '',
-										'package'      => $download,
-										'requires_php' => $remote['requires_php'] ?? ''
-									);
-								}
-							} elseif ( is_object( $data ) && isset( $data->message ) && isset( $data->documentation_url ) ) {
-								$error->add( sanitize_title( $data->message ), $data->message );
-							}
-						}
-					}
-
-					if ( HT()->array_has_value( $results ) ) {
-						$raw_response = wp_json_encode( array(
-							'themes' => $results
-						) );
-					}
-				}
-			} else {
-				// Make request.
-				$raw_response = wp_remote_post(
-					$url,
-					array(
-						'timeout' => 10,
-						'body'    => $body,
-					)
-				);
-
-				// Handle response error.
-				if ( is_wp_error( $raw_response ) ) {
-					return $raw_response;
-
-					// Handle http error.
-				} elseif ( wp_remote_retrieve_response_code( $raw_response ) !== 200 ) {
-					return new WP_Error( 'server_error', wp_remote_retrieve_response_message( $raw_response ) );
-				}
-
-				$raw_response = wp_remote_retrieve_body( $raw_response );
+				// Handle http error.
+			} elseif ( wp_remote_retrieve_response_code( $raw_response ) !== 200 ) {
+				return new WP_Error( 'server_error', wp_remote_retrieve_response_message( $raw_response ) );
 			}
 
-			if ( empty( $raw_response ) ) {
-				if ( $error->has_errors() ) {
-					return $error;
-				}
+			$raw_response = wp_remote_retrieve_body( $raw_response );
 
+			if ( empty( $raw_response ) ) {
 				return $raw_response;
 			}
 
