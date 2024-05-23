@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2024-05-23 09:21+0700\n"
-"PO-Revision-Date: 2024-05-23 09:21+0700\n"
+"POT-Creation-Date: 2024-05-23 21:45+0700\n"
+"PO-Revision-Date: 2024-05-23 21:45+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
@@ -48,7 +48,7 @@ msgid "Databases:"
 msgstr "Cơ sở dữ liệu:"
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:36
-#: hocwp/admin/admin.php:784 hocwp/admin/ajax-administration-tools.php:590
+#: hocwp/admin/admin.php:785 hocwp/admin/ajax-administration-tools.php:590
 msgid "Are you sure?"
 msgstr "Bạn chắc chứ?"
 
@@ -1516,7 +1516,7 @@ msgstr "Loại bài viết:"
 msgid "Choose post type"
 msgstr "Chọn loại bài viết"
 
-#: hocwp/admin/admin.php:785 hocwp/admin/ajax-administration-tools.php:591
+#: hocwp/admin/admin.php:786 hocwp/admin/ajax-administration-tools.php:591
 msgid "Delete this file"
 msgstr "Xóa tập tin này"
 
@@ -1595,11 +1595,11 @@ msgstr "Không thể nhập cơ sở dữ liệu, vui lòng thử lại sau."
 msgid "Invalid database file."
 msgstr "Tập tin cơ sở dữ liệu không đúng."
 
-#: hocwp/admin/ajax-administration-tools.php:647
+#: hocwp/admin/ajax-administration-tools.php:649
 msgid "File has been deleted!"
 msgstr "Tập tin đã được xóa!"
 
-#: hocwp/admin/ajax-administration-tools.php:651
+#: hocwp/admin/ajax-administration-tools.php:652
 msgid "Invalid nonce!"
 msgstr "Mã bảo mật không đúng!"
 
@@ -2709,7 +2709,7 @@ msgstr "Thanh bên trang 404"
 msgid "Display widgets on 404 page."
 msgstr "Hiển thị widget trên trang 404."
 
-#: hocwp/inc/class-hocwp-theme-controller.php:429
+#: hocwp/inc/class-hocwp-theme-controller.php:431
 msgid ""
 "<strong>HocWP Theme:</strong> Your current theme is a parent theme developed "
 "by HocWP Team, please create a child theme to use it."
@@ -2718,11 +2718,11 @@ msgstr ""
 "gốc được phát triển bởi HocWP Team, vui lòng tạo một giao diện con để sử "
 "dụng nó."
 
-#: hocwp/inc/class-hocwp-theme-controller.php:449
+#: hocwp/inc/class-hocwp-theme-controller.php:451
 msgid "Change Theme"
 msgstr "Thay đổi giao diện"
 
-#: hocwp/inc/class-hocwp-theme-controller.php:454
+#: hocwp/inc/class-hocwp-theme-controller.php:456
 msgid "Missing Child Theme"
 msgstr "Thiếu giao diện con"
 

@@ -16,6 +16,12 @@ add_action( 'init', function () {
 		if ( 'system_information' == $tab ) {
 			hocwp_theme_updates()->refresh_themes_transient();
 		}
+	} else {
+		$do_action = $_GET['do_action'] ?? '';
+
+		if ( 'check_updates' == $do_action ) {
+			hocwp_theme_updates()->refresh_themes_transient();
+		}
 	}
 
 	$theme = wp_get_theme();
