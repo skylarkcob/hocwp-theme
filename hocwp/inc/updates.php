@@ -10,6 +10,14 @@ add_action( 'init', function () {
 		return;
 	}
 
+	if ( HT_Admin()->is_admin_page( 'themes.php', 'hocwp_theme' ) ) {
+		$tab = $_GET['tab'] ?? '';
+
+		if ( 'system_information' == $tab ) {
+			hocwp_theme_updates()->refresh_themes_transient();
+		}
+	}
+
 	$theme = wp_get_theme();
 
 	// Register theme update
