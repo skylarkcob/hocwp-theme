@@ -540,6 +540,7 @@ jQuery(document).ready(function ($) {
             let that = this,
                 element = $(that),
                 form = element.closest("form"),
+                box = element.closest("td"),
                 database = form.find("#hocwp_theme_administration_tools_ie_database_db_name");
 
             if (confirm(element.attr("data-confirm-message"))) {
@@ -558,6 +559,18 @@ jQuery(document).ready(function ($) {
                                 alert(response.data.message);
                             } else {
                                 alert(element.attr("data-message"));
+                            }
+
+                            if (response.data.html) {
+                                let listFiles = box.find(".list-files"),
+                                    html = response.data.html;
+
+                                if (!listFiles || !listFiles.length) {
+                                    html = "<div class='list-files'>" + html + "</div>";
+                                    box.children(".multiple-fields").append(html);
+                                } else {
+                                    listFiles.append(html);
+                                }
                             }
                         } else if (response.data.message) {
                             alert(response.data.message);
@@ -626,6 +639,49 @@ jQuery(document).ready(function ($) {
             } else {
                 element.removeClass("disabled");
                 element.blur();
+            }
+        });
+
+        body.on("click", ".hocwp-theme .multiple-fields .list-files .delete", function (e) {
+            e.preventDefault();
+            let that = this,
+                element = $(that),
+                container = element.closest("p"),
+                path = container.attr("data-path");
+
+            if (confirm(element.attr("data-text-confirm"))) {
+                body.trigger("hocwpTheme:ajaxStart", [element]);
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "JSON",
+                    url: hocwpTheme.ajaxUrl,
+                    cache: true,
+                    data: {
+                        action: "hocwp_theme_delete_file",
+                        file: path,
+                        nonce: hocwpTheme.nonce
+                    },
+                    success: function (response) {
+                        if (response.data.message) {
+                            alert(response.data.message);
+                        }
+
+                        if (response.success) {
+                            container.remove();
+                        }
+
+                        if (!container.children().length) {
+                            container.remove();
+                        }
+                    },
+                    complete: function (response) {
+                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    },
+                    error: function (jqXHR, exception) {
+                        alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
+                    }
+                });
             }
         });
     })();

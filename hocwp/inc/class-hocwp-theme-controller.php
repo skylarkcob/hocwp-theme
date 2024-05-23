@@ -416,12 +416,14 @@ final class HOCWP_Theme_Controller {
 			return;
 		}
 
+		// Allow user run custom hook before theme load
 		$pre_hook = $this->load_child_first( 'pre-hook.php' );
 
 		if ( ( is_file( $pre_hook ) && file_exists( $pre_hook ) ) ) {
 			require $pre_hook;
 		}
 
+		// Check if theme must use child theme or can only use one root theme
 		if ( ! defined( 'HOCWP_THEME_FORCE_PARENT' ) || HOCWP_THEME_FORCE_PARENT ) {
 			$theme = wp_get_theme();
 
@@ -458,14 +460,20 @@ final class HOCWP_Theme_Controller {
 			}
 		}
 
+		// Load all deprecated functions
 		require $this->core_path . '/inc/functions-deprecated.php';
 
+		// Load PHP 8 functions
 		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
 			require $this->core_path . '/inc/class-hocwp-theme-php8.php';
 		}
 
+		// Load all default messages text.
 		require $this->core_path . '/inc/class-hocwp-theme-message.php';
+
+		// Load all normal PHP utility functions
 		require $this->core_path . '/inc/class-hocwp-theme.php';
+
 		require $this->core_path . '/inc/abstract-class-hocwp-theme-google-api.php';
 		require $this->core_path . '/inc/class-hocwp-theme-youtube-api.php';
 		require $this->core_path . '/inc/class-hocwp-theme-google-maps-api.php';
@@ -473,10 +481,13 @@ final class HOCWP_Theme_Controller {
 		require $this->core_path . '/inc/class-hocwp-theme-google-maps-autocomplete-api.php';
 		require $this->core_path . '/inc/class-hocwp-theme-google-maps-distance-matrix-api.php';
 		require $this->core_path . '/inc/class-hocwp-theme-google-maps-geocode-api.php';
+
 		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
 		require $this->core_path . '/inc/class-hocwp-theme-enqueue.php';
 		require $this->core_path . '/inc/class-hocwp-theme-utility.php';
+
 		require $this->core_path . '/inc/class-hocwp-theme-options.php';
+
 		require $this->core_path . '/inc/abstract-class-hocwp-theme-captcha.php';
 		require $this->core_path . '/inc/class-hocwp-theme-captcha-hcaptcha.php';
 		require $this->core_path . '/inc/class-hocwp-theme-captcha-recaptcha.php';
@@ -500,11 +511,14 @@ final class HOCWP_Theme_Controller {
 
 		require $this->core_path . '/inc/class-hocwp-theme-html-tag.php';
 		require $this->core_path . '/inc/class-hocwp-theme-layout.php';
+
 		require $this->core_path . '/inc/class-hocwp-theme-html-field.php';
+
 		require $this->core_path . '/inc/class-hocwp-theme-metas.php';
 		require $this->core_path . '/inc/abstract-class-hocwp-theme-object.php';
 		require $this->core_path . '/inc/class-hocwp-theme-post.php';
 		require $this->core_path . '/inc/class-hocwp-theme-term.php';
+
 		require $this->core_path . '/inc/class-hocwp-theme-query.php';
 
 		require $this->core_path . '/inc/template-tags.php';
@@ -616,6 +630,8 @@ final class HOCWP_Theme_Controller {
 
 		require_once $this->core_path . '/inc/customizer.php';
 
+		require $this->core_path . '/inc/updates.php';
+
 		do_action( 'hocwp_theme_loaded' );
 	}
 
@@ -650,7 +666,14 @@ final class HOCWP_Theme_Controller {
 }
 
 function HOCWP_Theme() {
-	return HOCWP_Theme_Controller::get_instance();
+	global $ht_controller;
+
+	// Instantiate only once.
+	if ( ! isset( $ht_controller ) ) {
+		$ht_controller = HOCWP_Theme_Controller::get_instance();
+	}
+
+	return $ht_controller;
 }
 
 HOCWP_Theme();

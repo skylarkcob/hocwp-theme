@@ -570,11 +570,29 @@ add_action( 'wp_ajax_hocwp_theme_export_database', function () {
 			$dir = mkdir( $dir, 0777, true );
 		}
 
-		$dir .= $database . '_' . date( 'Ymd_Hi', current_time( 'timestamp' ) ) . '.sql';
+		$name = $database . '_' . date( 'Ymd_Hi', current_time( 'timestamp' ) ) . '.sql';
+
+		$dir .= $name;
 		HT_Util()->export_database( $database, $dir );
 
 		if ( file_exists( $dir ) ) {
 			$data['message'] = sprintf( __( 'Database "%s" has been exported successfully.', 'hocwp-theme' ), $database );
+
+			$url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $dir );
+
+			ob_start();
+			?>
+            <p class="file-row new" data-path="<?php echo esc_attr( $dir ); ?>">
+                <a href="<?php echo esc_attr( $url ); ?>"
+                   data-path="<?php echo esc_attr( $dir ); ?>"><?php echo $name; ?></a>
+                <strong>(<?php echo size_format( filesize( $dir ) ); ?>)</strong>
+                <span class="delete"
+                      data-text-confirm="<?php esc_attr_e( 'Are you sure?', 'hocwp-theme' ); ?>"
+                      title="<?php esc_attr_e( 'Delete this file', 'hocwp-theme' ); ?>">&times;</span>
+            </p>
+			<?php
+			$data['html'] = ob_get_clean();
+
 			wp_send_json_success( $data );
 		} else {
 			$data['message'] = __( 'Cannot export database, please try again later.', 'hocwp-theme' );
@@ -610,6 +628,28 @@ add_action( 'wp_ajax_hocwp_theme_import_database', function () {
 		}
 	} else {
 		$data['message'] = __( 'Invalid database file.', 'hocwp-theme' );
+	}
+
+	wp_send_json_error( $data );
+} );
+
+// Delete file
+add_action( 'wp_ajax_hocwp_theme_delete_file', function () {
+	$data = array();
+
+	$nonce = $_POST['nonce'] ?? '';
+
+	if ( HT_Util()->verify_nonce( is_child_theme() ? get_stylesheet() : HOCWP_Theme()->get_textdomain(), $nonce ) ) {
+		$file = $_POST['file'] ?? '';
+
+		if ( file_exists( $file ) ) {
+			unlink( $file );
+		}
+
+		$data['message'] = __( 'File has been deleted!', 'hocwp-theme' );
+		wp_send_json_success( $data );
+	} else {
+		$data['message'] = __( 'Invalid nonce!', 'hocwp-theme' );
 	}
 
 	wp_send_json_error( $data );

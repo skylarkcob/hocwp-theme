@@ -267,7 +267,7 @@ trait HOCWP_Theme_Database {
 		$res = call_user_func( 'exec', $cmd );
 
 		if ( '' == $res ) {
-			return true;
+			return $destination;
 		}
 
 		return false;

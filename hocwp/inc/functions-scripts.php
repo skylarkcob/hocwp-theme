@@ -310,6 +310,12 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 		wp_enqueue_editor();
 		wp_enqueue_style( 'hocwp-theme-options-style', $src );
 		wp_enqueue_script( 'hocwp-theme-admin' );
+
+		$tab = $_GET['tab'] ?? '';
+
+		if ( 'administration_tools' == $tab ) {
+			wp_enqueue_style( 'hocwp-theme-ajax-overlay-style' );
+		}
 	}
 
 	$load = ( 'widgets.php' == $pagenow || 'customize.php' == $pagenow || 'appearance_page_hocwp_theme' == $screen->id || 'link.php' == $pagenow || 'link-add.php' == $pagenow );

@@ -755,3 +755,42 @@ add_filter( 'clean_url', function ( $url, $original_url ) {
 
 	return $url;
 }, 10, 2 );
+
+// Add extra field below HTML field fields
+add_action( 'hocwp_theme_field_fields', function ( $args ) {
+	$id = $args['id'] ?? '';
+
+	if ( 'hocwp_theme_administration_tools_ie_database_inlines_field' == $id ) {
+		$dir = trailingslashit( WP_CONTENT_DIR ) . 'backups/databases';
+
+		if ( is_dir( $dir ) ) {
+			$files = glob( $dir . "/*.sql" );
+
+			if ( ! empty( $files ) ) {
+				?>
+                <div class="list-files">
+					<?php
+					$uri = trailingslashit( WP_CONTENT_URL ) . 'backups/databases';
+
+					foreach ( $files as $path ) {
+						$name = basename( $path );
+						$url  = trailingslashit( $uri ) . $name;
+						$size = filesize( $path );
+						?>
+                        <p class="file-row" data-path="<?php echo esc_attr( $path ); ?>">
+                            <a href="<?php echo esc_attr( $url ); ?>"
+                               data-path="<?php echo esc_attr( $path ); ?>"><?php echo $name; ?></a>
+                            <strong>(<?php echo size_format( $size ); ?>)</strong>
+                            <span class="delete"
+                                  data-text-confirm="<?php esc_attr_e( 'Are you sure?', 'hocwp-theme' ); ?>"
+                                  title="<?php esc_attr_e( 'Delete this file', 'hocwp-theme' ); ?>">&times;</span>
+                        </p>
+						<?php
+					}
+					?>
+                </div>
+				<?php
+			}
+		}
+	}
+} );

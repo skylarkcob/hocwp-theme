@@ -516,6 +516,43 @@
     margin-left: 10px;
 }
 
+.hocwp-theme .multiple-fields .list-files {
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.hocwp-theme .multiple-fields .list-files > * {
+    margin-top: 0;
+}
+
+.hocwp-theme .multiple-fields .list-files > * ~ * {
+    border-top: 1px dashed #eee;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.hocwp-theme .multiple-fields .list-files .delete {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 0 5px;
+    margin: 0 5px;
+    border-radius: 4px;
+    transition: all .5s;
+}
+
+.hocwp-theme .multiple-fields .list-files .delete:hover {
+    background-color: #f00;
+    color: #fff;
+    border-color: #f00;
+}
+
+.hocwp-theme .multiple-fields .list-files .new a,
+.hocwp-theme .multiple-fields .list-files .new {
+    color: #ffa500;
+}
+
 /*--------------------------------------------------------------
 # Modal content
 --------------------------------------------------------------*/
