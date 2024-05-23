@@ -25,7 +25,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			add_filter( 'themes_api', array( $this, 'modify_theme_details' ), 10, 3 );
 		}
 
-		public function modify_themes_transient( $transient ) {
+		private function modify_transient( $transient, $callback, $type ) {
 			// Bail early if no response (error).
 			if ( ! isset( $transient->response ) ) {
 				return $transient;
@@ -40,12 +40,12 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			$force_check = $this->checked == 0 && ! empty( $_GET['force-check'] ); // phpcs:ignore -- False positive, value not used.
 
 			// Fetch updates (this filter is called multiple times during a single page load).
-			$updates = $this->get_theme_updates( $force_check );
+			$updates = call_user_func( $callback, $force_check );
 
 			// Append my themes.
 			if ( is_array( $updates ) ) {
-				if ( ! empty( $updates['themes'] ) ) {
-					foreach ( $updates['themes'] as $basename => $update ) {
+				if ( ! empty( $updates[ $type ] ) ) {
+					foreach ( $updates[ $type ] as $basename => $update ) {
 						$transient->response[ $basename ] = $update;
 					}
 				}
@@ -62,19 +62,21 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			return $transient;
 		}
 
-		public function get_theme_updates( $force_check = false ) {
-			$transient_name = 'hocwp_theme_theme_updates';
+		public function modify_themes_transient( $transient ) {
+			return $this->modify_transient( $transient, array( $this, 'get_theme_updates' ), 'themes' );
+		}
 
-			// Don't call our site if no themes have registered updates.
-			if ( empty( $this->themes ) ) {
+		private function get_updates( $transient_name, $type, $endpoint, $force_check = false ) {
+			// Don't call our site if no items have registered updates.
+			if ( empty( $this->{$type} ) ) {
 				return array();
 			}
 
-			// Construct array of 'checked' plugins.
+			// Construct array of 'checked' items.
 			// Sort by key to avoid detecting change due to "include order".
 			$checked = array();
 
-			foreach ( $this->themes as $slug => $theme ) {
+			foreach ( $this->{$type} as $slug => $theme ) {
 				$checked[ $slug ] = $theme['version'];
 			}
 
@@ -98,16 +100,17 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 				}
 			}
 
-			$post = $this->request_post( array( 'themes' => wp_json_encode( $this->themes ) ) );
+			$post = $this->request_post( array( $type => wp_json_encode( $this->{$type} ) ) );
 
 			// Check update from connect.
-			$response = $this->request( 'v1/themes/update-check', $post );
+			$response = $this->request( $endpoint, $post );
 
 			// Append checked reference.
 			if ( is_array( $response ) ) {
 				$response['checked'] = $checked;
 
 				// Check information from response here
+				do_action( 'hocwp_theme_requested_updates', $response, $this );
 			}
 
 			// Allow json to include expiration but force minimum and max for safety.
@@ -119,46 +122,16 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			return $response;
 		}
 
-		public function modify_theme_details( $result, $action = null, $args = null ) {
+		public function get_theme_updates( $force_check = false ) {
+			return $this->get_updates( 'hocwp_theme_theme_updates', 'themes', 'v1/themes/update-check', $force_check );
+		}
 
-			return $result;
+		public function modify_theme_details( $result, $action = null, $args = null ) {
+			return $this->modify_details( 'themes', $result, $action, $args );
 		}
 
 		public function modify_plugins_transient( $transient ) {
-			// Bail early if no response (error).
-			if ( ! isset( $transient->response ) ) {
-				return $transient;
-			}
-
-			// Ensure no_update is set for back compat.
-			if ( ! isset( $transient->no_update ) ) {
-				$transient->no_update = array();
-			}
-
-			// Force-check (only once).
-			$force_check = $this->checked == 0 && ! empty( $_GET['force-check'] ); // phpcs:ignore -- False positive, value not used.
-
-			// Fetch updates (this filter is called multiple times during a single page load).
-			$updates = $this->get_plugin_updates( $force_check );
-
-			// Append my plugins.
-			if ( is_array( $updates ) ) {
-				if ( ! empty( $updates['plugins'] ) ) {
-					foreach ( $updates['plugins'] as $basename => $update ) {
-						$transient->response[ $basename ] = $update;
-					}
-				}
-
-				if ( ! empty( $updates['no_update'] ) ) {
-					foreach ( $updates['no_update'] as $basename => $update ) {
-						$transient->no_update[ $basename ] = $update;
-					}
-				}
-			}
-
-			++ $this->checked;
-
-			return $transient;
+			return $this->modify_transient( $transient, array( $this, 'get_plugin_updates' ), 'plugins' );
 		}
 
 		private function request_post( $args = array() ) {
@@ -218,60 +191,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		}
 
 		public function get_plugin_updates( $force_check = false ) {
-			$transient_name = 'hocwp_theme_plugin_updates';
-
-			// Don't call our site if no plugins have registered updates.
-			if ( empty( $this->plugins ) ) {
-				return array();
-			}
-
-			// Construct array of 'checked' plugins.
-			// Sort by key to avoid detecting change due to "include order".
-			$checked = array();
-
-			foreach ( $this->plugins as $basename => $plugin ) {
-				$checked[ $basename ] = $plugin['version'];
-			}
-
-			ksort( $checked );
-
-			// $force_check prevents transient lookup.
-			if ( ! $force_check ) {
-				$transient = get_transient( $transient_name );
-
-				// If cached response was found, compare $transient['checked'] against $checked and ignore if they don't match (plugins/versions have changed).
-				if ( is_array( $transient ) ) {
-					$transient_checked = $transient['checked'] ?? array();
-
-					if ( wp_json_encode( $checked ) !== wp_json_encode( $transient_checked ) ) {
-						$transient = false;
-					}
-				}
-
-				if ( $transient !== false ) {
-					return $transient;
-				}
-			}
-
-			$post = $this->request_post( array( 'plugins' => wp_json_encode( $this->plugins ) ) );
-
-			// Check update from connect.
-			$response = $this->request( 'plugin', $post );
-
-			// Append checked reference.
-			if ( is_array( $response ) ) {
-				$response['checked'] = $checked;
-
-				// Check information from response here
-			}
-
-			// Allow json to include expiration but force minimum and max for safety.
-			$expiration = $this->get_expiration( $response, DAY_IN_SECONDS, MONTH_IN_SECONDS );
-
-			// Update transient and return.
-			set_transient( $transient_name, $response, $expiration );
-
-			return $response;
+			return $this->get_updates( 'hocwp_theme_plugin_updates', 'plugins', 'v1/plugins/update-check', $force_check );
 		}
 
 		public function request( $endpoint = '', $body = null ) {
@@ -359,23 +279,21 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			delete_transient( 'hocwp_theme_theme_updates' );
 		}
 
-		public function modify_plugin_details( $result, $action = null, $args = null ) {
-			$plugin = false;
-
+		private function modify_details( $type, $result, $action = null, $args = null ) {
 			// Only for 'plugin_information' action.
-			if ( $action !== 'plugin_information' ) {
+			if ( $action !== rtrim( $type, 's' ) . '_information' ) {
 				return $result;
 			}
 
-			// Find plugin via slug.
-			$plugin = $this->get_plugin_by( 'slug', $args->slug );
+			// Find item via slug.
+			$item = $this->get_item_by( $type, 'slug', $args->slug );
 
-			if ( ! $plugin ) {
+			if ( ! $item ) {
 				return $result;
 			}
 
 			// Get data from connect or cache.
-			$response = $this->get_plugin_info( $plugin['id'] );
+			$response = $this->get_info( $type, $item['id'] );
 
 			// Bail early if no response.
 			if ( ! is_array( $response ) ) {
@@ -396,7 +314,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			);
 
 			foreach ( $sections as $k => $v ) {
-				$sections[ $k ] = $response->$k;
+				$sections[ $k ] = $response->{$k};
 			}
 
 			$response->sections = $sections;
@@ -404,18 +322,26 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			return $response;
 		}
 
-		public function get_plugin_by( $key = '', $value = null ) {
-			foreach ( $this->plugins as $plugin ) {
-				if ( $plugin[ $key ] === $value ) {
-					return $plugin;
+		public function modify_plugin_details( $result, $action = null, $args = null ) {
+			return $this->modify_details( 'plugins', $result, $action, $args );
+		}
+
+		public function get_item_by( $type, $key = '', $value = null ) {
+			foreach ( $this->{$type} as $item ) {
+				if ( $item[ $key ] === $value ) {
+					return $item;
 				}
 			}
 
 			return false;
 		}
 
-		public function get_plugin_info( $id = '', $force_check = false ) {
-			$transient_name = 'hocwp_theme_plugin_info_' . $id;
+		public function get_plugin_by( $key = '', $value = null ) {
+			return $this->get_item_by( 'plugins', $key, $value );
+		}
+
+		private function get_info( $type, $id = '', $force_check = false ) {
+			$transient_name = 'hocwp_theme_' . $type . '_info_' . $id;
 
 			// check cache but allow for $force_check override.
 			if ( ! $force_check ) {
@@ -426,8 +352,8 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 				}
 			}
 
-			// Get plugin info from connect
-			$response = $this->request( '' . $id );
+			// Get item info from connect
+			$response = $this->request( 'v1/' . $type . '/get-info/?p=' . $id );
 
 			// convert string (misc error) to WP_Error object.
 			if ( is_string( $response ) ) {
@@ -443,14 +369,22 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			return $response;
 		}
 
-		public function add_plugin( $plugin ) {
-			if ( ! is_array( $this->plugins ) ) {
-				$this->plugins = array();
+		public function get_theme_info( $id = '', $force_check = false ) {
+			return $this->get_info( 'themes', $id, $force_check );
+		}
+
+		public function get_plugin_info( $id = '', $force_check = false ) {
+			return $this->get_info( 'plugins', $id, $force_check );
+		}
+
+		private function add_item( $type, $item ) {
+			if ( ! is_array( $this->{$type} ) ) {
+				$this->{$type} = array();
 			}
 
 			// validate.
-			$plugin = wp_parse_args(
-				$plugin,
+			$item = wp_parse_args(
+				$item,
 				array(
 					'id'       => '',
 					'key'      => '',
@@ -460,36 +394,32 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 				)
 			);
 
-			// Check if is_plugin_active() function exists. This is required on the front end of the
-			// site, since it is in a file that is normally only loaded in the admin.
-			if ( ! function_exists( 'is_plugin_active' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			if ( empty( $item['basename'] ) ) {
+				$item['basename'] = $item['slug'];
 			}
 
-			// add if is active plugin (not included in theme).
-			if ( is_plugin_active( $plugin['basename'] ) ) {
-				$this->plugins[ $plugin['basename'] ] = $plugin;
+			if ( 'plugins' == $type ) {
+				// Check if is_plugin_active() function exists. This is required on the front end of the
+				// site, since it is in a file that is normally only loaded in the admin.
+				if ( ! function_exists( 'is_plugin_active' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/plugin.php';
+				}
+
+				// add if is active plugin (not included in theme).
+				if ( ! is_plugin_active( $item['basename'] ) ) {
+					return;
+				}
 			}
+
+			$this->{$type}[ $item['basename'] ] = $item;
+		}
+
+		public function add_plugin( $plugin ) {
+			$this->add_item( 'plugins', $plugin );
 		}
 
 		public function add_theme( $theme ) {
-			if ( ! is_array( $this->themes ) ) {
-				$this->themes = array();
-			}
-
-			// validate.
-			$theme = wp_parse_args(
-				$theme,
-				array(
-					'id'       => '',
-					'key'      => '',
-					'slug'     => '',
-					'basename' => '',
-					'version'  => '',
-				)
-			);
-
-			$this->themes[ $theme['slug'] ] = $theme;
+			$this->add_item( 'themes', $theme );
 		}
 	}
 
