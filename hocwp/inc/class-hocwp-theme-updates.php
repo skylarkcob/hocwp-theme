@@ -10,7 +10,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 
 		public $checked = 0;
 
-		public $api_url = '';
+		public $api_url = 'https://api.ldcuong.com/';
 
 		public $github_username = 'skylarkcob';
 
@@ -47,19 +47,18 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			if ( is_array( $updates ) ) {
 				if ( ! empty( $updates['themes'] ) ) {
 					foreach ( $updates['themes'] as $basename => $update ) {
-						$transient->response[ $basename ] = (object) $update;
+						$transient->response[ $basename ] = $update;
 					}
 				}
 
 				if ( ! empty( $updates['no_update'] ) ) {
 					foreach ( $updates['no_update'] as $basename => $update ) {
-						$transient->no_update[ $basename ] = (object) $update;
+						$transient->no_update[ $basename ] = $update;
 					}
 				}
 			}
 
 			++ $this->checked;
-			CAD_DEBUG( $transient );
 
 			return $transient;
 		}
@@ -103,7 +102,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			$post = $this->request_post( array( 'themes' => wp_json_encode( $this->themes ) ) );
 
 			// Check update from connect.
-			$response = $this->request( 'theme', $post );
+			$response = $this->request( 'v1/themes/update-check', $post );
 
 			// Append checked reference.
 			if ( is_array( $response ) ) {
@@ -122,7 +121,6 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		}
 
 		public function modify_theme_details( $result, $action = null, $args = null ) {
-			CAD_DEBUG( $result );
 
 			return $result;
 		}
@@ -148,13 +146,13 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			if ( is_array( $updates ) ) {
 				if ( ! empty( $updates['plugins'] ) ) {
 					foreach ( $updates['plugins'] as $basename => $update ) {
-						$transient->response[ $basename ] = (object) $update;
+						$transient->response[ $basename ] = $update;
 					}
 				}
 
 				if ( ! empty( $updates['no_update'] ) ) {
 					foreach ( $updates['no_update'] as $basename => $update ) {
-						$transient->no_update[ $basename ] = (object) $update;
+						$transient->no_update[ $basename ] = $update;
 					}
 				}
 			}
@@ -288,6 +286,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			// Staging environment.
 			if ( HOCWP_THEME_DEVELOPING ) {
 				// Change api url to dev environment and debug log
+				$url = 'http://localhost/api/' . $endpoint;
 			}
 
 			$raw_response = '';
