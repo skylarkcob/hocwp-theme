@@ -1336,6 +1336,12 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		unset( $last_item );
 
+		$items = apply_filters( 'hocwp_theme_breadcrumb_items', $items, $args );
+
+		if ( empty( $items ) ) {
+			return;
+		}
+
 		$count = count( $items );
 
 		if ( $bootstrap ) {
