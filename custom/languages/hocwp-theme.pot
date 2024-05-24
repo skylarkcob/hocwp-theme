@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2024-05-23 21:45+0700\n"
+"POT-Creation-Date: 2024-05-24 18:45+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -2624,33 +2624,33 @@ msgstr ""
 msgid "Page not found"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1541
+#: hocwp/inc/class-hocwp-theme-frontend.php:1547
 msgctxt "back to top"
 msgid "Top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1575 hocwp/inc/class-hocwp-theme-frontend.php:1577
+#: hocwp/inc/class-hocwp-theme-frontend.php:1581 hocwp/inc/class-hocwp-theme-frontend.php:1583
 msgid "Go to top"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1743
+#: hocwp/inc/class-hocwp-theme-frontend.php:1749
 #, php-format
 msgid "<a href=\"%s\" class=\"read-more-link\">Read more &rarr;</a>"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1836
+#: hocwp/inc/class-hocwp-theme-frontend.php:1842
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1840
+#: hocwp/inc/class-hocwp-theme-frontend.php:1846
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1849
+#: hocwp/inc/class-hocwp-theme-frontend.php:1855
 msgid "Most Used Categories"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-frontend.php:1865
+#: hocwp/inc/class-hocwp-theme-frontend.php:1871
 #, php-format
 msgid "Try looking in the monthly archives. %1$s"
 msgstr ""
