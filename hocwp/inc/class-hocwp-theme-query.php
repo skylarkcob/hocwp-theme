@@ -731,6 +731,34 @@ final class HOCWP_Theme_Query {
 		return $wpdb->get_col( $sql );
 	}
 
+	public function in_range_meta_query_args( $from, $to, $key, $type = 'NUMERIC' ) {
+		$items = array();
+
+		if ( ! empty( $from ) ) {
+			$items[] = array(
+				'key'     => $key,
+				'value'   => $from,
+				'compare' => '>=',
+				'type'    => $type
+			);
+		}
+
+		if ( ! empty( $to ) ) {
+			$items[] = array(
+				'key'     => $key,
+				'value'   => $to,
+				'compare' => '<=',
+				'type'    => $type
+			);
+		}
+
+		if ( ! empty( $items ) ) {
+			$items['relation'] = 'AND';
+		}
+
+		return $items;
+	}
+	
 	public function not_meta_query_args( $key, $value = 1, $relation = 'OR' ) {
 		return array(
 			'relation' => $relation,
