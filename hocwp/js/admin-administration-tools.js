@@ -86,7 +86,7 @@ jQuery(document).ready(function ($) {
                             _hocwp_theme_update_button_waiting_text(element, "FALSE");
                         },
                         complete: function (response) {
-                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            HOCWP_THEME.hideLoading(element, response);
                             _hocwp_theme_update_button_waiting_text(element, "FALSE");
                         },
                         error: function (jqXHR, exception) {
@@ -134,7 +134,7 @@ jQuery(document).ready(function ($) {
                     _hocwp_theme_update_button_waiting_text(element, "FALSE");
                 },
                 complete: function (response) {
-                    body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    HOCWP_THEME.hideLoading(element, response);
                     _hocwp_theme_update_button_waiting_text(element, "FALSE");
                 },
                 error: function (jqXHR, exception) {
@@ -181,7 +181,7 @@ jQuery(document).ready(function ($) {
                             }
                         },
                         complete: function (response) {
-                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            HOCWP_THEME.hideLoading(element, response);
                         },
                         error: function (jqXHR, exception) {
                             alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -305,7 +305,7 @@ jQuery(document).ready(function ($) {
                                 }
                             },
                             complete: function (response) {
-                                body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                                HOCWP_THEME.hideLoading(element, response);
                             },
                             error: function (jqXHR, exception) {
                                 alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -365,7 +365,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -415,7 +415,7 @@ jQuery(document).ready(function ($) {
                             }
                         },
                         complete: function (response) {
-                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            HOCWP_THEME.hideLoading(element, response);
                         },
                         error: function (jqXHR, exception) {
                             alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -521,7 +521,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -577,7 +577,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -629,7 +629,7 @@ jQuery(document).ready(function ($) {
                             }
                         },
                         complete: function (response) {
-                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            HOCWP_THEME.hideLoading(element, response);
                         },
                         error: function (jqXHR, exception) {
                             alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -650,7 +650,7 @@ jQuery(document).ready(function ($) {
                 path = container.attr("data-path");
 
             if (confirm(element.attr("data-text-confirm"))) {
-                body.trigger("hocwpTheme:ajaxStart", [element]);
+                HOCWP_THEME.showLoading(element);
 
                 $.ajax({
                     type: "POST",
@@ -676,7 +676,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -713,7 +713,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -778,7 +778,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
@@ -825,7 +825,7 @@ jQuery(document).ready(function ($) {
                         }
                     },
                     complete: function (response) {
-                        body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                        HOCWP_THEME.hideLoading(element, response);
                     },
                     error: function (jqXHR, exception) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");

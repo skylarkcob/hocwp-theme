@@ -37,7 +37,7 @@ jQuery(document).ready(function ($) {
             if ($.trim(href)) {
                 recheck = recheck || false;
 
-                body.trigger("hocwpTheme:ajaxStart", [element]);
+                HOCWP_THEME.showLoading(element);
 
                 let loadMore = parseInt(pagination.data("load-more"));
 
@@ -92,7 +92,7 @@ jQuery(document).ready(function ($) {
                         hocwpThemePaginationAjax(element, href, list, pagination, hasListId, listId, false);
                     }
 
-                    body.trigger("hocwpTheme:ajaxComplete", [element]);
+                    HOCWP_THEME.hideLoading(element, response);
                 });
             }
         }

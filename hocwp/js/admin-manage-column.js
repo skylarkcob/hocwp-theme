@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
                     }
                 },
                 complete: function (response) {
-                    body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                    HOCWP_THEME.hideLoading(element, response);
                 }
             });
         });

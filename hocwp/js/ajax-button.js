@@ -1,7 +1,7 @@
 window.hocwpTheme = window.hocwpTheme || {};
 
 jQuery(document).ready(function ($) {
-    var body = $("body"),
+    let body = $("body"),
         ajaxOverlay = null,
         currentButton = null;
 
@@ -29,7 +29,7 @@ jQuery(document).ready(function ($) {
      */
     (function () {
         body.on("click", "[data-ajax-button='1']", function () {
-            if ("SELECT" == $(this).prop("tagName")) {
+            if ("SELECT" === $(this).prop("tagName")) {
                 return;
             }
 
@@ -74,7 +74,7 @@ jQuery(document).ready(function ($) {
         $(document).keyup(function (e) {
             e = e || window.event;
 
-            if (("key" in e && ("Escape" == e.key || "Esc" == e.key )) || e.keyCode == 27) {
+            if (("key" in e && ("Escape" === e.key || "Esc" === e.key)) || e.keyCode === 27) {
                 if (currentButton && currentButton.length) {
                     currentButton.removeClass("disabled");
                 }

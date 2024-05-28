@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2024-05-24 18:46+0700\n"
-"PO-Revision-Date: 2024-05-24 18:46+0700\n"
+"POT-Creation-Date: 2024-05-28 19:33+0700\n"
+"PO-Revision-Date: 2024-05-28 19:33+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: en_US\n"
@@ -3513,11 +3513,11 @@ msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:573
+#: hocwp/inc/functions-scripts.php:574
 msgid "Link is not supported."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:574
+#: hocwp/inc/functions-scripts.php:575
 msgid "Link can be opened."
 msgstr ""
 

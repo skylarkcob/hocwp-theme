@@ -411,4 +411,44 @@ trait HOCWP_Theme_PHP {
 			'pattern'    => $pattern
 		);
 	}
+
+	public function in_range( $item, $min, $max ) {
+		return ( $item >= $min && $item <= $max );
+	}
+
+	public function month_to_season( $month = '' ) {
+		if ( empty( $month ) ) {
+			$month = date( 'm' );
+		}
+
+		$month = absint( $month );
+
+		if ( $this->in_range( $month, 3, 5 ) ) {
+			return 'SPRING';
+		} elseif ( $this->in_range( $month, 6, 8 ) ) {
+			return 'SUMMER';
+		} elseif ( $this->in_range( $month, 9, 11 ) ) {
+			return 'FALL';
+		} elseif ( $this->in_range( $month, 12, 2 ) ) {
+			return 'WINTER';
+		}
+
+		return false;
+	}
+
+	public function navigator_share_json( $data = array() ) {
+		$defaults = array(
+			'title'       => '',
+			'description' => '',
+			'hashtag'     => '',
+			'image'       => '',
+			'url'         => ''
+		);
+
+		$data = wp_parse_args( $data, $defaults );
+
+		$data = json_encode( $data );
+
+		return 'navigator.share(' . $data . ')';
+	}
 }

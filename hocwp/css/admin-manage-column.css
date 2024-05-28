@@ -94,3 +94,32 @@ td.column-featured {
     max-height: 100px;
     width: auto;
 }
+
+.wp-list-table th.column-image,
+.wp-list-table th.column-thumbnail,
+.wp-list-table th.column-icon {
+    width: 80px;
+}
+
+.wp-list-table td.column-image .image-box,
+.wp-list-table td.column-thumbnail .image-box,
+.wp-list-table td.column-icon .image-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-position: center;
+    height: 58px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+}
+
+.wp-list-table td.column-image .image-box img,
+.wp-list-table td.column-thumbnail .image-box img,
+.wp-list-table td.column-icon .image-box img {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: none;
+}

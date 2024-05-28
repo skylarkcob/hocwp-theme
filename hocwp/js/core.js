@@ -139,7 +139,7 @@ function HOCWP_Theme() {
                 }
             },
             complete: function (response) {
-                element.closest("body").trigger("hocwpTheme:ajaxComplete", [element, response]);
+                HOCWP_THEME.hideLoading(element, response);
             }
         }, params);
 
@@ -466,4 +466,59 @@ jQuery(document).ready(function ($) {
 
     hocwpTheme.GLOBAL.init();
     window.HOCWP_THEME = hocwpTheme;
+
+    HOCWP_THEME.randomNumber = function (min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    };
+
+    HOCWP_THEME.showLoading = function (element) {
+        BODY.trigger("hocwpTheme:ajaxStart", [element]);
+    };
+
+    HOCWP_THEME.hideLoading = function (element, response) {
+        BODY.trigger("hocwpTheme:ajaxComplete", [element, response]);
+    };
+
+    HOCWP_THEME.sanitizeCountDownResultFormat = function (event, element, style) {
+        let format = "";
+
+        style = style || "short";
+
+        if ("short" === style) {
+            if (event.offset.weeks > 0) {
+                format += "%w week%!w ";
+            }
+
+            if (event.offset.totalDays > 0) {
+                format += "%-d day%!d ";
+            }
+
+            format += "%H:%M:%S";
+        } else {
+            // Add weeks to format if greater than zero
+            if (event.offset.weeks > 0) {
+                format += event.offset.weeks + ' week' + (event.offset.weeks > 1 ? 's ' : ' ');
+            }
+
+            // Add days to format if greater than zero
+            if (event.offset.days > 0) {
+                format += event.offset.days + ' day' + (event.offset.days > 1 ? 's ' : ' ');
+            }
+
+            // Add hours to format if greater than zero
+            if (event.offset.hours > 0) {
+                format += event.offset.hours + ' hour' + (event.offset.hours > 1 ? 's ' : ' ');
+            }
+
+            // Add minutes to format if greater than zero
+            if (event.offset.minutes > 0) {
+                format += event.offset.minutes + ' minute' + (event.offset.minutes > 1 ? 's ' : ' ');
+            }
+
+            // Add seconds to format
+            format += event.offset.seconds + ' second' + (event.offset.seconds > 1 ? 's ' : '');
+        }
+
+        element.html(event.strftime(format));
+    };
 });

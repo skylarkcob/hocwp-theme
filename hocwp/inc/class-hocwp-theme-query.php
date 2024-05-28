@@ -668,6 +668,16 @@ final class HOCWP_Theme_Query {
 		return $result;
 	}
 
+	public function get_all_meta_values( $meta_key, $order = 'ASC' ) {
+		global $wpdb;
+
+		$sql     = "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '" . $meta_key . "' GROUP BY meta_value ORDER BY meta_value " . $order . ";";
+		$results = $wpdb->get_col( $sql );
+		HT()->unique_filter( $results );
+
+		return $results;
+	}
+
 	public function posts_orderby_meta( $meta_key, $args = array() ) {
 		$defaults = array(
 			'meta_key' => $meta_key,
@@ -721,6 +731,25 @@ final class HOCWP_Theme_Query {
 		return $wpdb->get_col( $sql );
 	}
 
+	public function not_meta_query_args( $key, $value = 1, $relation = 'OR' ) {
+		return array(
+			'relation' => $relation,
+			array(
+				'key'   => $key,
+				'value' => ''
+			),
+			array(
+				'key'     => $key,
+				'compare' => 'NOT EXISTS'
+			),
+			array(
+				'key'     => $key,
+				'value'   => $value,
+				'compare' => '!='
+			)
+		);
+	}
+
 	private function add_meta_or_tax_query_item( $item, &$args, $key = 'meta_query' ) {
 		if ( is_array( $args ) ) {
 			if ( ! isset( $args[ $key ] ) || ! is_array( $args[ $key ] ) ) {
@@ -745,10 +774,104 @@ final class HOCWP_Theme_Query {
 		return $args;
 	}
 
+	public function add_tax_query_item_to_array( &$tax_query, $taxonomy, $terms = null, $key = '' ) {
+		if ( empty( $terms ) ) {
+			$terms = $_GET[ $key ] ?? '';
+		}
+
+		if ( ! is_array( $terms ) && ! empty( $terms ) ) {
+			$terms = (array) $terms;
+		}
+
+		if ( ! empty( $terms ) ) {
+			$tax_query[] = array(
+				'taxonomy' => $taxonomy,
+				'terms'    => $terms
+			);
+		}
+	}
+
+	/**
+	 * Auto update tax_query for a WP_Query.
+	 *
+	 * @param WP_Query $query Query object to adjust.
+	 * @param array $taxs The list of taxonomy and form key, uses like that array( 'tax' => 'key' ).
+	 * @param string $relation Tax query item relation.
+	 *
+	 * @return void
+	 */
+	public function update_tax_query( &$query, $taxs, $relation = 'AND' ) {
+		if ( $query instanceof WP_Query ) {
+			$tax_query = $query->get( 'tax_query' );
+
+			if ( ! is_array( $tax_query ) ) {
+				$tax_query = array();
+			}
+
+			$items = array();
+
+			foreach ( $taxs as $taxonomy => $key ) {
+				$this->add_tax_query_item_to_array( $items, $taxonomy, null, $key );
+			}
+
+			if ( ! empty( $items ) ) {
+				$items['relation'] = $relation;
+
+				$tax_query[] = $items;
+				$query->set( 'tax_query', $tax_query );
+			}
+		}
+	}
+
 	public function add_meta_query_item( $item, &$args ) {
 		$this->add_meta_or_tax_query_item( $item, $args );
 
 		return $args;
+	}
+
+	public function add_meta_query_item_to_array( &$meta_query, $meta_key, $meta_value = null, $key = '' ) {
+		if ( empty( $meta_value ) ) {
+			$meta_value = $_GET[ $key ] ?? '';
+		}
+
+		if ( ! empty( $meta_value ) ) {
+			$meta_query[] = array(
+				'key'   => $meta_key,
+				'value' => $meta_value
+			);
+		}
+	}
+
+	/**
+	 * Auto update meta_query for a WP_Query.
+	 *
+	 * @param WP_Query $query Query object to adjust.
+	 * @param array $params The list of meta_key and form key, uses like that array( 'meta_key' => 'form_name' ).
+	 * @param string $relation Tax query item relation.
+	 *
+	 * @return void
+	 */
+	public function update_meta_query( &$query, $params, $relation = 'AND' ) {
+		if ( $query instanceof WP_Query ) {
+			$meta_query = $query->get( 'meta_query' );
+
+			if ( ! is_array( $meta_query ) ) {
+				$meta_query = array();
+			}
+
+			$items = array();
+
+			foreach ( $params as $meta_key => $key ) {
+				$this->add_meta_query_item_to_array( $items, $meta_key, null, $key );
+			}
+
+			if ( ! empty( $items ) ) {
+				$items['relation'] = $relation;
+
+				$meta_query[] = $items;
+				$query->set( 'meta_query', $meta_query );
+			}
+		}
 	}
 }
 

@@ -6,6 +6,7 @@
 * 22/05/2024: Fix function to enqueue Fontawesome new version.
 * 23/05/2024: Update function to manage exported database files.
 * 23/05/2024: Add update functions to update theme and plugin from remote source.
+* 24/05/2024: Update css animation defined.
 
 = 7.0.5 =
 * 24/01/2024: Update some dev functions before coding Fapas Clothes Store theme.

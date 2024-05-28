@@ -757,7 +757,7 @@ class HOCWP_Theme_Utility {
 
 		$zip = new ZipArchive();
 
-		if ( $zip->open( $destination, ZipArchive::CREATE ) === true ) {
+		if ( @$zip->open( $destination, ZipArchive::CREATE ) === true ) {
 			$source = wp_normalize_path( $source );
 
 			if ( is_dir( $source ) ) {
@@ -793,16 +793,16 @@ class HOCWP_Theme_Utility {
 					$relative = str_replace( $replace, '', $file );
 
 					if ( is_dir( $file ) ) {
-						$zip->addEmptyDir( $relative );
+						@$zip->addEmptyDir( $relative );
 					} elseif ( is_file( $file ) ) {
-						$zip->addFile( $file, $relative );
+						@$zip->addFile( $file, $relative );
 					}
 				}
 			} else if ( is_file( $source ) ) {
-				$zip->addFile( $source, basename( $source ) );
+				@$zip->addFile( $source, basename( $source ) );
 			}
 
-			return $zip->close();
+			return @$zip->close();
 		}
 
 		return false;
@@ -2735,7 +2735,7 @@ class HOCWP_Theme_Utility {
 		return null;
 	}
 
-	public function background_image_css( $image, $color = '' ) {
+	public function background_image_css( $image, $color = '', $bg_gradient = '' ) {
 		$style = '';
 
 		if ( ! empty( $color ) ) {
@@ -2746,8 +2746,20 @@ class HOCWP_Theme_Utility {
 			$image = wp_get_original_image_url( $image );
 		}
 
+		$bg_gradient = trim( $bg_gradient );
+
+		if ( ! empty( $bg_gradient ) ) {
+			$bg_gradient = rtrim( $bg_gradient, ',' );
+			$style       .= 'background-image: ' . $bg_gradient;
+		}
+
 		if ( ! empty( $image ) ) {
-			$style .= sprintf( 'background-image: url("%s");', esc_attr( $image ) );
+			if ( empty( $bg_gradient ) ) {
+				$style .= sprintf( 'background-image: url("%s");', esc_attr( $image ) );
+			} else {
+
+				$style .= sprintf( ', url("%s");', esc_attr( $image ) );
+			}
 		}
 
 		return trim( $style );

@@ -23,13 +23,13 @@ jQuery(document).ready(function ($) {
                     requireLogin = parseInt(element.attr("data-require-login")),
                     confirmMessage = element.attr("data-confirm-message");
 
-                if (1 == requireLogin && !body.hasClass("logged-in")) {
+                if (1 === requireLogin && !body.hasClass("logged-in")) {
                     window.location.href = hocwpTheme.loginUrl;
                     return;
                 }
 
                 if (!$.trim(confirmMessage) || confirm(confirmMessage)) {
-                    body.trigger("hocwpTheme:ajaxStart", [element]);
+                    HOCWP_THEME.showLoading(element);
 
                     $.ajax({
                         type: "POST",
@@ -88,7 +88,7 @@ jQuery(document).ready(function ($) {
                             }
                         },
                         complete: function (response) {
-                            body.trigger("hocwpTheme:ajaxComplete", [element, response]);
+                            HOCWP_THEME.hideLoading(element, response);
                             element.blur();
                         }
                     });
