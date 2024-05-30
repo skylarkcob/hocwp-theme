@@ -758,7 +758,7 @@ final class HOCWP_Theme_Query {
 
 		return $items;
 	}
-	
+
 	public function not_meta_query_args( $key, $value = 1, $relation = 'OR' ) {
 		return array(
 			'relation' => $relation,

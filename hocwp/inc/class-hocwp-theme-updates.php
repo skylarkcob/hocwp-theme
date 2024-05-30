@@ -203,9 +203,11 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			$url = $this->api_url . $endpoint;
 
 			// Staging environment.
-			if ( HOCWP_THEME_DEVELOPING ) {
+			if ( defined( 'LDC_DEV_API' ) && LDC_DEV_API ) {
 				// Change api url to dev environment and debug log
-				$url = 'http://localhost/api/' . $endpoint;
+				$url = trailingslashit( LDC_DEV_API ) . $endpoint;
+				CAD_DEBUG( $url );
+				CAD_DEBUG( $body );
 			}
 
 			// Make request.

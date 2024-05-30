@@ -250,17 +250,31 @@ final class HOCWP_Theme_Controller {
 		return HT_Util()->verify_nonce( is_child_theme() ? get_stylesheet() : $this->textdomain, $nonce_name );
 	}
 
+	public function get_default( $key ) {
+		return $this->object->defaults[ $key ] ?? '';
+	}
+
 	public function get_date_format() {
-		return $this->object->defaults['date_format'];
+		return $this->get_default( 'date_format' );
+	}
+
+	public function get_time_format() {
+		return $this->get_default( 'time_format' );
+	}
+
+	public function get_date_time_format( $time = true ) {
+		$format = $this->get_date_format();
+
+		if ( $time ) {
+			$format .= ' ' . $this->get_time_format();
+		}
+
+		return $format;
 	}
 
 	public function the_date( $format = '', $post = null, $time = true ) {
 		if ( empty( $format ) ) {
-			$format = $this->get_date_format();
-
-			if ( $time ) {
-				$format .= ' ' . $this->object->defaults['time_format'];
-			}
+			$format = $this->get_date_time_format( $time );
 		}
 
 		echo get_the_time( $format, $post );
@@ -414,6 +428,15 @@ final class HOCWP_Theme_Controller {
 		 */
 		if ( class_exists( 'HOCWP_Theme' ) ) {
 			return;
+		}
+
+		if ( HOCWP_THEME_DEVELOPING ) {
+			// Load all development configurations.
+			$dev_config = trailingslashit( $_SERVER['DOCUMENT_ROOT'] ) . 'dev-config.php';
+
+			if ( file_exists( $dev_config ) ) {
+				require_once $dev_config;
+			}
 		}
 
 		// Allow user run custom hook before theme load

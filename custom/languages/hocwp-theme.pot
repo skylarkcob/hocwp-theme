@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2024-05-28 19:33+0700\n"
+"POT-Creation-Date: 2024-05-30 20:17+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -2396,15 +2396,15 @@ msgstr ""
 msgid "Display widgets on 404 page."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-controller.php:431
+#: hocwp/inc/class-hocwp-theme-controller.php:454
 msgid "<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-controller.php:451
+#: hocwp/inc/class-hocwp-theme-controller.php:474
 msgid "Change Theme"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-controller.php:456
+#: hocwp/inc/class-hocwp-theme-controller.php:479
 msgid "Missing Child Theme"
 msgstr ""
 

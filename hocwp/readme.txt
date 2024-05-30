@@ -1,4 +1,8 @@
 == Changelog ==
+= 7.0.7 =
+* 30/05/2024: Update improve search extension.
+* 30/05/2024: Update for pre-release anime theme.
+
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.
 * 21/05/2024: Big update with more change in core.
@@ -7,6 +11,7 @@
 * 23/05/2024: Update function to manage exported database files.
 * 23/05/2024: Add update functions to update theme and plugin from remote source.
 * 24/05/2024: Update css animation defined.
+* 29/05/2024: Update improve search extension, allow filter sql query before get ids.
 
 = 7.0.5 =
 * 24/01/2024: Update some dev functions before coding Fapas Clothes Store theme.
