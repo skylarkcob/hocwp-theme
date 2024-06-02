@@ -46,12 +46,20 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			if ( is_array( $updates ) ) {
 				if ( ! empty( $updates[ $type ] ) ) {
 					foreach ( $updates[ $type ] as $basename => $update ) {
+						if ( 'plugins' == $type ) {
+							$update = (object) $update;
+						}
+
 						$transient->response[ $basename ] = $update;
 					}
 				}
 
 				if ( ! empty( $updates['no_update'] ) ) {
 					foreach ( $updates['no_update'] as $basename => $update ) {
+						if ( 'plugins' == $type ) {
+							$update = (object) $update;
+						}
+
 						$transient->no_update[ $basename ] = $update;
 					}
 				}
@@ -380,6 +388,10 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		}
 
 		private function add_item( $type, $item ) {
+			if ( ! is_array( $item ) ) {
+				return;
+			}
+
 			if ( ! is_array( $this->{$type} ) ) {
 				$this->{$type} = array();
 			}
@@ -399,6 +411,12 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			if ( empty( $item['basename'] ) ) {
 				$item['basename'] = $item['slug'];
 			}
+
+			if ( empty( $item['slug'] ) ) {
+				$item['slug'] = $item['basename'];
+			}
+
+			$item['slug'] = dirname( $item['slug'] );
 
 			if ( 'plugins' == $type ) {
 				// Check if is_plugin_active() function exists. This is required on the front end of the
