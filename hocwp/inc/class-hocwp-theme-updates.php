@@ -113,6 +113,10 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			// Check update from connect.
 			$response = $this->request( $endpoint, $post );
 
+			if ( isset( $response['code'] ) && isset( $response['message'] ) ) {
+				return array();
+			}
+
 			// Append checked reference.
 			if ( is_array( $response ) ) {
 				$response['checked'] = $checked;
@@ -290,8 +294,10 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		}
 
 		private function modify_details( $type, $result, $action = null, $args = null ) {
+			$do_action = rtrim( $type, 's' ) . '_information';
+
 			// Only for 'plugin_information' action.
-			if ( $action !== rtrim( $type, 's' ) . '_information' ) {
+			if ( $action !== $do_action ) {
 				return $result;
 			}
 
@@ -324,7 +330,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			);
 
 			foreach ( $sections as $k => $v ) {
-				$sections[ $k ] = $response->{$k};
+				$sections[ $k ] = $response->{$k} ?? '';
 			}
 
 			$response->sections = $sections;
@@ -337,7 +343,10 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		}
 
 		public function get_item_by( $type, $key = '', $value = null ) {
+			CAD_DEBUG( $key );
+			CAD_DEBUG( $value );
 			foreach ( $this->{$type} as $item ) {
+				CAD_DEBUG( $item );
 				if ( $item[ $key ] === $value ) {
 					return $item;
 				}
@@ -368,6 +377,10 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			// convert string (misc error) to WP_Error object.
 			if ( is_string( $response ) ) {
 				$response = new WP_Error( 'server_error', esc_html( $response ) );
+			}
+
+			if ( isset( $response['code'] ) && isset( $response['message'] ) ) {
+				return new WP_Error( $response['code'], $response['message'] );
 			}
 
 			// allow json to include expiration but force minimum and max for safety.
