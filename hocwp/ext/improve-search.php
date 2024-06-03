@@ -70,8 +70,14 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 		}
 
 		public function pre_get_posts_action( $query ) {
-			if ( $query instanceof WP_Query ) {
+			if ( $query instanceof WP_Query && ( is_search() || apply_filters( 'hocwp_theme_improve_search_query', false, $query ) ) ) {
 				$search = $query->query_vars['s'] ?? '';
+
+				if ( empty( $search ) ) {
+					$search = $_GET['text'] ?? '';
+				}
+
+				$search = apply_filters( 'hocwp_theme_improve_search_search_term', $search, $query );
 
 				if ( ! empty( $search ) ) {
 					$search = trim( $search );
@@ -231,7 +237,7 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 
 					if ( HT()->array_has_value( $post_ids ) ) {
 						$query->set( 'post__in', $post_ids );
-						$query->set( 's', '' );
+						unset( $query->query_vars['s'] );
 					}
 
 					unset( $ppp, $post_ids, $sql, $tmp, $post_type, $post_types, $type, $save, $slug );
