@@ -347,10 +347,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 		}
 
 		public function get_item_by( $type, $key = '', $value = null ) {
-			CAD_DEBUG( $key );
-			CAD_DEBUG( $value );
 			foreach ( $this->{$type} as $item ) {
-				CAD_DEBUG( $item );
 				if ( $item[ $key ] === $value ) {
 					return $item;
 				}
