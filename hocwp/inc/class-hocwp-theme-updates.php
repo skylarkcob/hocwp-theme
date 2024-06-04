@@ -113,6 +113,10 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			// Check update from connect.
 			$response = $this->request( $endpoint, $post );
 
+			if ( is_wp_error( $response ) ) {
+				return array();
+			}
+
 			if ( isset( $response['code'] ) && isset( $response['message'] ) ) {
 				return array();
 			}
