@@ -223,7 +223,7 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 								}
 
 								if ( $tmp->have_posts() ) {
-									$post_ids += $tmp->posts;
+									$post_ids = array_merge( $post_ids, $tmp->posts );
 								}
 							}
 						}
