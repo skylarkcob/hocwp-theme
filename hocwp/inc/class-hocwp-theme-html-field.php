@@ -1038,6 +1038,8 @@ final class HOCWP_Theme_HTML_Field {
 		$images = $value;
 
 		if ( is_array( $value ) ) {
+			// Small fix prevent images value like {"1":123}
+			$value = array_values( $value );
 			$value = json_encode( $value );
 		}
 
