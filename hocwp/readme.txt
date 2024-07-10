@@ -2,6 +2,7 @@
 = 7.0.7 =
 * 30/05/2024: Update improve search extension.
 * 30/05/2024: Update for pre-release anime theme.
+* 26/06/2024: Update countdown function support translation.
 
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.

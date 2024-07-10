@@ -479,44 +479,63 @@ jQuery(document).ready(function ($) {
         BODY.trigger("hocwpTheme:ajaxComplete", [element, response]);
     };
 
-    HOCWP_THEME.sanitizeCountDownResultFormat = function (event, element, style) {
+    HOCWP_THEME.sanitizeCountDownResultFormat = function (event, element, style, language) {
         let format = "";
 
+        function formatDate(format, value, translation) {
+            if ("en" !== language) {
+                format += value + " " + translation + " ";
+            } else {
+                format += value + " week" + (value > 1 ? "s " : " ");
+            }
+
+            return format;
+        }
+
         style = style || "short";
+        language = language || "en";
 
         if ("short" === style) {
             if (event.offset.weeks > 0) {
-                format += "%w week%!w ";
+                if ("en" !== language) {
+                    format += event.offset.weeks + " " + hocwpTheme.countdown.labels.week + " ";
+                } else {
+                    format += "%w week%!w ";
+                }
             }
 
             if (event.offset.totalDays > 0) {
-                format += "%-d day%!d ";
+                if ("en" !== language) {
+                    format += "%-d " + hocwpTheme.countdown.labels.day + " ";
+                } else {
+                    format += "%-d day%!d ";
+                }
             }
 
             format += "%H:%M:%S";
         } else {
             // Add weeks to format if greater than zero
             if (event.offset.weeks > 0) {
-                format += event.offset.weeks + ' week' + (event.offset.weeks > 1 ? 's ' : ' ');
+                format = formatDate(format, event.offset.weeks, hocwpTheme.countdown.labels.week);
             }
 
             // Add days to format if greater than zero
             if (event.offset.days > 0) {
-                format += event.offset.days + ' day' + (event.offset.days > 1 ? 's ' : ' ');
+                format = formatDate(format, event.offset.days, hocwpTheme.countdown.labels.day);
             }
 
             // Add hours to format if greater than zero
             if (event.offset.hours > 0) {
-                format += event.offset.hours + ' hour' + (event.offset.hours > 1 ? 's ' : ' ');
+                format = formatDate(format, event.offset.hours, hocwpTheme.countdown.labels.hour);
             }
 
             // Add minutes to format if greater than zero
             if (event.offset.minutes > 0) {
-                format += event.offset.minutes + ' minute' + (event.offset.minutes > 1 ? 's ' : ' ');
+                format = formatDate(format, event.offset.minutes, hocwpTheme.countdown.labels.minute);
             }
 
             // Add seconds to format
-            format += event.offset.seconds + ' second' + (event.offset.seconds > 1 ? 's ' : '');
+            format = formatDate(format, event.offset.seconds, hocwpTheme.countdown.labels.second);
         }
 
         element.html(event.strftime(format));

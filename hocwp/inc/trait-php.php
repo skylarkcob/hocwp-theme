@@ -423,13 +423,13 @@ trait HOCWP_Theme_PHP {
 
 		$month = absint( $month );
 
-		if ( $this->in_range( $month, 3, 5 ) ) {
+		if ( $this->in_range( $month, 4, 6 ) ) {
 			return 'SPRING';
-		} elseif ( $this->in_range( $month, 6, 8 ) ) {
+		} elseif ( $this->in_range( $month, 7, 9 ) ) {
 			return 'SUMMER';
-		} elseif ( $this->in_range( $month, 9, 11 ) ) {
+		} elseif ( $this->in_range( $month, 10, 12 ) ) {
 			return 'FALL';
-		} elseif ( $this->in_range( $month, 12, 2 ) ) {
+		} elseif ( $this->in_range( $month, 1, 3 ) ) {
 			return 'WINTER';
 		}
 

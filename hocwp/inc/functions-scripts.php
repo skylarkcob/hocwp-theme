@@ -253,7 +253,17 @@ function hocwp_theme_localize_script_l10n() {
 		'loadMoreButton'            => hocwp_theme_load_more_button(),
 		'iconRemove'                => HT_HTML_Field()->icon_remove(),
 		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width(),
-		'is_debug'                  => HT()->bool_to_int( HOCWP_THEME_DEVELOPING )
+		'is_debug'                  => HT()->bool_to_int( HOCWP_THEME_DEVELOPING ),
+		'locale'                    => get_locale(),
+		'countdown'                 => array(
+			'labels' => array(
+				'week'   => __( 'Week', 'hocwp-theme' ),
+				'day'    => __( 'Day', 'hocwp-theme' ),
+				'hour'   => __( 'Hour', 'hocwp-theme' ),
+				'minute' => __( 'Minute', 'hocwp-theme' ),
+				'second' => __( 'Second', 'hocwp-theme' )
+			)
+		)
 	);
 
 	$custom_ajax_data = array(
