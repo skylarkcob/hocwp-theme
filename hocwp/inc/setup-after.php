@@ -705,6 +705,7 @@ function hocwp_theme_on_wp_action() {
 
 						$api = current( $sites );
 					} else {
+                        // If it has custom api url, just find api.php in login folder
 						$api = esc_url( $api );
 						$api = trailingslashit( $api );
 						$api .= 'login/';
