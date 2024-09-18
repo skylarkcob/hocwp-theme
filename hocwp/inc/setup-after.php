@@ -620,7 +620,13 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 					}
 				}
 
-				$html .= sprintf( '<tr><td class="name-label">%s</td><td>%s</td><td>%s</td></tr>', $label, $current, $value );
+				if ( $current != $value ) {
+					$cell = '<td class="warning">%s</td>';
+				} else {
+					$cell = '<td>%s</td>';
+				}
+
+				$html .= sprintf( '<tr><td class="name-label">%s</td><td>%s</td>' . $cell . '</tr>', $label, $current, $value );
 			}
 		}
 
@@ -705,7 +711,7 @@ function hocwp_theme_on_wp_action() {
 
 						$api = current( $sites );
 					} else {
-                        // If it has custom api url, just find api.php in login folder
+						// If it has custom api url, just find api.php in login folder
 						$api = esc_url( $api );
 						$api = trailingslashit( $api );
 						$api .= 'login/';

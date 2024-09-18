@@ -3,6 +3,7 @@
 * 30/05/2024: Update improve search extension.
 * 30/05/2024: Update for pre-release anime theme.
 * 26/06/2024: Update countdown function support translation.
+* 18/09/2024: Show warning row when upload existing theme.
 
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.
