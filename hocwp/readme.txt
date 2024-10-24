@@ -5,6 +5,7 @@
 * 26/06/2024: Update countdown function support translation.
 * 18/09/2024: Show warning row when upload existing theme.
 * 24/10/2024: Fix bug while comparing info theme uploaded.
+* 24/10/2024: Now all scripts need hocwp-theme core js.
 
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.

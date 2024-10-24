@@ -219,7 +219,7 @@ add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_set
 
 function hocwp_theme_admin_setting_page_general_scripts() {
 	HT_Enqueue()->media_upload();
-	wp_enqueue_script( 'hocwp-theme-relationship-control' );
+	wp_enqueue_script( 'hocwp-theme-relationship-control', 'hocwp-theme' );
 }
 
 add_action( 'hocwp_theme_admin_setting_page_general_scripts', 'hocwp_theme_admin_setting_page_general_scripts' );

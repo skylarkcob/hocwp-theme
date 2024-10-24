@@ -259,17 +259,24 @@ function hocwp_theme_customize_controls_enqueue_scripts_action() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
 	// Add main customizer js file.
-	wp_enqueue_script( 'hocwp-theme-customize', HOCWP_Theme()->core_url . '/js/customize.js', array( 'jquery' ), $theme_version, false );
+	wp_enqueue_script( 'hocwp-theme-customize', HOCWP_Theme()->core_url . '/js/customize.js', array(
+		'jquery',
+		'hocwp-theme'
+	), $theme_version, false );
 
 	// Add script for color calculations.
-	wp_enqueue_script( 'hocwp-theme-color-calculations', HOCWP_Theme()->core_url . '/js/color-calculations.js', array( 'wp-color-picker' ), $theme_version, false );
+	wp_enqueue_script( 'hocwp-theme-color-calculations', HOCWP_Theme()->core_url . '/js/color-calculations.js', array(
+		'wp-color-picker',
+		'hocwp-theme'
+	), $theme_version, false );
 
 	// Add script for controls.
 	wp_enqueue_script( 'hocwp-theme-customize-controls', HOCWP_Theme()->core_url . '/js/customize-controls.js', array(
 		'hocwp-theme-color-calculations',
 		'customize-controls',
 		'underscore',
-		'jquery'
+		'jquery',
+		'hocwp-theme'
 	), $theme_version, false );
 
 	wp_localize_script( 'hocwp-theme-customize-controls', 'hocwpThemeCustomizer', array( 'colors' => hocwp_theme_get_customizer_color_vars() ) );
@@ -283,7 +290,8 @@ function hocwp_theme_customize_preview_init_action() {
 	wp_enqueue_script( 'hocwp-theme-customize-preview', HOCWP_Theme()->core_url . '/js/customize-preview.js', array(
 		'customize-preview',
 		'customize-selective-refresh',
-		'jquery'
+		'jquery',
+		'hocwp-theme'
 	), $theme_version, true );
 
 	if ( ! function_exists( 'hocwp_theme_get_inline_css' ) ) {

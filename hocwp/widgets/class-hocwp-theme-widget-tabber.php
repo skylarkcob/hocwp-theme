@@ -36,7 +36,7 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 		wp_enqueue_style( 'hocwp-theme-widget-tabber-style', $src );
 
 		$src = HOCWP_THEME_CORE_URL . '/js/widget-tabber' . HOCWP_THEME_JS_SUFFIX;
-		wp_enqueue_script( 'hocwp-theme-widget-tabber', $src, array(), false, true );
+		wp_enqueue_script( 'hocwp-theme-widget-tabber', $src, array( 'hocwp-theme' ), false, true );
 	}
 
 	public function widget( $args, $instance ) {
