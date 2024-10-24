@@ -794,3 +794,41 @@ add_action( 'hocwp_theme_field_fields', function ( $args ) {
 		}
 	}
 } );
+
+// Add page state description after title by getting page template name of current page
+add_filter( 'display_post_states', function ( $states, $post ) {
+	if ( ! isset( $states['template'] ) && $post instanceof WP_Post && 'page' == $post->post_type ) {
+		$template = get_post_meta( $post->ID, '_wp_page_template', true );
+
+		if ( ! empty( $template ) && 'default' != $template ) {
+			$file = trailingslashit( get_stylesheet_directory() ) . $template;
+
+			if ( ! file_exists( $file ) ) {
+				$base = trailingslashit( WP_CONTENT_DIR ) . 'plugins';
+
+				$files = scandir( $base );
+
+				$files = array_diff( $files, array( '.', '..' ) );
+
+				foreach ( $files as $folder ) {
+					$file = trailingslashit( $base ) . $folder;
+					$file = trailingslashit( $file ) . $template;
+
+					if ( file_exists( $file ) ) {
+						break;
+					}
+				}
+			}
+
+			if ( file_exists( $file ) ) {
+				$data = get_file_data( $file, array( 'name' => 'Template Name' ) );
+
+				if ( ! empty( $data['name'] ) ) {
+					$states['template'] = $data['name'];
+				}
+			}
+		}
+	}
+
+	return $states;
+}, 10, 2 );

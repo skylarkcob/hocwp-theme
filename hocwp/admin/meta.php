@@ -72,15 +72,15 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 	}
 
 	function hocwp_theme_meta_box_editor( $args = array() ) {
-		$post_type    = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
-		$box_title    = isset( $args['title'] ) ? $args['title'] : __( 'Additional Information', 'hocwp-theme' );
+		$post_type    = $args['post_type'] ?? 'post';
+		$box_title    = $args['title'] ?? __( 'Additional Information', 'hocwp-theme' );
 		$current_type = HT_Admin()->get_current_post_type();
 
 		if ( is_array( $current_type ) ) {
 			$current_type = current( $current_type );
 		}
 
-		$box_id = isset( $args['id'] ) ? $args['id'] : '';
+		$box_id = $args['id'] ?? '';
 
 		if ( empty( $box_id ) ) {
 			$box_id = sanitize_title( $box_title );
@@ -92,7 +92,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		}
 
 		if ( empty( $current_type ) ) {
-			$current_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : '';
+			$current_type = $_POST['post_type'] ?? '';
 		}
 
 		if ( ! empty( $current_type ) ) {
@@ -113,8 +113,8 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		$meta->set_title( $box_title );
 		$meta->set_id( $box_id );
 
-		$id   = isset( $field_args['id'] ) ? $field_args['id'] : '';
-		$name = isset( $field_args['name'] ) ? $field_args['name'] : '';
+		$id   = $field_args['id'] ?? '';
+		$name = $field_args['name'] ?? '';
 
 		if ( empty( $id ) && empty( $name ) ) {
 			$name = $box_id;
