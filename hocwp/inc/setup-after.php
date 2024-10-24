@@ -571,7 +571,8 @@ function hocwp_theme_read_style_header_info( $theme_path ) {
 		'created_date'    => 'Created Date',
 		'last_updated'    => 'Last Updated',
 		'coder'           => 'Coder',
-		'text_domain'     => 'Text Domain'
+		'text_domain'     => 'Text Domain',
+		'template'        => 'Template'
 	);
 
 	// Get file header data
@@ -587,15 +588,28 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 
 	// Get uploaded information
 	if ( false !== ( $source_info = get_transient( 'hocwp_theme_upgrader_source_info' ) ) ) {
-		// Get current information
-		$data = hocwp_theme_read_style_header_info( get_stylesheet_directory() );
+		$template = $source_info['template'] ?? '';
+		// Get current information (should detect parent theme or child theme)
+
+		if ( ! empty( $template ) ) {
+			// The child theme has stylesheet name different with template name
+			$current_path = get_stylesheet_directory();
+		} else {
+			// The parent theme has stylesheet name and template name same
+			$current_path = get_template_directory();
+		}
+
+		// Read data from current theme style path
+		$data = hocwp_theme_read_style_header_info( $current_path );
+
 		$info = $data['data'] ?? '';
 
 		if ( ! is_array( $info ) ) {
 			$info = array();
 		}
 
-		hocwp_theme_add_more_theme_comparison_info( $info, get_stylesheet_directory() );
+		// Get more info from current theme style file path
+		hocwp_theme_add_more_theme_comparison_info( $info, $current_path );
 
 		$headers = $data['headers'] ?? '';
 
@@ -604,6 +618,11 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 			'core_version'  => __( 'Core Version', 'hocwp-theme' ),
 			'total_files'   => __( 'Total Files', 'hocwp-theme' )
 		);
+
+        // If is parent theme so not compare template
+		if ( empty( $template ) ) {
+			unset( $source_info['template'] );
+		}
 
 		// Info Columns: Label / Active / Uploaded
 		foreach ( $source_info as $key => $value ) {
@@ -618,6 +637,11 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 							$current = HOCWP_THEME_CORE_VERSION;
 							break;
 					}
+				}
+
+				// Skip both empty fields
+				if ( '' == $current && '' == $value ) {
+					continue;
 				}
 
 				if ( $current != $value ) {
@@ -642,6 +666,7 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 
 add_filter( 'upgrader_source_selection', function ( $source, $remote_source, $upgrader ) {
 	if ( $upgrader instanceof Theme_Upgrader && ! empty( $remote_source ) ) {
+		// Get uploaded theme information
 		$data = hocwp_theme_read_style_header_info( $source );
 		$info = $data['data'] ?? '';
 
