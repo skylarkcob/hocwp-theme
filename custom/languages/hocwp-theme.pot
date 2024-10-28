@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2024-06-26 18:55+0700\n"
+"POT-Creation-Date: 2024-10-28 22:56+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-Basepath: ../..\n"
@@ -293,7 +293,7 @@ msgid "Copy the setting value and fill in the data entry box to import into the 
 msgstr ""
 
 #: hocwp/admin/admin-setting-page-administration-tools.php:300 hocwp/admin/class-hocwp-theme-admin-setting-page.php:749
-#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:771 hocwp/inc/setup-after.php:162 hocwp/inc/setup-after.php:656
+#: hocwp/admin/class-hocwp-theme-admin-setting-page.php:771 hocwp/inc/setup-after.php:162 hocwp/inc/setup-after.php:700
 msgid "Theme Settings"
 msgstr ""
 
@@ -1321,7 +1321,7 @@ msgid "Choose post status"
 msgstr ""
 
 #: hocwp/admin/admin.php:647 hocwp/inc/class-hocwp-theme-html-field.php:857 hocwp/inc/class-hocwp-theme-html-field.php:899
-#: hocwp/inc/class-hocwp-theme-html-field.php:2080 hocwp/inc/functions-scripts.php:421
+#: hocwp/inc/class-hocwp-theme-html-field.php:2080 hocwp/inc/functions-scripts.php:425
 #, php-format
 msgid "Choose %s"
 msgstr ""
@@ -1529,7 +1529,7 @@ msgctxt "hocwp-theme-extension"
 msgid "Activate %s"
 msgstr ""
 
-#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:420
+#: hocwp/admin/class-hocwp-extensions-list-table.php:297 hocwp/inc/functions-scripts.php:424
 #, php-format
 msgid "Select %s"
 msgstr ""
@@ -2659,7 +2659,7 @@ msgstr ""
 msgid "API name cannot be empty, can be place, geocode, distancematrix,..."
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-google-maps-api.php:44 hocwp/inc/class-hocwp-theme-youtube-api.php:137
+#: hocwp/inc/class-hocwp-theme-google-maps-api.php:44 hocwp/inc/class-hocwp-theme-youtube-api.php:133
 msgid "Query parameters must be provided in full."
 msgstr ""
 
@@ -3197,7 +3197,7 @@ msgstr ""
 msgid "Show sub menu"
 msgstr ""
 
-#: hocwp/inc/class-hocwp-theme-youtube-api.php:133
+#: hocwp/inc/class-hocwp-theme-youtube-api.php:129
 msgid "API name cannot be empty, can be videos, search,..."
 msgstr ""
 
@@ -3266,71 +3266,71 @@ msgstr ""
 msgid "Load more"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:417
+#: hocwp/inc/functions-scripts.php:421
 #, php-format
 msgid "Remove %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:418
+#: hocwp/inc/functions-scripts.php:422
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:422
+#: hocwp/inc/functions-scripts.php:426
 #, php-format
 msgid "Change %s"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:494
+#: hocwp/inc/functions-scripts.php:499
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:495
+#: hocwp/inc/functions-scripts.php:500
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:496
+#: hocwp/inc/functions-scripts.php:501
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:497
+#: hocwp/inc/functions-scripts.php:502
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:498
+#: hocwp/inc/functions-scripts.php:503
 msgctxt "quicktags description"
 msgid "Indentation"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:499
+#: hocwp/inc/functions-scripts.php:504
 msgctxt "quicktags description"
 msgid "Heading 2"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:500
+#: hocwp/inc/functions-scripts.php:505
 msgctxt "quicktags description"
 msgid "Heading 3"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:501
+#: hocwp/inc/functions-scripts.php:506
 msgctxt "quicktags description"
 msgid "Heading 4"
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:502
+#: hocwp/inc/functions-scripts.php:507
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:584
+#: hocwp/inc/functions-scripts.php:589
 msgid "Link is not supported."
 msgstr ""
 
-#: hocwp/inc/functions-scripts.php:585
+#: hocwp/inc/functions-scripts.php:590
 msgid "Link can be opened."
 msgstr ""
 
@@ -3448,36 +3448,56 @@ msgstr ""
 msgid "Missing Required Plugins"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:603
+#: hocwp/inc/setup-after.php:618
 msgid "Custom Readme"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:604
+#: hocwp/inc/setup-after.php:619
 msgid "Core Version"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:605
+#: hocwp/inc/setup-after.php:620
 msgid "Total Files"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:654
+#: hocwp/inc/setup-after.php:655
+msgid "Real theme name"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:657
+msgid "Created date"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:659
+msgid "Last updated"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:661
+msgid "Tested up to"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:663
+msgid "Coder"
+msgstr ""
+
+#: hocwp/inc/setup-after.php:698
 #, php-format
 msgid "%s Settings"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:660
+#: hocwp/inc/setup-after.php:704
 msgid "Contact Author"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:814
+#: hocwp/inc/setup-after.php:859
 msgid "Disable Upgrade"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:815
+#: hocwp/inc/setup-after.php:860
 msgid "Enable Upgrade"
 msgstr ""
 
-#: hocwp/inc/setup-after.php:855
+#: hocwp/inc/setup-after.php:900
 msgid "Upgrade Disabled"
 msgstr ""
 

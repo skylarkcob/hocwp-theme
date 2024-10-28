@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2024-06-26 18:56+0700\n"
-"PO-Revision-Date: 2024-06-26 18:56+0700\n"
+"POT-Creation-Date: 2024-10-28 22:56+0700\n"
+"PO-Revision-Date: 2024-10-28 22:57+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - hocwp.net@gmail.com - www.hocwp.net\n"
 "Language: vi\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
@@ -340,7 +340,7 @@ msgstr ""
 #: hocwp/admin/admin-setting-page-administration-tools.php:300
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:749
 #: hocwp/admin/class-hocwp-theme-admin-setting-page.php:771
-#: hocwp/inc/setup-after.php:162 hocwp/inc/setup-after.php:656
+#: hocwp/inc/setup-after.php:162 hocwp/inc/setup-after.php:700
 msgid "Theme Settings"
 msgstr "Cài đặt giao diện"
 
@@ -1502,7 +1502,7 @@ msgstr "Chọn trạng thái bài viết"
 #: hocwp/admin/admin.php:647 hocwp/inc/class-hocwp-theme-html-field.php:857
 #: hocwp/inc/class-hocwp-theme-html-field.php:899
 #: hocwp/inc/class-hocwp-theme-html-field.php:2080
-#: hocwp/inc/functions-scripts.php:421
+#: hocwp/inc/functions-scripts.php:425
 #, php-format
 msgid "Choose %s"
 msgstr "Chọn %s"
@@ -1715,7 +1715,7 @@ msgid "Activate %s"
 msgstr "Kích hoạt %s"
 
 #: hocwp/admin/class-hocwp-extensions-list-table.php:297
-#: hocwp/inc/functions-scripts.php:420
+#: hocwp/inc/functions-scripts.php:424
 #, php-format
 msgid "Select %s"
 msgstr "Lựa chọn %s"
@@ -3006,7 +3006,7 @@ msgstr ""
 "Tên của API không được để trống, có thể là place, geocode, distancematrix,..."
 
 #: hocwp/inc/class-hocwp-theme-google-maps-api.php:44
-#: hocwp/inc/class-hocwp-theme-youtube-api.php:137
+#: hocwp/inc/class-hocwp-theme-youtube-api.php:133
 msgid "Query parameters must be provided in full."
 msgstr "Các tham số truy vấn phải được cung cấp đầy đủ."
 
@@ -3574,7 +3574,7 @@ msgstr "#%d (không có tiêu đề)"
 msgid "Show sub menu"
 msgstr "Hiển thị trình đơn con"
 
-#: hocwp/inc/class-hocwp-theme-youtube-api.php:133
+#: hocwp/inc/class-hocwp-theme-youtube-api.php:129
 msgid "API name cannot be empty, can be videos, search,..."
 msgstr "Tên API không thể trống, có thể là videos, search,..."
 
@@ -3643,71 +3643,71 @@ msgstr "Giây"
 msgid "Load more"
 msgstr "Tải thêm"
 
-#: hocwp/inc/functions-scripts.php:417
+#: hocwp/inc/functions-scripts.php:421
 #, php-format
 msgid "Remove %s"
 msgstr "Xóa %s"
 
-#: hocwp/inc/functions-scripts.php:418
+#: hocwp/inc/functions-scripts.php:422
 #, php-format
 msgid "Click the %s to edit or update"
 msgstr "Nhấn vào %s để chỉnh sửa hoặc cập nhật"
 
-#: hocwp/inc/functions-scripts.php:422
+#: hocwp/inc/functions-scripts.php:426
 #, php-format
 msgid "Change %s"
 msgstr "Thay đổi %s"
 
-#: hocwp/inc/functions-scripts.php:494
+#: hocwp/inc/functions-scripts.php:499
 msgctxt "quicktags description"
 msgid "Horizontal rule line"
 msgstr "Thẻ hr"
 
-#: hocwp/inc/functions-scripts.php:495
+#: hocwp/inc/functions-scripts.php:500
 msgctxt "quicktags description"
 msgid "HTML Description List Element"
 msgstr "Thẻ dl"
 
-#: hocwp/inc/functions-scripts.php:496
+#: hocwp/inc/functions-scripts.php:501
 msgctxt "quicktags description"
 msgid "HTML Definition Term Element"
 msgstr "Thẻ dt"
 
-#: hocwp/inc/functions-scripts.php:497
+#: hocwp/inc/functions-scripts.php:502
 msgctxt "quicktags description"
 msgid "HTML Description Element"
 msgstr "Thẻ dd"
 
-#: hocwp/inc/functions-scripts.php:498
+#: hocwp/inc/functions-scripts.php:503
 msgctxt "quicktags description"
 msgid "Indentation"
 msgstr "Thụt đầu dòng"
 
-#: hocwp/inc/functions-scripts.php:499
+#: hocwp/inc/functions-scripts.php:504
 msgctxt "quicktags description"
 msgid "Heading 2"
 msgstr "Tiêu đề 2"
 
-#: hocwp/inc/functions-scripts.php:500
+#: hocwp/inc/functions-scripts.php:505
 msgctxt "quicktags description"
 msgid "Heading 3"
 msgstr "Tiêu đề 3"
 
-#: hocwp/inc/functions-scripts.php:501
+#: hocwp/inc/functions-scripts.php:506
 msgctxt "quicktags description"
 msgid "Heading 4"
 msgstr "Tiêu đề 4"
 
-#: hocwp/inc/functions-scripts.php:502
+#: hocwp/inc/functions-scripts.php:507
 msgctxt "quicktags description"
 msgid "Split the article into multiple pages."
 msgstr "Chia bài viết ra thành nhiều trang."
 
-#: hocwp/inc/functions-scripts.php:584
+#: hocwp/inc/functions-scripts.php:589
 msgid "Link is not supported."
 msgstr "Liên kết không được hỗ trợ."
 
-#: hocwp/inc/functions-scripts.php:585
+#: hocwp/inc/functions-scripts.php:590
 msgid "Link can be opened."
 msgstr "Liên kết có thể mở được."
 
@@ -3848,36 +3848,56 @@ msgstr ""
 msgid "Missing Required Plugins"
 msgstr "Thiếu các plugin bắt buộc"
 
-#: hocwp/inc/setup-after.php:603
+#: hocwp/inc/setup-after.php:618
 msgid "Custom Readme"
 msgstr "Readme tùy chỉnh"
 
-#: hocwp/inc/setup-after.php:604
+#: hocwp/inc/setup-after.php:619
 msgid "Core Version"
 msgstr "Phiên bản nhân"
 
-#: hocwp/inc/setup-after.php:605
+#: hocwp/inc/setup-after.php:620
 msgid "Total Files"
 msgstr "Tổng số tệp"
 
-#: hocwp/inc/setup-after.php:654
+#: hocwp/inc/setup-after.php:655
+msgid "Real theme name"
+msgstr "Tên giao diện thật"
+
+#: hocwp/inc/setup-after.php:657
+msgid "Created date"
+msgstr "Ngày khởi tạo"
+
+#: hocwp/inc/setup-after.php:659
+msgid "Last updated"
+msgstr "Cập nhật lần cuối"
+
+#: hocwp/inc/setup-after.php:661
+msgid "Tested up to"
+msgstr "Kiếm tra đến phiên bản"
+
+#: hocwp/inc/setup-after.php:663
+msgid "Coder"
+msgstr "Người code"
+
+#: hocwp/inc/setup-after.php:698
 #, php-format
 msgid "%s Settings"
 msgstr "Cài đặt %s"
 
-#: hocwp/inc/setup-after.php:660
+#: hocwp/inc/setup-after.php:704
 msgid "Contact Author"
 msgstr "Liên hệ tác giả"
 
-#: hocwp/inc/setup-after.php:814
+#: hocwp/inc/setup-after.php:859
 msgid "Disable Upgrade"
 msgstr "Vô hiệu hóa nâng cấp"
 
-#: hocwp/inc/setup-after.php:815
+#: hocwp/inc/setup-after.php:860
 msgid "Enable Upgrade"
 msgstr "Bật nâng cấp"
 
-#: hocwp/inc/setup-after.php:855
+#: hocwp/inc/setup-after.php:900
 msgid "Upgrade Disabled"
 msgstr "Nâng cấp đã được vô hiệu hóa"
 

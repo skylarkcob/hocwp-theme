@@ -80,35 +80,31 @@ class HOCWP_Theme_YouTube_API extends Abstract_HOCWP_Theme_Google_API {
 
 		$id = '';
 
+		// Get YouTube video ID from embed URL like https://www.youtube.com/watch?v=9g2U12SsRns
 		if ( isset( $params['v'] ) && strlen( $params['v'] ) > 0 ) {
 			$id = $params['v'];
 		}
 
+		// Get YouTube video ID from embed URL like https://www.youtube.com/embed/9g2U12SsRns
 		if ( empty( $id ) && str_contains( $url, '/embed/' ) ) {
-			$params = explode( '/embed/', $url );
-
-			if ( 2 == count( $params ) ) {
-				$id = $params[1];
-			}
+			$id = HT()->explode_get_value( $url, '/embed/', false, 1 );
 		}
 
+		// Get YouTube video ID from embed URL like https://youtu.be/9g2U12SsRns
 		if ( empty( $id ) && str_contains( $url, 'youtu.be/' ) ) {
-			$params = explode( 'youtu.be/', $url );
-
-			if ( 2 == count( $params ) ) {
-				$id = $params[1];
-			}
+			$id = HT()->explode_get_value( $url, 'youtu.be/', false, 1 );
 		}
 
-		if ( str_contains( $id, '/?' ) ) {
-			$params = explode( '/?', $id );
-			$id     = current( $params );
+		// Get YouTube video ID from embed URL like https://www.youtube.com/shorts/uJvtjKYwWT4
+		if ( empty( $id ) && str_contains( $url, '/shorts/' ) ) {
+			$id = HT()->explode_get_value( $url, '/shorts/', false, 1 );
 		}
 
-		if ( str_contains( $id, '?' ) ) {
-			$params = explode( '?', $id );
-			$id     = current( $params );
-		}
+		$id = HT()->explode_get_value( $id, '/?' );
+
+		$id = HT()->explode_get_value( $id, '?' );
+
+		$id = HT()->explode_get_value( $id, '/' );
 
 		unset( $parse, $params );
 

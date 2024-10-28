@@ -287,6 +287,32 @@ trait HOCWP_Theme_PHP {
 		return null;
 	}
 
+	/**
+	 * Explode string by separator and keep only first or last value.
+	 *
+	 * @param $str
+	 * @param $sep
+	 * @param $check_contains
+	 * @param $get_first
+	 *
+	 * @return string|null
+	 */
+	public function explode_get_value( $str, $sep, $check_contains = true, $pos = 'first' ) {
+		if ( ! $check_contains || str_contains( $str, $sep ) ) {
+			$parts = explode( $sep, $str );
+
+			if ( 'first' === $pos || 'begin' == $pos || 'head' == $pos ) {
+				return array_shift( $parts );
+			} elseif ( 'last' === $pos || 'end' == $pos || 'tail' == $pos ) {
+				return array_pop( $parts );
+			}
+
+			return $parts[ $pos ] ?? '';
+		}
+
+		return $str;
+	}
+
 	public function scandir( $dir, $recursive = false ) {
 		// Get the list of items in the directory
 		$items = scandir( $dir );

@@ -572,7 +572,8 @@ function hocwp_theme_read_style_header_info( $theme_path ) {
 		'last_updated'    => 'Last Updated',
 		'coder'           => 'Coder',
 		'text_domain'     => 'Text Domain',
-		'template'        => 'Template'
+		'template'        => 'Template',
+		'tested_up_to'    => 'Tested up to'
 	);
 
 	// Get file header data
@@ -619,7 +620,7 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 			'total_files'   => __( 'Total Files', 'hocwp-theme' )
 		);
 
-        // If is parent theme so not compare template
+		// If is parent theme so not compare template
 		if ( empty( $template ) ) {
 			unset( $source_info['template'] );
 		}
@@ -648,6 +649,18 @@ add_filter( 'install_theme_overwrite_comparison', function ( $table ) {
 					$cell = '<td class="warning">%s</td>';
 				} else {
 					$cell = '<td>%s</td>';
+				}
+
+				if ( 'real_theme_name' == $key ) {
+					$label = __( 'Real theme name', 'hocwp-theme' );
+				} elseif ( 'created_date' == $key ) {
+					$label = __( 'Created date', 'hocwp-theme' );
+				} elseif ( 'last_updated' == $key ) {
+					$label = __( 'Last updated', 'hocwp-theme' );
+				} elseif ( 'tested_up_to' == $key ) {
+					$label = __( 'Tested up to', 'hocwp-theme' );
+				} elseif ( 'coder' == $key ) {
+					$label = __( 'Coder', 'hocwp-theme' );
 				}
 
 				$html .= sprintf( '<tr><td class="name-label">%s</td><td>%s</td>' . $cell . '</tr>', $label, $current, $value );
