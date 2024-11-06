@@ -9,6 +9,7 @@
 * 25/10/2024: Add page state by finding page template in plugins.
 * 28/10/2024: Update YouTube API to detech Video ID.
 * 28/10/2024: Update theme uploaded table comparing.
+* 06/11/2024: Update code editor not receive data code editor in textarea field.
 
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.

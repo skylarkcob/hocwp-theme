@@ -1,14 +1,14 @@
 window.wp = window.wp || {};
 
 jQuery(document).ready(function ($) {
-    var body = $("body");
+    let body = $("body");
 
     $.fn.hocwpCodeEditor = function (options) {
         if (wp.codeEditor) {
-            var settings = $.extend({}, wp.codeEditor.defaultSettings, $.fn.hocwpCodeEditor.defaults, options);
+            let settings = $.extend({}, wp.codeEditor.defaultSettings, $.fn.hocwpCodeEditor.defaults, options);
 
             return this.each(function () {
-                var defaultSettings = settings,
+                let defaultSettings = settings,
                     element = $(this),
                     codeMirror = element.next(),
                     widget = element.closest("div.widget"),
@@ -20,21 +20,25 @@ jQuery(document).ready(function ($) {
 
                 defaultSettings.codemirror.mode = mode;
 
-                var instance = null;
+                let instance = null;
 
-                if (!element.hasClass("initialized") || null === instance) {
+                if (!element.hasClass("initialized")) {
                     instance = wp.codeEditor.initialize(element, defaultSettings);
                     element.addClass("initialized");
+                }
+
+                if (null === instance) {
+                    return false;
                 }
 
                 instance.codemirror.setSize(null, element.height());
 
                 if ("widgets" === window.pagenow && widget && widget.length) {
-                    var widgetContainers;
+                    let widgetContainers;
 
                     widgetContainers = $(".widgets-holder-wrap:not(#available-widgets)").find("div.widget");
                     widgetContainers.one("click.toggle-widget-expanded", function toggleWidgetExpanded() {
-                        var widgetContainer = $(this);
+                        let widgetContainer = $(this);
 
                         if (widgetContainer.is(widget)) {
                             setTimeout(function () {
@@ -65,7 +69,7 @@ jQuery(document).ready(function ($) {
                     });
 
                     instance.codemirror.on("change", function () {
-                        var value = instance.codemirror.getValue();
+                        let value = instance.codemirror.getValue();
 
                         if (value !== element.val()) {
                             element.val(value).trigger("change");
@@ -74,7 +78,7 @@ jQuery(document).ready(function ($) {
 
                     if (wp.customize) {
                         instance.codemirror.on("keydown", function onKeydown(codemirror, event) {
-                            var escKeyCode = 27;
+                            let escKeyCode = 27;
 
                             if (escKeyCode === event.keyCode) {
                                 event.stopPropagation();
@@ -96,12 +100,12 @@ jQuery(document).ready(function ($) {
         $("textarea[data-code-editor='1']").hocwpCodeEditor();
 
         if (body.hasClass("term-desc-html")) {
-            var termDesc = $(".term-php .form-table").find("textarea#description");
+            let termDesc = $(".term-php .form-table").find("textarea#description");
 
             if (termDesc && termDesc.length) {
                 setTimeout(function () {
                     if ("none" !== termDesc.css("display")) {
-                        var container = termDesc.closest(".wp-editor-container");
+                        let container = termDesc.closest(".wp-editor-container");
 
                         if (!container || !container.length) {
                             termDesc.attr("rows", 20);
