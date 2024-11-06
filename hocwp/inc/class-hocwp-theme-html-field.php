@@ -431,7 +431,9 @@ final class HOCWP_Theme_HTML_Field {
 
 	public static function code_editor( $args = array() ) {
 		$defaults = array(
-			'data-code-editor' => 1
+			'attributes' => array(
+				'data-code-editor' => 1
+			)
 		);
 
 		$args = wp_parse_args( $args, $defaults );
