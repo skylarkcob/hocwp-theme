@@ -209,7 +209,6 @@ add_action( 'hocwp_theme_upgrade_new_version', 'hocwp_theme_update_comment_black
 
 function hocwp_theme_required_plugins( $plugins ) {
 	if ( defined( 'HOCWP_THEME_DEVELOPING' ) && HOCWP_THEME_DEVELOPING && HT_Util()->is_localhost() ) {
-		$plugins[] = 'sb-core';
 		$plugins[] = 'theme-check';
 		$plugins[] = 'query-monitor';
 	}
