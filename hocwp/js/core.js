@@ -350,6 +350,26 @@ jQuery(document).ready(function ($) {
             this.carousel();
         },
         delayLoad: function () {
+            function containsBodyTag(str) {
+                const bodyPattern = /<body\b[^>]*>/i;
+                return bodyPattern.test(str);
+            }
+
+            function fetchDelayData(url, element) {
+                $.get(url, function (response) {
+                    if (!containsBodyTag(response)) {
+                        element.html(response);
+                        element.addClass("data-loaded");
+
+                        if (element.children().length) {
+                            element.addClass("has-data");
+                        }
+
+                        BODY.trigger("hocwpTheme:delayLoaded", [element, response]);
+                    }
+                });
+            }
+
             $(".delay-load").each(function () {
                 let that = this,
                     element = $(that),
@@ -366,22 +386,10 @@ jQuery(document).ready(function ($) {
                     }
 
                     setTimeout(function () {
-                        $.get(url, function (response) {
-                            element.html(response);
-                            BODY.trigger("hocwpTheme:delayLoaded", [element, response]);
-                        });
+                        fetchDelayData(url, element);
                     }, delay);
                 } else {
-                    $.get(url, function (response) {
-                        element.html(response);
-                        element.addClass("data-loaded");
-
-                        if (element.children().length) {
-                            element.addClass("has-data");
-                        }
-
-                        BODY.trigger("hocwpTheme:delayLoaded", [element, response]);
-                    });
+                    fetchDelayData(url, element);
                 }
             });
 
