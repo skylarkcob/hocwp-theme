@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'Walker_Nav_Menu_Edit' ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-walker-nav-menu-edit.php';
+	require_once( ABSPATH . 'wp-admin/includes/class-walker-nav-menu-edit.php' );
 }
 
 class HOCWP_Theme_Walker_Nav_Menu_Edit extends Walker_Nav_Menu_Edit {
@@ -26,8 +26,8 @@ class HOCWP_Theme_Walker_Nav_Menu_Edit extends Walker_Nav_Menu_Edit {
 					$html = ob_get_clean();
 
 					if ( ! empty( $html ) ) {
-						$html = HT()->wrap_text( $html, '<div class="custom-fields hocwp-theme">', '</div>' );
-						$html .= PHP_EOL;
+						$html     = HT()->wrap_text( $html, '<div class="custom-fields hocwp-theme">', '</div>' );
+						$html     .= PHP_EOL;
 						$add      = preg_replace( '/<fieldset /', $html . '<fieldset ', $add, 1 );
 						$parts[1] = $add;
 						$output   = join( $menu_id, $parts );

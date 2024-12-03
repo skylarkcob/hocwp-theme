@@ -209,9 +209,9 @@ abstract class HOCWP_Theme_Health_Check {
 
 // Add site health check items
 function hocwp_theme_admin_health_check_init() {
-	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-email.php';
-	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-user.php';
-	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-password.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-email.php' );
+	require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-user.php' );
+	require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check-password.php' );
 
 	$heal_checks = array(
 		new HOCWP_Theme_Health_Check_Email(),

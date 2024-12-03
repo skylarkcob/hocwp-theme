@@ -424,4 +424,4 @@ function hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback() {
 
 add_action( 'wp_ajax_hocwp_theme_search_post', 'hocwp_theme_wp_ajax_hocwp_theme_search_post_ajax_callback' );
 
-require_once dirname( __FILE__ ) . '/ajax-administration-tools.php';
+require_once( dirname( __FILE__ ) . '/ajax-administration-tools.php' );

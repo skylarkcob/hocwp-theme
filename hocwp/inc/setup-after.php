@@ -779,7 +779,7 @@ function hocwp_theme_on_wp_action() {
 			}
 		}
 	} elseif ( 'delete_cache' == $do_action ) {
-		require_once HOCWP_THEME_CORE_PATH . '/admin/ajax.php';
+		require_once( HOCWP_THEME_CORE_PATH . '/admin/ajax.php' );
 
 		hocwp_theme_delete_cache_ajax_callback();
 		exit;

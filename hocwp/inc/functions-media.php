@@ -86,7 +86,7 @@ function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 
 	if ( HT_Media()->is_webp_image( $path ) ) {
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/image.php';
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
 		}
 
 		$data = wp_generate_attachment_metadata( $media_id, $path );

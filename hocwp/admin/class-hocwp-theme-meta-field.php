@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Admin_Field' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php' );
 }
 
 class HOCWP_Theme_Meta_Field extends HOCWP_Theme_Admin_Field {

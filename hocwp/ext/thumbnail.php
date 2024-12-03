@@ -18,9 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WP_Filesystem_Direct' ) ) {
-	require ABSPATH . 'wp-includes/class-wp-error.php';
-	require ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
-	require ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+	require( ABSPATH . 'wp-includes/class-wp-error.php' );
+	require( ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php' );
+	require( ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php' );
 }
 
 $file = new WP_Filesystem_Direct( null );
@@ -64,7 +64,7 @@ if ( is_numeric( $height ) ) {
 	$filename .= '-' . $height;
 }
 
-$filename .= '.' . $extension;
+$filename   .= '.' . $extension;
 $regenerate = true;
 $file_path  = $basedir . '/' . $filename;
 

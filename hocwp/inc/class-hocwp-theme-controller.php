@@ -435,7 +435,7 @@ final class HOCWP_Theme_Controller {
 			$dev_config = trailingslashit( $_SERVER['DOCUMENT_ROOT'] ) . 'dev-config.php';
 
 			if ( file_exists( $dev_config ) ) {
-				require_once $dev_config;
+				require_once( $dev_config );
 			}
 		}
 
@@ -443,7 +443,7 @@ final class HOCWP_Theme_Controller {
 		$pre_hook = $this->load_child_first( 'pre-hook.php' );
 
 		if ( ( is_file( $pre_hook ) && file_exists( $pre_hook ) ) ) {
-			require $pre_hook;
+			require( $pre_hook );
 		}
 
 		// Check if theme must use child theme or can only use one root theme
@@ -484,82 +484,82 @@ final class HOCWP_Theme_Controller {
 		}
 
 		// Load all deprecated functions
-		require $this->core_path . '/inc/functions-deprecated.php';
+		require( $this->core_path . '/inc/functions-deprecated.php' );
 
 		// Load PHP 8 functions
 		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
-			require $this->core_path . '/inc/class-hocwp-theme-php8.php';
+			require( $this->core_path . '/inc/class-hocwp-theme-php8.php' );
 		}
 
 		// Load all default messages text.
-		require $this->core_path . '/inc/class-hocwp-theme-message.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-message.php' );
 
 		// Load all normal PHP utility functions
-		require $this->core_path . '/inc/class-hocwp-theme.php';
+		require( $this->core_path . '/inc/class-hocwp-theme.php' );
 
-		require $this->core_path . '/inc/abstract-class-hocwp-theme-google-api.php';
-		require $this->core_path . '/inc/class-hocwp-theme-youtube-api.php';
-		require $this->core_path . '/inc/class-hocwp-theme-google-maps-api.php';
-		require $this->core_path . '/inc/class-hocwp-theme-google-maps-find-place-api.php';
-		require $this->core_path . '/inc/class-hocwp-theme-google-maps-autocomplete-api.php';
-		require $this->core_path . '/inc/class-hocwp-theme-google-maps-distance-matrix-api.php';
-		require $this->core_path . '/inc/class-hocwp-theme-google-maps-geocode-api.php';
+		require( $this->core_path . '/inc/abstract-class-hocwp-theme-google-api.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-youtube-api.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-google-maps-api.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-google-maps-find-place-api.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-google-maps-autocomplete-api.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-google-maps-distance-matrix-api.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-google-maps-geocode-api.php' );
 
-		require $this->core_path . '/inc/class-hocwp-theme-sanitize.php';
-		require $this->core_path . '/inc/class-hocwp-theme-enqueue.php';
-		require $this->core_path . '/inc/class-hocwp-theme-utility.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-sanitize.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-enqueue.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-utility.php' );
 
-		require $this->core_path . '/inc/class-hocwp-theme-options.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-options.php' );
 
-		require $this->core_path . '/inc/abstract-class-hocwp-theme-captcha.php';
-		require $this->core_path . '/inc/class-hocwp-theme-captcha-hcaptcha.php';
-		require $this->core_path . '/inc/class-hocwp-theme-captcha-recaptcha.php';
-		require $this->core_path . '/inc/class-hocwp-theme-captcha.php';
+		require( $this->core_path . '/inc/abstract-class-hocwp-theme-captcha.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-captcha-hcaptcha.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-captcha-recaptcha.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-captcha.php' );
 
 		$this->captcha = HT_CAPTCHA();
 
 		if ( is_admin() ) {
-			require $this->core_path . '/admin/class-hocwp-theme-admin.php';
+			require( $this->core_path . '/admin/class-hocwp-theme-admin.php' );
 		}
 
 		// Load front-end class on frontend and customize preview pages.
 		if ( ! is_admin() || is_customize_preview() ) {
-			require $this->core_path . '/inc/class-hocwp-theme-frontend.php';
+			require( $this->core_path . '/inc/class-hocwp-theme-frontend.php' );
 		}
 
-		require $this->core_path . '/inc/class-hocwp-theme-requirement.php';
-		require $this->core_path . '/inc/class-hocwp-theme-svg-icon.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-requirement.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-svg-icon.php' );
 
-		//require $this->core_path . '/inc/class-hocwp-theme-color.php';
+		//require( $this->core_path . '/inc/class-hocwp-theme-color.php');
 
-		require $this->core_path . '/inc/class-hocwp-theme-html-tag.php';
-		require $this->core_path . '/inc/class-hocwp-theme-layout.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-html-tag.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-layout.php' );
 
-		require $this->core_path . '/inc/class-hocwp-theme-html-field.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-html-field.php' );
 
-		require $this->core_path . '/inc/class-hocwp-theme-metas.php';
-		require $this->core_path . '/inc/abstract-class-hocwp-theme-object.php';
-		require $this->core_path . '/inc/class-hocwp-theme-post.php';
-		require $this->core_path . '/inc/class-hocwp-theme-term.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-metas.php' );
+		require( $this->core_path . '/inc/abstract-class-hocwp-theme-object.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-post.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-term.php' );
 
-		require $this->core_path . '/inc/class-hocwp-theme-query.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-query.php' );
 
-		require $this->core_path . '/inc/template-tags.php';
+		require( $this->core_path . '/inc/template-tags.php' );
 
-		require $this->core_path . '/inc/functions-scripts.php';
-		require $this->core_path . '/inc/functions-media.php';
-		require $this->core_path . '/inc/functions-user.php';
-		require $this->core_path . '/inc/functions-preprocess.php';
-		require $this->core_path . '/inc/functions-extensions.php';
-		require $this->core_path . '/inc/class-hocwp-theme-extension.php';
+		require( $this->core_path . '/inc/functions-scripts.php' );
+		require( $this->core_path . '/inc/functions-media.php' );
+		require( $this->core_path . '/inc/functions-user.php' );
+		require( $this->core_path . '/inc/functions-preprocess.php' );
+		require( $this->core_path . '/inc/functions-extensions.php' );
+		require( $this->core_path . '/inc/class-hocwp-theme-extension.php' );
 
-		require $this->core_path . '/inc/setup.php';
+		require( $this->core_path . '/inc/setup.php' );
 
 		$this->defaults();
-		require $this->core_path . '/inc/defaults.php';
+		require( $this->core_path . '/inc/defaults.php' );
 
-		require $this->core_path . '/inc/functions-permalinks.php';
-		require $this->core_path . '/inc/functions-license.php';
+		require( $this->core_path . '/inc/functions-permalinks.php' );
+		require( $this->core_path . '/inc/functions-license.php' );
 
 		/**
 		 * Widgets.
@@ -574,42 +574,42 @@ final class HOCWP_Theme_Controller {
 		$this->load_extensions( $this->custom_current_path );
 
 		if ( is_admin() ) {
-			require $this->core_path . '/admin/admin.php';
+			require( $this->core_path . '/admin/admin.php' );
 		} else {
-			require $this->core_path . '/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php';
-			require $this->core_path . '/inc/class-hocwp-theme-walker-nav-menu-link.php';
-			require $this->core_path . '/inc/functions-context.php';
+			require( $this->core_path . '/inc/class-hocwp-theme-walker-nav-menu-bootstrap.php' );
+			require( $this->core_path . '/inc/class-hocwp-theme-walker-nav-menu-link.php' );
+			require( $this->core_path . '/inc/functions-context.php' );
 		}
 
-		require $this->core_path . '/inc/class-hocwp-theme-walker-page.php';
+		require( $this->core_path . '/inc/class-hocwp-theme-walker-page.php' );
 
 		if ( is_customize_preview() ) {
-			require $this->core_path . '/inc/class-hocwp-theme-customize.php';
+			require( $this->core_path . '/inc/class-hocwp-theme-customize.php' );
 		}
 
 		/**
 		 * Setup After.
 		 */
-		require $this->core_path . '/inc/setup-after.php';
+		require( $this->core_path . '/inc/setup-after.php' );
 
 		if ( ! is_admin() || is_customize_preview() ) {
-			require $this->core_path . '/inc/template.php';
-			require $this->core_path . '/inc/template-general.php';
-			require $this->core_path . '/inc/template-comments.php';
-			require $this->core_path . '/inc/template-post.php';
+			require( $this->core_path . '/inc/template.php' );
+			require( $this->core_path . '/inc/template-general.php' );
+			require( $this->core_path . '/inc/template-comments.php' );
+			require( $this->core_path . '/inc/template-post.php' );
 
 			if ( 'wp-login.php' == $pagenow ) {
-				require $this->core_path . '/inc/template-user.php';
+				require( $this->core_path . '/inc/template-user.php' );
 			}
 		}
 
 		if ( is_admin() || is_customize_preview() ) {
-			require $this->core_path . '/admin/meta.php';
+			require( $this->core_path . '/admin/meta.php' );
 		}
 
-		require $this->core_path . '/inc/abstract-class-hocwp-theme-custom.php';
+		require( $this->core_path . '/inc/abstract-class-hocwp-theme-custom.php' );
 		HT()->require_if_exists( $this->load_child_first( 'functions.php' ) );
-		require $this->core_path . '/inc/back-compat.php';
+		require( $this->core_path . '/inc/back-compat.php' );
 		HT()->require_if_exists( $this->load_child_first( 'register.php' ) );
 
 		// Autoload all PHP files in custom inc folder
@@ -640,7 +640,7 @@ final class HOCWP_Theme_Controller {
 		HT()->require_if_exists( $this->load_child_first( 'extensions.php' ) );
 
 		if ( is_admin() ) {
-			require $this->core_path . '/admin/load-custom-meta.php';
+			require( $this->core_path . '/admin/load-custom-meta.php' );
 			HT()->require_if_exists( $this->load_child_first( 'meta.php' ) );
 
 			if ( $this->doing_ajax ) {
@@ -651,9 +651,9 @@ final class HOCWP_Theme_Controller {
 			HT()->require_if_exists( $this->load_child_first( 'template.php' ) );
 		}
 
-		require_once $this->core_path . '/inc/customizer.php';
+		require_once( $this->core_path . '/inc/customizer.php' );
 
-		require $this->core_path . '/inc/updates.php';
+		require( $this->core_path . '/inc/updates.php' );
 
 		do_action( 'hocwp_theme_loaded' );
 	}

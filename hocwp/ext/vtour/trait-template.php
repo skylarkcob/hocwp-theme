@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) || exit;
 
 trait HT_VR_Tour_Template {
 	public function index() {
-		require_once HTE_VR()->folder_path . '/setup.php';
+		require_once( HTE_VR()->folder_path . '/setup.php' );
 		?>
         <!DOCTYPE html>
 		<?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>

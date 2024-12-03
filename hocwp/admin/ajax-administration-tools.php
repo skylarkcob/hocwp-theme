@@ -203,7 +203,7 @@ function hocwp_theme_admin_tools_ajax_callback() {
 
 				if ( ! empty( $api_token ) || ! empty( $api_key ) ) {
 					if ( ! class_exists( 'HOCWP_Theme_Cloudflare_API' ) ) {
-						require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php';
+						require_once( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php' );
 					}
 
 					$params = array(
@@ -297,7 +297,7 @@ function hocwp_theme_delete_cache_ajax_callback() {
 
 		if ( ! empty( $api_token ) || ! empty( $api_key ) ) {
 			if ( ! class_exists( 'HOCWP_Theme_Cloudflare_API' ) ) {
-				require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php';
+				require_once( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-cloudflare-api.php' );
 			}
 
 			$params = array(
@@ -455,7 +455,7 @@ add_action( 'wp_ajax_hocwp_theme_download_theme_plugin', 'hocwp_theme_download_t
 global $hocwp_theme_import_administrative_boundaries;
 
 if ( ! class_exists( 'HOCWP_Theme_Import_Administrative_Boundaries_Process' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-import-administrative-boundaries.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-import-administrative-boundaries.php' );
 }
 
 if ( ! $hocwp_theme_import_administrative_boundaries instanceof HOCWP_Theme_Import_Administrative_Boundaries_Process ) {
@@ -466,7 +466,7 @@ function hocwp_theme_import_administrative_boundaries_ajax_callback() {
 	global $hocwp_theme_import_administrative_boundaries;
 
 	if ( ! class_exists( 'HOCWP_Theme_Import_Administrative_Boundaries_Process' ) ) {
-		require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-import-administrative-boundaries.php';
+		require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-import-administrative-boundaries.php' );
 	}
 
 	$data = array();

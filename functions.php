@@ -145,20 +145,20 @@ add_action( 'wp_enqueue_scripts', 'hocwp_theme_scripts' );
 /**
  * Custom template tags for this theme.
  */
-require get_template_directory() . '/inc/template-tags.php';
+require( get_template_directory() . '/inc/template-tags.php' );
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require get_template_directory() . '/inc/template-functions.php';
+require( get_template_directory() . '/inc/template-functions.php' );
 
 /**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
+	require( get_template_directory() . '/inc/jetpack.php' );
 }
 
 if ( file_exists( get_template_directory() . '/hocwp/load.php' ) ) {
-	require get_template_directory() . '/hocwp/load.php';
+	require( get_template_directory() . '/hocwp/load.php' );
 }

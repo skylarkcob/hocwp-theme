@@ -24,7 +24,7 @@ if ( 'extension' != $hocwp_theme->option->tab ) {
 
 add_filter( 'hocwp_theme_settings_page_extension_display_form', '__return_false' );
 
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-extensions-list-table.php';
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-extensions-list-table.php' );
 
 function hocwp_theme_settings_page_extension_field() {
 	$fields = array();

@@ -40,9 +40,8 @@ if ( ! defined( 'AMP__VERSION' ) ) {
 if ( ! function_exists( 'hocwp_theme_load_extension_amp' ) ) {
 	function hocwp_theme_load_extension_amp() {
 		$load = HT_Extension()->is_active( __FILE__ );
-		$load = apply_filters( 'hocwp_theme_load_extension_amp', $load );
 
-		return $load;
+		return apply_filters( 'hocwp_theme_load_extension_amp', $load );
 	}
 }
 
@@ -52,4 +51,4 @@ if ( ! $load ) {
 	return;
 }
 
-require dirname( __FILE__ ) . '/amp/amp.php';
+require( dirname( __FILE__ ) . '/amp/amp.php' );

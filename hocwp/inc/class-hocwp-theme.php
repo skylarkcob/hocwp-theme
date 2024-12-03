@@ -21,11 +21,11 @@ const HOCWP_THEME_ROOT_DOMAIN_EXTENSIONS = array(
 );
 
 if ( ! trait_exists( 'HOCWP_Theme_PHP' ) ) {
-	require_once dirname( __FILE__ ) . '/trait-php.php';
+	require_once( dirname( __FILE__ ) . '/trait-php.php' );
 }
 
 if ( ! trait_exists( 'HOCWP_Theme_Formatting' ) ) {
-	require_once dirname( __FILE__ ) . '/trait-formatting.php';
+	require_once( dirname( __FILE__ ) . '/trait-formatting.php' );
 }
 
 final class HOCWP_Theme {
@@ -453,9 +453,9 @@ final class HOCWP_Theme {
 	public function require_if_exists( $file, $require_once = false ) {
 		if ( self::is_file( $file ) ) {
 			if ( $require_once ) {
-				require_once $file;
+				require_once( $file );
 			} else {
-				require $file;
+				require( $file );
 			}
 		}
 	}
@@ -785,9 +785,9 @@ final class HOCWP_Theme {
 
 	public function url_exists( $url ) {
 		if ( ! class_exists( 'WP_Filesystem_Direct' ) ) {
-			require ABSPATH . 'wp-includes/class-wp-error.php';
-			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
-			require ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+			require( ABSPATH . 'wp-includes/class-wp-error.php' );
+			require( ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php' );
+			require( ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php' );
 		}
 
 		$file = new WP_Filesystem_Direct( null );

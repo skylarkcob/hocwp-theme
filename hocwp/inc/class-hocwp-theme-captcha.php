@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! trait_exists( 'HOCWP_Theme_CAPTCHA_Utils' ) ) {
-	require_once __DIR__ . '/trait-hocwp-theme-captcha-utils.php';
+	require_once( __DIR__ . '/trait-hocwp-theme-captcha-utils.php' );
 }
 
 class HOCWP_Theme_CAPTCHA {

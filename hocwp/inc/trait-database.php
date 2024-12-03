@@ -297,7 +297,7 @@ trait HOCWP_Theme_Database {
 		global $wp_hasher, $wpdb;
 
 		if ( empty( $wp_hasher ) ) {
-			require_once ABSPATH . WPINC . '/class-phpass.php';
+			require_once( ABSPATH . WPINC . '/class-phpass.php' );
 			$wp_hasher = new PasswordHash( 8, true );
 		}
 

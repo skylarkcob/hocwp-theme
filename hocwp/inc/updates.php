@@ -1,7 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-require_once __DIR__ . '/class-hocwp-theme-updates.php';
+require_once( __DIR__ . '/class-hocwp-theme-updates.php' );
 
 add_action( 'init', function () {
 	$allow_updates = apply_filters( 'hocwp_theme_allow_updates', HOCWP_THEME_DEVELOPING );

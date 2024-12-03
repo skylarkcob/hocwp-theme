@@ -154,4 +154,4 @@ unset( $theme, $php_version, $require_version );
 /*
  * Load Theme Controller Class.
  */
-require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-controller.php';
+require( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-controller.php' );

@@ -251,20 +251,20 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 						load_template( ABSPATH . WPINC . '/class-smtp.php' );
 						$phpmailer = new PHPMailer( true );
 					} else {
-						require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
-						require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
-						require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+						require_once( ABSPATH . WPINC . '/PHPMailer/PHPMailer.php' );
+						require_once( ABSPATH . WPINC . '/PHPMailer/SMTP.php' );
+						require_once( ABSPATH . WPINC . '/PHPMailer/Exception.php' );
 						$phpmailer = new PHPMailer\PHPMailer\PHPMailer( true );
 					}
 				}
 
-				$subject = isset( $_POST['hocwp_theme_test_smtp_subject'] ) ? $_POST['hocwp_theme_test_smtp_subject'] : '';
+				$subject = $_POST['hocwp_theme_test_smtp_subject'] ?? '';
 
 				if ( empty( $subject ) ) {
 					$subject = __( 'SMTP Email', 'hocwp-theme' ) . ': ' . sprintf( __( 'Test mail to %s', 'hocwp-theme' ), $to_email );
 				}
 
-				$message = isset( $_POST['hocwp_theme_test_smtp_message'] ) ? $_POST['hocwp_theme_test_smtp_message'] : '';
+				$message = $_POST['hocwp_theme_test_smtp_message'] ?? '';
 
 				if ( empty( $message ) ) {
 					$message = __( 'Thank you for using HocWP, your SMTP mail settings work successfully.', 'hocwp-theme' );

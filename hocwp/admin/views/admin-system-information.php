@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'hocwp_theme_load_views' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/inc/template.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/inc/template.php' );
 }
 
 echo '<div id="systemInformation">';

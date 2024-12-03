@@ -1066,7 +1066,7 @@ function hocwp_theme_wp_head_action() {
 
 	if ( ! empty( $css ) ) {
 		if ( ! class_exists( 'HOCWP_Theme_Minify' ) ) {
-			require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-minify.php';
+			require( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-minify.php' );
 		}
 
 		$css   = strip_tags( $css );
@@ -1119,7 +1119,7 @@ function hocwp_theme_wp_footer_action() {
 
 	if ( ! empty( $script ) ) {
 		if ( ! class_exists( 'HOCWP_Theme_Minify' ) ) {
-			require HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-minify.php';
+			require( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-minify.php' );
 		}
 
 		$js = HOCWP_Theme_Minify::js( $script );
@@ -1951,7 +1951,7 @@ function hocwp_theme_fix_not_found_paged() {
 			$path = HOCWP_Theme()->custom_path . '/page-templates/blog.php';
 
 			if ( file_exists( $path ) ) {
-				require_once $path;
+				require_once( $path );
 				exit;
 			}
 		}

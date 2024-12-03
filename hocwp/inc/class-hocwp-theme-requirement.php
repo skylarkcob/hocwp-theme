@@ -203,11 +203,11 @@ final class HOCWP_Theme_Requirement {
 
 	public function load_ajax_loop_functions() {
 		if ( ! function_exists( 'hocwp_theme_load_custom_loop' ) ) {
-			require_once HOCWP_Theme()->core_path . '/inc/functions-context.php';
-			require_once HOCWP_Theme()->core_path . '/inc/functions-media.php';
-			require_once HOCWP_Theme()->core_path . '/inc/template.php';
-			require_once HOCWP_Theme()->core_path . '/inc/template-general.php';
-			require_once HOCWP_Theme()->core_path . '/inc/template-post.php';
+			require_once( HOCWP_Theme()->core_path . '/inc/functions-context.php' );
+			require_once( HOCWP_Theme()->core_path . '/inc/functions-media.php' );
+			require_once( HOCWP_Theme()->core_path . '/inc/template.php' );
+			require_once( HOCWP_Theme()->core_path . '/inc/template-general.php' );
+			require_once( HOCWP_Theme()->core_path . '/inc/template-post.php' );
 		}
 	}
 }

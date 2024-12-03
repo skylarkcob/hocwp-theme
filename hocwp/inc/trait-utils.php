@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! trait_exists( 'HOCWP_Theme_Deprecated' ) ) {
-	require_once __DIR__ . '/trait-deprecated.php';
+	require_once( __DIR__ . '/trait-deprecated.php' );
 }
 
 trait HOCWP_Theme_Utils {

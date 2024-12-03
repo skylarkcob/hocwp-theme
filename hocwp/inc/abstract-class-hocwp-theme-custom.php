@@ -52,7 +52,7 @@ abstract class Abstract_HT_Custom {
 		}
 
 		if ( ! class_exists( 'HOCWP_Theme_Meta_Field' ) ) {
-			require_once HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
+			require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php' );
 		}
 
 		if ( method_exists( $this, 'meta_config' ) ) {

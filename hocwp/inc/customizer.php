@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'HT_Frontend' ) ) {
-	require_once HOCWP_Theme()->core_path . '/inc/class-hocwp-theme-frontend.php';
+	require_once( HOCWP_Theme()->core_path . '/inc/class-hocwp-theme-frontend.php' );
 }
 
 add_action( 'customize_register', array( 'HOCWP_Theme_Customize', 'register' ) );
@@ -295,7 +295,7 @@ function hocwp_theme_customize_preview_init_action() {
 	), $theme_version, true );
 
 	if ( ! function_exists( 'hocwp_theme_get_inline_css' ) ) {
-		require_once HOCWP_THEME_CORE_PATH . '/inc/template.php';
+		require_once( HOCWP_THEME_CORE_PATH . '/inc/template.php' );
 	}
 
 	wp_localize_script( 'hocwp-theme-customize-preview', 'hocwpThemeCustomizer', array(
@@ -311,7 +311,7 @@ function hocwp_theme_customize_inline_css() {
 	$data = hocwp_theme_get_customizer_css();
 
 	if ( ! function_exists( 'hocwp_theme_get_inline_css' ) ) {
-		require_once HOCWP_THEME_CORE_PATH . '/inc/template.php';
+		require_once( HOCWP_THEME_CORE_PATH . '/inc/template.php' );
 	}
 
 	// Allow user add custom inline css.

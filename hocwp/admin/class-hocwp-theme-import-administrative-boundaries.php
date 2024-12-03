@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Background_Process' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-background-process.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-background-process.php' );
 }
 
 if ( ! trait_exists( 'HOCWP_Theme_Import_Administrative_Boundaries' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/admin/trait-hocwp-theme-import-administrative-boundaries.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/admin/trait-hocwp-theme-import-administrative-boundaries.php' );
 }
 
 class HOCWP_Theme_Import_Administrative_Boundaries_Process extends HOCWP_Theme_Background_Process {

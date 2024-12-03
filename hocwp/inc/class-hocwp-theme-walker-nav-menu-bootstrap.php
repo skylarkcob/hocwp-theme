@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-walker-nav-menu.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-walker-nav-menu.php' );
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
@@ -44,6 +44,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 			}
 
 			$classes = array_filter( $classes );
+
 			return array_unique( $classes );
 		}
 
@@ -63,6 +64,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 			}
 
 			$classes = array_filter( $classes );
+
 			return array_unique( $classes );
 		}
 
@@ -119,13 +121,14 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 		/**
 		 * Starts the list before the elements are added.
 		 *
-		 * @since 3.0.0
-		 *
-		 * @see Walker::start_lvl()
-		 *
 		 * @param string $output Used to append additional content (passed by reference).
 		 * @param int $depth Depth of menu item. Used for padding.
 		 * @param stdClass $args An object of wp_nav_menu() arguments.
+		 *
+		 * @see Walker::start_lvl()
+		 *
+		 * @since 3.0.0
+		 *
 		 */
 		public function start_lvl( &$output, $depth = 0, $args = null ) {
 			parent::start_lvl( $output, $depth, $args );

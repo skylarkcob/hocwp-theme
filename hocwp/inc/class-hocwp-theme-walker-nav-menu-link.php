@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-walker-nav-menu.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-walker-nav-menu.php' );
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Link' ) ) {
@@ -84,7 +84,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Link' ) ) {
 
 			foreach ( $atts as $attr => $value ) {
 				if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
-					$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+					$value      = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
 					$attributes .= ' ' . $attr . '="' . $value . '"';
 				}
 			}

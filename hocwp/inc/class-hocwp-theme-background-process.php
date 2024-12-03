@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Async_Request' ) ) {
-	require_once HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-async-request.php';
+	require_once( HOCWP_THEME_CORE_PATH . '/inc/class-hocwp-theme-async-request.php' );
 }
 
 /**

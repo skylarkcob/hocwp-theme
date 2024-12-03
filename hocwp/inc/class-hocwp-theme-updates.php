@@ -436,7 +436,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 				// Check if is_plugin_active() function exists. This is required on the front end of the
 				// site, since it is in a file that is normally only loaded in the admin.
 				if ( ! function_exists( 'is_plugin_active' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/plugin.php';
+					require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 				}
 
 				// add if is active plugin (not included in theme).

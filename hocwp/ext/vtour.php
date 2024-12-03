@@ -44,7 +44,7 @@ if ( ! class_exists( 'HOCWP_Ext_VR' ) ) {
 
 			add_action( 'template_redirect', array( $this, 'template_redirect_action' ), 1 );
 			add_filter( 'template_include', array( $this, 'template_include_filter' ), 999999 );
-			require_once __DIR__ . '/vtour/class-hocwp-theme-vr.php';
+			require_once( __DIR__ . '/vtour/class-hocwp-theme-vr.php' );
 			add_filter( 'body_class', array( $this, 'body_class_filter' ), 999999 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts_action' ), 9999 );
 		}

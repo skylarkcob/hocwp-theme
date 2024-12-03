@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! trait_exists( 'HOCWP_Theme_Utils' ) ) {
-	require_once dirname( __FILE__ ) . '/trait-utils.php';
+	require_once( dirname( __FILE__ ) . '/trait-utils.php' );
 }
 
 if ( ! trait_exists( 'HOCWP_Theme_Database' ) ) {
-	require_once dirname( __FILE__ ) . '/trait-database.php';
+	require_once( dirname( __FILE__ ) . '/trait-database.php' );
 }
 
 class HOCWP_Theme_Utility {
@@ -813,10 +813,10 @@ class HOCWP_Theme_Utility {
 
 		if ( ! $wp_filesystem ) {
 			if ( ! function_exists( 'get_file_description' ) ) {
-				require ABSPATH . 'wp-admin/includes/file.php';
+				require( ABSPATH . 'wp-admin/includes/file.php' );
 			}
 
-			require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php' );
 
 			$method = get_filesystem_method( false, false );
 
@@ -843,7 +843,7 @@ class HOCWP_Theme_Utility {
 					return false;
 				}
 
-				require_once $abstraction_file;
+				require_once( $abstraction_file );
 			}
 			$method = "WP_Filesystem_$method";
 
@@ -1628,7 +1628,7 @@ class HOCWP_Theme_Utility {
 
 			if ( HT()->array_has_value( $roles ) ) {
 				if ( ! function_exists( 'get_editable_roles' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/user.php';
+					require_once( ABSPATH . 'wp-admin/includes/user.php' );
 				}
 
 				$all_roles = get_editable_roles();
@@ -1825,7 +1825,7 @@ class HOCWP_Theme_Utility {
 	public function html_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
 		if ( ! function_exists( 'hocwp_theme_wp_mail_content_type_filter' ) ) {
 			/** @noinspection PhpIncludeInspection */
-			require_once HOCWP_THEME_CORE_PATH . '/ext/smtp.php';
+			require_once( HOCWP_THEME_CORE_PATH . '/ext/smtp.php' );
 		}
 
 		add_filter( 'wp_mail_content_type', 'hocwp_theme_wp_mail_content_type_filter', 99 );
@@ -2656,7 +2656,7 @@ class HOCWP_Theme_Utility {
 
 		if ( ! $cache || false === ( $api = get_transient( $tr_name ) ) ) {
 			if ( ! function_exists( 'plugins_api' ) ) {
-				require ABSPATH . 'wp-admin/includes/plugin-install.php';
+				require( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 			}
 
 			$api = plugins_api( $action, $args );
@@ -2675,7 +2675,7 @@ class HOCWP_Theme_Utility {
 
 	public function get_plugin_info( $name, $folder_name = '' ) {
 		if ( ! function_exists( 'get_plugins' ) ) {
-			require ABSPATH . 'wp-admin/includes/plugin.php';
+			require( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
 		if ( ! $name && ! empty( $folder_name ) ) {

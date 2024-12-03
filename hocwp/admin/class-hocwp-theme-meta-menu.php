@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Edit' ) ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-walker-nav-menu-edit.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-walker-nav-menu-edit.php' );
 }
 
 final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {

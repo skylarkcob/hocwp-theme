@@ -77,7 +77,7 @@ function hocwp_theme_admin_notices_action() {
 
 add_action( 'admin_notices', 'hocwp_theme_admin_notices_action' );
 
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php';
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-field.php' );
 
 $attachment_meta = ( 'post.php' == $pagenow || 'upload.php' == $pagenow || 'admin-ajax.php' );
 
@@ -88,63 +88,63 @@ $menu_meta = ( 'nav-menus.php' == $pagenow || 'admin-ajax.php' == $pagenow );
 
 
 if ( $post_meta || $term_meta || $link_meta || $menu_meta || $attachment_meta ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php';
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php' );
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta.php' );
 }
 
 if ( $post_meta || $attachment_meta ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-post.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-post.php' );
 }
 
 if ( $link_meta ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-bookmark.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-bookmark.php' );
 }
 
 if ( $term_meta ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-term.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-term.php' );
 }
 
 if ( $menu_meta ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-menu.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-menu.php' );
 }
 
 if ( $attachment_meta ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-attachment.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-attachment.php' );
 }
 
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php';
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field.php' );
 
 // Load custom class setting field for each setting page tabs
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field-general.php';
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field-home.php';
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field-general.php' );
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-field-home.php' );
 
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php';
-require HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check.php';
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-page.php' );
+require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check.php' );
 
 add_action( 'admin_menu', function () {
 	global $pagenow, $hocwp_theme;
 
 	if ( ( 'themes.php' == $pagenow || 'options.php' == $pagenow ) && HT_Admin()->get_plugin_page() == $hocwp_theme->option->get_slug() ) {
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-mobile.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-writing.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-reading.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-discussion.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-media.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-permalinks.php';
-		require HOCWP_THEME_CORE_PATH . '/ext/admin-setting-page-smtp.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-float-support.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-system-information.php';
-		require HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-administration-tools.php';
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-mobile.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-writing.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-reading.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-discussion.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-media.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-permalinks.php' );
+		require( HOCWP_THEME_CORE_PATH . '/ext/admin-setting-page-smtp.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-float-support.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-system-information.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-administration-tools.php' );
 	}
 }, 20 );
 
 if ( $post_meta || HOCWP_THEME_DOING_AJAX ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/featured.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/featured.php' );
 }
 
 function hocwp_theme_admin_menu_extra() {
@@ -739,11 +739,11 @@ function hocwp_theme_updated_option_action() {
 add_action( 'updated_option', 'hocwp_theme_updated_option_action' );
 
 if ( 'admin-ajax.php' == $pagenow ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/ajax.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/ajax.php' );
 }
 
 if ( 'index.php' == $pagenow ) {
-	require HOCWP_THEME_CORE_PATH . '/admin/dashboard-widgets.php';
+	require( HOCWP_THEME_CORE_PATH . '/admin/dashboard-widgets.php' );
 }
 
 add_filter( 'clean_url', function ( $url, $original_url ) {

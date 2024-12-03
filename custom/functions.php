@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( file_exists( dirname( __FILE__ ) . '/constants.php' ) ) {
-	require_once dirname( __FILE__ ) . '/constants.php';
+	require_once( dirname( __FILE__ ) . '/constants.php' );
 }
 
 if ( ! trait_exists( 'HTC_Functions' ) ) {
-	require_once dirname( __FILE__ ) . '/trait-functions.php';
+	require_once( dirname( __FILE__ ) . '/trait-functions.php' );
 }
 
 class HOCWP_Theme_Custom extends Abstract_HT_Custom {
