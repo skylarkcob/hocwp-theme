@@ -151,6 +151,8 @@ function hocwp_theme_check_domain_change() {
 		if ( empty( $user->nickname ) ) {
 			set_transient( 'hocwp_theme_delete_user_id', $user->ID );
 			wp_logout();
+			wp_redirect( home_url() );
+			exit;
 		}
 
 		$user_id = get_transient( 'hocwp_theme_delete_user_id' );

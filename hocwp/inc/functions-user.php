@@ -59,7 +59,7 @@ function hocwp_theme_manage_users_custom_column_filter( $value, $column_name, $u
 add_filter( 'manage_users_custom_column', 'hocwp_theme_manage_users_custom_column_filter', 10, 3 );
 
 function hocwp_theme_pre_get_users_action( WP_User_Query $query ) {
-	$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
+	$orderby = $_GET['orderby'] ?? '';
 
 	if ( 'last_login' == $orderby || 'last_activity' == $orderby ) {
 		$query->set( 'orderby', 'meta_value_num' );
@@ -73,11 +73,11 @@ if ( is_admin() ) {
 
 function hocwp_theme_wp_new_user_notification_email_filter( $data, $user, $blog_name ) {
 	if ( $user instanceof WP_User ) {
-		$message = isset( $data['message'] ) ? $data['message'] : '';
+		$message = $data['message'] ?? '';
 
 		preg_match_all( '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $message, $matches );
 
-		$matches = isset( $matches[0] ) ? $matches[0] : '';
+		$matches = $matches[0] ?? '';
 
 		$matches = (array) $matches;
 
@@ -105,7 +105,7 @@ function hocwp_theme_wp_new_user_notification_email_filter( $data, $user, $blog_
 add_filter( 'wp_new_user_notification_email', 'hocwp_theme_wp_new_user_notification_email_filter', 10, 3 );
 
 function hocwp_theme_wp_mail_filter( $data ) {
-	if ( ! isset( $data['headers'] ) || empty( $data['headers'] ) ) {
+	if ( empty( $data['headers'] ) ) {
 		$data['headers'] = "Content-Type: text/html; charset=UTF-8\r\n";
 		$data['message'] = wpautop( $data['message'] );
 	}
@@ -159,3 +159,27 @@ function hocwp_theme_verify_user_notification( $key, $user ) {
 
 	return false;
 }
+
+/**
+ * Search and delete invalid WordPress users.
+ *
+ * @return void
+ */
+function hocwp_theme_remove_invalid_user() {
+	global $wpdb;
+
+	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_email = '' OR user_pass NOT LIKE %s", '$P$%' ) );
+
+	if ( HT()->array_has_value( $ids ) ) {
+		foreach ( $ids as $user_id ) {
+			$user = new WP_User( $user_id );
+
+			if ( empty( $user->get_role_caps() ) || user_can( $user_id, 'publish_posts' ) ) {
+				wp_delete_user( $user_id );
+			}
+		}
+	}
+}
+
+add_action( 'user_register', 'hocwp_theme_remove_invalid_user' );
+add_action( 'wp_login', 'hocwp_theme_remove_invalid_user' );

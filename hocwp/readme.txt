@@ -12,6 +12,7 @@
 * 06/11/2024: Update code editor not receive data code editor in textarea field.
 * 11/11/2024: Update delay load functions.
 * 14/11/2024: Mark SB Core not a required plugin while developing.
+* 09/12/2024: Add function to remove invalid user.
 
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.

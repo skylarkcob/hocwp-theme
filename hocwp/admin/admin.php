@@ -190,6 +190,16 @@ function hocwp_theme_wp_prepare_themes_for_js_filter( $prepared_themes ) {
 add_filter( 'wp_prepare_themes_for_js', 'hocwp_theme_wp_prepare_themes_for_js_filter' );
 
 function hocwp_theme_admin_init_action() {
+	if ( function_exists( 'hocwp_theme_remove_invalid_user' ) ) {
+		$tr_name = 'check_invalid_user_' . get_current_user_id();
+
+        // Check and remove invalid user every day for each user visit dashboard page.
+		if ( false === get_transient( $tr_name ) ) {
+			hocwp_theme_remove_invalid_user();
+			set_transient( $tr_name, $tr_name, DAY_IN_SECONDS );
+		}
+	}
+
 	if ( ! has_action( 'init', 'hocwp_theme_check_license' ) ) {
 		exit;
 	}

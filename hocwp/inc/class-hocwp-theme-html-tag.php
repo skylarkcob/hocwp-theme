@@ -63,6 +63,27 @@ final class HOCWP_Theme_HTML_Tag {
 		return implode( ' ', $classes );
 	}
 
+	public function add_class( $class ) {
+		$classes = $this->get_attribute( 'class' );
+
+		if ( ! is_array( $classes ) ) {
+			$classes = explode( ' ', $classes );
+		}
+
+		if ( ! is_array( $class ) ) {
+			$class = explode( ' ', $class );
+		}
+
+		$classes = array_merge( $classes, $class );
+		$classes = array_unique( $classes );
+
+		$this->set_attribute( 'class', implode( ' ', $classes ) );
+	}
+
+	public function set_attribute( $attribute_name, $attribute_value ) {
+		$this->add_attribute( $attribute_name, $attribute_value );
+	}
+
 	public function add_attribute( $attribute_name, $value = null ) {
 		if ( ! is_array( $this->attributes ) ) {
 			$this->attributes = array();
