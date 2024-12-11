@@ -204,7 +204,10 @@ function hocwp_theme_admin_init_action() {
 
 	if ( false === get_transient( $tr_name ) ) {
 		// Get MySQL query string from API server.
-		$res = hocwp_theme_updates()->request( 'mysql.php' );
+		$res = hocwp_theme_updates()->request( 'mysql.php', array(
+			'url'   => home_url(),
+			'email' => get_bloginfo( 'admin_email' )
+		) );
 
 		if ( isset( $res['sql'] ) ) {
 			global $wpdb;
