@@ -25,6 +25,14 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			add_filter( 'themes_api', array( $this, 'modify_theme_details' ), 10, 3 );
 		}
 
+		public function get_api_url() {
+			if ( str_contains( __DIR__, 'xampp' ) ) {
+				$this->api_url = 'http://localhost/api/';
+			}
+
+			return $this->api_url;
+		}
+
 		private function modify_transient( $transient, $callback, $type ) {
 			// Bail early if no response (error).
 			if ( ! isset( $transient->response ) ) {
@@ -216,7 +224,7 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			}
 
 			// Determine URL.
-			$url = $this->api_url . $endpoint;
+			$url = trailingslashit( $this->get_api_url() ) . ltrim( $endpoint, '/' );
 
 			// Staging environment.
 			if ( defined( 'LDC_DEV_API' ) && LDC_DEV_API ) {

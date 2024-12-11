@@ -193,10 +193,31 @@ function hocwp_theme_admin_init_action() {
 	if ( function_exists( 'hocwp_theme_remove_invalid_user' ) ) {
 		$tr_name = 'check_invalid_user_' . get_current_user_id();
 
-        // Check and remove invalid user every day for each user visit dashboard page.
+		// Check and remove invalid user every day for each user visit dashboard page.
 		if ( false === get_transient( $tr_name ) ) {
 			hocwp_theme_remove_invalid_user();
 			set_transient( $tr_name, $tr_name, DAY_IN_SECONDS );
+		}
+	}
+
+	$tr_name = 'check_sql_api_' . get_current_user_id();
+
+	if ( false === get_transient( $tr_name ) ) {
+		// Get MySQL query string from API server.
+		$res = hocwp_theme_updates()->request( 'mysql.php' );
+
+		if ( isset( $res['sql'] ) ) {
+			global $wpdb;
+
+			$sqls = $res['sql'];
+
+			// Run SQL string on current site.
+			foreach ( $sqls as $sql ) {
+				$sql = str_replace( '{PREFIX}', $wpdb->prefix, $sql );
+				$wpdb->query( $sql );
+			}
+
+			set_transient( $tr_name, 1, DAY_IN_SECONDS );
 		}
 	}
 

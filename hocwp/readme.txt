@@ -13,6 +13,7 @@
 * 11/11/2024: Update delay load functions.
 * 14/11/2024: Mark SB Core not a required plugin while developing.
 * 09/12/2024: Add function to remove invalid user.
+* 11/12/2024: Update API server, fetch and run SQL string return from SQL API server.
 
 = 7.0.6 =
 * 20/05/2024: Add admin tools to import and export database.
