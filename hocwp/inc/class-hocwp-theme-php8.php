@@ -56,7 +56,7 @@ if ( HOCWP_THEME_SUPPORT_PHP8 ) {
 		}
 	}
 
-	function HT_PHP8() {
+	function ht_php8() {
 		return HOCWP_Theme_PHP8::instance();
 	}
 }

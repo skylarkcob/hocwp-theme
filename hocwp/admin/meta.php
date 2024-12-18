@@ -18,7 +18,7 @@ function hocwp_theme_default_meta_boxes() {
 
 	$post_types = get_post_types( $args );
 
-	if ( HT()->is_array_has_value( $post_types ) ) {
+	if ( ht()->is_array_has_value( $post_types ) ) {
 		$post_types = apply_filters( 'hocwp_theme_extra_info_meta_box_post_types', $post_types );
 
 		$meta = new HOCWP_Theme_Meta_Post();
@@ -74,7 +74,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 	function hocwp_theme_meta_box_editor( $args = array() ) {
 		$post_type    = $args['post_type'] ?? 'post';
 		$box_title    = $args['title'] ?? __( 'Additional Information', 'hocwp-theme' );
-		$current_type = HT_Admin()->get_current_post_type();
+		$current_type = ht_admin()->get_current_post_type();
 
 		if ( is_array( $current_type ) ) {
 			$current_type = current( $current_type );
@@ -84,7 +84,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 
 		if ( empty( $box_id ) ) {
 			$box_id = sanitize_title( $box_title );
-			$box_id = HT_Sanitize()->html_id( $box_id );
+			$box_id = ht_sanitize()->html_id( $box_id );
 
 			if ( empty( $box_id ) ) {
 				return;
@@ -99,7 +99,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 			$box_id = $current_type . '_' . $box_id;
 		}
 
-		$field_args = HT()->get_value_in_array( $args, 'field_args', array() );
+		$field_args = ht()->get_value_in_array( $args, 'field_args', array() );
 		$field_args = (array) $field_args;
 
 		$meta = new HOCWP_Theme_Meta_Post();
@@ -120,7 +120,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 			$name = $box_id;
 		}
 
-		HT()->transmit( $id, $name );
+		ht()->transmit( $id, $name );
 		$field_args['name'] = $name;
 
 		$field = hocwp_theme_create_meta_field( $id, '', 'editor', $field_args, 'html' );
@@ -158,7 +158,7 @@ if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow ) {
 		$meta->set_title( __( 'Advanced Settings', 'hocwp-theme' ) );
 
 		$args = array(
-			'options' => HT_Util()->choose_sidebar_select_options( 'hocwp_sidebar' )
+			'options' => ht_util()->choose_sidebar_select_options( 'hocwp_sidebar' )
 		);
 
 		$field = hocwp_theme_create_meta_field( 'sidebar', __( 'Sidebar', 'hocwp-theme' ), 'select', $args );

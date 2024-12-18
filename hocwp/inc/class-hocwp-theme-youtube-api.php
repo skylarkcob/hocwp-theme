@@ -76,7 +76,7 @@ class HOCWP_Theme_YouTube_API extends Abstract_HOCWP_Theme_Google_API {
 	}
 
 	public static function get_video_id( $url ) {
-		$params = HT()->get_params_from_url( $url );
+		$params = ht()->get_params_from_url( $url );
 
 		$id = '';
 
@@ -87,24 +87,24 @@ class HOCWP_Theme_YouTube_API extends Abstract_HOCWP_Theme_Google_API {
 
 		// Get YouTube video ID from embed URL like https://www.youtube.com/embed/9g2U12SsRns
 		if ( empty( $id ) && str_contains( $url, '/embed/' ) ) {
-			$id = HT()->explode_get_value( $url, '/embed/', false, 1 );
+			$id = ht()->explode_get_value( $url, '/embed/', false, 1 );
 		}
 
 		// Get YouTube video ID from embed URL like https://youtu.be/9g2U12SsRns
 		if ( empty( $id ) && str_contains( $url, 'youtu.be/' ) ) {
-			$id = HT()->explode_get_value( $url, 'youtu.be/', false, 1 );
+			$id = ht()->explode_get_value( $url, 'youtu.be/', false, 1 );
 		}
 
 		// Get YouTube video ID from embed URL like https://www.youtube.com/shorts/uJvtjKYwWT4
 		if ( empty( $id ) && str_contains( $url, '/shorts/' ) ) {
-			$id = HT()->explode_get_value( $url, '/shorts/', false, 1 );
+			$id = ht()->explode_get_value( $url, '/shorts/', false, 1 );
 		}
 
-		$id = HT()->explode_get_value( $id, '/?' );
+		$id = ht()->explode_get_value( $id, '/?' );
 
-		$id = HT()->explode_get_value( $id, '?' );
+		$id = ht()->explode_get_value( $id, '?' );
 
-		$id = HT()->explode_get_value( $id, '/' );
+		$id = ht()->explode_get_value( $id, '/' );
 
 		unset( $parse, $params );
 
@@ -116,7 +116,7 @@ class HOCWP_Theme_YouTube_API extends Abstract_HOCWP_Theme_Google_API {
 			$this->fetch();
 		}
 
-		return ( is_object( $this->result ) && isset( $this->result->items ) && HT()->array_has_value( $this->result->items ) );
+		return ( is_object( $this->result ) && isset( $this->result->items ) && ht()->array_has_value( $this->result->items ) );
 	}
 
 	public function build_query_url() {
@@ -129,7 +129,7 @@ class HOCWP_Theme_YouTube_API extends Abstract_HOCWP_Theme_Google_API {
 			return new WP_Error( 'invalid_name', __( 'API name cannot be empty, can be videos, search,...', 'hocwp-theme' ) );
 		}
 
-		if ( ! HT()->array_has_value( $this->params ) ) {
+		if ( ! ht()->array_has_value( $this->params ) ) {
 			return new WP_Error( 'invalid_params', __( 'Query parameters must be provided in full.', 'hocwp-theme' ) );
 		}
 

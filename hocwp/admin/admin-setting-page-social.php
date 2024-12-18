@@ -23,7 +23,7 @@ if ( 'social' != $hocwp_theme->option->tab ) {
 function hocwp_theme_settings_page_social_section() {
 	$sections = array();
 
-	$options = HT_Options()->get( 'social' );
+	$options = ht_options()->get( 'social' );
 
 	if ( is_array( $options ) && ! empty( $options['list_socials'] ) ) {
 		$sections['social_url'] = array(
@@ -124,7 +124,7 @@ function hocwp_theme_settings_page_social_field() {
 		)
 	);
 
-	$options = HT_Options()->get( 'social' );
+	$options = ht_options()->get( 'social' );
 
 	if ( is_array( $options ) && ! empty( $options['list_socials'] ) ) {
 		$socials = $options['list_socials'];

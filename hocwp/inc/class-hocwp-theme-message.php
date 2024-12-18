@@ -32,6 +32,6 @@ class HOCWP_Theme_Message {
 	}
 }
 
-function HT_Message() {
+function ht_message() {
 	return HOCWP_Theme_Message::instance();
 }

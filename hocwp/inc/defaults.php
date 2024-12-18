@@ -5,12 +5,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $hocwp_theme, $hocwp_theme_metas;
 
-$hocwp_theme = HOCWP_Theme()->object;
-
-if ( ! isset( $hocwp_theme->options ) || ! is_array( $hocwp_theme->options ) ) {
-	$hocwp_theme->options = HOCWP_Theme()->get_options();
+if ( ! isset( $hocwp_theme ) ) {
+	$hocwp_theme = hocwp_theme()->object;
 }
 
+if ( ! isset( $hocwp_theme->options ) || ! is_array( $hocwp_theme->options ) ) {
+	$hocwp_theme->options = hocwp_theme()->get_options();
+}
+
+hocwp_theme()->settings = $hocwp_theme->options;
+
 if ( ! ( $hocwp_theme_metas instanceof HOCWP_Theme_Metas ) ) {
-	$hocwp_theme_metas = new HOCWP_Theme_Metas();
+	$hocwp_theme_metas = hocwp_theme()->new_instance( 'HOCWP_Theme_Metas' );
 }

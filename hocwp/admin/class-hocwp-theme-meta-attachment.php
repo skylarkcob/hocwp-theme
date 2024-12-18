@@ -23,7 +23,7 @@ class HOCWP_Theme_Meta_Attachment extends HOCWP_Theme_Meta_Post {
 		global $post_type;
 
 		if ( 'attachment' == $post_type ) {
-			$file_id = HT_Admin()->get_current_post_id();
+			$file_id = ht_admin()->get_current_post_id();
 
 			$load = ( is_string( $this->media_type ) && 'all' == $this->media_type );
 
@@ -83,7 +83,7 @@ class HOCWP_Theme_Meta_Attachment extends HOCWP_Theme_Meta_Post {
 
 			if ( ! empty( $id ) && isset( $_POST[ $id ] ) ) {
 				$value = $_POST[ $id ];
-				$value = HT_Sanitize()->data( $value, $field['type'] );
+				$value = ht_sanitize()->data( $value, $field['type'] );
 
 				update_post_meta( $post['ID'], $id, $value );
 			}
@@ -110,9 +110,9 @@ class HOCWP_Theme_Meta_Attachment extends HOCWP_Theme_Meta_Post {
 
 		$id   = $field['id'] ?? '';
 		$name = $field['name'] ?? '';
-		HT()->transmit( $id, $name );
+		ht()->transmit( $id, $name );
 
-		$field['callback_args']['id'] = 'attachments-' . $attachment->ID . '-' . HT_Sanitize()->html_id( $id );
+		$field['callback_args']['id'] = 'attachments-' . $attachment->ID . '-' . ht_sanitize()->html_id( $id );
 
 		if ( empty( $field['value'] ) ) {
 			if ( $attachment instanceof WP_Post ) {

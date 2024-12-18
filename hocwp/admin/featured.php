@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_post_submitbox_misc_actions_action( $post ) {
-	$post_types = HT_Util()->post_types_support_featured();
+	$post_types = ht_util()->post_types_support_featured();
 
 	if ( ! in_array( $post->post_type, $post_types ) || ! current_user_can( 'publish_posts' ) ) {
 		return;
@@ -26,11 +26,11 @@ function hocwp_theme_post_submitbox_misc_actions_action( $post ) {
 add_action( 'post_submitbox_misc_actions', 'hocwp_theme_post_submitbox_misc_actions_action' );
 
 function hocwp_theme_save_post_action( $post_id ) {
-	if ( ! in_array( get_post_type( $post_id ), HT_Util()->post_types_support_featured() ) ) {
+	if ( ! in_array( get_post_type( $post_id ), ht_util()->post_types_support_featured() ) ) {
 		return;
 	}
 
-	if ( ! HT_Util()->can_save_post( $post_id, 'hocwp_theme_post_submitbox', 'hocwp_theme_post_submitbox_nonce' ) ) {
+	if ( ! ht_util()->can_save_post( $post_id, 'hocwp_theme_post_submitbox', 'hocwp_theme_post_submitbox_nonce' ) ) {
 		return;
 	}
 
@@ -68,7 +68,7 @@ function hocwp_theme_set_post_term_featured( $object_id, $terms ) {
 		} else {
 			$visi = wp_get_object_terms( $object_id, 'product_visibility', array( 'slug' => 'featured' ) );
 
-			if ( ! HT()->array_has_value( $visi ) ) {
+			if ( ! ht()->array_has_value( $visi ) ) {
 				delete_post_meta( $object_id, 'featured' );
 			}
 		}
@@ -81,7 +81,7 @@ function hocwp_theme_manage_posts_columns_filter( $columns ) {
 	if ( current_user_can( 'publish_posts' ) ) {
 		global $post_type;
 
-		if ( in_array( $post_type, HT_Util()->post_types_support_featured() ) ) {
+		if ( in_array( $post_type, ht_util()->post_types_support_featured() ) ) {
 			if ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) {
 				$text = _x( 'Featured', 'manage posts columns', 'hocwp-theme' );
 
@@ -99,7 +99,7 @@ add_filter( 'manage_page_posts_columns', 'hocwp_theme_manage_posts_columns_filte
 function hocwp_theme_manage_sortable_columns_filter( $columns ) {
 	global $post_type;
 
-	if ( in_array( $post_type, HT_Util()->post_types_support_featured_sortable() ) ) {
+	if ( in_array( $post_type, ht_util()->post_types_support_featured_sortable() ) ) {
 		if ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) {
 			$columns['featured'] = 'featured';
 		}
@@ -109,7 +109,7 @@ function hocwp_theme_manage_sortable_columns_filter( $columns ) {
 }
 
 function hocwp_theme_init_edit_columns() {
-	foreach ( HT_Util()->post_types_support_featured() as $post_type ) {
+	foreach ( ht_util()->post_types_support_featured() as $post_type ) {
 		$action   = 'manage_' . $post_type . '_posts_custom_column';
 		$function = 'hocwp_theme_manage_posts_custom_column_action';
 
@@ -118,7 +118,7 @@ function hocwp_theme_init_edit_columns() {
 		}
 	}
 
-	foreach ( HT_Util()->post_types_support_featured_sortable() as $post_type ) {
+	foreach ( ht_util()->post_types_support_featured_sortable() as $post_type ) {
 		$filter   = 'manage_edit-' . $post_type . '_sortable_columns';
 		$function = 'hocwp_theme_manage_sortable_columns_filter';
 
@@ -134,7 +134,7 @@ function hocwp_theme_manage_posts_custom_column_action( $column_name, $post_id )
 	$obj       = get_post( $post_id );
 	$post_type = $obj->post_type;
 
-	if ( in_array( $post_type, HT_Util()->post_types_support_featured() ) ) {
+	if ( in_array( $post_type, ht_util()->post_types_support_featured() ) ) {
 		if ( ( ! ( 'product' == $post_type && $GLOBALS['hocwp_theme']->is_wc_activated ) ) ) {
 			if ( 'featured' == $column_name ) {
 				$value = get_post_meta( $post_id, 'featured', true );
@@ -145,7 +145,7 @@ function hocwp_theme_manage_posts_custom_column_action( $column_name, $post_id )
 					$class .= ' active';
 				}
 
-				if ( in_array( $post_type, HT_Util()->post_types_support_featured_sortable() ) ) {
+				if ( in_array( $post_type, ht_util()->post_types_support_featured_sortable() ) ) {
 					$class .= ' sortable-active';
 				}
 
@@ -162,8 +162,8 @@ function hocwp_theme_hocwp_theme_featured_post_ajax_callback() {
 
 	$post_id = isset( $_POST['post_id'] ) ? $_POST['post_id'] : '';
 
-	if ( HT()->is_positive_number( $post_id ) ) {
-		if ( in_array( get_post_type( $post_id ), HT_Util()->post_types_support_featured() ) ) {
+	if ( ht()->is_positive_number( $post_id ) ) {
+		if ( in_array( get_post_type( $post_id ), ht_util()->post_types_support_featured() ) ) {
 			$featured = isset( $_POST['featured'] ) ? $_POST['featured'] : '';
 			$featured = absint( $featured );
 

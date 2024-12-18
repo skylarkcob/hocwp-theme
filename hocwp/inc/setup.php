@@ -5,9 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_setup_start_session() {
 	if ( ! is_admin() ) {
-		if ( HT_Util()->is_vr_theme() || defined( 'VR_DIR' ) ) {
-			if ( ! function_exists( 'HT_Extension' ) || ! HT_Extension()->is_active( 'ext/vtour.php' ) ) {
-				wp_die( HT_Message()->invalid_vtour_theme() );
+		if ( ht_util()->is_vr_theme() || defined( 'VR_DIR' ) ) {
+			if ( ! function_exists( 'ht_extension' ) || ! ht_extension()->is_active( 'ext/vtour.php' ) ) {
+				wp_die( ht_message()->invalid_vtour_theme() );
 			}
 		}
 	}
@@ -24,7 +24,7 @@ function hocwp_theme_setup_start_session() {
 		$taxonomy = $_REQUEST['get_terms'];
 		$output   = array();
 
-		if ( HT_Util()->verify_nonce( HOCWP_Theme()->get_textdomain() ) ) {
+		if ( ht_util()->verify_nonce( hocwp_theme()->get_textdomain() ) ) {
 			$q = $_REQUEST['term'] ?? '';
 
 			$args = array( 'hide_empty' => false );
@@ -33,9 +33,9 @@ function hocwp_theme_setup_start_session() {
 				$args['search'] = $q;
 			}
 
-			$terms = HT_Util()->get_terms( $taxonomy, $args );
+			$terms = ht_util()->get_terms( $taxonomy, $args );
 
-			if ( HT()->array_has_value( $terms ) ) {
+			if ( ht()->array_has_value( $terms ) ) {
 				$return = $_REQUEST['return'] ?? '';
 				$return = strtolower( $return );
 
@@ -122,9 +122,8 @@ function hocwp_theme_switch_theme_action( $new_name, $new_theme ) {
 add_action( 'switch_theme', 'hocwp_theme_switch_theme_action', 10, 2 );
 
 function hocwp_theme_after_setup_theme_action() {
-	$theme       = wp_get_theme();
-	$new_version = $theme->get( 'Version' );
-	$sheet       = $theme->get_stylesheet();
+	$new_version = hocwp_theme()->version;
+	$sheet       = hocwp_theme()->stylesheet;
 	$name        = str_replace( '-', '_', $sheet );
 	$option      = 'hocwp_theme_' . $name . '_version';
 	$old_version = get_option( $option );
@@ -132,7 +131,7 @@ function hocwp_theme_after_setup_theme_action() {
 	if ( version_compare( $new_version, $old_version, '>' ) ) {
 		update_option( $option, $new_version );
 		set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
-		do_action( 'hocwp_theme_upgrade_new_version', $theme, $new_version, $old_version );
+		do_action( 'hocwp_theme_upgrade_new_version', hocwp_theme()->theme, $new_version, $old_version );
 	}
 }
 
@@ -169,7 +168,7 @@ function hocwp_theme_check_domain_change() {
 	}
 
 	$old_domain = get_option( 'hocwp_theme_domain' );
-	$new_domain = HT()->get_domain_name( home_url() );
+	$new_domain = ht()->get_domain_name( home_url() );
 
 	if ( $new_domain != $old_domain ) {
 		update_option( 'hocwp_theme_domain', $new_domain );
@@ -210,7 +209,7 @@ add_action( 'hocwp_theme_activation', 'hocwp_theme_update_comment_blacklist_keys
 add_action( 'hocwp_theme_upgrade_new_version', 'hocwp_theme_update_comment_blacklist_keys' );
 
 function hocwp_theme_required_plugins( $plugins ) {
-	if ( defined( 'HOCWP_THEME_DEVELOPING' ) && HOCWP_THEME_DEVELOPING && HT_Util()->is_localhost() ) {
+	if ( defined( 'HOCWP_THEME_DEVELOPING' ) && HOCWP_THEME_DEVELOPING && ht_util()->is_localhost() ) {
 		$plugins[] = 'theme-check';
 		$plugins[] = 'query-monitor';
 	}

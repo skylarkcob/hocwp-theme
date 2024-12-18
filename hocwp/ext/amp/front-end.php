@@ -3,15 +3,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! HT_Util()->is_amp() ) {
+if ( ! ht_util()->is_amp() ) {
 	return;
 }
 
 function hocwp_ext_amp_post_template_data_filter( $data ) {
 	$fonts = hocwp_ext_amp_fonts();
 
-	if ( HT()->array_has_value( $fonts ) ) {
-		$remove_default_font = HT_Util()->get_theme_option( 'remove_default_font', '', 'amp' );
+	if ( ht()->array_has_value( $fonts ) ) {
+		$remove_default_font = ht_util()->get_theme_option( 'remove_default_font', '', 'amp' );
 
 		if ( 1 == $remove_default_font ) {
 			unset( $data['font_urls']['merriweather'] );
@@ -38,7 +38,7 @@ add_action( 'amp_post_template_css', 'hocwp_ext_amp_post_template_css_action' );
 function hocwp_ext_amp_custom_wp_head() {
 	$fonts = hocwp_ext_amp_fonts();
 
-	if ( HT()->array_has_value( $fonts ) ) {
+	if ( ht()->array_has_value( $fonts ) ) {
 		foreach ( $fonts as $key => $url ) {
 			if ( ! empty( $url ) ) {
 				echo '<link rel="stylesheet" href="' . esc_attr( $url ) . '">';
@@ -46,7 +46,7 @@ function hocwp_ext_amp_custom_wp_head() {
 		}
 	}
 
-	$value = HT_Options()->get_tab( 'amp_head', '', 'amp' );
+	$value = ht_options()->get_tab( 'amp_head', '', 'amp' );
 	echo $value;
 }
 
@@ -56,8 +56,8 @@ function hocwp_ext_amp_wp_action() {
 	global $wp_query;
 
 	if ( isset( $_GET['amp'] ) || isset( $wp_query->query['amp'] ) ) {
-		if ( ! HT_Util()->is_amp( array( 'transitional', 'standard' ) ) ) {
-			wp_redirect( HT_Util()->get_current_url() );
+		if ( ! ht_util()->is_amp( array( 'transitional', 'standard' ) ) ) {
+			wp_redirect( ht_util()->get_current_url() );
 			exit;
 		}
 	}

@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$load = apply_filters( 'hocwp_theme_load_extension_comment_notification', HT_Extension()->is_active( __FILE__ ) );
+$load = apply_filters( 'hocwp_theme_load_extension_comment_notification', ht_extension()->is_active( __FILE__ ) );
 
 if ( ! $load ) {
 	return;
@@ -23,7 +23,7 @@ function hocwp_theme_comment_notification_transition_comment_status_action( $new
 add_action( 'transition_comment_status', 'hocwp_theme_comment_notification_transition_comment_status_action', 10, 3 );
 
 function hocwp_theme_comment_notification_wp_insert_comment_action( $id, $comment ) {
-	if ( HT()->is_positive_number( $id ) ) {
+	if ( ht()->is_positive_number( $id ) ) {
 		hocwp_theme_comment_reply_notification( $comment );
 	}
 }
@@ -43,11 +43,11 @@ function hocwp_theme_notify_comment_tags() {
 
 function hocwp_theme_comment_reply_notification( $comment ) {
 	if ( 1 == $comment->comment_approved ) {
-		if ( HT()->is_positive_number( $comment->comment_parent ) ) {
+		if ( ht()->is_positive_number( $comment->comment_parent ) ) {
 			$parent = get_comment( $comment->comment_parent );
 
-			if ( HT_Util()->is_email( $parent->comment_author_email ) && $parent->comment_author_email != $comment->comment_author_email ) {
-				$options = HT_Options()->get( 'discussion' );
+			if ( ht_util()->is_email( $parent->comment_author_email ) && $parent->comment_author_email != $comment->comment_author_email ) {
+				$options = ht_options()->get( 'discussion' );
 
 				$obj = get_post( $parent->comment_post_ID );
 
@@ -86,7 +86,7 @@ function hocwp_theme_comment_reply_notification( $comment ) {
 
 				$subject = sprintf( '[%s] ', wp_specialchars_decode( get_bloginfo( 'blogname' ) ) ) . $subject;
 
-				HT_Util()->html_mail( $parent->comment_author_email, $subject, $message, $headers );
+				ht_util()->html_mail( $parent->comment_author_email, $subject, $message, $headers );
 				unset( $obj, $subject );
 			}
 			unset( $parent );

@@ -62,7 +62,7 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 				if ( is_active_sidebar( $sidebar ) ) {
 					dynamic_sidebar( $sidebar );
 				} else {
-					$tmp = HT_Util()->get_sidebar_by( 'id', $sidebar );
+					$tmp = ht_util()->get_sidebar_by( 'id', $sidebar );
 
 					$sidebar_name = '';
 
@@ -106,11 +106,11 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 		$value = $instance[ $name ] ?? '';
 
 		$args = array(
-			'options'     => HT_Util()->choose_sidebar_select_options(),
+			'options'     => ht_util()->choose_sidebar_select_options(),
 			'description' => __( 'Please do not select Sidebar that contains this widget.', 'hocwp-theme' )
 		);
 
-		HT_HTML_Field()->widget_field( $this, $name, __( 'Sidebar:', 'hocwp-theme' ), $value, 'select', $args );
+		ht_html_field()->widget_field( $this, $name, __( 'Sidebar:', 'hocwp-theme' ), $value, 'select', $args );
 
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
@@ -119,7 +119,7 @@ class HOCWP_Theme_Widget_Tabber extends WP_Widget {
 		$instance = $old_instance;
 
 		$instance['title']   = isset( $new_instance['title'] ) ? sanitize_text_field( $new_instance['title'] ) : '';
-		$instance['sidebar'] = HT_Sanitize()->data( $new_instance['sidebar'], 'string' );
+		$instance['sidebar'] = ht_sanitize()->data( $new_instance['sidebar'], 'string' );
 
 		return $instance;
 	}

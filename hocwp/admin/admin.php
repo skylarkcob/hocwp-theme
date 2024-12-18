@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $pagenow, $hocwp_theme, $post_type;
 
 if ( empty( $post_type ) ) {
-	$post_type = HT_Admin()->get_current_post_type();
+	$post_type = ht_admin()->get_current_post_type();
 }
 
 function hocwp_theme_admin_notices_action() {
@@ -14,7 +14,7 @@ function hocwp_theme_admin_notices_action() {
 
 	$compatible = apply_filters( 'hocwp_theme_block_compatible', HOCWP_THEME_BLOCK_COMPATIBLE );
 
-	if ( ! $compatible && ! HT_Extension()->is_active( 'hocwp/ext/classic-widgets.php' ) ) {
+	if ( ! $compatible && ! ht_extension()->is_active( 'hocwp/ext/classic-widgets.php' ) ) {
 		$link = sprintf( '<a href="%s">Classic Widgets</a>', esc_url( admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=inactive' ) ) );
 
 		$args = array(
@@ -22,13 +22,13 @@ function hocwp_theme_admin_notices_action() {
 			'message' => sprintf( __( 'Current theme is not compatible with WordPress 5.8 or later, please active %s extension for theme works normally.', 'hocwp-theme' ), $link )
 		);
 
-		HT_Util()->admin_notice( $args );
+		ht_util()->admin_notice( $args );
 	}
 
-	if ( ! HOCWP_THEME_DEVELOPING && ! HT_Admin()->skip_admin_notices() ) {
+	if ( ! HOCWP_THEME_DEVELOPING && ! ht_admin()->skip_admin_notices() ) {
 		$email = get_bloginfo( 'admin_email' );
 
-		if ( HT_Util()->is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
+		if ( ht_util()->is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
 			$link = '<a href="' . admin_url( 'options-general.php' ) . '">' . _x( 'general settings page', 'setting page', 'hocwp-theme' ) . '</a>';
 
 			$args = array(
@@ -36,18 +36,18 @@ function hocwp_theme_admin_notices_action() {
 				'message' => sprintf( __( 'You must change administrator\'s email address for site working, please go to %s and update it.', 'hocwp-theme' ), $link )
 			);
 
-			HT_Util()->admin_notice( $args );
+			ht_util()->admin_notice( $args );
 		}
 	}
 
 	$updated_posts = $_GET['updated_posts'] ?? '';
 
-	if ( HT()->is_positive_number( $updated_posts ) ) {
+	if ( ht()->is_positive_number( $updated_posts ) ) {
 		$msg = array(
 			'message' => sprintf( __( '%s posts have been updated!', 'hocwp-theme' ), number_format_i18n( $updated_posts ) )
 		);
 
-		HT_Admin()->admin_notice( $msg );
+		ht_admin()->admin_notice( $msg );
 	}
 
 	if ( 'plugins.php' == $pagenow ) {
@@ -59,7 +59,7 @@ function hocwp_theme_admin_notices_action() {
 					'message' => sprintf( __( '%s plugins have been disabled upgrade functional!', 'hocwp-theme' ), number_format_i18n( $count ) )
 				);
 
-				HT_Admin()->admin_notice( $msg );
+				ht_admin()->admin_notice( $msg );
 			}
 		} elseif ( isset( $_GET['count_enable-upgrade'] ) ) {
 			$count = $_GET['count_enable-upgrade'];
@@ -69,7 +69,7 @@ function hocwp_theme_admin_notices_action() {
 					'message' => sprintf( __( '%s plugins have been enabled upgrade functional!', 'hocwp-theme' ), number_format_i18n( $count ) )
 				);
 
-				HT_Admin()->admin_notice( $msg );
+				ht_admin()->admin_notice( $msg );
 			}
 		}
 	}
@@ -124,7 +124,7 @@ require( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-health-check.php' );
 add_action( 'admin_menu', function () {
 	global $pagenow, $hocwp_theme;
 
-	if ( ( 'themes.php' == $pagenow || 'options.php' == $pagenow ) && HT_Admin()->get_plugin_page() == $hocwp_theme->option->get_slug() ) {
+	if ( ( 'themes.php' == $pagenow || 'options.php' == $pagenow ) && ht_admin()->get_plugin_page() == $hocwp_theme->option->get_slug() ) {
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-general.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-home.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-mobile.php' );
@@ -177,10 +177,8 @@ function hocwp_theme_wp_prepare_themes_for_js_filter( $prepared_themes ) {
 	global $pagenow;
 
 	if ( 'themes.php' == $pagenow && defined( 'HOCWP_THEME_NAME' ) ) {
-		$theme = wp_get_theme();
-
-		if ( isset( $prepared_themes[ $theme->get_stylesheet() ] ) ) {
-			$prepared_themes[ $theme->get_stylesheet() ]['name'] = HOCWP_THEME_NAME;
+		if ( isset( $prepared_themes[ hocwp_theme()->stylesheet ] ) ) {
+			$prepared_themes[ hocwp_theme()->stylesheet ]['name'] = HOCWP_THEME_NAME;
 		}
 	}
 
@@ -233,7 +231,7 @@ function hocwp_theme_admin_init_action() {
 	if ( 'post.php' == $pagenow ) {
 		$post_id = $_GET['post'] ?? '';
 
-		if ( HT()->is_positive_number( $post_id ) ) {
+		if ( ht()->is_positive_number( $post_id ) ) {
 			$obj = get_post( $post_id );
 
 			if ( $obj instanceof WP_Post ) {
@@ -254,7 +252,7 @@ function hocwp_theme_enqueue_plugin_installer_scripts() {
 	wp_enqueue_script( 'updates' );
 }
 
-if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == HT_Admin()->get_plugin_page() ) {
+if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == ht_admin()->get_plugin_page() ) {
 	add_action( 'admin_enqueue_scripts', 'hocwp_theme_enqueue_plugin_installer_scripts' );
 }
 
@@ -265,7 +263,7 @@ function hocwp_theme_admin_notices_required_plugins() {
 		return;
 	}
 
-	if ( ! HT_Requirement()->check_required_plugins() && current_user_can( 'manage_options' ) ) {
+	if ( ! ht_requirement()->check_required_plugins() && current_user_can( 'manage_options' ) ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '">' . _x( 'this list', 'required plugins list', 'hocwp-theme' ) . '</a>';
 
 		$args = array(
@@ -273,10 +271,10 @@ function hocwp_theme_admin_notices_required_plugins() {
 			'message' => sprintf( __( 'You must install required plugins for theme can work properly. Try to install and activate all plugins in %s.', 'hocwp-theme' ), $link )
 		);
 
-		HT_Util()->admin_notice( $args );
+		ht_util()->admin_notice( $args );
 	}
 
-	if ( ! HT_Requirement()->check_required_extensions() ) {
+	if ( ! ht_requirement()->check_required_extensions() ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=required' ) . '">' . _x( 'this list', 'required plugins list', 'hocwp-theme' ) . '</a>';
 
 		$args = array(
@@ -284,10 +282,10 @@ function hocwp_theme_admin_notices_required_plugins() {
 			'message' => sprintf( __( 'You must install all required extensions for theme can work properly. Try to install and activate all extensions in %s.', 'hocwp-theme' ), $link )
 		);
 
-		HT_Util()->admin_notice( $args );
+		ht_util()->admin_notice( $args );
 	}
 
-	if ( ! HT_Requirement()->check_extension_woocommerce() ) {
+	if ( ! ht_requirement()->check_extension_woocommerce() ) {
 		$link = '<a href="' . self_admin_url( 'themes.php?page=hocwp_theme&tab=extension' ) . '">' . _x( 'here', 'list extensions link', 'hocwp-theme' ) . '</a>';
 
 		$args = array(
@@ -295,7 +293,7 @@ function hocwp_theme_admin_notices_required_plugins() {
 			'message' => sprintf( __( 'You must enable WooCommerce extension for this theme. Try to activate it %s.', 'hocwp-theme' ), $link )
 		);
 
-		HT_Util()->admin_notice( $args );
+		ht_util()->admin_notice( $args );
 	}
 }
 
@@ -435,7 +433,7 @@ function hocwp_theme_mce_buttons_filter( $mce_buttons, $editor_id ) {
 add_filter( 'mce_buttons', 'hocwp_theme_mce_buttons_filter', 10, 2 );
 
 function hocwp_theme_admin_body_class_filter( $class ) {
-	$term_html_description = HT_Options()->get_tab( 'term_html_description', '', 'writing' );
+	$term_html_description = ht_options()->get_tab( 'term_html_description', '', 'writing' );
 
 	if ( $term_html_description ) {
 		$class .= ' term-desc-html';
@@ -574,18 +572,18 @@ foreach ( $post_types as $type ) {
  * @return mixed|string
  */
 function hocwp_theme_custom_edit_posts_bulk_action( $redirect_to, $do_action, $post_ids ) {
-	if ( HT()->array_has_value( $post_ids ) ) {
+	if ( ht()->array_has_value( $post_ids ) ) {
 		$select_terms = $_REQUEST['select_terms'] ?? '';
 
 		$select_status = $_REQUEST['select_status'] ?? '';
 
 		$select_pt = $_REQUEST['select_post_type'] ?? '';
 
-		if ( ! empty( $select_status ) || HT()->array_has_value( $select_terms ) || ! empty( $select_pt ) ) {
+		if ( ! empty( $select_status ) || ht()->array_has_value( $select_terms ) || ! empty( $select_pt ) ) {
 			$count = 0;
 
 			foreach ( $post_ids as $post_id ) {
-				if ( HT()->array_has_value( $select_terms ) ) {
+				if ( ht()->array_has_value( $select_terms ) ) {
 					foreach ( $select_terms as $tax => $term_id ) {
 						wp_set_post_terms( $post_id, $term_id, $tax );
 					}
@@ -644,7 +642,7 @@ function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 						<?php
 						$statuses = get_post_statuses();
 
-						if ( HT()->array_has_value( $statuses ) ) {
+						if ( ht()->array_has_value( $statuses ) ) {
 							?>
                             <div class="status-area form-row">
                                 <label for="select-status"><?php _e( 'Post status:', 'hocwp-theme' ); ?></label>
@@ -664,7 +662,7 @@ function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 
 						$taxs = get_taxonomies( array( 'public' => true, 'hierarchical' => true ), 'objects' );
 
-						if ( HT()->array_has_value( $taxs ) ) {
+						if ( ht()->array_has_value( $taxs ) ) {
 							foreach ( $taxs as $tax ) {
 								$id = 'select-taxonomy-' . $tax->name;
 								?>
@@ -688,7 +686,7 @@ function hocwp_theme_custom_edit_posts_action_fields( $post_type, $which ) {
 
 						$post_types = get_post_types( array( 'public' => true ) );
 
-						if ( HT()->array_has_value( $post_types ) ) {
+						if ( ht()->array_has_value( $post_types ) ) {
 							?>
                             <div class="post-type-area form-row">
                                 <label for="select-post-type"><?php _e( 'Post type:', 'hocwp-theme' ); ?></label>
@@ -735,7 +733,7 @@ function hocwp_theme_updated_option_action() {
 	if ( 'options.php' == $pagenow ) {
 		$sizes = array( 'thumbnail', 'medium', 'large' );
 
-		$options = HT_Options()->get();
+		$options = ht_options()->get();
 
 		$change = false;
 

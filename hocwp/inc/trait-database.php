@@ -60,7 +60,7 @@ trait HOCWP_Theme_Database {
 
 					$sql_file = '';
 
-					$tmp_files = HT()->scandir( $tmp_dir, true );
+					$tmp_files = ht()->scandir( $tmp_dir, true );
 
 					foreach ( $tmp_files as $file ) {
 						if ( pathinfo( $file, PATHINFO_EXTENSION ) === 'sql' ) {
@@ -69,7 +69,7 @@ trait HOCWP_Theme_Database {
 						}
 					}
 
-					$file_system = HT_Util()->filesystem();
+					$file_system = ht_util()->filesystem();
 
 					if ( ! empty( $sql_file ) ) {
 						$tmp = dirname( $sql_file );
@@ -109,7 +109,7 @@ trait HOCWP_Theme_Database {
 					return $error;
 				}
 
-				$file_system = HT_Util()->filesystem();
+				$file_system = ht_util()->filesystem();
 
 				$tmp_dir = trailingslashit( WP_CONTENT_DIR ) . 'temp';
 
@@ -151,7 +151,7 @@ trait HOCWP_Theme_Database {
 				$error->add( 'unsupported_extension', sprintf( __( 'Unsupported file extension: %s', 'hocwp-theme' ), esc_html( $extension ) ) );
 		}
 
-		$file_system = HT_Util()->filesystem();
+		$file_system = ht_util()->filesystem();
 
 		$file_path = str_replace( '\\', '/', $file_path );
 		$content   = $file_system->get_contents( $file_path );
@@ -170,7 +170,7 @@ trait HOCWP_Theme_Database {
 				$db_config = array( 'db_name' => $db_config );
 			}
 
-			if ( HT()->array_has_value( $db_config ) ) {
+			if ( ht()->array_has_value( $db_config ) ) {
 				$db_name = $db_config['db_name'] ?? '';
 
 				if ( ! empty( $db_name ) && $db_name != DB_NAME ) {
@@ -325,7 +325,7 @@ trait HOCWP_Theme_Database {
 
 	public function create_database_table( $table_name, $sql_column ) {
 		if ( str_contains( $sql_column, 'CREATE TABLE' ) || str_contains( $sql_column, 'create table' ) ) {
-			HT_Util()->doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );
+			ht_util()->doing_it_wrong( __FUNCTION__, __( 'The <strong>$sql_column</strong> argument just only contains MySQL query inside (), it isn\'t full MySQL query.', 'hocwp-theme' ), '6.5.2' );
 
 			return;
 		}
@@ -358,7 +358,7 @@ trait HOCWP_Theme_Database {
 	public function is_database_table_exists( $table_name ) {
 		global $wpdb;
 
-		if ( ! HT()->string_contain( $table_name, $wpdb->prefix ) ) {
+		if ( ! ht()->string_contain( $table_name, $wpdb->prefix ) ) {
 			$table_name = $wpdb->prefix . $table_name;
 		}
 

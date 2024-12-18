@@ -17,7 +17,7 @@ if ( is_singular() || is_single() || is_page() ) {
 		$canonical = home_url();
 	}
 } else {
-	$canonical = HT_Util()->get_current_url();
+	$canonical = ht_util()->get_current_url();
 }
 
 if ( true ) {
@@ -34,17 +34,17 @@ if ( true ) {
 
 		$css = apply_filters( 'hocwp_theme_amp_style', '' );
 
-		if ( function_exists( 'HT_Custom' ) ) {
-			$file = HT_Custom()->get_path() . '/css/amp.css';
+		if ( function_exists( 'ht_custom' ) ) {
+			$file = ht_custom()->get_path() . '/css/amp.css';
 
 			if ( file_exists( $file ) ) {
-				$css .= HT_Util()->read_all_text( $file );
+				$css .= ht_util()->read_all_text( $file );
 			}
 		}
 
 		$css .= hocwp_theme_get_customizer_css();
 
-		$css .= HT_Options()->get_tab( 'custom_css', '', 'amp' );
+		$css .= ht_options()->get_tab( 'custom_css', '', 'amp' );
 
 		$css = apply_filters( 'hocwp_theme_amp_custom_style', $css );
 
@@ -54,10 +54,10 @@ if ( true ) {
 			'../images/'
 		), array(
 			get_template_directory_uri() . '/hocwp/',
-			HT_Custom()->get_url( 'images/' )
+			ht_custom()->get_url( 'images/' )
 		), $css );
 
-		HT()->wrap_text( $css, '<style amp-custom>', '</style>', true );
+		ht()->wrap_text( $css, '<style amp-custom>', '</style>', true );
 		?>
         <script async src="https://cdn.ampproject.org/v0.js"></script>
 		<?php

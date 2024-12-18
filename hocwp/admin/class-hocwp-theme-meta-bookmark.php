@@ -102,7 +102,7 @@ class HOCWP_Theme_Meta_Bookmark extends HOCWP_Theme_Meta {
 				} else {
 					if ( ! empty( $id ) ) {
 						if ( ! $this->form_table && isset( $field['title'] ) && ! empty( $field['title'] ) ) {
-							HT_HTML_Field()->label( array( 'text' => $field['title'], 'for' => $id ) );
+							ht_html_field()->label( array( 'text' => $field['title'], 'for' => $id ) );
 							unset( $field['title'] );
 							unset( $field['label'] );
 							unset( $field['callback_args']['label'] );
@@ -182,11 +182,11 @@ class HOCWP_Theme_Meta_Bookmark extends HOCWP_Theme_Meta {
 			$post_id = isset( $_POST['link_id'] ) ? $_POST['link_id'] : '';
 		}
 
-		if ( ! HT()->is_positive_number( $post_id ) ) {
+		if ( ! ht()->is_positive_number( $post_id ) ) {
 			return;
 		}
 
-		if ( ! HT_Util()->can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
+		if ( ! ht_util()->can_save_post( $post_id, $this->id, $this->id . '_nonce' ) ) {
 			return;
 		}
 

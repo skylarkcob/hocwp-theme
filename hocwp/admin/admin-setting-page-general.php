@@ -32,7 +32,7 @@ function hocwp_theme_settings_page_general_section() {
 
 	$sections = apply_filters( 'hocwp_theme_setting_sections', $sections );
 
-	if ( HT()->array_has_value( $sections ) ) {
+	if ( ht()->array_has_value( $sections ) ) {
 		foreach ( $sections as $key => $data ) {
 			if ( ! isset( $data['tab'] ) ) {
 				$sections[ $key ]['tab'] = 'general';
@@ -56,13 +56,13 @@ function hocwp_theme_settings_page_general_section() {
 add_filter( 'hocwp_theme_settings_page_general_settings_section', 'hocwp_theme_settings_page_general_section' );
 
 function hocwp_theme_settings_page_general_field( $fields ) {
-	$options = HT_Options()->get( 'general' );
+	$options = ht_options()->get( 'general' );
 
 	$logo_display = $options['logo_display'];
 
 	$value = $options['site_icon'] ?? '';
 
-	if ( ! HT()->is_positive_number( $value ) ) {
+	if ( ! ht()->is_positive_number( $value ) ) {
 		$value = get_option( 'site_icon' );
 	}
 
@@ -143,7 +143,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 
 	$value = $options['logo_image'] ?? '';
 
-	if ( ! HT()->is_positive_number( $value ) ) {
+	if ( ! ht()->is_positive_number( $value ) ) {
 		$value = get_theme_mod( 'custom_logo' );
 	}
 
@@ -188,7 +188,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 
 	$fields = apply_filters( 'hocwp_theme_setting_fields', $fields, $options );
 
-	if ( HT()->array_has_value( $fields ) ) {
+	if ( ht()->array_has_value( $fields ) ) {
 		foreach ( $fields as $key => $data ) {
 			if ( $data instanceof HOCWP_Theme_Admin_Setting_Field ) {
 				$data = $data->generate();
@@ -218,7 +218,7 @@ function hocwp_theme_settings_page_general_field( $fields ) {
 add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_settings_page_general_field', 99 );
 
 function hocwp_theme_admin_setting_page_general_scripts() {
-	HT_Enqueue()->media_upload();
+	ht_enqueue()->media_upload();
 	wp_enqueue_script( 'hocwp-theme-relationship-control', 'hocwp-theme' );
 }
 

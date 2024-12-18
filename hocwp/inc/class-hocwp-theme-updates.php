@@ -230,8 +230,8 @@ if ( ! class_exists( 'HOCWP_Theme_Updates' ) ) {
 			if ( defined( 'LDC_DEV_API' ) && LDC_DEV_API ) {
 				// Change api url to dev environment and debug log
 				$url = trailingslashit( LDC_DEV_API ) . $endpoint;
-				CAD_DEBUG( $url );
-				CAD_DEBUG( $body );
+				cad_debug( $url );
+				cad_debug( $body );
 			}
 
 			// Make request.

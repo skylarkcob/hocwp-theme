@@ -3,4 +3,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-HT_Custom()->load_template( 'template-single' );
+ht_custom()->load_template( 'template-single' );

@@ -55,7 +55,7 @@ class HOCWP_Theme_Metas {
 	}
 
 	public function set( $metas ) {
-		if ( HT()->array_has_value( $metas ) ) {
+		if ( ht()->array_has_value( $metas ) ) {
 			$this->metas = $metas;
 		}
 	}

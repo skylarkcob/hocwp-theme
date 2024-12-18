@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function hocwp_theme_meta_get_object_metas_list( $object_names, $metas ) {
 	$lists = array();
 
-	if ( HT()->array_has_value( $object_names ) ) {
+	if ( ht()->array_has_value( $object_names ) ) {
 		foreach ( $object_names as $name ) {
 			foreach ( $metas as $key => $data ) {
-				if ( is_array( $data ) && isset( $data['field'] ) && HT()->array_has_value( $data['field'] ) ) {
+				if ( is_array( $data ) && isset( $data['field'] ) && ht()->array_has_value( $data['field'] ) ) {
 					$object_name = isset( $data['object_name'] ) ? $data['object_name'] : '';
 
 					if ( ! is_array( $object_name ) ) {
@@ -48,10 +48,10 @@ function hocwp_theme_add_post_meta_from_configuration() {
 
 	$metas = $hocwp_theme_metas->get();
 
-	if ( HT()->array_has_value( $metas ) && isset( $metas['post_type'] ) && HT()->array_has_value( $metas['post_type'] ) ) {
+	if ( ht()->array_has_value( $metas ) && isset( $metas['post_type'] ) && ht()->array_has_value( $metas['post_type'] ) ) {
 		$lists = hocwp_theme_meta_get_object_metas_list( $hocwp_theme_metas->post_types, $metas['post_type'] );
 
-		if ( HT()->array_has_value( $lists ) ) {
+		if ( ht()->array_has_value( $lists ) ) {
 			foreach ( $lists as $type => $fields ) {
 				$meta = new HOCWP_Theme_Meta_Post();
 				$meta->add_post_type( $type );
@@ -75,10 +75,10 @@ function hocwp_theme_add_term_meta_from_configuration() {
 
 	$metas = $hocwp_theme_metas->get();
 
-	if ( HT()->array_has_value( $metas ) && isset( $metas['taxonomy'] ) && HT()->array_has_value( $metas['taxonomy'] ) ) {
+	if ( ht()->array_has_value( $metas ) && isset( $metas['taxonomy'] ) && ht()->array_has_value( $metas['taxonomy'] ) ) {
 		$lists = hocwp_theme_meta_get_object_metas_list( $hocwp_theme_metas->taxonomies, $metas['taxonomy'] );
 
-		if ( HT()->array_has_value( $lists ) ) {
+		if ( ht()->array_has_value( $lists ) ) {
 			foreach ( $lists as $tax => $fields ) {
 				$meta = new HOCWP_Theme_Meta_Term();
 				$meta->add_taxonomy( $tax );

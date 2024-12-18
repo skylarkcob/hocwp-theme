@@ -25,7 +25,7 @@ add_filter( 'hocwp_theme_settings_page_amp_settings_section', 'hocwp_theme_setti
 function hocwp_theme_settings_page_amp_field() {
 	$fields = array();
 
-	$options = HT_Util()->get_theme_options( 'amp' );
+	$options = ht_util()->get_theme_options( 'amp' );
 
 	$field    = hocwp_theme_create_setting_field( 'menu_button_label', __( 'Menu Button Label', 'hocwp-theme' ), 'input', array(), 'string', 'amp' );
 	$fields[] = $field;
@@ -90,10 +90,10 @@ function hocwp_theme_settings_page_amp_field() {
 add_filter( 'hocwp_theme_settings_page_amp_settings_field', 'hocwp_theme_settings_page_amp_field' );
 
 function hocwp_theme_admin_setting_page_amp_scripts() {
-	if ( function_exists( 'HT_Enqueue' ) ) {
-		HT_Enqueue()->code_editor();
+	if ( function_exists( 'ht_enqueue' ) ) {
+		ht_enqueue()->code_editor();
 	} else {
-		HT_Util()->enqueue_code_editor();
+		ht_util()->enqueue_code_editor();
 	}
 }
 

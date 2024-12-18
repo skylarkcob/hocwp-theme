@@ -16,7 +16,7 @@ final class HOCWP_Theme_Requirement {
 
 	private function __construct() {
 		if ( self::$_instance ) {
-			HT_Util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.2' );
+			ht_util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.2' );
 
 			return;
 		}
@@ -51,7 +51,7 @@ final class HOCWP_Theme_Requirement {
 
 		$extensions = apply_filters( 'hocwp_theme_required_extensions', $extensions );
 
-		if ( HT()->array_has_value( $extensions ) ) {
+		if ( ht()->array_has_value( $extensions ) ) {
 			$extensions = array_filter( $extensions );
 			$extensions = array_unique( $extensions );
 			$extensions = array_map( array( $this, 'sanitize_extension_basename' ), $extensions );
@@ -69,7 +69,7 @@ final class HOCWP_Theme_Requirement {
 
 		$extensions = apply_filters( 'hocwp_theme_recommended_extensions', $extensions );
 
-		if ( HT()->array_has_value( $extensions ) ) {
+		if ( ht()->array_has_value( $extensions ) ) {
 			$extensions = array_filter( $extensions );
 			$extensions = array_unique( $extensions );
 			$extensions = array_map( array( $this, 'sanitize_extension_basename' ), $extensions );
@@ -79,7 +79,7 @@ final class HOCWP_Theme_Requirement {
 	}
 
 	public function sanitize_extension_basename( $basename ) {
-		$basename = HT_Extension()->sanitize_basename( $basename );
+		$basename = ht_extension()->sanitize_basename( $basename );
 
 		return $basename;
 	}
@@ -87,9 +87,9 @@ final class HOCWP_Theme_Requirement {
 	public function check_required_extensions() {
 		$extensions = $this->get_required_extensions();
 
-		if ( HT()->array_has_value( $extensions ) ) {
+		if ( ht()->array_has_value( $extensions ) ) {
 			foreach ( $extensions as $basename ) {
-				if ( ! HT_extension()->is_active( $basename ) ) {
+				if ( ! ht_extension()->is_active( $basename ) ) {
 					return false;
 				}
 			}
@@ -101,7 +101,7 @@ final class HOCWP_Theme_Requirement {
 	public static function get_recommended_plugins() {
 		$rps = defined( 'HOCWP_THEME_RECOMMENDED_PLUGINS' ) ? HOCWP_THEME_RECOMMENDED_PLUGINS : '';
 
-		$plugins = HT_Requirement()->get_defined_value_array( $rps );
+		$plugins = ht_requirement()->get_defined_value_array( $rps );
 
 		unset( $rps );
 
@@ -115,7 +115,7 @@ final class HOCWP_Theme_Requirement {
 	public static function get_required_plugins() {
 		$rps = defined( 'HOCWP_THEME_REQUIRED_PLUGINS' ) ? HOCWP_THEME_REQUIRED_PLUGINS : '';
 
-		$plugins = HT_Requirement()->get_defined_value_array( $rps );
+		$plugins = ht_requirement()->get_defined_value_array( $rps );
 
 		unset( $rps );
 
@@ -129,7 +129,7 @@ final class HOCWP_Theme_Requirement {
 	public static function check_required_plugins() {
 		$plugins = self::get_required_plugins();
 
-		if ( HT()->array_has_value( $plugins ) ) {
+		if ( ht()->array_has_value( $plugins ) ) {
 			$active_plugins = get_option( 'active_plugins' );
 			$active_plugins = (array) $active_plugins;
 
@@ -139,7 +139,7 @@ final class HOCWP_Theme_Requirement {
 			foreach ( $plugins as $plugin ) {
 				$path = trailingslashit( $root ) . $plugin;
 
-				if ( ! HT()->is_dir( $path ) ) {
+				if ( ! ht()->is_dir( $path ) ) {
 					$required = true;
 					break;
 				} else {
@@ -186,7 +186,7 @@ final class HOCWP_Theme_Requirement {
 			return false;
 		}
 
-		$re = HT_Requirement()->check_required_extensions();
+		$re = ht_requirement()->check_required_extensions();
 
 		if ( ! $re ) {
 			return false;
@@ -203,15 +203,15 @@ final class HOCWP_Theme_Requirement {
 
 	public function load_ajax_loop_functions() {
 		if ( ! function_exists( 'hocwp_theme_load_custom_loop' ) ) {
-			require_once( HOCWP_Theme()->core_path . '/inc/functions-context.php' );
-			require_once( HOCWP_Theme()->core_path . '/inc/functions-media.php' );
-			require_once( HOCWP_Theme()->core_path . '/inc/template.php' );
-			require_once( HOCWP_Theme()->core_path . '/inc/template-general.php' );
-			require_once( HOCWP_Theme()->core_path . '/inc/template-post.php' );
+			require_once( hocwp_theme()->core_path . '/inc/functions-context.php' );
+			require_once( hocwp_theme()->core_path . '/inc/functions-media.php' );
+			require_once( hocwp_theme()->core_path . '/inc/template.php' );
+			require_once( hocwp_theme()->core_path . '/inc/template-general.php' );
+			require_once( hocwp_theme()->core_path . '/inc/template-post.php' );
 		}
 	}
 }
 
-function HT_Requirement() {
+function ht_requirement() {
 	return HOCWP_Theme_Requirement::instance();
 }

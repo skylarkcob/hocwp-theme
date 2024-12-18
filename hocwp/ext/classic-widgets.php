@@ -49,10 +49,10 @@ if ( ! isset( $hocwp_theme->extensions ) || ! is_array( $hocwp_theme->extensions
 	$hocwp_theme->extensions = array();
 }
 
-$extension = HTE_Classic_Widgets()->get_instance();
+$extension = hte_classic_widgets()->get_instance();
 
 $hocwp_theme->extensions[ $extension->basename ] = $extension;
 
-function HTE_Classic_Widgets() {
+function hte_classic_widgets() {
 	return HOCWP_EXT_Classic_Widgets::get_instance();
 }

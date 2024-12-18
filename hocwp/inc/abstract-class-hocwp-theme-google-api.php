@@ -21,7 +21,7 @@ abstract class Abstract_HOCWP_Theme_Google_API {
 		}
 
 		if ( empty( $key ) ) {
-			$key = HT_Options()->get_google_api_key();
+			$key = ht_options()->get_google_api_key();
 		}
 
 		$this->api_key = $key;
@@ -34,7 +34,7 @@ abstract class Abstract_HOCWP_Theme_Google_API {
 			return true;
 		}
 
-		if ( HT()->array_has_value( $params ) ) {
+		if ( ht()->array_has_value( $params ) ) {
 			$this->api_key = $params['key'] ?? '';
 
 			return empty( $this->api_key );

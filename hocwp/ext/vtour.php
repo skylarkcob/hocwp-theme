@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'hocwp_theme_load_extension_vtour' ) ) {
 	function hocwp_theme_load_extension_vtour() {
-		$load = HT_extension()->is_active( __FILE__ );
+		$load = ht_extension()->is_active( __FILE__ );
 
 		return apply_filters( 'hocwp_theme_load_extension_vtour', $load );
 	}
@@ -81,10 +81,10 @@ if ( ! class_exists( 'HOCWP_Ext_VR' ) ) {
 	}
 }
 
-if ( ! function_exists( 'HTE_VR' ) ) {
-	function HTE_VR() {
+if ( ! function_exists( 'hte_vr' ) ) {
+	function hte_vr() {
 		return HOCWP_Ext_VR::get_instance();
 	}
 }
 
-HTE_VR()->get_instance();
+hte_vr()->get_instance();

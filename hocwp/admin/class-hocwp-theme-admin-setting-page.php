@@ -28,7 +28,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	public $scripts;
 
 	public function __construct() {
-		$this->menu_slug = HOCWP_Theme()->get_prefix();
+		$this->menu_slug = hocwp_theme()->get_prefix();
 
 		if ( self::$instance instanceof self ) {
 			return;
@@ -42,15 +42,15 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 		load_template( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-admin-setting-tabs.php' );
 
-		$this->tabs = HT_Admin_Setting_Tabs();
+		$this->tabs = ht_admin_setting_tabs();
 
 		add_action( 'admin_menu', array( $this, 'admin_menu_action' ) );
 
-		if ( 'options.php' == $pagenow || $this->menu_slug == HT_Admin()->get_plugin_page() ) {
+		if ( 'options.php' == $pagenow || $this->menu_slug == ht_admin()->get_plugin_page() ) {
 			add_action( 'admin_init', array( $this, 'settings_init' ) );
 		}
 
-		if ( $this->menu_slug == HT_Admin()->get_plugin_page() ) {
+		if ( $this->menu_slug == ht_admin()->get_plugin_page() ) {
 			$this->tab = $this->tabs->tab_name;
 			add_action( 'admin_notices', array( $this, 'saved_notices' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_action' ), 99 );
@@ -119,7 +119,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 				$view_modes = apply_filters( 'hocwp_theme_admin_setting_page_view_modes', $view_modes );
 
-				if ( HT()->array_has_value( $view_modes ) ) {
+				if ( ht()->array_has_value( $view_modes ) ) {
 					$mode = get_user_setting( 'theme_settings_view_mode', 'default' );
 
 					ob_start();
@@ -195,10 +195,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			'text' => __( 'How to use WordPress Dashboard', 'hocwp-theme' )
 		) );
 
-		if ( HT()->array_has_value( $helps ) ) {
+		if ( ht()->array_has_value( $helps ) ) {
 			$screen = get_current_screen();
 
-			if ( HT()->array_has_value( $links ) ) {
+			if ( ht()->array_has_value( $links ) ) {
 				$sidebar = '<p><strong>' . __( 'For more information:', 'hocwp-theme' ) . '</strong></p>';
 
 				foreach ( $links as $link ) {
@@ -295,7 +295,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				$default = pll_default_language();
 				unset( $langs[ array_search( $default, $langs ) ] );
 
-				if ( HT()->array_has_value( $langs ) ) {
+				if ( ht()->array_has_value( $langs ) ) {
 					$lists = array();
 
 					foreach ( (array) $this->settings_field as $field ) {
@@ -392,7 +392,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			if ( isset( $options[ $this->tabs->tab_name ][ $name ] ) ) {
 				$value = $options[ $this->tabs->tab_name ][ $name ];
 			} else {
-				$options = HOCWP_Theme()->object->options;
+				$options = hocwp_theme()->object->options;
 
 				$value = $options[ $this->tabs->tab_name ][ $name ] ?? $default;
 			}
@@ -403,7 +403,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ];
 				} else {
-					$options = HOCWP_Theme()->object->options;
+					$options = hocwp_theme()->object->options;
 
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ] ?? $default;
 				}
@@ -411,7 +411,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ];
 				} else {
-					$options = HOCWP_Theme()->object->options;
+					$options = hocwp_theme()->object->options;
 
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ?? $default;
 				}
@@ -491,7 +491,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			// Get list child fields
 			$fields = $field['args']['callback_args']['fields'] ?? '';
 
-			if ( HT()->array_has_value( $fields ) ) {
+			if ( ht()->array_has_value( $fields ) ) {
 				foreach ( $fields as $base => $a_field ) {
 					// Check field args
 					$a_args = $a_field['args'] ?? '';
@@ -530,7 +530,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					$new_name = $field['page'] . '[' . $field['tab'] . '][' . $field['id'] . '][' . $base . ']';
 
 					$a_args['name'] = $new_name;
-					$a_args['id']   = HT_Sanitize()->html_id( $new_name );
+					$a_args['id']   = ht_sanitize()->html_id( $new_name );
 
 					if ( empty( $a_args['label'] ) && isset( $a_field['label'] ) && ! empty( $a_field['label'] ) ) {
 						$a_args['label'] = $a_field['label'];
@@ -580,7 +580,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 				$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
 			} else {
-				$options = HOCWP_Theme()->object->options;
+				$options = hocwp_theme()->object->options;
 
 				if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
@@ -597,7 +597,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$type = $field['args']['callback_args']['type'] ?? '';
 
 		if ( ! empty( $type ) && ( 'radio' == $type || 'checkbox' == $type ) ) {
-			if ( isset( $field['args']['callback_args']['options'] ) && HT()->array_has_value( $field['args']['callback_args']['options'] ) ) {
+			if ( isset( $field['args']['callback_args']['options'] ) && ht()->array_has_value( $field['args']['callback_args']['options'] ) ) {
 				unset( $field['args']['label_for'] );
 			}
 		}
@@ -605,7 +605,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		$data_type = $field['args']['type'] ?? 'string';
 
 		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
-			$field['args']['callback_args']['min'] = HT_PHP8()->match( $data_type, array(
+			$field['args']['callback_args']['min'] = ht_php8()->match( $data_type, array(
 				array(
 					array(
 						'positive_number',
@@ -703,7 +703,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 		if ( ! empty( $this->tabs->tab_name ) ) {
 			$this->settings_field = apply_filters( 'hocwp_theme_settings_page_' . $this->tabs->tab_name . '_settings_field', $this->settings_field );
 
-			if ( HT()->array_has_value( $this->settings_field ) ) {
+			if ( ht()->array_has_value( $this->settings_field ) ) {
 				foreach ( $this->settings_field as $field ) {
 					$field = $this->sanitize_field( $field );
 					$name  = $this->get_field_name( $field );
@@ -712,7 +712,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 					if ( ! empty( $type ) ) {
 						$type  = strtolower( $type );
 						$data  = $input[ $this->tabs->tab_name ] ?? array();
-						$value = HT_Sanitize()->form_post( $name, $type, $data );
+						$value = ht_sanitize()->form_post( $name, $type, $data );
 
 						// Remove empty json data value
 						if ( 'json' == $type || 'array' == $type || 'sortable' == $type ) {
@@ -753,15 +753,13 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	private function update_list_tabs() {
-		if ( empty( $this->tabs ) || ! ( $this->tabs instanceof HOCWP_Theme_Admin_Setting_Tabs ) || ! HT()->array_has_value( $this->tabs->tabs ) ) {
+		if ( empty( $this->tabs ) || ! ( $this->tabs instanceof HOCWP_Theme_Admin_Setting_Tabs ) || ! ht()->array_has_value( $this->tabs->tabs ) ) {
 			$this->tabs->get();
 		}
 	}
 
 	public function html() {
 		$this->update_list_tabs();
-
-		$theme = wp_get_theme();
 
 		$tab_obj = $this->tabs->tab;
 
@@ -806,7 +804,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
                             <div class="theme-info">
                                 <h2><?php printf( __( '%s options', 'hocwp-theme' ), HOCWP_THEME_NAME ); ?></h2>
 
-                                <p><?php printf( __( 'Version %s', 'hocwp-theme' ), $theme->get( 'Version' ) ); ?></p>
+                                <p><?php printf( __( 'Version %s', 'hocwp-theme' ), hocwp_theme()->version ); ?></p>
                             </div>
 							<?php
 							if ( ! ( $tab_obj instanceof HOCWP_Theme_Admin_Setting_Tab ) || $tab_obj->submit_button ) {
@@ -854,7 +852,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
                     </div>
                     <div class="module-footer clearfix">
                         <div class="author-info">
-                            <p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), $theme->get( 'ThemeURI' ), $theme->get( 'AuthorURI' ) ); ?></p>
+                            <p><?php printf( __( 'This theme is created by <a target="_blank" href="%s">HocWP Team</a>. If you have any questions please feel free to <a target="_blank" href="%s">contact us</a> for more information.', 'hocwp-theme' ), hocwp_theme()->theme->get( 'ThemeURI' ), hocwp_theme()->theme->get( 'AuthorURI' ) ); ?></p>
                         </div>
                         <div class="core-version">
                             <p><?php printf( __( 'Theme core version %s', 'hocwp-theme' ), HOCWP_THEME_CORE_VERSION ); ?></p>
@@ -930,7 +928,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				'hidden_interval' => 2000
 			);
 
-			HT_Util()->admin_notice( $args );
+			ht_util()->admin_notice( $args );
 		}
 	}
 
@@ -955,39 +953,39 @@ final class HOCWP_Theme_Admin_Setting_Page {
 						case 'sortable_post':
 						case 'sortable_page':
 						case 'sortable_term':
-							HT_Enqueue()->sortable();
+							ht_enqueue()->sortable();
 							break;
 						case 'color_picker':
-							HT_Enqueue()->color_picker();
+							ht_enqueue()->color_picker();
 							break;
 						case 'date_picker':
-							HT_Enqueue()->datetime_picker();
+							ht_enqueue()->datetime_picker();
 							break;
 						case 'image_upload':
 						case 'image_link':
 						case 'media_upload':
 						case 'content_image':
 						case 'content_with_image':
-							HT_Enqueue()->media_upload();
+							ht_enqueue()->media_upload();
 							break;
 						case 'fields':
-							HT_Enqueue()->media_upload();
-							HT_Enqueue()->sortable();
-							HT_Enqueue()->color_picker();
-							HT_Enqueue()->code_editor();
-							HT_Enqueue()->chosen();
+							ht_enqueue()->media_upload();
+							ht_enqueue()->sortable();
+							ht_enqueue()->color_picker();
+							ht_enqueue()->code_editor();
+							ht_enqueue()->chosen();
 							break;
 						case 'images':
-							HT_Enqueue()->media_upload();
-							HT_Enqueue()->sortable();
+							ht_enqueue()->media_upload();
+							ht_enqueue()->sortable();
 							break;
 						case 'code_editor':
-							HT_Enqueue()->code_editor();
+							ht_enqueue()->code_editor();
 							break;
 						case 'chosen_term':
 						case 'chosen_post':
 						case 'chosen':
-							HT_Enqueue()->chosen();
+							ht_enqueue()->chosen();
 							break;
 					}
 				}

@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) || exit;
 
 trait HT_VR_Tour_Template {
 	public function index() {
-		require_once( HTE_VR()->folder_path . '/setup.php' );
+		require_once( hte_vr()->folder_path . '/setup.php' );
 		?>
         <!DOCTYPE html>
 		<?php hocwp_theme_html_tag( 'html', '', get_language_attributes() ); ?>
@@ -19,7 +19,7 @@ trait HT_VR_Tour_Template {
 		<?php
 		hocwp_theme_html_tag( 'body' ); // Open body
 
-		if ( HT_Util()->is_vr_theme() ) {
+		if ( ht_util()->is_vr_theme() ) {
 			wp_body_open();
 			?>
             <div class="ldcuong-container">
@@ -28,7 +28,7 @@ trait HT_VR_Tour_Template {
                         <table style="width:100%;height:100%;">
                             <tr style="vertical-align:middle;">
                                 <td>
-                                    <div style="text-align:center;"><?php echo HT_Message()->noscript(); ?></div>
+                                    <div style="text-align:center;"><?php echo ht_message()->noscript(); ?></div>
                                 </td>
                             </tr>
                         </table>
@@ -90,7 +90,7 @@ trait HT_VR_Tour_Template {
             </div>
 			<?php
 		} else {
-			echo wpautop( HT_Message()->theme_or_site_incorrect_config() );
+			echo wpautop( ht_message()->theme_or_site_incorrect_config() );
 		}
 
 		hocwp_theme_html_tag_close( 'body' ); // Close body

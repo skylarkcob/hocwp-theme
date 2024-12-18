@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function hocwp_theme_preprocess_comment_filter( $commentdata ) {
 	if ( isset( $commentdata['comment_author_url'] ) && ! empty( $commentdata['comment_author_url'] ) ) {
-		$domain = HT()->get_domain_name( $commentdata['comment_author_url'] );
+		$domain = ht()->get_domain_name( $commentdata['comment_author_url'] );
 
 		$commentdata['comment_author_url'] = $domain;
 	}

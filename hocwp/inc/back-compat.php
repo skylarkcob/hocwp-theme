@@ -29,8 +29,8 @@ if ( ! class_exists( 'HOCWP_Theme_Custom' ) ) {
 	}
 }
 
-if ( ! function_exists( 'HT_Custom' ) ) {
-	function HT_Custom() {
+if ( ! function_exists( 'ht_custom' ) ) {
+	function ht_custom() {
 		return HOCWP_Theme_Custom::get_instance();
 	}
 }

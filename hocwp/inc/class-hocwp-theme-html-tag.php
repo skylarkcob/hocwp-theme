@@ -100,7 +100,7 @@ final class HOCWP_Theme_HTML_Tag {
 			if ( is_array( $attribute_name ) ) {
 				$atts = $attribute_name;
 			} else {
-				$atts = HT()->attribute_to_array( $attribute_name );
+				$atts = ht()->attribute_to_array( $attribute_name );
 			}
 
 			foreach ( $atts as $key => $value ) {
@@ -108,7 +108,7 @@ final class HOCWP_Theme_HTML_Tag {
 			}
 		} else {
 			if ( is_bool( $value ) ) {
-				$value = HT()->bool_to_string( $value );
+				$value = ht()->bool_to_string( $value );
 			}
 
 			if ( 'class' == $attribute_name ) {
@@ -192,7 +192,7 @@ final class HOCWP_Theme_HTML_Tag {
 	}
 
 	public function set_wrap_tag( $tag_name ) {
-		if ( ! HT()->in_array( $tag_name, $this->self_closers ) ) {
+		if ( ! ht()->in_array( $tag_name, $this->self_closers ) ) {
 			$this->wrap_tag = $tag_name;
 		}
 	}
@@ -236,7 +236,7 @@ final class HOCWP_Theme_HTML_Tag {
 		}
 
 		foreach ( (array) $this->attributes as $key => $value ) {
-			if ( in_array( $key, HT()->same_value_atts ) ) {
+			if ( in_array( $key, ht()->same_value_atts ) ) {
 				$value = $key;
 			}
 
@@ -249,7 +249,7 @@ final class HOCWP_Theme_HTML_Tag {
 
 		$result .= '>';
 
-		if ( ! HT()->in_array( $tag_name, $this->self_closers ) || 'input' == $tag_name ) {
+		if ( ! ht()->in_array( $tag_name, $this->self_closers ) || 'input' == $tag_name ) {
 			if ( is_array( $this->text ) || is_object( $this->text ) ) {
 				$this->text = maybe_serialize( $this->text );
 			}
@@ -257,7 +257,7 @@ final class HOCWP_Theme_HTML_Tag {
 			$result .= $this->text;
 		}
 
-		if ( $this->get_close() && ! HT()->in_array( $tag_name, $this->self_closers ) ) {
+		if ( $this->get_close() && ! ht()->in_array( $tag_name, $this->self_closers ) ) {
 			$result .= sprintf( '</%s>', $tag_name );
 		}
 

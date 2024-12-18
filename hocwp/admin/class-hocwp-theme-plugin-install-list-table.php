@@ -13,13 +13,13 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 	public function __construct( $args = array() ) {
 		parent::__construct( $args );
 
-		if ( 'hocwp_theme_plugins' == HT_Admin()->get_plugin_page() ) {
+		if ( 'hocwp_theme_plugins' == ht_admin()->get_plugin_page() ) {
 			add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links_filter' ), 10, 2 );
 		}
 	}
 
 	public function plugin_install_action_links_filter( $action_links, $plugin ) {
-		if ( HT()->array_has_value( $action_links ) ) {
+		if ( ht()->array_has_value( $action_links ) ) {
 			$links = isset( $action_links[0] ) ? $action_links[0] : '';
 
 			if ( false !== strpos( $links, 'update-now button' ) ) {
@@ -53,7 +53,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$plugins = wp_get_active_and_valid_plugins();
 
-		if ( HT()->array_has_value( $plugins ) ) {
+		if ( ht()->array_has_value( $plugins ) ) {
 			$tabs['activated'] = array(
 				'text'        => _x( 'Activated', 'Plugin Installer', 'hocwp-theme' ),
 				'description' => __( 'The list of plugins are being activated on your site.', 'hocwp-theme' )
@@ -65,14 +65,14 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			'description' => __( 'These suggestions are based on the plugins you and other users have installed.', 'hocwp-theme' )
 		);
 
-		if ( HT()->array_has_value( HOCWP_Theme_Requirement::get_required_plugins() ) ) {
+		if ( ht()->array_has_value( HOCWP_Theme_Requirement::get_required_plugins() ) ) {
 			$tabs['required'] = array(
 				'text'        => _x( 'Required', 'Plugin Installer', 'hocwp-theme' ),
 				'description' => __( 'You must install these required plugins for theme can run normally.', 'hocwp-theme' )
 			);
 		}
 
-		if ( HT()->array_has_value( HT_Requirement()->get_recommended_plugins() ) ) {
+		if ( ht()->array_has_value( ht_requirement()->get_recommended_plugins() ) ) {
 			$tabs['should_use'] = array(
 				'text'        => _x( 'Should Use', 'Plugin Installer', 'hocwp-theme' ),
 				'description' => __( 'You should install these recommended plugins for theme can work perfectly.', 'hocwp-theme' )
@@ -114,7 +114,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			$lists   = array();
 
 			foreach ( $plugins as $name ) {
-				$api = HT_Util()->get_wp_plugin_info( $name );
+				$api = ht_util()->get_wp_plugin_info( $name );
 
 				if ( ! is_wp_error( $api ) ) {
 					$lists[] = $api;
@@ -124,11 +124,11 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			$this->items = array_slice( $lists, ( $paged - 1 ) * $per_page, $per_page );
 			$total_items = count( $lists );
 		} elseif ( 'should_use' == $tab ) {
-			$plugins = HT_Requirement()->get_recommended_plugins();
+			$plugins = ht_requirement()->get_recommended_plugins();
 			$lists   = array();
 
 			foreach ( $plugins as $name ) {
-				$api = HT_Util()->get_wp_plugin_info( $name );
+				$api = ht_util()->get_wp_plugin_info( $name );
 
 				if ( ! is_wp_error( $api ) ) {
 					$lists[] = $api;
@@ -142,7 +142,7 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 			$lists   = array();
 
 			foreach ( $plugins as $name ) {
-				$api = HT_Util()->get_wp_plugin_info( $name );
+				$api = ht_util()->get_wp_plugin_info( $name );
 
 				if ( ! is_wp_error( $api ) ) {
 					$lists[] = $api;
@@ -154,12 +154,12 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 		} elseif ( 'activated' == $tab ) {
 			$plugins = wp_get_active_and_valid_plugins();
 
-			if ( HT()->array_has_value( $plugins ) ) {
+			if ( ht()->array_has_value( $plugins ) ) {
 				$lists = array();
 
 				foreach ( $plugins as $name ) {
 					$name = basename( dirname( $name ) );
-					$api  = HT_Util()->get_wp_plugin_info( $name );
+					$api  = ht_util()->get_wp_plugin_info( $name );
 
 					if ( ! is_wp_error( $api ) ) {
 						$lists[] = $api;

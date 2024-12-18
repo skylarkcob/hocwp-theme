@@ -19,7 +19,7 @@ $sort_order = $tab->get_value( 'sort_order' );
 if ( ! empty( $sort_order ) ) {
 	$sort_order = json_decode( $sort_order );
 
-	if ( HT()->array_has_value( $sort_order ) ) {
+	if ( ht()->array_has_value( $sort_order ) ) {
 		$tmp      = $supports;
 		$supports = array();
 
@@ -30,7 +30,7 @@ if ( ! empty( $sort_order ) ) {
 			}
 		}
 
-		if ( HT()->array_has_value( $tmp ) ) {
+		if ( ht()->array_has_value( $tmp ) ) {
 			$supports += $tmp;
 		}
 	}

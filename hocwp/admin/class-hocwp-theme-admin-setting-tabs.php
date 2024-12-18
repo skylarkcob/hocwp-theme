@@ -30,7 +30,7 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 
 	public function get_tab_name() {
 		if ( empty( $this->tab_name ) ) {
-			$this->tab_name = HT()->get_method_value( 'tab', 'request', 'general' );
+			$this->tab_name = ht()->get_method_value( 'tab', 'request', 'general' );
 		}
 
 		return $this->tab_name;
@@ -93,12 +93,12 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 	}
 
 	public function html() {
-		if ( ! HT()->array_has_value( $this->tabs ) ) {
+		if ( ! ht()->array_has_value( $this->tabs ) ) {
 			$this->get();
 		}
 
-		if ( HT()->array_has_value( $this->tabs ) ) {
-			$current_url = HT_Util()->get_current_url( true );
+		if ( ht()->array_has_value( $this->tabs ) ) {
+			$current_url = ht_util()->get_current_url( true );
 			$current_url = remove_query_arg( 'settings-updated', $current_url );
 
 			$count = 0;
@@ -107,7 +107,7 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 			if ( isset( $this->tabs['extension'] ) ) {
 				$exts = $this->tabs['extension'];
 				unset( $this->tabs['extension'] );
-				HT()->insert_to_array( $this->tabs, $exts, 'before_tail', 'extension' );
+				ht()->insert_to_array( $this->tabs, $exts, 'before_tail', 'extension' );
 
 				unset( $exts );
 			}
@@ -189,6 +189,6 @@ class HOCWP_Theme_Admin_Setting_Tabs {
 	}
 }
 
-function HT_Admin_Setting_Tabs() {
+function ht_admin_setting_tabs() {
 	return HOCWP_Theme_Admin_Setting_Tabs::get_instance();
 }

@@ -47,7 +47,7 @@ function hocwp_theme_manage_users_custom_column_filter( $value, $column_name, $u
 			$value = get_user_meta( $user_id, $column_name, true );
 
 			if ( ! empty( $value ) ) {
-				$value = HT_Util()->timestamp_to_string( $value );
+				$value = ht_util()->timestamp_to_string( $value );
 			}
 
 			break;
@@ -116,7 +116,7 @@ function hocwp_theme_wp_mail_filter( $data ) {
 add_filter( 'wp_mail', 'hocwp_theme_wp_mail_filter' );
 
 function hocwp_theme_verify_user_notification( $key, $user ) {
-	$user = HT_Util()->return_user( $user );
+	$user = ht_util()->return_user( $user );
 
 	if ( $user instanceof WP_User ) {
 		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
@@ -148,7 +148,7 @@ function hocwp_theme_verify_user_notification( $key, $user ) {
 
 		$notification_email['subject'] = wp_specialchars_decode( sprintf( $notification_email['subject'], $blogname ) );
 
-		$sent = HT_Util()->html_mail( $notification_email['to'], $notification_email['subject'], $notification_email['message'], $notification_email['headers'] );
+		$sent = ht_util()->html_mail( $notification_email['to'], $notification_email['subject'], $notification_email['message'], $notification_email['headers'] );
 
 		if ( $switched_locale ) {
 			restore_previous_locale();
@@ -170,7 +170,7 @@ function hocwp_theme_remove_invalid_user() {
 
 	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_email = '' OR user_pass NOT LIKE %s", '$P$%' ) );
 
-	if ( HT()->array_has_value( $ids ) ) {
+	if ( ht()->array_has_value( $ids ) ) {
 		foreach ( $ids as $user_id ) {
 			$user = new WP_User( $user_id );
 

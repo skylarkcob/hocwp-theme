@@ -3,15 +3,15 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 
-if ( HT_Util()->is_vr_theme() ) {
-	$url = HT_VR()->get_vr_url();
+if ( ht_util()->is_vr_theme() ) {
+	$url = ht_vr()->get_vr_url();
 
 	if ( ! empty( $url ) ) {
-		$current_url = HT_Util()->get_current_url( true );
+		$current_url = ht_util()->get_current_url( true );
 
-		$results = HT()->get_params_from_url( $current_url );
+		$results = ht()->get_params_from_url( $current_url );
 
-		if ( HT()->array_has_value( $results ) ) {
+		if ( ht()->array_has_value( $results ) ) {
 			// Pass all params to panorama
 			$url = add_query_arg( $results, $url );
 		}
@@ -20,7 +20,7 @@ if ( HT_Util()->is_vr_theme() ) {
 		<?php
 	}
 } else {
-	echo wpautop( HT_Message()->theme_or_site_incorrect_config() );
+	echo wpautop( ht_message()->theme_or_site_incorrect_config() );
 }
 
 get_footer();

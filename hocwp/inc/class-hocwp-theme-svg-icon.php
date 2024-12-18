@@ -67,11 +67,11 @@ final class HOCWP_Theme_SVG_Icon {
 			$viewbox = array( 0, 0, 1972, 1972 );
 		}
 
-		if ( HT()->is_positive_number( $width ) ) {
+		if ( ht()->is_positive_number( $width ) ) {
 			$viewbox[2] = $width;
 		}
 
-		if ( HT()->is_positive_number( $height ) ) {
+		if ( ht()->is_positive_number( $height ) ) {
 			$viewbox[3] = $height;
 		}
 
@@ -81,7 +81,7 @@ final class HOCWP_Theme_SVG_Icon {
 	}
 
 	private static function helper( $name, $d, $atts = array() ) {
-		if ( ! HT()->string_contain( $name, 'icon' ) ) {
+		if ( ! ht()->string_contain( $name, 'icon' ) ) {
 			$name = 'icon-' . str_replace( '_', '-', $name );
 		}
 
@@ -493,6 +493,6 @@ final class HOCWP_Theme_SVG_Icon {
 	);
 }
 
-function HT_SVG_Icon() {
+function ht_svg_icon() {
 	return HOCWP_Theme_SVG_Icon::instance();
 }

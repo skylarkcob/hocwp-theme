@@ -8,63 +8,353 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 final class HOCWP_Theme_Controller {
-	public $core_version = HOCWP_THEME_CORE_VERSION;
-	public $is_developing = HOCWP_THEME_DEVELOPING;
-	public $theme_path = HOCWP_THEME_PATH;
-	public $theme_url = HOCWP_THEME_URL;
-	public $core_path = HOCWP_THEME_CORE_PATH;
-	public $core_url = HOCWP_THEME_CORE_URL;
-	public $css_suffix = HOCWP_THEME_CSS_SUFFIX;
-	public $js_suffix = HOCWP_THEME_JS_SUFFIX;
+	/**
+	 * The theme core version number.
+	 *
+	 * @var string
+	 */
+	public $core_version;
 
+	/**
+	 * The theme is developing status.
+	 *
+	 * @var bool
+	 */
+	public $is_developing;
+
+	/**
+	 * The theme current path or theme parent path.
+	 *
+	 * @var string
+	 */
+	public $theme_path;
+
+	/**
+	 * The theme current url or theme parent url.
+	 *
+	 * @var string
+	 */
+	public $theme_url;
+
+	/**
+	 * The theme core path.
+	 *
+	 * @var string
+	 */
+	public $core_path;
+
+	/**
+	 * The theme core url.
+	 *
+	 * @var string
+	 */
+	public $core_url;
+
+	/**
+	 * The css suffix.
+	 *
+	 * @var string
+	 */
+	public $css_suffix;
+
+	/**
+	 * The js suffix.
+	 *
+	 * @var string
+	 */
+	public $js_suffix;
+
+	/**
+	 * The theme template name.
+	 *
+	 * @var string
+	 */
 	public $template;
+
+	/**
+	 * The theme stylesheet name.
+	 *
+	 * @var string
+	 */
 	public $stylesheet;
+
+	/**
+	 * The current theme is child theme.
+	 *
+	 * @var bool
+	 */
 	public $is_child_theme;
 
-	public $custom_path = HOCWP_THEME_CUSTOM_PATH;
-	public $custom_url = HOCWP_THEME_CUSTOM_URL;
-	public $custom_current_path = HOCWP_THEME_CUSTOM_CURRENT_PATH;
-	public $custom_current_url = HOCWP_THEME_CUSTOM_CURRENT_URL;
+	/**
+	 * The theme current object.
+	 *
+	 * @var WP_Theme
+	 */
+	public $theme;
 
-	public $doing_ajax = HOCWP_THEME_DOING_AJAX;
-	public $doing_cron = HOCWP_THEME_DOING_CRON;
+	/**
+	 * The theme custom path.
+	 *
+	 * @var string
+	 */
+	public $custom_path;
 
-	protected $textdomain = 'hocwp-theme';
-	protected $prefix = 'hocwp_theme';
-	protected $short_name = 'ht_';
+	/**
+	 * The theme custom url.
+	 *
+	 * @var string
+	 */
+	public $custom_url;
 
+	/**
+	 * The theme current custom path.
+	 *
+	 * @var string
+	 */
+	public $custom_current_path;
+
+	/**
+	 * The theme current custom url.
+	 *
+	 * @var string
+	 */
+	public $custom_current_url;
+
+	/**
+	 * The theme doing ajax status.
+	 *
+	 * @var bool
+	 */
+	public $doing_ajax;
+
+	/**
+	 * The theme doing cron status.
+	 *
+	 * @var bool
+	 */
+	public $doing_cron;
+
+	/**
+	 * The theme current text domain.
+	 *
+	 * @var string
+	 */
+	protected $textdomain;
+
+	/**
+	 * The theme current prefix.
+	 *
+	 * @var string
+	 */
+	protected $prefix;
+
+	/**
+	 * The theme current short name.
+	 *
+	 * @var string
+	 */
+	protected $short_name;
+
+	/**
+	 * The theme controller object.
+	 *
+	 * @var HOCWP_Theme_Controller
+	 */
 	protected static $instance;
 
+	/**
+	 * The theme std object.
+	 *
+	 * @var object
+	 */
 	public $object;
+
+	/**
+	 * The captcha object.
+	 *
+	 * @var HOCWP_Theme_CAPTCHA
+	 */
 	public $captcha;
 
-	public $loop_data = array();
-	public $temp_data = array();
+	/**
+	 * The array to save loop data.
+	 *
+	 * @var array
+	 */
+	public $loop_data;
 
+	/**
+	 * The array to save temporary data.
+	 *
+	 * @var array
+	 */
+	public $temp_data;
+
+	/**
+	 * The website http protocol.
+	 *
+	 * @var string
+	 */
 	public $protocol;
 
-	public function __construct() {
+	/**
+	 * The theme current version.
+	 *
+	 * @var string
+	 */
+	public $version;
+
+	/**
+	 * The theme settings data.
+	 *
+	 * @var array
+	 */
+	public $settings;
+
+	/**
+	 * The theme data array.
+	 *
+	 * @var array
+	 */
+	public $data;
+
+	/**
+	 * The list instances using in theme.
+	 *
+	 * @var array
+	 */
+	public $instances;
+
+	private function __construct() {
 		if ( self::$instance ) {
-			HT_Util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
+			ht_util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
 
 			return;
 		}
 
+		$this->initialize();
+	}
+
+	public static function get_instance() {
+		if ( ! ( self::$instance instanceof self ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	public function initialize() {
+		if ( $this->theme ) {
+			return;
+		}
+
+		$this->loop_data = array();
+		$this->temp_data = array();
+		$this->settings  = array();
+		$this->data      = array();
+		$this->instances = array();
+
+		$this->theme = $GLOBALS['hocwp_current_theme'];
+
+		$this->textdomain = $this->theme->get( 'TextDomain' );
+		$this->prefix     = str_replace( '-', '_', $this->textdomain );
+
+		$words = explode( '-', $this->textdomain );
+
+		$this->short_name = '';
+
+		foreach ( $words as $word ) {
+			if ( ! empty( $word ) ) {
+				$this->short_name .= $word[0];
+			}
+		}
+
+		unset( $words, $word );
+		$this->short_name .= '_';
+
+		$this->core_version        = HOCWP_THEME_CORE_VERSION;
+		$this->is_developing       = HOCWP_THEME_DEVELOPING;
+		$this->theme_path          = HOCWP_THEME_PATH;
+		$this->theme_url           = HOCWP_THEME_URL;
+		$this->core_path           = HOCWP_THEME_CORE_PATH;
+		$this->core_url            = HOCWP_THEME_CORE_URL;
+		$this->css_suffix          = HOCWP_THEME_CSS_SUFFIX;
+		$this->js_suffix           = HOCWP_THEME_JS_SUFFIX;
+		$this->custom_path         = HOCWP_THEME_CUSTOM_PATH;
+		$this->custom_url          = HOCWP_THEME_CUSTOM_URL;
+		$this->custom_current_path = HOCWP_THEME_CUSTOM_CURRENT_PATH;
+		$this->custom_current_url  = HOCWP_THEME_CUSTOM_CURRENT_URL;
+		$this->doing_ajax          = HOCWP_THEME_DOING_AJAX;
+		$this->doing_cron          = HOCWP_THEME_DOING_CRON;
+
+		$this->template   = $this->theme->get_template();
+		$this->stylesheet = $this->theme->get_stylesheet();
+
+		$this->is_child_theme = ( $this->theme->parent() instanceof WP_Theme );
+
 		$this->object = new stdClass();
 
-		$this->object->theme_core_version = HOCWP_THEME_CORE_VERSION;
-		$this->object->theme_core_path    = HOCWP_THEME_CORE_PATH;
-		$this->object->theme_core_url     = HOCWP_THEME_CORE_URL;
+		$this->object->theme_core_version = $this->core_version;
+		$this->object->theme_core_path    = $this->core_path;
+		$this->object->theme_core_url     = $this->core_url;
 
-		self::$instance = $this;
+		$this->version  = $this->theme->get( 'Version' );
+		$this->protocol = is_ssl() ? 'https' : 'http';
 
 		add_action( 'after_setup_theme', array( $this, 'load' ), 0 );
+	}
+
+	public function define( $name, $value = true ) {
+		if ( ! defined( $name ) ) {
+			define( $name, $value );
+		}
+	}
+
+	public function has_setting( $name ) {
+		return isset( $this->settings[ $name ] );
+	}
+
+	public function get_setting( $name ) {
+		return $this->settings[ $name ] ?? null;
+	}
+
+	public function update_setting( $name, $value ) {
+		$this->settings[ $name ] = $value;
+
+		return true;
+	}
+
+	public function get_data( $name ) {
+		return $this->data[ $name ] ?? null;
+	}
+
+	public function set_data( $name, $value ) {
+		$this->data[ $name ] = $value;
+	}
+
+	public function get_instance_object( $class ) {
+		$name = strtolower( $class );
+
+		return $this->instances[ $name ] ?? null;
+	}
+
+	public function new_instance( $class ) {
+		$instance = $this->get_instance_object( $class );
+
+		if ( ! $instance ) {
+			$instance = new $class();
+			$name     = strtolower( $class );
+
+			$this->instances[ $name ] = $instance;
+		}
+
+		return $instance;
 	}
 
 	private function defaults() {
 		global $hocwp_theme, $is_opera, $hocwp_theme_protocol;
 
-		$this->object->browser = HT()->get_browser();
+		$this->object->browser = ht()->get_browser();
 
 		if ( empty( $hocwp_theme_protocol ) ) {
 			$hocwp_theme_protocol = ( isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) != 'off' ) ? 'https://' : 'http://';
@@ -73,7 +363,7 @@ final class HOCWP_Theme_Controller {
 		$this->protocol = $hocwp_theme_protocol;
 
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			$is_opera = ( HT()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || HT()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
+			$is_opera = ( ht()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || ht()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
 		}
 
 		if ( ! isset( $this->object->client_info ) ) {
@@ -84,7 +374,7 @@ final class HOCWP_Theme_Controller {
 			}
 
 			if ( is_string( $client_info ) ) {
-				$client_info = HT()->json_string_to_array( $client_info );
+				$client_info = ht()->json_string_to_array( $client_info );
 			}
 
 			$this->object->client_info = (array) $client_info;
@@ -216,14 +506,14 @@ final class HOCWP_Theme_Controller {
 			$this->object->options = array();
 		}
 
-		if ( ! HT()->array_has_value( $this->object->options ) ) {
+		if ( ! ht()->array_has_value( $this->object->options ) ) {
 			$this->object->options = (array) get_option( $this->get_prefix() );
 
 			if ( ! isset( $this->object->defaults ) ) {
 				$this->object->defaults = array();
 			}
 
-			if ( isset( $this->object->defaults['options'] ) && HT()->array_has_value( $this->object->defaults['options'] ) ) {
+			if ( isset( $this->object->defaults['options'] ) && ht()->array_has_value( $this->object->defaults['options'] ) ) {
 				$this->object->options = wp_parse_args( $this->object->options, $this->object->defaults['options'] );
 			}
 		}
@@ -247,7 +537,7 @@ final class HOCWP_Theme_Controller {
 	}
 
 	public function verify_nonce( $nonce_name ) {
-		return HT_Util()->verify_nonce( is_child_theme() ? get_stylesheet() : $this->textdomain, $nonce_name );
+		return ht_util()->verify_nonce( is_child_theme() ? get_stylesheet() : $this->textdomain, $nonce_name );
 	}
 
 	public function get_default( $key ) {
@@ -278,14 +568,6 @@ final class HOCWP_Theme_Controller {
 		}
 
 		echo get_the_time( $format, $post );
-	}
-
-	public static function get_instance() {
-		if ( ! ( self::$instance instanceof self ) ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
 	}
 
 	/**
@@ -330,7 +612,7 @@ final class HOCWP_Theme_Controller {
 				}
 			}
 
-			if ( HT()->array_has_value( $invalid_exts ) ) {
+			if ( ht()->array_has_value( $invalid_exts ) ) {
 				update_option( 'hocwp_theme_invalid_extensions', $invalid_exts );
 			} else {
 				delete_option( 'hocwp_theme_invalid_extensions' );
@@ -354,15 +636,15 @@ final class HOCWP_Theme_Controller {
 		$result = array();
 
 		if ( is_dir( $base_path ) ) {
-			$files = HT()->scandir( $base_path );
+			$files = ht()->scandir( $base_path );
 
 			foreach ( $files as $file ) {
 				$path = trailingslashit( $base_path ) . $file;
 				$info = pathinfo( $path );
 
 				if ( isset( $info['extension'] ) && 'php' == $info['extension'] ) {
-					if ( HT()->string_contain( $info['filename'], 'class-' ) ) {
-						$name = HT_Util()->get_class_name_from_file( $path );
+					if ( ht()->string_contain( $info['filename'], 'class-' ) ) {
+						$name = ht_util()->get_class_name_from_file( $path );
 
 						$result[ $path ] = $name;
 					}
@@ -397,13 +679,6 @@ final class HOCWP_Theme_Controller {
 	 * @return string
 	 */
 	private function load_child_first( $path ) {
-		if ( ! $this->is_child_theme ) {
-			$this->template   = get_option( 'template' );
-			$this->stylesheet = get_option( 'stylesheet' );
-
-			$this->is_child_theme = ( $this->stylesheet != $this->template && $this->template = $this->textdomain );
-		}
-
 		if ( is_string( $path ) && ! empty( $path ) ) {
 			$path = ltrim( $path, '/' );
 
@@ -448,9 +723,7 @@ final class HOCWP_Theme_Controller {
 
 		// Check if theme must use child theme or can only use one root theme
 		if ( ! defined( 'HOCWP_THEME_FORCE_PARENT' ) || HOCWP_THEME_FORCE_PARENT ) {
-			$theme = wp_get_theme();
-
-			if ( empty( $theme->parent() ) ) {
+			if ( empty( $this->theme->parent() ) ) {
 				$msg = __( '<strong>HocWP Theme:</strong> Your current theme is a parent theme developed by HocWP Team, please create a child theme to use it.', 'hocwp-theme' );
 
 				if ( is_admin() ) {
@@ -516,7 +789,7 @@ final class HOCWP_Theme_Controller {
 		require( $this->core_path . '/inc/class-hocwp-theme-captcha-recaptcha.php' );
 		require( $this->core_path . '/inc/class-hocwp-theme-captcha.php' );
 
-		$this->captcha = HT_CAPTCHA();
+		$this->captcha = ht_captcha();
 
 		if ( is_admin() ) {
 			require( $this->core_path . '/admin/class-hocwp-theme-admin.php' );
@@ -608,9 +881,9 @@ final class HOCWP_Theme_Controller {
 		}
 
 		require( $this->core_path . '/inc/abstract-class-hocwp-theme-custom.php' );
-		HT()->require_if_exists( $this->load_child_first( 'functions.php' ) );
+		ht()->require_if_exists( $this->load_child_first( 'functions.php' ) );
 		require( $this->core_path . '/inc/back-compat.php' );
-		HT()->require_if_exists( $this->load_child_first( 'register.php' ) );
+		ht()->require_if_exists( $this->load_child_first( 'register.php' ) );
 
 		// Autoload all PHP files in custom inc folder
 		if ( $this->is_child_theme ) {
@@ -621,34 +894,34 @@ final class HOCWP_Theme_Controller {
 
 		if ( is_dir( $inc ) ) {
 			$path  = $inc;
-			$files = HT()->scandir( $path );
+			$files = ht()->scandir( $path );
 			$files = array_diff( $files, array( '.', '..', 'index.php' ) );
 
 			foreach ( $files as $file ) {
-				HT()->require_if_exists( $inc . '/' . $file );
+				ht()->require_if_exists( $inc . '/' . $file );
 			}
 		}
 
-		HT()->require_if_exists( $this->load_child_first( 'hook.php' ) );
+		ht()->require_if_exists( $this->load_child_first( 'hook.php' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_menu', function () {
-				HT()->require_if_exists( $this->load_child_first( 'admin.php' ) );
+				ht()->require_if_exists( $this->load_child_first( 'admin.php' ) );
 			} );
 		}
 
-		HT()->require_if_exists( $this->load_child_first( 'extensions.php' ) );
+		ht()->require_if_exists( $this->load_child_first( 'extensions.php' ) );
 
 		if ( is_admin() ) {
 			require( $this->core_path . '/admin/load-custom-meta.php' );
-			HT()->require_if_exists( $this->load_child_first( 'meta.php' ) );
+			ht()->require_if_exists( $this->load_child_first( 'meta.php' ) );
 
 			if ( $this->doing_ajax ) {
-				HT()->require_if_exists( $this->load_child_first( 'ajax.php' ) );
+				ht()->require_if_exists( $this->load_child_first( 'ajax.php' ) );
 			}
 		} else {
-			HT()->require_if_exists( $this->load_child_first( 'front-end.php' ) );
-			HT()->require_if_exists( $this->load_child_first( 'template.php' ) );
+			ht()->require_if_exists( $this->load_child_first( 'front-end.php' ) );
+			ht()->require_if_exists( $this->load_child_first( 'template.php' ) );
 		}
 
 		require_once( $this->core_path . '/inc/customizer.php' );
@@ -684,11 +957,11 @@ final class HOCWP_Theme_Controller {
 	}
 
 	public function get_loop_data( $key ) {
-		return HT()->get_value_in_array( $GLOBALS['hocwp_theme']->loop_data, $key );
+		return ht()->get_value_in_array( $GLOBALS['hocwp_theme']->loop_data, $key );
 	}
 }
 
-function HOCWP_Theme() {
+function hocwp_theme() {
 	global $ht_controller;
 
 	// Instantiate only once.
@@ -699,8 +972,8 @@ function HOCWP_Theme() {
 	return $ht_controller;
 }
 
-HOCWP_Theme();
+hocwp_theme();
 
-function HT_Control() {
-	return HOCWP_Theme();
+function ht_control() {
+	return hocwp_theme();
 }

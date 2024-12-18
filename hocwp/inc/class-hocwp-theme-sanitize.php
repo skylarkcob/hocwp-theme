@@ -18,7 +18,7 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function extension( $file, $extension ) {
-		if ( HT()->array_has_value( $file ) ) {
+		if ( ht()->array_has_value( $file ) ) {
 			foreach ( $file as $key => $single_file ) {
 				$file[ $key ] = self::extension( $single_file, $extension );
 			}
@@ -52,7 +52,7 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function prefix( $string, $prefix, $sep = '-' ) {
-		if ( HT()->array_has_value( $string ) ) {
+		if ( ht()->array_has_value( $string ) ) {
 			foreach ( $string as $key => $single_string ) {
 				$string[ $key ] = self::prefix( $single_string, $prefix, $sep );
 			}
@@ -91,7 +91,7 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public static function media_url( $url, $media_id ) {
-		if ( HT()->is_positive_number( $media_id ) && HT_Media()->exists( $media_id ) ) {
+		if ( ht()->is_positive_number( $media_id ) && ht_media()->exists( $media_id ) ) {
 			if ( wp_attachment_is_image( $media_id ) ) {
 				$details = wp_get_attachment_image_src( $media_id, 'full' );
 				$url     = $details[0] ?? '';
@@ -121,15 +121,15 @@ final class HOCWP_Theme_Sanitize {
 			$id  = absint( $id );
 		}
 
-		if ( ! HT()->is_positive_number( $id ) ) {
+		if ( ! ht()->is_positive_number( $id ) ) {
 			$id = attachment_url_to_postid( $url );
 		}
 
-		if ( HT()->is_positive_number( $id ) ) {
+		if ( ht()->is_positive_number( $id ) ) {
 			$url  = self::media_url( $url, $id );
 			$icon = wp_mime_type_icon( $id );
 
-			if ( HT_Media()->exists( $id ) ) {
+			if ( ht_media()->exists( $id ) ) {
 				$size = filesize( get_attached_file( $id ) );
 			}
 		}
@@ -148,7 +148,7 @@ final class HOCWP_Theme_Sanitize {
 	}
 
 	public function form_forminator_data( $data ) {
-		if ( HT()->array_has_value( $data ) ) {
+		if ( ht()->array_has_value( $data ) ) {
 			$fields = array();
 
 			foreach ( $data as $field ) {
@@ -177,7 +177,7 @@ final class HOCWP_Theme_Sanitize {
 
 					$value_type = '';
 
-					if ( 'hidden' == $field_type && ( str_contains( $label, 'id' ) || str_contains( $label, 'ID' ) ) && HT()->is_positive_number( $value ) ) {
+					if ( 'hidden' == $field_type && ( str_contains( $label, 'id' ) || str_contains( $label, 'ID' ) ) && ht()->is_positive_number( $value ) ) {
 						$tmp = get_post( $value );
 
 						if ( $tmp instanceof WP_Post ) {
@@ -219,7 +219,7 @@ final class HOCWP_Theme_Sanitize {
 
 		$value = ( is_array( $data ) && isset( $data[ $key ] ) ) ? $data[ $key ] : '';
 
-		return HT_Sanitize()->data( $value, $type );
+		return ht_sanitize()->data( $value, $type );
 	}
 
 	public static function data( $value, $type ) {
@@ -241,7 +241,7 @@ final class HOCWP_Theme_Sanitize {
 				case 'positive_integer':
 					$value = absint( $value );
 
-					if ( ! HT()->is_positive_number( $value ) ) {
+					if ( ! ht()->is_positive_number( $value ) ) {
 						$value = '';
 					}
 
@@ -254,7 +254,7 @@ final class HOCWP_Theme_Sanitize {
 					$value = abs( $value );
 					break;
 				case 'timestamp':
-					$value = HT()->string_to_datetime( $value );
+					$value = ht()->string_to_datetime( $value );
 					$value = strtotime( $value );
 					break;
 			}
@@ -265,7 +265,7 @@ final class HOCWP_Theme_Sanitize {
 
 	public function phone( $phone ) {
 		$phone = wp_strip_all_tags( $phone );
-		$phone = HT()->keep_only_number( $phone, '' );
+		$phone = ht()->keep_only_number( $phone, '' );
 
 		return str_replace( array( '.', '-', ' ' ), '', $phone );
 	}
@@ -388,6 +388,6 @@ final class HOCWP_Theme_Sanitize {
 	}
 }
 
-function HT_Sanitize() {
+function ht_sanitize() {
 	return HOCWP_Theme_Sanitize::instance();
 }

@@ -3,4 +3,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-HT_Custom()->load_template( 'template-index' );
+ht_custom()->load_template( 'template-index' );

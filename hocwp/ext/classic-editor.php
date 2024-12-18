@@ -46,10 +46,10 @@ if ( ! isset( $hocwp_theme->extensions ) || ! is_array( $hocwp_theme->extensions
 	$hocwp_theme->extensions = array();
 }
 
-$extension = HTE_Classic_Editor()->get_instance();
+$extension = hte_classic_editor()->get_instance();
 
 $hocwp_theme->extensions[ $extension->basename ] = $extension;
 
-function HTE_Classic_Editor() {
+function hte_classic_editor() {
 	return HOCWP_EXT_Classic_Editor::get_instance();
 }

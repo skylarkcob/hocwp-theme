@@ -3,8 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! function_exists( 'HT_Frontend' ) ) {
-	require_once( HOCWP_Theme()->core_path . '/inc/class-hocwp-theme-frontend.php' );
+if ( ! function_exists( 'ht_frontend' ) ) {
+	require_once( hocwp_theme()->core_path . '/inc/class-hocwp-theme-frontend.php' );
 }
 
 add_action( 'customize_register', array( 'HOCWP_Theme_Customize', 'register' ) );
@@ -21,7 +21,7 @@ add_action( 'customize_register', array( 'HOCWP_Theme_Customize', 'register' ) )
  */
 function hocwp_theme_get_color_for_area( $area = 'content', $context = 'text', $theme_mod = 'accent_accessible_colors' ) {
 	if ( 'accent_accessible_colors' == $theme_mod ) {
-		$defaults = HT_Frontend()->get_default_colors();
+		$defaults = ht_frontend()->get_default_colors();
 	} else {
 		$defaults = array();
 	}
@@ -109,7 +109,7 @@ function hocwp_theme_get_elements_array() {
 		)
 	);
 
-	if ( defined( 'HOCWP_THEME_CSS_ELEMENT_SELECTORS' ) && HT()->array_has_value( HOCWP_THEME_CSS_ELEMENT_SELECTORS ) ) {
+	if ( defined( 'HOCWP_THEME_CSS_ELEMENT_SELECTORS' ) && ht()->array_has_value( HOCWP_THEME_CSS_ELEMENT_SELECTORS ) ) {
 		$elements = wp_parse_args( HOCWP_THEME_CSS_ELEMENT_SELECTORS, $elements );
 	}
 
@@ -161,7 +161,7 @@ function hocwp_theme_get_customizer_css( $type = 'front-end' ) {
 						$val = hocwp_theme_get_color_for_area( $context, $key );
 
 						if ( $val ) {
-							HT()->generate_css( implode( ',', $elements ), $property, $val );
+							ht()->generate_css( implode( ',', $elements ), $property, $val );
 						}
 					}
 				}
@@ -175,10 +175,10 @@ function hocwp_theme_get_customizer_css( $type = 'front-end' ) {
 		if ( 'front-end' == $type ) {
 			$elements_definitions = hocwp_theme_get_elements_array();
 
-			if ( HT()->array_has_value( $elements_definitions ) ) {
+			if ( ht()->array_has_value( $elements_definitions ) ) {
 				$custom_colors = isset( $elements_definitions['custom-color'] ) ? $elements_definitions['custom-color'] : '';
 
-				if ( HT()->array_has_value( $custom_colors ) ) {
+				if ( ht()->array_has_value( $custom_colors ) ) {
 					foreach ( (array) $custom_colors as $key => $definitions ) {
 						foreach ( $definitions as $property => $elements ) {
 							/*
@@ -192,7 +192,7 @@ function hocwp_theme_get_customizer_css( $type = 'front-end' ) {
 							$val = hocwp_theme_get_color_for_area( 'custom-color', $key, 'custom_accessible_colors' );
 
 							if ( $val ) {
-								HT()->generate_css( implode( ',', $elements ), $property, $val );
+								ht()->generate_css( implode( ',', $elements ), $property, $val );
 							}
 						}
 					}
@@ -220,7 +220,7 @@ function hocwp_theme_get_customizer_color_vars() {
 		)
 	);
 
-	if ( defined( 'HOCWP_THEME_DEFAULT_COLORS' ) && HT()->array_has_value( HOCWP_THEME_DEFAULT_COLORS ) ) {
+	if ( defined( 'HOCWP_THEME_DEFAULT_COLORS' ) && ht()->array_has_value( HOCWP_THEME_DEFAULT_COLORS ) ) {
 		foreach ( HOCWP_THEME_DEFAULT_COLORS as $key => $data ) {
 			if ( 'content' != $key && 'header-footer' != $key && 'custom-color' != $key ) {
 				$colors[ $key ] = array(
@@ -233,11 +233,11 @@ function hocwp_theme_get_customizer_color_vars() {
 	if ( current_theme_supports( 'custom-color' ) ) {
 		$custom_color = get_theme_support( 'custom-color' );
 
-		if ( HT()->array_has_value( $custom_color ) ) {
+		if ( ht()->array_has_value( $custom_color ) ) {
 			$items = array();
 
 			foreach ( $custom_color as $lists ) {
-				if ( HT()->array_has_value( $lists ) ) {
+				if ( ht()->array_has_value( $lists ) ) {
 					foreach ( $lists as $key => $color ) {
 						$setting = 'custom_color_' . $key;
 
@@ -246,7 +246,7 @@ function hocwp_theme_get_customizer_color_vars() {
 				}
 			}
 
-			if ( HT()->array_has_value( $items ) ) {
+			if ( ht()->array_has_value( $items ) ) {
 				$colors['custom-color'] = $items;
 			}
 		}
@@ -256,22 +256,22 @@ function hocwp_theme_get_customizer_color_vars() {
 }
 
 function hocwp_theme_customize_controls_enqueue_scripts_action() {
-	$theme_version = wp_get_theme()->get( 'Version' );
+	$theme_version = hocwp_theme()->version;
 
 	// Add main customizer js file.
-	wp_enqueue_script( 'hocwp-theme-customize', HOCWP_Theme()->core_url . '/js/customize.js', array(
+	wp_enqueue_script( 'hocwp-theme-customize', hocwp_theme()->core_url . '/js/customize.js', array(
 		'jquery',
 		'hocwp-theme'
 	), $theme_version, false );
 
 	// Add script for color calculations.
-	wp_enqueue_script( 'hocwp-theme-color-calculations', HOCWP_Theme()->core_url . '/js/color-calculations.js', array(
+	wp_enqueue_script( 'hocwp-theme-color-calculations', hocwp_theme()->core_url . '/js/color-calculations.js', array(
 		'wp-color-picker',
 		'hocwp-theme'
 	), $theme_version, false );
 
 	// Add script for controls.
-	wp_enqueue_script( 'hocwp-theme-customize-controls', HOCWP_Theme()->core_url . '/js/customize-controls.js', array(
+	wp_enqueue_script( 'hocwp-theme-customize-controls', hocwp_theme()->core_url . '/js/customize-controls.js', array(
 		'hocwp-theme-color-calculations',
 		'customize-controls',
 		'underscore',
@@ -285,9 +285,9 @@ function hocwp_theme_customize_controls_enqueue_scripts_action() {
 add_action( 'customize_controls_enqueue_scripts', 'hocwp_theme_customize_controls_enqueue_scripts_action' );
 
 function hocwp_theme_customize_preview_init_action() {
-	$theme_version = wp_get_theme()->get( 'Version' );
+	$theme_version = hocwp_theme()->version;
 
-	wp_enqueue_script( 'hocwp-theme-customize-preview', HOCWP_Theme()->core_url . '/js/customize-preview.js', array(
+	wp_enqueue_script( 'hocwp-theme-customize-preview', hocwp_theme()->core_url . '/js/customize-preview.js', array(
 		'customize-preview',
 		'customize-selective-refresh',
 		'jquery',
@@ -331,12 +331,12 @@ function hocwp_theme_customize_save_after_action() {
 	$customized = isset( $_POST['customized'] ) ? $_POST['customized'] : '';
 
 	if ( ! empty( $customized ) ) {
-		$customized = HT()->json_string_to_array( $customized );
+		$customized = ht()->json_string_to_array( $customized );
 
 		if ( isset( $customized['custom_logo'] ) ) {
 			// Remove theme logo general option if customize logo empty.
 			if ( empty( $customized['custom_logo'] ) ) {
-				HT_Options()->update( 'logo_image', '', 'general' );
+				ht_options()->update( 'logo_image', '', 'general' );
 			}
 		}
 	}

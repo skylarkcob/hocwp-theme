@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="container clearfix">
 		<?php do_action( 'hocwp_theme_content_area_before' ); ?>
 		<section class="error-404 not-found">
-			<?php HT_Frontend()->content_404(); ?>
+			<?php ht_frontend()->content_404(); ?>
 		</section>
 		<!-- .error-404 -->
 		<?php

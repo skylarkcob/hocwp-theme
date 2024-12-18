@@ -25,7 +25,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 		}
 
 		public function nav_menu_start_el_filter( $item_output, $item ) {
-			if ( isset( $item->classes ) && HT()->array_has_value( $item->classes ) && in_array( 'divider', $item->classes ) ) {
+			if ( isset( $item->classes ) && ht()->array_has_value( $item->classes ) && in_array( 'divider', $item->classes ) ) {
 				$item_output = '<div class="dropdown-divider"></div>';
 			}
 
@@ -55,11 +55,11 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 
 			$show_submenu = ( isset( $args->show_submenu ) && $args->show_submenu );
 
-			if ( ! $show_submenu || ! HT()->is_positive_number( $item->menu_item_parent ) ) {
+			if ( ! $show_submenu || ! ht()->is_positive_number( $item->menu_item_parent ) ) {
 				$classes[] = 'nav-item';
 			}
 
-			if ( isset( $item->classes ) && HT()->array_has_value( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
+			if ( isset( $item->classes ) && ht()->array_has_value( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
 				$classes[] = 'dropdown';
 			}
 
@@ -85,12 +85,12 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 				$classes = explode( ' ', $classes );
 			}
 
-			if ( ! $show_submenu || ! HT()->is_positive_number( $item->menu_item_parent ) ) {
+			if ( ! $show_submenu || ! ht()->is_positive_number( $item->menu_item_parent ) ) {
 				$classes[] = 'nav-link';
 			}
 
 			if ( ! $show_submenu ) {
-				if ( isset( $item->classes ) && HT()->array_has_value( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
+				if ( isset( $item->classes ) && ht()->array_has_value( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
 					$classes[] = 'dropdown-toggle';
 
 					unset( $atts['data-object-id'] );
@@ -103,7 +103,7 @@ if ( ! class_exists( 'HOCWP_Theme_Walker_Nav_Menu_Bootstrap' ) ) {
 					$atts['data-object-id'] = $item->ID;
 				}
 
-				if ( HT()->is_positive_number( $item->menu_item_parent ) ) {
+				if ( ht()->is_positive_number( $item->menu_item_parent ) ) {
 					$classes[] = 'dropdown-item';
 				}
 			}

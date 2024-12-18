@@ -75,7 +75,7 @@ class HOCWP_Theme_VR {
 
 	public function audio_html( $music, $html_id, $loop = null, $class = '', $hidden = true ) {
 		if ( ! empty( $music ) ) {
-			$music = HT_Media()->sanitize_value( $music );
+			$music = ht_media()->sanitize_value( $music );
 
 			$id  = $music['id'] ?? '';
 			$url = $music['url'] ?? '';
@@ -87,7 +87,7 @@ class HOCWP_Theme_VR {
 				$loop  = '';
 			}
 
-			if ( HT()->is_positive_number( $loop ) ) {
+			if ( ht()->is_positive_number( $loop ) ) {
 				$class .= ' loop';
 			} else {
 				$loop = '';
@@ -103,7 +103,7 @@ class HOCWP_Theme_VR {
                        controls>
                     <source src="<?php echo esc_url( $url ); ?>"
                             type="<?php echo esc_attr( $music['mime'] ); ?>">
-					<?php echo HT_Message()->browser_not_support_audio(); ?>
+					<?php echo ht_message()->browser_not_support_audio(); ?>
                 </audio>
             </div>
 			<?php
@@ -154,6 +154,6 @@ class HOCWP_Theme_VR {
 
 new HOCWP_Theme_VR();
 
-function HT_VR() {
+function ht_vr() {
 	return HOCWP_Theme_VR::instance();
 }

@@ -83,7 +83,7 @@ trait HOCWP_Theme_Import_Administrative_Boundaries {
 	}
 
 	private function import_child( $list, $taxonomy, $parent_id = null ) {
-		if ( HT()->array_has_value( $list ) ) {
+		if ( ht()->array_has_value( $list ) ) {
 			foreach ( $list as $id => $data ) {
 				$name = $data['name'];
 				$type = $data['type'];
@@ -92,7 +92,7 @@ trait HOCWP_Theme_Import_Administrative_Boundaries {
 
 				$res = $this->import_item( $name, $id, $type, $taxonomy, $parent_id );
 
-				if ( HT()->array_has_value( $data ) ) {
+				if ( ht()->array_has_value( $data ) ) {
 					if ( isset( $res['term_id'] ) ) {
 						$this->import_child( $data, $taxonomy, $res['term_id'] );
 					} else {
@@ -123,14 +123,14 @@ trait HOCWP_Theme_Import_Administrative_Boundaries {
 	}
 
 	public function import_item( $name, $id, $type, $taxonomy, $parent = null ) {
-		if ( HT()->is_positive_number( $parent ) ) {
+		if ( ht()->is_positive_number( $parent ) ) {
 			$exists = term_exists( $name, $taxonomy, $parent );
 		} else {
 			$exists = term_exists( $name, $taxonomy );
 		}
 
 		if ( ! $exists ) {
-			if ( HT()->is_positive_number( $parent ) ) {
+			if ( ht()->is_positive_number( $parent ) ) {
 				$res = wp_insert_term( $name, $taxonomy, array( 'parent' => $parent ) );
 			} else {
 				$res = wp_insert_term( $name, $taxonomy );
@@ -149,6 +149,6 @@ trait HOCWP_Theme_Import_Administrative_Boundaries {
 	}
 
 	public function convert_to_array( $csv, $district, $commune ) {
-		return HT_Util()->convert_administrative_boundaries_to_array( $csv, $district, $commune );
+		return ht_util()->convert_administrative_boundaries_to_array( $csv, $district, $commune );
 	}
 }

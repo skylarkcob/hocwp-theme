@@ -3,17 +3,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+global $hocwp_current_theme;
+
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '7.0.7';
+const HOCWP_THEME_CORE_VERSION = '7.0.8';
 
-$theme = wp_get_theme();
+if ( ! $hocwp_current_theme ) {
+	$hocwp_current_theme = wp_get_theme();
+}
 
-$require_version = $theme->get( 'RequiresPHP' );
+$require_version = $hocwp_current_theme->get( 'RequiresPHP' );
 
+// If theme not declare required PHP version, just provide new.
 if ( empty( $require_version ) ) {
-	$require_version = '7.4';
+	$require_version = '8.1';
 }
 
 /**
@@ -26,39 +31,39 @@ define( 'HOCWP_THEME_REQUIRE_PHP_VERSION', $require_version );
  */
 define( 'HOCWP_THEME_DEVELOPING', ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) );
 
-define( 'HOCWP_THEME_SUPPORT_PHP8', version_compare( phpversion(), '8.0', '>=' ) );
+define( 'HOCWP_THEME_SUPPORT_PHP8', version_compare( phpversion(), '8.1', '>=' ) );
 
 /**
- * Theme root path.
+ * Current theme root path or theme parent root path.
  */
 define( 'HOCWP_THEME_PATH', get_template_directory() );
 
 /**
- * Theme child root path
+ * Theme child root path.
  */
 define( 'HOCWP_THEME_CURRENT_PATH', get_stylesheet_directory() );
 
 /**
- * Theme base url.
+ * Current theme base url or theme parent base url.
  */
 define( 'HOCWP_THEME_URL', get_template_directory_uri() );
 
 /**
- * Theme child base url
+ * Theme child base url.
  */
 define( 'HOCWP_THEME_CURRENT_URL', get_stylesheet_directory_uri() );
 
 /**
  * Theme core path.
  */
-define( 'HOCWP_THEME_CORE_PATH', untrailingslashit( dirname( __FILE__ ) ) );
+const HOCWP_THEME_CORE_PATH = __DIR__;
 
 const HOCWP_THEME_INC_PATH = HOCWP_THEME_CORE_PATH . '/inc';
 
 /**
  * Theme core base url.
  */
-define( 'HOCWP_THEME_CORE_URL', untrailingslashit( HOCWP_THEME_URL . '/hocwp' ) );
+define( 'HOCWP_THEME_CORE_URL', untrailingslashit( HOCWP_THEME_URL ) . '/hocwp' );
 
 /**
  * CSS suffix.
@@ -71,17 +76,23 @@ const HOCWP_THEME_CSS_SUFFIX = '.css';
 const HOCWP_THEME_JS_SUFFIX = '.js';
 
 /**
- * Theme custom path.
+ * Theme custom path or theme parent custom path.
  */
 const HOCWP_THEME_CUSTOM_PATH = HOCWP_THEME_PATH . '/custom';
 
+/**
+ * Child theme custom path.
+ */
 const HOCWP_THEME_CUSTOM_CURRENT_PATH = HOCWP_THEME_CURRENT_PATH . '/custom';
 
 /**
- * Theme custom base url.
+ * Theme custom base url or theme parent custom base url.
  */
 const HOCWP_THEME_CUSTOM_URL = HOCWP_THEME_URL . '/custom';
 
+/**
+ * Child theme custom base url.
+ */
 const HOCWP_THEME_CUSTOM_CURRENT_URL = HOCWP_THEME_CURRENT_URL . '/custom';
 
 /**
@@ -94,6 +105,9 @@ define( 'HOCWP_THEME_DOING_AJAX', ( defined( 'DOING_AJAX' ) && true === DOING_AJ
  */
 define( 'HOCWP_THEME_DOING_CRON', ( defined( 'DOING_CRON' ) && true === DOING_CRON ) );
 
+/**
+ * The dot image for lazyload.
+ */
 const HOCWP_THEME_DOT_IMAGE_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 /*
@@ -101,12 +115,15 @@ const HOCWP_THEME_DOT_IMAGE_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA
  */
 $php_version = phpversion();
 
+// Check if current PHP version less than required PHP version.
 if ( version_compare( $php_version, $require_version, '<' ) ) {
 	$dir = HOCWP_THEME_PATH;
 	$dir = dirname( $dir );
 
+	// Find all themes in wp-content/themes folder.
 	$dirs = array_filter( glob( $dir . '/*' ), 'is_dir' );
 
+	// Check and switch to another theme.
 	if ( ! empty( $dirs ) ) {
 		$msg   = sprintf( __( '<strong>Error:</strong> You are using PHP version %s, please upgrade PHP version to at least %s.', 'hocwp-theme' ), $php_version, $require_version );
 		$title = __( 'Invalid PHP Version', 'hocwp-theme' );
@@ -120,8 +137,8 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 		foreach ( $dirs as $dir ) {
 			$folder = basename( $dir );
 
-			// Skip current theme and HocWP Theme
-			if ( $folder == get_option( 'stylesheet' ) || 'hocwp-theme' == get_option( 'template' ) ) {
+			// Skip current theme and parent theme.
+			if ( $folder == $hocwp_current_theme->get_stylesheet() || $folder == $hocwp_current_theme->get_template() ) {
 				continue;
 			}
 
@@ -130,12 +147,14 @@ if ( version_compare( $php_version, $require_version, '<' ) ) {
 			$theme = wp_get_theme( $folder );
 			$uri   = $theme->get( 'ThemeURI' );
 
+			// Check and switch to default WordPress theme.
 			if ( str_contains( $uri, 'wordpress.org' ) ) {
 				switch_theme( $folder );
 				wp_die( $msg, $title, $args );
 			}
 		}
 
+		// If it has another theme not default WordPress theme.
 		if ( $has ) {
 			$dir    = array_shift( $dirs );
 			$folder = basename( $dir );

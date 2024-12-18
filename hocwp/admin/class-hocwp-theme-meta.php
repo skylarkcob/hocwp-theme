@@ -91,7 +91,7 @@ abstract class HOCWP_Theme_Meta {
 				$this->load_script( 'wp-color-picker' );
 				$this->load_script( 'hocwp-theme-color-picker' );
 			} elseif ( array( $class, 'code_editor' ) === $callback ) {
-				HT_Enqueue()->code_editor();
+				ht_enqueue()->code_editor();
 			} elseif ( array( $class, 'layout' ) === $callback ) {
 				$this->load_script( 'hocwp-theme' );
 				$this->load_script( 'hocwp-theme-admin' );
@@ -136,7 +136,7 @@ abstract class HOCWP_Theme_Meta {
 		if ( $this->is_fields_field( $cb ) ) {
 			$fields = $field['callback_args']['fields'] ?? '';
 
-			if ( HT()->array_has_value( $fields ) ) {
+			if ( ht()->array_has_value( $fields ) ) {
 				$id = $field['id'] ?? '';
 
 				foreach ( $fields as $key => $data ) {
@@ -193,10 +193,10 @@ abstract class HOCWP_Theme_Meta {
 
 		$id   = $field['id'] ?? '';
 		$name = $field['name'] ?? '';
-		HT()->transmit( $id, $name );
+		ht()->transmit( $id, $name );
 		$title = $field['title'] ?? '';
 		$label = $field['label'] ?? '';
-		HT()->transmit( $title, $label );
+		ht()->transmit( $title, $label );
 		$field['callback_args']['id']    = $id;
 		$field['callback_args']['name']  = $name;
 		$field['callback_args']['label'] = $label;
@@ -210,11 +210,11 @@ abstract class HOCWP_Theme_Meta {
 		$value = $_POST[ $id ] ?? '';
 		$type  = $field['type'];
 
-		return HT_Sanitize()->data( $value, $type );
+		return ht_sanitize()->data( $value, $type );
 	}
 
 	public function get_base_name( $name ) {
-		if ( HT()->string_contain( $name, '[' ) && HT()->string_contain( $name, ']' ) ) {
+		if ( ht()->string_contain( $name, '[' ) && ht()->string_contain( $name, ']' ) ) {
 			$tmp  = explode( '[', $name );
 			$name = array_shift( $tmp );
 		}
@@ -230,7 +230,7 @@ abstract class HOCWP_Theme_Meta {
 			$name = $field['callback_args']['name'] ?? '';
 		}
 
-		HT()->transmit( $id, $name );
+		ht()->transmit( $id, $name );
 
 		if ( $base ) {
 			$name = $this->get_base_name( $name );
@@ -251,7 +251,7 @@ abstract class HOCWP_Theme_Meta {
 	protected function sanitize_value( $obj_id, $field ) {
 		if ( ! isset( $field['callback_args']['value'] ) ) {
 			if ( ! is_callable( $this->get_value_callback ) ) {
-				HT_Util()->doing_it_wrong( __FUNCTION__, __( 'Please set get_value_callback.', 'hocwp-theme' ), '6.3.2' );
+				ht_util()->doing_it_wrong( __FUNCTION__, __( 'Please set get_value_callback.', 'hocwp-theme' ), '6.3.2' );
 
 				return $field;
 			}
@@ -288,7 +288,7 @@ abstract class HOCWP_Theme_Meta {
 				$meta_key = $this->get_name( $field );
 			}
 
-			if ( HT()->string_contain( $meta_key, '[' ) && HT()->string_contain( $meta_key, ']' ) ) {
+			if ( ht()->string_contain( $meta_key, '[' ) && ht()->string_contain( $meta_key, ']' ) ) {
 				$tmp = explode( '[', $meta_key );
 
 				foreach ( $tmp as $key => $a ) {
@@ -330,7 +330,7 @@ abstract class HOCWP_Theme_Meta {
 					$format = 'Y-m-d';
 				}
 
-				$field['callback_args']['data-date-format'] = HT()->javascript_datetime_format( $format );
+				$field['callback_args']['data-date-format'] = ht()->javascript_datetime_format( $format );
 
 				if ( ! empty( $value ) ) {
 					$value = date( $format, $value );
@@ -352,7 +352,7 @@ abstract class HOCWP_Theme_Meta {
 				// Sanitize field fields value
 				$fields = $field['callback_args']['fields'] ?? '';
 
-				if ( HT()->array_has_value( $fields ) ) {
+				if ( ht()->array_has_value( $fields ) ) {
 					foreach ( $fields as $key => $data ) {
 						$data['callback_args']['value'] = call_user_func( $this->get_value_callback, $obj_id, $key, $this->single_value );
 
@@ -409,7 +409,7 @@ abstract class HOCWP_Theme_Meta {
 					if ( $check_multi ) {
 						$options = $field['callback_args']['options'] ?? '';
 
-						if ( HT()->array_has_value( $options ) ) {
+						if ( ht()->array_has_value( $options ) ) {
 							$checkbox = true;
 						}
 					} else {
@@ -424,7 +424,7 @@ abstract class HOCWP_Theme_Meta {
 
 	protected function save( $obj_id ) {
 		if ( ! is_callable( $this->update_value_callback ) ) {
-			HT_Util()->doing_it_wrong( __FUNCTION__, __( 'Please set update_value_callback.', 'hocwp-theme' ), '6.3.2' );
+			ht_util()->doing_it_wrong( __FUNCTION__, __( 'Please set update_value_callback.', 'hocwp-theme' ), '6.3.2' );
 
 			return;
 		}
@@ -467,7 +467,7 @@ abstract class HOCWP_Theme_Meta {
 			} elseif ( $this->is_fields_field( $cb ) ) {
 				$fields = $field['callback_args']['fields'] ?? '';
 
-				if ( HT()->array_has_value( $fields ) ) {
+				if ( ht()->array_has_value( $fields ) ) {
 					foreach ( $fields as $key => $data ) {
 						$value = $this->sanitize_data( $data );
 						call_user_func( $this->update_value_callback, $obj_id, $key, $value );
@@ -517,7 +517,7 @@ abstract class HOCWP_Theme_Meta {
 	}
 
 	private function enqueue( $arr, $script = false ) {
-		if ( HT()->array_has_value( $arr ) ) {
+		if ( ht()->array_has_value( $arr ) ) {
 			$callback = 'wp_enqueue_style';
 
 			if ( $script ) {
@@ -526,7 +526,7 @@ abstract class HOCWP_Theme_Meta {
 
 			foreach ( $arr as $handle ) {
 				if ( 'jquery-ui-style' == $handle ) {
-					HT_Enqueue()->jquery_ui_style();
+					ht_enqueue()->jquery_ui_style();
 				} else {
 					call_user_func( $callback, $handle );
 				}
@@ -537,16 +537,16 @@ abstract class HOCWP_Theme_Meta {
 	public function admin_scripts() {
 		if ( is_array( $this->scripts ) ) {
 			if ( in_array( 'hocwp-theme-media-upload', $this->scripts ) || in_array( 'media-upload', $this->scripts ) ) {
-				HT_Enqueue()->media_upload();
+				ht_enqueue()->media_upload();
 			}
 
 			if ( in_array( 'sortable-images-box', $this->scripts ) ) {
 				wp_enqueue_editor();
-				HT_Enqueue()->sortable();
+				ht_enqueue()->sortable();
 			}
 
 			if ( in_array( 'sortable', $this->scripts ) ) {
-				HT_Enqueue()->sortable();
+				ht_enqueue()->sortable();
 			}
 		}
 
@@ -556,6 +556,6 @@ abstract class HOCWP_Theme_Meta {
 
 	public function doing_it_wrong() {
 		$msg = __( 'You must call this class in callback of <strong>load-{$pagenow}</strong> action.', 'hocwp-theme' );
-		HT_Util()->doing_it_wrong( __CLASS__, $msg, '4.8.1' );
+		ht_util()->doing_it_wrong( __CLASS__, $msg, '4.8.1' );
 	}
 }

@@ -63,9 +63,9 @@ class HOCWP_Theme_Province_VN {
 			}
 
 			if ( file_exists( $path ) ) {
-				$tmp = HT_Util()->read_all_text( $path );
+				$tmp = ht_util()->read_all_text( $path );
 
-				return HT()->json_string_to_array( $tmp );
+				return ht()->json_string_to_array( $tmp );
 			}
 		}
 

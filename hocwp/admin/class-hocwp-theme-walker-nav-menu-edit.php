@@ -26,7 +26,7 @@ class HOCWP_Theme_Walker_Nav_Menu_Edit extends Walker_Nav_Menu_Edit {
 					$html = ob_get_clean();
 
 					if ( ! empty( $html ) ) {
-						$html     = HT()->wrap_text( $html, '<div class="custom-fields hocwp-theme">', '</div>' );
+						$html     = ht()->wrap_text( $html, '<div class="custom-fields hocwp-theme">', '</div>' );
 						$html     .= PHP_EOL;
 						$add      = preg_replace( '/<fieldset /', $html . '<fieldset ', $add, 1 );
 						$parts[1] = $add;

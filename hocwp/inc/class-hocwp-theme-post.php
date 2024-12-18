@@ -10,7 +10,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 		if ( is_numeric( $post ) ) {
 			$post = get_post( $post );
 		} elseif ( ! ( $post instanceof WP_Post ) ) {
-			$post = HT_Util()->return_post( $post );
+			$post = ht_util()->return_post( $post );
 		}
 
 		$this->set( $post );
@@ -55,7 +55,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 			$this->post = $object;
 
 			// Set meta keys as post object properties.
-			if ( HT()->array_has_value( $this->get_meta_keys() ) ) {
+			if ( ht()->array_has_value( $this->get_meta_keys() ) ) {
 				foreach ( $this->get_meta_keys() as $key ) {
 					$this->post->{$key} = $this->get_meta( $key );
 				}
@@ -106,7 +106,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 		if ( is_taxonomy_hierarchical( $taxonomy ) && has_term( '', $taxonomy, $this->post->ID ) ) {
 			$result = get_ancestors( $this->post->ID, $taxonomy, 'taxonomy' );
 
-			if ( ! HT()->array_has_value( $result ) ) {
+			if ( ! ht()->array_has_value( $result ) ) {
 				$result = wp_get_post_terms( $this->post->ID, $taxonomy, array(
 					'orderby' => 'parent',
 					'fields'  => 'ids'
@@ -114,7 +114,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 			}
 		}
 
-		if ( HT()->array_has_value( $result ) && OBJECT == $output ) {
+		if ( ht()->array_has_value( $result ) && OBJECT == $output ) {
 			foreach ( $result as $key => $term_id ) {
 				$result[ $key ] = get_term( $term_id, $taxonomy );
 			}
@@ -217,7 +217,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 		if ( ! is_numeric( $length ) ) {
 			$key = ( wp_is_mobile() ) ? 'excerpt_length_mobile' : 'excerpt_length';
 
-			$length = HT_Options()->get_tab( $key, '', 'reading' );
+			$length = ht_options()->get_tab( $key, '', 'reading' );
 
 			if ( ! is_numeric( $length ) ) {
 				$length = 55;
@@ -241,7 +241,7 @@ class HOCWP_Theme_Post extends Abstract_HOCWP_Theme_Object {
 
 			$excerpt = strip_shortcodes( $excerpt );
 
-			$excerpt = HT_Util()->apply_the_content( $excerpt );
+			$excerpt = ht_util()->apply_the_content( $excerpt );
 			$excerpt = str_replace( ']]>', ']]&gt;', $excerpt );
 
 			wp_reset_postdata();

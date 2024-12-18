@@ -57,7 +57,7 @@ function hocwp_theme_comments_popup_link() {
 }
 
 function hocwp_theme_excerpt_more_filter( $more ) {
-	$options = HT_Options()->get( 'reading' );
+	$options = ht_options()->get( 'reading' );
 
 	if ( is_array( $options ) && isset( $options['excerpt_more'] ) && ! empty( $options['excerpt_more'] ) ) {
 		$more = $options['excerpt_more'];
@@ -75,12 +75,12 @@ function hocwp_theme_excerpt_length_filter( $length ) {
 	if ( isset( $wp_query->query_vars['excerpt_length'] ) ) {
 		$length = $wp_query->query_vars['excerpt_length'];
 
-		if ( HT()->is_positive_number( $length ) ) {
+		if ( ht()->is_positive_number( $length ) ) {
 			return $length;
 		}
 	}
 
-	$options = HT_Options()->get( 'reading' );
+	$options = ht_options()->get( 'reading' );
 
 	if ( wp_is_mobile() ) {
 		if ( is_array( $options ) && isset( $options['excerpt_length_mobile'] ) && ! empty( $options['excerpt_length_mobile'] ) ) {
@@ -180,7 +180,7 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 	} else {
 		if ( is_array( $attr ) && isset( $attr['post_link'] ) && $attr['post_link'] ) {
 			$before = sprintf( '<a class="img-hyperlink post-link" href="%s" title="%s">', get_the_permalink(), get_the_title() );
-			$html   = HT()->wrap_text( $html, $before, '</a>' );
+			$html   = ht()->wrap_text( $html, $before, '</a>' );
 		}
 	}
 
@@ -190,13 +190,13 @@ function hocwp_theme_post_thumbnail_html_auto_link( $html, $post_id, $post_thumb
 add_filter( 'post_thumbnail_html', 'hocwp_theme_post_thumbnail_html_auto_link', 10, 5 );
 
 function hocwp_theme_get_default_post_thumbnail( $size = 'thumbnail', $attr = '', $style = '' ) {
-	$thumbnail = HT_Options()->get_tab( 'default_thumbnail', '', 'writing' );
+	$thumbnail = ht_options()->get_tab( 'default_thumbnail', '', 'writing' );
 	$class     = ( is_array( $attr ) && isset( $attr['class'] ) ) ? $attr['class'] : '';
 
 	$class .= ' default-thumbnail no-thumbnail wp-post-image';
 	$class = trim( $class );
 
-	if ( HT()->is_positive_number( $thumbnail ) ) {
+	if ( ht()->is_positive_number( $thumbnail ) ) {
 		$thumbnail = '<img class="' . $class . '" src="' . wp_get_attachment_image_url( $thumbnail, $size ) . '" alt="" style="' . $style . '">';
 	} else {
 		$thumbnail = '<span class="' . $class . '" style="' . $style . '" ></span>';
@@ -206,12 +206,12 @@ function hocwp_theme_get_default_post_thumbnail( $size = 'thumbnail', $attr = ''
 }
 
 function hocwp_theme_post_thumbnail_default( $size, $attr ) {
-	if ( HT_Util()->is_amp() ) {
+	if ( ht_util()->is_amp() ) {
 		return;
 	}
 
 	if ( is_string( $size ) ) {
-		$size = HT_Util()->get_image_size( $size );
+		$size = ht_util()->get_image_size( $size );
 	}
 
 	$width = ( is_array( $size ) && isset( $size['width'] ) ) ? $size['width'] : '';
@@ -244,7 +244,7 @@ function hocwp_theme_post_thumbnail_default( $size, $attr ) {
 
 	if ( is_array( $attr ) && isset( $attr['post_link'] ) && $attr['post_link'] ) {
 		$before = sprintf( '<a class="img-hyperlink" href="%s" title="%s">', get_the_permalink(), get_the_title() );
-		$html   = HT()->wrap_text( $html, $before, '</a>' );
+		$html   = ht()->wrap_text( $html, $before, '</a>' );
 	}
 
 	$html = apply_filters( 'hocwp_theme_post_thumbnail_default_html', $html, $size, $attr );
@@ -285,7 +285,7 @@ add_action( 'hocwp_theme_the_content', 'hocwp_theme_the_content' );
 function hocwp_theme_fix_empty_paragraph_and_new_line_in_post_content( $content ) {
 	if ( empty( $content ) && ! is_page_template() ) {
 		// Display default content if post has empty content.
-		$default = HT_Options()->get_tab( 'default_content', '', 'reading' );
+		$default = ht_options()->get_tab( 'default_content', '', 'reading' );
 
 		if ( ! empty( $default ) ) {
 			$default = do_shortcode( $default );
@@ -349,7 +349,7 @@ function hocwp_theme_related_posts( $args ) {
 	unset( $args['box_title'] );
 
 	$args  = apply_filters( 'hocwp_theme_related_posts_args', $args );
-	$query = HT_Query()->related_posts( $args );
+	$query = ht_query()->related_posts( $args );
 
 	if ( $query->have_posts() ) {
 		if ( empty( $box_title ) ) {
@@ -357,7 +357,7 @@ function hocwp_theme_related_posts( $args ) {
 		}
 
 		echo '<div class="related-posts">';
-		echo HT()->wrap_text( $box_title, '<h3 class="box-title">', '</h3>' );
+		echo ht()->wrap_text( $box_title, '<h3 class="box-title">', '</h3>' );
 		global $hocwp_theme;
 		$hocwp_theme->loop_data['template']        = 'related';
 		$hocwp_theme->loop_data['pagination_args'] = false;
@@ -368,7 +368,7 @@ function hocwp_theme_related_posts( $args ) {
 		echo '</div>';
 	}
 
-	HT_Util()->display_ads( 'related_posts' );
+	ht_util()->display_ads( 'related_posts' );
 }
 
 add_action( 'hocwp_theme_related_posts', 'hocwp_theme_related_posts' );

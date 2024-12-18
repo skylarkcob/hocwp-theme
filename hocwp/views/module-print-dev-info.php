@@ -60,7 +60,7 @@ if ( function_exists( 'memory_get_usage' ) ) {
 	$memory        = max( $memory, $system_memory );
 }
 
-printf( __( 'WP memory limit: %s', 'hocwp-theme' ), size_format( HT()->memory_size_convert( $memory ) ) . PHP_EOL );
+printf( __( 'WP memory limit: %s', 'hocwp-theme' ), size_format( ht()->memory_size_convert( $memory ) ) . PHP_EOL );
 
 printf( __( 'Home directory: %s', 'hocwp-theme' ), htmlspecialchars( ABSPATH ) . PHP_EOL );
 printf( __( 'Content directory: %s', 'hocwp-theme' ), htmlspecialchars( WP_CONTENT_DIR ) . PHP_EOL );
@@ -68,7 +68,7 @@ printf( __( 'Plugin directory: %s', 'hocwp-theme' ), htmlspecialchars( WP_PLUGIN
 
 printf( __( 'WP debug mode: %s', 'hocwp-theme' ), ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? $yes : $no ) . PHP_EOL );
 printf( __( 'WP debug log active: %s', 'hocwp-theme' ), ( ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) ? $yes : $no ) . PHP_EOL );
-printf( __( 'Table prefix: %s', 'hocwp-theme' ), HT_Util()->get_table_prefix() . PHP_EOL );
+printf( __( 'Table prefix: %s', 'hocwp-theme' ), ht_util()->get_table_prefix() . PHP_EOL );
 $users = count_users();
 printf( __( 'Total users: %s', 'hocwp-theme' ), number_format_i18n( $users['total_users'] ) . PHP_EOL );
 printf( __( 'WP debug log file location: %s', 'hocwp-theme' ), ( ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) ? ini_get( 'error_log' ) : '' ) . PHP_EOL );
@@ -78,7 +78,7 @@ $upload_dir = wp_upload_dir();
 printf( __( 'Upload directory location: %s', 'hocwp-theme' ), $upload_dir['basedir'] . PHP_EOL );
 printf( __( 'Upload URL location: %s', 'hocwp-theme' ), $upload_dir['baseurl'] . PHP_EOL );
 
-printf( __( 'WP local time: %s', 'hocwp-theme' ), HT_Util()->get_timezone() . PHP_EOL );
+printf( __( 'WP local time: %s', 'hocwp-theme' ), ht_util()->get_timezone() . PHP_EOL );
 printf( __( 'Site time: %s', 'hocwp-theme' ), ( current_time( 'mysql' ) ) . PHP_EOL );
 printf( __( 'DB time: %s', 'hocwp-theme' ), ( $wpdb->get_var( 'SELECT utc_timestamp()' ) ) . PHP_EOL );
 printf( __( 'PHP time: %s', 'hocwp-theme' ), date( 'Y-m-d H:i:s' ) . PHP_EOL );
@@ -100,7 +100,7 @@ hocwp_theme_dev_info_section_open( __( 'Server Information', 'hocwp-theme' ) );
 printf( __( 'Operating system: %s', 'hocwp-theme' ), php_uname() . PHP_EOL );
 printf( __( 'PHP version: %s', 'hocwp-theme' ), phpversion() . PHP_EOL );
 printf( __( 'MySQL version: %s', 'hocwp-theme' ), $wpdb->db_version() . PHP_EOL );
-printf( __( 'PHP post max size: %s', 'hocwp-theme' ), ( size_format( HT()->memory_size_convert( ini_get( 'post_max_size' ) ) ) ) . PHP_EOL );
+printf( __( 'PHP post max size: %s', 'hocwp-theme' ), ( size_format( ht()->memory_size_convert( ini_get( 'post_max_size' ) ) ) ) . PHP_EOL );
 printf( __( 'PHP time limit: %s', 'hocwp-theme' ), ( ini_get( 'max_execution_time' ) ) . PHP_EOL );
 printf( __( 'PHP max input vars: %s', 'hocwp-theme' ), ( ini_get( 'max_input_vars' ) ) . PHP_EOL );
 printf( __( 'Peak memory usage: %s', 'hocwp-theme' ), size_format( memory_get_peak_usage( true ) ) . PHP_EOL );
@@ -196,9 +196,9 @@ if ( ! is_admin() ) {
 	$number = - 1;
 }
 
-$files = HT()->get_last_modified_files( get_stylesheet_directory(), $number );
+$files = ht()->get_last_modified_files( get_stylesheet_directory(), $number );
 
-if ( HT()->array_has_value( $files ) ) {
+if ( ht()->array_has_value( $files ) ) {
 	hocwp_theme_dev_info_section_open( __( 'Recent Modified Theme Files', 'hocwp-theme' ) );
 
 	$count = 1;
@@ -215,7 +215,7 @@ if ( ! is_admin() ) {
 	$path = get_stylesheet_directory() . '/style.css';
 
 	if ( file_exists( $path ) ) {
-		$style = HT_Util()->read_all_text( $path );
+		$style = ht_util()->read_all_text( $path );
 		$style = substr( $style, 0, strpos( $style, '*/' ) + 2 );
 		hocwp_theme_dev_info_section_open( __( 'Theme Style File', 'hocwp-theme' ) );
 		print_r( $style );
@@ -223,10 +223,10 @@ if ( ! is_admin() ) {
 	}
 }
 
-$path = HT_Custom()->get_path( 'readme.txt', true );
+$path = ht_custom()->get_path( 'readme.txt', true );
 
 if ( file_exists( $path ) ) {
-	$data = HT_Util()->read_all_text( $path );
+	$data = ht_util()->read_all_text( $path );
 	hocwp_theme_dev_info_section_open( __( 'Theme Custom Readme', 'hocwp-theme' ) );
 	print_r( $data );
 	echo PHP_EOL;
@@ -236,7 +236,7 @@ if ( file_exists( $path ) ) {
 $path = HOCWP_THEME_CORE_PATH . '/readme.txt';
 
 if ( file_exists( $path ) ) {
-	$data = HT_Util()->read_all_text( $path );
+	$data = ht_util()->read_all_text( $path );
 	hocwp_theme_dev_info_section_open( __( 'Theme Core Readme', 'hocwp-theme' ) );
 	print_r( $data );
 	echo PHP_EOL;
@@ -252,7 +252,7 @@ if ( is_multisite() ) {
 	$data = array_merge( $data, $network_activated_plugins );
 }
 
-if ( HT()->array_has_value( $data ) ) {
+if ( ht()->array_has_value( $data ) ) {
 	foreach ( $data as $key => $pl ) {
 		$plugin = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $pl );
 
@@ -270,7 +270,7 @@ if ( ! is_admin() ) {
 	$path = ABSPATH . 'wp-config.php';
 
 	if ( file_exists( $path ) ) {
-		$data = HT_Util()->read_all_text( $path );
+		$data = ht_util()->read_all_text( $path );
 		$data = str_replace( '<?php', '', $data );
 		$data = str_replace( '?>', '', $data );
 		hocwp_theme_dev_info_section_open( __( 'Configure File', 'hocwp-theme' ) );
@@ -279,8 +279,7 @@ if ( ! is_admin() ) {
 	}
 
 	hocwp_theme_dev_info_section_open( __( 'Theme Object', 'hocwp-theme' ) );
-	$theme = wp_get_theme();
-	print_r( $theme );
+	print_r( hocwp_theme()->theme );
 	hocwp_theme_dev_info_section_close();
 
 	hocwp_theme_dev_info_section_open( __( 'Theme Core Object', 'hocwp-theme' ) );
@@ -294,7 +293,7 @@ if ( ! is_admin() ) {
 	hocwp_theme_dev_info_section_close();
 
 	hocwp_theme_dev_info_section_open( __( 'Theme Custom Statistics', 'hocwp-theme' ) );
-	$stats = lstat( HT_Custom()->get_path( '', true ) );
+	$stats = lstat( ht_custom()->get_path( '', true ) );
 	hocwp_theme_dev_info_stats( $stats );
 	hocwp_theme_dev_info_section_close();
 }

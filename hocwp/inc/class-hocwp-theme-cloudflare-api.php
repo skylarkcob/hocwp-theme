@@ -35,9 +35,9 @@ class HOCWP_Theme_Cloudflare_API {
 		}
 
 		if ( empty( $this->get_domain() ) ) {
-			$this->set_domain( HT()->get_domain_name( home_url() ) );
+			$this->set_domain( ht()->get_domain_name( home_url() ) );
 		} else {
-			$this->set_domain( HT()->get_domain_name( $this->get_domain() ) );
+			$this->set_domain( ht()->get_domain_name( $this->get_domain() ) );
 		}
 	}
 
@@ -76,7 +76,7 @@ class HOCWP_Theme_Cloudflare_API {
 		if ( ! empty( $this->api_token ) ) {
 			$headers['Authorization'] = $this->api_token;
 		} else {
-			if ( ! empty( $this->api_key ) && HT_Util()->is_email( $this->user_email ) ) {
+			if ( ! empty( $this->api_key ) && ht_util()->is_email( $this->user_email ) ) {
 				$headers['X-Auth-Key']   = $this->api_key;
 				$headers['X-Auth-Email'] = $this->user_email;
 			}
@@ -143,7 +143,7 @@ class HOCWP_Theme_Cloudflare_API {
 	public function is_response_valid( $response, $suffix = '' ) {
 		if ( ! empty( $response ) ) {
 			if ( is_object( $response ) ) {
-				if ( $response->errors && HT()->array_has_value( $response->errors ) ) {
+				if ( $response->errors && ht()->array_has_value( $response->errors ) ) {
 					$error = new WP_Error();
 
 					foreach ( $response->errors as $err ) {

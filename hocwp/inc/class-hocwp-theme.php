@@ -341,7 +341,7 @@ final class HOCWP_Theme {
 
 		$result = '';
 
-		if ( HT()->array_has_value( $arr ) ) {
+		if ( ht()->array_has_value( $arr ) ) {
 			if ( is_array( $key ) ) {
 				if ( count( $key ) == 1 ) {
 					$key = array_shift( $key );
@@ -376,10 +376,10 @@ final class HOCWP_Theme {
 						reset( $key );
 						$first_key = current( $key );
 
-						if ( HT()->array_has_value( $arr ) ) {
+						if ( ht()->array_has_value( $arr ) ) {
 							$tmp = $this->get_value_in_array( $arr, $first_key );
 
-							if ( HT()->array_has_value( $tmp ) ) {
+							if ( ht()->array_has_value( $tmp ) ) {
 								$result = $this->get_value_in_array( $tmp, $key );
 							}
 						}
@@ -419,7 +419,7 @@ final class HOCWP_Theme {
 		$method = strtoupper( $method );
 
 		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
-			return HT_PHP8()->match( $method, array(
+			return ht_php8()->match( $method, array(
 				'POST'    => $this->get_value_in_array( $_POST, $key, $default ),
 				'GET'     => $this->get_value_in_array( $_GET, $key, $default ),
 				'default' => $this->get_value_in_array( $_REQUEST, $key, $default )
@@ -817,7 +817,7 @@ final class HOCWP_Theme {
 
 	public function is_image( $deprecated, $deprecated1 = null ) {
 		if ( $deprecated || $deprecated1 ) {
-			HT()->debug( sprintf( 'Function %s is deprecated.', __CLASS__ . '::' . __FUNCTION__ ) );
+			ht()->debug( sprintf( 'Function %s is deprecated.', __CLASS__ . '::' . __FUNCTION__ ) );
 		}
 
 		return false;
@@ -894,11 +894,11 @@ final class HOCWP_Theme {
 	public function has_image( $string ) {
 		$result = false;
 
-		if ( false !== HT()->string_contain( $string, '.jpg' ) ) {
+		if ( false !== ht()->string_contain( $string, '.jpg' ) ) {
 			$result = true;
-		} elseif ( false !== HT()->string_contain( $string, '.png' ) ) {
+		} elseif ( false !== ht()->string_contain( $string, '.png' ) ) {
 			$result = true;
-		} elseif ( false !== HT()->string_contain( $string, '.gif' ) ) {
+		} elseif ( false !== ht()->string_contain( $string, '.gif' ) ) {
 			$result = true;
 		}
 
@@ -937,8 +937,8 @@ final class HOCWP_Theme {
 		$matches = $matches[0] ?? array();
 
 		if ( ! self::array_has_value( $matches ) ) {
-			if ( false !== HT()->string_contain( $data, '//' ) ) {
-				if ( HT()->has_image( $data ) ) {
+			if ( false !== ht()->string_contain( $data, '//' ) ) {
+				if ( ht()->has_image( $data ) ) {
 					$sources = explode( PHP_EOL, $data );
 
 					if ( self::array_has_value( $sources ) ) {
@@ -1028,7 +1028,7 @@ final class HOCWP_Theme {
 
 				if ( checkdnsrr( $urlparts['host'], 'A' ) ) {
 					$validation = true;
-				} elseif ( in_array( $urlparts['scheme'], $protocols ) && ! HT()->is_IP( $urlparts['host'] ) ) {
+				} elseif ( in_array( $urlparts['scheme'], $protocols ) && ! ht()->is_IP( $urlparts['host'] ) ) {
 					$urlparts['host'] = preg_replace( '/^www\./', '', $urlparts['host'] );
 
 					$url = $urlparts['scheme'] . '://' . $urlparts['host'] . '/';
@@ -1050,7 +1050,7 @@ final class HOCWP_Theme {
 			return '';
 		}
 
-		if ( false === HT()->string_contain( $url, 'http://' ) && false === HT()->string_contain( $url, 'https://' ) ) {
+		if ( false === ht()->string_contain( $url, 'http://' ) && false === ht()->string_contain( $url, 'https://' ) ) {
 			$url = 'http://' . $url;
 		}
 
@@ -1151,14 +1151,14 @@ final class HOCWP_Theme {
 	}
 }
 
-function HT() {
+function ht() {
 	return HOCWP_Theme::instance();
 }
 
-if ( ! function_exists( 'CAD_DEBUG' ) ) {
-	function CAD_DEBUG( $item ) {
-		if ( method_exists( HT(), 'debug' ) ) {
-			HT()->debug( $item );
+if ( ! function_exists( 'cad_debug' ) ) {
+	function cad_debug( $item ) {
+		if ( method_exists( ht(), 'debug' ) ) {
+			ht()->debug( $item );
 		}
 	}
 }

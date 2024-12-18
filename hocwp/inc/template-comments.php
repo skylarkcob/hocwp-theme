@@ -27,7 +27,7 @@ function hocwp_theme_change_default_avatar( $avatar, $id_or_email, $size, $defau
 add_filter( 'get_avatar', 'hocwp_theme_change_default_avatar', 10, 6 );
 
 function hocwp_theme_comments_template( $args = array() ) {
-	$options = HT_Options()->get( 'discussion' );
+	$options = ht_options()->get( 'discussion' );
 
 	$defaults = array(
 		'post_id'        => get_the_ID(),
@@ -108,7 +108,7 @@ function hocwp_theme_comments_template_facebook( $args = array() ) {
 	}
 
 	if ( empty( $href ) ) {
-		$href = HT_Util()->get_current_url();
+		$href = ht_util()->get_current_url();
 	}
 
 	$mobile    = $args['mobile'];
@@ -152,14 +152,14 @@ function hocwp_theme_comments_template_google() {
 
 function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post_id = null ) {
 	if ( empty( $shortname ) ) {
-		$shortname = HT_Options()->get_tab( 'disqus_shortname', '', 'discussion' );
+		$shortname = ht_options()->get_tab( 'disqus_shortname', '', 'discussion' );
 	}
 
 	if ( empty( $shortname ) ) {
 		return;
 	}
 
-	if ( HT()->is_positive_number( $post_id ) ) {
+	if ( ht()->is_positive_number( $post_id ) ) {
 		$identifier = $post_id;
 	} else {
 		$identifier = get_the_ID();
@@ -169,11 +169,11 @@ function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post
 		if ( is_singular() ) {
 			$url = get_the_permalink();
 		} else {
-			$url = HT_Util()->get_current_url();
+			$url = ht_util()->get_current_url();
 		}
 	}
 
-	if ( ! is_singular() && ! HT()->is_positive_number( $post_id ) ) {
+	if ( ! is_singular() && ! ht()->is_positive_number( $post_id ) ) {
 		if ( is_home() ) {
 			$identifier = 'HOME';
 		} elseif ( is_archive() ) {
@@ -203,11 +203,11 @@ function hocwp_theme_comments_template_disqus( $shortname = '', $url = '', $post
 
 function hocwp_theme_add_captcha_to_comment_form( $submit_field ) {
 	if ( ! is_user_logged_in() ) {
-		$options = HT_Util()->get_theme_options( 'discussion' );
+		$options = ht_util()->get_theme_options( 'discussion' );
 		$captcha = $options['captcha'] ?? '';
 
 		if ( 1 == $captcha ) {
-			$obj = HOCWP_Theme()->captcha;
+			$obj = hocwp_theme()->captcha;
 
 			if ( $obj instanceof Abstract_HOCWP_Theme_CAPTCHA ) {
 				ob_start();
@@ -215,7 +215,7 @@ function hocwp_theme_add_captcha_to_comment_form( $submit_field ) {
 				$captcha = ob_get_clean();
 
 				$submit_field = $captcha . $submit_field;
-				$submit_field = HT_CAPTCHA()->add_recaptcha_script( $obj, $submit_field );
+				$submit_field = ht_captcha()->add_recaptcha_script( $obj, $submit_field );
 			}
 		}
 	}
@@ -228,10 +228,10 @@ add_filter( 'comment_form_submit_field', 'hocwp_theme_add_captcha_to_comment_for
 function hocwp_theme_preprocess_comment_check_captcha( $commentdata ) {
 	// Skip checking spam with logged-in users
 	if ( ! is_user_logged_in() ) {
-		$options = HT_Util()->get_theme_options( 'discussion' );
+		$options = ht_util()->get_theme_options( 'discussion' );
 		$captcha = $options['captcha'] ?? '';
 
-		$obj = HOCWP_Theme()->captcha;
+		$obj = hocwp_theme()->captcha;
 
 		if ( 1 == $captcha && $obj instanceof Abstract_HOCWP_Theme_CAPTCHA ) {
 			if ( empty( $obj->post_key ) || isset( $_POST[ $obj->post_key ] ) ) {

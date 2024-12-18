@@ -89,7 +89,7 @@ class HOCWP_Theme_Customize {
 			$wp_customize->add_setting(
 				'accent_accessible_colors',
 				array(
-					'default'           => HT_Frontend()->get_default_colors(),
+					'default'           => ht_frontend()->get_default_colors(),
 					'type'              => 'theme_mod',
 					'transport'         => 'postMessage',
 					'sanitize_callback' => array( __CLASS__, 'sanitize_accent_accessible_colors' )
@@ -140,7 +140,7 @@ class HOCWP_Theme_Customize {
 
 			/* Theme custom accent colors --------------------- */
 
-			if ( defined( 'HOCWP_THEME_DEFAULT_COLORS' ) && HT()->array_has_value( HOCWP_THEME_DEFAULT_COLORS ) ) {
+			if ( defined( 'HOCWP_THEME_DEFAULT_COLORS' ) && ht()->array_has_value( HOCWP_THEME_DEFAULT_COLORS ) ) {
 				foreach ( HOCWP_THEME_DEFAULT_COLORS as $key => $data ) {
 					if ( 'content' != $key && 'header-footer' != $key && 'custom-color' != $key ) {
 						$wp_customize->add_setting(
@@ -176,12 +176,12 @@ class HOCWP_Theme_Customize {
 			if ( current_theme_supports( 'custom-color' ) ) {
 				$supports = get_theme_support( 'custom-color' );
 
-				if ( HT()->array_has_value( $supports ) ) {
+				if ( ht()->array_has_value( $supports ) ) {
 					// Add setting to hold colors derived from the custom color settings.
 					$wp_customize->add_setting(
 						'custom_accessible_colors',
 						array(
-							'default'           => HT_Frontend()->get_default_colors(),
+							'default'           => ht_frontend()->get_default_colors(),
 							'type'              => 'theme_mod',
 							'transport'         => 'postMessage',
 							'sanitize_callback' => array( __CLASS__, 'sanitize_accent_accessible_colors' )
@@ -189,7 +189,7 @@ class HOCWP_Theme_Customize {
 					);
 
 					foreach ( $supports as $colors ) {
-						if ( HT()->array_has_value( $colors ) ) {
+						if ( ht()->array_has_value( $colors ) ) {
 							foreach ( $colors as $key => $color ) {
 								if ( is_string( $color ) && sanitize_hex_color( $color ) ) {
 									$setting = 'custom_color_' . $key;
@@ -263,7 +263,7 @@ class HOCWP_Theme_Customize {
 
 		// Loop values.
 		foreach ( $value as $key => $values ) {
-			if ( HT()->array_has_value( $values ) ) {
+			if ( ht()->array_has_value( $values ) ) {
 				foreach ( $values as $context => $color_val ) {
 					$value[ $key ][ $context ] = sanitize_hex_color( $color_val );
 				}

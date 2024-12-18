@@ -7,7 +7,7 @@ define( 'HOCWP_EXT_AMP_PATH', dirname( __FILE__ ) );
 define( 'HOCWP_EXT_AMP_URL', HOCWP_THEME_CORE_PATH . '/ext/amp' );
 
 function hocwp_ext_amp_fonts() {
-	$options = HT_Util()->get_theme_options( 'amp' );
+	$options = ht_util()->get_theme_options( 'amp' );
 	$result  = array();
 
 	$fonts = isset( $options['fonts'] ) ? $options['fonts'] : '';

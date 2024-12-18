@@ -34,7 +34,7 @@ if ( ! class_exists( 'HOCWP_EXT_Disable_Auto_Update' ) ) {
 
 			add_filter( 'site_transient_update_core', function ( $value ) {
 				if ( is_object( $value ) && isset( $value->updates ) ) {
-					if ( HT()->array_has_value( $value->updates ) ) {
+					if ( ht()->array_has_value( $value->updates ) ) {
 						$value->updates = array();
 					}
 				}
@@ -45,4 +45,4 @@ if ( ! class_exists( 'HOCWP_EXT_Disable_Auto_Update' ) ) {
 	}
 }
 
-HT_Extension()->register( new HOCWP_EXT_Disable_Auto_Update() );
+ht_extension()->register( new HOCWP_EXT_Disable_Auto_Update() );

@@ -27,9 +27,9 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 
 			$slug = dirname( $plugin );
 
-			$plugins = HT_Requirement()->get_required_plugins();
+			$plugins = ht_requirement()->get_required_plugins();
 
-			if ( HT()->array_has_value( $plugins ) && in_array( $slug, $plugins ) ) {
+			if ( ht()->array_has_value( $plugins ) && in_array( $slug, $plugins ) ) {
 				$update_actions['required_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '" target="_parent">' . __( 'Back to required plugins page', 'hocwp-theme' ) . '</a>';
 			} else {
 				$update_actions['theme_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins' ) . '" target="_parent">' . __( 'Back to theme plugins page', 'hocwp-theme' ) . '</a>';
@@ -88,7 +88,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 			$action  = $_GET['action'] ?? '';
 			$post_id = $_GET['post'] ?? 0;
 
-			if ( 'edit' == $action && HT()->is_positive_number( $post_id ) ) {
+			if ( 'edit' == $action && ht()->is_positive_number( $post_id ) ) {
 				$obj    = get_post( $post_id );
 				$result = $obj->post_type;
 
@@ -122,7 +122,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 			$post_id = $_POST['post_ID'];
 		}
 
-		if ( ! HT()->is_positive_number( $post_id ) && $this->is_admin_page( 'post-new.php' ) ) {
+		if ( ! ht()->is_positive_number( $post_id ) && $this->is_admin_page( 'post-new.php' ) ) {
 			$post_id = $this->get_current_new_post( 'ID' );
 		}
 
@@ -165,7 +165,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	}
 
 	public function is_theme_option_page() {
-		return $this->is_admin_page( 'themes.php', HOCWP_Theme()->get_prefix() );
+		return $this->is_admin_page( 'themes.php', hocwp_theme()->get_prefix() );
 	}
 
 	public function add_setting_with_language( $field, &$fields ) {
@@ -189,7 +189,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 
 		$tab_name = sanitize_title( $template );
 
-		$pages = HT_Query()->pages_by_template( 'custom/page-templates/' . $template . '.php', array( 'hierarchical' => false ) );
+		$pages = ht_query()->pages_by_template( 'custom/page-templates/' . $template . '.php', array( 'hierarchical' => false ) );
 
 		if ( $add_default ) {
 			$page = array_shift( $pages );
@@ -213,8 +213,8 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	}
 }
 
-function HT_Admin() {
+function ht_admin() {
 	return HOCWP_Theme_Admin::get_instance();
 }
 
-HT_Admin();
+ht_admin();

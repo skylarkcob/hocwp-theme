@@ -37,7 +37,7 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 	 * Load styles and scripts.
 	 */
 	public function custom_admin_scripts() {
-		HT_Enqueue()->sortable();
+		ht_enqueue()->sortable();
 	}
 
 	/*
@@ -129,7 +129,7 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 				$class = 'description description-wide field-' . $id;
 				$class .= ' field-' . str_replace( '_', '-', $field['real_name'] );
 
-				if ( HT()->in_array( $field['real_name'], $options ) ) {
+				if ( ht()->in_array( $field['real_name'], $options ) ) {
 					$class .= ' hidden-field';
 				}
 				?>
@@ -182,7 +182,7 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 							}
 						}
 
-						HT_HTML_Field()->sortable( $params );
+						ht_html_field()->sortable( $params );
 						?>
                     </div>
                 </fieldset>
@@ -295,7 +295,7 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
 
 		if ( isset( $_POST[ $name ][ $menu_item_db_id ] ) ) {
 			$value = $_POST[ $name ][ $menu_item_db_id ];
-			$value = HT()->json_string_to_array( $value );
+			$value = ht()->json_string_to_array( $value );
 
 			update_post_meta( $menu_item_db_id, $this->build_menu_item_meta_key( $base_name ), $value );
 		}
@@ -336,7 +336,7 @@ final class HOCWP_Theme_Meta_Menu extends HOCWP_Theme_Meta {
  * Add custom list widgets to left menu sidebar
  */
 function hocwp_theme_add_menu_meta_columns() {
-	$list_socials = HT_Options()->get_tab( 'list_socials', '', 'social' );
+	$list_socials = ht_options()->get_tab( 'list_socials', '', 'social' );
 
 	if ( ! empty( $list_socials ) ) {
 		$list_socials = explode( ',', $list_socials );
@@ -345,7 +345,7 @@ function hocwp_theme_add_menu_meta_columns() {
 		$list_socials = array_unique( $list_socials );
 		$list_socials = array_filter( $list_socials );
 
-		if ( HT()->array_has_value( $list_socials ) ) {
+		if ( ht()->array_has_value( $list_socials ) ) {
 			add_meta_box( 'hocwp-theme-socials', __( 'List Socials', 'hocwp-theme' ), 'hocwp_theme_admin_menu_custom_list_meta_box', 'nav-menus', 'side', 'low', array(
 				'lists' => $list_socials,
 				'id'    => 'list-socials'
@@ -361,7 +361,7 @@ function hocwp_theme_add_menu_meta_columns() {
 
 	$lists = get_post_types( $args, 'objects' );
 
-	if ( HT()->array_has_value( $lists ) ) {
+	if ( ht()->array_has_value( $lists ) ) {
 		add_meta_box( 'hocwp-theme-post-types', __( 'List Post Types', 'hocwp-theme' ), 'hocwp_theme_admin_menu_custom_list_meta_box', 'nav-menus', 'side', 'low', array(
 			'lists' => $lists,
 			'id'    => 'list-post-types'
@@ -381,10 +381,10 @@ add_action( 'load-admin-ajax.php', 'hocwp_theme_add_menu_meta_columns' );
 function hocwp_theme_admin_menu_custom_list_meta_box( $object, $box ) {
 	$args = isset( $box['args'] ) ? $box['args'] : '';
 
-	if ( HT()->array_has_value( $args ) ) {
+	if ( ht()->array_has_value( $args ) ) {
 		$lists = isset( $args['lists'] ) ? $args['lists'] : '';
 
-		if ( HT()->array_has_value( $lists ) ) {
+		if ( ht()->array_has_value( $lists ) ) {
 			global $nav_menu_selected_id;
 
 			$base_name = $args['id'] ?? 'custom-list';
@@ -408,12 +408,12 @@ function hocwp_theme_admin_menu_custom_list_meta_box( $object, $box ) {
 							$item = '';
 
 							if ( 'list-socials' == $base_name ) {
-								$url = HT_Options()->get_tab( $list_item . '_url', '', 'social' );
+								$url = ht_options()->get_tab( $list_item . '_url', '', 'social' );
 								$url = add_query_arg( 'theme_list_social', 1, $url );
 
 								$item = array(
 									'url'            => $url,
-									'icon'           => HT_Options()->get_tab( $list_item . '_icon', '', 'social' ),
+									'icon'           => ht_options()->get_tab( $list_item . '_icon', '', 'social' ),
 									'type'           => $base_name,
 									'name'           => ucwords( $list_item ),
 									'menu_item_type' => 'custom'
@@ -431,7 +431,7 @@ function hocwp_theme_admin_menu_custom_list_meta_box( $object, $box ) {
 								);
 							}
 
-							if ( HT()->array_has_value( $item ) ) {
+							if ( ht()->array_has_value( $item ) ) {
 								$items[] = json_decode( json_encode( $item ) );
 							}
 						}
@@ -504,14 +504,14 @@ function hocwp_theme_wp_setup_nav_menu_item_admin_column_filter( $menu_item ) {
 add_filter( 'wp_setup_nav_menu_item', 'hocwp_theme_wp_setup_nav_menu_item_admin_column_filter' );
 
 function hocwp_theme_wp_add_nav_menu_item_action( $menu_id, $menu_item_db_id, $args ) {
-	if ( ! HT()->is_positive_number( $menu_id ) && HT()->is_positive_number( $menu_item_db_id ) ) {
+	if ( ! ht()->is_positive_number( $menu_id ) && ht()->is_positive_number( $menu_item_db_id ) ) {
 		$object = isset( $args['menu-item-object'] ) ? $args['menu-item-object'] : '';
 
 		if ( 'custom' == $object ) {
 			$url = isset( $args['menu-item-url'] ) ? $args['menu-item-url'] : '';
 
 			if ( ! empty( $url ) ) {
-				$params = HT()->get_params_from_url( $url );
+				$params = ht()->get_params_from_url( $url );
 
 				if ( isset( $params['theme_list_social'] ) && 1 == $params['theme_list_social'] ) {
 					update_post_meta( $menu_item_db_id, 'theme_list_social', 1 );

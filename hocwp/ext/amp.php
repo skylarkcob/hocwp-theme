@@ -17,7 +17,7 @@ if ( ! function_exists( 'hocwp_ext_amp_missing_plugin_notice' ) ) {
 			'type'    => 'warning'
 		);
 
-		HT_Util()->admin_notice( $args );
+		ht_util()->admin_notice( $args );
 	}
 }
 
@@ -39,7 +39,7 @@ if ( ! defined( 'AMP__VERSION' ) ) {
 
 if ( ! function_exists( 'hocwp_theme_load_extension_amp' ) ) {
 	function hocwp_theme_load_extension_amp() {
-		$load = HT_Extension()->is_active( __FILE__ );
+		$load = ht_extension()->is_active( __FILE__ );
 
 		return apply_filters( 'hocwp_theme_load_extension_amp', $load );
 	}

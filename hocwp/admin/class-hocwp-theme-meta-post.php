@@ -20,7 +20,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 
 		if ( empty( $this->allow_pagenow ) || in_array( $pagenow, $this->allow_pagenow ) ) {
 			parent::__construct();
-			$this->post_type = HT_Admin()->get_current_post_type();
+			$this->post_type = ht_admin()->get_current_post_type();
 			$this->set_id( 'extra-information' );
 			$this->set_title( __( 'Extra Information', 'hocwp-theme' ) );
 			$this->set_callback( array( $this, 'callback' ) );
@@ -30,7 +30,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			$this->set_update_value_callback( 'update_post_meta' );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_action' ) );
 
-			$pt = HT_Admin()->get_current_post_type();
+			$pt = ht_admin()->get_current_post_type();
 
 			if ( 'attachment' == $pt ) {
 				add_action( 'edit_attachment', array( $this, 'save_post_action' ) );
@@ -122,7 +122,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 				$sac = $field['show_admin_column'] ?? '';
 
 				if ( $sac ) {
-					HT()->insert_to_array( $columns, $field['title'], 'date', $field['id'] );
+					ht()->insert_to_array( $columns, $field['title'], 'date', $field['id'] );
 				}
 			}
 		}
@@ -209,7 +209,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			if ( ! empty( $this->post_type ) ) {
 				$post_type = $this->post_type;
 			} else {
-				$post_type = HT_Admin()->get_current_post_type();
+				$post_type = ht_admin()->get_current_post_type();
 
 				$this->post_type = $post_type;
 			}
@@ -244,7 +244,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 		} else {
 			if ( ! empty( $id ) ) {
 				if ( ! $this->form_table && isset( $field['title'] ) && ! empty( $field['title'] ) ) {
-					HT_HTML_Field()->label( array( 'text' => $field['title'], 'for' => $id ) );
+					ht_html_field()->label( array( 'text' => $field['title'], 'for' => $id ) );
 					unset( $field['title'] );
 					unset( $field['label'] );
 					unset( $field['callback_args']['label'] );
@@ -295,7 +295,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 			}
 		}
 
-		if ( ! HT()->array_has_value( $this->fields ) ) {
+		if ( ! ht()->array_has_value( $this->fields ) ) {
 			return;
 		}
 
@@ -337,7 +337,7 @@ class HOCWP_Theme_Meta_Post extends HOCWP_Theme_Meta {
 	}
 
 	public function save_post_action( $post_id ) {
-		if ( ! HT_Util()->can_save_post( $post_id, $this->get_id(), $this->get_id() . '_nonce' ) ) {
+		if ( ! ht_util()->can_save_post( $post_id, $this->get_id(), $this->get_id() . '_nonce' ) ) {
 			return;
 		}
 

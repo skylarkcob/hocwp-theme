@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$file_colors = HT_Util()->read_all_text( HOCWP_THEME_CORE_PATH . '/inc/colors.txt' );
+$file_colors = ht_util()->read_all_text( HOCWP_THEME_CORE_PATH . '/inc/colors.txt' );
 $file_colors = json_decode( $file_colors, true );
 
 $lists = array();
@@ -34,7 +34,7 @@ class HOCWP_Theme_Color {
 	}
 
 	public function random() {
-		return HT()->random_color_hex();
+		return ht()->random_color_hex();
 	}
 
 	public function is_hex( $color ) {
@@ -63,10 +63,10 @@ class HOCWP_Theme_Color {
 		$result = false;
 
 		$color = strtolower( $color );
-		$parts = HT()->get_string_between( $color, '(', ')' );
+		$parts = ht()->get_string_between( $color, '(', ')' );
 		$parts = explode( ',', $parts );
 
-		if ( HT()->array_has_value( $parts ) ) {
+		if ( ht()->array_has_value( $parts ) ) {
 			$sub   = substr( $color, 0, 4 );
 			$count = count( $parts );
 
@@ -285,6 +285,6 @@ class HOCWP_Theme_Color {
 	}
 }
 
-function HT_Color() {
+function ht_color() {
 	return HOCWP_Theme_Color::get_instance();
 }

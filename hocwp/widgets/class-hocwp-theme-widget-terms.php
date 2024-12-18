@@ -88,9 +88,9 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 
 		$query_args = apply_filters( 'hocwp_theme_widget_terms_query_args', $query_args, $instance, $args, $this );
 
-		$terms = HT_Util()->get_terms( 'category', $query_args );
+		$terms = ht_util()->get_terms( 'category', $query_args );
 
-		if ( HT()->array_has_value( $terms ) ) {
+		if ( ht()->array_has_value( $terms ) ) {
 			$current_as_title = isset( $instance['current_as_title'] ) ? (bool) $instance['current_as_title'] : $this->defaults['current_as_title'];
 
 			if ( $current_as_title && ( is_category() || is_tag() || is_tax() ) ) {
@@ -213,7 +213,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 						'text' => 'Taxonomy:'
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'       => $this->get_field_id( 'taxonomy' ),
@@ -224,7 +224,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 						'value'    => $taxonomy
 					);
 
-					HT_HTML_Field()->chosen( $args );
+					ht_html_field()->chosen( $args );
 					?>
 				</div>
 				<p>
@@ -250,7 +250,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 						'text' => __( 'Order by:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'      => $this->get_field_id( 'orderby' ),
@@ -260,7 +260,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 						'value'   => $orderby
 					);
 
-					HT_HTML_Field()->select( $args );
+					ht_html_field()->select( $args );
 					?>
 				</p>
 
@@ -271,7 +271,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 						'text' => __( 'Order:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'      => $this->get_field_id( 'order' ),
@@ -281,7 +281,7 @@ class HOCWP_Theme_Widget_Terms extends WP_Widget {
 						'value'   => $order
 					);
 
-					HT_HTML_Field()->select( $args );
+					ht_html_field()->select( $args );
 					?>
 				</p>
 			</div>

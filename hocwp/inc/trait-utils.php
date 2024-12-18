@@ -45,13 +45,13 @@ trait HOCWP_Theme_Utils {
 
 	public function is_localhost() {
 		$domain = home_url();
-		$domain = HT()->get_domain_name( $domain, true );
+		$domain = ht()->get_domain_name( $domain, true );
 
 		return ( 'localhost' == $domain || str_contains( $domain, 'localhost' ) || str_contains( $domain, '127.0.0.1' ) || str_contains( $domain, '192.168.1.249' ) || str_contains( $domain, '192.168.1.213' ) || str_contains( $domain, '192.168.1.69' ) );
 	}
 
 	public function get_site_name() {
-		$name = HT_Options()->get_general( 'site_short_name' );
+		$name = ht_options()->get_general( 'site_short_name' );
 
 		if ( empty( $name ) ) {
 			$name = get_bloginfo( 'name' );
@@ -104,7 +104,7 @@ trait HOCWP_Theme_Utils {
 
 				$res = json_decode( wp_remote_retrieve_body( $remote ) );
 
-				if ( ! empty( $args ) && isset( $res->data->images ) && HT()->array_has_value( $res->data->images ) ) {
+				if ( ! empty( $args ) && isset( $res->data->images ) && ht()->array_has_value( $res->data->images ) ) {
 					$defaults = array(
 						'extensions'   => array( 'jpg', 'jpeg', 'png', 'webp' ),
 						'name_len'     => 20,
@@ -166,7 +166,7 @@ trait HOCWP_Theme_Utils {
 						}
 					}
 
-					if ( empty( $result ) && HT()->array_has_value( $images ) ) {
+					if ( empty( $result ) && ht()->array_has_value( $images ) ) {
 						$result = $images;
 					}
 				} else {

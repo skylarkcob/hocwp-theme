@@ -8,7 +8,7 @@ final class HOCWP_THEME_CAPTCHA_SERVICE {
 
 trait HOCWP_Theme_CAPTCHA_Utils {
 	public function detect_service() {
-		$options = HT_Options()->get_tab( null, null, 'social' );
+		$options = ht_options()->get_tab( null, null, 'social' );
 
 		$service = '';
 
@@ -41,7 +41,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 
 		$response = json_decode( $response );
 
-		if ( HT_Util()->is_object_valid( $response ) ) {
+		if ( ht_util()->is_object_valid( $response ) ) {
 			if ( isset( $response->success ) && ( $response->success || 1 == $response->success ) ) {
 				return true;
 			}
@@ -61,7 +61,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 
 	public function check_recaptcha_config_valid( $options = array() ) {
 		if ( empty( $options ) ) {
-			$options = HT_Options()->get_tab( null, '', 'social' );
+			$options = ht_options()->get_tab( null, '', 'social' );
 		}
 
 		$site_key   = $options['recaptcha_site_key'] ?? '';
@@ -72,7 +72,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 
 	public function check_hcaptcha_config_valid( $options = array() ) {
 		if ( empty( $options ) ) {
-			$options = HT_Options()->get_tab( null, '', 'social' );
+			$options = ht_options()->get_tab( null, '', 'social' );
 		}
 
 		$site_key   = $options['hcaptcha_site_key'] ?? '';
@@ -82,7 +82,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 	}
 
 	public function check_config_valid() {
-		$options = HT_Options()->get_tab( null, '', 'social' );
+		$options = ht_options()->get_tab( null, '', 'social' );
 
 		return ( $this->check_recaptcha_config_valid( $options ) || $this->check_hcaptcha_config_valid( $options ) );
 	}
@@ -112,7 +112,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		$service = $this->detect_service();
 
 		if ( HOCWP_THEME_SUPPORT_PHP8 ) {
-			return HT_PHP8()->match( $service, array(
+			return ht_php8()->match( $service, array(
 				HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA => $this->recaptcha_valid( $params ),
 				HOCWP_THEME_CAPTCHA_SERVICE::HCAPTCHA  => $this->hcaptcha_valid( $params ),
 				'default'                              => new WP_Error( 'empty_service', __( 'CAPTCHA service does not provide.', 'hocwp-theme' ) )
@@ -143,12 +143,12 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		$url = 'https://www.hcaptcha.com/1/api.js';
 		$url = add_query_arg( $script_params, $url );
 
-		HT_Util()->inline_script( 'hcaptcha', $url );
+		ht_util()->inline_script( 'hcaptcha', $url );
 
 		$div = new HOCWP_Theme_HTML_Tag( 'div' );
 
 		$defaults = array(
-			'data-sitekey' => HT_Options()->get_tab( 'hcaptcha_site_key', '', 'social' )
+			'data-sitekey' => ht_options()->get_tab( 'hcaptcha_site_key', '', 'social' )
 		);
 
 		$atts = wp_parse_args( $atts, $defaults );
@@ -161,7 +161,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 
 	public function hcaptcha_valid( $params = array() ) {
 		$defaults = array(
-			'secret'   => HT_Options()->get_tab( 'hcaptcha_secret_key', '', 'social' ),
+			'secret'   => ht_options()->get_tab( 'hcaptcha_secret_key', '', 'social' ),
 			'response' => $_POST['h-captcha-response'] ?? ''
 		);
 
@@ -181,7 +181,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 			$version = $obj->version;
 
 			if ( 'v2_invisible' == $version || 'v3' == $version || 'enterprise' == $version ) {
-				$site_key = HT_Options()->get_tab( 'recaptcha_site_key', '', 'social' );
+				$site_key = ht_options()->get_tab( 'recaptcha_site_key', '', 'social' );
 
 				ob_start();
 				?>
@@ -258,7 +258,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 
 		$version = $atts['version'] ?? '';
 
-		$options  = HT_Util()->get_theme_options( 'social' );
+		$options  = ht_util()->get_theme_options( 'social' );
 		$site_key = $options['recaptcha_site_key'] ?? '';
 
 		if ( empty( $site_key ) ) {
@@ -271,7 +271,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		if ( 'v2' == $version ) {
 			$src = 'https://www.google.com/recaptcha/api.js';
 
-			HT_Util()->inline_script( 'recaptcha-jssdk', $src );
+			ht_util()->inline_script( 'recaptcha-jssdk', $src );
 			?>
             <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"
                  data-version="<?php echo esc_attr( $version ); ?>" style="margin-bottom: 10px;"></div>
@@ -279,7 +279,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		} elseif ( 'v2_invisible' == $version ) {
 			$src = 'https://www.google.com/recaptcha/api.js';
 
-			HT_Util()->inline_script( 'recaptcha-jssdk', $src );
+			ht_util()->inline_script( 'recaptcha-jssdk', $src );
 			?>
             <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" data-size="invisible"
                  data-callback="setResponse" data-version="<?php echo esc_attr( $version ); ?>"
@@ -288,7 +288,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		} elseif ( 'v3' == $version ) {
 			$src = 'https://www.google.com/recaptcha/api.js';
 			$src = add_query_arg( 'render', $site_key, $src );
-			HT_Util()->inline_script( 'recaptcha-jssdk', $src );
+			ht_util()->inline_script( 'recaptcha-jssdk', $src );
 			?>
             <input type="hidden" id="captcha-response" name="g-recaptcha-response"
                    data-version="<?php echo esc_attr( $version ); ?>">
@@ -296,7 +296,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 		} elseif ( 'enterprise' == $version ) {
 			$src = 'https://www.google.com/recaptcha/enterprise.js';
 			$src = add_query_arg( 'render', $site_key, $src );
-			HT_Util()->inline_script( 'recaptcha-jssdk', $src );
+			ht_util()->inline_script( 'recaptcha-jssdk', $src );
 			?>
             <input type="hidden" id="captcha-response" name="g-recaptcha-response"
                    data-version="<?php echo esc_attr( $version ); ?>">
@@ -325,7 +325,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 	}
 
 	public function recaptcha_valid( $params = array() ) {
-		$options    = HT_Util()->get_theme_options( 'social' );
+		$options    = ht_util()->get_theme_options( 'social' );
 		$secret_key = $options['recaptcha_secret_key'] ?? '';
 
 		if ( empty( $secret_key ) ) {
@@ -342,7 +342,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 			$token = htmlspecialchars( $token, ENT_QUOTES, 'UTF-8' );
 
 			$site_key   = $_POST['recaptcha_site_key'] ?? '';
-			$project_id = HT_Options()->get_tab( 'recaptcha_project_id', '', 'social' );
+			$project_id = ht_options()->get_tab( 'recaptcha_project_id', '', 'social' );
 
 			if ( empty( $site_key ) || empty( $project_id ) ) {
 				return false;
@@ -355,8 +355,8 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 					'token'          => $token,
 					'siteKey'        => $site_key,
 					'expectedAction' => 'validate_captcha',
-					'userAgent'      => HT()->get_user_agent(),
-					'userIpAddress'  => HT()->get_IP()
+					'userAgent'      => ht()->get_user_agent(),
+					'userIpAddress'  => ht()->get_IP()
 				)
 			);
 
@@ -372,7 +372,7 @@ trait HOCWP_Theme_CAPTCHA_Utils {
 			$defaults = array(
 				'secret'   => $secret_key,
 				'response' => $_POST['g-recaptcha-response'] ?? '',
-				'remoteip' => HT()->get_IP()
+				'remoteip' => ht()->get_IP()
 			);
 
 			$params = wp_parse_args( $params, $defaults );

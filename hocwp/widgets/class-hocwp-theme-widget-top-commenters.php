@@ -38,14 +38,14 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 		$tr_name = 'hocwp_theme_top_commenters_' . $date_interval;
 
 		if ( false === ( $commenters = get_transient( $tr_name ) ) ) {
-			$commenters = HT_Query()->get_top_commenters( $number, $date_interval );
+			$commenters = ht_query()->get_top_commenters( $number, $date_interval );
 
-			if ( HT()->array_has_value( $commenters ) ) {
+			if ( ht()->array_has_value( $commenters ) ) {
 				set_transient( $tr_name, $commenters );
 			}
 		}
 
-		if ( HT()->array_has_value( $commenters ) ) {
+		if ( ht()->array_has_value( $commenters ) ) {
 			do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
 			?>
 			<ul>
@@ -53,7 +53,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 				foreach ( $commenters as $commenter ) {
 					$email = $commenter->comment_author_email;
 
-					if ( ! HT_Util()->is_email( $email ) ) {
+					if ( ! ht_util()->is_email( $email ) ) {
 						continue;
 					}
 
@@ -88,7 +88,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 	public function form( $instance ) {
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : $this->defaults['number'];
 
-		$date_intervals = HT_Util()->date_intervals();
+		$date_intervals = ht_util()->date_intervals();
 		$date_interval  = isset( $instance['date_interval'] ) ? $instance['date_interval'] : $this->defaults['date_interval'];
 
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
@@ -107,7 +107,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 				'text' => __( 'Date interval:', 'hocwp-theme' )
 			);
 
-			HT_HTML_Field()->label( $args );
+			ht_html_field()->label( $args );
 
 			$args = array(
 				'id'      => $this->get_field_id( 'date_interval' ),
@@ -117,7 +117,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 				'value'   => $date_interval
 			);
 
-			HT_HTML_Field()->select( $args );
+			ht_html_field()->select( $args );
 			?>
 		</p>
 		<?php
@@ -135,7 +135,7 @@ class HOCWP_Theme_Widget_Top_Commenters extends WP_Widget {
 	}
 
 	private function remove_transient() {
-		HT_Util()->delete_transient( 'hocwp_theme_top_commenters' );
+		ht_util()->delete_transient( 'hocwp_theme_top_commenters' );
 	}
 
 	public function transition_comment_status() {

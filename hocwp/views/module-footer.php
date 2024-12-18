@@ -3,11 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! HT_Util()->is_vr_theme() ) {
+if ( ! ht_util()->is_vr_theme() ) {
 	$blank_body = apply_filters( 'hocwp_theme_blank_body', false );
 
 	if ( ! $blank_body ) {
-		if ( HT_Frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
+		if ( ht_frontend()->is_amp( array( 'transitional', 'standard' ) ) ) {
 			hocwp_theme_load_views( 'module-footer-amp' );
 
 			return;

@@ -37,15 +37,15 @@ class HOCWP_Theme_AJAX {
 	}
 
 	public function default_callback() {
-		$method = HT()->get_method_value( 'method', 'request', 'post' );
-		$nonce  = HT()->get_method_value( 'nonce', $method );
+		$method = ht()->get_method_value( 'method', 'request', 'post' );
+		$nonce  = ht()->get_method_value( 'nonce', $method );
 
 		$data = array(
 			'message' => __( 'AJAX nonce is invalid.', 'hocwp-theme' )
 		);
 
-		if ( HOCWP_Theme()->verify_nonce( $nonce ) ) {
-			$callback = HT()->get_method_value( 'callback', $method );
+		if ( hocwp_theme()->verify_nonce( $nonce ) ) {
+			$callback = ht()->get_method_value( 'callback', $method );
 
 			$tmp = array( $this, $callback );
 
@@ -68,16 +68,16 @@ class HOCWP_Theme_AJAX {
 
 	public function update_meta() {
 		// Type of meta table. Example: usermeta, postmeta, termmeta.
-		$meta_type = HT()->get_method_value( 'meta_type' );
+		$meta_type = ht()->get_method_value( 'meta_type' );
 
 		// Object id for using in meta table. Example: post_id, term_id, user_id.
-		$object_id = HT()->get_method_value( 'object_id' );
+		$object_id = ht()->get_method_value( 'object_id' );
 
 		// Meta key for using in meta table.
-		$meta_key = HT()->get_method_value( 'meta_key' );
+		$meta_key = ht()->get_method_value( 'meta_key' );
 
-		if ( ! empty( $meta_type ) && HT()->is_positive_number( $object_id ) && ! empty( $meta_key ) ) {
-			$value_type = HT()->get_method_value( 'value_type' );
+		if ( ! empty( $meta_type ) && ht()->is_positive_number( $object_id ) && ! empty( $meta_key ) ) {
+			$value_type = ht()->get_method_value( 'value_type' );
 
 			if ( 'up_down' == $value_type ) {
 				$key    = $meta_type . '_' . $meta_key;
@@ -95,7 +95,7 @@ class HOCWP_Theme_AJAX {
 					$change = - 1;
 				}
 
-				$meta_value = HT()->get_method_value( 'meta_value' );
+				$meta_value = ht()->get_method_value( 'meta_value' );
 
 				if ( empty( $meta_value ) ) {
 					$meta_value = get_metadata( $meta_type, $object_id, $meta_key, true );
@@ -134,7 +134,7 @@ class HOCWP_Theme_AJAX {
 					wp_send_json_success( $data );
 				}
 			} elseif ( 'add_remove' == $value_type ) {
-				$meta_value = HT()->get_method_value( 'meta_value' );
+				$meta_value = ht()->get_method_value( 'meta_value' );
 
 				if ( empty( $meta_value ) ) {
 					$meta_value = get_metadata( $meta_type, $object_id, $meta_key, true );
@@ -144,10 +144,10 @@ class HOCWP_Theme_AJAX {
 					$meta_value = array();
 				}
 
-				$change_value = HT()->get_method_value( 'change_value' );
+				$change_value = ht()->get_method_value( 'change_value' );
 
 				if ( empty( $change_value ) ) {
-					$change_value = HT()->get_method_value( 'change_id' );
+					$change_value = ht()->get_method_value( 'change_id' );
 				}
 
 				if ( ! is_array( $change_value ) ) {
@@ -180,13 +180,13 @@ class HOCWP_Theme_AJAX {
 
 	private function update_meta_fallback() {
 		$data      = array();
-		$object_id = HT()->get_method_value( 'object_id' );
+		$object_id = ht()->get_method_value( 'object_id' );
 
-		if ( HT()->is_positive_number( $object_id ) ) {
-			$meta_key = HT()->get_method_value( 'meta_key' );
+		if ( ht()->is_positive_number( $object_id ) ) {
+			$meta_key = ht()->get_method_value( 'meta_key' );
 
 			if ( ! empty( $meta_key ) ) {
-				$meta_type = HT()->get_method_value( 'meta_type' );
+				$meta_type = ht()->get_method_value( 'meta_type' );
 
 				if ( empty( $meta_type ) ) {
 					$meta_type = 'post';
@@ -237,7 +237,7 @@ HOCWP_Theme_AJAX::get_instance();
 function hocwp_theme_update_facebook_data_ajax_callback() {
 	$post_id = $_GET['post_id'] ?? '';
 
-	if ( HT()->is_positive_number( $post_id ) ) {
+	if ( ht()->is_positive_number( $post_id ) ) {
 		$event = $_GET['event'] ?? '';
 
 		if ( 'like' == $event || 'unlike' == $event ) {
@@ -261,10 +261,10 @@ add_action( 'wp_ajax_hocwp_theme_update_facebook_data', 'hocwp_theme_update_face
 add_action( 'wp_ajax_nopriv_hocwp_theme_update_facebook_data', 'hocwp_theme_update_facebook_data_ajax_callback' );
 
 function hocwp_theme_change_post_name_ajax_callback() {
-	$post_id = HT()->get_method_value( 'post_id' );
+	$post_id = ht()->get_method_value( 'post_id' );
 
-	if ( HT()->is_positive_number( $post_id ) ) {
-		$post_name = HT()->get_method_value( 'post_name' );
+	if ( ht()->is_positive_number( $post_id ) ) {
+		$post_name = ht()->get_method_value( 'post_name' );
 
 		if ( ! empty( $post_name ) ) {
 			$data = array(
@@ -284,8 +284,8 @@ add_action( 'wp_ajax_hocwp_theme_change_post_name', 'hocwp_theme_change_post_nam
 function hocwp_theme_detect_client_info_ajax_callback() {
 	$screen_width = $_GET['screen_width'] ?? '';
 
-	if ( HT()->is_positive_number( $screen_width ) ) {
-		$client_info = HT_Util()->get_client_info( true );
+	if ( ht()->is_positive_number( $screen_width ) ) {
+		$client_info = ht_util()->get_client_info( true );
 
 		$client_info['screen_width'] = $screen_width;
 
@@ -304,11 +304,11 @@ add_action( 'wp_ajax_nopriv_hocwp_theme_detect_client_info', 'hocwp_theme_detect
 function hocwp_theme_boolean_meta_ajax_callback() {
 	$nonce = $_POST['nonce'] ?? '';
 
-	if ( HOCWP_Theme()->verify_nonce( $nonce ) ) {
-		$meta_type  = HT()->get_method_value( 'meta_type' );
-		$meta_key   = HT()->get_method_value( 'meta_key' );
-		$meta_value = absint( HT()->get_method_value( 'meta_value' ) );
-		$object_id  = HT()->get_method_value( 'object_id' );
+	if ( hocwp_theme()->verify_nonce( $nonce ) ) {
+		$meta_type  = ht()->get_method_value( 'meta_type' );
+		$meta_key   = ht()->get_method_value( 'meta_key' );
+		$meta_value = absint( ht()->get_method_value( 'meta_value' ) );
+		$object_id  = ht()->get_method_value( 'object_id' );
 
 		if ( 1 == $meta_value ) {
 			$meta_value = 0;

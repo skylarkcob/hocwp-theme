@@ -3,4 +3,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-HT_Custom()->load_module( 'site-header' );
+ht_custom()->load_module( 'site-header' );

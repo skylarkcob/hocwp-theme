@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'hocwp_theme_load_extension_smtp' ) ) {
 	function hocwp_theme_load_extension_smtp() {
-		$load = HT_extension()->is_active( __FILE__ );
+		$load = ht_extension()->is_active( __FILE__ );
 
 		return apply_filters( 'hocwp_theme_load_extension_smtp', $load );
 	}
@@ -23,7 +23,7 @@ if ( ! $load ) {
 }
 
 function hocwp_theme_wp_mail_from_name_filter( $name ) {
-	$options = HT_Options()->get( 'smtp' );
+	$options = ht_options()->get( 'smtp' );
 
 	if ( ! empty( $options['from_name'] ) ) {
 		$name = $options['from_name'];
@@ -35,9 +35,9 @@ function hocwp_theme_wp_mail_from_name_filter( $name ) {
 add_filter( 'wp_mail_from_name', 'hocwp_theme_wp_mail_from_name_filter' );
 
 function hocwp_theme_wp_mail_from_filter( $email ) {
-	$options = HT_Options()->get( 'smtp' );
+	$options = ht_options()->get( 'smtp' );
 
-	if ( isset( $options['from_email'] ) && HT_Util()->is_email( $options['from_email'] ) ) {
+	if ( isset( $options['from_email'] ) && ht_util()->is_email( $options['from_email'] ) ) {
 		$email = sanitize_email( $options['from_email'] );
 	}
 
@@ -63,7 +63,7 @@ function hocwp_theme_phpmailer_init_action( $phpmailer ) {
 		}
 	}
 
-	$data = HT_Options()->get( 'smtp' );
+	$data = ht_options()->get( 'smtp' );
 
 	$phpmailer->Mailer = 'smtp';
 

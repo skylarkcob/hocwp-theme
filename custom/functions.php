@@ -65,8 +65,8 @@ class HOCWP_Theme_Custom extends Abstract_HT_Custom {
 	 */
 	public function ajax_callback() {
 		$data   = array();
-		$method = HT()->get_method_value( 'method', 'request', 'post' );
-		$action = HT()->get_method_value( 'do_action', $method );
+		$method = ht()->get_method_value( 'method', 'request', 'post' );
+		$action = ht()->get_method_value( 'do_action', $method );
 
 		switch ( $action ) {
 			default:
@@ -80,8 +80,8 @@ class HOCWP_Theme_Custom extends Abstract_HT_Custom {
 	 */
 	public function ajax_private_callback() {
 		$data   = array();
-		$method = HT()->get_method_value( 'method', 'request', 'post' );
-		$action = HT()->get_method_value( 'do_action', $method );
+		$method = ht()->get_method_value( 'method', 'request', 'post' );
+		$action = ht()->get_method_value( 'do_action', $method );
 
 		switch ( $action ) {
 			default:
@@ -159,8 +159,8 @@ class HOCWP_Theme_Custom extends Abstract_HT_Custom {
 	}
 }
 
-function HT_Custom() {
+function ht_custom() {
 	return HOCWP_Theme_Custom::get_instance();
 }
 
-HT_Custom();
+ht_custom();

@@ -77,7 +77,7 @@ function hocwp_theme_settings_page_reading_field() {
 		'default' => __( 'Default', 'hocwp-theme' )
 	);
 
-	if ( HT_Util()->yoast_seo_exists() ) {
+	if ( ht_util()->yoast_seo_exists() ) {
 		$types['yoast_seo'] = 'Yoast SEO';
 	}
 
@@ -246,16 +246,16 @@ function hocwp_theme_settings_page_reading_field() {
 	$field    = hocwp_theme_create_setting_field( 'back_to_top', __( 'Active', 'hocwp-theme' ), '', $args, 'boolean', 'reading', 'back_top_section' );
 	$fields[] = $field;
 
-	$color = HT_Util()->get_theme_option( 'back_top_bg', '', 'reading' );
+	$color = ht_util()->get_theme_option( 'back_top_bg', '', 'reading' );
 
 	$args = array(
 		'background_color' => $color,
-		'style'            => HT_Util()->get_theme_option( 'back_top_style', '', 'reading' )
+		'style'            => ht_util()->get_theme_option( 'back_top_style', '', 'reading' )
 	);
 
-	$icon = HT_Options()->get_tab( 'icon', '', 'reading' );
+	$icon = ht_options()->get_tab( 'icon', '', 'reading' );
 
-	if ( ! HT()->is_positive_number( $icon ) ) {
+	if ( ! ht()->is_positive_number( $icon ) ) {
 		unset( $args['style'] );
 	}
 
@@ -277,8 +277,8 @@ function hocwp_theme_settings_page_reading_field() {
 add_filter( 'hocwp_theme_settings_page_reading_settings_field', 'hocwp_theme_settings_page_reading_field' );
 
 function hocwp_theme_admin_setting_page_reading_scripts() {
-	HT_Enqueue()->media_upload();
-	HT_Enqueue()->color_picker();
+	ht_enqueue()->media_upload();
+	ht_enqueue()->color_picker();
 }
 
 add_action( 'hocwp_theme_admin_setting_page_reading_scripts', 'hocwp_theme_admin_setting_page_reading_scripts' );

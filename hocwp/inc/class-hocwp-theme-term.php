@@ -10,7 +10,7 @@ class HOCWP_Theme_Term extends Abstract_HOCWP_Theme_Object {
 		if ( is_numeric( $term ) ) {
 			$term = get_term( $term, $taxonomy );
 		} elseif ( ! ( $term instanceof WP_Term ) ) {
-			$term = HT_Util()->return_term( $term, $taxonomy );
+			$term = ht_util()->return_term( $term, $taxonomy );
 		}
 
 		$this->set( $term );
@@ -55,7 +55,7 @@ class HOCWP_Theme_Term extends Abstract_HOCWP_Theme_Object {
 			$this->term = $term;
 
 			// Set meta keys as term object properties.
-			if ( HT()->array_has_value( $this->get_meta_keys() ) ) {
+			if ( ht()->array_has_value( $this->get_meta_keys() ) ) {
 				foreach ( $this->get_meta_keys() as $key ) {
 					$this->term->{$key} = $this->get_meta( $key );
 				}

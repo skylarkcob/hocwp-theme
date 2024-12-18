@@ -224,14 +224,14 @@ add_action( 'hocwp_theme_settings_page_smtp_form_after', 'hocwp_theme_settings_p
  */
 function hocwp_theme_settings_page_smtp_admin_notices_action() {
 	if ( isset( $_POST['submit'] ) ) {
-		if ( HT_Util()->verify_nonce( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ) ) {
+		if ( ht_util()->verify_nonce( 'hocwp_theme_test_smtp', 'hocwp_theme_test_smtp_nonce' ) ) {
 			$to_email = isset( $_POST['hocwp_theme_test_smtp_to'] ) ? $_POST['hocwp_theme_test_smtp_to'] : '';
 
-			if ( ! HT_Util()->is_email( $to_email ) ) {
+			if ( ! ht_util()->is_email( $to_email ) ) {
 				$to_email = get_option( 'admin_email' );
 			}
 
-			if ( HT_Util()->is_email( $to_email ) ) {
+			if ( ht_util()->is_email( $to_email ) ) {
 				global $phpmailer;
 				$tmp = $phpmailer;
 
@@ -276,7 +276,7 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 				$phpmailer->isHTML( true );
 
 				ob_start();
-				$result     = HT_Util()->html_mail( $to_email, $subject, $message );
+				$result     = ht_util()->html_mail( $to_email, $subject, $message );
 				$sent       = $result;
 				$smtp_debug = ob_get_clean();
 
@@ -309,7 +309,7 @@ function hocwp_theme_settings_page_smtp_admin_notices_action() {
 					$args['type'] = 'error';
 				}
 
-				HT_Util()->admin_notice( $args );
+				ht_util()->admin_notice( $args );
 				$phpmailer = $tmp;
 			}
 		}

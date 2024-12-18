@@ -93,10 +93,10 @@ class HOCWP_Walker_Page extends Walker_Page {
 			// Add a toggle to items with children.
 			if ( isset( $args['pages_with_children'][ $page->ID ] ) ) {
 				$toggle_target_string = '.menu-modal .page-item-' . $page->ID . ' > ul';
-				$toggle_duration      = HT_Util()->toggle_duration();
+				$toggle_duration      = ht_util()->toggle_duration();
 
 				// Add the sub menu toggle.
-				$args['list_item_after'] .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'hocwp-theme' ) . '</span>' . HT_SVG_Icon()->get_theme_svg( 'chevron-down' ) . '</button>';
+				$args['list_item_after'] .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'hocwp-theme' ) . '</span>' . ht_svg_icon()->get_theme_svg( 'chevron-down' ) . '</button>';
 
 			}
 

@@ -40,7 +40,7 @@ class HOCWP_Theme_Google_Maps_API extends Abstract_HOCWP_Theme_Google_API {
 			return new WP_Error( 'invalid_name', __( 'API name cannot be empty, can be place, geocode, distancematrix,...', 'hocwp-theme' ) );
 		}
 
-		if ( ! HT()->array_has_value( $this->params ) ) {
+		if ( ! ht()->array_has_value( $this->params ) ) {
 			return new WP_Error( 'invalid_params', __( 'Query parameters must be provided in full.', 'hocwp-theme' ) );
 		}
 

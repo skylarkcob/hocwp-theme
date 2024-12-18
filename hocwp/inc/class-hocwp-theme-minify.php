@@ -29,7 +29,7 @@ final class HOCWP_Theme_Minify {
 
 			$first_char = substr( $element, 0, 1 );
 
-			if ( '.' !== $first_char && ! HT()->string_contain( $element, '.' ) ) {
+			if ( '.' !== $first_char && ! ht()->string_contain( $element, '.' ) ) {
 				$element = '.' . $element;
 			}
 
@@ -88,8 +88,8 @@ final class HOCWP_Theme_Minify {
 		if ( $online ) {
 			$buffer = self::get_minified( 'https://cssminifier.com/raw', $css_content );
 		} else {
-			if ( HT()->is_file( $css_content ) ) {
-				$filesystem  = HT_Util()->filesystem();
+			if ( ht()->is_file( $css_content ) ) {
+				$filesystem  = ht_util()->filesystem();
 				$css_content = $filesystem->get_contents( $css_content );
 			}
 
@@ -111,9 +111,9 @@ final class HOCWP_Theme_Minify {
 
 	public static function get_minified( $url, $content ) {
 		if ( ! empty( $content ) ) {
-			$filesystem = HT_Util()->filesystem();
+			$filesystem = ht_util()->filesystem();
 
-			if ( HT()->is_file( $content ) ) {
+			if ( ht()->is_file( $content ) ) {
 				$content = $filesystem->get_contents( $content );
 			}
 
@@ -140,7 +140,7 @@ final class HOCWP_Theme_Minify {
 
 	public function is_error_content( $content ) {
 		if ( ! empty( $content ) ) {
-			if ( HT()->string_contain( $content, '<html>' ) || HT()->string_contain( $content, 'ESCAPED_SOURCE' ) ) {
+			if ( ht()->string_contain( $content, '<html>' ) || ht()->string_contain( $content, 'ESCAPED_SOURCE' ) ) {
 				return new WP_Error( 'invalid_minified_content', $content );
 			}
 		}
@@ -149,7 +149,7 @@ final class HOCWP_Theme_Minify {
 	}
 
 	public static function generate( $file, $recompress = false ) {
-		if ( ! HT()->is_file( $file ) || ! _hocwp_theme_is_css_or_js_file( $file ) ) {
+		if ( ! ht()->is_file( $file ) || ! _hocwp_theme_is_css_or_js_file( $file ) ) {
 			return;
 		}
 
@@ -177,12 +177,12 @@ final class HOCWP_Theme_Minify {
 				return;
 			}
 
-			if ( $error = HT_Minify()->is_error_content( $minified ) ) {
+			if ( $error = ht_minify()->is_error_content( $minified ) ) {
 				if ( $error instanceof WP_Error ) {
 					hocwp_theme_debug( $error->get_error_message() );
 				}
 			} else {
-				$filesystem = HT_Util()->filesystem();
+				$filesystem = ht_util()->filesystem();
 				if ( ! $filesystem->put_contents( $min_file, $minified, FS_CHMOD_FILE ) ) {
 					hocwp_theme_debug( __( 'File can not be compressed!', 'hocwp-theme' ) );
 				}
@@ -191,6 +191,6 @@ final class HOCWP_Theme_Minify {
 	}
 }
 
-function HT_Minify() {
+function ht_minify() {
 	return HOCWP_Theme_Minify::instance();
 }

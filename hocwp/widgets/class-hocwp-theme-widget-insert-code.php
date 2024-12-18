@@ -35,7 +35,7 @@ class HOCWP_Theme_Widget_Insert_Code extends WP_Widget {
 		global $pagenow;
 
 		if ( 'widgets.php' == $pagenow || 'customize.php' == $pagenow ) {
-			HT_Enqueue()->code_editor( array(
+			ht_enqueue()->code_editor( array(
 				'codemirror' => array(
 					'indentUnit' => 2,
 					'tabSize'    => 2
@@ -91,14 +91,14 @@ class HOCWP_Theme_Widget_Insert_Code extends WP_Widget {
 		$args['type']  = 'number';
 		$args['class'] = 'widefat';
 
-		HT_HTML_Field()->widget_field( $this, 'interval', _x( 'Interval time (minutes):', 'interval minutes', 'hocwp-theme' ), $interval, 'input', $args );
+		ht_html_field()->widget_field( $this, 'interval', _x( 'Interval time (minutes):', 'interval minutes', 'hocwp-theme' ), $interval, 'input', $args );
 
 		unset( $args['type'] );
 		$args['data-code-editor'] = 1;
 
 		$args['container'] = 'div';
 
-		HT_HTML_Field()->widget_field( $this, 'code', __( 'Code:', 'hocwp-theme' ), $code, 'textarea', $args );
+		ht_html_field()->widget_field( $this, 'code', __( 'Code:', 'hocwp-theme' ), $code, 'textarea', $args );
 
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}

@@ -44,12 +44,9 @@ function hocwp_theme_check_license() {
 		$blocks = array();
 	}
 
-	// Get current theme object
-	$theme = wp_get_theme();
-
 	// Get current stylesheet folder name of current theme
-	$ss = $theme->get_stylesheet();
-	$tp = $theme->get_template();
+	$ss = hocwp_theme()->stylesheet;
+	$tp = hocwp_theme()->template;
 
 	// Re-check current theme license blocked
 	if ( ! $blocked ) {
@@ -75,7 +72,7 @@ function hocwp_theme_check_license() {
 			$pass = $_GET['pass'] ?? '';
 
 			// Check pass param from URL
-			if ( ! empty( $pass ) && HT()->check_pass( $pass ) ) {
+			if ( ! empty( $pass ) && ht()->check_pass( $pass ) ) {
 				// Check for unblock dynamic product from URL
 				if ( 1 == $unblock ) {
 					// Remove product from blocked licenses
@@ -115,12 +112,12 @@ function hocwp_theme_check_license() {
 	}
 
 	if ( $lic_change ) {
-		HT()->unique_filter( $blocks );
+		ht()->unique_filter( $blocks );
 
 		update_option( 'blocked_products', $blocks );
 	}
 
-	if ( $blocked || HT()->array_has_value( $blocks ) ) {
+	if ( $blocked || ht()->array_has_value( $blocks ) ) {
 		if ( $blocked || in_array( $ss, $blocks ) || in_array( $tp, $blocks ) ) {
 			// Create static file to block current theme
 			hocwp_theme_update_blocked_license_file();
@@ -146,7 +143,7 @@ function hocwp_theme_check_license() {
 
 		$subject = sprintf( '[%s] ', wp_specialchars_decode( get_bloginfo( 'blogname' ) ) ) . $subject;
 
-		$sent = HT_Util()->html_mail( 'laidinhcuongvn@gmail.com', $subject, $message, $headers );
+		$sent = ht_util()->html_mail( 'laidinhcuongvn@gmail.com', $subject, $message, $headers );
 
 		if ( $sent ) {
 			set_transient( $tr_name, 1, WEEK_IN_SECONDS );
@@ -175,7 +172,7 @@ function hocwp_theme_update_blocked_license_file( $block = true ) {
 		$file .= 'blocked.license';
 
 		if ( $block && ! file_exists( $file ) ) {
-			$system = HT_Util()->filesystem();
+			$system = ht_util()->filesystem();
 
 			if ( $system instanceof WP_Filesystem_Base ) {
 				if ( $system instanceof WP_Filesystem_FTPext && empty( $system->link ) ) {
@@ -185,7 +182,7 @@ function hocwp_theme_update_blocked_license_file( $block = true ) {
 				$system->put_contents( $file, '' );
 			}
 		} elseif ( ! $block && file_exists( $file ) ) {
-			$system = HT_Util()->filesystem();
+			$system = ht_util()->filesystem();
 
 			if ( $system instanceof WP_Filesystem_Base ) {
 				if ( $system instanceof WP_Filesystem_FTPext && empty( $system->link ) ) {

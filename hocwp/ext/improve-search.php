@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'hocwp_theme_load_extension_improve_search' ) ) {
 	function hocwp_theme_load_extension_improve_search() {
-		$load = HT_extension()->is_active( __FILE__ );
+		$load = ht_extension()->is_active( __FILE__ );
 
 		return apply_filters( 'hocwp_theme_load_extension_improve_search', $load );
 	}
@@ -47,7 +47,7 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 
 		public function get_search_query_filter( $term ) {
 			if ( empty( $term ) ) {
-				$term = HT()->get_method_value( 's', 'request' );
+				$term = ht()->get_method_value( 's', 'request' );
 
 				if ( empty( $this->search_term ) ) {
 					$this->search_term = $term;
@@ -91,7 +91,7 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 					if ( false === ( $post_ids = get_transient( $tr_name ) ) ) {
 						global $wpdb;
 
-						$ppp = $query->query_vars['posts_per_page'] ?? HT_Util()->get_posts_per_page();
+						$ppp = $query->query_vars['posts_per_page'] ?? ht_util()->get_posts_per_page();
 
 						if ( empty( $this->posts_per_page ) ) {
 							$this->posts_per_page = $ppp;
@@ -140,13 +140,13 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 
 						$post_ids = $this->query( $sql );
 
-						if ( ! HT()->array_has_value( $post_ids ) ) {
+						if ( ! ht()->array_has_value( $post_ids ) ) {
 							$sql = $save;
 							$sql .= "p.post_name LIKE '%$slug%'";
 
 							$post_ids = $this->query( $sql );
 
-							if ( ! HT()->array_has_value( $post_ids ) ) {
+							if ( ! ht()->array_has_value( $post_ids ) ) {
 								$parts = explode( ' ', $search );
 
 								if ( 1 < count( $parts ) ) {
@@ -178,14 +178,14 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 								unset( $parts );
 							}
 
-							if ( ! HT()->array_has_value( $post_ids ) ) {
+							if ( ! ht()->array_has_value( $post_ids ) ) {
 								$sql = $save;
 								$sql .= "pm.meta_value LIKE '%$search%' AND p.ID = pm.post_id";
 
 								$post_ids = $this->query( $sql );
 							}
 
-							if ( ! HT()->array_has_value( $post_ids ) ) {
+							if ( ! ht()->array_has_value( $post_ids ) ) {
 								$args = $query->query_vars;
 
 								$args['fields'] = 'ids';
@@ -228,14 +228,14 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 							}
 						}
 
-						HT()->unique_filter( $post_ids );
+						ht()->unique_filter( $post_ids );
 
-						if ( HT()->array_has_value( $post_ids ) ) {
+						if ( ht()->array_has_value( $post_ids ) ) {
 							set_transient( $tr_name, $post_ids, 6 * HOUR_IN_SECONDS );
 						}
 					}
 
-					if ( HT()->array_has_value( $post_ids ) ) {
+					if ( ht()->array_has_value( $post_ids ) ) {
 						$query->set( 'post__in', $post_ids );
 						unset( $query->query_vars['s'] );
 					}
@@ -256,7 +256,7 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 		}
 
 		private function build_term_query( $search, $chunk_size = 2, $column_name = 'post_title' ) {
-			$chunks = HT()->string_chunk( $search, $chunk_size );
+			$chunks = ht()->string_chunk( $search, $chunk_size );
 			$this->sanitize_search_word( $chunks );
 
 			if ( empty( $chunks ) ) {
@@ -294,15 +294,15 @@ if ( ! class_exists( 'HOCWP_Ext_Improve_Search' ) ) {
 
 unset( $load );
 
-if ( ! function_exists( 'HTE_Improve_Search' ) ) {
-	function HTE_Improve_Search() {
+if ( ! function_exists( 'hte_improve_search' ) ) {
+	function hte_improve_search() {
 		return HOCWP_Ext_Improve_Search::get_instance();
 	}
 }
 
 if ( ! function_exists( 'hocwp_ext_load_improve_search' ) ) {
 	function hocwp_ext_load_improve_search() {
-		HTE_Improve_Search();
+		hte_improve_search();
 	}
 }
 

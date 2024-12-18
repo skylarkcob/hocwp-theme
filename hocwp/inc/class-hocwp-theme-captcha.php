@@ -28,7 +28,7 @@ class HOCWP_Theme_CAPTCHA {
 		}
 
 		if ( $service == HOCWP_THEME_CAPTCHA_SERVICE::RECAPTCHA ) {
-			$version = HT_Options()->get_tab( 'recaptcha_version', '', 'social' );
+			$version = ht_options()->get_tab( 'recaptcha_version', '', 'social' );
 
 			if ( empty( $version ) ) {
 				$version = 'v3';
@@ -43,7 +43,7 @@ class HOCWP_Theme_CAPTCHA {
 	}
 }
 
-function HT_CAPTCHA() {
+function ht_captcha() {
 	$service = apply_filters( 'hocwp_theme_captcha_service', 'auto' );
 
 	return HOCWP_Theme_CAPTCHA::instance()->get_object( $service );

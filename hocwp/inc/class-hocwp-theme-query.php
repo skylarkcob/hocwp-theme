@@ -23,7 +23,7 @@ final class HOCWP_Theme_Query {
 	 * @return mixed|WP_Query
 	 */
 	public function get_current_query() {
-		$query = HOCWP_Theme()->get_loop_data( 'query' );
+		$query = hocwp_theme()->get_loop_data( 'query' );
 
 		if ( ! is_object( $query ) || ! ( $query instanceof WP_Query ) ) {
 			$query = $GLOBALS['wp_query'];
@@ -46,7 +46,7 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function pages_by_custom_template( $file, $args = array() ) {
-		$file = HT()->trim_string( $file, '.php', 'right' );
+		$file = ht()->trim_string( $file, '.php', 'right' );
 
 		return $this->pages_by_template( 'custom/page-templates/' . $file . '.php', $args );
 	}
@@ -58,13 +58,13 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function blog_page() {
-		$blog = HT_Options()->get_tab( 'blog_page', '', 'reading' );
+		$blog = ht_options()->get_tab( 'blog_page', '', 'reading' );
 
-		if ( HT()->is_positive_number( $blog ) ) {
+		if ( ht()->is_positive_number( $blog ) ) {
 			return get_post( $blog );
 		}
 
-		return HT_Query()->page_by_template( 'custom/page-templates/blog.php' );
+		return ht_query()->page_by_template( 'custom/page-templates/blog.php' );
 	}
 
 	public function pages( $args = array() ) {
@@ -89,8 +89,8 @@ final class HOCWP_Theme_Query {
 		$format = array_map( array( 'HOCWP_Theme_Sanitize', 'post_format' ), $format );
 		$format = array_filter( $format );
 
-		if ( HT()->array_has_value( $format ) ) {
-			if ( HT()->array_has_value( $tax_query ) ) {
+		if ( ht()->array_has_value( $format ) ) {
+			if ( ht()->array_has_value( $tax_query ) ) {
 				$tax_query['relation'] = 'AND';
 			}
 
@@ -116,7 +116,7 @@ final class HOCWP_Theme_Query {
 
 		$query = new WP_Query();
 
-		if ( HT()->array_has_value( $taxs ) ) {
+		if ( ht()->array_has_value( $taxs ) ) {
 			if ( $hierarchical ) {
 				foreach ( $taxs as $key => $tax ) {
 					if ( ! is_taxonomy_hierarchical( $tax ) ) {
@@ -127,7 +127,7 @@ final class HOCWP_Theme_Query {
 
 			$terms = wp_get_object_terms( get_the_ID(), $taxs );
 
-			if ( HT()->array_has_value( $terms ) ) {
+			if ( ht()->array_has_value( $terms ) ) {
 				$has = false;
 
 				$tax_query = $args['tax_query'] ?? '';
@@ -146,7 +146,7 @@ final class HOCWP_Theme_Query {
 					$has = true;
 				}
 
-				if ( $has && HT()->array_has_value( $tax_query ) ) {
+				if ( $has && ht()->array_has_value( $tax_query ) ) {
 					$tax_query['relation'] = 'AND';
 
 					$args['tax_query'] = $tax_query;
@@ -173,7 +173,7 @@ final class HOCWP_Theme_Query {
 
 		$post_parent = $obj->post_parent;
 
-		if ( HT()->is_positive_number( $post_parent ) ) {
+		if ( ht()->is_positive_number( $post_parent ) ) {
 			$defaults['post_parent'] = $post_parent;
 		}
 
@@ -201,7 +201,7 @@ final class HOCWP_Theme_Query {
 				foreach ( $taxonomy as $tax ) {
 					$term_ids = wp_get_object_terms( get_the_ID(), $tax, array( 'fields' => 'ids' ) );
 
-					if ( HT()->array_has_value( $term_ids ) ) {
+					if ( ht()->array_has_value( $term_ids ) ) {
 						$tax_query[] = array(
 							'taxonomy' => $tax,
 							'field'    => 'term_id',
@@ -231,23 +231,23 @@ final class HOCWP_Theme_Query {
 				$by_term = true;
 			} elseif ( isset( $args['category_name'] ) && ! empty( $args['category_name'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['category__and'] ) && HT()->array_has_value( $args['category__and'] ) ) {
+			} elseif ( isset( $args['category__and'] ) && ht()->array_has_value( $args['category__and'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['category__in'] ) && HT()->array_has_value( $args['category__in'] ) ) {
+			} elseif ( isset( $args['category__in'] ) && ht()->array_has_value( $args['category__in'] ) ) {
 				$by_term = true;
 			} elseif ( isset( $args['tag_id'] ) && is_numeric( $args['tag_id'] ) ) {
 				$by_term = true;
 			} elseif ( isset( $args['tag'] ) && ! empty( $args['tag'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['tag__and'] ) && HT()->array_has_value( $args['tag__and'] ) ) {
+			} elseif ( isset( $args['tag__and'] ) && ht()->array_has_value( $args['tag__and'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['tag__in'] ) && HT()->array_has_value( $args['tag__in'] ) ) {
+			} elseif ( isset( $args['tag__in'] ) && ht()->array_has_value( $args['tag__in'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['tag_slug__and'] ) && HT()->array_has_value( $args['tag_slug__and'] ) ) {
+			} elseif ( isset( $args['tag_slug__and'] ) && ht()->array_has_value( $args['tag_slug__and'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['tag_slug__in'] ) && HT()->array_has_value( $args['tag_slug__in'] ) ) {
+			} elseif ( isset( $args['tag_slug__in'] ) && ht()->array_has_value( $args['tag_slug__in'] ) ) {
 				$by_term = true;
-			} elseif ( isset( $args['tax_query'] ) && HT()->array_has_value( $args['tax_query'] ) ) {
+			} elseif ( isset( $args['tax_query'] ) && ht()->array_has_value( $args['tax_query'] ) ) {
 				$by_term = true;
 			}
 
@@ -265,7 +265,7 @@ final class HOCWP_Theme_Query {
 
 			$taxs = get_object_taxonomies( $obj );
 
-			if ( HT()->array_has_value( $taxs ) ) {
+			if ( ht()->array_has_value( $taxs ) ) {
 				$tax_query = $args['tax_query'] ?? array();
 
 				if ( ! is_array( $tax_query ) ) {
@@ -288,7 +288,7 @@ final class HOCWP_Theme_Query {
 						if ( ! $taxonomy->hierarchical ) {
 							$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
-							if ( HT()->array_has_value( $ids ) ) {
+							if ( ht()->array_has_value( $ids ) ) {
 								$tax_item['taxonomy'] = $tax;
 
 								$tax_item['terms'] = $ids;
@@ -325,7 +325,7 @@ final class HOCWP_Theme_Query {
 					$ppp = $query->get( 'posts_per_page' );
 
 					if ( ! is_numeric( $ppp ) ) {
-						$ppp = HT_Util()->get_posts_per_page();
+						$ppp = ht_util()->get_posts_per_page();
 					}
 
 					if ( $query->found_posts < ( $ppp / 2 ) ) {
@@ -337,7 +337,7 @@ final class HOCWP_Theme_Query {
 					foreach ( $taxs as $tax ) {
 						$ids = wp_get_post_terms( $post_id, $tax, array( 'fields' => 'ids' ) );
 
-						if ( HT()->array_has_value( $ids ) && is_string( $tax ) ) {
+						if ( ht()->array_has_value( $ids ) && is_string( $tax ) ) {
 							$tax_item['taxonomy'] = $tax;
 
 							$tax_item['terms'] = $ids;
@@ -348,7 +348,7 @@ final class HOCWP_Theme_Query {
 						}
 					}
 
-					if ( HT()->array_has_value( $new ) ) {
+					if ( ht()->array_has_value( $new ) ) {
 						$new['relation'] = 'or';
 
 						$tax_query = $new;
@@ -436,7 +436,7 @@ final class HOCWP_Theme_Query {
 
 		$output = $args['output'] ?? object;
 
-		if ( HT()->array_has_value( $columns ) ) {
+		if ( ht()->array_has_value( $columns ) ) {
 			if ( object == $output ) {
 				$columns = array_map( 'get_post', $columns );
 			}
@@ -471,15 +471,15 @@ final class HOCWP_Theme_Query {
 	}
 
 	public function featured_posts( $args = array() ) {
-		return HT_Query()->posts_by_meta( 'featured', 1, $args );
+		return ht_query()->posts_by_meta( 'featured', 1, $args );
 	}
 
 	public function set_orderby_popularity( &$query, $range = 'auto' ) {
 		if ( $query instanceof WP_Query ) {
 			if ( function_exists( 'wpp_get_mostpopular' ) ) {
-				$ids = HT_Query()->popular_post_ids( $range );
+				$ids = ht_query()->popular_post_ids( $range );
 
-				if ( HT()->array_has_value( $ids ) ) {
+				if ( ht()->array_has_value( $ids ) ) {
 					$ppp = $query->get( 'posts_per_page' );
 
 					if ( count( $ids ) > $ppp ) {
@@ -488,7 +488,7 @@ final class HOCWP_Theme_Query {
 						$ids    = array_slice( $ids, $offset, $ppp );
 					}
 
-					if ( HT()->array_has_value( $ids ) ) {
+					if ( ht()->array_has_value( $ids ) ) {
 						$query->set( 'post__in', $ids );
 						$query->set( 'orderby', 'post__in' );
 					}
@@ -503,17 +503,17 @@ final class HOCWP_Theme_Query {
 				$query = new \WordPressPopularPosts\Query();
 				$lists = $query->get_posts();
 
-				if ( ! HT()->array_has_value( $lists ) ) {
+				if ( ! ht()->array_has_value( $lists ) ) {
 					$query = new \WordPressPopularPosts\Query( array( 'range' => 'last7days' ) );
 					$lists = $query->get_posts();
 				}
 
-				if ( ! HT()->array_has_value( $lists ) ) {
+				if ( ! ht()->array_has_value( $lists ) ) {
 					$query = new \WordPressPopularPosts\Query( array( 'range' => 'last30days' ) );
 					$lists = $query->get_posts();
 				}
 
-				if ( ! HT()->array_has_value( $lists ) ) {
+				if ( ! ht()->array_has_value( $lists ) ) {
 					$query = new \WordPressPopularPosts\Query( array( 'range' => 'all' ) );
 					$lists = $query->get_posts();
 				}
@@ -522,7 +522,7 @@ final class HOCWP_Theme_Query {
 				$lists = $query->get_posts();
 			}
 
-			if ( HT()->array_has_value( $lists ) ) {
+			if ( ht()->array_has_value( $lists ) ) {
 				$ids = array();
 
 				foreach ( $lists as $obj ) {
@@ -554,15 +554,15 @@ final class HOCWP_Theme_Query {
 		} elseif ( class_exists( '\WordPressPopularPosts\Query' ) ) {
 			$ids = $this->popular_post_ids();
 
-			if ( HT()->array_has_value( $ids ) ) {
+			if ( ht()->array_has_value( $ids ) ) {
 				$ppp = $args['posts_per_page'] ?? '';
 
 				if ( empty( $ppp ) ) {
-					$ppp = HT_Frontend()->get_posts_per_page( is_home() );
+					$ppp = ht_frontend()->get_posts_per_page( is_home() );
 				}
 
 				if ( $ppp < count( $ids ) ) {
-					$paged = $args['paged'] ?? HT_Frontend()->get_paged();
+					$paged = $args['paged'] ?? ht_frontend()->get_paged();
 					$ids   = array_slice( $ids, ( $paged - 1 ) * $ppp, $ppp );
 				}
 
@@ -656,7 +656,7 @@ final class HOCWP_Theme_Query {
 
 		switch ( $output ) {
 			case OBJECT:
-				if ( HT()->is_positive_number( $post_id ) ) {
+				if ( ht()->is_positive_number( $post_id ) ) {
 					$result = get_post( $post_id );
 				}
 
@@ -673,7 +673,7 @@ final class HOCWP_Theme_Query {
 
 		$sql     = "SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '" . $meta_key . "' GROUP BY meta_value ORDER BY meta_value " . $order . ";";
 		$results = $wpdb->get_col( $sql );
-		HT()->unique_filter( $results );
+		ht()->unique_filter( $results );
 
 		return $results;
 	}
@@ -903,6 +903,6 @@ final class HOCWP_Theme_Query {
 	}
 }
 
-function HT_Query() {
+function ht_query() {
 	return HOCWP_Theme_Query::instance();
 }

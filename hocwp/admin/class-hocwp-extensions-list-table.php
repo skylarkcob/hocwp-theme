@@ -51,8 +51,8 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 		wp_reset_vars( array( 'orderby', 'order' ) );
 		$all_extensions   = $this->get_extensions();
-		$required_exts    = HT_Requirement()->get_required_extensions();
-		$recommended_exts = HT_Requirement()->get_recommended_extensions();
+		$required_exts    = ht_requirement()->get_required_extensions();
+		$recommended_exts = ht_requirement()->get_recommended_extensions();
 
 		$extensions = array(
 			'all'         => $all_extensions,
@@ -66,7 +66,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 		foreach ( $extensions['all'] as $key => $data ) {
 			$extension = new HOCWP_Theme_Extension( $data['dir'] );
 
-			if ( HT_extension()->is_active( $key ) ) {
+			if ( ht_extension()->is_active( $key ) ) {
 				$extensions['active'][ $key ] = $data;
 			} else {
 				$extensions['inactive'][ $key ] = $data;
@@ -149,7 +149,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	}
 
 	private function get_extensions() {
-		return HT_Extension()->get_extensions();
+		return ht_extension()->get_extensions();
 	}
 
 	public function _search_callback( $extension ) {
@@ -279,7 +279,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			'activate'   => ''
 		);
 
-		$is_active = HT_extension()->is_active( $extension_file );
+		$is_active = ht_extension()->is_active( $extension_file );
 
 		$baseurl = 'themes.php?page=hocwp_theme&tab=extension&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s;
 
@@ -346,7 +346,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			$options = $GLOBALS['hocwp_theme']->active_extensions;
 		}
 
-		$extension_file = HT_Extension()->sanitize_file( $extension_file );
+		$extension_file = ht_extension()->sanitize_file( $extension_file );
 		$action         = $this->current_action();
 
 		switch ( $action ) {
@@ -376,7 +376,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 		if ( isset( $_REQUEST['_wpnonce'] ) ) {
 			$nonce = $_REQUEST['_wpnonce'];
 
-			if ( ! HT_Util()->verify_nonce( 'bulk-' . $this->_args['plural'], $nonce ) ) {
+			if ( ! ht_util()->verify_nonce( 'bulk-' . $this->_args['plural'], $nonce ) ) {
 				return;
 			}
 		}
@@ -447,7 +447,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 		if ( empty( $action ) && ! isset( $_GET['extension'] ) && false !== ( $message = get_transient( $tr_name ) ) ) {
 			if ( ! empty( $message ) ) {
-				HT_Util()->admin_notice( $message );
+				ht_util()->admin_notice( $message );
 			}
 
 			delete_transient( $tr_name );

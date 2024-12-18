@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'hocwp_theme_load_extension_load_more' ) ) {
 	function hocwp_theme_load_extension_load_more() {
-		$load = HT_extension()->is_active( __FILE__ );
+		$load = ht_extension()->is_active( __FILE__ );
 
 		return apply_filters( 'hocwp_theme_load_extension_load_more', $load );
 	}
@@ -55,10 +55,10 @@ if ( ! class_exists( 'HOCWP_Ext_Load_More' ) ) {
 	}
 }
 
-if ( ! function_exists( 'HTE_Load_More' ) ) {
-	function HTE_Load_More() {
+if ( ! function_exists( 'hte_load_more' ) ) {
+	function hte_load_more() {
 		return HOCWP_Ext_Load_More::get_instance();
 	}
 }
 
-HTE_Load_More()->get_instance();
+hte_load_more()->get_instance();

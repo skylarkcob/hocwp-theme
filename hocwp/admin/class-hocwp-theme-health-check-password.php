@@ -63,7 +63,7 @@ class HOCWP_Theme_Health_Check_Password extends HOCWP_Theme_Health_Check {
 
 		$users = $query->get_results();
 
-		if ( HT()->array_has_value( $users ) ) {
+		if ( ht()->array_has_value( $users ) ) {
 			foreach ( $users as $user ) {
 				if ( $user instanceof WP_User ) {
 					foreach ( $passwords as $pass ) {

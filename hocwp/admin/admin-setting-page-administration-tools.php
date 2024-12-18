@@ -287,7 +287,7 @@ $args = array(
 
 $tab->add_section( 'import_export', $args );
 
-$value = HOCWP_Theme()->get_options();
+$value = hocwp_theme()->get_options();
 
 $args = array(
 	'attributes'  => array(
@@ -573,7 +573,7 @@ $tab->load_script( 'hocwp-theme' );
 $tab->load_script( 'hocwp-theme-ajax-button' );
 
 function hocwp_theme_setting_page_administration_tools_script() {
-	wp_enqueue_script( 'hocwp-theme-administration-tools', HOCWP_Theme()->core_url . '/js/admin-administration-tools.js', array(
+	wp_enqueue_script( 'hocwp-theme-administration-tools', hocwp_theme()->core_url . '/js/admin-administration-tools.js', array(
 		'jquery',
 		'hocwp-theme'
 	), false, true );

@@ -1,4 +1,8 @@
 == Changelog ==
+= 7.0.8 =
+* 16/12/2024: Change all PHP function name to snake_case. Change Javascript function to PascalCase and variable to camelCase.
+* 16/12/2024: Upgrade new version 7.0.8, only supports PHP 8.1 or later.
+
 = 7.0.7 =
 * 30/05/2024: Update improve search extension.
 * 30/05/2024: Update for pre-release anime theme.

@@ -6,7 +6,7 @@ function hocwp_theme_change_administrative_email_ajax_callback() {
 
 	$email = $_POST['email'] ?? '';
 
-	if ( ! HT_Util()->is_email( $email ) ) {
+	if ( ! ht_util()->is_email( $email ) ) {
 		$data['message'] = __( 'Invalid email.', 'hocwp-theme' );
 	} else {
 		$old_email = get_bloginfo( 'admin_email' );
@@ -43,7 +43,7 @@ function hocwp_theme_change_administrative_email_ajax_callback() {
 					$query = new WP_User_Query( $args );
 
 					// Only update first administrator user
-					if ( HT()->array_has_value( $ids = $query->get_results() ) && 1 < $query->get_total() ) {
+					if ( ht()->array_has_value( $ids = $query->get_results() ) && 1 < $query->get_total() ) {
 						$user_id = current( $ids );
 
 						$userdata = array(
@@ -84,14 +84,14 @@ function hocwp_theme_send_test_email_ajax_callback() {
 
 	$email = $_POST['email'] ?? '';
 
-	if ( ! HT_Util()->is_email( $email ) ) {
+	if ( ! ht_util()->is_email( $email ) ) {
 		$email = get_bloginfo( 'admin_email' );
 	}
 
-	if ( HT_Util()->is_email( $email ) ) {
+	if ( ht_util()->is_email( $email ) ) {
 		$subject = sprintf( __( '[%s] Testing email', 'hocwp-theme' ), get_bloginfo( 'name' ) );
 		$message = __( 'This is a testing email. If you see this message, it means your email setting works normally.', 'hocwp-theme' );
-		$sent    = HT_Util()->html_mail( $email, $subject, $message );
+		$sent    = ht_util()->html_mail( $email, $subject, $message );
 
 		if ( $sent ) {
 			wp_send_json_success( $data );
@@ -219,7 +219,7 @@ function hocwp_theme_admin_tools_ajax_callback() {
 
 					$settings = $_REQUEST['settings'] ?? '';
 
-					if ( HT()->array_has_value( $settings ) ) {
+					if ( ht()->array_has_value( $settings ) ) {
 						if ( 'fetch_cloudflare_settings' == $do_action ) {
 							$value = '';
 
@@ -366,7 +366,7 @@ function hocwp_theme_delete_transient_ajax_callback() {
 	if ( $expired ) {
 		delete_expired_transients();
 	} else {
-		HT_Util()->delete_transient( $transient );
+		ht_util()->delete_transient( $transient );
 	}
 
 	wp_send_json_success( $data );
@@ -375,7 +375,7 @@ function hocwp_theme_delete_transient_ajax_callback() {
 add_action( 'wp_ajax_hocwp_theme_delete_transient', 'hocwp_theme_delete_transient_ajax_callback' );
 
 function _hocwp_theme_build_zip_file_name( $dir, $url, $folder, $name, $version = '', $extension = 'zip' ) {
-	return HT_Util()->generate_file_path( $dir, $url, trailingslashit( 'backups/' . $folder ), $name, $version, $extension );
+	return ht_util()->generate_file_path( $dir, $url, trailingslashit( 'backups/' . $folder ), $name, $version, $extension );
 }
 
 function hocwp_theme_download_theme_plugin_ajax_callback() {
@@ -396,7 +396,7 @@ function hocwp_theme_download_theme_plugin_ajax_callback() {
 	if ( ! empty( $theme ) ) {
 		$obj  = wp_get_theme( $theme );
 		$file = _hocwp_theme_build_zip_file_name( $dir, $url, 'themes', $theme, $obj->get( 'Version' ) );
-		$zip  = HT_Util()->zip_folder( $obj->get_stylesheet_directory(), $file['path'] );
+		$zip  = ht_util()->zip_folder( $obj->get_stylesheet_directory(), $file['path'] );
 
 		if ( $zip ) {
 			if ( file_exists( $file['path'] ) ) {
@@ -414,7 +414,7 @@ function hocwp_theme_download_theme_plugin_ajax_callback() {
 		$info = get_plugin_data( trailingslashit( WP_PLUGIN_DIR ) . $plugin );
 		$file = _hocwp_theme_build_zip_file_name( $dir, $url, 'plugins', dirname( $plugin ), $info['Version'] ?? '' );
 
-		$zip = HT_Util()->zip_folder( trailingslashit( WP_PLUGIN_DIR ) . dirname( $plugin ), $file['path'] );
+		$zip = ht_util()->zip_folder( trailingslashit( WP_PLUGIN_DIR ) . dirname( $plugin ), $file['path'] );
 
 		if ( $zip ) {
 			if ( file_exists( $file['path'] ) ) {
@@ -433,7 +433,7 @@ function hocwp_theme_download_theme_plugin_ajax_callback() {
 
 		$file = _hocwp_theme_build_zip_file_name( $dir, $url, 'databases', $database, $wp_db_version, 'sql' );
 
-		$zip = HT_Util()->export_database( $database, $file['path'] );
+		$zip = ht_util()->export_database( $database, $file['path'] );
 
 		if ( $zip ) {
 			if ( file_exists( $file['path'] ) ) {
@@ -477,8 +477,8 @@ function hocwp_theme_import_administrative_boundaries_ajax_callback() {
 		$district = $_POST['district'] ?? '';
 		$commune  = $_POST['commune'] ?? '';
 
-		$csv = HT_Util()->read_all_text( HOCWP_Theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
-		$csv = HT()->explode_new_line( $csv );
+		$csv = ht_util()->read_all_text( hocwp_theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
+		$csv = ht()->explode_new_line( $csv );
 
 		// Remove heading text
 		array_shift( $csv );
@@ -517,14 +517,14 @@ function hocwp_theme_fetch_administrative_boundaries_ajax_callback() {
 	$id   = $_REQUEST['id'] ?? '';
 
 	if ( ! empty( $type ) && ! empty( $id ) ) {
-		$csv = HT_Util()->read_all_text( HOCWP_Theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
-		$csv = HT()->explode_new_line( $csv );
+		$csv = ht_util()->read_all_text( hocwp_theme()->core_path . '/inc/dia-gioi-hanh-chinh-viet-nam.csv' );
+		$csv = ht()->explode_new_line( $csv );
 
 		// Remove heading text
 		array_shift( $csv );
 		$csv = array_filter( $csv );
 
-		$lists = HT_Util()->convert_administrative_boundaries_to_array( $csv, true, true );
+		$lists = ht_util()->convert_administrative_boundaries_to_array( $csv, true, true );
 
 		$parent = $_REQUEST['parent'] ?? '';
 
@@ -573,7 +573,7 @@ add_action( 'wp_ajax_hocwp_theme_export_database', function () {
 		$name = $database . '_' . date( 'Ymd_Hi', current_time( 'timestamp' ) ) . '.sql';
 
 		$dir .= $name;
-		HT_Util()->export_database( $database, $dir );
+		ht_util()->export_database( $database, $dir );
 
 		if ( file_exists( $dir ) ) {
 			$data['message'] = sprintf( __( 'Database "%s" has been exported successfully.', 'hocwp-theme' ), $database );
@@ -610,11 +610,11 @@ add_action( 'wp_ajax_hocwp_theme_import_database', function () {
 
 	$file = $_POST['file'] ?? '';
 
-	if ( HT_Media()->exists( $file ) ) {
+	if ( ht_media()->exists( $file ) ) {
 		$database = $_POST['database'] ?? '';
 
 		if ( ! empty( $database ) ) {
-			$res = HT_Util()->import_database( get_attached_file( $file ), $database );
+			$res = ht_util()->import_database( get_attached_file( $file ), $database );
 
 			if ( $res instanceof WP_Error ) {
 				$data['message'] = $res->get_error_message();
@@ -639,7 +639,7 @@ add_action( 'wp_ajax_hocwp_theme_delete_file', function () {
 
 	$nonce = $_POST['nonce'] ?? '';
 
-	if ( HT_Util()->verify_nonce( is_child_theme() ? get_stylesheet() : HOCWP_Theme()->get_textdomain(), $nonce ) ) {
+	if ( ht_util()->verify_nonce( is_child_theme() ? get_stylesheet() : hocwp_theme()->get_textdomain(), $nonce ) ) {
 		$file = $_POST['file'] ?? '';
 
 		if ( file_exists( $file ) ) {

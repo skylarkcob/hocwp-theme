@@ -90,7 +90,7 @@ final class HOCWP_Theme_Meta_Term extends HOCWP_Theme_Meta {
 	public function edit( $term_id ) {
 		$taxonomy = isset( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
 
-		if ( ! HT_Util()->verify_nonce( $taxonomy, $taxonomy . '_nonce' ) ) {
+		if ( ! ht_util()->verify_nonce( $taxonomy, $taxonomy . '_nonce' ) ) {
 			return;
 		}
 

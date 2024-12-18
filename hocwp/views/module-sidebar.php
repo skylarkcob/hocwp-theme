@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 do_action( 'hocwp_theme_sidebar_before' );
 
-$full_width = HT_Frontend()->is_full_width();
+$full_width = ht_frontend()->is_full_width();
 
 if ( ! $full_width ) {
 	$sidebar = apply_filters( 'hocwp_theme_sidebar', 'sidebar-1' );

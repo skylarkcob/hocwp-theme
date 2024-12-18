@@ -42,7 +42,7 @@ class HOCWP_Theme_Widget_Disqus_Recent_Comment extends WP_Widget {
 		$shortname      = isset( $instance['shortname'] ) ? $instance['shortname'] : $this->defaults['shortname'];
 
 		if ( empty( $shortname ) ) {
-			$shortname = HT_Options()->get_tab( 'disqus_shortname', '', 'discussion' );
+			$shortname = ht_options()->get_tab( 'disqus_shortname', '', 'discussion' );
 		}
 
 		if ( empty( $shortname ) ) {
@@ -81,22 +81,22 @@ class HOCWP_Theme_Widget_Disqus_Recent_Comment extends WP_Widget {
 
 		$args = array();
 
-		HT_HTML_Field()->widget_field( $this, 'shortname', __( 'Disqus Shortname:', 'hocwp-theme' ), $shortname );
+		ht_html_field()->widget_field( $this, 'shortname', __( 'Disqus Shortname:', 'hocwp-theme' ), $shortname );
 
 		$args['type']  = 'number';
 		$args['class'] = 'medium-text';
 
-		HT_HTML_Field()->widget_field( $this, 'num_items', _x( 'Number items:', 'comment items', 'hocwp-theme' ), $num_items, 'input', $args );
-		HT_HTML_Field()->widget_field( $this, 'excerpt_length', __( 'Excerpt length:', 'hocwp-theme' ), $excerpt_length, 'input', $args );
-		HT_HTML_Field()->widget_field( $this, 'avatar_size', __( 'Avatar size:', 'hocwp-theme' ), $avatar_size, 'input', $args );
+		ht_html_field()->widget_field( $this, 'num_items', _x( 'Number items:', 'comment items', 'hocwp-theme' ), $num_items, 'input', $args );
+		ht_html_field()->widget_field( $this, 'excerpt_length', __( 'Excerpt length:', 'hocwp-theme' ), $excerpt_length, 'input', $args );
+		ht_html_field()->widget_field( $this, 'avatar_size', __( 'Avatar size:', 'hocwp-theme' ), $avatar_size, 'input', $args );
 
 		$args = array(
 			'type'        => 'checkbox',
 			'right_label' => true
 		);
 
-		HT_HTML_Field()->widget_field( $this, 'hide_mods', __( 'Hide moderator\'s comments?', 'hocwp-theme' ), $hide_mods, 'input', $args );
-		HT_HTML_Field()->widget_field( $this, 'hide_avatars', __( 'Hide commenter avatar?', 'hocwp-theme' ), $hide_avatars, 'input', $args );
+		ht_html_field()->widget_field( $this, 'hide_mods', __( 'Hide moderator\'s comments?', 'hocwp-theme' ), $hide_mods, 'input', $args );
+		ht_html_field()->widget_field( $this, 'hide_avatars', __( 'Hide commenter avatar?', 'hocwp-theme' ), $hide_avatars, 'input', $args );
 
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}

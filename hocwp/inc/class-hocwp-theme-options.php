@@ -29,8 +29,8 @@ class HOCWP_Theme_Options {
 	 * @return bool|null Updated result.
 	 */
 	public function update( $key, $value, $tab = null, $options = null ) {
-		if ( HT()->is_array_key_valid( $key ) && null !== $value ) {
-			if ( ! HT()->array_has_value( $options ) ) {
+		if ( ht()->is_array_key_valid( $key ) && null !== $value ) {
+			if ( ! ht()->array_has_value( $options ) ) {
 				$options = $this->get();
 			}
 
@@ -45,7 +45,7 @@ class HOCWP_Theme_Options {
 			return null;
 		}
 
-		return update_option( HOCWP_Theme()->get_prefix(), $options );
+		return update_option( hocwp_theme()->get_prefix(), $options );
 	}
 
 	/**
@@ -76,10 +76,10 @@ class HOCWP_Theme_Options {
 				), $option_base );
 			}
 
-			return HT_Options()->get( $option_base );
+			return ht_options()->get( $option_base );
 		}
 
-		return HT_Options()->get( $tab_name );
+		return ht_options()->get( $tab_name );
 	}
 
 	/**
@@ -91,10 +91,10 @@ class HOCWP_Theme_Options {
 	 * @return array|mixed|string Full options array or a value of key.
 	 */
 	public function get( $key = null, $default = '' ) {
-		$options = HOCWP_Theme()->get_options();
+		$options = hocwp_theme()->get_options();
 
-		if ( HT()->is_array_key_valid( $key ) ) {
-			$options = HT()->get_value_in_array( $options, $key, $default );
+		if ( ht()->is_array_key_valid( $key ) ) {
+			$options = ht()->get_value_in_array( $options, $key, $default );
 		}
 
 		return $options;
@@ -110,11 +110,11 @@ class HOCWP_Theme_Options {
 	 * @return mixed|array Option value in a tab. If key is invalid, tab options will be returned.
 	 */
 	public function get_tab( $key = null, $default = '', $tab = 'general' ) {
-		if ( ! HT()->is_array_key_valid( $key ) ) {
+		if ( ! ht()->is_array_key_valid( $key ) ) {
 			return $this->get( $tab );
 		}
 
-		return HT_Util()->get_theme_option( $key, $default, $tab );
+		return ht_util()->get_theme_option( $key, $default, $tab );
 	}
 
 	public function get_default( $key = null ) {
@@ -122,7 +122,7 @@ class HOCWP_Theme_Options {
 
 		$defaults = $hocwp_theme->defaults;
 
-		if ( HT()->is_array_key_valid( $key ) ) {
+		if ( ht()->is_array_key_valid( $key ) ) {
 			$defaults = $defaults[ $key ] ?? '';
 		}
 
@@ -130,19 +130,19 @@ class HOCWP_Theme_Options {
 	}
 
 	public function get_home( $key = null, $default = '' ) {
-		return HT_Util()->get_theme_option( $key, $default, 'home' );
+		return ht_util()->get_theme_option( $key, $default, 'home' );
 	}
 
 	public function get_general( $key = null, $default = '' ) {
-		return HT_Util()->get_theme_option( $key, $default );
+		return ht_util()->get_theme_option( $key, $default );
 	}
 
 	public function check_page_valid( $page, $check_current_page = false, $page_template = true ) {
-		return HT_Util()->check_page_valid( $page, $check_current_page, $page_template );
+		return ht_util()->check_page_valid( $page, $check_current_page, $page_template );
 	}
 
 	public function check_post_valid( $id_or_object, $post_type = null ) {
-		return HT_Util()->check_post_valid( $id_or_object, $post_type );
+		return ht_util()->check_post_valid( $id_or_object, $post_type );
 	}
 
 	public function get_google_api_key( $restriction = '' ) {
@@ -178,6 +178,6 @@ class HOCWP_Theme_Options {
 	}
 }
 
-function HT_Options() {
+function ht_options() {
 	return HOCWP_Theme_Options::get_instance();
 }

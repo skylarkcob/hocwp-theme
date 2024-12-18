@@ -56,7 +56,7 @@ foreach ( $files as $file ) {
 	$file = trailingslashit( ABSPATH ) . $file;
 
 	if ( file_exists( $file ) ) {
-		$data = HT_Util()->filesystem()->get_contents( $file );
+		$data = ht_util()->filesystem()->get_contents( $file );
 
 		if ( ! empty( $data ) ) {
 			$has_error = true;

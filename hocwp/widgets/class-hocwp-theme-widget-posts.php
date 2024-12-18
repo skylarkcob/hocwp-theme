@@ -57,7 +57,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 
 	public function query_args_filter( $query_args, $instance ) {
 		if ( isset( $query_args['meta_key'] ) && 'views' == $query_args['meta_key'] && class_exists( 'WPP_Query' ) ) {
-			$ppp = $query_args['posts_per_page'] ?? HT_Util()->get_posts_per_page();
+			$ppp = $query_args['posts_per_page'] ?? ht_util()->get_posts_per_page();
 
 			$post_type = $query_args['post_type'] ?? 'post';
 
@@ -75,7 +75,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				$params['range'] = $query_args['date_interval'];
 			}
 
-			if ( isset( $instance['term'] ) && HT()->array_has_value( $instance['term'] ) ) {
+			if ( isset( $instance['term'] ) && ht()->array_has_value( $instance['term'] ) ) {
 				$terms = $instance['term'];
 				$first = array_shift( $terms );
 
@@ -84,7 +84,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				if ( isset( $parts[0] ) && isset( $parts[1] ) ) {
 					$term = get_term( $parts[1], $parts[0] );
 
-					while ( ! ( $term instanceof WP_Term ) && HT()->array_has_value( $terms ) ) {
+					while ( ! ( $term instanceof WP_Term ) && ht()->array_has_value( $terms ) ) {
 						$first = array_shift( $terms );
 
 						$parts = explode( ',', $first );
@@ -101,7 +101,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 							if ( str_contains( $data, $term->taxonomy ) ) {
 								$parts = explode( ',', $data );
 
-								if ( isset( $parts[1] ) && HT()->is_positive_number( $parts[1] ) ) {
+								if ( isset( $parts[1] ) && ht()->is_positive_number( $parts[1] ) ) {
 									$term_id .= $parts[1] . ',';
 								}
 							}
@@ -128,7 +128,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				$list_posts = $wq->get_posts();
 			}
 
-			if ( HT()->array_has_value( $list_posts ) ) {
+			if ( ht()->array_has_value( $list_posts ) ) {
 				$ids = array();
 
 				foreach ( $list_posts as $data ) {
@@ -146,9 +146,9 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 
 	private function get_post_type_from_instance( $instance ) {
 		$post_type = $instance['post_type'] ?? '';
-		$post_type = HT()->json_string_to_array( $post_type );
+		$post_type = ht()->json_string_to_array( $post_type );
 
-		if ( ! HT()->array_has_value( $post_type ) ) {
+		if ( ! ht()->array_has_value( $post_type ) ) {
 			$post_type = array(
 				array(
 					'value' => 'post'
@@ -283,7 +283,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		if ( $group_category ) {
 			$term = (array) $term;
 
-			if ( HT()->array_has_value( $term ) ) {
+			if ( ht()->array_has_value( $term ) ) {
 				$list = '';
 
 				foreach ( $term as $td ) {
@@ -342,7 +342,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			}
 		} else {
 			if ( $related ) {
-				$query = HT_Query()->related_posts( $query_args );
+				$query = ht_query()->related_posts( $query_args );
 			} else {
 				$query = new WP_Query( $query_args );
 			}
@@ -350,7 +350,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			if ( $query->have_posts() ) {
 				$term_as_title = $instance['term_as_title'] ?? $this->defaults['term_as_title'];
 
-				if ( ( 1 == $term_as_title || $term_as_title ) && HT()->array_has_value( $term ) ) {
+				if ( ( 1 == $term_as_title || $term_as_title ) && ht()->array_has_value( $term ) ) {
 					reset( $term );
 					$value = current( $term );
 
@@ -438,9 +438,9 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			$tr_name = 'hocwp_theme_search_meta_key_' . md5( $search );
 
 			if ( false === get_transient( $tr_name ) ) {
-				$keys = HT_Query()->meta_keys( $search );
+				$keys = ht_query()->meta_keys( $search );
 
-				if ( HT()->array_has_value( $keys ) ) {
+				if ( ht()->array_has_value( $keys ) ) {
 					foreach ( $keys as $key ) {
 						$suggestions[] = array(
 							'value' => $key,
@@ -518,7 +518,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$related         = isset( $instance['related'] ) ? (bool) $instance['related'] : $this->defaults['related'];
 		$term_as_title   = isset( $instance['term_as_title'] ) ? (bool) $instance['term_as_title'] : $this->defaults['term_as_title'];
 		$title_term_link = isset( $instance['title_term_link'] ) ? (bool) $instance['title_term_link'] : $this->defaults['title_term_link'];
-		$date_intervals  = HT_Util()->date_intervals();
+		$date_intervals  = ht_util()->date_intervals();
 		$date_interval   = $instance['date_interval'] ?? $this->defaults['date_interval'];
 
 		$orders = array(
@@ -556,7 +556,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Post type:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'       => $this->get_field_id( 'post_type' ),
@@ -567,7 +567,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'value'    => $post_type
 					);
 
-					HT_HTML_Field()->chosen( $args );
+					ht_html_field()->chosen( $args );
 					?>
                 </div>
                 <p>
@@ -577,7 +577,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Thumbnail size:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'    => $this->get_field_id( 'thumbnail_size' ),
@@ -585,7 +585,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'value' => $thumbnail_size
 					);
 
-					HT_HTML_Field()->size( $args );
+					ht_html_field()->size( $args );
 					?>
                 </p>
                 <p>
@@ -618,7 +618,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Term:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'         => $this->get_field_id( 'term' ),
@@ -633,7 +633,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'callback'   => 'select_term'
 					);
 
-					HT_HTML_Field()->chosen( $args );
+					ht_html_field()->chosen( $args );
 					?>
                 </div>
                 <div style="margin: 1em 0">
@@ -643,7 +643,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Order by:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'       => $this->get_field_id( 'orderby' ),
@@ -654,7 +654,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'value'    => $orderby
 					);
 
-					HT_HTML_Field()->chosen( $args );
+					ht_html_field()->chosen( $args );
 					?>
                 </div>
                 <p>
@@ -738,7 +738,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Date interval:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'      => $this->get_field_id( 'date_interval' ),
@@ -748,7 +748,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'value'   => $date_interval
 					);
 
-					HT_HTML_Field()->select( $args );
+					ht_html_field()->select( $args );
 					?>
                 </p>
                 <p>
@@ -758,7 +758,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Order:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'      => $this->get_field_id( 'order' ),
@@ -768,7 +768,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'value'   => $order
 					);
 
-					HT_HTML_Field()->select( $args );
+					ht_html_field()->select( $args );
 					?>
                 </p>
                 <p>
@@ -778,7 +778,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'text' => __( 'Display type:', 'hocwp-theme' )
 					);
 
-					HT_HTML_Field()->label( $args );
+					ht_html_field()->label( $args );
 
 					$args = array(
 						'id'      => $this->get_field_id( 'display_type' ),
@@ -796,7 +796,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						'value'   => $instance['display_type'] ?? $this->defaults['display_type']
 					);
 
-					HT_HTML_Field()->select( $args );
+					ht_html_field()->select( $args );
 					?>
                 </p>
                 <p>

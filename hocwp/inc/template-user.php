@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hocwp_theme_login_headerurl_filter( $login_header_url ) {
-	if ( HT()->string_contain( $login_header_url, 'wordpress.org' ) ) {
+	if ( ht()->string_contain( $login_header_url, 'wordpress.org' ) ) {
 		$login_header_url = home_url( '/' );
 	}
 
@@ -14,7 +14,7 @@ function hocwp_theme_login_headerurl_filter( $login_header_url ) {
 add_filter( 'login_headerurl', 'hocwp_theme_login_headerurl_filter' );
 
 function hocwp_theme_login_headertitle_filter( $title ) {
-	if ( ! HT()->string_contain( $title, 'img' ) && ! HT()->string_contain( $title, 'src' ) ) {
+	if ( ! ht()->string_contain( $title, 'img' ) && ! ht()->string_contain( $title, 'src' ) ) {
 		$title = get_bloginfo( 'name', 'display' );
 	}
 

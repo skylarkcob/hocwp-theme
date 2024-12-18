@@ -91,17 +91,13 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	$classes[] = 'hocwp-theme';
 
-	$theme = wp_get_theme();
-
 	if ( defined( 'HOCWP_THEME_NAME' ) ) {
 		$classes[] = sanitize_html_class( 'theme-' . HOCWP_THEME_NAME );
 	} else {
-		if ( $theme instanceof WP_Theme ) {
-			$classes[] = sanitize_html_class( 'theme-' . $theme->get( 'Name' ) );
-		}
+		$classes[] = sanitize_html_class( 'theme-' . hocwp_theme()->theme->get( 'Name' ) );
 	}
 
-	$classes[] = sanitize_file_name( 'theme-version-' . str_replace( '.', '-', $theme->get( 'Version' ) ) );
+	$classes[] = sanitize_file_name( 'theme-version-' . str_replace( '.', '-', hocwp_theme()->version ) );
 	$classes[] = sanitize_file_name( 'theme-core-version-' . str_replace( '.', '-', HOCWP_THEME_CORE_VERSION ) );
 
 	unset( $theme );
@@ -135,7 +131,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 		$classes[] = 'mobile';
 	}
 
-	$sidebar_position = HT_Util()->get_theme_option( 'sidebar_position', '', 'reading' );
+	$sidebar_position = ht_util()->get_theme_option( 'sidebar_position', '', 'reading' );
 
 	if ( is_single() || is_page() || is_singular() ) {
 		$tmp = get_post_meta( get_the_ID(), 'sidebar_position', true );
@@ -144,7 +140,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 			$sidebar_position = $tmp;
 		}
 
-		$tmp = HT_Frontend()->is_full_width();
+		$tmp = ht_frontend()->is_full_width();
 
 		if ( 1 == $tmp ) {
 			$classes[] = 'full-width';
@@ -164,7 +160,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	global $wp_styles;
 
-	if ( isset( $wp_styles->done ) && HT()->array_has_value( $wp_styles->done ) ) {
+	if ( isset( $wp_styles->done ) && ht()->array_has_value( $wp_styles->done ) ) {
 		foreach ( $wp_styles->done as $style ) {
 			if ( str_contains( $style, 'bootstrap' ) ) {
 				$classes[] = 'has-bootstrap';
@@ -175,7 +171,7 @@ function hocwp_theme_body_class_filter( $classes ) {
 
 	$classes[] = 'no-js';
 
-	$loading = HT_Options()->get_tab( 'loading', '', 'reading' );
+	$loading = ht_options()->get_tab( 'loading', '', 'reading' );
 
 	if ( $loading ) {
 		$classes[] = 'loading';
@@ -205,11 +201,11 @@ function hocwp_theme_post_class_filter( $classes, $class, $post_id ) {
 			$custom[] = 'has-excerpt';
 		}
 
-		if ( ! is_singular() && HT()->string_contain( $post->post_content, '<!--more' ) ) {
+		if ( ! is_singular() && ht()->string_contain( $post->post_content, '<!--more' ) ) {
 			$custom[] = 'has-more-link';
 		}
 
-		if ( HT()->string_contain( $post->post_content, '<!--nextpage' ) ) {
+		if ( ht()->string_contain( $post->post_content, '<!--nextpage' ) ) {
 			$custom[] = 'has-pages';
 		}
 
@@ -279,7 +275,7 @@ function hocwp_theme_html_tag_close( $tag ) {
  */
 function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo = true ) {
 	if ( ! empty( $attr ) && ! is_array( $attr ) ) {
-		$attr = HT()->attribute_to_array( $attr );
+		$attr = ht()->attribute_to_array( $attr );
 	}
 
 	if ( ! is_array( $attr ) ) {
@@ -307,7 +303,7 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 			$sub = substr( $att, 0, 5 );
 
 			if ( 'data_' == $sub ) {
-				$att = HT()->trim_string( $att, 'data_' );
+				$att = ht()->trim_string( $att, 'data_' );
 				$att = 'data-' . $att;
 			}
 
@@ -333,11 +329,11 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 	switch ( $tag ) {
 		case 'html':
-			$client_info = HT_Util()->get_client_info();
+			$client_info = ht_util()->get_client_info();
 
 			$screen_width = $client_info['screen_width'] ?? 'unknown';
 
-			if ( HT()->is_positive_number( $screen_width ) ) {
+			if ( ht()->is_positive_number( $screen_width ) ) {
 				$atts['data-screen-width'] = $screen_width;
 			}
 
@@ -349,9 +345,9 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 			$atts['data-theme-core-version'] = HOCWP_THEME_CORE_VERSION;
 
-			$browser = HT_Util()->get_browser();
+			$browser = ht_util()->get_browser();
 
-			if ( isset( $browser['name'] ) && ! empty( $browser['name'] ) ) {
+			if ( ! empty( $browser['name'] ) ) {
 				$atts['data-browser'] = $browser['name'];
 
 				if ( isset( $browser['short_name'] ) ) {
@@ -365,7 +361,7 @@ function hocwp_theme_html_tag_with_context_attributes( $atts, $tag, $context ) {
 
 			$atts['data-platform'] = $browser['platform'] ?? '';
 
-			$atts['data-is-mobile'] = HT()->bool_to_int( wp_is_mobile() );
+			$atts['data-is-mobile'] = ht()->bool_to_int( wp_is_mobile() );
 
 			break;
 		case 'footer':

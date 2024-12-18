@@ -25,7 +25,7 @@ $field = hocwp_theme_create_setting_field( 'term_html_description', __( 'Term HT
 $tab->add_field_array( $field );
 
 function hocwp_theme_admin_setting_page_writing_scripts() {
-	HT_Enqueue()->media_upload();
+	ht_enqueue()->media_upload();
 }
 
 add_action( 'hocwp_theme_admin_setting_page_writing_scripts', 'hocwp_theme_admin_setting_page_writing_scripts' );

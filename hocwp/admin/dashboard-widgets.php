@@ -8,9 +8,9 @@ function hocwp_theme_get_feed_items() {
 
 	if ( false === ( $feeds = get_transient( $tr_name ) ) ) {
 		$url   = 'https://hocwp.net/feed/';
-		$feeds = HT_Util()->get_feed_items( $url );
+		$feeds = ht_util()->get_feed_items( $url );
 
-		if ( HT()->array_has_value( $feeds ) ) {
+		if ( ht()->array_has_value( $feeds ) ) {
 			set_transient( $tr_name, $feeds, DAY_IN_SECONDS );
 		}
 	}
@@ -21,7 +21,7 @@ function hocwp_theme_get_feed_items() {
 function hocwp_theme_news_from_hocwp_team_callback() {
 	$feeds = hocwp_theme_get_feed_items();
 
-	if ( HT()->array_has_value( $feeds ) ) {
+	if ( ht()->array_has_value( $feeds ) ) {
 		?>
         <div class="wordpress-news">
             <div class="rss-widget">

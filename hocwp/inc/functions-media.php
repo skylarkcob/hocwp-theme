@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool
  */
 function hocwp_theme_media_file_exists( $id ) {
-	if ( HT()->is_positive_number( $id ) && HT()->is_file( get_attached_file( $id ) ) ) {
+	if ( ht()->is_positive_number( $id ) && ht()->is_file( get_attached_file( $id ) ) ) {
 		return true;
 	}
 
@@ -19,7 +19,7 @@ function hocwp_theme_media_file_exists( $id ) {
 }
 
 function hocwp_theme_is_image( $url, $id = 0 ) {
-	if ( HT()->is_positive_number( $id ) ) {
+	if ( ht()->is_positive_number( $id ) ) {
 		return wp_attachment_is_image( $id );
 	}
 
@@ -27,7 +27,7 @@ function hocwp_theme_is_image( $url, $id = 0 ) {
 }
 
 function hocwp_theme_is_image_url( $url ) {
-	return HT()->is_image_url( $url );
+	return ht()->is_image_url( $url );
 }
 
 function hocwp_theme_attachment_path_to_postid( $path ) {
@@ -50,7 +50,7 @@ add_filter( 'wp_calculate_image_srcset', '__return_false' );
 function hocwp_theme_upload_mimes_filter( $mimes ) {
 	$mimes['webp'] = 'image/webp';
 
-	if ( defined( 'HOCWP_THEME_ALLOW_MIME_TYPES' ) && HT()->array_has_value( HOCWP_THEME_ALLOW_MIME_TYPES ) ) {
+	if ( defined( 'HOCWP_THEME_ALLOW_MIME_TYPES' ) && ht()->array_has_value( HOCWP_THEME_ALLOW_MIME_TYPES ) ) {
 		foreach ( HOCWP_THEME_ALLOW_MIME_TYPES as $mime => $type ) {
 			if ( ! isset( $mimes[ $mime ] ) ) {
 				$mimes[ $mime ] = $type;
@@ -63,7 +63,7 @@ function hocwp_theme_upload_mimes_filter( $mimes ) {
 
 // Update WEBP image file type
 function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file ) {
-	if ( HT_Media()->is_webp_image( $file ) ) {
+	if ( ht_media()->is_webp_image( $file ) ) {
 		$types['ext']  = 'webp';
 		$types['type'] = 'image/webp';
 	}
@@ -73,7 +73,7 @@ function hocwp_theme_wp_check_filetype_and_ext_filter( $types, $file ) {
 
 // Mark WEBP image as real image
 function hocwp_theme_file_is_displayable_image_filter( $result, $path ) {
-	if ( ! $result && HT_Media()->is_webp_image( $path ) ) {
+	if ( ! $result && ht_media()->is_webp_image( $path ) ) {
 		$result = true;
 	}
 
@@ -84,7 +84,7 @@ function hocwp_theme_file_is_displayable_image_filter( $result, $path ) {
 function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 	$path = get_attached_file( $media_id );
 
-	if ( HT_Media()->is_webp_image( $path ) ) {
+	if ( ht_media()->is_webp_image( $path ) ) {
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/image.php' );
 		}
@@ -95,7 +95,7 @@ function hocwp_theme_wp_get_attachment_metadata_filter( $data, $media_id ) {
 
 	$sizes = $data['sizes'] ?? '';
 
-	if ( HT()->array_has_value( $sizes ) ) {
+	if ( ht()->array_has_value( $sizes ) ) {
 		foreach ( (array) $sizes as $key => $tmp ) {
 			if ( empty( $tmp ) ) {
 				unset( $sizes[ $key ] );
@@ -121,7 +121,7 @@ if ( version_compare( $wp_version, '5.8', '<' ) ) {
 function hocwp_theme_fix_attachment_metadata( $meta ) {
 	$sizes = $meta['sizes'] ?? '';
 
-	if ( HT()->array_has_value( $sizes ) ) {
+	if ( ht()->array_has_value( $sizes ) ) {
 		$update = false;
 
 		foreach ( $sizes as $_size => $data ) {
@@ -257,7 +257,7 @@ class HOCWP_Theme_Media {
 			return $colors;
 		}
 
-		if ( HT()->is_positive_number( $number ) ) {
+		if ( ht()->is_positive_number( $number ) ) {
 			$colors = array_slice( array_keys( $colors ), 0, $number );
 		} elseif ( ! empty( $number ) && is_string( $number ) ) {
 			$colors = array_slice( array_keys( $colors ), 0, ceil( count( $colors ) / 2 ) );
@@ -267,9 +267,9 @@ class HOCWP_Theme_Media {
 	}
 
 	public function big_image_size_threshold_filter( $threshold ) {
-		$size = HT_Options()->get_tab( 'big_image_size_threshold', 2560, 'media' );
+		$size = ht_options()->get_tab( 'big_image_size_threshold', 2560, 'media' );
 
-		if ( HT()->is_positive_number( $size ) && $size != $threshold ) {
+		if ( ht()->is_positive_number( $size ) && $size != $threshold ) {
 			$threshold = $size;
 		}
 
@@ -279,7 +279,7 @@ class HOCWP_Theme_Media {
 	}
 
 	public function is_webp_image( $file ) {
-		if ( is_file( $file ) && HT()->is_image_url( $file ) ) {
+		if ( is_file( $file ) && ht()->is_image_url( $file ) ) {
 			$mime = wp_get_image_mime( $file );
 
 			if ( 'image/webp' == $mime ) {
@@ -291,9 +291,9 @@ class HOCWP_Theme_Media {
 	}
 
 	public function jpeg_quality_filter( $quality ) {
-		$number = HT_Options()->get_tab( 'jpeg_quality', '', 'media' );
+		$number = ht_options()->get_tab( 'jpeg_quality', '', 'media' );
 
-		if ( HT()->is_positive_number( $number ) && $number != $quality ) {
+		if ( ht()->is_positive_number( $number ) && $number != $quality ) {
 			$number  = min( $number, 100 );
 			$number  = max( 1, $number );
 			$quality = $number;
@@ -351,11 +351,11 @@ class HOCWP_Theme_Media {
 		$name = '';
 
 		if ( is_array( $size ) ) {
-			if ( ! HT()->array_has_value( $sizes ) ) {
-				$sizes = HT_Util()->get_image_sizes();
+			if ( ! ht()->array_has_value( $sizes ) ) {
+				$sizes = ht_util()->get_image_sizes();
 			}
 
-			if ( HT()->array_has_value( $sizes ) ) {
+			if ( ht()->array_has_value( $sizes ) ) {
 				$w = $size[0] ?? '';
 
 				if ( empty( $w ) ) {
@@ -437,7 +437,7 @@ class HOCWP_Theme_Media {
 				$ids = $query->get_posts();
 				$id  = array_shift( $ids );
 
-				if ( HT_Media()->exists( $id ) ) {
+				if ( ht_media()->exists( $id ) ) {
 					return $id;
 				}
 			}
@@ -505,7 +505,7 @@ class HOCWP_Theme_Media {
 	}
 
 	public function get_default_image_url( $size = false ) {
-		$thumbnail = HT_Options()->get_tab( 'default_thumbnail', '', 'writing' );
+		$thumbnail = ht_options()->get_tab( 'default_thumbnail', '', 'writing' );
 
 		if ( $this->exists( $thumbnail ) ) {
 			if ( $size ) {
@@ -516,14 +516,14 @@ class HOCWP_Theme_Media {
 		}
 
 		if ( empty( $thumbnail ) ) {
-			$thumbnail = HT_Util()->get_my_image_url( 'no-thumbnail.webp' );
+			$thumbnail = ht_util()->get_my_image_url( 'no-thumbnail.webp' );
 		}
 
 		return apply_filters( 'hocwp_theme_default_image_url', $thumbnail );
 	}
 
 	public function get_image_size( $size ) {
-		return HT_Util()->get_image_size( $size );
+		return ht_util()->get_image_size( $size );
 	}
 
 	public function convert_size_to_array( $thumbnail_size, $crop = true ) {
@@ -531,7 +531,7 @@ class HOCWP_Theme_Media {
 			return $thumbnail_size;
 		}
 
-		$size = HT_Media()->get_image_size( $thumbnail_size );
+		$size = ht_media()->get_image_size( $thumbnail_size );
 
 		if ( ! empty( $size['width'] ) && ! empty( $size['height'] ) ) {
 			$thumbnail_size = array( $size['width'], $size['height'], $crop );
@@ -541,6 +541,6 @@ class HOCWP_Theme_Media {
 	}
 }
 
-function HT_Media() {
+function ht_media() {
 	return HOCWP_Theme_Media::get_instance();
 }

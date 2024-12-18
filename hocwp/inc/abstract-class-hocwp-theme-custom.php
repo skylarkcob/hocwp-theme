@@ -6,7 +6,7 @@ abstract class Abstract_HT_Custom {
 	public $term_meta_keys;
 
 	private function get_path_or_url( $suffix = '', $in_child = false, $url = false ) {
-		if ( ! $in_child && HT_Control()->is_child_theme && defined( 'HOCWP_THEME_FORCE_PARENT' ) && HOCWP_THEME_FORCE_PARENT ) {
+		if ( ! $in_child && ht_control()->is_child_theme && defined( 'HOCWP_THEME_FORCE_PARENT' ) && HOCWP_THEME_FORCE_PARENT ) {
 			$in_child = true;
 		}
 
@@ -19,10 +19,10 @@ abstract class Abstract_HT_Custom {
 		}
 
 		if ( $in_child ) {
-			return HT_Util()->get_path_or_url( $current, $suffix );
+			return ht_util()->get_path_or_url( $current, $suffix );
 		}
 
-		return HT_Util()->get_path_or_url( $base, $suffix );
+		return ht_util()->get_path_or_url( $base, $suffix );
 	}
 
 	/*
@@ -47,9 +47,7 @@ abstract class Abstract_HT_Custom {
 
 		global $hocwp_theme_metas;
 
-		if ( ! ( $hocwp_theme_metas instanceof HOCWP_Theme_Metas ) ) {
-			$hocwp_theme_metas = new HOCWP_Theme_Metas();
-		}
+		$hocwp_theme_metas = hocwp_theme()->new_instance( 'HOCWP_Theme_Metas' );
 
 		if ( ! class_exists( 'HOCWP_Theme_Meta_Field' ) ) {
 			require_once( HOCWP_THEME_CORE_PATH . '/admin/class-hocwp-theme-meta-field.php' );
@@ -141,9 +139,7 @@ abstract class Abstract_HT_Custom {
 		if ( $field instanceof HOCWP_Theme_Meta_Field ) {
 			global $hocwp_theme_metas;
 
-			if ( ! ( $hocwp_theme_metas instanceof HOCWP_Theme_Metas ) ) {
-				$hocwp_theme_metas = new HOCWP_Theme_Metas();
-			}
+			$hocwp_theme_metas = hocwp_theme()->new_instance( 'HOCWP_Theme_Metas' );
 
 			$add = $hocwp_theme_metas->add( $field, $type_name, $type );
 
@@ -163,7 +159,7 @@ abstract class Abstract_HT_Custom {
 			$keys = array();
 		}
 
-		if ( HT()->array_has_value( $this->post_meta_keys ) && $object instanceof HOCWP_Theme_Post ) {
+		if ( ht()->array_has_value( $this->post_meta_keys ) && $object instanceof HOCWP_Theme_Post ) {
 			if ( $object->is() ) {
 				$object = $object->get();
 
@@ -186,7 +182,7 @@ abstract class Abstract_HT_Custom {
 			$keys = array();
 		}
 
-		if ( HT()->array_has_value( $this->term_meta_keys ) && $object instanceof HOCWP_Theme_Term ) {
+		if ( ht()->array_has_value( $this->term_meta_keys ) && $object instanceof HOCWP_Theme_Term ) {
 			if ( $object->is() ) {
 				$object = $object->get();
 
@@ -236,6 +232,6 @@ abstract class Abstract_HT_Custom {
 	 * @return string The full image url.
 	 */
 	public function get_image_url( $name ) {
-		return HT_Util()->get_custom_image_url( $name );
+		return ht_util()->get_custom_image_url( $name );
 	}
 }

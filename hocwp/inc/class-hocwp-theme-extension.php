@@ -40,7 +40,7 @@ class HOCWP_Theme_Extension {
 
 			$this->description = $this->data['Description'];
 		} else {
-			HT_Util()->doing_it_wrong( __CLASS__, __( 'Please declare extension with Name and Description in header.', 'hocwp-theme' ), '6.4.2' );
+			ht_util()->doing_it_wrong( __CLASS__, __( 'Please declare extension with Name and Description in header.', 'hocwp-theme' ), '6.4.2' );
 
 			return;
 		}
@@ -48,7 +48,7 @@ class HOCWP_Theme_Extension {
 		$this->folder_path = $this->basedir;
 
 		if ( empty( $this->folder_url ) ) {
-			$this->folder_url = HOCWP_Theme()->core_url . '/ext';
+			$this->folder_url = hocwp_theme()->core_url . '/ext';
 		}
 
 		if ( empty( $this->folder_name ) ) {
@@ -65,12 +65,12 @@ class HOCWP_Theme_Extension {
 		$this->folder_url = trailingslashit( $this->folder_url );
 		$this->folder_url .= $this->folder_name;
 
-		$this->basename = HT_Extension()->get_basename( $this->file );
+		$this->basename = ht_extension()->get_basename( $this->file );
 
 		add_filter( 'hocwp_theme_required_extensions', array( $this, 'required_extensions' ) );
 
 		if ( is_admin() ) {
-			if ( HT_Admin()->is_theme_option_page() ) {
+			if ( ht_admin()->is_theme_option_page() ) {
 				add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'option_tabs' ) );
 
 				add_filter( 'hocwp_theme_settings_page_' . $this->option_name . '_settings_section', array(
@@ -131,7 +131,7 @@ class HOCWP_Theme_Extension {
 	}
 
 	public function required_extensions( $extensions ) {
-		if ( HT()->array_has_value( $this->required_extensions ) ) {
+		if ( ht()->array_has_value( $this->required_extensions ) ) {
 			$extensions = array_merge( $this->required_extensions, $extensions );
 		}
 
@@ -139,7 +139,7 @@ class HOCWP_Theme_Extension {
 	}
 
 	public function get_headers() {
-		$this->data = get_file_data( $this->file, HT_Extension()->headers );
+		$this->data = get_file_data( $this->file, ht_extension()->headers );
 
 		return $this->data;
 	}
@@ -167,7 +167,7 @@ class HOCWP_Theme_Extension {
 	}
 
 	public function get_option( $name, $default = '' ) {
-		return HT_Options()->get_tab( $name, $default, $this->option_name );
+		return ht_options()->get_tab( $name, $default, $this->option_name );
 	}
 }
 
@@ -191,14 +191,12 @@ class HOCWP_Theme_Extension_Controller {
 
 	public function __construct() {
 		if ( self::$instance ) {
-			HT_Util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
+			ht_util()->doing_it_wrong( __CLASS__, sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'hocwp-theme' ), get_class( $this ) ), '6.4.1' );
 
 			return;
 		}
 
 		$this->active_extensions = (array) get_option( 'hocwp_theme_active_extensions', array() );
-
-		self::$instance = $this;
 
 		global $hocwp_theme;
 
@@ -242,7 +240,7 @@ class HOCWP_Theme_Extension_Controller {
 		$tr_name = 'deprecated_extension_notices';
 
 		if ( false !== ( $notices = get_transient( $tr_name ) ) ) {
-			if ( HT()->array_has_value( $notices ) ) {
+			if ( ht()->array_has_value( $notices ) ) {
 				foreach ( $notices as $notice ) {
 					?>
                     <div class="notice notice-warning is-dismissible">
@@ -312,12 +310,12 @@ class HOCWP_Theme_Extension_Controller {
 
 		foreach ( $paths as $path ) {
 			if ( is_dir( $path ) ) {
-				$tmp = HT()->scandir( $path );
+				$tmp = ht()->scandir( $path );
 
 				foreach ( $tmp as $key => $file ) {
 					if ( '.' != $file && '..' != $file ) {
 						$file = trailingslashit( $path ) . $file;
-						if ( HT()->is_file( $file ) ) {
+						if ( ht()->is_file( $file ) ) {
 							$data = get_file_data( $file, $this->headers );
 
 							if ( ! empty( $data['Name'] ) && ! in_array( $file, $this->files ) ) {
@@ -366,7 +364,7 @@ class HOCWP_Theme_Extension_Controller {
 
 		foreach ( $files as $file ) {
 			if ( '.' != $file && '..' != $file ) {
-				if ( HT()->is_file( $file ) ) {
+				if ( ht()->is_file( $file ) ) {
 					$data = get_file_data( $file, $this->headers );
 
 					if ( ! empty( $data['Name'] ) ) {
@@ -408,6 +406,6 @@ class HOCWP_Theme_Extension_Controller {
 	}
 }
 
-function HT_Extension() {
+function ht_extension() {
 	return HOCWP_Theme_Extension_Controller::get_instance();
 }

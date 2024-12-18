@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( ! function_exists( 'hocwp_theme_custom_ajax_callback' ) ) {
 	function hocwp_theme_custom_ajax_callback() {
-		HT_Custom()->ajax_callback();
+		ht_custom()->ajax_callback();
 	}
 }
 
@@ -19,6 +19,6 @@ if ( ! function_exists( 'hocwp_theme_custom_ajax_callback' ) ) {
  */
 if ( ! function_exists( 'hocwp_theme_custom_ajax_private_callback' ) ) {
 	function hocwp_theme_custom_ajax_private_callback() {
-		HT_Custom()->ajax_private_callback();
+		ht_custom()->ajax_private_callback();
 	}
 }

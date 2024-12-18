@@ -10,7 +10,7 @@ get_header();
             <div style="text-align: center;">
 				<?php
 				$goto   = isset( $_GET['goto'] ) ? $_GET['goto'] : '';
-				$domain = HT()->get_domain_name( home_url() );
+				$domain = ht()->get_domain_name( home_url() );
 				$msg    = __( 'This url is not belong to %s, please choose these options below to continue.', 'hocwp-theme' );
 				do_action( 'hocwp_theme_goout_before' )
 				?>

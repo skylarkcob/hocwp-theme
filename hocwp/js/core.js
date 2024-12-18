@@ -1,7 +1,7 @@
 window.wp = window.wp || {};
 window.hocwpTheme = window.hocwpTheme || {};
 
-function HOCWP_Theme() {
+function HocwpTheme() {
     this.log = function (string) {
         log(string);
     };
@@ -296,7 +296,7 @@ function HOCWP_Theme() {
     }
 }
 
-hocwpTheme.object = new HOCWP_Theme();
+hocwpTheme.object = new HocwpTheme();
 hocwpTheme.object.init();
 
 let log = console.log.bind(document);

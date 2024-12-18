@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $tab = new HOCWP_Theme_Admin_Setting_Tab( 'discussion', __( 'Discussion', 'hocwp-theme' ), '<span class="dashicons dashicons-testimonial"></span>' );
 
-if ( HT_extension()->is_active( 'ext/comment-notification.php' ) ) {
+if ( ht_extension()->is_active( 'ext/comment-notification.php' ) ) {
 	$tab->add_section( 'comment_notification', array(
 		'title'    => __( 'Comment Notification', 'hocwp-theme' ),
 		'callback' => 'hocwp_theme_settings_page_discussion_section_comment_notification_callback'
@@ -53,7 +53,7 @@ $tab->add_field_array( array(
 	)
 ) );
 
-$comment_system = HT_Options()->get_tab( 'comment_system', '', 'discussion' );
+$comment_system = ht_options()->get_tab( 'comment_system', '', 'discussion' );
 
 if ( 'disqus' == $comment_system ) {
 	$tab->add_field_array( new HOCWP_Theme_Admin_Setting_Field( 'disqus_shortname', __( 'Disqus Shortname', 'hocwp-theme' ), 'input', array( 'class' => 'regular-text' ), 'string', 'discussion' ) );
@@ -66,7 +66,7 @@ $args = array(
 
 $tab->add_field( 'captcha', __( 'CAPTCHA', 'hocwp-theme' ), 'input', $args, 'boolean' );
 
-if ( HT_extension()->is_active( 'ext/comment-notification.php' ) ) {
+if ( ht_extension()->is_active( 'ext/comment-notification.php' ) ) {
 	$tab->add_field_array( array(
 		'section' => 'comment_notification',
 		'id'      => 'cn_mail_subject',

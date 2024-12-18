@@ -25,10 +25,10 @@ class HOCWP_Theme_Admin_Setting_Tab {
 
 	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10, $page = '' ) {
 		if ( empty( $name ) ) {
-			HT_Util()->doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
+			ht_util()->doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
 		}
 
-		if ( ! HT()->is_positive_number( $priority ) ) {
+		if ( ! ht()->is_positive_number( $priority ) ) {
 			$priority = 10;
 		}
 
@@ -50,7 +50,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 
 		add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'setting_tabs_filter' ), $this->priority );
 
-		if ( $this->name != HT_Admin_Setting_Tabs()->tab_name ) {
+		if ( $this->name != ht_admin_setting_tabs()->tab_name ) {
 			return;
 		}
 
@@ -70,7 +70,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		$cff = $args['custom_fields_filter'] ?? '';
 
 		if ( ! empty( $cff ) ) {
-			$this->fields = apply_filters( $cff, $this->fields, HT_Options()->get( $this->name ) );
+			$this->fields = apply_filters( $cff, $this->fields, ht_options()->get( $this->name ) );
 		}
 
 		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_field', array( $this, 'fields_filter' ) );
@@ -82,7 +82,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	}
 
 	public function get_value( $key, $default = '' ) {
-		return HT_Options()->get_tab( $key, $default, $this->name );
+		return ht_options()->get_tab( $key, $default, $this->name );
 	}
 
 	public function admin_bar_menu_action( $admin_bar ) {
@@ -211,7 +211,7 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	}
 
 	public function fields_filter() {
-		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, HT_Options()->get( $this->name ) );
+		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, ht_options()->get( $this->name ) );
 
 		if ( is_array( $this->fields ) ) {
 			foreach ( $this->fields as $key => $field ) {

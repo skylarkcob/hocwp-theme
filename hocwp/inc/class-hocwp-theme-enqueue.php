@@ -22,19 +22,19 @@ class HOCWP_Theme_Enqueue {
 			return;
 		}
 
-		$this->custom_lib_dir = HOCWP_Theme()->custom_path;
+		$this->custom_lib_dir = hocwp_theme()->custom_path;
 
-		if ( HOCWP_Theme()->is_child_theme ) {
-			$this->custom_lib_dir = HOCWP_Theme()->custom_current_path;
+		if ( hocwp_theme()->is_child_theme ) {
+			$this->custom_lib_dir = hocwp_theme()->custom_current_path;
 		}
 
 		$this->custom_lib_dir = trailingslashit( $this->custom_lib_dir );
 		$this->custom_lib_dir .= 'lib/';
 
-		$this->custom_lib_url = HOCWP_Theme()->custom_url;
+		$this->custom_lib_url = hocwp_theme()->custom_url;
 
-		if ( HOCWP_Theme()->is_child_theme ) {
-			$this->custom_lib_url = HOCWP_Theme()->custom_current_url;
+		if ( hocwp_theme()->is_child_theme ) {
+			$this->custom_lib_url = hocwp_theme()->custom_current_url;
 		}
 
 		$this->custom_lib_url = trailingslashit( $this->custom_lib_url );
@@ -159,7 +159,7 @@ class HOCWP_Theme_Enqueue {
 
 		$folder_name = 'popper.js';
 
-		if ( ! HT()->is_dir( $this->custom_lib_dir . $folder_name ) ) {
+		if ( ! ht()->is_dir( $this->custom_lib_dir . $folder_name ) ) {
 			$folder_name = 'popper';
 		}
 
@@ -251,14 +251,14 @@ class HOCWP_Theme_Enqueue {
 
 		wp_enqueue_style( $handle . '-style', $base_url . $css_file );
 
-		if ( $args['theme'] && HT()->is_file( $base_dir . 'css/bootstrap-theme.min.css' ) ) {
+		if ( $args['theme'] && ht()->is_file( $base_dir . 'css/bootstrap-theme.min.css' ) ) {
 			wp_enqueue_style( $handle . '-theme-style', $base_url . 'css/bootstrap-theme.min.css' );
 		}
 
-		if ( $args['js'] && HT()->is_file( $base_dir . 'js/bootstrap.min.js' ) ) {
+		if ( $args['js'] && ht()->is_file( $base_dir . 'js/bootstrap.min.js' ) ) {
 			$popper = isset( $args['popper'] ) ? $args['popper'] : array();
 
-			if ( HT()->array_has_value( $popper ) || $popper ) {
+			if ( ht()->array_has_value( $popper ) || $popper ) {
 				$this->popper( $popper );
 			}
 
@@ -275,14 +275,14 @@ class HOCWP_Theme_Enqueue {
 	}
 
 	private function auto_check_lib_version( &$args, &$base_dir, $abs_file ) {
-		if ( ( ! isset( $args['cdn'] ) || ! $args['cdn'] ) && ! HT()->is_dir( $base_dir ) ) {
+		if ( ( ! isset( $args['cdn'] ) || ! $args['cdn'] ) && ! ht()->is_dir( $base_dir ) ) {
 			// Auto check version
 			$tmp  = dirname( $base_dir );
 			$tmp  = trailingslashit( $tmp );
 			$tmp  .= '*';
 			$dirs = glob( $tmp, GLOB_ONLYDIR );
 
-			if ( HT()->array_has_value( $dirs ) ) {
+			if ( ht()->array_has_value( $dirs ) ) {
 				$tmp = current( $dirs );
 				$tmp = trailingslashit( $tmp );
 
@@ -293,11 +293,11 @@ class HOCWP_Theme_Enqueue {
 				}
 			}
 
-			if ( ! HT()->is_dir( $base_dir ) ) {
+			if ( ! ht()->is_dir( $base_dir ) ) {
 				$base_dir = dirname( $base_dir );
 				$base_dir = trailingslashit( $base_dir );
 
-				if ( ! HT()->is_dir( $base_dir ) || ! HT()->is_file( $base_dir . $abs_file ) ) {
+				if ( ! ht()->is_dir( $base_dir ) || ! ht()->is_file( $base_dir . $abs_file ) ) {
 					return;
 				}
 
@@ -463,10 +463,10 @@ class HOCWP_Theme_Enqueue {
 			_deprecated_argument( __FUNCTION__, '6.7.7' );
 		}
 
-		wp_enqueue_style( 'jquery-ui-style', HOCWP_Theme()->core_url . '/css/jquery-ui' . HOCWP_THEME_CSS_SUFFIX );
+		wp_enqueue_style( 'jquery-ui-style', hocwp_theme()->core_url . '/css/jquery-ui' . HOCWP_THEME_CSS_SUFFIX );
 	}
 }
 
-function HT_Enqueue() {
+function ht_enqueue() {
 	return HOCWP_Theme_Enqueue::get_instance();
 }

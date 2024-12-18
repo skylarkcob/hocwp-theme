@@ -50,7 +50,7 @@ function hocwp_theme_settings_page_media_field() {
 	$field    = hocwp_theme_create_setting_field( 'big_image_size_threshold', __( 'Big Image Size Threshold', 'hocwp-theme' ), 'input', $args, 'positive_integer', 'media' );
 	$fields[] = $field;
 
-	$sizes = HT_Util()->get_image_sizes();
+	$sizes = ht_util()->get_image_sizes();
 
 	$args = array();
 

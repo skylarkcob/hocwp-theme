@@ -55,7 +55,7 @@ final class HOCWP_Theme_HTML_Field {
 	public static function layout( $args = array() ) {
 		$options = $args['options'] ?? '';
 
-		if ( HT()->array_has_value( $options ) ) {
+		if ( ht()->array_has_value( $options ) ) {
 			$lists = array();
 
 			foreach ( $options as $key => $option ) {
@@ -83,7 +83,7 @@ final class HOCWP_Theme_HTML_Field {
 	public static function buttons( $args = array() ) {
 		$buttons = $args['buttons'] ?? '';
 
-		if ( HT()->array_has_value( $buttons ) ) {
+		if ( ht()->array_has_value( $buttons ) ) {
 			echo '<div class="buttons">' . PHP_EOL;
 
 			foreach ( $buttons as $id => $button ) {
@@ -210,7 +210,7 @@ final class HOCWP_Theme_HTML_Field {
 			$button->add_attribute( 'type', $button_type );
 
 			$attributes = $args['attributes'];
-			$attributes = HT()->attribute_to_array( $attributes );
+			$attributes = ht()->attribute_to_array( $attributes );
 
 			foreach ( $attributes as $att => $value ) {
 				$button->add_attribute( $att, $value );
@@ -455,7 +455,7 @@ final class HOCWP_Theme_HTML_Field {
 		$label = $args['label'] ?? '';
 
 		if ( ! empty( $label ) ) {
-			HT_HTML_Field()->label( array( 'text' => $label, 'for' => $args['id'] ) );
+			ht_html_field()->label( array( 'text' => $label, 'for' => $args['id'] ) );
 		}
 
 		unset( $label );
@@ -634,7 +634,7 @@ final class HOCWP_Theme_HTML_Field {
 		$options = $args['options'] ?? '';
 
 		if ( empty( $options ) ) {
-			$args['options'] = HT_Util()->choose_sidebar_select_options();
+			$args['options'] = ht_util()->choose_sidebar_select_options();
 		}
 
 		self::select( $args );
@@ -643,7 +643,7 @@ final class HOCWP_Theme_HTML_Field {
 	public static function select_term( $args = array() ) {
 		$options = $args['options'] ?? '';
 
-		if ( ! HT()->array_has_value( $options ) ) {
+		if ( ! ht()->array_has_value( $options ) ) {
 			global $pagenow;
 
 			$options  = array();
@@ -676,7 +676,7 @@ final class HOCWP_Theme_HTML_Field {
 						'label' => $tax->label
 					);
 
-					$terms = HT_Util()->get_terms( $taxonomy, $term_args );
+					$terms = ht_util()->get_terms( $taxonomy, $term_args );
 
 					foreach ( $terms as $obj ) {
 						$options[ $taxonomy ][] = array(
@@ -688,7 +688,7 @@ final class HOCWP_Theme_HTML_Field {
 					}
 				}
 			} else {
-				$terms = HT_Util()->get_terms( $taxonomy, $term_args );
+				$terms = ht_util()->get_terms( $taxonomy, $term_args );
 
 				foreach ( $terms as $obj ) {
 					$options[ $obj->term_id ] = $obj->name . ' (' . $obj->count . ')';
@@ -718,7 +718,7 @@ final class HOCWP_Theme_HTML_Field {
 	public static function select_menu( $args = array() ) {
 		$options = $args['options'] ?? '';
 
-		if ( ! HT()->array_has_value( $options ) ) {
+		if ( ! ht()->array_has_value( $options ) ) {
 			global $pagenow;
 
 			$options = array();
@@ -743,11 +743,11 @@ final class HOCWP_Theme_HTML_Field {
 	public static function select_page( $args = array() ) {
 		$options = $args['options'] ?? '';
 
-		if ( ! HT()->array_has_value( $options ) ) {
+		if ( ! ht()->array_has_value( $options ) ) {
 			global $pagenow;
 
 			$options = array();
-			$pages   = HT_Query()->pages();
+			$pages   = ht_query()->pages();
 
 			if ( $pages ) {
 				foreach ( $pages as $obj ) {
@@ -768,7 +768,7 @@ final class HOCWP_Theme_HTML_Field {
 	public static function select_post( $args = array() ) {
 		$options = $args['options'] ?? '';
 
-		if ( ! HT()->array_has_value( $options ) ) {
+		if ( ! ht()->array_has_value( $options ) ) {
 			global $pagenow;
 
 			$options = array();
@@ -874,9 +874,9 @@ final class HOCWP_Theme_HTML_Field {
 				$term_args['taxonomy'] = $args['taxonomy'] ?? '';
 			}
 
-			$terms = HT_Util()->get_terms( $term_args['taxonomy'], $term_args );
+			$terms = ht_util()->get_terms( $term_args['taxonomy'], $term_args );
 
-			if ( HT()->array_has_value( $terms ) ) {
+			if ( ht()->array_has_value( $terms ) ) {
 				$options = array();
 
 				foreach ( $terms as $term ) {
@@ -936,7 +936,7 @@ final class HOCWP_Theme_HTML_Field {
 			$id = $args['id'] ?? '';
 
 			if ( empty( $id ) ) {
-				$id = HT_Sanitize()->html_id( $name );
+				$id = ht_sanitize()->html_id( $name );
 			}
 
 			$value = $args['value'] ?? '';
@@ -952,7 +952,7 @@ final class HOCWP_Theme_HTML_Field {
                     <ul data-list-type="custom" class="widefat sortable sub-sortable hocwp-theme-sortable"
                         data-count="<?php echo esc_attr( $count ); ?>">
 						<?php
-						if ( HT()->array_has_value( $value ) ) {
+						if ( ht()->array_has_value( $value ) ) {
 							$count = 0;
 
 							foreach ( $value as $data ) {
@@ -1082,7 +1082,7 @@ final class HOCWP_Theme_HTML_Field {
 						$images = json_decode( $images );
 					}
 
-					if ( HT()->array_has_value( $images ) ) {
+					if ( ht()->array_has_value( $images ) ) {
 						foreach ( $images as $id ) {
 							?>
                             <li class="ui-state-default" data-id="<?php echo esc_attr( $id ); ?>"
@@ -1133,7 +1133,7 @@ final class HOCWP_Theme_HTML_Field {
 			$options = (array) $options;
 			$options = array_filter( $options );
 
-			if ( HT()->array_has_value( $options ) ) {
+			if ( ht()->array_has_value( $options ) ) {
 				if ( empty( $value ) ) {
 					if ( ! $connects ) {
 						$value = array_keys( $options );
@@ -1156,7 +1156,7 @@ final class HOCWP_Theme_HTML_Field {
 		}
 
 		// Display lists or connects
-		if ( HT()->array_has_value( $lists ) || HT()->array_has_value( $connects ) ) {
+		if ( ht()->array_has_value( $lists ) || ht()->array_has_value( $connects ) ) {
 			$id = $args['id'];
 			$id = sanitize_html_class( $id );
 			unset( $args['lists'] );
@@ -1185,7 +1185,7 @@ final class HOCWP_Theme_HTML_Field {
 
 			$has_sub = $args['has_sub'] ?? false;
 
-			if ( $connects || HT()->array_has_value( $connects ) ) {
+			if ( $connects || ht()->array_has_value( $connects ) ) {
 				$ul->add_attribute( 'data-connect-with', $id );
 
 				$class .= ' connect-lists';
@@ -1214,7 +1214,7 @@ final class HOCWP_Theme_HTML_Field {
 						continue;
 					}
 
-					if ( ! HT()->string_contain( $list, '</li>' ) ) {
+					if ( ! ht()->string_contain( $list, '</li>' ) ) {
 						$li = new HOCWP_Theme_HTML_Tag( 'li' );
 						$li->add_attribute( 'class', 'ui-state-default' );
 						$li->set_text( $list );
@@ -1247,7 +1247,7 @@ final class HOCWP_Theme_HTML_Field {
 						continue;
 					}
 
-					if ( ! HT()->string_contain( $list, '</li>' ) ) {
+					if ( ! ht()->string_contain( $list, '</li>' ) ) {
 						$li = new HOCWP_Theme_HTML_Tag( 'li' );
 						$li->add_attribute( 'class', 'ui-state-default' );
 						$li->set_text( $list );
@@ -1269,13 +1269,13 @@ final class HOCWP_Theme_HTML_Field {
 				}
 
 				// Display not chosen items in source list
-				if ( HT()->array_has_value( $lists ) ) {
+				if ( ht()->array_has_value( $lists ) ) {
 					foreach ( $lists as $key => $list ) {
 						if ( empty( $list ) ) {
 							continue;
 						}
 
-						if ( ! HT()->string_contain( $list, '</li>' ) ) {
+						if ( ! ht()->string_contain( $list, '</li>' ) ) {
 							$li = new HOCWP_Theme_HTML_Tag( 'li' );
 							$li->add_attribute( 'class', 'ui-state-default' );
 							$li->set_text( $list );
@@ -1298,7 +1298,7 @@ final class HOCWP_Theme_HTML_Field {
 			$ul->set_text( $li_html );
 			$ul->output();
 
-			if ( $connects || HT()->array_has_value( $connects ) ) {
+			if ( $connects || ht()->array_has_value( $connects ) ) {
 				$class .= ' connected-result ';
 				$ul    = new HOCWP_Theme_HTML_Tag( 'ul' );
 				$ul->add_attribute( 'data-list-type', $list_type );
@@ -1318,13 +1318,13 @@ final class HOCWP_Theme_HTML_Field {
 				if ( empty( $result_html ) ) {
 					$li_html = '';
 
-					if ( HT()->array_has_value( $connects ) ) {
+					if ( ht()->array_has_value( $connects ) ) {
 						foreach ( (array) $connects as $key => $list ) {
 							if ( empty( $list ) ) {
 								continue;
 							}
 
-							if ( ! HT()->string_contain( $list, '</li>' ) ) {
+							if ( ! ht()->string_contain( $list, '</li>' ) ) {
 								$li = new HOCWP_Theme_HTML_Tag( 'li' );
 								$li->add_attribute( 'class', 'ui-state-default' );
 								$li->set_text( $list );
@@ -1444,9 +1444,9 @@ final class HOCWP_Theme_HTML_Field {
 				$item = '<li class="ui-state-default has-child">';
 				$item .= '<a href="javascript:">' . $tax->label . '</a>';
 
-				$terms = HT_Util()->get_terms( $taxonomy, $term_args );
+				$terms = ht_util()->get_terms( $taxonomy, $term_args );
 
-				if ( HT()->array_has_value( $terms ) ) {
+				if ( ht()->array_has_value( $terms ) ) {
 					$args['has_sub'] = true;
 
 					$connects = $args['connects'] ?? true;
@@ -1457,7 +1457,7 @@ final class HOCWP_Theme_HTML_Field {
 
 					$sub = $id . '_' . $taxonomy;
 
-					if ( $connects || HT()->array_has_value( $connects ) ) {
+					if ( $connects || ht()->array_has_value( $connects ) ) {
 						$ul->add_attribute( 'data-connect-with', $id );
 						$class .= ' ' . $sub;
 
@@ -1497,7 +1497,7 @@ final class HOCWP_Theme_HTML_Field {
 				return;
 			}
 
-			$terms = HT_Util()->get_terms( $taxonomy, $term_args );
+			$terms = ht_util()->get_terms( $taxonomy, $term_args );
 
 			foreach ( $terms as $obj ) {
 				if ( array_key_exists( $obj->term_id, $results ) ) {
@@ -1591,7 +1591,7 @@ final class HOCWP_Theme_HTML_Field {
 
 				$list_posts = get_posts( $post_args );
 
-				if ( HT()->array_has_value( $list_posts ) ) {
+				if ( ht()->array_has_value( $list_posts ) ) {
 					$args['has_sub'] = true;
 
 					$connects = $args['connects'] ?? true;
@@ -1602,7 +1602,7 @@ final class HOCWP_Theme_HTML_Field {
 
 					$sub = $id . '_' . $post_type;
 
-					if ( $connects || HT()->array_has_value( $connects ) ) {
+					if ( $connects || ht()->array_has_value( $connects ) ) {
 						$ul->add_attribute( 'data-connect-with', $id );
 						$class .= ' ' . $sub;
 
@@ -1656,9 +1656,9 @@ final class HOCWP_Theme_HTML_Field {
 		$value   = $args['value'] ?? '';
 		$default = $args['default'] ?? '';
 
-		$w = HT()->get_value_in_arrays( 'width', $value, $default );
-		$h = HT()->get_value_in_arrays( 'height', $value, $default );
-		$c = HT()->get_value_in_arrays( 'crop', $value, $default );
+		$w = ht()->get_value_in_arrays( 'width', $value, $default );
+		$h = ht()->get_value_in_arrays( 'height', $value, $default );
+		$c = ht()->get_value_in_arrays( 'crop', $value, $default );
 		?>
         <div class="image-size">
             <fieldset>
@@ -1697,7 +1697,7 @@ final class HOCWP_Theme_HTML_Field {
 		$args['step']  = 1;
 
 		$size = $args['value'] ?? '';
-		$size = HT_Sanitize()->size( $size );
+		$size = ht_sanitize()->size( $size );
 
 		$args['name']  = $name_width;
 		$args['value'] = $size[0];
@@ -1730,7 +1730,7 @@ final class HOCWP_Theme_HTML_Field {
 		$fields = $args['fields'] ?? '';
 		$id     = $args['id'] ?? '';
 
-		if ( HT()->array_has_value( $fields ) ) {
+		if ( ht()->array_has_value( $fields ) ) {
 			$columns = $args['columns'] ?? 1;
 			$c_class = $args['container_class'] ?? '';
 			$c_class .= ' multiple-fields';
@@ -1842,7 +1842,7 @@ final class HOCWP_Theme_HTML_Field {
 				}
 			}
 
-			if ( HT()->array_has_value( $extra_fields ) ) {
+			if ( ht()->array_has_value( $extra_fields ) ) {
 				foreach ( $extra_fields as $key => $title ) {
 					$lists[ $key ] = $title;
 				}
@@ -1900,7 +1900,7 @@ final class HOCWP_Theme_HTML_Field {
 	public static function content_with_image( $args = array() ) {
 		$base_value = $args['value'] ?? '';
 
-		if ( HT_Media()->exists( $base_value ) ) {
+		if ( ht_media()->exists( $base_value ) ) {
 			$base_value = array(
 				'image' => $base_value
 			);
@@ -1915,7 +1915,7 @@ final class HOCWP_Theme_HTML_Field {
 			$content_key = 'content';
 		}
 
-		$content_key = HT_Sanitize()->html_id( $content_key );
+		$content_key = ht_sanitize()->html_id( $content_key );
 
 		$content_args = $args['content_args'] ?? '';
 
@@ -1950,7 +1950,7 @@ final class HOCWP_Theme_HTML_Field {
 		echo '<div class="content-image-box">';
 
 		if ( ! is_callable( $content_callback ) ) {
-			$content_callback = array( HT_HTML_Field(), $content_callback );
+			$content_callback = array( ht_html_field(), $content_callback );
 		}
 
 		if ( is_callable( $content_callback ) ) {
@@ -2019,7 +2019,7 @@ final class HOCWP_Theme_HTML_Field {
 			$type = 'button';
 		}
 
-		if ( HT()->is_positive_number( $value ) || ( 'file' == $media_type ) && ! empty( $value['url'] ) ) {
+		if ( ht()->is_positive_number( $value ) || ( 'file' == $media_type ) && ! empty( $value['url'] ) ) {
 			$class .= ' has-media';
 		}
 
@@ -2027,7 +2027,7 @@ final class HOCWP_Theme_HTML_Field {
 
 		$background_color = $args['background_color'] ?? '';
 
-		if ( ! empty( $background_color ) && HT()->is_positive_number( $value ) ) {
+		if ( ! empty( $background_color ) && ht()->is_positive_number( $value ) ) {
 			$style .= 'background-color:' . $background_color . ';';
 		}
 
@@ -2040,11 +2040,11 @@ final class HOCWP_Theme_HTML_Field {
 		$label = $args['label'] ?? '';
 
 		if ( ! empty( $label ) ) {
-			HT_HTML_Field()->label( array( 'text' => $label, 'for' => $args['id'] ) );
+			ht_html_field()->label( array( 'text' => $label, 'for' => $args['id'] ) );
 		}
 
 		if ( 'button' == $type ) {
-			$value = HT_Sanitize()->media_value( $value );
+			$value = ht_sanitize()->media_value( $value );
 			$class .= ' button';
 			$id    = $value['id'] ?? '';
 			$text  = __( 'Add media', 'hocwp-theme' );
@@ -2087,7 +2087,7 @@ final class HOCWP_Theme_HTML_Field {
                        data-text="<?php echo $text; ?>" data-media-type="<?php echo esc_attr( $media_type ); ?>"
                        data-target="<?php echo $args['id']; ?>" style="<?php echo $style; ?>">
 						<?php
-						if ( HT()->is_positive_number( $value ) ) {
+						if ( ht()->is_positive_number( $value ) ) {
 							$img = new HOCWP_Theme_HTML_Tag( 'img' );
 							$img->add_attribute( 'src', wp_get_attachment_url( $value ) );
 							$img->output();
@@ -2098,7 +2098,7 @@ final class HOCWP_Theme_HTML_Field {
                     </a>
                 </p>
 				<?php
-				if ( HT()->is_positive_number( $value ) ) {
+				if ( ht()->is_positive_number( $value ) ) {
 					$l10n = hocwp_theme_localize_script_l10n_media_upload();
 					printf( $l10n['updateImageDescription'], $media_type );
 					printf( $l10n['removeImageButton'], $media_type );
@@ -2206,12 +2206,12 @@ final class HOCWP_Theme_HTML_Field {
 		$div = new HOCWP_Theme_HTML_Tag( 'div' );
 		$div->add_attribute( 'id', $args['id'] . '_marker' );
 		$div->add_attribute( 'class', 'hocwp-field-maps google-maps-marker hocwp-theme' );
-		$div->add_attribute( 'data-scrollwheel', HT()->bool_to_int( $args['scrollwheel'] ) );
+		$div->add_attribute( 'data-scrollwheel', ht()->bool_to_int( $args['scrollwheel'] ) );
 		$post_id = $args['post_id'] ?? '';
 		$div->add_attribute( 'data-post-id', $post_id );
 		$div->add_attribute( 'data-zoom', $zoom );
 		$div->add_attribute( 'data-marker-title', $args['marker_title'] );
-		$div->add_attribute( 'data-draggable', HT()->bool_to_int( $args['draggable'] ) );
+		$div->add_attribute( 'data-draggable', ht()->bool_to_int( $args['draggable'] ) );
 		$div->add_attribute( 'data-address', $args['address'] );
 		$div->add_attribute( 'data-latitude', $latitude );
 		$div->add_attribute( 'data-longitude', $longitude );
@@ -2288,7 +2288,7 @@ final class HOCWP_Theme_HTML_Field {
 			$container = $args['container'] ?? 'p';
 
 			if ( 'p' == $container && is_string( $callback ) ) {
-				if ( HT()->string_contain( $callback, 'sortable' ) || HT()->string_contain( $callback, 'editor' ) || HT()->string_contain( $callback, 'media' ) ) {
+				if ( ht()->string_contain( $callback, 'sortable' ) || ht()->string_contain( $callback, 'editor' ) || ht()->string_contain( $callback, 'media' ) ) {
 					$container = 'div';
 				}
 			}
@@ -2296,7 +2296,7 @@ final class HOCWP_Theme_HTML_Field {
 			$c_atts = $args['container_attributes'] ?? '';
 
 			if ( is_array( $c_atts ) ) {
-				$c_atts = HT()->attributes_to_string( $c_atts );
+				$c_atts = ht()->attributes_to_string( $c_atts );
 			}
 
 			$c_atts = $container . ' ' . $c_atts;
@@ -2316,7 +2316,7 @@ final class HOCWP_Theme_HTML_Field {
 			$right_label = ( 1 === $right_label || true === $right_label );
 
 			if ( ! $right_label ) {
-				HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
+				ht_html_field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
 			}
 
 			if ( ! is_callable( $callback ) ) {
@@ -2330,7 +2330,7 @@ final class HOCWP_Theme_HTML_Field {
 			call_user_func( $callback, $args );
 
 			if ( $right_label ) {
-				HT_HTML_Field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
+				ht_html_field()->label( array( 'text' => $label, 'for' => $widget->get_field_id( $name ) ) );
 			}
 
 			if ( 'p' != $container ) {
@@ -2338,7 +2338,7 @@ final class HOCWP_Theme_HTML_Field {
 			}
 
 			if ( isset( $args['description'] ) ) {
-				HT()->wrap_text( $args['description'], '<em class="desc">', '</em>', true );
+				ht()->wrap_text( $args['description'], '<em class="desc">', '</em>', true );
 			}
 
 			printf( '</%s>', $container );
@@ -2346,6 +2346,6 @@ final class HOCWP_Theme_HTML_Field {
 	}
 }
 
-function HT_HTML_Field() {
+function ht_html_field() {
 	return HOCWP_Theme_HTML_Field::instance();
 }
