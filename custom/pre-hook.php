@@ -8,11 +8,11 @@ if ( defined( 'HOCWP_THEME_MOBILE_SCREEN_WIDTH' ) ) {
 }
 
 /**
- * Define if allowing this theme to be used without child theme.
+ * Define if allowing this theme to be used without child theme. Default is true and user must create child theme.
  *
  * Data type: boolean
  */
-const HOCWP_THEME_FORCE_PARENT = false;
+const HOCWP_THEME_FORCE_PARENT = true;
 
 /**
  * Define theme load default styles and scripts or not.
