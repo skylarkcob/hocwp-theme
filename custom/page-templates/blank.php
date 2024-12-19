@@ -6,7 +6,7 @@
 defined( 'ABSPATH' ) || exit;
 get_header();
 
-hocwp_theme()->set_tmp_data( 'full_width', true );
+hocwp_theme()->set_temp_data( 'full_width', true );
 
 while ( have_posts() ) {
 	the_post();

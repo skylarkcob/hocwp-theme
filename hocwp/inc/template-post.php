@@ -97,17 +97,17 @@ add_filter( 'excerpt_length', 'hocwp_theme_excerpt_length_filter' );
 
 function hocwp_theme_the_title( $args = array() ) {
 	$in_loop = true;
-	$query   = hocwp_theme_object()->loop_data['query'] ?? null;
+	$query   = hocwp_theme()->get_loop_data( 'query', null );
 
 	if ( $query instanceof WP_Query ) {
 		$in_loop = $query->in_the_loop;
 	}
 
-	$is_single = hocwp_theme_object()->loop_data['is_single'] ?? false;
+	$is_single = hocwp_theme()->get_loop_data( 'is_single', false );
 
-	$list = hocwp_theme_object()->loop_data['list'] ?? false;
+	$list = hocwp_theme()->get_loop_data( 'list' );
 
-	$args = apply_filters( 'hocwp_theme_the_title_args', $args, hocwp_theme_object()->loop_data );
+	$args = apply_filters( 'hocwp_theme_the_title_args', $args, hocwp_theme_object( 'loop_data' ) );
 
 	$container_tag = $args['container_tag'] ?? '';
 
@@ -358,11 +358,11 @@ function hocwp_theme_related_posts( $args ) {
 		echo '<div class="related-posts">';
 		echo ht()->wrap_text( $box_title, '<h3 class="box-title">', '</h3>' );
 
-		hocwp_theme_object()->loop_data['template']        = 'related';
-		hocwp_theme_object()->loop_data['pagination_args'] = false;
-		hocwp_theme_object()->loop_data['content_none']    = false;
-		hocwp_theme_object()->loop_data['only_link']       = true;
-		hocwp_theme_object()->loop_data['list']            = true;
+		hocwp_theme()->add_loop_data( 'template', 'related' );
+		hocwp_theme()->add_loop_data( 'pagination_args', false );
+		hocwp_theme()->add_loop_data( 'content_none', false );
+		hocwp_theme()->add_loop_data( 'only_link', true );
+		hocwp_theme()->add_loop_data( 'list', true );
 		do_action( 'hocwp_theme_loop', $query );
 		echo '</div>';
 	}

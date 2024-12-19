@@ -177,20 +177,6 @@ final class HOCWP_Theme_Controller {
 	public $captcha;
 
 	/**
-	 * The array to save loop data.
-	 *
-	 * @var array
-	 */
-	public $loop_data;
-
-	/**
-	 * The array to save temporary data.
-	 *
-	 * @var array
-	 */
-	public $temp_data;
-
-	/**
 	 * The website http protocol.
 	 *
 	 * @var string
@@ -248,8 +234,6 @@ final class HOCWP_Theme_Controller {
 			return;
 		}
 
-		$this->loop_data = array();
-		$this->temp_data = array();
 		$this->settings  = array();
 		$this->data      = array();
 		$this->instances = array();
@@ -292,11 +276,9 @@ final class HOCWP_Theme_Controller {
 
 		$this->is_child_theme = ( $this->theme->parent() instanceof WP_Theme );
 
-		$this->object = new stdClass();
-
-		$this->object->theme_core_version = $this->core_version;
-		$this->object->theme_core_path    = $this->core_path;
-		$this->object->theme_core_url     = $this->core_url;
+		$this->update_object( 'theme_core_version', $this->core_version );
+		$this->update_object( 'theme_core_path', $this->core_path );
+		$this->update_object( 'theme_core_url', $this->core_url );
 
 		$this->version  = $this->theme->get( 'Version' );
 		$this->protocol = is_ssl() ? 'https' : 'http';
@@ -332,12 +314,12 @@ final class HOCWP_Theme_Controller {
 		$this->data[ $name ] = $value;
 	}
 
-	public function get_tmp_data( $name ) {
-		return $this->tmp_data[ $name ] ?? null;
+	public function get_temp_data( $name ) {
+		return $this->get_object()->temp_data[ $name ] ?? null;
 	}
 
-	public function set_tmp_data( $name, $value ) {
-		$this->tmp_data[ $name ] = $value;
+	public function set_temp_data( $name, $value ) {
+		$this->get_object()->temp_data[ $name ] = $value;
 	}
 
 	public function get_instance_object( $class ) {
@@ -362,13 +344,13 @@ final class HOCWP_Theme_Controller {
 	private function defaults() {
 		global $is_opera;
 
-		$this->object->browser = ht()->get_browser();
+		$this->update_object( 'browser', ht()->get_browser() );
 
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			$is_opera = ( ht()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || ht()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
 		}
 
-		if ( ! isset( $this->object->client_info ) ) {
+		if ( ! isset( $this->get_object()->client_info ) ) {
 			$client_info = $_COOKIE['hocwp_theme_client_info'] ?? '';
 
 			if ( empty( $client_info ) ) {
@@ -379,34 +361,18 @@ final class HOCWP_Theme_Controller {
 				$client_info = ht()->json_string_to_array( $client_info );
 			}
 
-			$this->object->client_info = (array) $client_info;
+			$this->update_object( 'client_info', (array) $client_info );
 		}
 
-		if ( ! isset( $this->object->temp_data ) ) {
-			$this->object->temp_data = array();
-		}
+		$this->set_object_default( 'temp_data', array() );
+		$this->set_object_default( 'loop_data', array() );
+		$this->set_object_default( 'options', $this->get_options() );
+		$this->set_object_default( 'is_wc_activated', class_exists( 'WC_Product' ) );
+		$this->set_object_default( 'active_extensions', (array) get_option( 'hocwp_theme_active_extensions', array() ) );
+		$this->set_object_default( 'option', '' );
+		$this->set_object_default( 'users_can_register', (bool) get_option( 'users_can_register' ) );
 
-		if ( ! isset( $this->object->loop_data ) ) {
-			$this->object->loop_data = array();
-		}
-
-		if ( ! isset( $this->object->options ) ) {
-			$this->object->options = $this->get_options();
-		}
-
-		$this->object->is_wc_activated = class_exists( 'WC_Product' );
-
-		if ( ! isset( $this->object->active_extensions ) ) {
-			$this->object->active_extensions = (array) get_option( 'hocwp_theme_active_extensions', array() );
-		}
-
-		if ( ! isset( $this->object->option ) ) {
-			$this->object->option = '';
-		}
-
-		$this->object->users_can_register = (bool) get_option( 'users_can_register' );
-
-		$this->object->default_sidebars = array(
+		$default_sidebars = array(
 			array(
 				'id'          => 'home',
 				'name'        => __( 'Home Sidebar', 'hocwp-theme' ),
@@ -439,89 +405,133 @@ final class HOCWP_Theme_Controller {
 			)
 		);
 
-		if ( ! isset( $this->object->defaults ) ) {
-			$this->object->defaults = array();
-		}
+		$this->set_object_default( 'default_sidebars', $default_sidebars );
+		$this->set_object_default( 'defaults', array() );
 
-		$this->object->defaults['blacklist_keys']   = array();
-		$this->object->defaults['blacklist_keys'][] = 'sex';
-		$this->object->defaults['blacklist_keys'][] = 'adult';
-		$this->object->defaults['blacklist_keys'][] = 'porn';
-		$this->object->defaults['blacklist_keys'][] = 'ass';
-		$this->object->defaults['blacklist_keys'][] = 'penis';
-		$this->object->defaults['blacklist_keys'][] = 'tits';
-		$this->object->defaults['blacklist_keys'][] = 'viagra';
-		$this->object->defaults['blacklist_keys'][] = 'lesbian';
+		$this->get_object()->defaults['blacklist_keys']   = array();
+		$this->get_object()->defaults['blacklist_keys'][] = 'sex';
+		$this->get_object()->defaults['blacklist_keys'][] = 'adult';
+		$this->get_object()->defaults['blacklist_keys'][] = 'porn';
+		$this->get_object()->defaults['blacklist_keys'][] = 'ass';
+		$this->get_object()->defaults['blacklist_keys'][] = 'penis';
+		$this->get_object()->defaults['blacklist_keys'][] = 'tits';
+		$this->get_object()->defaults['blacklist_keys'][] = 'viagra';
+		$this->get_object()->defaults['blacklist_keys'][] = 'lesbian';
 
-		$this->object->defaults['date_format']     = get_option( 'date_format' );
-		$this->object->defaults['time_format']     = get_option( 'time_format' );
-		$this->object->defaults['timezone_string'] = get_option( 'timezone_string' );
-		$this->object->defaults['posts_per_page']  = get_option( 'posts_per_page' );
-		$this->object->defaults['locale']          = get_locale();
+		$this->get_object()->defaults['date_format']     = get_option( 'date_format' );
+		$this->get_object()->defaults['time_format']     = get_option( 'time_format' );
+		$this->get_object()->defaults['timezone_string'] = get_option( 'timezone_string' );
+		$this->get_object()->defaults['posts_per_page']  = get_option( 'posts_per_page' );
+		$this->get_object()->defaults['locale']          = get_locale();
 
 		/*
 		 * SMTP Email
 		 */
-		$this->object->defaults['options']['smtp']['from_name']  = get_bloginfo( 'name' );
-		$this->object->defaults['options']['smtp']['from_email'] = get_bloginfo( 'admin_email' );
-		$this->object->defaults['options']['smtp']['port']       = 465;
-		$this->object->defaults['options']['smtp']['encryption'] = 'ssl';
+		$this->get_object()->defaults['options']['smtp']['from_name']  = get_bloginfo( 'name' );
+		$this->get_object()->defaults['options']['smtp']['from_email'] = get_bloginfo( 'admin_email' );
+		$this->get_object()->defaults['options']['smtp']['port']       = 465;
+		$this->get_object()->defaults['options']['smtp']['encryption'] = 'ssl';
 
 		/*
 		 * Discussion
 		 */
-		$this->object->defaults['options']['discussion']['avatar_size']    = 48;
-		$this->object->defaults['options']['discussion']['comment_system'] = 'default';
+		$this->get_object()->defaults['options']['discussion']['avatar_size']    = 48;
+		$this->get_object()->defaults['options']['discussion']['comment_system'] = 'default';
 
 		/*
 		 * General
 		 */
-		$this->object->defaults['options']['general']['logo_display'] = 'image';
+		$this->get_object()->defaults['options']['general']['logo_display'] = 'image';
 
 		/*
 		 * Home
 		 */
-		$this->object->defaults['options']['home']['posts_per_page'] = isset( $this->object->options['home']['posts_per_page'] ) ? absint( $this->object->options['home']['posts_per_page'] ) : $this->object->defaults['posts_per_page'];
+		$this->get_object()->defaults['options']['home']['posts_per_page'] = isset( $this->get_object()->options['home']['posts_per_page'] ) ? absint( $this->get_object()->options['home']['posts_per_page'] ) : $this->get_object()->defaults['posts_per_page'];
 
 		/*
 		 * Reading
 		 */
-		$this->object->defaults['options']['reading']['excerpt_more'] = '&hellip;';
+		$this->get_object()->defaults['options']['reading']['excerpt_more'] = '&hellip;';
 
 		/*
 		 * Media
 		 */
-		$this->object->defaults['options']['media']['upload_per_day'] = 10;
+		$this->get_object()->defaults['options']['media']['upload_per_day'] = 10;
 
 		/*
 		 * VIP Management
 		 */
-		$this->object->defaults['options']['vip']['post_price'] = 100;
+		$this->get_object()->defaults['options']['vip']['post_price'] = 100;
 
-		$this->object->options = wp_parse_args( $this->object->options, $this->object->defaults['options'] );
+		$this->parse_options_defaults();
+	}
+
+	public function update_object( $property, $value ) {
+		global $hocwp_theme;
+
+		if ( ! is_object( $hocwp_theme ) ) {
+			$hocwp_theme = new stdClass();
+		}
+
+		$hocwp_theme->{$property} = $value;
+	}
+
+	/**
+	 * @param $property
+	 * @param $value
+	 *
+	 * @return void
+	 */
+	private function set_object_default( $property, $value ) {
+		if ( ! isset( $this->get_object()->{$property} ) ) {
+			$this->update_object( $property, $value );
+		}
+	}
+
+	/**
+	 * Get global $hocwp_theme object or get object property or set object property.
+	 *
+	 * @param string $property The object property for get value.
+	 * @param mixed $value The value to be set for object property.
+	 *
+	 * @return object|stdClass|null|mixed
+	 */
+	public function get_object( $property = false, $value = null ) {
+		global $hocwp_theme;
+
+		if ( ! isset( $hocwp_theme ) ) {
+			$hocwp_theme = hocwp_theme()->get_object();
+		}
+
+		if ( ! empty( $property ) ) {
+			if ( ! is_null( $value ) ) {
+				$this->update_object( $property, $value );
+			}
+
+			return $hocwp_theme->{$property} ?? null;
+		}
+
+		return $hocwp_theme;
+	}
+
+	private function parse_options_defaults() {
+		if ( isset( $this->get_object()->defaults['options'] ) && ht()->array_has_value( $this->get_object()->defaults['options'] ) ) {
+			$this->update_object( 'options', wp_parse_args( $this->get_object( 'options' ), $this->get_object()->defaults['options'] ) );
+		}
 	}
 
 	public function get_options() {
-		if ( ! isset( $this->object->options ) ) {
-			$this->object->options = array();
-		}
+		$this->set_object_default( 'options', array() );
 
-		if ( ! ht()->array_has_value( $this->object->options ) ) {
-			$this->object->options = (array) get_option( $this->get_prefix() );
-
-			if ( ! isset( $this->object->defaults ) ) {
-				$this->object->defaults = array();
-			}
-
-			if ( isset( $this->object->defaults['options'] ) && ht()->array_has_value( $this->object->defaults['options'] ) ) {
-				$this->object->options = wp_parse_args( $this->object->options, $this->object->defaults['options'] );
-			}
+		if ( ! ht()->array_has_value( $this->get_object( 'options' ) ) ) {
+			$this->update_object( 'options', (array) get_option( $this->get_prefix() ) );
+			$this->set_object_default( 'defaults', array() );
 		}
 
 		// Remove empty value as 0 and 1 index
-		$this->object->options = array_filter( $this->object->options );
+		$this->update_object( 'options', array_filter( $this->get_object( 'options' ) ) );
 
-		return apply_filters( 'hocwp_theme_options', $this->object->options );
+		return apply_filters( 'hocwp_theme_options', $this->get_object( 'options' ) );
 	}
 
 	public function get_textdomain() {
@@ -541,7 +551,7 @@ final class HOCWP_Theme_Controller {
 	}
 
 	public function get_default( $key ) {
-		return $this->object->defaults[ $key ] ?? '';
+		return $this->get_object()->defaults[ $key ] ?? '';
 	}
 
 	public function get_date_format() {
@@ -581,11 +591,9 @@ final class HOCWP_Theme_Controller {
 		if ( is_array( $exts ) && 0 < count( $exts ) ) {
 			$path = trailingslashit( $base_path );
 
-			if ( ! isset( $this->object->loaded_extensions ) ) {
-				$this->object->loaded_extensions = array();
-			}
+			$this->set_object_default( 'loaded_extensions', array() );
 
-			$exts = array_diff( $exts, $this->object->loaded_extensions );
+			$exts = array_diff( $exts, $this->get_object( 'loaded_extensions' ) );
 
 			$invalid_exts = array();
 
@@ -608,7 +616,7 @@ final class HOCWP_Theme_Controller {
 					}
 
 					load_template( $ext_file );
-					$this->object->loaded_extensions[] = $ext;
+					$this->get_object()->loaded_extensions[] = $ext;
 				}
 			}
 
@@ -931,33 +939,37 @@ final class HOCWP_Theme_Controller {
 		do_action( 'hocwp_theme_loaded' );
 	}
 
-	public function reset_loop_data( $reset_tmp = false ) {
-		$GLOBALS['hocwp_theme']->loop_data = array();
+	public function reset_loop_data( $reset_temp = false ) {
+		$this->update_object( 'loop_data', array() );
 
-		if ( $reset_tmp ) {
-			$GLOBALS['hocwp_theme']->temp_data = array();
+		if ( $reset_temp ) {
+			$this->update_object( 'temp_data', array() );
 		}
 	}
 
 	public function set_loop_data( $data = array() ) {
-		$GLOBALS['hocwp_theme']->loop_data = $data;
+		$this->update_object( 'loop_data', $data );
 	}
 
-	public function add_loop_data( $key, $value ) {
+	public function add_loop_data( $key, $value = '' ) {
 		if ( $key instanceof WP_Query ) {
 			$value = $key;
 			$key   = 'query';
 		}
 
-		$GLOBALS['hocwp_theme']->loop_data[ $key ] = $value;
+		$this->get_object()->loop_data[ $key ] = $value;
+	}
+
+	public function update_loop_data( $key, $value = '' ) {
+		$this->add_loop_data( $key, $value );
 	}
 
 	public function remove_loop_data( $key ) {
-		unset( $GLOBALS['hocwp_theme']->loop_data[ $key ] );
+		unset( $this->get_object()->loop_data[ $key ] );
 	}
 
-	public function get_loop_data( $key ) {
-		return ht()->get_value_in_array( $GLOBALS['hocwp_theme']->loop_data, $key );
+	public function get_loop_data( $key, $default = '' ) {
+		return ht()->get_value_in_array( $this->get_object( 'loop_data' ), $key, $default );
 	}
 }
 
@@ -987,19 +999,5 @@ function ht_control() {
  * @return object|stdClass|null|mixed
  */
 function hocwp_theme_object( $property = false, $value = null ) {
-	global $hocwp_theme;
-
-	if ( ! isset( $hocwp_theme ) ) {
-		$hocwp_theme = hocwp_theme()->object;
-	}
-
-	if ( ! empty( $property ) ) {
-		if ( ! is_null( $value ) ) {
-			$hocwp_theme->$property = $value;
-		}
-
-		return $hocwp_theme->$property ?? null;
-	}
-
-	return $hocwp_theme;
+	return hocwp_theme()->get_object( $property, $value );
 }

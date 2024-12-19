@@ -403,18 +403,18 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						}
 					}
 
-					hocwp_theme_object()->loop_data['list']       = true;
-					hocwp_theme_object()->loop_data['on_sidebar'] = true;
-					hocwp_theme_object()->loop_data['template']   = 'sidebar';
+					hocwp_theme()->add_loop_data( 'list', true );
+					hocwp_theme()->add_loop_data( 'on_sidebar', true );
+					hocwp_theme()->add_loop_data( 'template', 'sidebar' );
 
-					hocwp_theme_object()->loop_data['widget'] = $this;
+					hocwp_theme()->add_loop_data( 'widget', $this );
 
-					hocwp_theme_object()->loop_data['widget_args']     = $args;
-					hocwp_theme_object()->loop_data['widget_instance'] = $instance;
+					hocwp_theme()->add_loop_data( 'widget_args', $args );
+					hocwp_theme()->add_loop_data( 'widget_instance', $instance );
 
-					hocwp_theme_object()->loop_data['pagination_args'] = null;
-					hocwp_theme_object()->loop_data['content_none']    = false;
-					hocwp_theme_object()->loop_data['display_type']    = $display_type;
+					hocwp_theme()->add_loop_data( 'pagination_args', null );
+					hocwp_theme()->add_loop_data( 'content_none', false );
+					hocwp_theme()->add_loop_data( 'display_type', $display_type );
 					do_action( 'hocwp_theme_loop', $query );
 
 					if ( ! empty( $more_link ) && 'bottom' == $more_pos ) {
@@ -848,7 +848,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$instance['number']             = isset( $new_instance['number'] ) ? absint( $new_instance['number'] ) : $this->defaults['number'];
 		$instance['title_length']       = isset( $new_instance['title_length'] ) ? absint( $new_instance['title_length'] ) : $this->defaults['title_length'];
 		$instance['show_date']          = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : $this->defaults['show_date'];
-		$instance['show_date_diff']          = isset( $new_instance['show_date_diff'] ) ? (bool) $new_instance['show_date_diff'] : $this->defaults['show_date_diff'];
+		$instance['show_date_diff']     = isset( $new_instance['show_date_diff'] ) ? (bool) $new_instance['show_date_diff'] : $this->defaults['show_date_diff'];
 		$instance['related']            = isset( $new_instance['related'] ) ? (bool) $new_instance['related'] : $this->defaults['related'];
 		$instance['term_as_title']      = isset( $new_instance['term_as_title'] ) ? (bool) $new_instance['term_as_title'] : $this->defaults['term_as_title'];
 		$instance['title_term_link']    = isset( $new_instance['title_term_link'] ) ? (bool) $new_instance['title_term_link'] : $this->defaults['title_term_link'];
