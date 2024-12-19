@@ -24,6 +24,10 @@ final class HOCWP_Theme_HTML_Tag {
 	}
 
 	public function attribute_exists( $attribute_name ) {
+		if ( ! is_array( $this->attributes ) ) {
+			$this->attributes = array();
+		}
+
 		return array_key_exists( $attribute_name, $this->attributes );
 	}
 
