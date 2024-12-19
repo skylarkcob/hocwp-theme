@@ -300,6 +300,9 @@ function hocwp_theme_admin_enqueue_scripts_action() {
 	$screen = get_current_screen();
 
 	wp_register_style( 'hocwp-theme-admin-style', HOCWP_THEME_CORE_URL . '/css/admin' . HOCWP_THEME_CSS_SUFFIX );
+
+	wp_add_inline_style( 'hocwp-theme-admin-style', '#adminmenu li.current+li a[href="themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension"]{display:none}' );
+
 	$src = HOCWP_THEME_CORE_URL . '/js/admin' . HOCWP_THEME_JS_SUFFIX;
 	wp_register_script( 'hocwp-theme-admin', $src, array( 'jquery', 'hocwp-theme' ), false, true );
 

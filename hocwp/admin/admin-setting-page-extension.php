@@ -16,9 +16,7 @@ function hocwp_theme_settings_page_extension_tab( $tabs ) {
 
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_extension_tab', 99 );
 
-global $hocwp_theme;
-
-if ( 'extension' != $hocwp_theme->option->tab ) {
+if ( 'extension' != hocwp_theme_object()->option->tab ) {
 	return;
 }
 
@@ -35,29 +33,27 @@ function hocwp_theme_settings_page_extension_field() {
 //add_filter( 'hocwp_theme_settings_page_general_settings_field', 'hocwp_theme_settings_page_extension_field' );
 
 function hocwp_theme_settings_page_extension_admin_menu() {
-	global $hocwp_theme;
+	$hook = hocwp_theme_object()->option->hook_suffix;
 
 	set_screen_options();
 
-	add_action( "load-{$hocwp_theme->option->hook_suffix}", 'hocwp_theme_settings_page_extension_screen_options' );
+	add_action( "load-{$hook}", 'hocwp_theme_settings_page_extension_screen_options' );
 }
 
 add_action( 'admin_init', 'hocwp_theme_settings_page_extension_admin_menu' );
 
 function hocwp_theme_settings_page_extension_screen_options() {
-	global $hocwp_theme;
-
-	if ( ! isset( $hocwp_theme->extensions_list_table ) ) {
-		$hocwp_theme->extensions_list_table = new HOCWP_Extensions_List_Table();
+	if ( ! isset( hocwp_theme_object()->extensions_list_table ) ) {
+		hocwp_theme_object()->extensions_list_table = new HOCWP_Extensions_List_Table();
 	}
 
 	$screen = get_current_screen();
 
-	if ( ! is_object( $screen ) || $screen->id != $hocwp_theme->option->hook_suffix ) {
+	if ( ! is_object( $screen ) || $screen->id != hocwp_theme_object()->option->hook_suffix ) {
 		return;
 	}
 
-	if ( 'extension' == $hocwp_theme->option->tab ) {
+	if ( 'extension' == hocwp_theme_object()->option->tab ) {
 		$args = array(
 			'label'   => __( 'Number of items per page:', 'hocwp-theme' ),
 			'default' => get_option( 'posts_per_page' ),
@@ -68,7 +64,7 @@ function hocwp_theme_settings_page_extension_screen_options() {
 
 		$args = array(
 			'label'   => __( 'Columns', 'hocwp-theme' ),
-			'default' => $hocwp_theme->extensions_list_table->get_columns(),
+			'default' => hocwp_theme_object()->extensions_list_table->get_columns(),
 			'option'  => $screen->id . '_columns'
 		);
 
@@ -86,29 +82,25 @@ function hocwp_theme_settings_page_extension_form_after() {
 	?>
     <div style="padding-top: 10px;">
 		<?php
-		global $hocwp_theme;
-
-		if ( ! isset( $hocwp_theme->extensions_list_table ) ) {
-			$hocwp_theme->extensions_list_table = new HOCWP_Extensions_List_Table();
+		if ( ! isset( hocwp_theme_object()->extensions_list_table ) ) {
+			hocwp_theme_object()->extensions_list_table = new HOCWP_Extensions_List_Table();
 		}
 
-		$hocwp_theme->extensions_list_table->process_bulk_action();
-		$hocwp_theme->extensions_list_table->prepare_items();
-		$hocwp_theme->extensions_list_table->admin_notices();
+		hocwp_theme_object()->extensions_list_table->process_bulk_action();
+		hocwp_theme_object()->extensions_list_table->prepare_items();
+		hocwp_theme_object()->extensions_list_table->admin_notices();
 		?>
         <h2 class="screen-reader-text"><?php _e( 'Filter extensions list', 'hocwp-theme' ); ?></h2>
 		<?php
-		$hocwp_theme->extensions_list_table->views();
+		hocwp_theme_object()->extensions_list_table->views();
 		$url = ht_util()->get_current_url( true );
 		?>
         <form class="search-form search-extensions" method="post" action="">
-			<?php $hocwp_theme->extensions_list_table->search_box( __( 'Search', 'hocwp-theme' ), 'extension' ); ?>
+			<?php hocwp_theme_object()->extensions_list_table->search_box( __( 'Search', 'hocwp-theme' ), 'extension' ); ?>
         </form>
         <form method="post">
             <input type="hidden" name="page" value="<?php echo ht_admin()->get_plugin_page(); ?>">
-			<?php
-			$hocwp_theme->extensions_list_table->display();
-			?>
+			<?php hocwp_theme_object()->extensions_list_table->display(); ?>
         </form>
     </div>
 	<?php

@@ -10,7 +10,7 @@ add_action( 'init', function () {
 		return;
 	}
 
-	if ( is_admin() && ht_admin()->is_admin_page( 'themes.php', 'hocwp_theme' ) ) {
+	if ( is_admin() && ht_admin()->is_admin_page( 'themes.php', hocwp_theme()->get_prefix() ) ) {
 		$tab = $_GET['tab'] ?? '';
 
 		if ( 'system_information' == $tab ) {

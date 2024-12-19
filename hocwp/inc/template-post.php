@@ -96,23 +96,22 @@ function hocwp_theme_excerpt_length_filter( $length ) {
 add_filter( 'excerpt_length', 'hocwp_theme_excerpt_length_filter' );
 
 function hocwp_theme_the_title( $args = array() ) {
-	global $hocwp_theme;
 	$in_loop = true;
-	$query   = $hocwp_theme->loop_data['query'] ?? null;
+	$query   = hocwp_theme_object()->loop_data['query'] ?? null;
 
 	if ( $query instanceof WP_Query ) {
 		$in_loop = $query->in_the_loop;
 	}
 
-	$is_single = $hocwp_theme->loop_data['is_single'] ?? false;
+	$is_single = hocwp_theme_object()->loop_data['is_single'] ?? false;
 
-	$list = $hocwp_theme->loop_data['list'] ?? false;
+	$list = hocwp_theme_object()->loop_data['list'] ?? false;
 
-	$args = apply_filters( 'hocwp_theme_the_title_args', $args, $hocwp_theme->loop_data );
+	$args = apply_filters( 'hocwp_theme_the_title_args', $args, hocwp_theme_object()->loop_data );
 
 	$container_tag = $args['container_tag'] ?? '';
 
-	if ( $list || ( isset( $hocwp_theme->loop_data['only_link'] ) && $hocwp_theme->loop_data['only_link'] ) ) {
+	if ( $list || ( isset( hocwp_theme_object()->loop_data['only_link'] ) && hocwp_theme_object()->loop_data['only_link'] ) ) {
 		if ( $list ) {
 			the_title( '<li><a href="' . get_the_permalink() . '" title="' . get_the_title() . '" class="title">', '</a></li>' );
 		} else {
@@ -358,12 +357,12 @@ function hocwp_theme_related_posts( $args ) {
 
 		echo '<div class="related-posts">';
 		echo ht()->wrap_text( $box_title, '<h3 class="box-title">', '</h3>' );
-		global $hocwp_theme;
-		$hocwp_theme->loop_data['template']        = 'related';
-		$hocwp_theme->loop_data['pagination_args'] = false;
-		$hocwp_theme->loop_data['content_none']    = false;
-		$hocwp_theme->loop_data['only_link']       = true;
-		$hocwp_theme->loop_data['list']            = true;
+
+		hocwp_theme_object()->loop_data['template']        = 'related';
+		hocwp_theme_object()->loop_data['pagination_args'] = false;
+		hocwp_theme_object()->loop_data['content_none']    = false;
+		hocwp_theme_object()->loop_data['only_link']       = true;
+		hocwp_theme_object()->loop_data['list']            = true;
 		do_action( 'hocwp_theme_loop', $query );
 		echo '</div>';
 	}
@@ -421,27 +420,25 @@ function hocwp_theme_post_author() {
 }
 
 function hocwp_theme_image_downsize_filter( $downsize, $id, $size ) {
-	global $hocwp_theme;
-
-	if ( ! isset( $hocwp_theme->image_downsizes ) ) {
+	if ( ! isset( hocwp_theme_object()->image_downsizes ) ) {
 		global $_wp_additional_image_sizes;
 
-		$hocwp_theme->image_downsizes = array();
+		hocwp_theme_object()->image_downsizes = array();
 
 		$sizes = get_intermediate_image_sizes();
 
 		foreach ( $sizes as $size_name ) {
 			if ( in_array( $size_name, array( 'thumbnail', 'medium', 'large' ) ) ) {
-				$hocwp_theme->image_downsizes[ $size_name ]['width']  = get_option( $size_name . '_size_w' );
-				$hocwp_theme->image_downsizes[ $size_name ]['height'] = get_option( $size_name . '_size_h' );
-				$hocwp_theme->image_downsizes[ $size_name ]['crop']   = (bool) get_option( $size_name . '_crop' );
+				hocwp_theme_object()->image_downsizes[ $size_name ]['width']  = get_option( $size_name . '_size_w' );
+				hocwp_theme_object()->image_downsizes[ $size_name ]['height'] = get_option( $size_name . '_size_h' );
+				hocwp_theme_object()->image_downsizes[ $size_name ]['crop']   = (bool) get_option( $size_name . '_crop' );
 			} elseif ( isset( $_wp_additional_image_sizes[ $size_name ] ) ) {
-				$hocwp_theme->image_downsizes[ $size_name ] = $_wp_additional_image_sizes[ $size_name ];
+				hocwp_theme_object()->image_downsizes[ $size_name ] = $_wp_additional_image_sizes[ $size_name ];
 			}
 		}
 	}
 
-	$sizes = $hocwp_theme->image_downsizes;
+	$sizes = hocwp_theme_object()->image_downsizes;
 
 	$imagedata = wp_get_attachment_metadata( $id );
 

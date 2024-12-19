@@ -322,8 +322,7 @@ abstract class HOCWP_Theme_Meta {
 				$format = $field['callback_args']['data-date-format'] ?? '';
 
 				if ( empty( $format ) ) {
-					global $hocwp_theme;
-					$format = $hocwp_theme->defaults['date_format'];
+					$format = hocwp_theme_object()->defaults['date_format'];
 				}
 
 				if ( 'F j, Y' == $format ) {

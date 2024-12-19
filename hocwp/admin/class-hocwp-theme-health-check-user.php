@@ -32,7 +32,7 @@ class HOCWP_Theme_Health_Check_User extends HOCWP_Theme_Health_Check {
 		$this->actions = sprintf(
 			__( '<p>You can <a href="%s">create new administrator user</a> account, or go to the <a href="%s">administrator tools page</a> of the theme, enter the email address and click create a new admin account.</p>', 'hocwp-theme' ),
 			esc_url( admin_url( 'user-new.php' ) ),
-			esc_url( admin_url( 'themes.php?page=hocwp_theme&tab=administration_tools' ) )
+			esc_url( admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=administration_tools' ) )
 		);
 	}
 

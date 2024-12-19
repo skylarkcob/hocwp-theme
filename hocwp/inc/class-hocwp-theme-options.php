@@ -118,9 +118,7 @@ class HOCWP_Theme_Options {
 	}
 
 	public function get_default( $key = null ) {
-		global $hocwp_theme;
-
-		$defaults = $hocwp_theme->defaults;
+		$defaults = hocwp_theme_object()->defaults;
 
 		if ( ht()->is_array_key_valid( $key ) ) {
 			$defaults = $defaults[ $key ] ?? '';

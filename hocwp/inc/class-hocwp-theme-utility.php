@@ -140,13 +140,11 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_browser() {
-		global $hocwp_theme;
-
-		if ( ! isset( $hocwp_theme->browser ) || ! ht()->array_has_value( $hocwp_theme->browser ) ) {
-			$hocwp_theme->browser = ht()->get_browser();
+		if ( ! isset( hocwp_theme_object()->browser ) || ! ht()->array_has_value( hocwp_theme_object()->browser ) ) {
+			hocwp_theme_object()->browser = ht()->get_browser();
 		}
 
-		return $hocwp_theme->browser;
+		return hocwp_theme_object()->browser;
 	}
 
 	/**
@@ -221,8 +219,7 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_current_url( $with_param = false ) {
-		global $hocwp_theme_protocol;
-		$current_url = $hocwp_theme_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$current_url = hocwp_theme()->protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 		if ( ! $with_param ) {
 			$current_url = ht()->get_url_without_param( $current_url );
@@ -1209,9 +1206,7 @@ class HOCWP_Theme_Utility {
 			$timestamp = intval( $timestamp );
 		}
 
-		global $hocwp_theme;
-
-		$defaults = $hocwp_theme->defaults;
+		$defaults = hocwp_theme_object()->defaults;
 
 		if ( null == $format ) {
 			$df = ( ! empty( $defaults['date_format'] ) ) ? $defaults['date_format'] : 'Y-m-d';
@@ -1302,9 +1297,7 @@ class HOCWP_Theme_Utility {
 				$client_info = ht()->json_string_to_array( $client_info );
 			}
 		} else {
-			global $hocwp_theme;
-
-			$client_info = $hocwp_theme->client_info ?? array();
+			$client_info = hocwp_theme_object()->client_info ?? array();
 
 			if ( empty( $client_info ) ) {
 				$client_info = $this->get_client_info( true );

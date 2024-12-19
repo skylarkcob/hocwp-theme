@@ -14,9 +14,7 @@ function hocwp_theme_settings_page_social_tab( $tabs ) {
 
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_social_tab' );
 
-global $hocwp_theme;
-
-if ( 'social' != $hocwp_theme->option->tab ) {
+if ( 'social' != hocwp_theme_object()->option->tab ) {
 	return;
 }
 

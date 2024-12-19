@@ -34,9 +34,9 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			return;
 		}
 
-		global $hocwp_theme, $pagenow;
+		global $pagenow;
 
-		if ( isset( $hocwp_theme->option ) && $hocwp_theme->option instanceof HOCWP_Theme_Admin_Setting_Page ) {
+		if ( isset( hocwp_theme_object()->option ) && hocwp_theme_object()->option instanceof HOCWP_Theme_Admin_Setting_Page ) {
 			return;
 		}
 
@@ -89,9 +89,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 
 	public function screen_settings_filter( $settings, $screen ) {
 		if ( $screen instanceof WP_Screen ) {
-			global $hocwp_theme;
-
-			if ( $screen->id == $hocwp_theme->option->hook_suffix ) {
+			if ( $screen->id == hocwp_theme_object()->option->hook_suffix ) {
 				$value = get_user_setting( 'theme_settings_collapse_expand' );
 
 				ob_start();
@@ -250,10 +248,10 @@ final class HOCWP_Theme_Admin_Setting_Page {
 	}
 
 	public function settings_init() {
-		global $hocwp_theme;
+        $hook = hocwp_theme_object()->option->hook_suffix;
 
 		// Action when theme setting page loaded
-		add_action( "load-{$hocwp_theme->option->hook_suffix}", array( $this, 'screen_options_and_help_action' ) );
+		add_action( "load-{$hook}", array( $this, 'screen_options_and_help_action' ) );
 
 		/**
 		 * Register Setting
@@ -392,7 +390,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			if ( isset( $options[ $this->tabs->tab_name ][ $name ] ) ) {
 				$value = $options[ $this->tabs->tab_name ][ $name ];
 			} else {
-				$options = hocwp_theme()->object->options;
+				$options = hocwp_theme_object()->options;
 
 				$value = $options[ $this->tabs->tab_name ][ $name ] ?? $default;
 			}
@@ -403,7 +401,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ];
 				} else {
-					$options = hocwp_theme()->object->options;
+					$options = hocwp_theme_object()->options;
 
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ] ?? $default;
 				}
@@ -411,7 +409,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 				if ( isset( $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ];
 				} else {
-					$options = hocwp_theme()->object->options;
+					$options = hocwp_theme_object()->options;
 
 					$value = $options[ $this->tabs->tab_name ][ $name[0] ][ $name[1] ][ $name[2] ] ?? $default;
 				}
@@ -580,7 +578,7 @@ final class HOCWP_Theme_Admin_Setting_Page {
 			if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 				$value = $options[ $this->tabs->tab_name ][ $field['id'] ];
 			} else {
-				$options = hocwp_theme()->object->options;
+				$options = hocwp_theme_object()->options;
 
 				if ( isset( $options[ $this->tabs->tab_name ][ $field['id'] ] ) ) {
 					$value = $options[ $this->tabs->tab_name ][ $field['id'] ];

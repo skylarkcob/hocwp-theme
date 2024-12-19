@@ -181,12 +181,10 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	}
 
 	public function no_items() {
-		global $hocwp_theme;
-
-		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
+		if ( ! empty( $_REQUEST['s'] ) ) {
 			$s = esc_html( wp_unslash( $_REQUEST['s'] ) );
 			printf( __( 'No extensions found for &#8220;%s&#8221;.', 'hocwp-theme' ), $s );
-		} elseif ( ! empty( $hocwp_theme->extensions['all'] ) ) {
+		} elseif ( ! empty( hocwp_theme_object()->extensions['all'] ) ) {
 			_e( 'No extensions found.', 'hocwp-theme' );
 		} else {
 			_e( 'You do not appear to have any extensions available at this time.', 'hocwp-theme' );
@@ -194,13 +192,11 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 	}
 
 	function get_columns() {
-		$columns = array(
+		return array(
 			'cb'          => '<input type="checkbox" />',
 			'name'        => __( 'Name', 'hocwp-theme' ),
 			'description' => __( 'Description', 'hocwp-theme' )
 		);
-
-		return $columns;
 	}
 
 	function get_sortable_columns() {
@@ -245,7 +241,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 			}
 
 			$status_links[ $type ] = sprintf( '<a href="%s" %s>%s</a>',
-				add_query_arg( 'extension_status', $type, 'themes.php?page=hocwp_theme&tab=extension' ),
+				add_query_arg( 'extension_status', $type, 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension' ),
 				( $type === $status ) ? ' class="current"' : '',
 				sprintf( $text, number_format_i18n( $count ) )
 			);
@@ -281,7 +277,7 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 		$is_active = ht_extension()->is_active( $extension_file );
 
-		$baseurl = 'themes.php?page=hocwp_theme&tab=extension&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s;
+		$baseurl = 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension&extension=' . $extension_file . '&extension_status=' . $context . '&paged=' . $page . '&s=' . $s;
 
 		if ( $is_active ) {
 			$href = wp_nonce_url( $baseurl . '&action=deactivate', 'bulk-' . $this->_args['plural'] );
@@ -422,11 +418,11 @@ class HOCWP_Extensions_List_Table extends WP_List_Table {
 
 			set_transient( 'hocwp_theme_extension_message', $message );
 			set_transient( 'hocwp_theme_flush_rewrite_rules', 1 );
-			$extension_status = isset( $_GET['extension_status'] ) ? $_GET['extension_status'] : '';
+			$extension_status = $_GET['extension_status'] ?? '';
 
-			$href = admin_url( 'themes.php?page=hocwp_theme&tab=extension&extension_status=' . $extension_status );
+			$href = admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension&extension_status=' . $extension_status );
 
-			if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
+			if ( ! empty( $_REQUEST['s'] ) ) {
 				$href = add_query_arg( 's', $_REQUEST['s'], $href );
 			}
 

@@ -243,14 +243,14 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 
 		$display_tabs = array();
 
-		$url = self_admin_url( 'themes.php?page=hocwp_theme_plugins' );
+		$url = self_admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '_plugins' );
 
 		foreach ( (array) $tabs as $action => $text ) {
 			$class = ( $action === $tab ) ? ' current' : '';
 			$href  = add_query_arg( 'tab', $action, $url );
 
 			if ( is_array( $text ) ) {
-				$text = isset( $text['text'] ) ? $text['text'] : ucwords( $action );
+				$text = $text['text'] ?? ucwords( $action );
 			}
 
 			$display_tabs[ 'plugin-install-' . $action ] = "<a href='$href' class='$class'>$text</a>";

@@ -332,6 +332,14 @@ final class HOCWP_Theme_Controller {
 		$this->data[ $name ] = $value;
 	}
 
+	public function get_tmp_data( $name ) {
+		return $this->tmp_data[ $name ] ?? null;
+	}
+
+	public function set_tmp_data( $name, $value ) {
+		$this->tmp_data[ $name ] = $value;
+	}
+
 	public function get_instance_object( $class ) {
 		$name = strtolower( $class );
 
@@ -352,15 +360,9 @@ final class HOCWP_Theme_Controller {
 	}
 
 	private function defaults() {
-		global $hocwp_theme, $is_opera, $hocwp_theme_protocol;
+		global $is_opera;
 
 		$this->object->browser = ht()->get_browser();
-
-		if ( empty( $hocwp_theme_protocol ) ) {
-			$hocwp_theme_protocol = ( isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) != 'off' ) ? 'https://' : 'http://';
-		}
-
-		$this->protocol = $hocwp_theme_protocol;
 
 		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			$is_opera = ( ht()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'Opera' ) || ht()->string_contain( $_SERVER['HTTP_USER_AGENT'], 'OPR/' ) );
@@ -497,8 +499,6 @@ final class HOCWP_Theme_Controller {
 		$this->object->defaults['options']['vip']['post_price'] = 100;
 
 		$this->object->options = wp_parse_args( $this->object->options, $this->object->defaults['options'] );
-
-		$hocwp_theme = $this->object;
 	}
 
 	public function get_options() {
@@ -976,4 +976,30 @@ hocwp_theme();
 
 function ht_control() {
 	return hocwp_theme();
+}
+
+/**
+ * Get global $hocwp_theme object or get object property or set object property.
+ *
+ * @param string $property The object property for get value.
+ * @param mixed $value The value to be set for object property.
+ *
+ * @return object|stdClass|null|mixed
+ */
+function hocwp_theme_object( $property = false, $value = null ) {
+	global $hocwp_theme;
+
+	if ( ! isset( $hocwp_theme ) ) {
+		$hocwp_theme = hocwp_theme()->object;
+	}
+
+	if ( ! empty( $property ) ) {
+		if ( ! is_null( $value ) ) {
+			$hocwp_theme->$property = $value;
+		}
+
+		return $hocwp_theme->$property ?? null;
+	}
+
+	return $hocwp_theme;
 }

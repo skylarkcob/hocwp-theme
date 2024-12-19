@@ -160,7 +160,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'theme-settings',
 				'title'  => __( 'Theme Settings', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() ),
 				'parent' => 'site-name'
 			);
 
@@ -169,7 +169,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'theme-extensions',
 				'title'  => __( 'Extensions', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=extension' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension' ),
 				'parent' => 'theme-settings'
 			);
 
@@ -178,7 +178,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'theme-phpinfo',
 				'title'  => __( 'PHP Info', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme_phpinfo' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '_phpinfo' ),
 				'parent' => 'theme-settings'
 			);
 
@@ -187,7 +187,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'system-information',
 				'title'  => __( 'System Information', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=system_information' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=system_information' ),
 				'parent' => 'theme-settings'
 			);
 
@@ -196,7 +196,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'theme-settings',
 				'title'  => __( 'Settings', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() ),
 				'parent' => 'themes'
 			);
 
@@ -205,7 +205,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'theme-extensions',
 				'title'  => __( 'Extensions', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=extension' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension' ),
 				'parent' => 'themes'
 			);
 
@@ -214,7 +214,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'theme-phpinfo',
 				'title'  => __( 'PHP Info', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme_phpinfo' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '_phpinfo' ),
 				'parent' => 'themes'
 			);
 
@@ -223,7 +223,7 @@ function hocwp_theme_admin_bar_menu_action( WP_Admin_Bar $wp_admin_bar ) {
 			$args = array(
 				'id'     => 'system-information',
 				'title'  => __( 'System Information', 'hocwp-theme' ),
-				'href'   => admin_url( 'themes.php?page=hocwp_theme&tab=system_information' ),
+				'href'   => admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=system_information' ),
 				'parent' => 'themes'
 			);
 
@@ -321,8 +321,6 @@ function hocwp_theme_update_option_url( $old_url, $new_url ) {
 add_action( 'hocwp_thene_change_siteurl', 'hocwp_theme_update_option_url', 10, 2 );
 
 function hocwp_theme_register_widgets() {
-	global $hocwp_theme;
-
 	$widgets = hocwp_theme()->get_widget_classes();
 
 	foreach ( $widgets as $widget ) {
@@ -343,7 +341,7 @@ function hocwp_theme_register_widgets() {
 			'after_title'   => "</h3>\n"
 		);
 
-		foreach ( $hocwp_theme->default_sidebars as $sidebar ) {
+		foreach ( hocwp_theme_object()->default_sidebars as $sidebar ) {
 			if ( is_array( $sidebar ) && ! empty( $sidebar['id'] ) ) {
 				$sidebar = wp_parse_args( $sidebar, $defaults );
 				$sidebar = array_filter( $sidebar );
@@ -438,7 +436,7 @@ function hocwp_theme_check_environment() {
 					$data = ht_util()->get_plugin_info( $info->name );
 
 					if ( empty( $data ) || ! isset( $data['basename'] ) || ! is_plugin_active( $data['basename'] ) ) {
-						$url  = admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' );
+						$url  = admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '_plugins&tab=required' );
 						$die  = true;
 						$name = $info->name;
 					}
@@ -693,7 +691,7 @@ add_filter( 'upgrader_source_selection', function ( $source, $remote_source, $up
 }, 10, 3 );
 
 add_filter( 'install_theme_overwrite_actions', function ( $install_actions ) {
-	$url = admin_url( 'themes.php?page=hocwp_theme' );
+	$url = admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() );
 
 	$text = sprintf( __( '%s Settings', 'hocwp-theme' ), HOCWP_THEME_NAME );
 

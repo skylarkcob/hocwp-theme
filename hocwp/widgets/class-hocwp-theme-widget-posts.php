@@ -403,19 +403,18 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 						}
 					}
 
-					global $hocwp_theme;
-					$hocwp_theme->loop_data['list']       = true;
-					$hocwp_theme->loop_data['on_sidebar'] = true;
-					$hocwp_theme->loop_data['template']   = 'sidebar';
+					hocwp_theme_object()->loop_data['list']       = true;
+					hocwp_theme_object()->loop_data['on_sidebar'] = true;
+					hocwp_theme_object()->loop_data['template']   = 'sidebar';
 
-					$hocwp_theme->loop_data['widget'] = $this;
+					hocwp_theme_object()->loop_data['widget'] = $this;
 
-					$hocwp_theme->loop_data['widget_args']     = $args;
-					$hocwp_theme->loop_data['widget_instance'] = $instance;
+					hocwp_theme_object()->loop_data['widget_args']     = $args;
+					hocwp_theme_object()->loop_data['widget_instance'] = $instance;
 
-					$hocwp_theme->loop_data['pagination_args'] = null;
-					$hocwp_theme->loop_data['content_none']    = false;
-					$hocwp_theme->loop_data['display_type']    = $display_type;
+					hocwp_theme_object()->loop_data['pagination_args'] = null;
+					hocwp_theme_object()->loop_data['content_none']    = false;
+					hocwp_theme_object()->loop_data['display_type']    = $display_type;
 					do_action( 'hocwp_theme_loop', $query );
 
 					if ( ! empty( $more_link ) && 'bottom' == $more_pos ) {

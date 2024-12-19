@@ -40,15 +40,13 @@ if ( ! class_exists( 'HOCWP_EXT_Classic_Editor' ) ) {
 	}
 }
 
-global $hocwp_theme;
-
-if ( ! isset( $hocwp_theme->extensions ) || ! is_array( $hocwp_theme->extensions ) ) {
-	$hocwp_theme->extensions = array();
+if ( ! isset( hocwp_theme_object()->extensions ) || ! is_array( hocwp_theme_object()->extensions ) ) {
+	hocwp_theme_object()->extensions = array();
 }
 
 $extension = hte_classic_editor()->get_instance();
 
-$hocwp_theme->extensions[ $extension->basename ] = $extension;
+hocwp_theme_object()->extensions[ $extension->basename ] = $extension;
 
 function hte_classic_editor() {
 	return HOCWP_EXT_Classic_Editor::get_instance();

@@ -20,8 +20,7 @@ function hocwp_theme_settings_page_smtp_tab( $tabs ) {
 
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_smtp_tab' );
 
-global $hocwp_theme;
-if ( 'smtp' != $hocwp_theme->option->tab ) {
+if ( 'smtp' != hocwp_theme_object()->option->tab ) {
 	return;
 }
 

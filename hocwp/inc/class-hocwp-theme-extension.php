@@ -198,10 +198,8 @@ class HOCWP_Theme_Extension_Controller {
 
 		$this->active_extensions = (array) get_option( 'hocwp_theme_active_extensions', array() );
 
-		global $hocwp_theme;
-
-		if ( ! isset( $hocwp_theme->extensions ) ) {
-			$hocwp_theme->extensions = array();
+		if ( ! isset( hocwp_theme_object()->extensions ) ) {
+			hocwp_theme_object()->extensions = array();
 		}
 
 		if ( is_admin() ) {
@@ -210,13 +208,11 @@ class HOCWP_Theme_Extension_Controller {
 	}
 
 	public function register( $extension ) {
-		global $hocwp_theme;
-
-		if ( ! isset( $hocwp_theme->extensions ) || ! is_array( $hocwp_theme->extensions ) ) {
-			$hocwp_theme->extensions = array();
+		if ( ! isset( hocwp_theme_object()->extensions ) || ! is_array( hocwp_theme_object()->extensions ) ) {
+			hocwp_theme_object()->extensions = array();
 		}
 
-		$hocwp_theme->extensions[ $extension->basename ] = $extension;
+		hocwp_theme_object()->extensions[ $extension->basename ] = $extension;
 	}
 
 	public function deprecated_extension_run_action( $extension, $replacement, $version ) {

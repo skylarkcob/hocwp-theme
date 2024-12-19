@@ -172,10 +172,6 @@
     margin: 1em 0;
 }
 
-#adminmenu li.current + li a[href="themes.php?page=hocwp_theme&tab=extension"] {
-    display: none;
-}
-
 .hocwp-theme .wp-picker-holder {
     position: absolute;
     z-index: 499;

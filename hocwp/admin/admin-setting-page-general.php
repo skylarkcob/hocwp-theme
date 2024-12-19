@@ -14,9 +14,7 @@ function hocwp_theme_settings_page_general_tab( $tabs ) {
 
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_general_tab' );
 
-global $hocwp_theme;
-
-if ( 'general' != $hocwp_theme->option->tab ) {
+if ( 'general' != hocwp_theme_object()->option->tab ) {
 	return;
 }
 

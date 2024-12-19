@@ -14,9 +14,7 @@ function hocwp_theme_settings_page_reading_tab( $tabs ) {
 
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_reading_tab' );
 
-global $hocwp_theme;
-
-if ( 'reading' != $hocwp_theme->option->tab ) {
+if ( 'reading' != hocwp_theme_object()->option->tab ) {
 	return;
 }
 

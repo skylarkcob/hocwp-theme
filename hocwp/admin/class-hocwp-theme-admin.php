@@ -30,9 +30,9 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 			$plugins = ht_requirement()->get_required_plugins();
 
 			if ( ht()->array_has_value( $plugins ) && in_array( $slug, $plugins ) ) {
-				$update_actions['required_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins&tab=required' ) . '" target="_parent">' . __( 'Back to required plugins page', 'hocwp-theme' ) . '</a>';
+				$update_actions['required_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '_plugins&tab=required' ) . '" target="_parent">' . __( 'Back to required plugins page', 'hocwp-theme' ) . '</a>';
 			} else {
-				$update_actions['theme_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=hocwp_theme_plugins' ) . '" target="_parent">' . __( 'Back to theme plugins page', 'hocwp-theme' ) . '</a>';
+				$update_actions['theme_plugins_page'] = '<a href="' . admin_url( 'themes.php?page=' . hocwp_theme()->get_prefix() . '_plugins' ) . '" target="_parent">' . __( 'Back to theme plugins page', 'hocwp-theme' ) . '</a>';
 			}
 		}
 

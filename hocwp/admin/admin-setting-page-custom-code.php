@@ -14,8 +14,7 @@ function hocwp_theme_settings_page_custom_code_tab( $tabs ) {
 
 add_filter( 'hocwp_theme_settings_page_tabs', 'hocwp_theme_settings_page_custom_code_tab' );
 
-global $hocwp_theme;
-if ( 'custom_code' != $hocwp_theme->option->tab ) {
+if ( 'custom_code' != hocwp_theme_object()->option->tab ) {
 	return;
 }
 
