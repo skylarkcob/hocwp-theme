@@ -40,7 +40,7 @@ trait HT_VR_Tour_Template {
                     (function ($) {
                         const body = $("body");
 
-                        let isDebug = parseInt(hocwpTheme.is_debug),
+                        let isDebug = parseInt(hocwpTheme.isDebug),
                             settings = {
                                 xml: "tour.xml",
                                 target: "pano",

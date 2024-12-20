@@ -92,8 +92,8 @@ window.hocwpThemeCustomizer = window.hocwpThemeCustomizer || {};
                 }
             }
 
-            if (hocwpThemeCustomizer.inline_css) {
-                styles += hocwpThemeCustomizer.inline_css;
+            if (hocwpThemeCustomizer.inlineCSS) {
+                styles += hocwpThemeCustomizer.inlineCSS;
             }
 
             // Add styles.

@@ -341,6 +341,10 @@ final class HOCWP_Theme_Controller {
 		return $instance;
 	}
 
+	public function is_wc_activated() {
+		return $this->get_object( 'is_wc_activated' );
+	}
+
 	private function defaults() {
 		global $is_opera;
 

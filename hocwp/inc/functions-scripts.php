@@ -253,7 +253,7 @@ function hocwp_theme_localize_script_l10n() {
 		'loadMoreButton'            => hocwp_theme_load_more_button(),
 		'iconRemove'                => ht_html_field()->icon_remove(),
 		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width(),
-		'is_debug'                  => ht()->bool_to_int( HOCWP_THEME_DEVELOPING ),
+		'isDebug'                  => ht()->bool_to_int( HOCWP_THEME_DEVELOPING ),
 		'locale'                    => get_locale(),
 		'countdown'                 => array(
 			'labels' => array(
@@ -419,7 +419,7 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 	global $wp_version;
 
 	$l10n = array(
-		'wp_version'             => $wp_version,
+		'wpVersion'             => $wp_version,
 		'multiple'               => 0,
 		'removeImageButton'      => '<p class="hide-if-no-js remove"><a href="javascript:" class="remove-media">' . __( 'Remove %s', 'hocwp-theme' ) . '</a></p>',
 		'updateImageDescription' => '<p class="hide-if-no-js howto">' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',

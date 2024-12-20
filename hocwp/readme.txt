@@ -5,6 +5,8 @@
 * 19/12/2024: Use dynamic theme prefix as option name and all pages. So user cannot change theme folder name.
 * 19/12/2024: Define function to get or update global $hocwp_theme object.
 * 19/12/2024: Check attributes array first in HTML_Tag class.
+* 19/12/2024: Must use camelCase for variables and PascalCase for function in Javascript.
+* 20/12/2024: Full big update for HTML Tag class.
 
 = 7.0.7 =
 * 30/05/2024: Update improve search extension.

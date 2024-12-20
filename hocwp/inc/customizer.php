@@ -132,7 +132,7 @@ function hocwp_theme_get_customizer_css( $type = 'front-end' ) {
 	ob_start();
 
 	/**
-	 * Note – Styles are applied in this order:
+	 * Note ï¿½ Styles are applied in this order:
 	 * 1. Element specific
 	 * 2. Helper classes
 	 *
@@ -301,7 +301,7 @@ function hocwp_theme_customize_preview_init_action() {
 	wp_localize_script( 'hocwp-theme-customize-preview', 'hocwpThemeCustomizer', array(
 		'colors'     => hocwp_theme_get_customizer_color_vars(),
 		'elements'   => hocwp_theme_get_elements_array(),
-		'inline_css' => hocwp_theme_get_inline_css()
+		'inlineCSS' => hocwp_theme_get_inline_css()
 	) );
 }
 

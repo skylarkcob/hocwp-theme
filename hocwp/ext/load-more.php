@@ -50,7 +50,7 @@ if ( ! class_exists( 'HOCWP_Ext_Load_More' ) ) {
 				'button' => '<button class="load-more btn button" data-loading="' . esc_attr__( 'Loading...', 'hocwp-theme' ) . '">' . __( 'View more', 'hocwp-theme' ) . '</button>'
 			);
 
-			wp_localize_script( 'load-more', 'HTELoadMore', $l10n );
+			wp_localize_script( 'load-more', 'hteLoadMore', $l10n );
 		}
 	}
 }
