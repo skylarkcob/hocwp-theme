@@ -140,9 +140,8 @@ function hocwp_theme_enqueue_scripts_action() {
 
 	global $wp_scripts;
 
-	wp_dequeue_script( 'hocwp-theme-navigation' );
-
 	$load = apply_filters( 'hocwp_theme_load_default_style', true );
+	$load = apply_filters( 'ht/load_default_style', $load );
 
 	if ( $load ) {
 		wp_enqueue_style( 'hocwp-theme-default-fixed-style', HOCWP_THEME_CORE_URL . '/css/default-fixed' . HOCWP_THEME_CSS_SUFFIX, array( 'hocwp-theme-define-style' ) );
@@ -167,21 +166,7 @@ function hocwp_theme_enqueue_scripts_action() {
 
 	wp_enqueue_script( 'hocwp-theme-front-end', HOCWP_THEME_CORE_URL . '/js/front-end' . HOCWP_THEME_JS_SUFFIX, array( 'hocwp-theme' ), false, true );
 
-	$src = hocwp_theme()->core_url . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX;
-
-	$mobile_loaded = false;
-
-	if ( isset( $wp_scripts->registered['hocwp-theme-navigation'] ) ) {
-		$wp_scripts->registered['hocwp-theme-navigation']->src = $src;
-
-		$mobile_loaded = true;
-	}
-
-	wp_enqueue_script( 'hocwp-theme-navigation', $src, array( 'hocwp-theme' ), false, true );
-
-	if ( ! $mobile_loaded ) {
-		wp_enqueue_script( 'hocwp-theme-mobile-menu', HOCWP_THEME_CORE_URL . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX, array( 'hocwp-theme' ), false, true );
-	}
+	wp_enqueue_script( 'hocwp-theme-mobile-menu', HOCWP_THEME_CORE_URL . '/js/mobile-menu' . HOCWP_THEME_JS_SUFFIX, array( 'hocwp-theme' ), false, true );
 
 	wp_register_script( 'hocwp-theme-pagination', HOCWP_THEME_CORE_URL . '/js/pagination' . HOCWP_THEME_JS_SUFFIX, array( 'jquery' ), false, true );
 
@@ -253,7 +238,7 @@ function hocwp_theme_localize_script_l10n() {
 		'loadMoreButton'            => hocwp_theme_load_more_button(),
 		'iconRemove'                => ht_html_field()->icon_remove(),
 		'mobileScreenWidth'         => hocwp_theme_mobile_menu_media_screen_width(),
-		'isDebug'                  => ht()->bool_to_int( HOCWP_THEME_DEVELOPING ),
+		'isDebug'                   => ht()->bool_to_int( HOCWP_THEME_DEVELOPING ),
 		'locale'                    => get_locale(),
 		'countdown'                 => array(
 			'labels' => array(
@@ -419,7 +404,7 @@ function hocwp_theme_localize_script_l10n_media_upload() {
 	global $wp_version;
 
 	$l10n = array(
-		'wpVersion'             => $wp_version,
+		'wpVersion'              => $wp_version,
 		'multiple'               => 0,
 		'removeImageButton'      => '<p class="hide-if-no-js remove"><a href="javascript:" class="remove-media">' . __( 'Remove %s', 'hocwp-theme' ) . '</a></p>',
 		'updateImageDescription' => '<p class="hide-if-no-js howto">' . __( 'Click the %s to edit or update', 'hocwp-theme' ) . '</p>',

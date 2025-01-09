@@ -54,4 +54,4 @@ if ( comments_open() ) {
 	comment_form();
 }
 
-hocwp_theme_html_tag_close( 'div' );
+hocwp_theme_html_tag_close( 'div', 'comments_area' );

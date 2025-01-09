@@ -39,31 +39,17 @@ function hocwp_theme_get_footer() {
 function hocwp_theme_load_template( $_template_file, $include_once = false ) {
 	if ( ht()->array_has_value( $_template_file ) ) {
 		foreach ( $_template_file as $file ) {
-			if ( ! ht()->string_contain( $file, '.php' ) ) {
-				$file .= '.php';
-			}
-
-			if ( ht()->is_file( $file ) ) {
-				$file = apply_filters( 'hocwp_theme_pre_load_template', $file );
-				load_template( $file, $include_once );
-				break;
+			if ( hocwp_theme_load_template( $file, $include_once ) ) {
+				return true;
 			}
 		}
 
 		unset( $file );
 
-		return;
+		return false;
 	}
 
-	if ( ! ht()->string_contain( $_template_file, '.php' ) ) {
-		$_template_file .= '.php';
-	}
-
-	if ( ht()->is_file( $_template_file ) ) {
-		$file = apply_filters( 'hocwp_theme_pre_load_template', $_template_file );
-		load_template( $file, $include_once );
-		unset( $file );
-	}
+	return hocwp_theme()->load_template( $_template_file, $include_once );
 }
 
 function hocwp_theme_load_views( $name ) {

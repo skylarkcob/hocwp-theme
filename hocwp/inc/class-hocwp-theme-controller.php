@@ -3,11 +3,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-/*
+if ( ! trait_exists( 'HT_Controller' ) ) {
+	require_once( __DIR__ . '/trait-controller.php' );
+}
+
+/**
  * Main class to load all theme functions.
  */
-
 final class HOCWP_Theme_Controller {
+	use HT_Controller;
+
 	/**
 	 * The theme core version number.
 	 *
@@ -636,6 +641,31 @@ final class HOCWP_Theme_Controller {
 		unset( $exts );
 	}
 
+	public function load_template( $file, $include_once = false ) {
+		if ( ! ht()->string_contain( $file, '.php' ) ) {
+			$file .= '.php';
+		}
+
+		if ( ht()->is_file( $file ) ) {
+			$file = apply_filters( 'hocwp_theme_pre_load_template', $file );
+			$file = apply_filters( 'ht/load_template/pre', $file );
+
+			do_action( 'ht/load_template/before', $file, $include_once );
+			load_template( $file, $include_once );
+			do_action( 'ht/load_template/after', $file, $include_once );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public function is_blank_body() {
+		$blank_body = apply_filters( 'hocwp_theme_blank_body', false );
+
+		return apply_filters( 'ht/blank_body', $blank_body );
+	}
+
 	public function get_widget_classes( $base_path = '' ) {
 		if ( empty( $base_path ) ) {
 			$base_path = $this->core_path;
@@ -941,6 +971,7 @@ final class HOCWP_Theme_Controller {
 		require( $this->core_path . '/inc/updates.php' );
 
 		do_action( 'hocwp_theme_loaded' );
+		do_action( 'ht/loaded' );
 	}
 
 	public function reset_loop_data( $reset_temp = false ) {

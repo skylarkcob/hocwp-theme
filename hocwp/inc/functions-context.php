@@ -240,6 +240,11 @@ add_filter( 'post_class', 'hocwp_theme_post_class_filter', 10, 3 );
  */
 function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
 	$tag = trim( $tag );
+
+	if ( empty( $tag ) ) {
+		return;
+	}
+
 	$tag = strtolower( $tag );
 
 	$atts = hocwp_theme_html_tag_attribute( $tag, $context, $attr, false );
@@ -249,6 +254,8 @@ function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
 	}
 
 	printf( "<%s>\n", $tag );
+	do_action( 'ht/html_tag/open', $tag, $context, $atts );
+	do_action( 'ht/html_tag/' . $tag . '/open', $context, $atts );
 }
 
 /**
@@ -256,11 +263,23 @@ function hocwp_theme_html_tag( $tag, $context = '', $attr = '' ) {
  *
  * @param string $tag The HTML tag name.
  */
-function hocwp_theme_html_tag_close( $tag ) {
+function hocwp_theme_html_tag_close( $tag, $context = '' ) {
 	$tag = trim( $tag );
+
+	if ( empty( $tag ) ) {
+		return;
+	}
+
 	$tag = strtolower( $tag );
 
-	printf( "</%s>\n", $tag );
+	do_action( 'ht/html_tag/close', $tag, $context );
+	do_action( 'ht/html_tag/' . $tag . '/close', $context );
+
+	if ( empty( $context ) ) {
+		printf( "</%s>\n", $tag );
+	} else {
+		printf( "</%s> <!-- Close //%s -->\n", $tag, $context );
+	}
 }
 
 /**

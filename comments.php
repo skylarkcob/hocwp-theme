@@ -4,3 +4,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 do_action( 'hocwp_theme_module_comments_area' );
+do_action( 'ht/module/comments_area' );

@@ -24,6 +24,7 @@ class HOCWP_Theme_Custom extends Abstract_HT_Custom {
 	 * Default enqueue script action for front-end before core styles and scripts loaded. Do not remove it.
 	 */
 	public function enqueue_scripts_early() {
+
 	}
 
 	/*

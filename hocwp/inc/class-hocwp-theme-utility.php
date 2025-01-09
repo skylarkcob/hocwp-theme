@@ -219,7 +219,14 @@ class HOCWP_Theme_Utility {
 	}
 
 	public function get_current_url( $with_param = false ) {
-		$current_url = hocwp_theme()->protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$current_url = hocwp_theme()->protocol;
+
+        // Check if protocol not contains ://.
+		if ( ! str_contains( $current_url, '://' ) ) {
+			$current_url .= '://';
+		}
+
+		$current_url .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 		if ( ! $with_param ) {
 			$current_url = ht()->get_url_without_param( $current_url );

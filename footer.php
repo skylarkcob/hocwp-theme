@@ -6,3 +6,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( function_exists( 'hocwp_theme_load_views' ) ) {
 	hocwp_theme_load_views( 'module-footer' );
 }
+
+do_action( 'ht/module/footer' );

@@ -687,7 +687,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 	}
 
-	public function social_sharing_buttons( $args = array() ) {
+	public function social_sharing_buttons( $args = array(), $bg = true, $show_text = true, $rounded = false ) {
 		$title = get_the_title();
 		$url   = get_the_permalink();
 
@@ -700,14 +700,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				)
 			),
 			'facebook'  => array(
-				'url'    => '//www.facebook.com/sharer.php?',
+				'url'    => 'https://www.facebook.com/sharer.php?',
 				'icon'   => '<i class="fa fa-facebook"></i>',
 				'params' => array(
 					'u' => $url
 				)
 			),
 			'twitter'   => array(
-				'url'    => '//twitter.com/share',
+				'url'    => 'https://twitter.com/share',
 				'icon'   => '<i class="fa fa-twitter"></i>',
 				'params' => array(
 					'url' => $url
@@ -722,7 +722,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				)
 			),
 			'pinterest' => array(
-				'url'    => '//pinterest.com/pin/create/button/',
+				'url'    => 'https://pinterest.com/pin/create/button/',
 				'icon'   => '<i class="fa fa-pinterest"></i>',
 				'params' => array(
 					'url'         => $url,
@@ -731,13 +731,19 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 				)
 			),
 			'linkedin'  => array(
-				'url'    => '//www.linkedin.com/shareArticle',
+				'url'    => 'https://www.linkedin.com/shareArticle',
 				'icon'   => '<i class="fa fa-linkedin"></i>',
 				'params' => array(
 					'url'   => $url,
 					'title' => $title,
 					'mini'  => true
 				)
+			),
+			'copy_url'  => array(
+				'url'   => get_permalink(),
+				'title' => __( 'Copy URL', 'hocwp-theme' ),
+				'name'  => __( 'Copy URL', 'hocwp-theme' ),
+				'icon'  => '<i class="fa fa-link" aria-hidden="true"></i>'
 			)
 		);
 
@@ -745,15 +751,84 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$args = apply_filters( 'hocwp_theme_social_sharing_buttons', $args );
 
-		foreach ( $args as $social => $data ) {
-			$url = $data['url'];
-			$url = add_query_arg( $data['params'], $url );
-			?>
-            <a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
-               title="<?php echo esc_attr( sprintf( __( 'Share on %s', 'hocwp-theme' ), $social ) ); ?>"
-               class="icon button circle is-outline tooltip <?php echo esc_attr( $social ); ?> show-for-medium tooltipstered"><?php echo $data['icon']; ?></a>
-			<?php
+		$container_class = 'td-post-sharing';
+
+		if ( $bg ) {
+			$container_class .= ' td-ps-bg';
 		}
+
+		if ( ! $show_text ) {
+			$container_class .= ' td-ps-notext';
+		}
+
+		if ( $rounded ) {
+			$container_class .= ' td-ps-rounded';
+		}
+		?>
+        <div class="<?php echo esc_attr( $container_class ); ?>">
+            <div class="td-post-sharing-visible">
+				<?php
+				foreach ( $args as $social => $data ) {
+					$url = $data['url'];
+
+					if ( ! empty( $data['params'] ) ) {
+						$url = add_query_arg( $data['params'], $url );
+					}
+
+					$class = 'td-social-sharing-button td-social-sharing-button-js td-social-network td-social-' . sanitize_html_class( $social );
+					$class .= ' icon button circle is-outline tooltip show-for-medium tooltipstered';
+					$class .= ' ' . sanitize_html_class( $social );
+
+					if ( 'email' == $social ) {
+						$class .= ' td-social-mail';
+					}
+
+					$name = $data['name'] ?? '';
+
+					if ( empty( $name ) ) {
+						$name = ucfirst( $social );
+					}
+
+					$icon = $data['icon'] ?? '';
+
+					if ( ! empty( $icon ) ) {
+						$icon = str_replace( 'class="', 'class="td-icon-' . sanitize_title( $social ) . ' ', $icon );
+
+						if ( 'email' == $social ) {
+							$icon = str_replace( 'class="', 'class="td-icon-mail ', $icon );
+						}
+					}
+
+					$title = $data['title'] ?? '';
+
+					if ( empty( $title ) ) {
+						$title = sprintf( __( 'Share on %s', 'hocwp-theme' ), $name );
+					}
+					?>
+                    <a href="<?php echo esc_attr( $url ); ?>" rel="nofollow" target="_blank"
+                       title="<?php echo esc_attr( $title ); ?>"
+                       class="<?php echo esc_attr( $class ); ?>">
+                        <div class="td-social-but-icon">
+							<?php
+							if ( 'copy_url' == $social ) {
+								?>
+                                <div class="td-social-copy_url-check td-icon-check">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+								<?php
+							}
+
+							echo $icon;
+							?>
+                        </div>
+                        <div class="td-social-but-text"><?php echo $name; ?></div>
+                    </a>
+					<?php
+				}
+				?>
+            </div>
+        </div>
+		<?php
 	}
 
 	public function get_current_title( $args = array() ) {
@@ -1152,7 +1227,14 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function breadcrumb( $args = array() ) {
+		if ( function_exists( 'woocommerce_breadcrumb' ) ) {
+			woocommerce_breadcrumb();
+
+			return;
+		}
+
 		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
+		$args = apply_filters( 'ht/breadcrumb/args', $args );
 
 		$type = $args['type'] ?? ht_options()->get_tab( 'breadcrumb_type', '', 'reading' );
 

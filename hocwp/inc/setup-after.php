@@ -14,22 +14,22 @@ function hocwp_theme_after_setup_theme() {
 			array(
 				'name'  => __( 'Accent Color', 'hocwp-theme' ),
 				'slug'  => 'accent',
-				'color' => hocwp_theme_get_color_for_area( 'content', 'accent' ),
+				'color' => hocwp_theme_get_color_for_area( 'content', 'accent' )
 			),
 			array(
 				'name'  => __( 'Primary', 'hocwp-theme' ),
 				'slug'  => 'primary',
-				'color' => hocwp_theme_get_color_for_area(),
+				'color' => hocwp_theme_get_color_for_area()
 			),
 			array(
 				'name'  => __( 'Secondary', 'hocwp-theme' ),
 				'slug'  => 'secondary',
-				'color' => hocwp_theme_get_color_for_area( 'content', 'secondary' ),
+				'color' => hocwp_theme_get_color_for_area( 'content', 'secondary' )
 			),
 			array(
 				'name'  => __( 'Subtle Background', 'hocwp-theme' ),
 				'slug'  => 'subtle-background',
-				'color' => hocwp_theme_get_color_for_area( 'content', 'borders' ),
+				'color' => hocwp_theme_get_color_for_area( 'content', 'borders' )
 			),
 		);
 	}
@@ -45,7 +45,7 @@ function hocwp_theme_after_setup_theme() {
 	$editor_color_palette[] = array(
 		'name'  => __( 'Background Color', 'hocwp-theme' ),
 		'slug'  => 'background',
-		'color' => ( ! empty( $background_color ) ) ? '#' . $background_color : '',
+		'color' => ( ! empty( $background_color ) ) ? '#' . $background_color : ''
 	);
 
 	$supports = array(

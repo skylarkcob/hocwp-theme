@@ -181,4 +181,44 @@ trait HOCWP_Theme_Utils {
 
 		return $result;
 	}
+
+	public function get_object_thumbnail_id( $object_id, $object_type = 'post', $default_meta_key = '' ) {
+		$meta_keys = array( '_thumbnail_id', 'thumbnail_id', 'thumbnail' );
+
+		if ( 'post' === $object_type ) {
+			$callback = 'get_post_meta';
+		} else {
+			$callback = 'get_term_meta';
+		}
+
+		$id = call_user_func( $callback, $object_id, $meta_keys[0], true );
+
+		if ( ! is_numeric( $id ) ) {
+			$id = call_user_func( $callback, $object_id, $meta_keys[1], true );
+
+			if ( ! is_numeric( $id ) ) {
+				$id = call_user_func( $callback, $object_id, $meta_keys[2], true );
+			}
+		}
+
+		if ( ! is_numeric( $id ) && ! empty( $default_meta_key ) ) {
+			$id = call_user_func( $callback, $object_id, $default_meta_key, true );
+		}
+
+		return $id;
+	}
+
+	public function star_rating( $args ) {
+		if ( ! is_array( $args ) ) {
+			$args = array(
+				'rating' => $args
+			);
+		}
+
+		if ( ! function_exists( 'wp_star_rating' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/template.php' );
+		}
+
+		wp_star_rating( $args );
+	}
 }

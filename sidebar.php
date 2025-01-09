@@ -4,3 +4,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 do_action( 'hocwp_theme_module_sidebar' );
+do_action( 'ht/module/sidebar' );

@@ -7,6 +7,7 @@
 * 19/12/2024: Check attributes array first in HTML_Tag class.
 * 19/12/2024: Must use camelCase for variables and PascalCase for function in Javascript.
 * 20/12/2024: Full big update for HTML Tag class.
+* 29/12/2024: Remove all underscores default functions.
 
 = 7.0.7 =
 * 30/05/2024: Update improve search extension.
@@ -16,7 +17,7 @@
 * 24/10/2024: Fix bug while comparing info theme uploaded.
 * 24/10/2024: Now all scripts need hocwp-theme core js.
 * 25/10/2024: Add page state by finding page template in plugins.
-* 28/10/2024: Update YouTube API to detech Video ID.
+* 28/10/2024: Update YouTube API to detect Video ID.
 * 28/10/2024: Update theme uploaded table comparing.
 * 06/11/2024: Update code editor not receive data code editor in textarea field.
 * 11/11/2024: Update delay load functions.
@@ -67,7 +68,7 @@
 * 13/11/2023: Update default localized script object.
 * 13/11/2023: Only load required plugin when running development mode on localhost.
 * 16/11/2023: Hide duplicated field description.
-* 16/11/2023: Add title attriubte for links.
+* 16/11/2023: Add title attribute for links.
 * 16/11/2023: Add until for delay loading HTML data by javascript.
 * 17/11/2023: Update download image function.
 * 11/12/2023: Fix loading function conflict with delay load.
@@ -168,7 +169,7 @@
 * 28/04/2022: Add reCAPTCHA inline script, check reCAPTCHA configuration before insert.
 * 05/05/2022: Add user setting for sticky sidebar.
 * 16/05/2022: Add Google API key restrictions setting.
-* 16/05/2022: Update Gooogle API classes.
+* 16/05/2022: Update Google API classes.
 * 16/05/2022: Add default get header and footer functions.
 
 = 6.9.4 =
@@ -191,7 +192,7 @@
 = 6.9.3 =
 * 03/04/2022: Remove attribute type="text/javascript".
 * 03/04/2022: Add param to disable mobile menu button.
-* 03/04/2022: Add default carousel function, auto detect carousel scripts.
+* 03/04/2022: Add default carousel function, auto-detect carousel scripts.
 * 03/04/2022: Add option import tools.
 * 05/04/2022: Add hCaptcha.
 * 06/04/2022: Add support VR Tour theme.
@@ -245,7 +246,7 @@
 * 21/01/2022: Update prepare for Nutifood US Cali theme.
 * 07/02/2022: Allow admin tab object can use view link on admin bar.
 * 07/02/2022: Fix translation text on admin setting page footer.
-* 07/02/2022: Add default admin ajax to fetch administrative boundaries relation.
+* 07/02/2022: Add default admin ajax to fetch administrative boundary's relation.
 * 07/02/2022: Now can use both args and callback_args for field in fields function.
 * 07/02/2022: Now use lozad script for lazy load image by default.
 * 07/02/2022: Fix media upload script bugs.
@@ -294,7 +295,7 @@
 * 23/11/2021: Fix page menu class.
 * 23/11/2021: Add URL to localized object script.
 * 27/11/2021: Fix screen options not showing in theme settings page. Change admin_menu to admin_init for hook load.
-* 27/11/2021: Add theme settings page view mode for user can schange styles.
+* 27/11/2021: Add theme settings page view mode for user can change styles.
 * 27/11/2021: Use set_screen_options to update theme extensions per_page.
 
 = 6.8.6.2 =
@@ -312,7 +313,7 @@
 = 6.8.6 =
 * 19/10/2021: Add fields method into class HTML Field for using multiple fields in single field.
 * 23/10/2021: Allow using multi fields in single field for theme options.
-* 23/10/2021: Update get_field_value, allows get value for sub field in theme options.
+* 23/10/2021: Update get_field_value, allows get value for sub-field in theme options.
 * 23/10/2021: Add social sharing buttons for using in post or page.
 * 23/10/2021: Update license functions, add file into theme folders for re-check license.
 * 26/10/2021: Update mobile menu style.
@@ -397,7 +398,7 @@
 = 6.7.6 =
 * Theme now supports some customizer functions.
 * Unset image sizes with empty data.
-* Allow add custom HTML to term description field.
+* Allow to add custom HTML to term description field.
 * Add cookie popup alert.
 * Update extension list table.
 * Change block editor max width.
@@ -420,9 +421,9 @@
 * Update jQuery date picker.
 * Add data-done attribute for meta AJAX.
 * Update HocWP Terms widget for showing filter box search.
-* Update newest Underscores theme.
+* Update the newest Underscores theme.
 * Add admin tabs for widget HocWP Terms.
-* Allow choose static not found page.
+* Allow to choose static not found page.
 
 = 6.7.4 =
 * Add update option function.
@@ -508,7 +509,7 @@
 
 = 6.6.3 =
 * Add color class for generate color or adjust color.
-* Update Dynamic Thumnail extension.
+* Update Dynamic Thumbnail extension.
 * Remove function is_image from HOCWP_Theme class.
 * Add HOCWP_Theme_Media class.
 

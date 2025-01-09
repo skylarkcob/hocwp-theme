@@ -5,4 +5,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 do_action( 'hocwp_theme_template_index' );
+do_action( 'ht/template/index' );
 get_footer();

@@ -346,6 +346,7 @@ jQuery(document).ready(function ($) {
 
     hocwpTheme.GLOBAL = {
         init: function () {
+            BODY.addClass("td-js-loaded");
             this.delayLoad();
             this.carousel();
         },
