@@ -306,6 +306,8 @@ function hocwp_theme_html_tag_attribute( $tag, $context = '', $attr = '', $echo 
 	}
 
 	$attributes = apply_filters( 'hocwp_theme_html_tag_with_context_attributes', $attr, $tag, $context );
+	$attributes = apply_filters( 'ht/html_tag/attributes', $attributes, $tag, $context );
+	$attributes = apply_filters( 'ht/html_tag/' . $tag . '/attributes', $attributes, $context );
 
 	if ( is_array( $attributes ) ) {
 		$atts = $attributes;
