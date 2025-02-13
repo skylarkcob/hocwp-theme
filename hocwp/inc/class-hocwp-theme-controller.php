@@ -771,7 +771,9 @@ final class HOCWP_Theme_Controller {
 				if ( is_admin() ) {
 					global $pagenow;
 
-					if ( 'themes.php' != $pagenow ) {
+					$excludes = array( 'themes.php', 'theme-install.php', 'update-core.php' );
+
+					if ( ! in_array( $pagenow, $excludes ) ) {
 						wp_redirect( admin_url( 'themes.php' ) );
 						exit;
 					}
