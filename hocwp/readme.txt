@@ -8,6 +8,8 @@
 * 19/12/2024: Must use camelCase for variables and PascalCase for function in Javascript.
 * 20/12/2024: Full big update for HTML Tag class.
 * 29/12/2024: Remove all underscores default functions.
+* 25/02/2025: Only require PHP 7.4 or later.
+* 25/02/2025: Update plugins list base slug match with current theme option name.
 
 = 7.0.7 =
 * 30/05/2024: Update improve search extension.

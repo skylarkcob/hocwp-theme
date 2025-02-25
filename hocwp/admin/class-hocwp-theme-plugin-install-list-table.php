@@ -13,16 +13,16 @@ class HOCWP_Theme_Plugin_Install_List_Table extends WP_Plugin_Install_List_Table
 	public function __construct( $args = array() ) {
 		parent::__construct( $args );
 
-		if ( 'hocwp_theme_plugins' == ht_admin()->get_plugin_page() ) {
+		if ( hocwp_theme()->get_prefix() . '_plugins' == ht_admin()->get_plugin_page() ) {
 			add_filter( 'plugin_install_action_links', array( $this, 'plugin_install_action_links_filter' ), 10, 2 );
 		}
 	}
 
 	public function plugin_install_action_links_filter( $action_links, $plugin ) {
 		if ( ht()->array_has_value( $action_links ) ) {
-			$links = isset( $action_links[0] ) ? $action_links[0] : '';
+			$links = $action_links[0] ?? '';
 
-			if ( false !== strpos( $links, 'update-now button' ) ) {
+			if ( str_contains( $links, 'update-now button' ) ) {
 				$links = str_replace( 'update-now button', 'button update-link', $links );
 
 				$action_links[0] = $links;

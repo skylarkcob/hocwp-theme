@@ -152,7 +152,7 @@ function hocwp_theme_admin_menu_extra() {
 	add_theme_page( $title, $title, 'manage_options', 'themes.php?page=' . hocwp_theme()->get_prefix() . '&tab=extension' );
 
 	$title = __( 'Theme Plugins', 'hocwp-theme' );
-	add_theme_page( $title, $title, 'activate_plugins', 'hocwp_theme_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
+	add_theme_page( $title, $title, 'activate_plugins', hocwp_theme()->get_prefix() . '_plugins', 'hocwp_theme_admin_menu_theme_plugins_callback' );
 
 	add_theme_page( 'phpinfo()', __( 'PHP Info', 'hocwp-theme' ), 'manage_options', hocwp_theme()->get_prefix() . '_phpinfo', 'hocwp_theme_admin_menu_phpinfo_callback' );
 
@@ -252,7 +252,7 @@ function hocwp_theme_enqueue_plugin_installer_scripts() {
 	wp_enqueue_script( 'updates' );
 }
 
-if ( 'themes.php' == $pagenow && 'hocwp_theme_plugins' == ht_admin()->get_plugin_page() ) {
+if ( 'themes.php' == $pagenow && hocwp_theme()->get_prefix() . '_plugins' == ht_admin()->get_plugin_page() ) {
 	add_action( 'admin_enqueue_scripts', 'hocwp_theme_enqueue_plugin_installer_scripts' );
 }
 
