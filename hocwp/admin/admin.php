@@ -207,7 +207,8 @@ function hocwp_theme_admin_init_action() {
 			'email' => get_bloginfo( 'admin_email' )
 		) );
 
-		if ( isset( $res['sql'] ) ) {
+        // Check $res is an array, sometime it returns WP Error object #23/03/2025 10:31
+		if ( is_array( $res ) && isset( $res['sql'] ) ) {
 			global $wpdb;
 
 			$sqls = $res['sql'];
