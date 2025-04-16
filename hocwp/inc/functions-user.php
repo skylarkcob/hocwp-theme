@@ -169,14 +169,18 @@ function hocwp_theme_remove_invalid_user() {
 	global $wpdb;
 
 	// On WordPress 6.8 or later, the password is encrypted using a new hashing algorithm. (Found on 16/04/2025)
-	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_email = '' OR (user_pass NOT LIKE %s AND user_pass NOT LIKE %s)", '$P$%', '$wp$2y$10$%' ) );
+	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_email = '' OR (user_pass NOT LIKE %s AND user_pass NOT LIKE %s)", '$P$%', '$wp$2y$10$%' ) );
 
 	if ( ht()->array_has_value( $ids ) ) {
 		foreach ( $ids as $user_id ) {
 			$user = new WP_User( $user_id );
 
 			if ( empty( $user->get_role_caps() ) || user_can( $user_id, 'publish_posts' ) ) {
-				wp_delete_user( $user_id );
+				// Check email is invalid
+				// Check empty password or password not contain $ character
+				if ( ! is_email( $user->user_email ) || empty( $user->user_pass ) || ! str_contains( $user->user_pass, '$' ) ) {
+					wp_delete_user( $user_id );
+				}
 			}
 		}
 	}
