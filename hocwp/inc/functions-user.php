@@ -168,7 +168,8 @@ function hocwp_theme_verify_user_notification( $key, $user ) {
 function hocwp_theme_remove_invalid_user() {
 	global $wpdb;
 
-	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_email = '' OR user_pass NOT LIKE %s", '$P$%' ) );
+	// On WordPress 6.8 or later, the password is encrypted using a new hashing algorithm. (Found on 16/04/2025)
+	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT * FROM $wpdb->users WHERE user_email = '' OR (user_pass NOT LIKE %s AND user_pass NOT LIKE %s)", '$P$%', '$wp$2y$10$%' ) );
 
 	if ( ht()->array_has_value( $ids ) ) {
 		foreach ( $ids as $user_id ) {
