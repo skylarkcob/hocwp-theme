@@ -179,7 +179,7 @@ function hocwp_theme_remove_invalid_user() {
 				// Check email is invalid
 				// Check empty password or password not contain $ character
 				if ( ! is_email( $user->user_email ) || empty( $user->user_pass ) || ! str_contains( $user->user_pass, '$' ) ) {
-					wp_delete_user( $user_id );
+					$user->set_role( 'subscriber' );
 				}
 			}
 		}
