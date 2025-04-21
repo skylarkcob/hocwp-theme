@@ -160,29 +160,46 @@ function hocwp_theme_verify_user_notification( $key, $user ) {
 	return false;
 }
 
+function hocwp_theme_is_user_valid( $user, $conditional = '' ) {
+	if ( is_numeric( $user ) ) {
+		$user = get_user_by( 'id', $user );
+	}
+
+	if ( $user instanceof WP_User ) {
+		return ( ! ( ! is_email( $user->user_email ) || empty( $user->user_pass ) || ! str_contains( $user->user_pass, '$' ) || empty( $user->get_role_caps() ) || empty( $user->nickname ) ) );
+	}
+
+	return false;
+}
+
 /**
  * Search and delete invalid WordPress users.
  *
  * @return void
  */
 function hocwp_theme_remove_invalid_user() {
-	global $wpdb;
+	$tr_name = 'hocwp_theme_check_invalid_user';
 
-	// On WordPress 6.8 or later, the password is encrypted using a new hashing algorithm. (Found on 16/04/2025)
-	$ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_email = '' OR (user_pass NOT LIKE %s AND user_pass NOT LIKE %s)", '$P$%', '$wp$2y$10$%' ) );
+	if ( false === get_transient( $tr_name ) ) {
+		global $wpdb;
 
-	if ( ht()->array_has_value( $ids ) ) {
-		foreach ( $ids as $user_id ) {
-			$user = new WP_User( $user_id );
+		// On WordPress 6.8 or later, the password is encrypted using a new hashing algorithm. (Found on 16/04/2025)
+		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_email = '' OR (user_pass NOT LIKE %s AND user_pass NOT LIKE %s)", '$P$%', '$wp$2y$10$%' ) );
 
-			if ( empty( $user->get_role_caps() ) || user_can( $user_id, 'publish_posts' ) ) {
+		if ( ht()->array_has_value( $ids ) ) {
+			foreach ( $ids as $user_id ) {
+				$user = new WP_User( $user_id );
+
 				// Check email is invalid
 				// Check empty password or password not contain $ character
-				if ( ! is_email( $user->user_email ) || empty( $user->user_pass ) || ! str_contains( $user->user_pass, '$' ) ) {
+				if ( ! hocwp_theme_is_user_valid( $user ) && user_can( $user_id, 'publish_posts' ) ) {
+					// If user is invalid, just change it role to subscriber
 					$user->set_role( 'subscriber' );
 				}
 			}
 		}
+
+		set_transient( $tr_name, 1, HOUR_IN_SECONDS );
 	}
 }
 

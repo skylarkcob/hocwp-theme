@@ -145,25 +145,27 @@ function hocwp_theme_check_domain_change() {
 		$user = wp_get_current_user();
 
 		/*
-		 * Delete user doesn't have nickname for security reason.
+		 * Detect invalid user for security reason.
 		 */
-		if ( empty( $user->nickname ) ) {
-			set_transient( 'hocwp_theme_delete_user_id', $user->ID );
+		$tr_name = 'hocwp_theme_invalid_user_id';
+
+		if ( ! hocwp_theme_is_user_valid( $user ) ) {
+			set_transient( $tr_name, $user->ID );
 			wp_logout();
 			wp_redirect( home_url() );
 			exit;
 		}
 
-		$user_id = get_transient( 'hocwp_theme_delete_user_id' );
+		$user_id = get_transient( $tr_name );
 
 		if ( false !== $user_id ) {
-			delete_transient( 'hocwp_theme_delete_user_id' );
+			delete_transient( $tr_name );
+			$user = get_user_by( 'id', $user_id );
 
-			if ( ! function_exists( 'wp_delete_user' ) ) {
-				load_template( ABSPATH . 'wp-admin/includes/user.php' );
+			// If user is invalid, just change it role to subscriber
+			if ( $user instanceof WP_User ) {
+				$user->set_role( 'subscriber' );
 			}
-
-			wp_delete_user( $user_id );
 		}
 	}
 

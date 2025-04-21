@@ -11,6 +11,7 @@
 * 25/02/2025: Only require PHP 7.4 or later.
 * 25/02/2025: Update plugins list base slug match with current theme option name.
 * 16/04/2025: WordPress 6.8 will use bcrypt for password hashing, which significantly hardens WordPress.
+* 21/04/2025: Update function check invalid user.
 
 = 7.0.7 =
 * 30/05/2024: Update improve search extension.
