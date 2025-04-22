@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '7.0.8';
+const HOCWP_THEME_CORE_VERSION = '7.0.9';
 
 class HOCWP_Theme_Load {
 	protected static $instance;
@@ -28,7 +28,7 @@ class HOCWP_Theme_Load {
 
 		// If theme not declare required PHP version, just provide new.
 		if ( empty( $require_version ) ) {
-			$require_version = '8.1';
+			$require_version = '7.4';
 		}
 
 		/**

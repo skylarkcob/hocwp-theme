@@ -1,4 +1,7 @@
 == Changelog ==
+= 7.0.9 =
+* 22/04/2025: Update core version 7.0.9.
+
 = 7.0.8 =
 * 16/12/2024: Change all PHP function name to snake_case. Change Javascript function to PascalCase and variable to camelCase.
 * 16/12/2024: Upgrade new version 7.0.8, only supports PHP 8.1 or later.
