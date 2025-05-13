@@ -144,7 +144,14 @@ function hocwp_theme_import_settings_ajax_callback() {
 
 		if ( ! empty( $copy_option ) ) {
 			$value = get_option( $copy_option );
-			$msg   = sprintf( __( 'Option "%s" has been copied from "%s" successfully!', 'hocwp-theme' ), $option, $copy_option );
+
+			if ( ! empty( $value ) ) {
+				$msg = sprintf( __( 'Option "%s" has been copied from "%s" successfully!', 'hocwp-theme' ), $option, $copy_option );
+
+				if ( empty( $option ) ) {
+					$option = ht_options()->get_name();
+				}
+			}
 		}
 	}
 
