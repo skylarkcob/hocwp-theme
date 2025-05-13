@@ -390,7 +390,7 @@ jQuery(document).ready(function ($) {
             let that = this,
                 element = $(that),
                 form = element.closest("form"),
-                option = form.find("#hocwp_theme_administration_tools_exports_option_name");
+                option = form.find("#" + hocwpTheme.optionName + "_administration_tools_exports_option_name");
 
             if (!$.trim(option.val())) {
                 alert(element.attr("data-empty-message"));
@@ -442,7 +442,7 @@ jQuery(document).ready(function ($) {
             let that = this,
                 element = $(that),
                 form = element.closest("form"),
-                option = form.find("#hocwp_theme_administration_tools_exports_option_name");
+                option = form.find("#" + hocwpTheme.optionName + "_administration_tools_exports_option_name");
 
             if (confirm(element.attr("data-confirm-message"))) {
                 let file_name = "theme-settings";
@@ -521,8 +521,9 @@ jQuery(document).ready(function ($) {
             let that = this,
                 element = $(that),
                 form = element.closest("form"),
-                option = form.find("#hocwp_theme_administration_tools_imports_option_name"),
-                value = form.find("#hocwp_theme_administration_tools_imports_option_value");
+                option = form.find("#" + hocwpTheme.optionName + "_administration_tools_imports_option_name"),
+                copyOption = form.find("#" + hocwpTheme.optionName + "_administration_tools_imports_copy_option"),
+                value = form.find("#" + hocwpTheme.optionName + "_administration_tools_imports_option_value");
 
             if (confirm(element.attr("data-confirm-message"))) {
                 $.ajax({
@@ -533,9 +534,14 @@ jQuery(document).ready(function ($) {
                     data: {
                         action: "hocwp_theme_import_settings",
                         option: option.val(),
+                        copy_option: copyOption.val(),
                         value: value.val()
                     },
                     success: function (response) {
+                        if (response.data && response.data.message) {
+                            alert(response.data.message);
+                        }
+
                         if (response.success) {
                             alert(element.attr("data-message"));
                             option.val("");
@@ -564,7 +570,7 @@ jQuery(document).ready(function ($) {
                 element = $(that),
                 form = element.closest("form"),
                 box = element.closest("td"),
-                database = form.find("#hocwp_theme_administration_tools_ie_database_db_name");
+                database = form.find("#" + hocwpTheme.optionName + "_administration_tools_ie_database_db_name");
 
             if (confirm(element.attr("data-confirm-message"))) {
                 $.ajax({
@@ -621,8 +627,8 @@ jQuery(document).ready(function ($) {
                 element = $(that),
                 form = element.closest("form"),
                 dbName = element.attr("data-db-name"),
-                database = form.find("#hocwp_theme_administration_tools_ie_database_db_name"),
-                file = form.find("#hocwp_theme_administration_tools_ie_database_db_file_id"),
+                database = form.find("#" + hocwpTheme.optionName + "_administration_tools_ie_database_db_name"),
+                file = form.find("#" + hocwpTheme.optionName + "_administration_tools_ie_database_db_file_id"),
                 fileID = parseInt(file.val());
 
             if (isNaN(fileID) || 0 === fileID) {
@@ -762,9 +768,9 @@ jQuery(document).ready(function ($) {
             let that = this,
                 element = $(that),
                 form = element.closest("form"),
-                themes = form.find("#hocwp_theme_administration_tools_download_theme_plugin_themes"),
-                plugins = form.find("#hocwp_theme_administration_tools_download_theme_plugin_plugins"),
-                databases = form.find("#hocwp_theme_administration_tools_download_theme_plugin_databases");
+                themes = form.find("#" + hocwpTheme.optionName + "_administration_tools_download_theme_plugin_themes"),
+                plugins = form.find("#" + hocwpTheme.optionName + "_administration_tools_download_theme_plugin_plugins"),
+                databases = form.find("#" + hocwpTheme.optionName + "_administration_tools_download_theme_plugin_databases");
 
             if (confirm(element.attr("data-confirm-message"))) {
                 $.ajax({

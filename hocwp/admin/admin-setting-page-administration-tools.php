@@ -352,6 +352,10 @@ $args = array(
 			'callback' => 'input',
 			'title'    => __( 'Option name:', 'hocwp-theme' )
 		),
+		'copy_option'   => array(
+			'callback' => 'input',
+			'title'    => __( 'Copy option from:', 'hocwp-theme' )
+		),
 		'option_value'  => array(
 			'callback' => 'textarea',
 			'title'    => __( 'Option value:', 'hocwp-theme' ),

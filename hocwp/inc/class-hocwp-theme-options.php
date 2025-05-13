@@ -174,6 +174,10 @@ class HOCWP_Theme_Options {
 
 		return $key;
 	}
+
+	public function get_name() {
+		return hocwp_theme()->get_prefix();
+	}
 }
 
 function ht_options() {

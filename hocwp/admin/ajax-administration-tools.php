@@ -127,15 +127,36 @@ function hocwp_theme_fetch_option_ajax_callback() {
 add_action( 'wp_ajax_hocwp_theme_fetch_option', 'hocwp_theme_fetch_option_ajax_callback' );
 
 function hocwp_theme_import_settings_ajax_callback() {
-	$data = array();
+	$data = array(
+		'message' => __( 'Nothing changed!', 'hocwp-theme' )
+	);
 
 	$option = $_POST['option'] ?? '';
 	$value  = $_POST['value'] ?? '';
 	$value  = wp_unslash( $value );
 	$value  = maybe_unserialize( $value );
 
+	$msg = '';
+
+	// Copy theme options from old settings for theme changing name
+	if ( empty( $value ) ) {
+		$copy_option = $_POST['copy_option'] ?? '';
+
+		if ( ! empty( $copy_option ) ) {
+			$value = get_option( $copy_option );
+			$msg   = sprintf( __( 'Option "%s" has been copied from "%s" successfully!', 'hocwp-theme' ), $option, $copy_option );
+		}
+	}
+
 	if ( ! empty( $option ) && ! empty( $value ) ) {
 		$data['updated'] = update_option( $option, $value );
+
+		if ( empty( $msg ) ) {
+			$msg = __( 'Option has been imported successfully!', 'hocwp-theme' );
+		}
+
+		$data['message'] = $msg;
+
 		wp_send_json_success( $data );
 	}
 
