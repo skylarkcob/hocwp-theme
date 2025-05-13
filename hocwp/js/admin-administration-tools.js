@@ -94,6 +94,7 @@ jQuery(document).ready(function ($) {
                         }
                     });
                 } else {
+                    HOCWP_THEME.hideLoading(element);
                     element.removeClass("disabled");
                     element.blur();
                 }
@@ -189,6 +190,7 @@ jQuery(document).ready(function ($) {
                     });
                 }
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -312,6 +314,7 @@ jQuery(document).ready(function ($) {
                             }
                         });
                     } else {
+                        HOCWP_THEME.hideLoading(element);
                         element.removeClass("disabled");
                         element.blur();
                     }
@@ -372,6 +375,7 @@ jQuery(document).ready(function ($) {
                     }
                 });
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -422,6 +426,7 @@ jQuery(document).ready(function ($) {
                         }
                     });
                 } else {
+                    HOCWP_THEME.hideLoading(element);
                     element.removeClass("disabled");
                     element.blur();
                 }
@@ -451,8 +456,8 @@ jQuery(document).ready(function ($) {
                 hocwpTheme.object.downloadTextarea("#administration_tools_theme_settings", file_name);
                 element.removeClass("disabled");
                 element.blur();
-
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -461,16 +466,22 @@ jQuery(document).ready(function ($) {
 
     // Import option value
     (function () {
-        let inputFile = $("#choose-setting-file");
+        let inputFile = $("#choose-setting-file"),
+            realInput = "",
+            fileDialogOpened = false;
 
         // Open file dialog
         body.on("click", "form[data-tab='administration_tools'] button[data-load-settings='1'], form[data-tab='administration_tools'] input[data-load-settings='1']", function (e) {
             e.preventDefault();
+            let element = $(this);
             inputFile.trigger("click");
 
+            realInput = inputFile;
+            fileDialogOpened = true;
+
             setTimeout(function () {
-                $(this).removeClass("disabled");
-                $(this).blur();
+                element.removeClass("disabled");
+                element.blur();
             }, 1000);
         });
 
@@ -489,6 +500,17 @@ jQuery(document).ready(function ($) {
                 fileReader.readAsText(files[0]);
                 button.removeClass("disabled");
                 button.blur();
+            }
+
+            realInput = inputFile;
+            fileDialogOpened = false;
+        });
+
+        $(window).on("focus", function () {
+            // Close dialog not choosing file
+            if (fileDialogOpened && realInput[0].files.length === 0) {
+                HOCWP_THEME.hideLoading();
+                fileDialogOpened = false;
             }
         });
 
@@ -528,6 +550,7 @@ jQuery(document).ready(function ($) {
                     }
                 });
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -584,6 +607,7 @@ jQuery(document).ready(function ($) {
                     }
                 });
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -637,6 +661,7 @@ jQuery(document).ready(function ($) {
                     });
                 }
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -682,6 +707,8 @@ jQuery(document).ready(function ($) {
                         alert("Error " + jqXHR.status.toString() + ": " + jqXHR.statusText.toString() + "!");
                     }
                 });
+            } else {
+                HOCWP_THEME.hideLoading(element);
             }
         });
     })();
@@ -720,6 +747,7 @@ jQuery(document).ready(function ($) {
                     }
                 });
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
@@ -785,6 +813,7 @@ jQuery(document).ready(function ($) {
                     }
                 });
             } else {
+                HOCWP_THEME.hideLoading(element);
                 element.removeClass("disabled");
                 element.blur();
             }
