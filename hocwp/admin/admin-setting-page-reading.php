@@ -72,7 +72,8 @@ function hocwp_theme_settings_page_reading_field() {
 
 	$types = array(
 		''        => __( '-- Choose breadcrumb type --', 'hocwp-theme' ),
-		'default' => __( 'Default', 'hocwp-theme' )
+		'default' => __( 'Default', 'hocwp-theme' ),
+		'list'    => __( 'List', 'hocwp-theme' )
 	);
 
 	if ( ht_util()->yoast_seo_exists() ) {
@@ -85,6 +86,10 @@ function hocwp_theme_settings_page_reading_field() {
 
 	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
 		$types['rank_math'] = 'Rank Math';
+	}
+
+	if ( function_exists( 'woocommerce_breadcrumb' ) ) {
+		$types['woocommerce'] = 'WooCommerce';
 	}
 
 	$args = array(

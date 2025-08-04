@@ -276,6 +276,7 @@ function hocwp_theme_find_woocommerce_template( $template ) {
 function hocwp_theme_template_include_filter( $template ) {
 	// Filter use templates in plugin.
 	$plugin_template = apply_filters( 'hocwp_theme_use_plugin_templates', true );
+	$plugin_template = apply_filters( 'ht/use_plugin_templates', $plugin_template );
 
 	// If we use templates in plugin, check dir contains plugins directory.
 	if ( $plugin_template ) {
@@ -399,6 +400,7 @@ function hocwp_theme_widget_before( $args, $instance, $widget ) {
 	$before_widget = $args['before_widget'] ?? '<div class="widget">' . PHP_EOL;
 
 	$before_widget = apply_filters( 'hocwp_theme_widget_before_html', $before_widget, $args, $instance, $widget );
+	$before_widget = apply_filters( 'ht/widget_before_html', $before_widget, $instance, $widget );
 
 	echo $before_widget . PHP_EOL;
 
@@ -556,6 +558,7 @@ add_filter( 'hocwp_theme_sidebar', 'hocwp_theme_sidebar_filter' );
  */
 function hocwp_theme_dynamic_sidebar_params_filter( $params ) {
 	$wrap = apply_filters( 'hocwp_theme_wrap_widget', true, $params );
+	$wrap = apply_filters( 'ht/wrap_widget', $wrap, $params );
 
 	if ( isset( $params[0] ) ) {
 		$args = $params[0];
@@ -817,6 +820,7 @@ function hocwp_theme_menu_button( $control = 'main-menu', $id = '' ) {
 	}
 
 	$mobile_menu_icon = apply_filters( 'hocwp_theme_mobile_menu_icon', $mobile_menu_icon, $control, $id );
+	$mobile_menu_icon = apply_filters( 'ht/mobile_menu_icon', $mobile_menu_icon, $control, $id );
 
 	if ( empty( $control ) ) {
 		$control = 'main-menu';
@@ -861,6 +865,7 @@ function hocwp_theme_main_menu( $args ) {
 	$container_class = 'primary-menus main-menu primary-menu';
 
 	$menu = apply_filters( 'hocwp_theme_main_menu_default_location', 'menu-1' );
+	$menu = apply_filters( 'ht/main_menu_default_location', $menu, $args );
 
 	$theme_location = $args['theme_location'] ?? $menu;
 
@@ -875,6 +880,7 @@ function hocwp_theme_main_menu( $args ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	$args = apply_filters( 'hocwp_theme_main_menu_args', $args );
+	$args = apply_filters( 'ht/main_menu_args', $args );
 
 	ht_frontend()->wp_nav_menu_helper( $args );
 }
@@ -915,6 +921,7 @@ function hocwp_theme_mobile_menu( $args ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	$args = apply_filters( 'hocwp_theme_mobile_menu_args', $args );
+	$args = apply_filters( 'ht/mobile_menu_args', $args );
 
 	ht_frontend()->wp_nav_menu_helper( $args );
 }
@@ -926,6 +933,7 @@ function hocwp_theme_wp_nav_menu_items_filter( $items, $args ) {
 
 	if ( $full_width && ( 'mobile' == $args->theme_location && wp_is_mobile() ) ) {
 		$label = apply_filters( 'hocwp_theme_mobile_menu_close_label', __( 'Menu', 'hocwp-theme' ) );
+		$label = apply_filters( 'ht/mobile_menu_close_label', $label, $args );
 
 		$before = '<li class="menu-item label-item"><div class="d-flex"><span class="label">';
 		$after  = '</span><a href="javascript:" class="close-menu" title="' . __( 'Close menu', 'hocwp-theme' ) . '">&times;</a></div></li>';
@@ -937,6 +945,7 @@ function hocwp_theme_wp_nav_menu_items_filter( $items, $args ) {
 
 	if ( ! $has_form ) {
 		$insert = apply_filters( 'hocwp_theme_insert_mobile_menu_search', ( 'mobile' == $args->theme_location && wp_is_mobile() ) );
+		$insert = apply_filters( 'ht/insert_mobile_menu_search', $insert, $args );
 
 		if ( $insert ) {
 			$form  = get_search_form( false );
@@ -1005,6 +1014,7 @@ function hocwp_theme_custom_nav_menu_css_class_filter( $classes, $item ) {
 			}
 
 			$classes = apply_filters( 'hocwp_theme_menu_item_social_classes', $classes, $item );
+			$classes = apply_filters( 'ht/menu_item_social_classes', $classes, $item );
 		}
 	}
 
@@ -1024,7 +1034,9 @@ function hocwp_theme_human_time_diff_filter( $since, $diff ) {
 		$since = sprintf( _n( '%s sec', '%s secs', $secs, 'hocwp-theme' ), $secs );
 	}
 
-	return apply_filters( 'hocwp_theme_human_time_diff', $since, $diff );
+	$since = apply_filters( 'hocwp_theme_human_time_diff', $since, $diff );
+
+	return apply_filters( 'ht/human_time_diff', $since, $diff );
 }
 
 add_filter( 'human_time_diff', 'hocwp_theme_human_time_diff_filter', 10, 2 );
@@ -1102,6 +1114,7 @@ function hocwp_theme_wp_footer_action() {
 	}
 
 	$load = apply_filters( 'hocwp_theme_load_addthis', false );
+	$load = apply_filters( 'ht/load_addthis', $load );
 
 	if ( $load ) {
 		$addthis_id = $options['social']['addthis_id'] ?? '';
@@ -1233,6 +1246,7 @@ function hocwp_theme_get_custom_logo_filter( $html ) {
 	}
 
 	$tag_name = apply_filters( 'hocwp_theme_site_title_tag', $tag_name );
+	$tag_name = apply_filters( 'ht/site_title_tag', $tag_name );
 
 	if ( 'image' != $logo_display ) {
 		if ( 'text' == $logo_display ) {
@@ -1494,6 +1508,7 @@ function hocwp_theme_loop( $query ) {
 		hocwp_theme()->add_loop_data( 'count', $count );
 
 		$class = apply_filters( 'hocwp_theme_loop_container_class', $class, $query );
+		$class = apply_filters( 'ht/loop_container_class', $class, $query );
 
 		echo '<div class="' . $class . '">';
 
@@ -1987,7 +2002,10 @@ function hocwp_theme_q2w3_fixed_widget_filter( $value ) {
 		if ( isset( $value['stop-id'] ) && str_contains( $value['stop-id'], '|' ) ) {
 			$parts = explode( '|', $value['stop-id'] );
 
-			$value['stop-id'] = apply_filters( 'hocwp_theme_q2w3_fixed_widget_stop_id', $parts[0], $parts );
+			$stop_id = apply_filters( 'hocwp_theme_q2w3_fixed_widget_stop_id', $parts[0], $parts );
+			$stop_id = apply_filters( 'ht/q2w3_fixed_widget_stop_id', $stop_id, $parts, $value );
+
+			$value['stop-id'] = $stop_id;
 		}
 	}
 

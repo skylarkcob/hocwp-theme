@@ -264,7 +264,9 @@ function hocwp_theme_localize_script_l10n() {
 		$args = apply_filters( 'hocwp_theme_localize_script_l10n_admin', $args );
 	}
 
-	return apply_filters( 'hocwp_theme_localize_script_l10n', $args );
+	$args = apply_filters( 'hocwp_theme_localize_script_l10n', $args );
+
+	return apply_filters( 'ht/localize_script_l10n', $args );
 }
 
 function hocwp_theme_load_more_button() {

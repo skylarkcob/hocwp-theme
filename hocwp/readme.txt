@@ -3,6 +3,7 @@
 * 22/04/2025: Update core version 7.0.9.
 * 13/05/2025: Fix ajax loading not hide when cancel confirm or cancel file dialog.
 * 13/05/2025: Update jQuery selector not using theme option prefix.
+* 04/08/2025: Fix and update some functions after Spa theme.
 
 = 7.0.8 =
 * 16/12/2024: Change all PHP function name to snake_case. Change Javascript function to PascalCase and variable to camelCase.

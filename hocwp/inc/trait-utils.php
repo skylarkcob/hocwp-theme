@@ -221,4 +221,18 @@ trait HOCWP_Theme_Utils {
 
 		wp_star_rating( $args );
 	}
+
+	public function get_fields_by_group_key( $key ) {
+		$result = array();
+
+		if ( ! empty( $key ) && function_exists( 'acf_get_field_group' ) ) {
+			$group = acf_get_field_group( $key );
+
+			if ( ! empty( $group['ID'] ) ) {
+				$result = acf_get_fields( $group['ID'] );
+			}
+		}
+
+		return $result;
+	}
 }

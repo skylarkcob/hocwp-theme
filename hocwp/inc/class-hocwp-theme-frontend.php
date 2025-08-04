@@ -1227,20 +1227,17 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 	}
 
 	public function breadcrumb( $args = array() ) {
-		if ( function_exists( 'woocommerce_breadcrumb' ) ) {
-			woocommerce_breadcrumb();
-
-			return;
-		}
-
 		$args = apply_filters( 'hocwp_theme_breadcrumb_args', $args );
 		$args = apply_filters( 'ht/breadcrumb/args', $args );
 
 		$type = $args['type'] ?? ht_options()->get_tab( 'breadcrumb_type', '', 'reading' );
 
+		// Switch to default if function of breadcrumb type not exists
 		if ( 'yoast_seo' == $type && ! ht_frontend()->is_yoast_breadcrumb() ) {
 			$type = 'default';
 		} elseif ( 'rank_math' == $type && ! ht_frontend()->is_rank_math_breadcrumb() ) {
+			$type = 'default';
+		} elseif ( 'woocommerce' == $type && ! function_exists( 'woocommerce_breadcrumb' ) ) {
 			$type = 'default';
 		}
 
@@ -1258,7 +1255,19 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			return;
 		}
 
+		if ( function_exists( 'woocommerce_breadcrumb' ) && 'woocommerce' == $type ) {
+			echo $before;
+			woocommerce_breadcrumb();
+			echo $after;
+
+			return;
+		}
+
 		$bootstrap = $args['bootstrap'] ?? false;
+
+		if ( 'list' == $type ) {
+			$bootstrap = true;
+		}
 
 		if ( ! $bootstrap && ht_frontend()->is_yoast_breadcrumb() && ( empty( $type ) || 'yoast_seo' == $type ) ) {
 			/** @noinspection PhpUndefinedFunctionInspection */
@@ -1287,7 +1296,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			return;
 		}
 
-		if ( empty( $type ) || 'default' != $type ) {
+		if ( empty( $type ) ) {
 			$type = 'simple';
 		}
 
@@ -1419,6 +1428,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		unset( $last_item );
 
 		$items = apply_filters( 'hocwp_theme_breadcrumb_items', $items, $args );
+		$items = apply_filters( 'ht/breadcrumb/items', $items, $args );
 
 		if ( empty( $items ) ) {
 			return;
