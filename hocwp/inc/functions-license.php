@@ -167,6 +167,9 @@ function hocwp_theme_check_license() {
 add_action( 'init', 'hocwp_theme_check_license' );
 
 function hocwp_theme_update_blocked_license_file( $block = true ) {
+	// Always backup database before do everything
+	ht_util()->export_database( '', trailingslashit( WP_CONTENT_DIR ) . 'backups/databases' );
+
 	foreach ( HOCWP_THEME_LICENSE_FILE_FOLDERS as $dir ) {
 		$file = trailingslashit( $dir );
 		$file .= 'blocked.license';

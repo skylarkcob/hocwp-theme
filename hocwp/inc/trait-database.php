@@ -260,6 +260,22 @@ trait HOCWP_Theme_Database {
 
 		if ( empty( $destination ) ) {
 			$destination = trailingslashit( ABSPATH ) . $db_name . '.sql';
+		} else {
+			// Check if destionation does not end with a valid file
+			$ext = strtolower( pathinfo( $destination, PATHINFO_EXTENSION ) );
+
+			if ( empty( $ext ) ) {
+				$ext = $db_name . '_' . current_time( 'timestamp' ) . '.sql';
+
+				// Name will be like path/db_name_1757172999.sql
+				$destination = trailingslashit( $destination ) . $ext;
+			}
+		}
+
+		$dir = dirname( $destination );
+
+		if ( ! is_dir( $dir ) ) {
+			mkdir( $dir, 0777, true ); // Create folders first
 		}
 
 		$cmd = $root . " -u$user -p$pass $name > $destination";
