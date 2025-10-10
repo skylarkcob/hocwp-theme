@@ -266,8 +266,10 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 		$args = wp_parse_args( $args, $defaults );
 		$args = apply_filters( 'hocwp_theme_pagination_args', $args );
+		$args = apply_filters( 'ht/pagination/args', $args );
 
 		$output = apply_filters( 'hocwp_theme_pagination', '', $args );
+		$output = apply_filters( 'ht/pagination', $output, $args );
 
 		if ( ! empty( $output ) ) {
 			echo $output;
@@ -448,6 +450,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 
 		$short_mid_mobile = apply_filters( 'hocwp_theme_pagination_short_mid_mobile', wp_is_mobile() );
+		$short_mid_mobile = apply_filters( 'ht/pagination/short_mid_mobile', $short_mid_mobile );
 
 		if ( $short_mid_mobile ) {
 			if ( ( 1 + 2 ) > $paged && $paged < ( $total - 2 ) ) {
@@ -458,6 +461,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 		}
 
 		$args = apply_filters( 'hocwp_theme_paginate_links_args', $args );
+		$args = apply_filters( 'ht/pagination/links/args', $args );
 
 		$items = paginate_links( $args );
 
@@ -504,6 +508,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			}
 
 			$root_url = apply_filters( 'hocwp_theme_pagination_first_item_url', $root_url, $args );
+			$root_url = apply_filters( 'ht/pagination/first_item_url', $root_url, $args );
 
 			if ( $bootstrap ) {
 				$class .= ' mt-5';
@@ -522,6 +527,7 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			);
 
 			$atts = apply_filters( 'hocwp_theme_pagination_attributes', $atts, $args );
+			$atts = apply_filters( 'ht/pagination/attributes', $atts, $args );
 
 			$atts = array_map( 'esc_attr', $atts );
 			$atts = ht()->attributes_to_string( $atts );
