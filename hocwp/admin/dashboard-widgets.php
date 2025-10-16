@@ -7,7 +7,7 @@ function hocwp_theme_get_feed_items() {
 	$tr_name = 'hocwp_theme_feed_items';
 
 	if ( false === ( $feeds = get_transient( $tr_name ) ) ) {
-		$url   = 'https://hocwp.net/feed/';
+		$url   = 'https://ldcuong.com/feed/';
 		$feeds = ht_util()->get_feed_items( $url );
 
 		if ( ht()->array_has_value( $feeds ) ) {
@@ -55,7 +55,7 @@ function hocwp_theme_news_from_hocwp_team_callback() {
 }
 
 function hocwp_theme_dashboard_widget_recent_draft_callback( $tmp, $args ) {
-	$query = isset( $args['args']['query'] ) ? $args['args']['query'] : null;
+	$query = $args['args']['query'] ?? null;
 
 	if ( ! ( $query instanceof WP_Query ) || ! $query->have_posts() ) {
 		return;

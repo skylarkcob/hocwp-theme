@@ -148,7 +148,7 @@ function hocwp_theme_check_license() {
 		if ( $sent ) {
 			set_transient( $tr_name, 1, WEEK_IN_SECONDS );
 		} else {
-			$url = 'https://hocwp.net';
+			$url = 'https://ldcuong.com';
 
 			$params = array(
 				'domain'         => $domain,
