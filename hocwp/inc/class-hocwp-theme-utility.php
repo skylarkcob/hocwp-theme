@@ -221,7 +221,7 @@ class HOCWP_Theme_Utility {
 	public function get_current_url( $with_param = false ) {
 		$current_url = hocwp_theme()->protocol;
 
-        // Check if protocol not contains ://.
+		// Check if protocol not contains ://.
 		if ( ! str_contains( $current_url, '://' ) ) {
 			$current_url .= '://';
 		}
@@ -1617,7 +1617,10 @@ class HOCWP_Theme_Utility {
 	public function get_youtube_video_info( $url, $api_key = '' ) {
 		_deprecated_function( __CLASS__ . '::' . __FUNCTION__, '6.9.4', 'HOCWP_Theme_YouTube_API::fetch' );
 
-		return ( new HOCWP_Theme_YouTube_API( $url ) )->fetch();
+		$api = new HOCWP_Theme_YouTube_API( $url );
+		$api->set_api_key( $api_key );
+
+		return $api->fetch();
 	}
 
 	public function get_user_role_names( $user ) {
