@@ -32,6 +32,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		);
 
 		$this->defaults = apply_filters( 'hocwp_theme_widget_posts_defaults', $this->defaults, $this );
+		$this->defaults = apply_filters( 'ht/widget/posts/defaults', $this->defaults, $this );
 
 		$widget_options = array(
 			'classname'                   => 'hocwp-theme-widget-posts hocwp-widget-post',
@@ -156,12 +157,16 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 			);
 		}
 
-		return apply_filters( 'hocwp_theme_widget_posts_post_type', $post_type, $this );
+		$post_type = apply_filters( 'hocwp_theme_widget_posts_post_type', $post_type, $this );
+
+		return apply_filters( 'ht/widget/posts/post_type', $post_type, $this );
 	}
 
 	public function widget( $args, $instance ) {
 		$instance = apply_filters( 'hocwp_theme_widget_posts_instance', $instance, $args, $this );
-		$related  = isset( $instance['related'] ) ? (bool) $instance['related'] : $this->defaults['related'];
+		$instance = apply_filters( 'ht/widget/posts/instance', $instance, $args, $this );
+
+		$related = isset( $instance['related'] ) ? (bool) $instance['related'] : $this->defaults['related'];
 
 		if ( $related && ! is_single() && ! is_singular() && ! is_page() ) {
 			return;
@@ -277,6 +282,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		}
 
 		$query_args = apply_filters( 'hocwp_theme_widget_posts_query_args', $query_args, $instance, $args, $this );
+		$query_args = apply_filters( 'ht/widget/posts/query_args', $query_args, $instance, $args, $this );
 
 		$display_type = $instance['display_type'] ?? $this->defaults['display_type'];
 
@@ -334,9 +340,11 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					$list = '<ul class="group-posts">' . $list . '</ul>';
 
 					do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+					do_action( 'ht/widget/before', $args, $instance, $this );
 
 					echo $list;
 
+					do_action( 'ht/widget/after', $args, $instance, $this );
 					do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 				}
 			}
@@ -367,6 +375,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				}
 
 				do_action( 'hocwp_theme_widget_before', $args, $instance, $this );
+				do_action( 'ht/widget/before', $args, $instance, $this );
 
 				if ( $term instanceof WP_Term ) {
 					$title_term_link = $instance['title_term_link'] ?? $this->defaults['title_term_link'];
@@ -381,6 +390,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 				}
 
 				$html = apply_filters( 'hocwp_theme_widget_posts_html', '', $query, $instance, $args, $this );
+				$html = apply_filters( 'ht/widget/posts/html', $html, $query, $instance, $args, $this );
 
 				if ( empty( $html ) ) {
 					$more = $instance['view_more'] ?? '';
@@ -415,7 +425,14 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					hocwp_theme()->add_loop_data( 'pagination_args', null );
 					hocwp_theme()->add_loop_data( 'content_none', false );
 					hocwp_theme()->add_loop_data( 'display_type', $display_type );
+
+					ob_start();
 					do_action( 'hocwp_theme_loop', $query );
+					do_action( 'ht/loop', $query, $instance, $args, $this );
+					$loop_html = ob_get_clean();
+
+					$loop_html = apply_filters( 'ht/widget/posts/loop/html', $loop_html, $query, $instance, $args, $this );
+					echo $loop_html;
 
 					if ( ! empty( $more_link ) && 'bottom' == $more_pos ) {
 						echo $more_link;
@@ -424,6 +441,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 					echo $html;
 				}
 
+				do_action( 'ht/widget/after', $args, $instance, $this );
 				do_action( 'hocwp_theme_widget_after', $args, $instance, $this );
 			}
 		}
@@ -460,6 +478,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$post_types = get_post_types( array( 'public' => true ) );
 		unset( $post_types['attachment'] );
 		$post_types = apply_filters( 'hocwp_theme_widget_posts_post_types', $post_types, $this );
+		$post_types = apply_filters( 'ht/widget/posts/post_types', $post_types, $this );
 
 		$post_type  = $instance['post_type'] ?? $this->defaults['post_type'];
 		$taxonomies = array();
@@ -537,6 +556,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
 		$view_more      = $instance['view_more'] ?? '';
 
 		do_action( 'hocwp_theme_widget_form_before', $instance, $this );
+		do_action( 'ht/widget/form/before', $instance, $this );
 		?>
         <nav class="nav-tab-wrapper wp-clearfix">
             <a href="#widgetPostGeneral<?php echo $this->number; ?>"
@@ -833,6 +853,7 @@ class HOCWP_Theme_Widget_Posts extends WP_Widget {
             </div>
         </div>
 		<?php
+		do_action( 'ht/widget/form/after', $instance, $this );
 		do_action( 'hocwp_theme_widget_form_after', $instance, $this );
 	}
 
