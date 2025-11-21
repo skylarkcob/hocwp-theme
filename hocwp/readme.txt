@@ -7,6 +7,7 @@
 * 06/09/2025: Make a database backup before block or unblock license.
 * 05/11/2025: Fix function get_youtube_video_info not apply API Key.
 * 12/11/2025: Update hook for widget post.
+* 13/11/2025: Update function query popular post ids accepts post_type param.
 
 = 7.0.8 =
 * 16/12/2024: Change all PHP function name to snake_case. Change Javascript function to PascalCase and variable to camelCase.
