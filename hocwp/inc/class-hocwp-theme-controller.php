@@ -350,6 +350,43 @@ final class HOCWP_Theme_Controller {
 		return $this->get_object( 'is_wc_activated' );
 	}
 
+    public function default_sidebars() {
+	    $default_sidebars = array(
+		    array(
+			    'id'          => 'home',
+			    'name'        => __( 'Home Sidebar', 'hocwp-theme' ),
+			    'description' => __( 'Display widgets on home page.', 'hocwp-theme' )
+		    ),
+		    array(
+			    'id'          => 'search',
+			    'name'        => __( 'Search Sidebar', 'hocwp-theme' ),
+			    'description' => __( 'Display widgets on search result page.', 'hocwp-theme' )
+		    ),
+		    array(
+			    'id'          => 'archive',
+			    'name'        => __( 'Archive Sidebar', 'hocwp-theme' ),
+			    'description' => __( 'Display widgets on archive page.', 'hocwp-theme' )
+		    ),
+		    array(
+			    'id'          => 'single',
+			    'name'        => __( 'Single Sidebar', 'hocwp-theme' ),
+			    'description' => __( 'Display widgets on single page.', 'hocwp-theme' )
+		    ),
+		    array(
+			    'id'          => 'page',
+			    'name'        => __( 'Page Sidebar', 'hocwp-theme' ),
+			    'description' => __( 'Display widgets on page.', 'hocwp-theme' )
+		    ),
+		    array(
+			    'id'          => 'page_404',
+			    'name'        => __( 'Not Found Sidebar', 'hocwp-theme' ),
+			    'description' => __( 'Display widgets on 404 page.', 'hocwp-theme' )
+		    )
+	    );
+
+	    $this->set_object_default( 'default_sidebars', $default_sidebars );
+    }
+
 	private function defaults() {
 		global $is_opera;
 
@@ -381,40 +418,6 @@ final class HOCWP_Theme_Controller {
 		$this->set_object_default( 'option', '' );
 		$this->set_object_default( 'users_can_register', (bool) get_option( 'users_can_register' ) );
 
-		$default_sidebars = array(
-			array(
-				'id'          => 'home',
-				'name'        => __( 'Home Sidebar', 'hocwp-theme' ),
-				'description' => __( 'Display widgets on home page.', 'hocwp-theme' )
-			),
-			array(
-				'id'          => 'search',
-				'name'        => __( 'Search Sidebar', 'hocwp-theme' ),
-				'description' => __( 'Display widgets on search result page.', 'hocwp-theme' )
-			),
-			array(
-				'id'          => 'archive',
-				'name'        => __( 'Archive Sidebar', 'hocwp-theme' ),
-				'description' => __( 'Display widgets on archive page.', 'hocwp-theme' )
-			),
-			array(
-				'id'          => 'single',
-				'name'        => __( 'Single Sidebar', 'hocwp-theme' ),
-				'description' => __( 'Display widgets on single page.', 'hocwp-theme' )
-			),
-			array(
-				'id'          => 'page',
-				'name'        => __( 'Page Sidebar', 'hocwp-theme' ),
-				'description' => __( 'Display widgets on page.', 'hocwp-theme' )
-			),
-			array(
-				'id'          => 'page_404',
-				'name'        => __( 'Not Found Sidebar', 'hocwp-theme' ),
-				'description' => __( 'Display widgets on 404 page.', 'hocwp-theme' )
-			)
-		);
-
-		$this->set_object_default( 'default_sidebars', $default_sidebars );
 		$this->set_object_default( 'defaults', array() );
 
 		$this->get_object()->defaults['blacklist_keys']   = array();

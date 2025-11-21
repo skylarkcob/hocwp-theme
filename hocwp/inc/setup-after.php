@@ -334,6 +334,8 @@ function hocwp_theme_register_widgets() {
 	$variable_sidebar = ht_options()->get_tab( 'variable_sidebar', '', 'reading' );
 
 	if ( $variable_sidebar ) {
+		hocwp_theme()->default_sidebars();
+
 		$defaults = array(
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget'  => "</div>\n",

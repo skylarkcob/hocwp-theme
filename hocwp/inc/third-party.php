@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) || exit;
 
 class HOCWP_Theme_Third_Party {
 	public function __construct() {
-		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) );
+		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ),99 );
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 	}
 
@@ -28,7 +28,6 @@ class HOCWP_Theme_Third_Party {
 	}
 
 	public function after_setup_theme() {
-		load_theme_textdomain( 'hocwp-theme', HOCWP_THEME_CUSTOM_PATH . '/languages' );
 		add_theme_support( 'automatic-feed-links' );
 		add_theme_support( 'title-tag' );
 		add_theme_support( 'post-thumbnails' );
