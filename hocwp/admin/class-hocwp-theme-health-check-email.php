@@ -44,10 +44,8 @@ class HOCWP_Theme_Health_Check_Email extends HOCWP_Theme_Health_Check {
 	 * @return bool
 	 */
 	public function has_default_email() {
-		$value    = get_bloginfo( 'admin_email' );
-		$default  = 'hocwp.net@gmail.com';
-		$default2 = 'codewpvn@gmail.com';
+		$value = get_bloginfo( 'admin_email' );
 
-		return ( ! HOCWP_THEME_DEVELOPING && ( $default === $value || $default2 === $value ) );
+		return ( ! HOCWP_THEME_DEVELOPING && in_array( $value, HOCWP_THEME_DEV_EMAILS ) );
 	}
 }

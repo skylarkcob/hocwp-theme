@@ -209,7 +209,7 @@ final class HOCWP_Theme_Admin extends HOCWP_Theme_Utility {
 	public function skip_admin_notices() {
 		global $pagenow;
 
-		return in_array( $pagenow, array( 'update.php' ) );
+		return in_array( $pagenow, array( 'update.php', 'options-general.php' ) );
 	}
 }
 

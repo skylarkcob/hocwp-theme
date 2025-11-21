@@ -1,4 +1,8 @@
 == Changelog ==
+= 7.1.0 =
+* 21/11/2025: Update to new theme core version 7.1.0.
+* 21/11/2025: Update check dev admin emails.
+
 = 7.0.9 =
 * 22/04/2025: Update core version 7.0.9.
 * 13/05/2025: Fix ajax loading not hide when cancel confirm or cancel file dialog.

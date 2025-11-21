@@ -37,10 +37,23 @@ class HOCWP_Theme_Health_Check_User extends HOCWP_Theme_Health_Check {
 	}
 
 	public function check_default_admin() {
-		$this->user = get_user_by( 'email', 'hocwp.net@gmail.com' );
+		$emails = HOCWP_THEME_DEV_EMAILS;
+		$count  = count( $emails );
 
-		if ( ! ( $this->user instanceof WP_User ) ) {
-			$this->user = get_user_by( 'email', 'codewpvn@gmail.com' );
+		for ( $i = $count - 1; $i >= 0; $i -- ) {
+			$email = $emails[ $i ] ?? '';
+
+			// Skip invalid email
+			if ( ! is_email( $email ) ) {
+				continue;
+			}
+
+			$user = get_user_by( 'email', $email );
+
+			if ( $user instanceof WP_User ) {
+				$this->user = $user;
+				break;
+			}
 		}
 
 		if ( ! ( $this->user instanceof WP_User ) ) {
@@ -48,7 +61,7 @@ class HOCWP_Theme_Health_Check_User extends HOCWP_Theme_Health_Check {
 		}
 
 		if ( ! ( $this->user instanceof WP_User ) ) {
-			$this->user = get_user_by( 'admin', 'huser' );
+			$this->user = get_user_by( 'login', 'admin' );
 		}
 
 		if ( $this->user instanceof WP_User ) {

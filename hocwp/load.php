@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme core version.
  */
-const HOCWP_THEME_CORE_VERSION = '7.0.9';
+const HOCWP_THEME_CORE_VERSION = '7.1.0';
 
 class HOCWP_Theme_Load {
 	protected static $instance;
@@ -30,6 +30,12 @@ class HOCWP_Theme_Load {
 		if ( empty( $require_version ) ) {
 			$require_version = '7.4';
 		}
+
+		define( 'HOCWP_THEME_DEV_EMAILS', array(
+			'laidinhcuongvn@gmail.com',
+			'hocwp.net@gmail.com',
+			'codewpvn@gmail.com'
+		) );
 
 		/**
 		 * Requires PHP version.

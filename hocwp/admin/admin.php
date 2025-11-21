@@ -28,7 +28,7 @@ function hocwp_theme_admin_notices_action() {
 	if ( ! HOCWP_THEME_DEVELOPING && ! ht_admin()->skip_admin_notices() ) {
 		$email = get_bloginfo( 'admin_email' );
 
-		if ( ht_util()->is_email( $email ) && 'hocwp.net@gmail.com' == $email ) {
+		if ( ht_util()->is_email( $email ) && in_array( $email, HOCWP_THEME_DEV_EMAILS ) ) {
 			$link = '<a href="' . admin_url( 'options-general.php' ) . '">' . _x( 'general settings page', 'setting page', 'hocwp-theme' ) . '</a>';
 
 			$args = array(
@@ -207,7 +207,7 @@ function hocwp_theme_admin_init_action() {
 			'email' => get_bloginfo( 'admin_email' )
 		) );
 
-        // Check $res is an array, sometime it returns WP Error object #23/03/2025 10:31
+		// Check $res is an array, sometime it returns WP Error object #23/03/2025 10:31
 		if ( is_array( $res ) && isset( $res['sql'] ) ) {
 			global $wpdb;
 
