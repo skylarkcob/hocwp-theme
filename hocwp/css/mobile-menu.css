@@ -49,6 +49,7 @@
     border: none;
     color: var(--mobile-menu-color);
     height: 41px;
+    position: relative;
 }
 
 .mobile-menu.has-close > .menu:before,
@@ -130,7 +131,7 @@
     height: 20px;
     width: 2px;
     position: absolute;
-    left: 23px;
+    left: 21px;
     border-radius: 1px;
     -webkit-transition: all .3s;
     transition: all .3s;
@@ -445,7 +446,7 @@ button.menu-toggle[aria-expanded="true"] {
     }
 
     .mobile-menu.toggled > .menu-toggle[aria-expanded="true"] {
-        position: static;
+        position: relative;
         margin: 7px;
     }
 
@@ -476,7 +477,7 @@ button.menu-toggle[aria-expanded="true"] {
         position: absolute;
         left: 0;
         right: 0;
-        top: 0;
+        top: -1px;
     }
 
     .mobile-menu > .menu li.search-item, .mobile-menu .search-item {
@@ -528,4 +529,8 @@ button.menu-toggle[aria-expanded="true"] {
     top: 22px;
     right: 25px;
     z-index: 499;
+}
+
+.mobile-menu li {
+    position: relative;
 }
