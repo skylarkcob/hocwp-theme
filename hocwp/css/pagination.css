@@ -1,3 +1,10 @@
+:root {
+    --pagination-border-color: #309dcf;
+    --pagination-bg-top: #93cede;
+    --pagination-bg-middle: #75bdd1;
+    --pagination-bg-bottom: #49a5bf;
+}
+
 .hocwp-pagination {
     padding: 0;
     width: 100%;
@@ -29,11 +36,7 @@
 
 .entry-content .hocwp-pagination .post-page-numbers,
 .hocwp-pagination li .page-numbers {
-    background: #ffffff;
-    background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-    background: -webkit-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
+    background: linear-gradient(180deg, #fff 0%, #f6f6f6 47%, #ededed 100%);
 }
 
 .entry-content .hocwp-pagination .post-page-numbers,
@@ -51,11 +54,7 @@
 .hocwp-pagination + a.load-more-button,
 .hocwp-pagination li a:hover,
 .hocwp-pagination li .page-numbers.current {
-    background: #93cede;
-    background: -moz-linear-gradient(top, #93cede 0%, #75bdd1 41%, #49a5bf 100%);
-    background: -webkit-linear-gradient(top, #93cede 0%, #75bdd1 41%, #49a5bf 100%);
-    background: linear-gradient(to bottom, #93cede 0%, #75bdd1 41%, #49a5bf 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#93cede', endColorstr='#49a5bf', GradientType=0);
+    background: linear-gradient(180deg, var(--pagination-bg-top) 0%, var(--pagination-bg-middle) 41%, var(--pagination-bg-bottom) 100%);
 }
 
 .entry-content .hocwp-pagination .post-page-numbers.current,
@@ -64,7 +63,7 @@
 .hocwp-pagination li a:hover,
 .hocwp-pagination li .page-numbers.current {
     color: #fff;
-    border-color: #309dcf;
+    border-color: var(--pagination-border-color);
     text-decoration: none;
     box-shadow: none;
 }

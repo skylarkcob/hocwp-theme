@@ -39,6 +39,15 @@ abstract class Abstract_HT_Custom {
 		return $this->get_path_or_url( $suffix, $in_child );
 	}
 
+	public function require_classes( $path ) {
+		if ( ! str_ends_with( $path, '.php' ) ) {
+			$path .= '.php';
+		}
+
+		$path = $this->get_path( 'classes/' . $path, true );
+		ht()->require_if_exists( $path, true );
+	}
+
 	/*
 	 * Default init action to load all hooks and template. Do not remove or change it.
 	 */

@@ -222,6 +222,30 @@ trait HOCWP_Theme_Utils {
 		wp_star_rating( $args );
 	}
 
+	public function update_meta_lists_item( $object_type, $object_id, $meta_key, $value ) {
+		if ( 'user' == $object_type ) {
+			$lists = get_user_meta( $object_id, $meta_key, true );
+		} elseif ( 'term' == $object_type ) {
+			$lists = get_term_meta( $object_id, $meta_key, true );
+		} else {
+			$lists = get_post_meta( $object_id, $meta_key, true );
+		}
+
+		if ( ! is_array( $lists ) ) {
+			$lists = array();
+		}
+
+		array_unshift( $lists, $value );
+
+		if ( 'user' == $object_type ) {
+			update_user_meta( $object_id, $meta_key, $lists );
+		} elseif ( 'term' == $object_type ) {
+			update_term_meta( $object_id, $meta_key, $lists );
+		} else {
+			update_post_meta( $object_id, $meta_key, $value );
+		}
+	}
+
 	public function get_fields_by_group_key( $key ) {
 		$result = array();
 
@@ -230,6 +254,85 @@ trait HOCWP_Theme_Utils {
 
 			if ( ! empty( $group['ID'] ) ) {
 				$result = acf_get_fields( $group['ID'] );
+			}
+		}
+
+		return $result;
+	}
+
+	public function get_field_groups_by_option_page( $page_slug ) {
+		return $this->get_field_groups_by_location( $page_slug, 'options_page' );
+	}
+
+	public function get_option_page_fields( $option_slug ) {
+		$result = array();
+		$groups = $this->get_field_groups_by_option_page( $option_slug );
+
+		if ( ! empty( $groups ) ) {
+			$current = current( $groups );
+			$key     = $current['key'] ?? '';
+			$result  = $this->get_fields_by_group_key( $key );
+		}
+
+		return $result;
+	}
+
+	public function get_home_page_fields( $option_slug ) {
+		$fields = $this->get_option_page_fields( $option_slug );
+
+		if ( empty( $fields ) ) {
+			$groups = $this->get_field_groups_by_location( 'front_page', 'page_type' );
+
+			if ( ! empty( $groups ) ) {
+				$current = current( $groups );
+				$key     = $current['key'] ?? '';
+				$fields  = $this->get_fields_by_group_key( $key );
+			}
+		}
+
+		return $fields;
+	}
+
+	public function get_field_groups_by_location( $location_value, $location_type, $operator = '==' ) {
+		$result = array();
+
+		if ( function_exists( 'acf_get_field_groups' ) ) {
+			$field_groups = acf_get_field_groups();
+
+			if ( ! empty( $field_groups ) ) {
+				if ( ! empty( $location_value ) ) {
+					foreach ( $field_groups as $group ) {
+						$locations = $group['location'] ?? '';
+
+						if ( ! empty( $locations ) ) {
+							$and = array_shift( $locations );
+							$or  = array_pop( $locations );
+
+							$lists = array();
+
+							if ( is_array( $or ) ) {
+								$lists = $or;
+							}
+
+							// If group has only one AND conditional
+							if ( is_array( $and ) && 1 == count( $and ) ) {
+								$lists[] = current( $and );
+							}
+
+							foreach ( $lists as $location ) {
+								$param   = $location['param'] ?? '';
+								$value   = $location['value'] ?? '';
+								$compare = $location['operator'] ?? '';
+
+								if ( $location_value == $value && $param == $location_type && $compare == $operator ) {
+									$result[] = $group;
+								}
+							}
+						}
+					}
+				} else {
+					$result = $field_groups;
+				}
 			}
 		}
 

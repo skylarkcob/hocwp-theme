@@ -296,6 +296,18 @@ class HOCWP_Theme_Utility {
 		wp_set_auth_cookie( $user_id, $remember );
 	}
 
+	function is_external_url( $url ) {
+		$host = wp_parse_url( $url, PHP_URL_HOST );
+
+		if ( ! $host ) {
+			return false;
+		}
+
+		$current_host = wp_parse_url( home_url(), PHP_URL_HOST );
+
+		return strtolower( $host ) !== strtolower( $current_host );
+	}
+
 	public function is_email( $email ) {
 		return ( ! empty( $email ) && is_string( $email ) && is_email( $email ) );
 	}

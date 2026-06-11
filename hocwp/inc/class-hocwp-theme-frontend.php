@@ -1415,6 +1415,15 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 
 				$parent = get_post( $parent->post_parent );
 			}
+		} elseif ( is_tax() || is_category() || is_tag() ) {
+			$term = get_queried_object();
+
+			// Loop through all parent terms @since version 7.1.0
+			while ( ht()->is_positive_number( $term->parent ) ) {
+				$term = get_term( $term->parent, $term->taxonomy );
+				$tmp  = sprintf( $link_schema, get_term_link( $term ), $term->name );
+				array_unshift( $items, $tmp );
+			}
 		}
 
 		$last_item = '';
@@ -1481,7 +1490,8 @@ final class HOCWP_Theme_Frontend extends HOCWP_Theme_Utility {
 			if ( empty( $separator ) ) {
 				$items_html = $home_item . $items_html;
 			} else {
-				$items_html = $home_item . '&nbsp;' . $separator . $items_html;
+                // Fix missing space after separator @since version 7.1.0
+				$items_html = $home_item . '&nbsp;' . $separator . '&nbsp;' . $items_html;
 			}
 
 			$items_html = ht()->wrap_text( $items_html, '<span>', '</span>' );
