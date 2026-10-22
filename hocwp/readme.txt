@@ -8,6 +8,9 @@
 * 11/06/2026: Update pagination css.
 * 11/06/2026: Update core breadcrumb.
 * 11/06/2026: Add function to update array meta value.
+* 22/10/2026: Add functions to check site security.
+* 22/10/2026: Fix some css.
+* 22/10/2026: Add function supports SCF plugin.
 
 = 7.0.9 =
 * 22/04/2025: Update core version 7.0.9.

@@ -1,9 +1,10 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
-class HOCWP_Theme_Admin_Setting_Tab {
+class HOCWP_Theme_Admin_Setting_Tab
+{
 	public $name;
 	public $label;
 	public $icon;
@@ -23,149 +24,155 @@ class HOCWP_Theme_Admin_Setting_Tab {
 	public $link;
 	public $link_text;
 
-	public function __construct( $name, $label, $icon = '', $args = array(), $priority = 10, $page = '' ) {
-		if ( empty( $name ) ) {
-			ht_util()->doing_it_wrong( __CLASS__, __( 'The tab name is not valid.', 'hocwp-theme' ), '6.4.4' );
+	public function __construct($name, $label, $icon = '', $args = array(), $priority = 10, $page = '')
+	{
+		if (empty($name)) {
+			ht_util()->doing_it_wrong(__CLASS__, __('The tab name is not valid.', 'hocwp-theme'), '6.4.4');
 		}
 
-		if ( ! ht()->is_positive_number( $priority ) ) {
+		if (! ht()->is_positive_number($priority)) {
 			$priority = 10;
 		}
 
-		if ( empty( $icon ) ) {
+		if (empty($icon)) {
 			$icon = '<span class="dashicons dashicons-admin-page"></span>';
 		}
 
-		if ( empty( $label ) ) {
+		if (empty($label)) {
 			$label = $name;
 		}
 
-		$label = ucwords( $label );
-		$label = strip_tags( $label );
+		$label = ucwords($label);
+		$label = strip_tags($label);
 
 		$this->name     = $name;
 		$this->label    = $label;
 		$this->icon     = $icon;
 		$this->priority = $priority;
 
-		add_filter( 'hocwp_theme_settings_page_tabs', array( $this, 'setting_tabs_filter' ), $this->priority );
+		add_filter('hocwp_theme_settings_page_tabs', array($this, 'setting_tabs_filter'), $this->priority);
 
-		if ( $this->name != ht_admin_setting_tabs()->tab_name ) {
+		if ($this->name != ht_admin_setting_tabs()->tab_name) {
 			return;
 		}
 
-		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_section', array(
+		add_filter('hocwp_theme_settings_page_' . $this->name . '_settings_section', array(
 			$this,
 			'sections_filter'
-		) );
+		));
 
 		$esc = $args['enqueue_scripts_callback'] ?? '';
 
-		if ( ! is_callable( $esc ) ) {
-			$esc = array( $this, 'enqueue_scripts' );
+		if (! is_callable($esc)) {
+			$esc = array($this, 'enqueue_scripts');
 		}
 
-		add_action( 'hocwp_theme_admin_setting_page_' . $this->name . '_scripts', $esc );
+		add_action('hocwp_theme_admin_setting_page_' . $this->name . '_scripts', $esc);
 
 		$cff = $args['custom_fields_filter'] ?? '';
 
-		if ( ! empty( $cff ) ) {
-			$this->fields = apply_filters( $cff, $this->fields, ht_options()->get( $this->name ) );
+		if (! empty($cff)) {
+			$this->fields = apply_filters($cff, $this->fields, ht_options()->get($this->name));
 		}
 
-		add_filter( 'hocwp_theme_settings_page_' . $this->name . '_settings_field', array( $this, 'fields_filter' ) );
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu_action' ), 999 );
+		add_filter('hocwp_theme_settings_page_' . $this->name . '_settings_field', array($this, 'fields_filter'));
+		add_action('admin_bar_menu', array($this, 'admin_bar_menu_action'), 999);
 
-		if ( $page instanceof WP_Post ) {
-			$this->add_queried_object( $page );
+		if ($page instanceof WP_Post) {
+			$this->add_queried_object($page);
 		}
 	}
 
-	public function get_value( $key, $default = '' ) {
-		return ht_options()->get_tab( $key, $default, $this->name );
+	public function get_value($key, $default = '')
+	{
+		return ht_options()->get_tab($key, $default, $this->name);
 	}
 
-	public function admin_bar_menu_action( $admin_bar ) {
-		if ( $admin_bar instanceof WP_Admin_Bar ) {
-			if ( ! empty( $this->queried_object ) ) {
+	public function admin_bar_menu_action($admin_bar)
+	{
+		if ($admin_bar instanceof WP_Admin_Bar) {
+			if (! empty($this->queried_object)) {
 				$title = '';
 
-				if ( $this->queried_object instanceof WP_Post ) {
-					$url  = get_permalink( $this->queried_object );
+				if ($this->queried_object instanceof WP_Post) {
+					$url  = get_permalink($this->queried_object);
 					$text = $this->queried_object->post_title;
 
-					$obj = get_post_type_object( $this->queried_object->post_type );
+					$obj = get_post_type_object($this->queried_object->post_type);
 
-					if ( $obj instanceof WP_Post_Type ) {
-						$title = sprintf( '%s: %s', $obj->labels->singular_name, $text );
+					if ($obj instanceof WP_Post_Type) {
+						$title = sprintf('%s: %s', $obj->labels->singular_name, $text);
 					}
-
-				} elseif ( $this->queried_object instanceof WP_Term ) {
-					$url  = get_term_link( $this->queried_object );
+				} elseif ($this->queried_object instanceof WP_Term) {
+					$url  = get_term_link($this->queried_object);
 					$text = $this->queried_object->name;
 
-					$obj = get_taxonomy( $this->queried_object->taxonomy );
+					$obj = get_taxonomy($this->queried_object->taxonomy);
 
-					if ( $obj instanceof WP_Taxonomy ) {
-						$title = sprintf( '%s: %s', $obj->labels->singular_name, $text );
+					if ($obj instanceof WP_Taxonomy) {
+						$title = sprintf('%s: %s', $obj->labels->singular_name, $text);
 					}
 				} else {
 					$url  = $this->queried_object;
 					$text = $this->label;
 				}
 
-				if ( empty( $title ) ) {
-					$title = sprintf( __( 'View %s front-end', 'hocwp-theme' ), $this->label );
+				if (empty($title)) {
+					$title = sprintf(__('View %s front-end', 'hocwp-theme'), $this->label);
 				}
 
 				$args = array(
 					'id'    => $this->name,
-					'title' => sprintf( __( 'View %s', 'hocwp-theme' ), $text ),
+					'title' => sprintf(__('View %s', 'hocwp-theme'), $text),
 					'href'  => $url,
 					'meta'  => array(
 						'target' => '_blank',
-						'title'  => sprintf( __( 'View %s', 'hocwp-theme' ), $title )
+						'title'  => sprintf(__('View %s', 'hocwp-theme'), $title)
 					)
 				);
 
-				$admin_bar->add_node( $args );
-			} elseif ( ! empty( $this->link ) && $this->link_text ) {
+				$admin_bar->add_node($args);
+			} elseif (! empty($this->link) && $this->link_text) {
 				$args = array(
 					'id'    => $this->name,
-					'title' => sprintf( __( 'View %s', 'hocwp-theme' ), $this->link_text ),
+					'title' => sprintf(__('View %s', 'hocwp-theme'), $this->link_text),
 					'href'  => $this->link,
 					'meta'  => array(
 						'target' => '_blank',
-						'title'  => sprintf( __( 'View %s', 'hocwp-theme' ), $this->link_text )
+						'title'  => sprintf(__('View %s', 'hocwp-theme'), $this->link_text)
 					)
 				);
 
-				$admin_bar->add_node( $args );
+				$admin_bar->add_node($args);
 			}
 		}
 	}
 
-	public function add_queried_object( $object ) {
+	public function add_queried_object($object)
+	{
 		$this->queried_object = $object;
 	}
 
-	public function enqueue_scripts() {
-		foreach ( $this->styles as $handle ) {
-			wp_enqueue_style( $handle );
+	public function enqueue_scripts()
+	{
+		foreach ($this->styles as $handle) {
+			wp_enqueue_style($handle);
 		}
 
-		foreach ( $this->scripts as $handle ) {
-			wp_enqueue_script( $handle );
+		foreach ($this->scripts as $handle) {
+			wp_enqueue_script($handle);
 		}
 	}
 
-	public function setting_tabs_filter( $tabs ) {
-		$tabs[ $this->name ] = $this;
+	public function setting_tabs_filter($tabs)
+	{
+		$tabs[$this->name] = $this;
 
 		return $tabs;
 	}
 
-	public function add_section( $name, $args = array() ) {
+	public function add_section($name, $args = array())
+	{
 		$defaults = array(
 			'tab'         => $this->name,
 			'id'          => $name,
@@ -173,19 +180,21 @@ class HOCWP_Theme_Admin_Setting_Tab {
 			'description' => ''
 		);
 
-		$args = wp_parse_args( $args, $defaults );
+		$args = wp_parse_args($args, $defaults);
 
-		$this->sections[ $name ] = $args;
+		$this->sections[$name] = $args;
 	}
 
-	public function sections_filter() {
-		$this->sections = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_sections', $this->sections );
+	public function sections_filter()
+	{
+		$this->sections = apply_filters('hocwp_theme_setting_page_' . $this->name . '_sections', $this->sections);
 
 		return $this->sections;
 	}
 
-	public function add_field_array( $data ) {
-		if ( $data instanceof HOCWP_Theme_Admin_Setting_Field ) {
+	public function add_field_array($data)
+	{
+		if ($data instanceof HOCWP_Theme_Admin_Setting_Field) {
 			$data = $data->generate();
 		}
 
@@ -193,30 +202,38 @@ class HOCWP_Theme_Admin_Setting_Tab {
 			'tab' => $this->name
 		);
 
-		$data = wp_parse_args( $data, $defaults );
+		$data = wp_parse_args($data, $defaults);
 
 		$this->fields[] = $data;
 	}
 
-	public function add_field( $id, $title = '', $callback = 'input', $callback_args = array(), $data_type = 'string', $section = 'default' ) {
-		if ( $id instanceof HOCWP_Theme_Admin_Setting_Field ) {
+	public function add_field($id, $title = '', $callback = 'input', $callback_args = array(), $data_type = 'string', $section = 'default')
+	{
+		if (is_array($id)) {
+			$this->add_field_array($id);
+			return;
+		}
+
+		if ($id instanceof HOCWP_Theme_Admin_Setting_Field) {
 			$this->fields[] = $id->generate();
 		} else {
-			$this->fields[] = hocwp_theme_create_setting_field( $id, $title, $callback, $callback_args, $data_type, $this->name, $section );
+			$this->fields[] = hocwp_theme_create_setting_field($id, $title, $callback, $callback_args, $data_type, $this->name, $section);
 		}
 	}
 
-	public function add_a_field( $field ) {
+	public function add_a_field($field)
+	{
 		$this->fields[] = $field;
 	}
 
-	public function fields_filter() {
-		$this->fields = apply_filters( 'hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, ht_options()->get( $this->name ) );
+	public function fields_filter()
+	{
+		$this->fields = apply_filters('hocwp_theme_setting_page_' . $this->name . '_fields', $this->fields, ht_options()->get($this->name));
 
-		if ( is_array( $this->fields ) ) {
-			foreach ( $this->fields as $key => $field ) {
-				if ( $field instanceof HOCWP_Theme_Admin_Setting_Field ) {
-					$this->fields[ $key ] = $field->generate();
+		if (is_array($this->fields)) {
+			foreach ($this->fields as $key => $field) {
+				if ($field instanceof HOCWP_Theme_Admin_Setting_Field) {
+					$this->fields[$key] = $field->generate();
 				}
 			}
 		}
@@ -224,14 +241,16 @@ class HOCWP_Theme_Admin_Setting_Tab {
 		return $this->fields;
 	}
 
-	public function load_style( $handle ) {
-		if ( ! in_array( $handle, $this->styles ) ) {
+	public function load_style($handle)
+	{
+		if (! in_array($handle, $this->styles)) {
 			$this->styles[] = $handle;
 		}
 	}
 
-	public function load_script( $handle ) {
-		if ( ! in_array( $handle, $this->scripts ) ) {
+	public function load_script($handle)
+	{
+		if (! in_array($handle, $this->scripts)) {
 			$this->scripts[] = $handle;
 		}
 	}

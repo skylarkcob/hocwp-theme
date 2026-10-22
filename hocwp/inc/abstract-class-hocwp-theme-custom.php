@@ -243,4 +243,16 @@ abstract class Abstract_HT_Custom {
 	public function get_image_url( $name ) {
 		return ht_util()->get_custom_image_url( $name );
 	}
+
+	public function comments_template( $args = array() ) {
+		hocwp_theme_comments_template( $args );
+	}
+
+	public function content_none() {
+		hocwp_theme_load_content_none();
+	}
+
+	public function content_404() {
+		hocwp_theme_load_content_404();
+	}
 }

@@ -32,9 +32,7 @@ class HOCWP_Theme_Load {
 		}
 
 		define( 'HOCWP_THEME_DEV_EMAILS', array(
-			'laidinhcuongvn@gmail.com',
-			'hocwp.net@gmail.com',
-			'codewpvn@gmail.com'
+			'laidinhcuongvn@gmail.com'
 		) );
 
 		/**

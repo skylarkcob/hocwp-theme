@@ -137,6 +137,7 @@ add_action( 'admin_menu', function () {
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-float-support.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-social.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-custom-code.php' );
+		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-security.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-extension.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-system-information.php' );
 		require( HOCWP_THEME_CORE_PATH . '/admin/admin-setting-page-administration-tools.php' );

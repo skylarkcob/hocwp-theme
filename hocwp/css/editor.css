@@ -1,0 +1,12 @@
+body#tinymce {
+    font-family: Arial, sans-serif;
+    letter-spacing: normal;
+    word-spacing: normal;
+}
+
+@media screen and (min-width: 1200px) {
+    body#tinymce {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+}

@@ -55,7 +55,6 @@
 .hocwp-theme .flex {
     display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox; /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Chrome */
     display: flex !important; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
@@ -396,10 +395,8 @@
 .hocwp-theme .list-layout {
     display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox; /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Chrome */
     display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    -ms-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
     -webkit-justify-content: space-between;
@@ -421,7 +418,6 @@
 .hocwp-theme .list-layout label {
     display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox; /* TWEENER - IE 10 */
     display: -webkit-flex; /* NEW - Chrome */
     display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
@@ -710,9 +706,6 @@
 }
 
 .hocwp-theme .lat-long {
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
     display: -webkit-flex;
     display: flex;
 }
@@ -812,4 +805,27 @@ td.column-description > *:not(:first-child):not(:nth-child(2)) {
 
 .form-table td .description ~ .description {
     display: none;
+}
+
+/* Fix SCF pagination style */
+.post-php .acf-postbox .acf-repeater > .acf-actions .acf-button,
+.post-php .acf-postbox .acf-actions .acf-tablenav .current-page,
+.post-php .acf-postbox .acf-actions .acf-tablenav .acf-nav {
+    height: 40px;
+    min-height: 40px;
+}
+
+.post-php .acf-postbox .acf-repeater > .acf-actions .acf-button,
+.post-php .acf-postbox .acf-actions .acf-tablenav .current-page,
+.post-php .acf-postbox .acf-actions .acf-tablenav .acf-nav,
+.post-php .acf-postbox .paging-input {
+    line-height: 40px;
+}
+
+.post-php .acf-postbox .acf-actions .acf-tablenav .current-page {
+    margin-right: 4px;
+}
+
+.post-php .acf-postbox .acf-actions .acf-tablenav .acf-nav.next-page {
+    margin-left: 4px;
 }

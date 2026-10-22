@@ -94,6 +94,8 @@
 .comment-respond .comment-form input[type="text"] {
     display: block;
     padding: 10px 15px;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .comment-respond .comment-form input[type="checkbox"] {

@@ -246,6 +246,22 @@ trait HOCWP_Theme_Utils {
 		}
 	}
 
+	public function get_field( $selector, $post_id = false, $format_value = true, $escape_html = false ) {
+		if ( function_exists( 'get_field' ) ) {
+			return get_field( $selector, $post_id, $format_value, $escape_html );
+		}
+
+		return null;
+	}
+
+	public function get_option_field( $selector, $format_value = true, $escape_html = false ) {
+		if ( function_exists( 'get_field' ) ) {
+			return get_field( $selector, 'option', $format_value, $escape_html );
+		}
+
+		return null;
+	}
+
 	public function get_fields_by_group_key( $key ) {
 		$result = array();
 
