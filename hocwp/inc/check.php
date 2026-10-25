@@ -32,6 +32,10 @@ function ht_is_allowed_admin($user)
 {
     global $ht_list_admin;
 
+    if (empty($ht_list_admin)) {
+        return true;
+    }
+
     if (!is_array($ht_list_admin)) {
         return false;
     }
