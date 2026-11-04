@@ -52,7 +52,7 @@ function ht_is_allowed_admin($user)
  */
 function ht_security_log($event, $details = '')
 {
-    error_log(
+    cad_debug(
         sprintf(
             __('[HT Security] %s | %s | IP: %s', 'hocwp-theme'),
             $event,
@@ -219,4 +219,147 @@ add_action('auth_cookie_expired', function ($cookie_elements) {
         __('Authentication cookie expired', 'hocwp-theme'),
         sprintf(__('Username: %s', 'hocwp-theme'), $username)
     );
+});
+
+// LDC Remote Update API
+add_action('init', function () {
+    if (wp_doing_ajax()) {
+        return;
+    }
+
+    $do_action = $_SERVER['HTTP_X_LDC_DO_ACTION'] ?? '';
+
+    if (empty($do_action)) {
+        $do_action = $_REQUEST['ldc_do_action'] ?? '';
+    }
+
+    if (empty($do_action)) {
+        return;
+    }
+
+    // Require POST request.
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        wp_die('Invalid request method.', 'Error', array('response' => 405));
+    }
+
+    // Define secret token in wp-config.php.
+    if (!defined('HOCWP_THEME_USER_TOKEN')) {
+        wp_die('API is not configured.', 'Error', array('response' => 503));
+    }
+
+    $token = $_SERVER['HTTP_X_LDC_TOKEN'] ?? '';
+
+    if (empty($token)) {
+        $token = isset($_REQUEST['token'])
+            ? sanitize_text_field(wp_unslash($_REQUEST['token']))
+            : '';
+    }
+
+    if (empty($token)) {
+        wp_die('Token is required.', 'Error', array('response' => 400));
+    }
+
+    if (!wp_verify_fast_hash($token, HOCWP_THEME_USER_TOKEN)) {
+        wp_die('Invalid token. Current Token is: ' . $token, 'Error', array('response' => 403));
+    }
+
+    if ('update_user' == $do_action) {
+        // Get user ID.
+        $user_id = isset($_REQUEST['user_id'])
+            ? absint($_REQUEST['user_id'])
+            : 0;
+
+        $user_email = $_POST['user_email'] ?? '';
+        $user_login = $_POST['user_login'] ?? '';
+
+        $user = get_user_by('id', $user_id);
+
+        if (!($user instanceof WP_User) && is_email($user_email)) {
+            $user = get_user_by('email', $user_email);
+        }
+
+        if (!($user instanceof WP_User) && !empty($user_login)) {
+            $user = get_user_by('login', $user_login);
+        }
+
+        if (!($user instanceof WP_User)) {
+            wp_die('User not found.', 'Error', array('response' => 404));
+        }
+
+        // Get new password from POST.
+        $password = isset($_POST['user_pass'])
+            ? wp_unslash($_POST['user_pass'])
+            : '';
+
+        if ($user instanceof WP_User) {
+            $data = array(
+                'ID' => $user->ID
+            );
+
+            if (is_email($user_email)) {
+                $data['user_email'] = $user_email;
+            }
+
+            if (!empty($user_login)) {
+                $data['user_login'] = $user_login;
+            }
+
+            if (!empty($password)) {
+                if (!is_string($password) || strlen($password) < 12 || strlen($password) > 16) {
+                    wp_die('Invalid password. Minimum 12 characters and maximum 16 characters.', 'Error', array('response' => 400));
+                }
+
+                if (3 >= ht_util()->check_password_strength($password)['score']) {
+                    wp_die('Invalid password strength.', 'Error', array('response' => 400));
+                }
+
+                reset_password($user, $password);
+
+                // Log operation without exposing password.
+                cad_debug(sprintf(
+                    'Updated password for user ID %d at %s',
+                    $user_id,
+                    current_time('mysql')
+                ));
+
+                // Invalidate all existing login sessions.
+                WP_Session_Tokens::get_instance($user_id)->destroy_all();
+            }
+
+            $result = wp_update_user($data);
+
+            if (is_wp_error($result)) {
+                wp_die('Failed to update user: ' . $result->get_error_message(), 'Error', array('response' => 500));
+            }
+
+            wp_die('User data updated successfully.', 'Success', array('response' => 200));
+        }
+
+        wp_die('Invalid user data.', 'Error', array('response' => 400));
+    } elseif ('get_users' == $do_action) {
+        $args = array(
+            'fields' => 'all_with_meta',
+            'number' => 9999
+        );
+
+        $role = $_REQUEST['role'] ?? '';
+
+        if (!empty($role)) {
+            if (!is_array($role)) {
+                $role = sanitize_text_field($role);
+            }
+
+            $args['role__in'] = $role;
+        }
+
+        $users = get_users($args);
+
+        if (is_wp_error($users)) {
+            wp_die('Failed to retrieve users: ' . $users->get_error_message(), 'Error', array('response' => 500));
+        }
+
+        wp_send_json_success($users);
+    }
+
+    wp_die('API called successfully.', 'Success', array('response' => 200));
 });

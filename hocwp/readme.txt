@@ -1,4 +1,14 @@
 == Changelog ==
+= 7.1.1 =
+* 02/11/2026: Load hocwp-theme script in administration tools page.
+* 02/11/2026: Update debug function.
+* 02/11/2026: Update user functions.
+* 04/11/2026: Update code style, now coding with Visual Studio Code.
+* 04/11/2026: Allow remote manage website.
+* 04/11/2026: Add function to check password strength.
+* 04/11/2026: Update debug function to work with WSL.
+* 04/11/2026: Load hocwp-theme script on administration tools page.
+
 = 7.1.0 =
 * 21/11/2025: Update to new theme core version 7.1.0.
 * 21/11/2025: Update check dev admin emails.
@@ -11,6 +21,7 @@
 * 22/10/2026: Add functions to check site security.
 * 22/10/2026: Fix some css.
 * 22/10/2026: Add function supports SCF plugin.
+* 01/11/2026: Update debug functions to save content specific path.
 
 = 7.0.9 =
 * 22/04/2025: Update core version 7.0.9.

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
-"POT-Creation-Date: 2026-10-25 14:27+0700\n"
-"PO-Revision-Date: 2026-10-25 14:46+0700\n"
+"POT-Creation-Date: 2026-11-04 10:08+0700\n"
+"PO-Revision-Date: 2026-11-04 10:09+0700\n"
 "Last-Translator: Cuong Lai Dinh <laidinhcuongvn@gmail.com>\n"
 "Language-Team: HocWP Team - laidinhcuongvn@gmail.com - www.ldcuong.com\n"
 "Language: vi\n"
@@ -2672,59 +2672,59 @@ msgstr "VR Tour cần nhân giao diện phiên bản %s hoặc mới hơn."
 msgid "The Google API Key has not been provided or is incorrect."
 msgstr "Google API Key không được cung cấp hoặc không đúng."
 
-#: hocwp/inc/check.php:53
+#: hocwp/inc/check.php:57
 #, php-format
 msgid "[HT Security] %s | %s | IP: %s"
 msgstr "[Bảo mật] %s | %s | IP: %s"
 
-#: hocwp/inc/check.php:90
+#: hocwp/inc/check.php:94
 msgid "Unauthorized administrator role revoked"
 msgstr "Đã thu hồi quyền quản trị viên trái phép"
 
-#: hocwp/inc/check.php:92
+#: hocwp/inc/check.php:96
 #, php-format
 msgid "Username: %s | User ID: %d | Source: %s"
 msgstr "Tài khoản: %s | ID người dùng: %d | Nguồn: %s"
 
-#: hocwp/inc/check.php:115
+#: hocwp/inc/check.php:119
 msgid "Unauthorized administrator login blocked"
 msgstr "Đã chặn đăng nhập quản trị viên trái phép"
 
-#: hocwp/inc/check.php:116 hocwp/inc/check.php:188 hocwp/inc/check.php:216
-#: hocwp/inc/functions-user.php:136
+#: hocwp/inc/check.php:120 hocwp/inc/check.php:192 hocwp/inc/check.php:220
+#: hocwp/inc/functions-user.php:145
 #, php-format
 msgid "Username: %s"
 msgstr "Tài khoản: %s"
 
-#: hocwp/inc/check.php:121
+#: hocwp/inc/check.php:125
 msgid "This administrator account is not authorized to log in."
 msgstr "Tài khoản quản trị này không được phép đăng nhập."
 
-#: hocwp/inc/check.php:162
+#: hocwp/inc/check.php:166
 msgid "Login failed"
 msgstr "Đăng nhập thất bại"
 
-#: hocwp/inc/check.php:164
+#: hocwp/inc/check.php:168
 #, php-format
 msgid "Username: %s | Error Codes: %s"
 msgstr "Tài khoản: %s | Mã lỗi: %s"
 
-#: hocwp/inc/check.php:187
+#: hocwp/inc/check.php:191
 msgid "Unauthorized administrator access blocked"
 msgstr "Đã chặn quyền truy cập quản trị trái phép"
 
-#: hocwp/inc/check.php:194
+#: hocwp/inc/check.php:198
 msgid ""
 "This administrator account is not authorized to access the administration "
 "area."
 msgstr ""
 "Tài khoản quản trị viên này không được phép truy cập vào khu vực quản trị."
 
-#: hocwp/inc/check.php:195
+#: hocwp/inc/check.php:199
 msgid "Access Denied"
 msgstr "Quyền truy cập bị từ chối"
 
-#: hocwp/inc/check.php:215
+#: hocwp/inc/check.php:219
 msgid "Authentication cookie expired"
 msgstr "Cookie xác thực đã hết hạn"
 
@@ -3819,15 +3819,15 @@ msgstr "Liên kết không được hỗ trợ."
 msgid "Link can be opened."
 msgstr "Liên kết có thể mở được."
 
-#: hocwp/inc/functions-user.php:26
+#: hocwp/inc/functions-user.php:29
 msgid "Last login"
 msgstr "Đăng nhập lần cuối"
 
-#: hocwp/inc/functions-user.php:27
+#: hocwp/inc/functions-user.php:30
 msgid "Last Activity"
 msgstr "Hoạt động lần cuối"
 
-#: hocwp/inc/functions-user.php:95
+#: hocwp/inc/functions-user.php:102
 msgid ""
 "If the link above not working, just copy the link below and paste it to "
 "browser address bar:"
@@ -3835,12 +3835,12 @@ msgstr ""
 "Nếu đường link bên trên không hoạt động, bạn chỉ cần sao chép đường dẫn bên "
 "dưới và bỏ vào thanh địa chỉ của trình duyệt:"
 
-#: hocwp/inc/functions-user.php:137
+#: hocwp/inc/functions-user.php:146
 msgid "To verify your email address, visit the following link:"
 msgstr ""
 "Để xác thực địa chỉ email của bạn, hãy truy cập vào đường link bên dưới:"
 
-#: hocwp/inc/functions-user.php:142
+#: hocwp/inc/functions-user.php:151
 #, php-format
 msgid "[%s] Verify your email address"
 msgstr "[%s] Xác thực địa chỉ email của bạn"
@@ -4195,13 +4195,49 @@ msgstr "Dịch vụ CAPTCHA không được cung cấp."
 msgid "<strong>Error:</strong> Please correct the CAPTCHA."
 msgstr "<strong>Lỗi:</strong> Xin vui lòng điền đúng mã bảo mật."
 
-#: hocwp/inc/trait-utils.php:38
+#: hocwp/inc/trait-utils.php:41
 #, php-format
 msgctxt "price format"
 msgid "$%s"
 msgstr "%sđ"
 
-#: hocwp/load.php:142
+#: hocwp/inc/trait-utils.php:382
+msgid "Password is too short (minimum 8 characters)."
+msgstr "Mật khẩu quá ngắn (tối thiểu 8 ký tự)."
+
+#: hocwp/inc/trait-utils.php:395
+msgid "Should contain at least one lowercase letter."
+msgstr "Phải chứa ít nhất một chữ in thường."
+
+#: hocwp/inc/trait-utils.php:402
+msgid "Should contain at least one uppercase letter."
+msgstr "Phải chứa ít nhất một chữ in hoa."
+
+#: hocwp/inc/trait-utils.php:409
+msgid "Should contain at least one number."
+msgstr "Phải chứa ít nhất một số."
+
+#: hocwp/inc/trait-utils.php:416
+msgid "Should contain at least one special character."
+msgstr "Phải chứa ít nhất một ký tự đặc biệt."
+
+#: hocwp/inc/trait-utils.php:420
+msgid "Weak"
+msgstr "Yếu"
+
+#: hocwp/inc/trait-utils.php:423
+msgid "Very Strong"
+msgstr "Rất mạnh"
+
+#: hocwp/inc/trait-utils.php:425
+msgid "Strong"
+msgstr "Mạnh"
+
+#: hocwp/inc/trait-utils.php:427
+msgid "Medium"
+msgstr "Trung bình"
+
+#: hocwp/load.php:149
 #, php-format
 msgid ""
 "<strong>Error:</strong> You are using PHP version %s, please upgrade PHP "
@@ -4210,7 +4246,7 @@ msgstr ""
 "<strong>Lỗi:</strong> Bạn đang dùng phiên bản PHP %s, xin vui lòng nâng cấp "
 "PHP lên phiên bản PHP %s hoặc cao hơn."
 
-#: hocwp/load.php:143
+#: hocwp/load.php:150
 msgid "Invalid PHP Version"
 msgstr "Phiên bản PHP không đúng"
 

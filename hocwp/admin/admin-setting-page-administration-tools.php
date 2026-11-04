@@ -577,6 +577,7 @@ $tab->load_script( 'hocwp-theme' );
 $tab->load_script( 'hocwp-theme-ajax-button' );
 
 function hocwp_theme_setting_page_administration_tools_script() {
+	wp_enqueue_script('hocwp-theme');
 	wp_enqueue_script( 'hocwp-theme-administration-tools', hocwp_theme()->core_url . '/js/admin-administration-tools.js', array(
 		'jquery',
 		'hocwp-theme'

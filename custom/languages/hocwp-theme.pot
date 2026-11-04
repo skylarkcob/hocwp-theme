@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Default\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2026-10-25 14:27+0700\n"
+"POT-Creation-Date: 2026-11-04 10:08+0700\n"
 "PO-Revision-Date: 2016-12-23 16:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: HocWP Team - laidinhcuongvn@gmail.com - www.ldcuong.com\n"
@@ -2357,55 +2357,55 @@ msgstr ""
 msgid "The Google API Key has not been provided or is incorrect."
 msgstr ""
 
-#: hocwp/inc/check.php:53
+#: hocwp/inc/check.php:57
 #, php-format
 msgid "[HT Security] %s | %s | IP: %s"
 msgstr ""
 
-#: hocwp/inc/check.php:90
+#: hocwp/inc/check.php:94
 msgid "Unauthorized administrator role revoked"
 msgstr ""
 
-#: hocwp/inc/check.php:92
+#: hocwp/inc/check.php:96
 #, php-format
 msgid "Username: %s | User ID: %d | Source: %s"
 msgstr ""
 
-#: hocwp/inc/check.php:115
+#: hocwp/inc/check.php:119
 msgid "Unauthorized administrator login blocked"
 msgstr ""
 
-#: hocwp/inc/check.php:116 hocwp/inc/check.php:188 hocwp/inc/check.php:216 hocwp/inc/functions-user.php:136
+#: hocwp/inc/check.php:120 hocwp/inc/check.php:192 hocwp/inc/check.php:220 hocwp/inc/functions-user.php:145
 #, php-format
 msgid "Username: %s"
 msgstr ""
 
-#: hocwp/inc/check.php:121
+#: hocwp/inc/check.php:125
 msgid "This administrator account is not authorized to log in."
 msgstr ""
 
-#: hocwp/inc/check.php:162
+#: hocwp/inc/check.php:166
 msgid "Login failed"
 msgstr ""
 
-#: hocwp/inc/check.php:164
+#: hocwp/inc/check.php:168
 #, php-format
 msgid "Username: %s | Error Codes: %s"
 msgstr ""
 
-#: hocwp/inc/check.php:187
+#: hocwp/inc/check.php:191
 msgid "Unauthorized administrator access blocked"
 msgstr ""
 
-#: hocwp/inc/check.php:194
+#: hocwp/inc/check.php:198
 msgid "This administrator account is not authorized to access the administration area."
 msgstr ""
 
-#: hocwp/inc/check.php:195
+#: hocwp/inc/check.php:199
 msgid "Access Denied"
 msgstr ""
 
-#: hocwp/inc/check.php:215
+#: hocwp/inc/check.php:219
 msgid "Authentication cookie expired"
 msgstr ""
 
@@ -3429,23 +3429,23 @@ msgstr ""
 msgid "Link can be opened."
 msgstr ""
 
-#: hocwp/inc/functions-user.php:26
+#: hocwp/inc/functions-user.php:29
 msgid "Last login"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:27
+#: hocwp/inc/functions-user.php:30
 msgid "Last Activity"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:95
+#: hocwp/inc/functions-user.php:102
 msgid "If the link above not working, just copy the link below and paste it to browser address bar:"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:137
+#: hocwp/inc/functions-user.php:146
 msgid "To verify your email address, visit the following link:"
 msgstr ""
 
-#: hocwp/inc/functions-user.php:142
+#: hocwp/inc/functions-user.php:151
 #, php-format
 msgid "[%s] Verify your email address"
 msgstr ""
@@ -3770,18 +3770,54 @@ msgstr ""
 msgid "<strong>Error:</strong> Please correct the CAPTCHA."
 msgstr ""
 
-#: hocwp/inc/trait-utils.php:38
+#: hocwp/inc/trait-utils.php:41
 #, php-format
 msgctxt "price format"
 msgid "$%s"
 msgstr ""
 
-#: hocwp/load.php:142
+#: hocwp/inc/trait-utils.php:382
+msgid "Password is too short (minimum 8 characters)."
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:395
+msgid "Should contain at least one lowercase letter."
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:402
+msgid "Should contain at least one uppercase letter."
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:409
+msgid "Should contain at least one number."
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:416
+msgid "Should contain at least one special character."
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:420
+msgid "Weak"
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:423
+msgid "Very Strong"
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:425
+msgid "Strong"
+msgstr ""
+
+#: hocwp/inc/trait-utils.php:427
+msgid "Medium"
+msgstr ""
+
+#: hocwp/load.php:149
 #, php-format
 msgid "<strong>Error:</strong> You are using PHP version %s, please upgrade PHP version to at least %s."
 msgstr ""
 
-#: hocwp/load.php:143
+#: hocwp/load.php:150
 msgid "Invalid PHP Version"
 msgstr ""
 

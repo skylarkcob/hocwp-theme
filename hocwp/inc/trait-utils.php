@@ -1,63 +1,68 @@
 <?php
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
-if ( ! trait_exists( 'HOCWP_Theme_Deprecated' ) ) {
-	require_once( __DIR__ . '/trait-deprecated.php' );
+if (! trait_exists('HOCWP_Theme_Deprecated')) {
+	require_once(__DIR__ . '/trait-deprecated.php');
 }
 
-trait HOCWP_Theme_Utils {
+trait HOCWP_Theme_Utils
+{
 	use HOCWP_Theme_Deprecated;
 
-	public function make_image_lazyload( $content, $originals = array() ) {
+	public function make_image_lazyload($content, $originals = array())
+	{
 		$dom = new DOMDocument();
-		@$dom->loadHTML( $content );
+		@$dom->loadHTML($content);
 
-		if ( ! in_array( 'data-original', $originals ) ) {
+		if (! in_array('data-original', $originals)) {
 			$originals[] = 'data-original';
 		}
 
-		if ( ! in_array( 'data-src', $originals ) ) {
+		if (! in_array('data-src', $originals)) {
 			$originals[] = 'data-src';
 		}
 
-		foreach ( $dom->getElementsByTagName( 'img' ) as $node ) {
-			$old_src = $node->getAttribute( 'src' );
+		foreach ($dom->getElementsByTagName('img') as $node) {
+			$old_src = $node->getAttribute('src');
 
-			foreach ( $originals as $attr ) {
-				$node->setAttribute( $attr, $old_src );
+			foreach ($originals as $attr) {
+				$node->setAttribute($attr, $old_src);
 			}
 
-			$node->setAttribute( 'src', HOCWP_THEME_DOT_IMAGE_SRC );
+			$node->setAttribute('src', HOCWP_THEME_DOT_IMAGE_SRC);
 		}
 
 		return $dom->saveHtml();
 	}
 
-	public function price_format( $price, $decimals = 0, $format = null ) {
-		if ( empty( $format ) ) {
-			$format = _x( '$%s', 'price format', 'hocwp-theme' );
+	public function price_format($price, $decimals = 0, $format = null)
+	{
+		if (empty($format)) {
+			$format = _x('$%s', 'price format', 'hocwp-theme');
 		}
 
-		$formatted = sprintf( $format, number_format_i18n( $price, $decimals ) );
+		$formatted = sprintf($format, number_format_i18n($price, $decimals));
 
-		return apply_filters( 'hocwp_theme_price_format', $formatted, $price, $decimals, $format );
+		return apply_filters('hocwp_theme_price_format', $formatted, $price, $decimals, $format);
 	}
 
-	public function is_localhost() {
+	public function is_localhost()
+	{
 		$domain = home_url();
-		$domain = ht()->get_domain_name( $domain, true );
+		$domain = ht()->get_domain_name($domain, true);
 
-		return ( 'localhost' == $domain || str_contains( $domain, 'localhost' ) || str_contains( $domain, '127.0.0.1' ) || str_contains( $domain, '192.168.1.249' ) || str_contains( $domain, '192.168.1.213' ) || str_contains( $domain, '192.168.1.69' ) );
+		return ('localhost' == $domain || str_contains($domain, 'localhost') || str_contains($domain, '127.0.0.1') || str_contains($domain, '192.168.1.249') || str_contains($domain, '192.168.1.213') || str_contains($domain, '192.168.1.69'));
 	}
 
-	public function get_site_name() {
-		$name = ht_options()->get_general( 'site_short_name' );
+	public function get_site_name()
+	{
+		$name = ht_options()->get_general('site_short_name');
 
-		if ( empty( $name ) ) {
-			$name = get_bloginfo( 'name' );
+		if (empty($name)) {
+			$name = get_bloginfo('name');
 		}
 
-		return apply_filters( 'hocwp_theme_site_name', $name );
+		return apply_filters('hocwp_theme_site_name', $name);
 	}
 
 	/**
@@ -69,112 +74,113 @@ trait HOCWP_Theme_Utils {
 	 *
 	 * @return array|mixed|string
 	 */
-	public function extract_pics_api( $api_key, $url, $args = array() ) {
-		$api_key = apply_filters( 'extract_pics_api_key', $api_key, $url, $args );
+	public function extract_pics_api($api_key, $url, $args = array())
+	{
+		$api_key = apply_filters('extract_pics_api_key', $api_key, $url, $args);
 
-		$root_tr_name = 'extract_pics_api_' . md5( $url );
+		$root_tr_name = 'extract_pics_api_' . md5($url);
 
-		if ( false === ( $result = get_transient( $root_tr_name ) ) ) {
+		if (false === ($result = get_transient($root_tr_name))) {
 			$headers = array(
 				'Authorization' => 'Bearer ' . $api_key,
 				'Content-Type'  => 'application/json'
 			);
 
-			$tr_name = 'extract_pics_api_id_' . md5( $url );
+			$tr_name = 'extract_pics_api_id_' . md5($url);
 
-			if ( false === ( $id = get_transient( $tr_name ) ) ) {
-				$id = apply_filters( 'hocwp_theme_extract_pics_api_id', $id );
+			if (false === ($id = get_transient($tr_name))) {
+				$id = apply_filters('hocwp_theme_extract_pics_api_id', $id);
 
-				if ( empty( $id ) ) {
-					$remote = wp_remote_post( 'https://api.extract.pics/v0/extractions', array(
+				if (empty($id)) {
+					$remote = wp_remote_post('https://api.extract.pics/v0/extractions', array(
 						'headers' => $headers,
-						'body'    => json_encode( array( 'url' => $url ) )
-					) );
+						'body'    => json_encode(array('url' => $url))
+					));
 
-					$body = json_decode( wp_remote_retrieve_body( $remote ) );
+					$body = json_decode(wp_remote_retrieve_body($remote));
 					// Set extract pics api url id
-					set_transient( $tr_name, $body->data->id );
+					set_transient($tr_name, $body->data->id);
 				}
 			}
 
-			if ( ! empty( $id ) ) {
-				$remote = wp_remote_get( 'https://api.extract.pics/v0/extractions/' . $id, array(
+			if (! empty($id)) {
+				$remote = wp_remote_get('https://api.extract.pics/v0/extractions/' . $id, array(
 					'headers' => $headers
-				) );
+				));
 
-				$res = json_decode( wp_remote_retrieve_body( $remote ) );
+				$res = json_decode(wp_remote_retrieve_body($remote));
 
-				if ( ! empty( $args ) && isset( $res->data->images ) && ht()->array_has_value( $res->data->images ) ) {
+				if (! empty($args) && isset($res->data->images) && ht()->array_has_value($res->data->images)) {
 					$defaults = array(
-						'extensions'   => array( 'jpg', 'jpeg', 'png', 'webp' ),
+						'extensions'   => array('jpg', 'jpeg', 'png', 'webp'),
 						'name_len'     => 20,
-						'url_contains' => '/wp-content/uploads/' . date( 'Y/m' ) . '/',
+						'url_contains' => '/wp-content/uploads/' . date('Y/m') . '/',
 						'number'       => 1
 					);
 
-					if ( ! is_array( $args ) ) {
+					if (! is_array($args)) {
 						$args = array();
 					}
 
-					$args = wp_parse_args( $args, $defaults );
+					$args = wp_parse_args($args, $defaults);
 
 					$images = array();
 
 					$number = $args['number'];
 
-					foreach ( $res->data->images as $item ) {
+					foreach ($res->data->images as $item) {
 						$image = $item->url ?? '';
 
-						if ( ! empty( $image ) ) {
-							$check = apply_filters( 'hocwp_theme_extract_pics_api_url_check_pre', false, $url, $args, $item );
+						if (! empty($image)) {
+							$check = apply_filters('hocwp_theme_extract_pics_api_url_check_pre', false, $url, $args, $item);
 
-							if ( ! $check ) {
-								if ( empty( $args['url_contains'] ) || str_contains( $image, $args['url_contains'] ) ) {
-									$parts = pathinfo( $image );
+							if (! $check) {
+								if (empty($args['url_contains']) || str_contains($image, $args['url_contains'])) {
+									$parts = pathinfo($image);
 									$ext   = $parts['extension'] ?? '';
 									$name  = $parts['filename'] ?? '';
 
-									if ( in_array( $ext, $args['extensions'] ) && strlen( $name ) > $args['name_len'] ) {
-										$check = apply_filters( 'hocwp_theme_extract_pics_api_url_check', $image, $url, $args, $item );
+									if (in_array($ext, $args['extensions']) && strlen($name) > $args['name_len']) {
+										$check = apply_filters('hocwp_theme_extract_pics_api_url_check', $image, $url, $args, $item);
 
-										if ( $check ) {
-											if ( 1 == $number ) {
+										if ($check) {
+											if (1 == $number) {
 												$result = $image;
 												break;
 											}
 
 											$images[] = $image;
 
-											if ( count( $images ) >= $number ) {
+											if (count($images) >= $number) {
 												break;
 											}
 										}
 									}
 								}
 							} else {
-								if ( 1 == $number ) {
+								if (1 == $number) {
 									$result = $image;
 									break;
 								}
 
 								$images[] = $image;
 
-								if ( count( $images ) >= $number ) {
+								if (count($images) >= $number) {
 									break;
 								}
 							}
 						}
 					}
 
-					if ( empty( $result ) && ht()->array_has_value( $images ) ) {
+					if (empty($result) && ht()->array_has_value($images)) {
 						$result = $images;
 					}
 				} else {
 					$result = $res;
 				}
 
-				if ( $result ) {
-					set_transient( $root_tr_name, $result );
+				if ($result) {
+					set_transient($root_tr_name, $result);
 				}
 			}
 		}
@@ -182,165 +188,175 @@ trait HOCWP_Theme_Utils {
 		return $result;
 	}
 
-	public function get_object_thumbnail_id( $object_id, $object_type = 'post', $default_meta_key = '' ) {
-		$meta_keys = array( '_thumbnail_id', 'thumbnail_id', 'thumbnail' );
+	public function get_object_thumbnail_id($object_id, $object_type = 'post', $default_meta_key = '')
+	{
+		$meta_keys = array('_thumbnail_id', 'thumbnail_id', 'thumbnail');
 
-		if ( 'post' === $object_type ) {
+		if ('post' === $object_type) {
 			$callback = 'get_post_meta';
 		} else {
 			$callback = 'get_term_meta';
 		}
 
-		$id = call_user_func( $callback, $object_id, $meta_keys[0], true );
+		$id = call_user_func($callback, $object_id, $meta_keys[0], true);
 
-		if ( ! is_numeric( $id ) ) {
-			$id = call_user_func( $callback, $object_id, $meta_keys[1], true );
+		if (! is_numeric($id)) {
+			$id = call_user_func($callback, $object_id, $meta_keys[1], true);
 
-			if ( ! is_numeric( $id ) ) {
-				$id = call_user_func( $callback, $object_id, $meta_keys[2], true );
+			if (! is_numeric($id)) {
+				$id = call_user_func($callback, $object_id, $meta_keys[2], true);
 			}
 		}
 
-		if ( ! is_numeric( $id ) && ! empty( $default_meta_key ) ) {
-			$id = call_user_func( $callback, $object_id, $default_meta_key, true );
+		if (! is_numeric($id) && ! empty($default_meta_key)) {
+			$id = call_user_func($callback, $object_id, $default_meta_key, true);
 		}
 
 		return $id;
 	}
 
-	public function star_rating( $args ) {
-		if ( ! is_array( $args ) ) {
+	public function star_rating($args)
+	{
+		if (! is_array($args)) {
 			$args = array(
 				'rating' => $args
 			);
 		}
 
-		if ( ! function_exists( 'wp_star_rating' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/template.php' );
+		if (! function_exists('wp_star_rating')) {
+			require_once(ABSPATH . 'wp-admin/includes/template.php');
 		}
 
-		wp_star_rating( $args );
+		wp_star_rating($args);
 	}
 
-	public function update_meta_lists_item( $object_type, $object_id, $meta_key, $value ) {
-		if ( 'user' == $object_type ) {
-			$lists = get_user_meta( $object_id, $meta_key, true );
-		} elseif ( 'term' == $object_type ) {
-			$lists = get_term_meta( $object_id, $meta_key, true );
+	public function update_meta_lists_item($object_type, $object_id, $meta_key, $value)
+	{
+		if ('user' == $object_type) {
+			$lists = get_user_meta($object_id, $meta_key, true);
+		} elseif ('term' == $object_type) {
+			$lists = get_term_meta($object_id, $meta_key, true);
 		} else {
-			$lists = get_post_meta( $object_id, $meta_key, true );
+			$lists = get_post_meta($object_id, $meta_key, true);
 		}
 
-		if ( ! is_array( $lists ) ) {
+		if (! is_array($lists)) {
 			$lists = array();
 		}
 
-		array_unshift( $lists, $value );
+		array_unshift($lists, $value);
 
-		if ( 'user' == $object_type ) {
-			update_user_meta( $object_id, $meta_key, $lists );
-		} elseif ( 'term' == $object_type ) {
-			update_term_meta( $object_id, $meta_key, $lists );
+		if ('user' == $object_type) {
+			update_user_meta($object_id, $meta_key, $lists);
+		} elseif ('term' == $object_type) {
+			update_term_meta($object_id, $meta_key, $lists);
 		} else {
-			update_post_meta( $object_id, $meta_key, $value );
+			update_post_meta($object_id, $meta_key, $value);
 		}
 	}
 
-	public function get_field( $selector, $post_id = false, $format_value = true, $escape_html = false ) {
-		if ( function_exists( 'get_field' ) ) {
-			return get_field( $selector, $post_id, $format_value, $escape_html );
-		}
-
-		return null;
-	}
-
-	public function get_option_field( $selector, $format_value = true, $escape_html = false ) {
-		if ( function_exists( 'get_field' ) ) {
-			return get_field( $selector, 'option', $format_value, $escape_html );
+	public function get_field($selector, $post_id = false, $format_value = true, $escape_html = false)
+	{
+		if (function_exists('get_field')) {
+			return get_field($selector, $post_id, $format_value, $escape_html);
 		}
 
 		return null;
 	}
 
-	public function get_fields_by_group_key( $key ) {
+	public function get_option_field($selector, $format_value = true, $escape_html = false)
+	{
+		if (function_exists('get_field')) {
+			return get_field($selector, 'option', $format_value, $escape_html);
+		}
+
+		return null;
+	}
+
+	public function get_fields_by_group_key($key)
+	{
 		$result = array();
 
-		if ( ! empty( $key ) && function_exists( 'acf_get_field_group' ) ) {
-			$group = acf_get_field_group( $key );
+		if (! empty($key) && function_exists('acf_get_field_group')) {
+			$group = acf_get_field_group($key);
 
-			if ( ! empty( $group['ID'] ) ) {
-				$result = acf_get_fields( $group['ID'] );
+			if (! empty($group['ID']) && function_exists('acf_get_fields')) {
+				$result = acf_get_fields($group['ID']);
 			}
 		}
 
 		return $result;
 	}
 
-	public function get_field_groups_by_option_page( $page_slug ) {
-		return $this->get_field_groups_by_location( $page_slug, 'options_page' );
+	public function get_field_groups_by_option_page($page_slug)
+	{
+		return $this->get_field_groups_by_location($page_slug, 'options_page');
 	}
 
-	public function get_option_page_fields( $option_slug ) {
+	public function get_option_page_fields($option_slug)
+	{
 		$result = array();
-		$groups = $this->get_field_groups_by_option_page( $option_slug );
+		$groups = $this->get_field_groups_by_option_page($option_slug);
 
-		if ( ! empty( $groups ) ) {
-			$current = current( $groups );
+		if (! empty($groups)) {
+			$current = current($groups);
 			$key     = $current['key'] ?? '';
-			$result  = $this->get_fields_by_group_key( $key );
+			$result  = $this->get_fields_by_group_key($key);
 		}
 
 		return $result;
 	}
 
-	public function get_home_page_fields( $option_slug ) {
-		$fields = $this->get_option_page_fields( $option_slug );
+	public function get_home_page_fields($option_slug)
+	{
+		$fields = $this->get_option_page_fields($option_slug);
 
-		if ( empty( $fields ) ) {
-			$groups = $this->get_field_groups_by_location( 'front_page', 'page_type' );
+		if (empty($fields)) {
+			$groups = $this->get_field_groups_by_location('front_page', 'page_type');
 
-			if ( ! empty( $groups ) ) {
-				$current = current( $groups );
+			if (! empty($groups)) {
+				$current = current($groups);
 				$key     = $current['key'] ?? '';
-				$fields  = $this->get_fields_by_group_key( $key );
+				$fields  = $this->get_fields_by_group_key($key);
 			}
 		}
 
 		return $fields;
 	}
 
-	public function get_field_groups_by_location( $location_value, $location_type, $operator = '==' ) {
+	public function get_field_groups_by_location($location_value, $location_type, $operator = '==')
+	{
 		$result = array();
 
-		if ( function_exists( 'acf_get_field_groups' ) ) {
+		if (function_exists('acf_get_field_groups')) {
 			$field_groups = acf_get_field_groups();
 
-			if ( ! empty( $field_groups ) ) {
-				if ( ! empty( $location_value ) ) {
-					foreach ( $field_groups as $group ) {
+			if (! empty($field_groups)) {
+				if (! empty($location_value)) {
+					foreach ($field_groups as $group) {
 						$locations = $group['location'] ?? '';
 
-						if ( ! empty( $locations ) ) {
-							$and = array_shift( $locations );
-							$or  = array_pop( $locations );
+						if (! empty($locations)) {
+							$and = array_shift($locations);
+							$or  = array_pop($locations);
 
 							$lists = array();
 
-							if ( is_array( $or ) ) {
+							if (is_array($or)) {
 								$lists = $or;
 							}
 
 							// If group has only one AND conditional
-							if ( is_array( $and ) && 1 == count( $and ) ) {
-								$lists[] = current( $and );
+							if (is_array($and) && 1 == count($and)) {
+								$lists[] = current($and);
 							}
 
-							foreach ( $lists as $location ) {
+							foreach ($lists as $location) {
 								$param   = $location['param'] ?? '';
 								$value   = $location['value'] ?? '';
 								$compare = $location['operator'] ?? '';
 
-								if ( $location_value == $value && $param == $location_type && $compare == $operator ) {
+								if ($location_value == $value && $param == $location_type && $compare == $operator) {
 									$result[] = $group;
 								}
 							}
@@ -353,5 +369,68 @@ trait HOCWP_Theme_Utils {
 		}
 
 		return $result;
+	}
+
+	public function check_password_strength($password)
+	{
+		$score = 0;
+		$feedback = [];
+
+		// 1. Length check using mb_strlen for UTF-8 compatibility
+		$length = mb_strlen($password, 'UTF-8');
+		if ($length < 8) {
+			$feedback[] = __('Password is too short (minimum 8 characters).', 'hocwp-theme');
+		} elseif ($length >= 8 && $length < 12) {
+			$score += 1;
+		} elseif ($length >= 12 && $length < 16) {
+			$score += 2;
+		} else { // >= 16
+			$score += 3;
+		}
+
+		// 2. Lowercase letter check
+		if (preg_match('/[a-z\p{Ll}]/u', $password)) {
+			$score++;
+		} else {
+			$feedback[] = __('Should contain at least one lowercase letter.', 'hocwp-theme');
+		}
+
+		// 3. Uppercase letter check
+		if (preg_match('/[A-Z\p{Lu}]/u', $password)) {
+			$score++;
+		} else {
+			$feedback[] = __('Should contain at least one uppercase letter.', 'hocwp-theme');
+		}
+
+		// 4. Number check
+		if (preg_match('/[0-9]/', $password)) {
+			$score++;
+		} else {
+			$feedback[] = __('Should contain at least one number.', 'hocwp-theme');
+		}
+
+		// 5. Special character check
+		if (preg_match('/[^\p{L}\p{N}]/u', $password)) {
+			$score++;
+		} else {
+			$feedback[] = __('Should contain at least one special character.', 'hocwp-theme');
+		}
+
+		// Determine strength level based on total score
+		$strength = __('Weak', 'hocwp-theme');
+		
+		if ($score >= 6) {
+			$strength = __('Very Strong', 'hocwp-theme');
+		} elseif ($score >= 4) {
+			$strength = __('Strong', 'hocwp-theme');
+		} elseif ($score >= 3) {
+			$strength = __('Medium', 'hocwp-theme');
+		}
+
+		return [
+			'score' => $score,
+			'strength' => $strength,
+			'feedback' => $feedback
+		];
 	}
 }
