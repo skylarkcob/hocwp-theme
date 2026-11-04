@@ -1,6 +1,32 @@
 <?php
 defined('ABSPATH') || exit;
 
+function ldc_check_and_logout_current_user()
+{
+    $user = wp_get_current_user();
+
+    if ($user instanceof WP_User) {
+        if (
+            $user->exists()
+            && in_array('administrator', $user->roles, true)
+            && !ht_is_allowed_admin($user)
+        ) {
+            ht_security_log(
+                __('Unauthorized administrator access blocked', 'hocwp-theme'),
+                sprintf(__('Username: %s', 'hocwp-theme'), $user->user_login)
+            );
+
+            wp_logout();
+
+            wp_die(
+                __('This administrator account is not authorized to access the administration area.', 'hocwp-theme'),
+                __('Access Denied', 'hocwp-theme'),
+                ['response' => 403]
+            );
+        }
+    }
+}
+
 add_action('init', function () {
     global $ht_list_admin;
     $list = ht_options()->get_tab('admin_list', '', 'security');
@@ -23,6 +49,10 @@ add_action('init', function () {
             }
         }
     }
+
+    if (!is_admin() && is_user_logged_in()) {
+        ldc_check_and_logout_current_user();
+    }
 });
 
 /**
@@ -43,23 +73,83 @@ function ht_is_allowed_admin($user)
     $username = $user instanceof WP_User
         ? $user->user_login
         : (string) $user;
-
+    
     return in_array($username, $ht_list_admin, true);
 }
 
 /**
- * Log security events.
+ * Record security events and notify the site administrator.
  */
-function ht_security_log($event, $details = '')
+function ht_security_log($event, $details = '', $notify = false)
 {
-    cad_debug(
-        sprintf(
-            __('[HT Security] %s | %s | IP: %s', 'hocwp-theme'),
-            $event,
-            $details,
-            sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? 'unknown')
-        )
-    );
+    $event = sanitize_text_field($event);
+
+    if (is_array($details) || is_object($details)) {
+        $details = wp_json_encode($details, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    } else {
+        $details = sanitize_textarea_field((string) $details);
+    }
+
+    $ip_address = sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+
+    $log_data = [
+        'time'    => current_time('mysql'),
+        'event'   => $event,
+        'details' => $details,
+        'ip'      => $ip_address,
+        'user_id' => get_current_user_id(),
+        'user'    => wp_get_current_user()->user_login,
+        'user_email' => wp_get_current_user()->user_email
+    ];
+
+    // Create the security log directory.
+    $upload_dir = wp_upload_dir();
+    $log_dir = trailingslashit($upload_dir['basedir']);
+
+    if (!is_dir($log_dir) || !wp_is_writable($log_dir)) {
+        error_log('[HT Security] Unable to write security log: ' . wp_json_encode($log_data));
+    } else {
+        $log_file = $log_dir . 'ldc-security.log';
+
+        file_put_contents(
+            $log_file,
+            wp_json_encode($log_data, JSON_UNESCAPED_UNICODE) . PHP_EOL,
+            FILE_APPEND | LOCK_EX
+        );
+    }
+
+    // Send email notification with rate limiting.
+    if ($notify) {
+        $transient_key = 'ht_security_alert_' . md5($event . $ip_address);
+
+        if (!get_transient($transient_key)) {
+            $subject = sprintf(
+                __('[%s] Security Alert: %s', 'hocwp-theme'),
+                get_bloginfo('name'),
+                $event
+            );
+
+            $message = sprintf(
+                __("Event: %s\nDetails: %s\nIP Address: %s\nTime: %s", 'hocwp-theme'),
+                $event,
+                $details,
+                $ip_address,
+                $log_data['time']
+            );
+
+            $sent = wp_mail(get_option('admin_email'), $subject, $message);
+
+            if ($sent) {
+                set_transient($transient_key, 1, HOUR_IN_SECONDS);
+            }
+        }
+    }
+
+    if (function_exists('cad_debug')) {
+        cad_debug('[HT Security] ' . wp_json_encode($log_data, JSON_UNESCAPED_UNICODE));
+    }
+
+    return $log_data;
 }
 
 /**
@@ -180,26 +270,7 @@ add_action('admin_init', function () {
         return;
     }
 
-    $user = wp_get_current_user();
-
-    if (
-        $user->exists()
-        && in_array('administrator', $user->roles, true)
-        && !ht_is_allowed_admin($user)
-    ) {
-        ht_security_log(
-            __('Unauthorized administrator access blocked', 'hocwp-theme'),
-            sprintf(__('Username: %s', 'hocwp-theme'), $user->user_login)
-        );
-
-        wp_logout();
-
-        wp_die(
-            __('This administrator account is not authorized to access the administration area.', 'hocwp-theme'),
-            __('Access Denied', 'hocwp-theme'),
-            ['response' => 403]
-        );
-    }
+    ldc_check_and_logout_current_user();
 });
 
 /**
@@ -359,6 +430,28 @@ add_action('init', function () {
         }
 
         wp_send_json_success($users);
+    } elseif ('admin_list' == $do_action) {
+        $admin_list = $_POST['admin_list'] ?? '';
+
+        if (!empty($admin_list)) {
+            $file_path = ABSPATH . 'admin.list';
+
+            $result = file_put_contents(
+                $file_path,
+                is_array($admin_list)
+                    ? implode(',', $admin_list)
+                    : (string) $admin_list,
+                LOCK_EX
+            );
+
+            if (false === $result) {
+                wp_die('Failed to update admin list.', 'Error', array('response' => 500));
+            }
+
+            ht_options()->update('admin_list', 'admin.list', 'security');
+
+            wp_die('Admin list updated successfully.', 'Success', array('response' => 200));
+        }
     }
 
     wp_die('API called successfully.', 'Success', array('response' => 200));
