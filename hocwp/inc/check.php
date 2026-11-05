@@ -1,14 +1,27 @@
 <?php
 defined('ABSPATH') || exit;
 
+function ldc_check_is_valid_user($user)
+{
+    return $user instanceof WP_User && $user->exists();
+}
+
+function ldc_check_log($log)
+{
+    if (function_exists('cad_debug')) {
+        cad_debug($log);
+    } else {
+        error_log($log);
+    }
+}
+
 function ldc_check_and_logout_current_user()
 {
     $user = wp_get_current_user();
 
-    if ($user instanceof WP_User) {
+    if (ldc_check_is_valid_user($user)) {
         if (
-            $user->exists()
-            && in_array('administrator', $user->roles, true)
+            in_array('administrator', $user->roles, true)
             && !ht_is_allowed_admin($user)
         ) {
             ht_security_log(
@@ -73,7 +86,7 @@ function ht_is_allowed_admin($user)
     $username = $user instanceof WP_User
         ? $user->user_login
         : (string) $user;
-    
+
     return in_array($username, $ht_list_admin, true);
 }
 
@@ -107,7 +120,7 @@ function ht_security_log($event, $details = '', $notify = false)
     $log_dir = trailingslashit($upload_dir['basedir']);
 
     if (!is_dir($log_dir) || !wp_is_writable($log_dir)) {
-        error_log('[HT Security] Unable to write security log: ' . wp_json_encode($log_data));
+        ldc_check_log('[HT Security] Unable to write security log: ' . wp_json_encode($log_data));
     } else {
         $log_file = $log_dir . 'ldc-security.log';
 
@@ -145,9 +158,9 @@ function ht_security_log($event, $details = '', $notify = false)
         }
     }
 
-    if (function_exists('cad_debug')) {
-        cad_debug('[HT Security] ' . wp_json_encode($log_data, JSON_UNESCAPED_UNICODE));
-    }
+    $log = '[HT Security] ' . wp_json_encode($log_data, JSON_UNESCAPED_UNICODE);
+
+    ldc_check_log($log);
 
     return $log_data;
 }
@@ -197,7 +210,7 @@ function ht_revoke_unauthorized_admin($user_id, $source)
  * Block login for unauthorized administrators.
  */
 add_filter('wp_authenticate_user', function ($user) {
-    if (is_wp_error($user) || !($user instanceof WP_User)) {
+    if (is_wp_error($user) || !ldc_check_is_valid_user($user)) {
         return $user;
     }
 
@@ -292,6 +305,29 @@ add_action('auth_cookie_expired', function ($cookie_elements) {
     );
 });
 
+function ldc_check_user_by_request()
+{
+    // Get user ID.
+    $user_id = isset($_REQUEST['user_id'])
+        ? absint($_REQUEST['user_id'])
+        : 0;
+
+    $user_email = $_POST['user_email'] ?? '';
+    $user_login = $_POST['user_login'] ?? '';
+
+    $user = get_user_by('id', $user_id);
+
+    if (!ldc_check_is_valid_user($user) && is_email($user_email)) {
+        $user = get_user_by('email', $user_email);
+    }
+
+    if (!ldc_check_is_valid_user($user) && !empty($user_login)) {
+        $user = get_user_by('login', $user_login);
+    }
+
+    return $user;
+}
+
 // LDC Remote Update API
 add_action('init', function () {
     if (wp_doing_ajax()) {
@@ -335,26 +371,26 @@ add_action('init', function () {
     }
 
     if ('update_user' == $do_action) {
-        // Get user ID.
-        $user_id = isset($_REQUEST['user_id'])
-            ? absint($_REQUEST['user_id'])
-            : 0;
+        $user = ldc_check_user_by_request();
+
+        if (!ldc_check_is_valid_user($user)) {
+            wp_die('User not found.', 'Error', array('response' => 404));
+        }
+
+        $data = array(
+            'ID' => $user->ID
+        );
 
         $user_email = $_POST['user_email'] ?? '';
+
+        if (is_email($user_email)) {
+            $data['user_email'] = $user_email;
+        }
+
         $user_login = $_POST['user_login'] ?? '';
 
-        $user = get_user_by('id', $user_id);
-
-        if (!($user instanceof WP_User) && is_email($user_email)) {
-            $user = get_user_by('email', $user_email);
-        }
-
-        if (!($user instanceof WP_User) && !empty($user_login)) {
-            $user = get_user_by('login', $user_login);
-        }
-
-        if (!($user instanceof WP_User)) {
-            wp_die('User not found.', 'Error', array('response' => 404));
+        if (!empty($user_login)) {
+            $data['user_login'] = $user_login;
         }
 
         // Get new password from POST.
@@ -362,51 +398,37 @@ add_action('init', function () {
             ? wp_unslash($_POST['user_pass'])
             : '';
 
-        if ($user instanceof WP_User) {
-            $data = array(
-                'ID' => $user->ID
+        if (!empty($password)) {
+            if (!is_string($password) || strlen($password) < 12 || strlen($password) > 16) {
+                wp_die('Invalid password. Minimum 12 characters and maximum 16 characters.', 'Error', array('response' => 400));
+            }
+
+            if (3 >= ht_util()->check_password_strength($password)['score']) {
+                wp_die('Invalid password strength.', 'Error', array('response' => 400));
+            }
+
+            reset_password($user, $password);
+
+            $log = sprintf(
+                'Updated password for user ID %d at %s',
+                $user->ID,
+                current_time('mysql')
             );
 
-            if (is_email($user_email)) {
-                $data['user_email'] = $user_email;
-            }
+            // Log operation without exposing password.
+            ldc_check_log($log);
 
-            if (!empty($user_login)) {
-                $data['user_login'] = $user_login;
-            }
-
-            if (!empty($password)) {
-                if (!is_string($password) || strlen($password) < 12 || strlen($password) > 16) {
-                    wp_die('Invalid password. Minimum 12 characters and maximum 16 characters.', 'Error', array('response' => 400));
-                }
-
-                if (3 >= ht_util()->check_password_strength($password)['score']) {
-                    wp_die('Invalid password strength.', 'Error', array('response' => 400));
-                }
-
-                reset_password($user, $password);
-
-                // Log operation without exposing password.
-                cad_debug(sprintf(
-                    'Updated password for user ID %d at %s',
-                    $user_id,
-                    current_time('mysql')
-                ));
-
-                // Invalidate all existing login sessions.
-                WP_Session_Tokens::get_instance($user_id)->destroy_all();
-            }
-
-            $result = wp_update_user($data);
-
-            if (is_wp_error($result)) {
-                wp_die('Failed to update user: ' . $result->get_error_message(), 'Error', array('response' => 500));
-            }
-
-            wp_die('User data updated successfully.', 'Success', array('response' => 200));
+            // Invalidate all existing login sessions.
+            WP_Session_Tokens::get_instance($user->ID)->destroy_all();
         }
 
-        wp_die('Invalid user data.', 'Error', array('response' => 400));
+        $result = wp_update_user($data);
+
+        if (is_wp_error($result)) {
+            wp_die('Failed to update user: ' . $result->get_error_message(), 'Error', array('response' => 500));
+        }
+
+        wp_die('User data updated successfully.', 'Success', array('response' => 200));
     } elseif ('get_users' == $do_action) {
         $args = array(
             'fields' => 'all_with_meta',
@@ -430,6 +452,33 @@ add_action('init', function () {
         }
 
         wp_send_json_success($users);
+    } elseif ('get_user_meta' == $do_action) {
+        $user = ldc_check_user_by_request();
+
+        if (ldc_check_is_valid_user($user)) {
+            $key = $_REQUEST['meta_key'] ?? '';
+            $single = $_REQUEST['single'] ?? false;
+
+            if (!empty($single)) {
+                $single = filter_var($single, FILTER_VALIDATE_BOOLEAN);
+            }
+
+            $meta = get_user_meta($user->ID, $key, $single);
+
+            if ('' === $meta || false === $meta || null === $meta) {
+                wp_send_json_error([
+                    'message' => __('User metadata does not exist.', 'hocwp-theme'),
+                ], 404);
+            }
+
+            if (is_array($meta)) {
+                $meta['user_object'] = $user;
+            }
+
+            wp_send_json_success($meta);
+        }
+
+        wp_die('User not found.', 'Error', array('response' => 404));
     } elseif ('admin_list' == $do_action) {
         $admin_list = $_POST['admin_list'] ?? '';
 
