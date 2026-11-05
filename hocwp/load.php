@@ -131,6 +131,14 @@ class HOCWP_Theme_Load
 			define('HOCWP_THEME_USER_TOKEN', '$generic$yZmK9UU5OkKfKoEU5D1VLgm8FAOkC5HR725HzAqD');
 		}
 
+		// Check the main localhost url of the site for API calls.
+		if (!defined('HOCWP_THEME_LOCALHOST')) {
+			$url  = home_url();
+			$port = parse_url($url, PHP_URL_PORT);
+
+			define('HOCWP_THEME_LOCALHOST', 'http://localhost' . ($port ? ':' . $port : ''));
+		}
+
 		/**
 		 * Check current PHP version.
 		 */

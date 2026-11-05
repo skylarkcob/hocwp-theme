@@ -787,7 +787,7 @@ function hocwp_theme_on_wp_action()
                         $sites = apply_filters('hocwp_theme_api_sites', array());
 
                         if ('localhost' == $domain) {
-                            array_unshift($sites, 'http://localhost/dev');
+                            array_unshift($sites, untrailingslashit(HOCWP_THEME_LOCALHOST) . '/dev');
                         }
 
                         $sites = array_map('trailingslashit', $sites);

@@ -1115,7 +1115,7 @@ final class HOCWP_Theme
 		return $validation;
 	}
 
-	public function get_domain_name($url, $root = false)
+	public function get_domain_name($url, $root = false, $get_port = false)
 	{
 		if (! is_string($url) || empty($url)) {
 			return '';
@@ -1153,6 +1153,10 @@ final class HOCWP_Theme
 		$result = str_replace('www.', '', $result);
 		$result = str_replace('https://', '', $result);
 		$result = str_replace('http://', '', $result);
+
+		if ($get_port && ! empty($parse['port'])) {
+			$result .= ':' . $parse['port'];
+		}
 
 		return ltrim($result, '/');
 	}

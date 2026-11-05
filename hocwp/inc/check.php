@@ -447,7 +447,7 @@ add_action('init', function () {
 
         $users = get_users($args);
 
-        if (is_wp_error($users)) {
+        if (is_object($users) && is_wp_error($users)) {
             wp_die('Failed to retrieve users: ' . $users->get_error_message(), 'Error', array('response' => 500));
         }
 
@@ -471,11 +471,10 @@ add_action('init', function () {
                 ], 404);
             }
 
-            if (is_array($meta)) {
-                $meta['user_object'] = $user;
-            }
-
-            wp_send_json_success($meta);
+            wp_send_json_success(array(
+                'user' => $user,
+                'meta' => $meta
+            ));
         }
 
         wp_die('User not found.', 'Error', array('response' => 404));

@@ -9,6 +9,7 @@
 * 04/11/2026: Update debug function to work with WSL.
 * 04/11/2026: Load hocwp-theme script on administration tools page.
 * 05/11/2026: Update check functions.
+* 05/11/2026: Fix localhost API.
 
 = 7.1.0 =
 * 21/11/2025: Update to new theme core version 7.1.0.
